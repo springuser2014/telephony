@@ -6,31 +6,28 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import net.sf.gilead.core.PersistentBeanManager;
+import net.sf.gilead.core.hibernate.jpa.HibernateJpaUtil;
+import net.sf.gilead.gwt.GwtConfigurationHelper;
+import net.sf.gilead.gwt.PersistentRemoteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 @Singleton
-public class GuiceRemoteServiceServlet extends RemoteServiceServlet {
+public class GuiceRemoteServiceServlet extends PersistentRemoteService {
 
-//@Singleton
-//public class GuiceRemoteServiceServlet extends PersistentRemoteService {
-
-//    private static Log log = LogFactory.getLog(GuiceRemoteServiceServlet.class);
+    private static Logger logger = LoggerFactory.getLogger(GuiceRemoteServiceServlet.class);
 
     @Inject
     private Injector injector;
 
-//    private Provider<PersistentBeanManager> beanManager;
-//
-//    @Inject
-//    public GuiceRemoteServiceServlet(Provider<PersistentBeanManager> provider) {
-//        this.beanManager = provider;
-//
-//        setBeanManager(this.beanManager.get());
-//    }
+    @Inject
+    private EntityManager em;
 
     @Override
     public String processCall(String payload) throws SerializationException {
@@ -55,21 +52,20 @@ public class GuiceRemoteServiceServlet extends RemoteServiceServlet {
         return (RemoteService) injector.getInstance(serviceClass);
     }
 
-//    public GuiceRemoteServiceServlet() {
-//        log.debug("GuiceRemoteServiceServlet constructor starts!!");
-//        log.info("GuiceRemoteServiceServlet constructor starts!!");
-//
-//        EntityManagerFactory emf =
-//                Persistence.createEntityManagerFactory(Constant.PERSISTENCE_UNIT_NAME);
-//        HibernateJpaUtil hibernateJpaUtil = new HibernateJpaUtil(emf);
-//
-//        PersistentBeanManager persistentBeanManager =
-//                GwtConfigurationHelper.initGwtStatelessBeanManager(hibernateJpaUtil);
-//
-//        this.setBeanManager(persistentBeanManager);
-//
-//        log.debug("GuiceRemoteServiceServlet constructor ends!!");
-//        log.info("GuiceRemoteServiceServlet constructor ends!!");
-//    }
+
+    public GuiceRemoteServiceServlet() {
+
+        logger.debug("GuiceRemoteServiceServlet constructor starts");
+        logger.debug("Entity manager : {} ", em);
+
+        HibernateJpaUtil hibernateJpaUtil = new HibernateJpaUtil(em.getEntityManagerFactory());
+
+        PersistentBeanManager persistentBeanManager =
+                GwtConfigurationHelper.initGwtStatelessBeanManager(hibernateJpaUtil);
+
+        this.setBeanManager(persistentBeanManager);
+
+        logger.debug("GuiceRemoteServiceServlet constructor ends");
+    }
 
 }

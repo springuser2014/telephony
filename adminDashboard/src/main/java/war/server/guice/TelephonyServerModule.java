@@ -10,10 +10,7 @@ import com.google.inject.Singleton;
 public class TelephonyServerModule extends AbstractModule {
     @Override
     protected void configure() {
-
-
         bind(TestClass.class).in(Singleton.class);
-//        bind(GuiceDaoInitializer.class).asEagerSingleton();
 
 //        bind(PersistentBeanManager.class).toProvider(PersistentBeanManagerProvider.class);
     }
