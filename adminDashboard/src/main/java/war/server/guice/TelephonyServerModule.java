@@ -13,6 +13,7 @@ public class TelephonyServerModule extends AbstractModule {
 
 
         bind(TestClass.class).in(Singleton.class);
+//        bind(GuiceDaoInitializer.class).asEagerSingleton();
 
 //        bind(PersistentBeanManager.class).toProvider(PersistentBeanManagerProvider.class);
     }

@@ -11,6 +11,7 @@ import war.server.core.configuration.Constant;
 public class TelephonyServletModule extends ServletModule {
 
     protected void configureServlets() {
+
         bindJpa();
         bindServlets();
     }
