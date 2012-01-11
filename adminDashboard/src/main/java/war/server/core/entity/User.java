@@ -1,7 +1,7 @@
 package war.server.core.entity;
 
 
-import net.sf.gilead.pojo.java5.LightEntity;
+
 
 import javax.persistence.*;
 import java.io.Serializable;

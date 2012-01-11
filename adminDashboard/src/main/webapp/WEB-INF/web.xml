@@ -5,17 +5,10 @@
 
 <web-app>
 
-    <!-- TO REMOVE CODE ABOVE -->
-    <!-- Servlets -->
-    <!--<servlet>-->
-    <!--<servlet-name>greetServlet</servlet-name>-->
-    <!--<servlet-class>war.server.GreetingServiceImpl</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>greetServlet</servlet-name>-->
-    <!--<url-pattern>/adminDashboard/greet</url-pattern>-->
-    <!--</servlet-mapping>-->
+    <!-- defined listeners -->
+    <listener>
+        <listener-class>war.server.listeners.TelephonyServletContextListener</listener-class>
+    </listener>
 
     <!-- defined filters -->
     <filter>
@@ -26,13 +19,7 @@
     <filter-mapping>
         <filter-name>guiceFilter</filter-name>
         <url-pattern>/*</url-pattern>
-      </filter-mapping>
-
-
-    <!-- defined listeners -->
-    <listener>
-      <listener-class>war.server.listeners.TelephonyServletConfig</listener-class>
-    </listener>
+    </filter-mapping>
 
     <!-- Default page to serve -->
     <welcome-file-list>
