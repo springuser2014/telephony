@@ -5,23 +5,26 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.sf.gilead.core.PersistentBeanManager;
 import war.client.GreetingService;
+import war.server.core.dao.IUserDao;
+import war.server.core.entity.User;
 import war.server.guice.gilead.renewed.GuicePersistentRemoteServiceServlet;
-import war.server.guice.TestClass;
+
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Singleton
 public class GreetingServiceImpl extends GuicePersistentRemoteServiceServlet implements GreetingService {
 
     @Inject
-    TestClass tc;
+    private IUserDao userDao;
 
     @Inject
     public GreetingServiceImpl(PersistentBeanManager beanManager) {
         setBeanManager(beanManager);
     }
 
-    public String greetServer() throws IllegalArgumentException {
+    public List<User> greetServer() throws IllegalArgumentException {
 
-       return tc.getName();
+       return userDao.findAll();
     }
 }

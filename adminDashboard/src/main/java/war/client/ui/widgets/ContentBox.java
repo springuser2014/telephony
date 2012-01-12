@@ -3,7 +3,6 @@ package war.client.ui.widgets;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.inject.Inject;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.util.SC;
@@ -14,6 +13,9 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import war.client.GreetingService;
 import war.client.GreetingServiceAsync;
+import war.server.core.entity.User;
+
+import java.util.List;
 
 public class ContentBox extends HLayout {
 
@@ -45,14 +47,22 @@ public class ContentBox extends HLayout {
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
 
-                greetingService.greetServer(new AsyncCallback<String>() {
+                greetingService.greetServer(new AsyncCallback<List<User>>() {
                     public void onFailure(Throwable caught) {
                         SC.say("Hello World from SmartGWT failed");
                     }
 
-                    public void onSuccess(String result) {
-                        SC.say("Hello World from SmartGWT : " + result);
+                    @Override
+                    public void onSuccess(List<User> result) {
+                        String message = " Hello man! ";
+
+                        for(User u : result) {
+                            message += u.getUsername();
+                        }
+
+                        SC.say(message);
                     }
+
                 });
             }
         });
