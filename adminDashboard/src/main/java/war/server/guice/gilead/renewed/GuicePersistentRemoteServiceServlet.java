@@ -1,4 +1,4 @@
-package war.server.guice;
+package war.server.guice.gilead.renewed;
 
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -9,14 +9,24 @@ import com.google.inject.Injector;
 import net.sf.gilead.gwt.PersistentRemoteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import war.server.guice.gilead.renewed.adapter.JPARemoteServiceAdapter;
+import war.server.guice.gilead.renewed.handler.JPAProcessCallHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
 
+/**
+ * Improved version of gilead's PersistentRemoteService servlet.
+ * Added guice integration with JPA support.
+ *
+ * Thanks to
+ *
+ * @link http://code.google.com/p/gwt-enterprise-patterns/
+ */
 @SuppressWarnings("serial")
-public abstract class GuiceRemoteServiceServlet extends PersistentRemoteService implements JPARemoteServiceAdapter {
+public abstract class GuicePersistentRemoteServiceServlet extends PersistentRemoteService implements JPARemoteServiceAdapter {
 
-    private static Logger logger = LoggerFactory.getLogger(GuiceRemoteServiceServlet.class);
+    private static Logger logger = LoggerFactory.getLogger(GuicePersistentRemoteServiceServlet.class);
 
     private static final long serialVersionUID = 68052617558196206L;
 
@@ -26,19 +36,22 @@ public abstract class GuiceRemoteServiceServlet extends PersistentRemoteService 
     @Inject
     private JPAProcessCallHandler processCallHandler;
 
-
     /**
      * Process call override. Use RPC_Copy instead. Copied from EngineRemoteService to change target object
      * from this to service
      */
     @Override
     public String processCall(String payload) throws SerializationException {
+        logger.debug("processCall() : {}", payload);
+
         getBeanManager().getPersistenceUtil().openSession(); //TODO: figure out why I have to do this
         return processCallHandler.processCall(payload, this);
     }
 
     @SuppressWarnings("unchecked")
     public RemoteService getRemoteService(Class serviceClass) {
+        logger.debug("getRemoteService() : {}", serviceClass.getName());
+
         return (RemoteService) injector.getInstance(serviceClass);
     }
 
@@ -49,6 +62,8 @@ public abstract class GuiceRemoteServiceServlet extends PersistentRemoteService 
 
     @Override
     public void onAfterRequestDeserialized(RPCRequest rpcRequest) {
+        logger.debug("onAfterRequestDeserialized() : {}", rpcRequest.getClass().getName());
+
         super.onAfterRequestDeserialized(rpcRequest);
     }
 }

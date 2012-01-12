@@ -1,4 +1,4 @@
-package war.server.guice;
+package war.server.guice.gilead.renewed.handler;
 
 
 
@@ -9,6 +9,8 @@ import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPCRequest;
+import war.server.guice.gilead.renewed.RPCGilead;
+import war.server.guice.gilead.renewed.adapter.JPARemoteServiceAdapter;
 
 public class JPAProcessCallHandler implements ProcessCallHandler<JPARemoteServiceAdapter> {
 

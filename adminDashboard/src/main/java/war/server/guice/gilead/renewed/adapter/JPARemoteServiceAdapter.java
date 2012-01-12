@@ -1,4 +1,4 @@
-package war.server.guice;
+package war.server.guice.gilead.renewed.adapter;
 
 import net.sf.gilead.core.PersistentBeanManager;
 

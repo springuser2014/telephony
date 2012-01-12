@@ -1,4 +1,4 @@
-package war.server.guice;
+package war.server.guice.gilead.renewed.adapter;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.server.rpc.RPCRequest;

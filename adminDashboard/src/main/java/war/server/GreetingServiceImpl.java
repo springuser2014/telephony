@@ -5,12 +5,12 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.sf.gilead.core.PersistentBeanManager;
 import war.client.GreetingService;
-import war.server.guice.GuiceRemoteServiceServlet;
+import war.server.guice.gilead.renewed.GuicePersistentRemoteServiceServlet;
 import war.server.guice.TestClass;
 
 @SuppressWarnings("serial")
 @Singleton
-public class GreetingServiceImpl extends GuiceRemoteServiceServlet implements GreetingService {
+public class GreetingServiceImpl extends GuicePersistentRemoteServiceServlet implements GreetingService {
 
     @Inject
     TestClass tc;

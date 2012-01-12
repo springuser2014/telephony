@@ -1,9 +1,13 @@
-package war.server.guice;
+package war.server.guice.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import net.sf.gilead.core.PersistentBeanManager;
+import war.server.guice.gilead.renewed.handler.JPAProcessCallHandler;
+import war.server.guice.provider.EntityManagerFactoryProvider;
+import war.server.guice.provider.EntityManagerProvider;
+import war.server.guice.provider.PersistentBeanManagerProvider;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

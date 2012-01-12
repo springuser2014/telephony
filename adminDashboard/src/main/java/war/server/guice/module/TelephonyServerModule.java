@@ -1,8 +1,9 @@
-package war.server.guice;
+package war.server.guice.module;
 
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
+import war.server.guice.TestClass;
 
 /**
  * Guice DI module configuration

@@ -1,4 +1,4 @@
-package war.server.guice;
+package war.server.guice.provider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

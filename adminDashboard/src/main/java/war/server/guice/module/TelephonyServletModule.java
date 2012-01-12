@@ -1,4 +1,4 @@
-package war.server.guice;
+package war.server.guice.module;
 
 import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import war.client.GreetingService;
 import war.server.GreetingServiceImpl;
 import war.server.core.configuration.Constant;
+import war.server.guice.module.JPAModule;
 
 
 /**
