@@ -1,7 +1,5 @@
 package war.server.guice;
 
-import com.google.inject.persist.PersistFilter;
-import com.google.inject.persist.jpa.JpaPersistModule;
 import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +29,7 @@ public class TelephonyServletModule extends ServletModule {
 
         logger.debug("TelephonyServletModule starts configuring servlets");
 
-        serve("/adminDashboard/Greeting").with(GuiceRemoteServiceServlet.class);
+        serve("/adminDashboard/Greeting").with(GreetingServiceImpl.class);
         bind(GreetingService.class).to(GreetingServiceImpl.class);
 
         logger.debug("TelephonyServletModule ends configuring servlets");
@@ -40,8 +38,10 @@ public class TelephonyServletModule extends ServletModule {
     private void bindJpa() {
         logger.debug("TelephonyServletModule starts configuring JPA module");
 
-        install(new JpaPersistModule(Constant.PERSISTENCE_UNIT_NAME));
-        filter("/*").through(PersistFilter.class);
+//        install(new JpaPersistModule(Constant.PERSISTENCE_UNIT_NAME));
+//        filter("/*").through(PersistFilter.class);
+
+        install(new JPAModule(Constant.PERSISTENCE_UNIT_NAME));
 
         logger.debug("TelephonyServletModule ends configuring servlets");
     }
