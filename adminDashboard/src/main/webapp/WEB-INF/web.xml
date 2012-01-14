@@ -23,7 +23,7 @@
 
     <!-- Default page to serve -->
     <welcome-file-list>
-        <welcome-file>adminDashboard.html</welcome-file>
+        <welcome-file>login.html</welcome-file>
     </welcome-file-list>
 
 </web-app>

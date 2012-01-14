@@ -6,9 +6,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.smartgwt.client.widgets.layout.VLayout;
-import war.client.gin.GuiIjector;
-import war.client.ui.widgets.ContentBox;
-import war.client.ui.widgets.TopMenu;
+import war.client.gin.GuiInjector;
+import war.client.ui.widget.ContentBox;
+import war.client.ui.widget.TopMenu;
 
 
 /**
@@ -16,7 +16,7 @@ import war.client.ui.widgets.TopMenu;
  */
 public class adminDashboard implements EntryPoint {
 
-    private final GuiIjector injector = GWT.create(GuiIjector.class);
+    private final GuiInjector injector = GWT.create(GuiInjector.class);
 
     private VLayout mainLayout;
 

@@ -4,8 +4,8 @@ package war.server;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.sf.gilead.core.PersistentBeanManager;
-import war.client.GreetingService;
-import war.server.core.dao.IUserDao;
+import war.client.service.GreetingService;
+import war.server.core.dao.interfaces.UserDao;
 import war.server.core.entity.User;
 import war.server.guice.gilead.renewed.GuicePersistentRemoteServiceServlet;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class GreetingServiceImpl extends GuicePersistentRemoteServiceServlet implements GreetingService {
 
     @Inject
-    private IUserDao userDao;
+    private UserDao userDao;
 
     @Inject
     public GreetingServiceImpl(PersistentBeanManager beanManager) {

@@ -1,14 +1,11 @@
-package war.client.ui.widgets;
+package war.client.ui.widget;
 
 
 import com.allen_sauer.gwt.log.client.Log;
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
-import war.client.GreetingService;
-import war.client.GreetingServiceAsync;
 
 
 /**

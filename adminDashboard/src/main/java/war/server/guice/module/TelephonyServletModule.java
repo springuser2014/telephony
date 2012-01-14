@@ -3,10 +3,9 @@ package war.server.guice.module;
 import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import war.client.GreetingService;
+import war.client.service.GreetingService;
 import war.server.GreetingServiceImpl;
 import war.server.core.configuration.Constant;
-import war.server.guice.module.JPAModule;
 
 
 /**
@@ -22,8 +21,15 @@ public class TelephonyServletModule extends ServletModule {
 
         bindJpa();
         bindServlets();
+        bindAuth();
 
         logger.debug("TelephonyServletModule is destroyed");
+    }
+
+    private void bindAuth() {
+
+        // Authentication module
+//        filter("/*").through(IniShiroFilter.class);
     }
 
     private void bindServlets() {
@@ -33,14 +39,12 @@ public class TelephonyServletModule extends ServletModule {
         serve("/adminDashboard/Greeting").with(GreetingServiceImpl.class);
         bind(GreetingService.class).to(GreetingServiceImpl.class);
 
+
         logger.debug("TelephonyServletModule ends configuring servlets");
     }
 
     private void bindJpa() {
         logger.debug("TelephonyServletModule starts configuring JPA module");
-
-//        install(new JpaPersistModule(Constant.PERSISTENCE_UNIT_NAME));
-//        filter("/*").through(PersistFilter.class);
 
         install(new JPAModule(Constant.PERSISTENCE_UNIT_NAME));
 

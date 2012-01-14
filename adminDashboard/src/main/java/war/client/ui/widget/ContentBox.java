@@ -1,4 +1,4 @@
-package war.client.ui.widgets;
+package war.client.ui.widget;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
@@ -11,8 +11,8 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
-import war.client.GreetingService;
-import war.client.GreetingServiceAsync;
+import war.client.service.GreetingService;
+import war.client.service.GreetingServiceAsync;
 import war.server.core.entity.User;
 
 import java.util.List;
