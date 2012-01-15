@@ -17,7 +17,6 @@ public class PersistentBeanManagerProvider implements Provider<PersistentBeanMan
         this.emf = emf;
     }
 
-    @Override
     public PersistentBeanManager get() {
         HibernateJpaUtil persistenceUtil = new HibernateJpaUtil();
 

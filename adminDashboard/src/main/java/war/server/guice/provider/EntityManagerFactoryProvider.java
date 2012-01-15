@@ -16,7 +16,6 @@ public class EntityManagerFactoryProvider implements Provider<EntityManagerFacto
         this.persistenceUnitName = persistenceUnitName;
     }
 
-    @Override
     public EntityManagerFactory get() {
         return Persistence.createEntityManagerFactory(persistenceUnitName);
     }

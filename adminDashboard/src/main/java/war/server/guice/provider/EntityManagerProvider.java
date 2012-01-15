@@ -16,7 +16,6 @@ public class EntityManagerProvider implements Provider<EntityManager> {
         this.emf = emf;
     }
 
-    @Override
     public EntityManager get() {
         return emf.createEntityManager();
     }
