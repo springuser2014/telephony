@@ -58,7 +58,6 @@ public class LoginForm extends DynamicForm {
 
         emailItem = new TextItem("email", "Email");
 
-
         this.setUseAllDataSourceFields(true);
 
         validateItem = new ButtonItem();

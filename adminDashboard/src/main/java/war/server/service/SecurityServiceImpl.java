@@ -19,17 +19,13 @@ import war.shared.LoginResult;
 @Singleton
 public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet implements SecurityService {
 
-    private static final long serialVersionUID = -4935507026700430314L;
-
-    private Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
-
     @Inject
     public SecurityServiceImpl(PersistentBeanManager beanManager) {
         setBeanManager(beanManager);
     }
 
     public LoginResult login(String username, String password, boolean rememberMe) {
-        logger.debug("LOGIN (username: " + username + " password: " + password + ")");
+//        logger.debug("LOGIN (username: " + username + " password: " + password + ")");
 
         Subject subject = SecurityUtils.getSubject();
         LoginResult result = new LoginResult();
@@ -49,7 +45,7 @@ public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet imp
     }
 
     public void logout() {
-        logger.debug("LOGOUT");
+//        logger.debug("LOGOUT");
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
     }
@@ -76,7 +72,7 @@ public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet imp
     protected String getReferrerUrl() {
         SavedRequest sr = WebUtils.getSavedRequest(getThreadLocalRequest());
         if (sr != null) {
-            logger.debug("Request Url: " + sr.getRequestUrl());
+//            logger.debug("Request Url: " + sr.getRequestUrl());
             return sr.getRequestUrl();
         }
 

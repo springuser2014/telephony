@@ -28,8 +28,6 @@ public abstract class GuicePersistentRemoteServiceServlet extends PersistentRemo
 
     private static Logger logger = LoggerFactory.getLogger(GuicePersistentRemoteServiceServlet.class);
 
-    private static final long serialVersionUID = 68052617558196206L;
-
     @Inject
     private Injector injector;
 
