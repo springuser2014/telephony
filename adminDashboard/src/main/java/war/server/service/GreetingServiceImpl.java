@@ -1,4 +1,4 @@
-package war.server;
+package war.server.service;
 
 
 import com.google.inject.Inject;

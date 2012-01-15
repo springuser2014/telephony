@@ -55,7 +55,6 @@ public abstract class GuicePersistentRemoteServiceServlet extends PersistentRemo
         return (RemoteService) injector.getInstance(serviceClass);
     }
 
-    @Override()
     public HttpServletRequest getRequest() {
         return super.getThreadLocalRequest();
     }

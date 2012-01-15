@@ -12,7 +12,7 @@
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony"/>
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="postgres"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.show_sql" value="true"/>
 
             <property name="current_session_context_class" value="thread" />
@@ -21,22 +21,3 @@
         </properties>
     </persistence-unit>
 </persistence>
-
-
-        <!--<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">-->
-
-        <!--<persistence-unit name="telephony" transaction-type="RESOURCE_LOCAL">-->
-        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
-        <!--<class>war.server.core.entity.User</class>-->
-        <!--<properties>-->
-        <!--<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
-        <!--<property name="javax.persistence.jdbc.url" value="jdbc:postgres:telephony"/>-->
-        <!--<property name="javax.persistence.jdbc.user" value="postgres"/>-->
-        <!--<property name="javax.persistence.jdbc.password" value="postgres"/>-->
-
-        <!--<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>-->
-        <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-        <!--</properties>-->
-        <!--</persistence-unit>-->
-        <!--</persistence>-->
-

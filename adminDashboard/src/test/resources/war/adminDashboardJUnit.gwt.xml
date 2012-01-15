@@ -4,6 +4,6 @@
   <inherits name='war.adminDashboard' />
 
   <!-- Specify the path to any remote services.                   -->
-  <!--<servlet path="/adminDashboard/greet" class="war.server.GreetingServiceImpl" />-->
+  <!--<servlet path="/adminDashboard/greet" class="war.server.service.GreetingServiceImpl" />-->
 
 </module>

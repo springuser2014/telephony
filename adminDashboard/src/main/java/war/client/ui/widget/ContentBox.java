@@ -52,7 +52,6 @@ public class ContentBox extends HLayout {
                         SC.say("Hello World from SmartGWT failed");
                     }
 
-                    @Override
                     public void onSuccess(List<User> result) {
                         String message = " Hello man! ";
 

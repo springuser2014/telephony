@@ -6,7 +6,7 @@ import war.server.core.entity.User;
 
 import java.util.List;
 
-@RemoteServiceRelativePath("Greeting")
+@RemoteServiceRelativePath("greeting")
 public interface GreetingService extends RemoteService {
 
     List<User> greetServer() throws IllegalArgumentException;

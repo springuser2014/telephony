@@ -25,7 +25,7 @@
     <inherits name="com.google.gwt.inject.Inject"/>
 
     <!-- Google Guava for GWT -->
-    <inherits name="com.google.common.collect.Collect"/>
+    <!--<inherits name="com.google.common.collect.Collect"/>-->
 
     <!--Tempraily compilation for FF -->
     <set-property name="user.agent" value="gecko1_8"/>

@@ -54,8 +54,8 @@
     <!-- SOME PROPERTIES -->
     <properties>
         <!-- Convenience property to set the GWT version -->
-        <gwtVersion>2.4.0</gwtVersion>
-        <gwtp.version>0.6</gwtp.version>
+        <!--<gwtVersion>2.2.0</gwtVersion>-->
+        <!--<gwtp.version>0.6</gwtp.version>-->
         <!-- GWT needs at least java 1.5 -->
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -74,14 +74,14 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
-            <version>${gwtVersion}</version>
-            <scope>runtime</scope>
+            <version>2.4.0</version>
+            <!--<scope>runtime</scope>-->
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>${gwtVersion}</version>
-            <scope>provided</scope>
+            <version>2.4.0</version>
+
         </dependency>
 
         <!-- GWT-log -->
@@ -358,6 +358,9 @@
                                     <excludes>
                                         <exclude>org.hibernate:ejb3-persistence</exclude>
                                     </excludes>
+                                    <!--<excludes>-->
+                                        <!--<exclude>com.google.gwt:gwt-servlet</exclude>-->
+                                    <!--</excludes>-->
                                 </bannedDependencies>
                             </rules>
                         </configuration>
