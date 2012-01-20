@@ -41,7 +41,7 @@ create table user_roles (
 
   id bigint primary key not null,
   version int default 0,
-  role_name character not null,
+  role_name varchar(20) not null,
 
   created_at timestamp not null,
   created_by bigint not null,
@@ -49,7 +49,7 @@ create table user_roles (
   edited_at timestamp null,
   edited_by bigint null,
 
-  deleted_at timestamp not null,
+  deleted_at timestamp null,
   deleted_by bigint null,
 
   UNIQUE (role_name)
@@ -100,6 +100,7 @@ create table deliveries (
 
   id bigint primary key not null,
   version int default 0,
+  label varchar(100),
 
   created_at timestamp not null,
   created_by bigint not null,
@@ -121,10 +122,13 @@ create table products (
   imei character(15) not null,
   store_id bigint not null references stores(id),
   delivery_id bigint not null references deliveries(id),
-  color character(20),
-  status character(20),
+  producer varchar(100) not null,
+  model varchar(100) not null,
 
-  price_in bigint,
+  color character(20),
+  status character(20) not null,
+
+  price_in bigint not null,
   price_out bigint,
 
   created_at timestamp not null,
@@ -133,7 +137,7 @@ create table products (
   edited_at timestamp null,
   edited_by bigint null,
 
-  deleted_at timestamp not null,
+  deleted_at timestamp null,
   deleted_by bigint null,
 
   UNIQUE (imei)
