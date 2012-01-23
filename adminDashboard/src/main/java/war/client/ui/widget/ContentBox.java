@@ -11,6 +11,8 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import war.client.configuration.COLOR;
+import war.client.configuration.SIZE;
 import war.client.service.GreetingService;
 import war.client.service.GreetingServiceAsync;
 import war.server.core.entity.User;
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class ContentBox extends HLayout {
 
-    private static final int CONTEXT_BOX_HEIGHT = 600;
+
 
     private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
@@ -31,8 +33,8 @@ public class ContentBox extends HLayout {
         Log.debug("Initializing ContextBox widget..");
 
         // initialise the layout container
-        this.setHeight(CONTEXT_BOX_HEIGHT);
-        this.setBackgroundColor("#4096EE");
+        this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
+        this.setBackgroundColor(COLOR.CONTENT_BOX_BACKGROUND);
 
         // initialise the application menu label
         label = new Label();
@@ -55,8 +57,10 @@ public class ContentBox extends HLayout {
                     public void onSuccess(List<User> result) {
                         String message = " Hello man! ";
 
+                        Log.debug("AJAX returned " + result.size() + " elements");
+
                         for(User u : result) {
-                            message += u.getUsername();
+                            message += u.getEmail();
                         }
 
                         SC.say(message);

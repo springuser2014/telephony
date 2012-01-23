@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import net.sf.gilead.core.PersistentBeanManager;
 import net.sf.gilead.core.hibernate.jpa.HibernateJpaUtil;
+import net.sf.gilead.core.serialization.GwtProxySerialization;
 import net.sf.gilead.core.store.stateless.StatelessProxyStore;
 
 import javax.persistence.EntityManagerFactory;
@@ -26,7 +27,9 @@ public class PersistentBeanManagerProvider implements Provider<PersistentBeanMan
 
         beanManager.setPersistenceUtil(persistenceUtil);
 
-        beanManager.setProxyStore(new StatelessProxyStore());
+        StatelessProxyStore stetelessProxyStore = new StatelessProxyStore();
+        stetelessProxyStore.setProxySerializer(new GwtProxySerialization());
+        beanManager.setProxyStore(stetelessProxyStore);
         return beanManager;
     }
 

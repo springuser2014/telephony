@@ -5,9 +5,9 @@
 
 <web-app>
 
-    <!-- defined listeners -->
+    <!-- defined listener -->
     <listener>
-        <listener-class>war.server.listeners.TelephonyServletContextListener</listener-class>
+        <listener-class>war.server.guice.listener.TelephonyServletContextListener</listener-class>
     </listener>
 
     <!-- defined filters -->

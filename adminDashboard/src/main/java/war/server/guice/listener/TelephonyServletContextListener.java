@@ -1,4 +1,4 @@
-package war.server.listeners;
+package war.server.guice.listener;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -21,8 +21,9 @@ public class TelephonyServletContextListener extends GuiceServletContextListener
         logger.debug("Injector configuration");
 
         return Guice.createInjector(
-                new TelephonyServletModule(),
-                new TelephonyServerModule()
+                new TelephonyServletModule()
+                ,new TelephonyServerModule()
+//              ,new SecurityModule()
         );
     }
 }

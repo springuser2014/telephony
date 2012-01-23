@@ -12,12 +12,16 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.client.service.SecurityService;
-import war.server.guice.gilead.renewed.GuicePersistentRemoteServiceServlet;
+import war.server.gilead.GuicePersistentRemoteServiceServlet;
 import war.shared.LoginResult;
+
+import javax.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
 @Singleton
 public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet implements SecurityService {
+
+    private static Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Inject
     public SecurityServiceImpl(PersistentBeanManager beanManager) {
@@ -25,7 +29,7 @@ public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet imp
     }
 
     public LoginResult login(String username, String password, boolean rememberMe) {
-//        logger.debug("LOGIN (username: " + username + " password: " + password + ")");
+        logger.debug("LOGIN (username: " + username + " password: " + password + ")");
 
         Subject subject = SecurityUtils.getSubject();
         LoginResult result = new LoginResult();
@@ -45,7 +49,7 @@ public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet imp
     }
 
     public void logout() {
-//        logger.debug("LOGOUT");
+        logger.debug("LOGOUT");
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
     }
@@ -65,6 +69,8 @@ public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet imp
             result.setErrorMessage("Konto jest zablokowane");
         } catch (AuthenticationException ae) {
             // unexpected condition - error?
+
+            logger.debug("AuthenticationException : " + ae.getStackTrace() );
             result.setErrorMessage("Wystąpił nieznany błąd");
         }
     }
@@ -72,7 +78,7 @@ public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet imp
     protected String getReferrerUrl() {
         SavedRequest sr = WebUtils.getSavedRequest(getThreadLocalRequest());
         if (sr != null) {
-//            logger.debug("Request Url: " + sr.getRequestUrl());
+            logger.debug("Request Url: " + sr.getRequestUrl());
             return sr.getRequestUrl();
         }
 

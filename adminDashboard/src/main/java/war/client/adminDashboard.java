@@ -9,6 +9,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import war.client.gin.GuiInjector;
 import war.client.ui.widget.ContentBox;
 import war.client.ui.widget.TopMenu;
+import war.client.ui.widget.TopSubmenu;
 
 
 /**
@@ -24,6 +25,7 @@ public class adminDashboard implements EntryPoint {
 
         ContentBox contentBox = injector.getContentBox();
         TopMenu topMenu = injector.getTopMenu();
+        TopSubmenu submenu = injector.getTopSubmenu();
 
         Log.debug("Initializing EntryPoint : adminDashboard ");
 
@@ -39,6 +41,9 @@ public class adminDashboard implements EntryPoint {
 
         // add the top menu container to the main layout container
         mainLayout.addMember(topMenu);
+
+        // add submenu used for present some specified actions in chosen module
+        mainLayout.addMember(submenu);
 
         // add the default content container to the main layout container
         mainLayout.addMember(contentBox);

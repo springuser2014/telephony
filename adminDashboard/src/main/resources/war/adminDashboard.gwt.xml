@@ -12,6 +12,9 @@
 
     <!-- For development, a default of `DEBUG` is recommended -->
     <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+    <set-property name="log_WindowLogger" value="DISABLED" />
+    <set-property name="log_FirebugLogger" value="ENABLED" />
+
 
     <!-- Some SmartGWT modules config -->
     <inherits name="com.smartgwt.SmartGwtNoTheme"/>

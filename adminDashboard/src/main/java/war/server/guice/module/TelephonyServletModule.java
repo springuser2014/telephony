@@ -4,11 +4,8 @@ import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.client.service.GreetingService;
-import war.client.service.SecurityService;
-import war.server.GuiceShiroFilter;
 import war.server.core.configuration.Constant;
 import war.server.service.GreetingServiceImpl;
-import war.server.service.SecurityServiceImpl;
 
 
 /**
@@ -31,7 +28,7 @@ public class TelephonyServletModule extends ServletModule {
 
     private void bindAuth() {
 
-        filter("/*").through(GuiceShiroFilter.class);
+//        filter("/*").through(GuiceShiroFilter.class);
     }
 
     private void bindServlets() {
@@ -41,10 +38,10 @@ public class TelephonyServletModule extends ServletModule {
         serve("/adminDashboard/greeting").with(GreetingServiceImpl.class);
         bind(GreetingService.class).to(GreetingServiceImpl.class);
 
-        serve("/login/login").with(SecurityServiceImpl.class);
-        bind(SecurityService.class).to(SecurityServiceImpl.class);
-
-        serve("/login/security").with(SecurityServiceImpl.class);
+//        serve("/login/login").with(SecurityServiceImpl.class);
+//        bind(SecurityService.class).to(SecurityServiceImpl.class);
+//
+//        serve("/login/security").with(SecurityServiceImpl.class);
 
 
 

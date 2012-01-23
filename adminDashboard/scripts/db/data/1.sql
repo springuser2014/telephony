@@ -113,42 +113,42 @@ insert into user_roles (
 --
 
 -- uzytkownik 1 ma wszystkie uprawnienia
-insert into role_to_user (id, user_id, user_role_id)
-values (1, 1, 1);
+insert into role_to_user (user_id, user_role_id)
+values (1, 1);
 
-insert into role_to_user (id, user_id, user_role_id)
-values (2, 1, 2);
+insert into role_to_user (user_id, user_role_id)
+values (1, 2);
 
-insert into role_to_user (id, user_id, user_role_id)
-values (3, 1, 3);
+insert into role_to_user (user_id, user_role_id)
+values (1, 3);
 
 -- uzytkownik 2 ma wszystkie uprawnienia
-insert into role_to_user (id, user_id, user_role_id)
-values (4, 2, 1);
+insert into role_to_user (user_id, user_role_id)
+values (2, 1);
 
-insert into role_to_user (id, user_id, user_role_id)
-values (5, 2, 2);
+insert into role_to_user (user_id, user_role_id)
+values (2, 2);
 
-insert into role_to_user (id, user_id, user_role_id)
-values (6, 2, 3);
+insert into role_to_user (user_id, user_role_id)
+values (2, 3);
 
 -- uzytkownik 3 ma dwa uprawnienia
-insert into role_to_user (id, user_id, user_role_id)
-values (7, 3, 1);
+insert into role_to_user (user_id, user_role_id)
+values (3, 1);
 
-insert into role_to_user (id, user_id, user_role_id)
-values (8, 3, 2);
+insert into role_to_user (user_id, user_role_id)
+values (3, 2);
 
 -- uzytkownik 4 ma dwa uprawnienia
-insert into role_to_user (id, user_id, user_role_id)
-values (9, 4, 2);
+insert into role_to_user (user_id, user_role_id)
+values (4, 2);
 
-insert into role_to_user (id, user_id, user_role_id)
-values (10, 4, 3);
+insert into role_to_user (user_id, user_role_id)
+values (4, 3);
 
 -- uzytkownik 5 ma jedno uprawnienie
-insert into role_to_user (id, user_id, user_role_id)
-values (11, 5, 2);
+insert into role_to_user (user_id, user_role_id)
+values (5, 2);
 
 --
 -- dane testowe do tabeli ze sklepami (magazynami)
@@ -209,27 +209,27 @@ insert into stores (
 -- dane testowe do tabeli ze sklepami (magazynami)
 --
 
-insert into user_to_store (id, version, user_id, store_id ) values
- (1, 1, 1, 1),
- (2, 1, 1, 2),
- (3, 1, 1, 3),
- (4, 1, 1, 4),
+insert into user_to_store (user_id, store_id ) values
+ (1, 1),
+ (1, 2),
+ (1, 3),
+ (1, 4),
 
- (5, 1, 2, 1),
- (6, 1, 2, 2),
- (7, 1, 2, 3),
- (8, 1, 2, 4),
+ (2, 1),
+ (2, 2),
+ (2, 3),
+ (2, 4),
 
- (9, 1, 3, 1),
- (10, 1, 3, 2),
- (11, 1, 3, 3),
+ (3, 1),
+ (3, 2),
+ (3, 3),
 
- (12, 1, 4, 2),
- (13, 1, 4, 3),
- (14, 1, 4, 4),
+ (4, 2),
+ (4, 3),
+ (4, 4),
 
- (15, 1, 5, 3),
- (16, 1, 5, 4);
+ (5, 3),
+ (5, 4);
 
 --
 -- dane testowe do tabeli dostaw

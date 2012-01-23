@@ -119,14 +119,14 @@ create table products (
   id bigint primary key not null,
   version int default 0,
 
-  imei character(15) not null,
+  imei varchar(15) not null,
   store_id bigint not null references stores(id),
   delivery_id bigint not null references deliveries(id),
   producer varchar(100) not null,
   model varchar(100) not null,
 
-  color character(20),
-  status character(20) not null,
+  color varchar(20),
+  status varchar(20) not null,
 
   price_in bigint not null,
   price_out bigint,

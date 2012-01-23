@@ -97,6 +97,12 @@
             <version>3.1.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- MVP component -->
         <!--<dependency>-->
         <!--<groupId>com.gwtplatform</groupId>-->
@@ -362,7 +368,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version> ${gwt.version}</version>
+                <version>${gwt.version}</version>
                 <executions>
                     <execution>
                         <goals>

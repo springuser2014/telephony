@@ -1,4 +1,4 @@
-package war.server.guice.gilead.renewed;
+package war.server.gilead;
 
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -9,8 +9,8 @@ import com.google.inject.Injector;
 import net.sf.gilead.gwt.PersistentRemoteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import war.server.guice.gilead.renewed.adapter.JPARemoteServiceAdapter;
-import war.server.guice.gilead.renewed.handler.JPAProcessCallHandler;
+import war.server.gilead.adapter.JPARemoteServiceAdapter;
+import war.server.gilead.handler.JPAProcessCallHandler;
 
 import javax.servlet.http.HttpServletRequest;
 

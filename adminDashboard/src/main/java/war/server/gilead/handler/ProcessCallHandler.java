@@ -1,7 +1,7 @@
-package war.server.guice.gilead.renewed.handler;
+package war.server.gilead.handler;
 
 import com.google.gwt.user.client.rpc.SerializationException;
-import war.server.guice.gilead.renewed.adapter.RemoteServiceAdapter;
+import war.server.gilead.adapter.RemoteServiceAdapter;
 
 public interface ProcessCallHandler<A extends RemoteServiceAdapter> {
     String processCall(String payload, A adapter) throws SerializationException;

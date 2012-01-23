@@ -4,7 +4,7 @@ package war.server.guice.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import war.server.core.dao.implementations.UserDaoImpl;
-import war.server.core.dao.interfaces.UserDao;
+import war.server.core.dao.interfaces.UsersDao;
 import war.server.guice.TestClass;
 
 /**
@@ -15,6 +15,6 @@ public class TelephonyServerModule extends AbstractModule {
     protected void configure() {
         bind(TestClass.class).in(Singleton.class);
 
-        bind(UserDao.class).to(UserDaoImpl.class);
+        bind(UsersDao.class).to(UserDaoImpl.class);
     }
 }

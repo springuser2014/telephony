@@ -1,4 +1,4 @@
-package war.server.guice.gilead.renewed;
+package war.server.gilead;
 
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.RemoteService;
