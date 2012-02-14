@@ -1,11 +1,10 @@
 package war.server.core.service.interfaces;
 
-
 import war.server.core.entity.User;
 
 import java.util.List;
 
-public interface MyFirstService {
+public interface UserService {
 
-    List<User> getAllUsers();
+    public List<User> findAllUsers();
 }

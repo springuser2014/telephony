@@ -9,8 +9,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "deliveries")
-public class Delivery extends BaseEntity implements Serializable {
+@Table(name = "sales")
+public class Sale extends BaseEntity implements Serializable {
+
+    public Sale() {}
 
     @Column(name = "label", nullable =false)
     private String label;
@@ -23,5 +25,4 @@ public class Delivery extends BaseEntity implements Serializable {
         this.label = label;
     }
 
-    public Delivery() {}
 }

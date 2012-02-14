@@ -60,6 +60,7 @@ create table user_roles (
 create table role_to_user (
 
   id bigint primary key not null,
+  version int default 0,
 
   user_id        bigint not null references users(id) ,
   user_role_id   bigint not null references user_roles(id)
@@ -113,6 +114,24 @@ create table deliveries (
 
 );
 
+-- wychodzace (hurtowo sprzedawana) produkty zostają zapisane jako określona sprzedaz
+create table sales (
+
+  id bigint primary key not null,
+  version int default 0,
+  label varchar(100),
+
+  created_at timestamp not null,
+  created_by bigint not null,
+
+  edited_at timestamp null,
+  edited_by bigint null,
+
+  deleted_at timestamp null,
+  deleted_by bigint null
+
+);
+
 -- Produkty
 create table products (
 
@@ -120,13 +139,14 @@ create table products (
   version int default 0,
 
   imei varchar(15) not null,
+
   store_id bigint not null references stores(id),
   delivery_id bigint not null references deliveries(id),
+  sale_id bigint null references sales(id),
+
   producer varchar(100) not null,
   model varchar(100) not null,
-
   color varchar(20),
-  status varchar(20) not null,
 
   price_in bigint not null,
   price_out bigint,

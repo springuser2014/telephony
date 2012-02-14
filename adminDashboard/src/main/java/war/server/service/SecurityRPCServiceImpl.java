@@ -11,20 +11,18 @@ import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import war.client.service.SecurityService;
+import war.client.service.SecurityRPCService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
 import war.shared.LoginResult;
 
-import javax.servlet.http.HttpSession;
-
 @SuppressWarnings("serial")
 @Singleton
-public class SecurityServiceImpl extends GuicePersistentRemoteServiceServlet implements SecurityService {
+public class SecurityRPCServiceImpl extends GuicePersistentRemoteServiceServlet implements SecurityRPCService {
 
-    private static Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(SecurityRPCServiceImpl.class);
 
     @Inject
-    public SecurityServiceImpl(PersistentBeanManager beanManager) {
+    public SecurityRPCServiceImpl(PersistentBeanManager beanManager) {
         setBeanManager(beanManager);
     }
 

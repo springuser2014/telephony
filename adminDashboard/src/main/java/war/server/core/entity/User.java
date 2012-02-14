@@ -20,13 +20,13 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false, length = 32)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_to_store",
                joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name ="store_id", referencedColumnName = "id"))
     private Set<Store> allowedShops = new HashSet<Store>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_to_user",
                joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"))

@@ -28,12 +28,20 @@ public interface GenericDao<E extends BaseEntity> {
     public void save(List<E> entities);
 
     public void saveOrUpdate(List<E> entities);
+    
+    public void markAsDeletedById(Long id, Long userId);
+    
+    public void markAsDeletedByIds(List<Long> ids, Long userId);
+    
+    public E markAsDeleted(E entity, Long userId);
 
-    public void deleteById(Long id);
+    public List<E> markAsDeleted(List<E> entities, Long userId);
 
-    public void deleteByIds(List<Long> ids);
+    public void permanentDeleteById(Long id);
 
-    public void delete(E entity);
+    public void permanentDeleteByIds(List<Long> ids);
 
-    public void delete(List<E> entities);
+    public void permanentDelete(E entity);
+
+    public void permanentDelete(List<E> entities);
 }

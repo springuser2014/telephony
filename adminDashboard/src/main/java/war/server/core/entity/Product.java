@@ -3,7 +3,6 @@ package war.server.core.entity;
 
 import war.server.core.entity.common.BaseEntity;
 import war.server.core.entity.common.Money;
-import war.server.core.entity.common.ProductStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,13 +14,17 @@ public class Product extends BaseEntity implements Serializable {
     @Column(name = "imei", nullable = false, length = 15)
     private String imei;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_id" , nullable = false)
     private Delivery delivery;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sale_id" , nullable = true)
+    private Sale sale;
 
     @Column(name = "producer" , length = 100, nullable = false)
     private String producer;
@@ -32,9 +35,9 @@ public class Product extends BaseEntity implements Serializable {
     @Column(name = "color" , length = 20, nullable = false)
     private String color;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status" , nullable = false)
-    private ProductStatus status;
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "status" , nullable = false)
+//    private ProductStatus status;
 
     @Embedded
     @AttributeOverrides({
@@ -46,7 +49,7 @@ public class Product extends BaseEntity implements Serializable {
     @AttributeOverrides({
             @AttributeOverride(name = "value", column=@Column(name = "price_out", nullable = true))
     })
-    private Money priceOut = new Money();;
+    private Money priceOut = new Money();
 
     public Product() {}
 
@@ -75,6 +78,14 @@ public class Product extends BaseEntity implements Serializable {
         this.delivery = delivery;
     }
 
+    public Sale getSale() {
+        return sale;
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
+    }
+
     public String getProducer() {
         return producer;
     }
@@ -99,13 +110,13 @@ public class Product extends BaseEntity implements Serializable {
         this.color = color;
     }
 
-    public ProductStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ProductStatus status) {
-        this.status = status;
-    }
+//    public ProductStatus getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(ProductStatus status) {
+//        this.status = status;
+//    }
 
     public Money getPriceIn() {
         return priceIn;

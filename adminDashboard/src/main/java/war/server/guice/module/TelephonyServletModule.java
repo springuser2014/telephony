@@ -3,9 +3,15 @@ package war.server.guice.module;
 import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import war.client.service.GreetingService;
+import war.client.service.DeliveryRPCService;
+import war.client.service.ProductRPCService;
+import war.client.service.StoreRPCService;
+import war.client.service.UserRPCService;
 import war.server.core.configuration.Constant;
-import war.server.service.GreetingServiceImpl;
+import war.server.service.DeliveryRPCServiceImpl;
+import war.server.service.ProductRPCServiceImpl;
+import war.server.service.StoreRPCServiceImpl;
+import war.server.service.UserRPCServiceImpl;
 
 
 /**
@@ -33,17 +39,19 @@ public class TelephonyServletModule extends ServletModule {
 
     private void bindServlets() {
 
-        logger.debug("TelephonyServletModule starts configuring servlets");
+        logger.debug("TelephonyServletModule starts configuring RPC services");
 
-        serve("/adminDashboard/greeting").with(GreetingServiceImpl.class);
-        bind(GreetingService.class).to(GreetingServiceImpl.class);
+        serve(ProductRPCService.FULL_SERVICE_PATH).with(ProductRPCServiceImpl.class);
+        bind(ProductRPCService.class).to(ProductRPCServiceImpl.class);
 
-//        serve("/login/login").with(SecurityServiceImpl.class);
-//        bind(SecurityService.class).to(SecurityServiceImpl.class);
-//
-//        serve("/login/security").with(SecurityServiceImpl.class);
+        serve(StoreRPCService.FULL_SERVICE_PATH).with(StoreRPCServiceImpl.class);
+        bind(StoreRPCService.class).to(StoreRPCServiceImpl.class);
 
+        serve(DeliveryRPCService.FULL_SERVICE_PATH).with(DeliveryRPCServiceImpl.class);
+        bind(DeliveryRPCService.class).to(DeliveryRPCServiceImpl.class);
 
+        serve(UserRPCService.FULL_SERVICE_PATH).with(UserRPCServiceImpl.class);
+        bind(UserRPCService.class).to(UserRPCServiceImpl.class);
 
         logger.debug("TelephonyServletModule ends configuring servlets");
     }

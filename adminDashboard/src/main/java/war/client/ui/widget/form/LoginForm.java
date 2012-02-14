@@ -16,15 +16,15 @@ import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import war.client.configuration.CSS;
 import war.client.configuration.REGEX;
-import war.client.service.SecurityService;
-import war.client.service.SecurityServiceAsync;
+import war.client.service.SecurityRPCService;
+import war.client.service.SecurityRPCServiceAsync;
 import war.shared.LoginResult;
 
 
 public class LoginForm extends DynamicForm {
 
 
-    SecurityServiceAsync service = GWT.create(SecurityService.class);
+    SecurityRPCServiceAsync service = GWT.create(SecurityRPCService.class);
 
     private DataSourceTextField emailField;
     private DataSourcePasswordField passwordField;
