@@ -6,11 +6,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.Side;
+import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
+import war.client.configuration.SIZE;
 import war.client.gin.GuiInjector;
-import war.client.ui.widget.StoreProductsComponent;
-import war.client.ui.widget.TopMenu;
-import war.client.ui.widget.TopSubmenu;
+import war.client.ui.widget.*;
 
 
 /**
@@ -26,9 +29,13 @@ public class adminDashboard implements EntryPoint {
 
         configModule();
 
-        StoreProductsComponent contentBox = injector.getContentBox();
-        TopMenu topMenu = injector.getTopMenu();
-        TopSubmenu submenu = injector.getTopSubmenu();
+        StoreProductsComponent storeProductsPage = injector.getStoreProductsPage();
+        DeliveriesComponent deliveriesPage = injector.getDeliveriesPage();
+        SalesComponent salesPage = injector.getSalesPage();
+
+        AddStoreComponent addStoreComponent = injector.getAddStorePage();
+        MoveProductsComponent editStoreComponent = injector.getEditStoreComponent();
+        SaleProductsComponent saleProductsComponent = injector.getSalesProductsComponent();
 
         Log.debug("Initializing EntryPoint : adminDashboard ");
 
@@ -37,20 +44,48 @@ public class adminDashboard implements EntryPoint {
         Window.enableScrolling(false);
         Window.setMargin("0px");
 
+
+        final TabSet topTabSet = new TabSet();
+        topTabSet.setTabBarPosition(Side.TOP);
+        topTabSet.setWidth(SIZE.CONTEXT_BOX_WIDTH + 50);
+        topTabSet.setHeight(SIZE.CONTEXT_BOX_HEIGHT + 50);
+
+
+        Tab tTab1 = new Tab("Produkty w magazynie");
+        tTab1.setPane(storeProductsPage);
+
+        Tab tTab2 = new Tab("Dodaj produkty");
+        tTab2.setPane(addStoreComponent);
+
+        Tab tTab3 = new Tab("Przenieś produkty");
+        tTab3.setPane(editStoreComponent);
+
+        Tab tTab4 = new Tab("Sprzedaj produkty");
+        tTab4.setPane(saleProductsComponent);
+
+        Tab tTab5 = new Tab("Dostawy");
+        tTab5.setPane(deliveriesPage);
+
+        Tab tTab6 = new Tab("Sprzedaż");
+        tTab6.setPane(salesPage);
+        
+        topTabSet.setMargin(10);
+
+        topTabSet.addTab(tTab1);
+        topTabSet.addTab(tTab2);
+        topTabSet.addTab(tTab3);
+        topTabSet.addTab(tTab4);
+        topTabSet.addTab(tTab5);
+        topTabSet.addTab(tTab6);
+
         // initialise the main layout container
         mainLayout = new VLayout();
         mainLayout.setWidth100();
         mainLayout.setHeight100();
-        mainLayout.setAlign(Alignment.CENTER);
+        mainLayout.setAlign(VerticalAlignment.TOP);
 
         // add the top menu container to the main layout container
-        mainLayout.addMember(topMenu);
-
-        // add submenu used for present some specified actions in chosen module
-        mainLayout.addMember(submenu);
-
-        // add the default content container to the main layout container
-        mainLayout.addMember(contentBox);
+        mainLayout.addMember(topTabSet);
 
         // add the main layout container to GWT's root panel
         RootLayoutPanel.get().add(mainLayout);

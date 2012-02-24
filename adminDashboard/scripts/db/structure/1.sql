@@ -16,6 +16,8 @@ powyżej trochę przykładowego kodu
  */
 --------------------------------------------
 
+CREATE SEQUENCE public.base_entity_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
+
 
 -- Użytkownicy
 create table users (
@@ -36,6 +38,8 @@ create table users (
   UNIQUE (email)
 );
 
+CREATE SEQUENCE public.users_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
+
 -- Uprawnienia użytkowników
 create table user_roles (
 
@@ -54,6 +58,8 @@ create table user_roles (
 
   UNIQUE (role_name)
 );
+
+CREATE SEQUENCE public.user_roles_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
 
 -- Połączenie użytkowników z rolami
 
@@ -75,6 +81,7 @@ create table role_to_user (
 --   deleted_by id bigint null
 );
 
+CREATE SEQUENCE public.role_to_user_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
 
 -- Sklepy/magazyny
 create table stores (
@@ -96,12 +103,16 @@ create table stores (
   UNIQUE(label)
 );
 
+CREATE SEQUENCE public.stores_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
+
 -- Przychodzace (hurtowo dodawane) produkty zostają zapisane jako określona dostawa
 create table deliveries (
 
   id bigint primary key not null,
   version int default 0,
   label varchar(100),
+
+  date_in timestamp not null,
 
   created_at timestamp not null,
   created_by bigint not null,
@@ -113,6 +124,8 @@ create table deliveries (
   deleted_by bigint null
 
 );
+
+CREATE SEQUENCE public.deliveries_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
 
 -- wychodzace (hurtowo sprzedawana) produkty zostają zapisane jako określona sprzedaz
 create table sales (
@@ -121,6 +134,8 @@ create table sales (
   version int default 0,
   label varchar(100),
 
+  date_out timestamp not null,
+
   created_at timestamp not null,
   created_by bigint not null,
 
@@ -132,13 +147,15 @@ create table sales (
 
 );
 
+CREATE SEQUENCE public.sales_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
+
 -- Produkty
 create table products (
 
   id bigint primary key not null,
   version int default 0,
 
-  imei varchar(15) not null,
+  imei varchar(100) not null,
 
   store_id bigint not null references stores(id),
   delivery_id bigint not null references deliveries(id),
@@ -163,6 +180,8 @@ create table products (
   UNIQUE (imei)
 );
 
+CREATE SEQUENCE public.products_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
+
 -- Przypisanie uzytkownikow do sklepu
 create table user_to_store (
 
@@ -181,3 +200,14 @@ create table user_to_store (
 --   deleted_at timestamp not null,
 --   deleted_by id bigint null
 );
+
+CREATE SEQUENCE public.user_to_store_seq START WITH 1 INCREMENT BY 1 NO MAXVALUE NO MINVALUE CACHE 1;
+
+
+CREATE SEQUENCE hibernate_sequence
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE hibernate_sequence OWNER TO postgres;

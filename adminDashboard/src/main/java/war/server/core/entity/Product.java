@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(name = "products")
 public class Product extends BaseEntity implements Serializable {
 
-    @Column(name = "imei", nullable = false, length = 15)
+    @Column(name = "imei", nullable = false, length = 100)
     private String imei;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -35,13 +35,9 @@ public class Product extends BaseEntity implements Serializable {
     @Column(name = "color" , length = 20, nullable = false)
     private String color;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "status" , nullable = false)
-//    private ProductStatus status;
-
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column=@Column(name = "price_in", nullable = false))
+            @AttributeOverride(name = "value", column=@Column(name = "price_in", nullable = true))
     })
     private Money priceIn = new Money();
 
@@ -52,7 +48,6 @@ public class Product extends BaseEntity implements Serializable {
     private Money priceOut = new Money();
 
     public Product() {}
-
 
     public String getImei() {
         return imei;

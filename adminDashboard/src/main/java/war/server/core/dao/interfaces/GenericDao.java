@@ -21,13 +21,13 @@ public interface GenericDao<E extends BaseEntity> {
 
     public List<E> findDeletedByIds(List<Long> ids);
 
-    public void save(E entity);
+    public E save(E entity);
 
-    public void saveOrUpdate(E entity);
+    public E saveOrUpdate(E entity);
 
-    public void save(List<E> entities);
+    public List<E> save(List<E> entities);
 
-    public void saveOrUpdate(List<E> entities);
+    public List<E> saveOrUpdate(List<E> entities);
     
     public void markAsDeletedById(Long id, Long userId);
     

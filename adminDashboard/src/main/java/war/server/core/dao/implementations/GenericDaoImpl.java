@@ -40,7 +40,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return DetachedCriteria.forClass(entityClass);
     }
 
-    @Override
     public List<E> findAll() {
 
         logger.debug("findAll starts ");
@@ -54,7 +53,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return lst;
     }
 
-    @Override
     public List<E> findUndeleted() {
 
         logger.debug("findUndeleted starts ");
@@ -68,7 +66,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return lst;
     }
 
-    @Override
     public List<E> findDeleted() {
 
         logger.debug("findDeleted starts ");
@@ -83,7 +80,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return lst;
     }
 
-    @Override
     public E findById(Long id) {
 
         logger.debug("findById starts ");
@@ -97,7 +93,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return entity;
     }
 
-    @Override
     public List<E> findByIds(List<Long> ids) {
         logger.debug("findByIds starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -113,7 +108,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return res;
     }
 
-    @Override
     public List<E> findUndeletedByIds(List<Long> ids) {
         logger.debug("findUndeletedByIds starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -128,7 +122,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return res;
     }
 
-    @Override
     public List<E> findDeletedByIds(List<Long> ids) {
         logger.debug("findDeletedByIds starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -143,53 +136,48 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return res;
     }
 
-    @Override
-    public void save(E entity) {
+    public E save(E entity) {
         logger.debug("save starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
-        em.persist(entity);
-
-        logger.debug("save ends");
+        return em.merge(entity);
     }
 
-    @Override
-    public void saveOrUpdate(E entity) {
+    public E saveOrUpdate(E entity) {
         logger.debug("saveOrUpdate stars ");
         logger.debug("entity type : {} ", entityClass.getName());
 
-        em.merge(entity);
-
-        logger.debug("saveOrUpdate ends");
+        return em.merge(entity);
     }
 
-    @Override
-    public void save(List<E> entities) {
+    public List<E> save(List<E> entities) {
         logger.debug("save stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
+        
+        List<E> res = new ArrayList<E>();
 
         for (E entity : entities) {
-            em.persist(entity);
+            res.add(em.merge(entity));
         }
 
-        logger.debug("save ends");
+        return res;
     }
 
-    @Override
-    public void saveOrUpdate(List<E> entities) {
+    public List<E> saveOrUpdate(List<E> entities) {
         logger.debug("saveOrUpdate starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
 
+        List<E> res = new ArrayList<E>();
+
         for (E entity : entities) {
-            em.merge(entity);
+            res.add(em.merge(entity));
         }
 
-        logger.debug("save ends");
+        return res;
     }
 
-    @Override
     public void markAsDeletedById(Long id, Long userId) {
         logger.debug("markAsDeletedById starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -204,7 +192,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("markAsDeletedById touched {} elements", touched);
     }
 
-    @Override
     public void markAsDeletedByIds(List<Long> ids, Long userId) {
         logger.debug("markAsDeletedByIds starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -220,7 +207,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("markAsDeletedByIds touched {} elements", touched);
     }
 
-    @Override
+
     public E markAsDeleted(E entity, Long userId) {
         logger.debug("markAsDeleted starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -236,7 +223,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return e;
     }
 
-    @Override
     public List<E> markAsDeleted(List<E> entities, Long userId) {
         logger.debug("markAsDeleted starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -256,7 +242,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return result;
     }
 
-    @Override
+
     public void permanentDeleteById(Long id) {
         logger.debug("permanentDeleteById starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -268,7 +254,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("permanentDeleteById updated {} elements ", updated);
     }
 
-    @Override
     public void permanentDeleteByIds(List<Long> ids) {
         logger.debug("permanentDeleteByIds stars ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -281,7 +266,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("permanentDeleteByIds updated {} elements ", updated);
     }
 
-    @Override
     public void permanentDelete(E entity) {
         logger.debug("permanentDelete starts ");
         logger.debug("entity type : {} ", entityClass.getName());
@@ -291,7 +275,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("permanentDelete ends");
     }
 
-    @Override
     public void permanentDelete(List<E> entities) {
         logger.debug("permanentDelete starts ");
         logger.debug("entity type : {} ", entityClass.getName());

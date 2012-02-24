@@ -4,7 +4,10 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import war.server.core.configuration.Constant;
 import war.server.core.entity.Product;
+import war.server.core.entity.Store;
+import war.server.core.entity.User;
 import war.server.core.entity.common.ProductStatus;
+import war.shared.RPCServiceStatus;
 
 import java.util.List;
 
@@ -18,5 +21,12 @@ public interface ProductRPCService extends RemoteService {
     
     List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
     
-    RPCServiceStatus moveProducts(Long storeId, List<Product> products, Long userId);
+    RPCServiceStatus moveProducts(Store store, List<Product> products, User user);
+
+    List<String> fetchAllProducers();
+
+    List<String> fetchAllModels();
+
+    List<String> fetchAllColors();
 }
+

@@ -21,7 +21,6 @@ public class StoreServiceImpl implements StoreService {
     @Inject
     private StoresDao storesDao;
 
-    @Override
     public List<Store> fetchAllStores() {
         
         logger.debug("StoreServiceImpl.fetchAllStores starts");

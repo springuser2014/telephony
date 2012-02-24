@@ -19,19 +19,18 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import war.client.configuration.SIZE;
 import war.client.service.ProductRPCService;
 import war.client.service.ProductRPCServiceAsync;
-import war.client.service.StoreRPCServiceAsync;
 import war.client.service.StoreRPCService;
+import war.client.service.StoreRPCServiceAsync;
 import war.client.ui.widget.interfaces.TelephonyComponent;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
-import war.server.core.entity.common.Money;
 import war.server.core.entity.common.ProductStatus;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class StoreProductsComponent extends VLayout implements TelephonyComponent {
+public class SalesComponent extends VLayout implements TelephonyComponent {
 
     private final ProductRPCServiceAsync productService = GWT.create(ProductRPCService.class);
     private final StoreRPCServiceAsync storeService = GWT.create(StoreRPCService.class);
@@ -48,10 +47,11 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
     private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Store> listOfStores     = new ArrayList<Store>();
 
-    public StoreProductsComponent() {
+    public SalesComponent() {
         super();
 
-        Log.debug("Initializing ContextBox widget..");
+        Log.debug("Initializing SalesComponent widget..");
+
 
         this.setMembersMargin(10);
 
@@ -60,19 +60,22 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
 //        this.setBackgroundColor(COLOR.CONTENT_BOX_BACKGROUND);
 
         this.setAlign(Alignment.CENTER);
+
         this.setAlign(VerticalAlignment.TOP);
+
         this.productsListGrid = new ListGrid();
         productsListGrid.setWidth(1010);
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
-        ListGridField field1 = new ListGridField("imei", "IMEI", 200);
-        ListGridField field2 = new ListGridField("color", "Kolor", 200);
-        ListGridField field3 = new ListGridField("producer", "Producent", 200);
-        ListGridField field4 = new ListGridField("model", "Model", 200);
-        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 200);
+        ListGridField field1 = new ListGridField("label", "Tytuł sprzedaży", 250);
+        ListGridField field2 = new ListGridField("number_of_elements", "Ilość produktów", 150);
+        ListGridField field3 = new ListGridField("date_out", "Data sprzedaży", 100);
+        ListGridField field4 = new ListGridField("who", "Sprzedający", 200);
+        ListGridField field5 = new ListGridField("store", "Magazyn sprzedaży", 150);
+        ListGridField field6 = new ListGridField("sum_price_out", "Sumaryczna kwota sprzedaży", 150);
 
-        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5});
+        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
 
         this.selectStoreCombo = new SelectItem();
         selectStoreCombo.setTitle("Magazyn");
@@ -80,46 +83,33 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         this.selectProductStatusCombo = new SelectItem();
         selectProductStatusCombo.setTitle("Status produktu");
 
-        this.reloadButton = new IButton("Pokaż produkty");
+        this.reloadButton = new IButton("Odśwież listę");
         reloadButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 fillWithData();
             }
         });
 
-//        reloadButton.addClickHandler(new ClickHandler() {
-//            @Override
-//            public void onClick(ClickEvent event) {
-//
-//                fillWithData();
-//            }
-//        });
-
-
-
         DynamicForm form = new DynamicForm();
         form.setFields(selectStoreCombo);
+        form.setHeight(10);
+        form.setMargin(0);
 
         HLayout formLay = new HLayout();
         formLay.setWidth100();
         formLay.setHeight(10);
 
-        formLay.setMembersMargin(10);
 
-        formLay.addMember(form);
+        formLay.setMembersMargin(10);
         formLay.addMember(reloadButton);
 
         this.addMember(formLay);
-
-//        this.addMember(reloadButton);
-
-//        productsListGrid.setMargin(20);
 
         this.addMember(productsListGrid);
 
         this.loadData();
 
-        Log.debug("ContentBox widget was initialized..");
+        Log.debug("ContentBox SalesComponent was initialized..");
     }
 
     class StoreProductsComponentRecord extends ListGridRecord {
@@ -128,47 +118,60 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         }
 
         public StoreProductsComponentRecord(Product product) {
-            setImei(product.getImei());
-            setColor(product.getColor());
-            setProducer(product.getProducer());
-            setModel(product.getModel());
-            setPriceIn(product.getPriceIn());
+            setLabel("label");
+            setDateOut("dateOut");
+            setNumberOfProducts("numberOfProducts");
+            setStore("store");
+            setWho("who");
+            setSumPriceOut("sumPriceOut");
         }
 
-        public void setImei(String imei) {
-            setAttribute("imei", imei);
+        public void setLabel(String label) {
+            setAttribute("label", label);
         }
 
-        public String getImei() {
-            return getAttributeAsString("imei");
+        public String getLabel() {
+            return getAttributeAsString("label");
         }
 
-        public void setColor(String color) {
-            setAttribute("color", color);
+        public void setDateOut(String label) {
+            setAttribute("date_out", label);
         }
 
-        public String getColor() {
-            return getAttributeAsString("color");
+        public String getDateOut() {
+            return getAttributeAsString("date_out");
         }
 
-        public void setModel(String model) {
-            setAttribute("model", model);
+        public void setNumberOfProducts(String label) {
+            setAttribute("number_of_products", label);
         }
 
-        public String getModel() {
-            return getAttributeAsString("model");
+        public String getNumberOfProducts() {
+            return getAttributeAsString("number_of_products");
         }
 
-        public void setProducer(String producer) {
-            setAttribute("producer", producer);
+        public void setStore(String label) {
+            setAttribute("store", label);
         }
 
-        public String getProducer() {
-            return getAttributeAsString("producer");
+        public String getStore() {
+            return getAttributeAsString("store");
         }
-        
-        public void setPriceIn(Money money) {
-            setAttribute("price_in", money.toString());
+
+        public void setWho(String label) {
+            setAttribute("who", label);
+        }
+
+        public String getWho() {
+            return getAttributeAsString("who");
+        }
+
+        public void setSumPriceOut(String sumPriceOut) {
+            setAttribute("sum_price_out", sumPriceOut);
+        }
+
+        public void getSumPriceOut(String sumPriceOut) {
+            setAttribute("sum_price_out", sumPriceOut);
         }
     }
 

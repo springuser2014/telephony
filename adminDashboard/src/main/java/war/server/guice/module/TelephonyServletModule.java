@@ -3,15 +3,9 @@ package war.server.guice.module;
 import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import war.client.service.DeliveryRPCService;
-import war.client.service.ProductRPCService;
-import war.client.service.StoreRPCService;
-import war.client.service.UserRPCService;
+import war.client.service.*;
 import war.server.core.configuration.Constant;
-import war.server.service.DeliveryRPCServiceImpl;
-import war.server.service.ProductRPCServiceImpl;
-import war.server.service.StoreRPCServiceImpl;
-import war.server.service.UserRPCServiceImpl;
+import war.server.service.*;
 
 
 /**
@@ -52,6 +46,9 @@ public class TelephonyServletModule extends ServletModule {
 
         serve(UserRPCService.FULL_SERVICE_PATH).with(UserRPCServiceImpl.class);
         bind(UserRPCService.class).to(UserRPCServiceImpl.class);
+
+        serve(SaleRPCService.FULL_SERVICE_PATH).with(SaleRPCServiceImpl.class);
+        bind(SaleRPCService.class).to(SaleRPCServiceImpl.class);
 
         logger.debug("TelephonyServletModule ends configuring servlets");
     }

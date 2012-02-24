@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.client.service.UserRPCService;
 import war.server.core.entity.User;
+import war.server.core.service.interfaces.UserService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
 
 import java.util.List;
@@ -18,12 +19,18 @@ public class UserRPCServiceImpl extends GuicePersistentRemoteServiceServlet impl
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
+    private UserService userService;
+
+    @Inject
     public UserRPCServiceImpl(PersistentBeanManager beanManager) {
         setBeanManager(beanManager);
     }
 
-    @Override
     public List<User> fetchAllUsers() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("UserRPCServiceImpl.fetchAllUsers starts");
+
+        List<User> res = userService.findAllUsers();
+
+        return res;
     }
 }

@@ -32,6 +32,8 @@ public interface ProductService {
      * @return
      */
     public List<String> fetchAllModels();
+    
+    public List<String> fetchAllColors();
 
     /**
      * Aktualizuje listę produktów w bazie danych
@@ -49,10 +51,11 @@ public interface ProductService {
     /**
      * Przenosi
      *
-     * @param products
      * @param store
+     * @param products
+     * @param user
      */
-    public void moveProducts(List<Product> products, Store store);
+    public void moveProducts(Store store, List<Product> products, User user);
 
 
 

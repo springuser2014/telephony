@@ -6,12 +6,15 @@ import net.sf.gilead.core.PersistentBeanManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.client.service.ProductRPCService;
-import war.client.service.RPCServiceStatus;
+import war.server.core.entity.Store;
+import war.server.core.entity.User;
+import war.shared.RPCServiceStatus;
 import war.server.core.entity.Product;
 import war.server.core.entity.common.ProductStatus;
 import war.server.core.service.interfaces.ProductService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 
@@ -23,32 +26,71 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
 
     @Inject
     private ProductService productService;
+    
+    @Inject
+    private EntityManager em;
 
     @Inject
     public ProductRPCServiceImpl(PersistentBeanManager beanManager) {
         setBeanManager(beanManager);
     }
 
-
-    @Override
     public List<String> fetchAllImeiInUse() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("ProductRPCServiceImpl.fetchAllImeiInUse starts");
+        
+        List<String> imeis = productService.fetchAllImeiInUse();
+
+        return imeis;
     }
 
-    @Override
     public List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus) {
         logger.debug("ProductRPCServiceImpl.fetchAllProducts starts");
         logger.debug("params : [ storeId : {} , productStatus : {} ] ", storeId, productStatus);
 
         List<Product> result = productService.fetchAllProducts(storeId, productStatus);
 
-        logger.debug("ProductRPCServiceImpl.fetchAllProducts ends");
+        return result;
+    }
+
+    public RPCServiceStatus moveProducts(Store store, List<Product> products, User user) {
+        logger.debug("ProductRPCServiceImpl.moveProducts starts");
+
+        RPCServiceStatus result = new RPCServiceStatus();
+
+        try {
+            productService.moveProducts(store, products, user);
+            result.setStatus(RPCServiceStatus.Status.SUCCESS);
+            result.setOperationStatusInfo("Zmiany zostały zapisane");
+        }
+        catch (Exception e) {
+            result.setStatus(RPCServiceStatus.Status.FAILED);
+            result.setOperationStatusInfo("Wystąpił błąd podczas wykonywania operacji");
+        }
 
         return result;
     }
 
-    @Override
-    public RPCServiceStatus moveProducts(Long storeId, List<Product> products, Long userId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public List<String> fetchAllProducers() {
+        logger.debug("ProductRPCServiceImpl.fetchAllProducers starts");
+        
+        List<String> producers = productService.fetchAllProducers();
+
+        return producers;
+    }
+
+    public List<String> fetchAllModels() {
+        logger.debug("ProductRPCServiceImpl.fetchAllModels starts");
+
+        List<String> models = productService.fetchAllModels();
+
+        return models;
+    }
+
+    public List<String> fetchAllColors() {
+        logger.debug("ProductRPCServiceImpl.fetchAllColors starts");
+
+        List<String> colors = productService.fetchAllColors();
+
+        return colors;
     }
 }

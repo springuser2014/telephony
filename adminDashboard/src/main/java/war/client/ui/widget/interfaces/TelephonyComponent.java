@@ -1,4 +1,4 @@
-package war.client.ui.widget;
+package war.client.ui.widget.interfaces;
 
 /**
  * That's basic interface for all application UI's.
@@ -29,12 +29,12 @@ public interface TelephonyComponent {
     /**
      * Presents the component in the window
      */
-    public void show();
+    public void presentComponent();
 
     /**
-     * Hides the component from the window
+     * Folds the component
      */
-    public void hide();
+    public void foldComponent();
 
     /**
      * Refresh component's data and visualization

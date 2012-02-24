@@ -26,4 +26,36 @@
         <welcome-file>login.html</welcome-file>
     </welcome-file-list>
 
+    <security-constraint>
+        <web-resource-collection>
+          <web-resource-name>
+            Protected Site
+          </web-resource-name>
+          <!-- This would protect the entire site -->
+          <url-pattern>/*</url-pattern>
+          <!-- If you list http methods,
+                only those methods are protected -->
+          <http-method>DELETE</http-method>
+          <http-method>GET</http-method>
+          <http-method>POST</http-method>
+          <http-method>PUT</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+          <!-- Roles that have access -->
+          <role-name>questuser</role-name>
+        </auth-constraint>
+      </security-constraint>
+
+      <!-- BASIC authentication -->
+      <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Telephony autoryzacja</realm-name>
+      </login-config>
+
+      <!-- Define security roles -->
+      <security-role>
+        <description>Telephony application's user role</description>
+        <role-name>questuser</role-name>
+      </security-role>
+
 </web-app>

@@ -1,4 +1,4 @@
-package war.client.service;
+package war.shared;
 
 
 import java.io.Serializable;

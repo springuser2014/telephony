@@ -21,11 +21,12 @@ public interface DeliveryService {
     /**
      * Dodaje nową dostawę do bazy danych według przekazanych danych
      *
+     * @param delivery
      * @param store
      * @param productList
      * @param creator
      */
-    public void addNewDelivery(Store store, List<Product> productList, User creator);
+    public void addNewDelivery(Delivery delivery, Store store, List<Product> productList, User creator);
 
     /**
      * Pobiera listę zarejestrowanych dostaw

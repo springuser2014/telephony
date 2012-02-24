@@ -44,17 +44,19 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         if (productStatus.toString().equals(ProductStatus.IN_STORE.toString())) {
 
             res = em.createQuery("select p from Product p " +
-                                   "left join p.delivery d " +
-                                   "left join p.store s " +
-                                   "where s.id = ?1 and p.sale_id is null")
+                    "left join p.delivery d " +
+                    "left join p.store st " +
+                    "left join p.sale sa " +
+                    "where st.id = ?1 and sa.id is null")
                     .setParameter(1, storeId)
                     .getResultList();
         }
         else if (productStatus.toString().equals(ProductStatus.SOLD.toString())) {
             res = em.createQuery("select p from Product p " +
-                                 "left join p.delivery d " +
-                                 "left join p.store s " +
-                                 "where s.id = ?1 and p.sale_id is not null")
+                    "left join p.delivery d " +
+                    "left join p.store st " +
+                    "left join p.sale sa " +
+                    "where st.id = ?1 and sa.id is not null")
                     .setParameter(1, storeId)
                     .getResultList();
         }
@@ -71,16 +73,53 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
     @Override
     public List<String> fetchImeisList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("ProductServiceImpl.fetchImeisList starts");
+        
+        List<Product> list = this.findUndeleted();
+        List<String> res = new ArrayList<String>();
+        
+        for (Product p : list) {
+            res.add(p.getImei());
+        }
+        
+        logger.debug("ProductServiceImpl.fetchImeisList ends");
+
+        return  res;
     }
 
     @Override
     public List<String> fetchProducersList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("ProductServiceImpl.fetchProducersList starts");
+
+        List<Product> list = this.findAll();
+        List<String> res = new ArrayList<String>();
+        
+        for (Product p : list) {
+            if (!res.contains(p.getProducer())) {
+                res.add(p.getProducer());
+            }
+        }
+
+        logger.debug("found {} elements", res.size());
+
+        return  res;
     }
 
     @Override
     public List<String> fetchModelsList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("ProductServiceImpl.fetchModelsList starts");
+
+        List<Product> list = this.findAll();
+        List<String> res = new ArrayList<String>();
+
+        for (Product p : list) {
+            if (!res.contains(p.getModel())) {
+                res.add(p.getModel());
+            }
+        }
+
+        logger.debug("found {} elements", res.size());
+
+        return  res;
     }
 }

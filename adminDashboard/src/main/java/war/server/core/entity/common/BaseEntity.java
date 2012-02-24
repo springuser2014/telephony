@@ -14,7 +14,8 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="base_entity_seq")
+    @SequenceGenerator(name="base_entity_seq", sequenceName="base_entity_seq", allocationSize=1)
     private Long id;
 
     @Version
