@@ -5,5 +5,23 @@ so be careful while you use it for your own.
 
 It's very experimental and I am just a student ;-)
 
+It's quite simple app for managing products in electronic store.
+
+Used tech stuff:
+- Google web Toolkit 2.4
+- SmartGWT 3.0
+- Gilead 1.3.1
+- Maven 2
+- JPA 2.0 (Hibernate 3.5)
+- Guice 3.0
+
+Project is now under havily development, in next few weeks there will appear:
+- Unit tests
+- Mvp4g integration
+- UI archtecture improvement
+- Many new features including authentication (Apache Shiro), mailing (JavaMail) and others.
+
+Stay tuned!
+
 Cheers 
 Paul
