@@ -6,6 +6,7 @@ import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.entity.common.ProductStatus;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ProductService {
@@ -58,5 +59,7 @@ public interface ProductService {
     public void moveProducts(Store store, List<Product> products, User user);
 
 
+    Product fetchProductByImeiAndStoreId(String imei, Long storeId);
 
+    List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status);
 }

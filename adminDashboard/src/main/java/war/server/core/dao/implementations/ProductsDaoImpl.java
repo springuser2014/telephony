@@ -7,7 +7,10 @@ import war.server.core.entity.Product;
 import war.server.core.entity.Delivery ;
 import war.server.core.entity.common.ProductStatus;
 
+import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -66,6 +69,81 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
+    public List<Product> findByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus productStatus) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select p from Product p ");
+        sb.append(" left join p.delivery d ");
+        sb.append(" left join p.store st ");
+        sb.append(" left join p.sale sa ");
+        sb.append(" where 1=1 ");
+
+        if (imei != null && imei.length() > 0)
+            sb.append("and p.imei = :imei ");
+
+        if (producer != null && producer.length() > 0)
+            sb.append("and p.producer = :producer ");
+
+        if (model != null && model.length() > 0)
+            sb.append("and p.model = :model ");
+
+        if (color != null && color.length() > 0)
+            sb.append("and p.color = :color ");
+
+        if (storeId != null && storeId > 0)
+            sb.append("and st.id = :storeId ");
+
+        if (deliveryDateStart != null)
+            sb.append("and d.dateIn >= :deliveryDateStart ");
+
+        if (deliveryDateEnd != null)
+            sb.append("and d.dateIn <= :deliveryDateEnd ");
+        
+        if (productStatus == ProductStatus.IN_STORE) {
+            sb.append("and sa.id is null ");
+        }
+        else if (productStatus == ProductStatus.SOLD) {
+            sb.append("and sa.id is not null ");
+        }
+
+        List<Product> res = null;
+
+        Query query = em.createQuery(sb.toString());
+
+        if (imei != null && imei.length() > 0)
+            query.setParameter("imei", imei);
+
+        if (producer != null && producer.length() > 0)
+            query.setParameter("producer", producer);
+
+        if (model != null && model.length() > 0)
+            query.setParameter("model", model);
+
+        if (color != null && color.length() > 0)
+            query.setParameter("color", color);
+
+        if (storeId != null && storeId > 0)
+            query.setParameter("storeId", storeId);
+
+        if (deliveryDateStart != null) {
+            Timestamp deliveryDateStartTmp = new Timestamp(deliveryDateStart.getTime());
+            query.setParameter("deliveryDateStart", deliveryDateStartTmp);
+        }
+
+        if (deliveryDateEnd != null) {
+            Timestamp deliveryDateEndTmp = new Timestamp(deliveryDateEnd.getTime());
+            query.setParameter("deliveryDateEnd", deliveryDateEndTmp);
+        }
+
+        res = query.getResultList();
+        
+        logger.debug("found {} elements ");
+
+        return res;
+    }
+
+    
+
     @Override
     public Product findByImei(String imei) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -119,6 +197,21 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         }
 
         logger.debug("found {} elements", res.size());
+
+        return  res;
+    }
+
+    public Product findByImeiAndStoreId(String imei, Long storeId) {
+        logger.debug("ProductServiceImpl.findByImeiAndStoreId starts");
+        logger.debug("params : [ imei : {} , storeId : {} ]", imei, storeId);
+
+        Product res = (Product) em.createQuery("select p from Product p " +
+                                               "left join p.store st " +
+                                               "left join p.sale sa " +
+                                               "where st.id = ?1 and p.imei = ?2 and sa.id is null")
+                        .setParameter(1, storeId)
+                        .setParameter(2, imei)
+                        .getSingleResult();
 
         return  res;
     }

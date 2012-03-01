@@ -115,7 +115,27 @@ public class ProductServiceImpl implements ProductService {
         
         logger.debug("ProductServiceImpl.fetchAllProducts ends");        
     }
-    
+
+    public Product fetchProductByImeiAndStoreId(String imei, Long storeId) {
+        logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
+        
+        Product p = productsDao.findByImeiAndStoreId(imei, storeId);
+        
+        return p;
+    }
+
+    public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status) {
+        logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
+        Object[] params = new Object[] {imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status};
+        logger.debug("params : [ imei : {} , producer : {} , model : {} , color : {} , storeId : {} , deliveryDateStart : {} , deliveryDateEnd : {}, productStatus : {} ] ", params);
+
+        List<Product> result = productsDao.findByCriteria(imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status);
+
+        logger.debug("ProductServiceImpl.fetchAllProductsByCriteria ends");
+
+        return  result;
+    }
+
 
     public void updateProducts(List<Product> products, User updatingUser) {
         //To change body of implemented methods use File | Settings | File Templates.

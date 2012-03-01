@@ -5,7 +5,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -57,23 +56,23 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     private ComboBoxItem selectColorCombo;
 
     /* ladowanie danych */
-    private boolean listOfStoresLoaded    = false;
-    private boolean listOfProductsLoaded  = false;
-    private boolean listOfUsersLoaded     = false;
-    private boolean listOfColorsLoaded    = false;
+    private boolean listOfStoresLoaded = false;
+    private boolean listOfProductsLoaded = false;
+    private boolean listOfUsersLoaded = false;
+    private boolean listOfColorsLoaded = false;
     private boolean listOfProducersLoaded = false;
-    private boolean listOfModelsLoaded    = false;
-    private boolean listOfImeisLoaded     = false;
+    private boolean listOfModelsLoaded = false;
+    private boolean listOfImeisLoaded = false;
 
-    private List<Product> listOfProducts  = new ArrayList<Product>();
-    private List<Store>   listOfStores    = new ArrayList<Store>();
-    private List<User>    listOfUsers     = new ArrayList<User>();
-    private List<String>  listOfColors    = new ArrayList<String>();
-    private List<String>  listOfProducers = new ArrayList<String>();
-    private List<String>  listOfModels    = new ArrayList<String>();
-    private List<String>  listOfImeis     = new ArrayList<String>();
-    
-    private List<String> listOfNewImeis   = new ArrayList<String>();
+    private List<Product> listOfProducts = new ArrayList<Product>();
+    private List<Store> listOfStores = new ArrayList<Store>();
+    private List<User> listOfUsers = new ArrayList<User>();
+    private List<String> listOfColors = new ArrayList<String>();
+    private List<String> listOfProducers = new ArrayList<String>();
+    private List<String> listOfModels = new ArrayList<String>();
+    private List<String> listOfImeis = new ArrayList<String>();
+
+    private List<String> listOfNewImeis = new ArrayList<String>();
 
     private ButtonItem addButton;
     private ButtonItem saveDelivery;
@@ -81,10 +80,6 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     private List<Product> listOfNewProducts = new ArrayList<Product>();
     private TextItem deliveryTitle;
 
-    class AddStoreComponentDataSource extends DataSource {
-
-        public AddStoreComponentDataSource() {}
-    }
 
     public AddStoreComponent() {
         super();
@@ -100,7 +95,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         this.setMembersMargin(10);
 
         this.productsListGrid = new ListGrid();
-        productsListGrid.setWidth(1000);
+        productsListGrid.setWidth(1010);
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
@@ -110,7 +105,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         ListGridField field4 = new ListGridField("model", "Model", 180);
         ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 180);
         ListGridField field6 = new ListGridField("delete_item", "Usuń", 100);
-        
+
         field1.setCanEdit(false);
         field2.setCanEdit(false);
         field3.setCanEdit(false);
@@ -136,7 +131,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
                             getProductsListGrid().removeData(record);
                             refreshProductsGrid();
                         }
-                    }); 
+                    });
 
                     return button;
                 }
@@ -184,12 +179,12 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
             public String format(Date date) {
                 if (date == null) return null;
-                
+
                 final DateTimeFormat dateFormatter = DateTimeFormat.getFormat("dd-MM-yyyy");
                 String format = dateFormatter.format(date);
                 return format;
             }
-            
+
         });
 
         formdel3.setFields(selectDate);
@@ -235,7 +230,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         form3.setFields(selectProducerCombo);
 
         DynamicForm form4 = new DynamicForm();
-        selectModelCombo= new ComboBoxItem();
+        selectModelCombo = new ComboBoxItem();
         selectModelCombo.setTitle("Model");
         selectModelCombo.setTitleAlign(Alignment.LEFT);
         selectModelCombo.setWidth(160);
@@ -289,20 +284,19 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
             public void onClick(ClickEvent event) {
 
                 String msg = validateAll();
-                
+
                 if (msg == null) {
                     tryToAddDelivery();
-                }
-                else {
+                } else {
                     SC.say(msg);
                 }
             }
         });
 
         formLaybottom.addMember(form7);
-        
+
         formLaybottom.setHeight(25);
-        this.addMember(formLaybottom );
+        this.addMember(formLaybottom);
 
         this.addMember(productsListGrid);
 
@@ -312,7 +306,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     }
 
     private void tryToAddDelivery() {
-        
+
         this.deliveryService.addNewDelivery(getDelivery(), getProducts(), getUser(), getStore(), new AsyncCallback<RPCServiceStatus>() {
             public void onFailure(Throwable caught) {
                 SC.say("Dodanie dostawy nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
@@ -320,7 +314,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
             public void onSuccess(RPCServiceStatus result) {
                 SC.say(result.getOperationStatusInfo());
-                
+
                 if (result.getStatus().equals(RPCServiceStatus.Status.SUCCESS)) {
                     clearForm();
                     refreshProductsGrid();
@@ -357,9 +351,9 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
     private User getUser() {
         String userIdStr = this.selectSalemanCombo.getValueAsString();
-        
+
         Long userId = Long.parseLong(userIdStr);
-        
+
         for (User u : this.listOfUsers) {
             if (u.getId().equals(userId)) {
                 return u;
@@ -375,10 +369,10 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
     private Delivery getDelivery() {
         Delivery d = new Delivery();
-        
+
         d.setLabel(deliveryTitle.getValueAsString());
         d.setDateIn(this.selectDate.getValueAsDate());
-        
+
         return d;
     }
 
@@ -400,25 +394,24 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     }
 
     private void deleteRecordWhereImei(String imei) {
-        
+
         for (Product p : this.listOfNewProducts) {
-            
+
             if (p.getImei().equals(imei)) {
                 this.listOfNewProducts.remove(p);
-                
+
                 this.listOfNewImeis.remove(p.getImei());
             }
         }
     }
 
     private void tryToAddProductToList() {
-        
+
         String msg = validteNewProduct();
-        
+
         if (msg == null) {
             addNewProduct();
-        }
-        else {
+        } else {
             SC.say(msg);
         }
     }
@@ -442,9 +435,9 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
             Long priceIn = Long.parseLong(priceInStr);
             m = new Money(priceIn);
         } catch (Exception e) {
-            Log.debug("Error" , e);
+            Log.debug("Error", e);
         }
-         
+
         product.setPriceIn(m);
 
         this.listOfNewImeis.add(getNewProductImei());
@@ -456,13 +449,13 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     }
 
     private String validteNewProduct() {
-        
+
         String imei, color, producer, model, priceIn;
-        imei     = getNewProductImei();
-        color    = getNewProductColor();
+        imei = getNewProductImei();
+        color = getNewProductColor();
         producer = getNewProductProducer();
-        model    = getNewProductModel();
-        priceIn  = getNewProductPriceIn();
+        model = getNewProductModel();
+        priceIn = getNewProductPriceIn();
 
         RegExp regExp1 = RegExp.compile("^[\\w]{5,}$");
         boolean imeiformat = regExp1.test(imei);
@@ -489,7 +482,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
             return "Cena powinna byc w najstępującym formacie 100.10 lub 100,00";
 
 
-       return null;
+        return null;
     }
 
     private String getNewProductPriceIn() {
@@ -514,7 +507,8 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
     class AddStoreComponentRecord extends ListGridRecord {
 
-        public AddStoreComponentRecord() {}
+        public AddStoreComponentRecord() {
+        }
 
         public AddStoreComponentRecord(Product product) {
             setImei(product.getImei());
@@ -556,14 +550,14 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         public String getProducer() {
             return getAttributeAsString("producer");
         }
-        
+
         public void setPriceIn(Money money) {
-            if (money != null )
+            if (money != null)
                 setAttribute("price_in", money.toString());
             else
                 setAttribute("price_in", "");
         }
-        
+
         public void setDeleteItem(String imei) {
             setAttribute("delete_item", imei);
         }
@@ -683,7 +677,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     }
 
     public void fillWithData() {
-         /* pobranie produktow do tabeli */
+        /* pobranie produktow do tabeli */
         this.productService.fetchAllProducts(getSelectedStore(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
 
             public void onFailure(Throwable caught) {
@@ -734,13 +728,14 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
     private void refreshProductsGrid() {
 
-        ListGridRecord [] records = this.productsListGrid.getRecords();
+        ListGridRecord[] records = this.productsListGrid.getRecords();
 
-        for (int i = 0; i < records.length; i++ ) {
+        for (int i = 0; i < records.length; i++) {
             this.productsListGrid.removeData(records[i]);
         }
 
-        for (Product p : listOfNewProducts) {
+        for (int j = listOfNewProducts.size(); j > 0; j--) {
+            Product p = listOfNewProducts.get(j - 1);
             AddStoreComponentRecord record = new AddStoreComponentRecord(p);
             this.productsListGrid.addData(record);
         }
@@ -768,24 +763,24 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         this.selectSalemanCombo.setValueMap(valueMap);
         this.selectSalemanCombo.setDefaultToFirstOption(true);
     }
-    
-    private void refreshColorComboValues() {        
+
+    private void refreshColorComboValues() {
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
-        
+
         valueMap.put("", "");
-        for (String color: listOfColors) {
+        for (String color : listOfColors) {
             valueMap.put(color, color);
         }
 
         this.selectColorCombo.setValueMap(valueMap);
-        this.selectColorCombo.setDefaultToFirstOption(true);        
+        this.selectColorCombo.setDefaultToFirstOption(true);
     }
 
     private void refreshSelectModelComboValues() {
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
 
         valueMap.put("", "");
-        for (String model: listOfModels) {
+        for (String model : listOfModels) {
             valueMap.put(model, model);
         }
 
@@ -805,7 +800,8 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         this.selectProducerCombo.setDefaultToFirstOption(true);
     }
 
-    public void validate() {}
+    public void validate() {
+    }
 
     public Long getSelectedStore() {
         String val = this.selectStoreCombo.getValueAsString();

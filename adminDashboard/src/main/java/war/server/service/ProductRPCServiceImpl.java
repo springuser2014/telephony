@@ -15,6 +15,7 @@ import war.server.core.service.interfaces.ProductService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
 
     @Inject
     private ProductService productService;
-    
+
     @Inject
     private EntityManager em;
 
@@ -37,7 +38,7 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
 
     public List<String> fetchAllImeiInUse() {
         logger.debug("ProductRPCServiceImpl.fetchAllImeiInUse starts");
-        
+
         List<String> imeis = productService.fetchAllImeiInUse();
 
         return imeis;
@@ -52,6 +53,25 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
         return result;
     }
 
+    public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status) {
+        logger.debug("ProductRPCServiceImpl.fetchAllProductsByCriteria starts");
+        
+        Object[] params = new Object[] {imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status};
+
+        logger.debug("params : [ imei : {} , producer : {} , model : {} , color : {} , storeId : {} , deliveryDateStart : {} , deliveryDateEnd : {}, productStatus : {} ] ", params);
+
+        List<Product> result = productService.fetchAllProductsByCriteria(imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status);
+
+        return result;
+    }
+
+    public Product fetchProductByImeiAndStoreId(String imei, Long storeId) {
+        logger.debug("ProductRPCServiceImpl.fetchProductByImeiAndStoreId starts");
+        logger.debug("params : [ imei: {} , storeId : {} ] ", imei, storeId);
+
+        return productService.fetchProductByImeiAndStoreId(imei, storeId);
+    }
+
     public RPCServiceStatus moveProducts(Store store, List<Product> products, User user) {
         logger.debug("ProductRPCServiceImpl.moveProducts starts");
 
@@ -61,8 +81,8 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
             productService.moveProducts(store, products, user);
             result.setStatus(RPCServiceStatus.Status.SUCCESS);
             result.setOperationStatusInfo("Zmiany zostały zapisane");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
+            logger.error("error message : {} , stackTrack : {}", e.getMessage(), e.getStackTrace());
             result.setStatus(RPCServiceStatus.Status.FAILED);
             result.setOperationStatusInfo("Wystąpił błąd podczas wykonywania operacji");
         }
@@ -72,7 +92,7 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
 
     public List<String> fetchAllProducers() {
         logger.debug("ProductRPCServiceImpl.fetchAllProducers starts");
-        
+
         List<String> producers = productService.fetchAllProducers();
 
         return producers;

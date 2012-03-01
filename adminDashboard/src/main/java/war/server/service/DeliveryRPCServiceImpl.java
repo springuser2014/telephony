@@ -46,7 +46,7 @@ public class DeliveryRPCServiceImpl extends GuicePersistentRemoteServiceServlet 
         {
             status.setOperationStatusInfo("Wystąpił błąd podczas dodawania dostawy");
             status.setStatus(RPCServiceStatus.Status.FAILED);
-            logger.error("Error during adding new delivery message {}  stacktrace {} " , e.getMessage(), e.getStackTrace() );
+            logger.error("Error during adding new delivery cause {} , message {} , stacktrace {} " , new Object[] { e.getCause(), e.getMessage(), e.getStackTrace() });
         }
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery ends");

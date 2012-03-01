@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.DateDisplayFormatter;
 import com.smartgwt.client.util.DateUtil;
@@ -13,14 +14,12 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.DateItem;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.*;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.fields.events.KeyUpEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyUpHandler;
-import com.smartgwt.client.widgets.grid.ListGrid;
-import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.*;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import war.client.configuration.SIZE;
@@ -53,11 +52,11 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
     /* ladowanie danych */
     private boolean listOfStoresLoaded = false;
-    private boolean listOfProductsLoaded = false;
+    //    private boolean listOfProductsLoaded = false;
     private boolean listOfUsersLoaded = false;
 
     private List<Product> listOfSelectedProducts = new ArrayList<Product>();
-    private List<Product> listOfProducts = new ArrayList<Product>();
+    //    private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Store> listOfStores = new ArrayList<Store>();
     private List<User> listOfUsers = new ArrayList<User>();
 
@@ -85,26 +84,72 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
-        ListGridField field1 = new ListGridField("imei", "IMEI", 200);
-        ListGridField field2 = new ListGridField("color", "Kolor", 200);
-        ListGridField field3 = new ListGridField("producer", "Producent", 200);
-        ListGridField field4 = new ListGridField("model", "Model", 200);
-        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 200);
+        ListGridField field1 = new ListGridField("imei", "IMEI", 180);
+        ListGridField field2 = new ListGridField("color", "Kolor", 180);
+        ListGridField field3 = new ListGridField("producer", "Producent", 180);
+        ListGridField field4 = new ListGridField("model", "Model", 180);
+        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 180);
+        ListGridField field6 = new ListGridField("delete_item", "Usuń", 100);
 
-        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5});
+        field1.setCanEdit(false);
+        field2.setCanEdit(false);
+        field3.setCanEdit(false);
+        field4.setCanEdit(false);
+        field5.setCanEdit(false);
+
+        this.productsListGrid.setEditorCustomizer(new ListGridEditorCustomizer() {
+
+            private SaleProductsComponentRecord record;
+
+            public FormItem getEditor(ListGridEditorContext context) {
+                ListGridField field = context.getEditField();
+
+                if (field.getName().equals("delete_item")) {
+                    record = (SaleProductsComponentRecord) context.getEditedRecord();
+
+                    ButtonItem button = new ButtonItem();
+                    button.setTitle("usuń produkt");
+
+                    button.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+                        public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+                            deleteFromSelectedProductsListWhereImei(record.getImei());
+                            getProductsListGrid().removeData(record);
+                            refreshProductsGrid();
+                        }
+
+
+                    });
+
+                    return button;
+                }
+
+                return context.getDefaultProperties();
+            }
+        });
+
+        productsListGrid.setCanEdit(true);
+        productsListGrid.setEditEvent(ListGridEditEvent.CLICK);
+
+        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
 
         this.selectStoreCombo = new SelectItem();
         selectStoreCombo.setTitle("Magazyn");
 
+        this.selectStoreCombo.addChangedHandler(new ChangedHandler() {
+            public void onChanged(ChangedEvent event) {
+                clearData();
+            }
+        });
+
         this.selectProductStatusCombo = new SelectItem();
         selectProductStatusCombo.setTitle("Status produktu");
 
-        this.reloadButton = new IButton("Odśwież listę");
-        reloadButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                fillWithData();
-            }
-        });
+//        this.reloadButton = new IButton("Odśwież listę");
+//        reloadButton.addClickHandler(new ClickHandler() {
+//            public void onClick(ClickEvent event) {
+//                fillWithData();
+//            }
+//        });
 
         // formularz wyboru magazynu
         DynamicForm form = new DynamicForm();
@@ -119,7 +164,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         formLay.setMembersMargin(10);
 
         formLay.addMember(form);
-        formLay.addMember(reloadButton);
+//        formLay.addMember(reloadButton);
 
         this.addMember(formLay);
 
@@ -131,7 +176,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         imeibox.addKeyUpHandler(new KeyUpHandler() {
             public void onKeyUp(KeyUpEvent event) {
                 if (event.getKeyName().equals("Enter")) {
-                    selectUnselectProduct();
+                    tryToAddProductToList();
                 }
             }
         });
@@ -151,7 +196,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
         selectUnselectButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                selectUnselectProduct();
+                tryToAddProductToList();
             }
         });
 
@@ -216,6 +261,18 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         Log.debug("EditStoreComponent was initialized..");
     }
 
+    private void deleteFromSelectedProductsListWhereImei(String imei) {
+        for (Product p : this.listOfSelectedProducts) {
+            if (p.getImei().equals(imei)) {
+                this.listOfSelectedProducts.remove(p);
+            }
+        }
+    }
+
+    public ListGrid getProductsListGrid() {
+        return this.productsListGrid;
+    }
+
     private void tryToAddNewSale() {
         String msg = validateForm();
 
@@ -227,19 +284,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
     }
 
     private String validateForm() {
-
-//        User user = getSelectedUser();
-//        Date saleDate = getSelectedSaleDate();
-        List<Product> products = getSelectedProdcuts();
-        String saleTitle = this.saleTitle.getValueAsString();
-
-        if (saleTitle == null || saleTitle.length() < 4) {
-            return "Tytuł sprzedaży to conajmniej 4 znaki";
-        } else if (products.size() == 0) {
-            return "Nie wybrano żadnych produktów";
-        }
-
-        return null;
+        return null;  //To change body of created methods use File | Settings | File Templates.
     }
 
     private Date getSelectedSaleDate() {
@@ -266,16 +311,16 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
     }
 
     private void AddNewSale() {
-        
+
         this.saleService.addNewSale(getNewSale(), getSelectedProdcuts(), getSelectedUser(), new AsyncCallback<RPCServiceStatus>() {
 
             public void onFailure(Throwable caught) {
                 SC.say("Niestety wystąpił błąd podczas zapisu, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
-                listOfProductsLoaded = false;
+//                listOfProductsLoaded = false;
             }
 
             public void onSuccess(RPCServiceStatus result) {
-                
+
                 SC.say(result.getOperationStatusInfo());
 
                 if (result.getStatus().equals(RPCServiceStatus.Status.SUCCESS)) {
@@ -295,47 +340,73 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
     }
 
     private void clearData() {
-        this.listOfProducts = new ArrayList<Product>();
-        this.listOfProductsLoaded = false;
+        this.listOfSelectedProducts = new ArrayList<Product>();
         this.saleTitle.setValue("");
 
+        refreshProductsGrid();
     }
 
-    private void selectUnselectProduct() {
+    private void tryToAddProductToList() {
 
         String imei = this.imeibox.getValueAsString();
 
         RegExp regExp1 = RegExp.compile("^[\\w]{5,}$");
         boolean imeiformat = regExp1.test(imei);
 
+        for (Product p : this.listOfSelectedProducts) {
+            if (p.getImei().equals(imei)) {
+                SC.say("Produkt znajduje już się na liście");
+
+                return;
+            }
+        }
+
         if (imeiformat) {
 
-            ListGridRecord rec = this.findRecordWithImei(imei);
-            if (rec != null) {
-
-                boolean selected = false;
-                for (ListGridRecord r : this.productsListGrid.getSelectedRecords()) {
-                    if (r == rec)
-                        selected = true;
-                }
-
-                if (selected) {
-                    unselectProductWithImei(imei);
-                    this.productsListGrid.deselectRecord(rec);
-                } else {
-                    selectProductWithImei(imei);
-                    this.productsListGrid.selectRecord(rec);
-                }
-
-                this.imeibox.setValue("");
-                this.imeibox.focusInItem();
-            } else {
-                SC.say("Nie ma takiego obiektu na liście");
-            }
+            fetchProductByImeiAndStoreId(imei, getSelectedStoreId());
 
         } else {
-            SC.say("Wymagana długośc IMEI to 5 znaków (cyfr, liter, myślników)");
+            SC.say("Wymagana długośc IMEI to conajmniej 5 znaków (cyfr, liter, myślników)");
         }
+    }
+
+
+    private void fetchProductByImeiAndStoreId(String imei, Long selectedStoreId) {
+
+        this.productService.fetchProductByImeiAndStoreId(imei, selectedStoreId, new AsyncCallback<Product>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety, pobranie danych nie powiodło się, jeżeli bład będzie się powtarzał skontaktuj się z administratorem");
+
+                clearForm();
+            }
+
+            public void onSuccess(Product result) {
+                if (result == null) {
+                    SC.say("Nie ma produktu o takim IMEI w wybranym magazynie");
+                } else {
+                    listOfSelectedProducts.add(result);
+
+                    clearForm();
+
+                    refreshProductsGrid();
+                }
+
+            }
+        });
+    }
+
+    private void clearForm() {
+        this.imeibox.setValue("");
+        this.imeibox.focusInItem();
+    }
+
+
+    private long getSelectedStoreId() {
+
+        String val = this.selectStoreCombo.getValueAsString();
+        long l = Long.parseLong(val);
+        return l;
+
     }
 
     private ListGridRecord findRecordWithImei(String imei) {
@@ -353,23 +424,22 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         return null;
     }
 
-    private void selectProductWithImei(String imei) {
-
-        for (Product p : this.listOfProducts) {
-            if (p.getImei().equals(imei)) {
-                listOfSelectedProducts.add(p);
-            }
-        }
-    }
-
-    private void unselectProductWithImei(String imei) {
-        for (Product p : this.listOfProducts) {
-            if (p.getImei().equals(imei)) {
-                listOfSelectedProducts.remove(p);
-            }
-        }
-
-    }
+//    private void selectProductWithImei(String imei) {
+//
+//        for (Product p : this.listOfProducts) {
+//            if (p.getImei().equals(imei)) {
+//                listOfSelectedProducts.add(p);
+//            }
+//        }
+//    }
+//
+//    private void unselectProductWithImei(String imei) {
+//        for (Product p : this.listOfProducts) {
+//            if (p.getImei().equals(imei)) {
+//                listOfSelectedProducts.remove(p);
+//            }
+//        }
+//    }
 
     class SaleProductsComponentRecord extends ListGridRecord {
 
@@ -382,6 +452,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
             setProducer(product.getProducer());
             setModel(product.getModel());
             setPriceIn(product.getPriceIn());
+            setDeleteItem(" ");
         }
 
         public void setImei(String imei) {
@@ -418,6 +489,10 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
         public void setPriceIn(Money money) {
             setAttribute("price_in", money.toString());
+        }
+
+        public void setDeleteItem(String deleteItem) {
+            setAttribute("delete_item", deleteItem);
         }
     }
 
@@ -462,12 +537,12 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
         this.productService.fetchAllProducts(getSelectedStore().getId(), ProductStatus.IN_STORE, new AsyncCallback<List<Product>>() {
             public void onFailure(Throwable caught) {
-                listOfProductsLoaded = false;
+//                listOfProductsLoaded = false;
             }
 
             public void onSuccess(List<Product> result) {
-                listOfProductsLoaded = true;
-                listOfProducts = result;
+//                listOfProductsLoaded = true;
+//                listOfProducts = result;
 
                 refreshProductsGrid();
             }
@@ -476,22 +551,24 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
     }
 
     private List<Product> getSelectedProdcuts() {
-        ListGridRecord[] records = this.productsListGrid.getSelectedRecords();
+//        ListGridRecord[] records = this.productsListGrid.getSelectedRecords();
+//
+//        List<Product> result = new ArrayList<Product>();
+//
+//        for (int i = 0; i < records.length; i++) {
+//
+//            SaleProductsComponentRecord record = (SaleProductsComponentRecord) records[i];
+//
+//            for (Product p : this.listOfProducts) {
+//                if (p.getImei().equals(record.getImei())) {
+//                    result.add(p);
+//                }
+//            }
+//        }
 
-        List<Product> result = new ArrayList<Product>();
+        return this.listOfSelectedProducts;
 
-        for (int i = 0; i < records.length; i++) {
-
-            SaleProductsComponentRecord record = (SaleProductsComponentRecord) records[i];
-
-            for (Product p : this.listOfProducts) {
-                if (p.getImei().equals(record.getImei())) {
-                    result.add(p);
-                }
-            }
-        }
-
-        return result;
+//        return result;
     }
 
     public void dataChanged() {
@@ -532,7 +609,8 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
             this.productsListGrid.removeData(records[i]);
         }
 
-        for (Product p : listOfProducts) {
+        for (int j = listOfSelectedProducts.size(); j > 0; j--) {
+            Product p = listOfSelectedProducts.get(j - 1);
             SaleProductsComponentRecord record = new SaleProductsComponentRecord(p);
             this.productsListGrid.addData(record);
         }
@@ -564,7 +642,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         String val = this.selectStoreCombo.getValueAsString();
         long l = Long.parseLong(val);
 
-        for(Store s : this.listOfStores) {
+        for (Store s : this.listOfStores) {
             if (s.getId().equals(l)) {
                 return s;
             }
