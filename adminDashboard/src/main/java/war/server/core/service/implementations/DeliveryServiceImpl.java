@@ -72,6 +72,15 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         return res;
     }
+
+    public List<Delivery> fetchAllDeliveriesFrom(Long aLong) {
+        logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
+        
+        
+        List<Delivery> result = deliveriesDao.findByStoreId(aLong);
+        
+        logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom ends");
+    }
 }
 
 

@@ -16,11 +16,9 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import war.client.configuration.SIZE;
-import war.client.service.ProductRPCService;
-import war.client.service.ProductRPCServiceAsync;
-import war.client.service.StoreRPCService;
-import war.client.service.StoreRPCServiceAsync;
+import war.client.service.*;
 import war.client.ui.widget.interfaces.TelephonyComponent;
+import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.common.ProductStatus;
@@ -33,6 +31,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     private final ProductRPCServiceAsync productService = GWT.create(ProductRPCService.class);
     private final StoreRPCServiceAsync storeService = GWT.create(StoreRPCService.class);
+    private final DeliveryRPCServiceAsync deliveryService= GWT.create(DeliveryRPCService.class);
 
     private ListGrid productsListGrid;
     private SelectItem selectStoreCombo;
@@ -45,6 +44,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Store> listOfStores     = new ArrayList<Store>();
+    private boolean listOfDeliveriesLoaded;
+    private List<Delivery> listOfDeliveries;
 
     public DeliveriesComponent() {
         super();
@@ -66,10 +67,9 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         ListGridField field2 = new ListGridField("number_of_elements", "Ilość produktów", 150);
         ListGridField field3 = new ListGridField("date_in", "Data zakupu", 100);
         ListGridField field4 = new ListGridField("who", "Odbierający", 200);
-        ListGridField field5 = new ListGridField("store", "Magazyn dostawy", 150);
-        ListGridField field6 = new ListGridField("sum_price_in", "Sumaryczna kwota dostawy", 150);
+        ListGridField field6 = new ListGridField("sum_price_in", "Sumaryczna kwota dostawy", 200);
 
-        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
+        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field6});
 
         this.selectStoreCombo = new SelectItem();
         selectStoreCombo.setTitle("Magazyn");
@@ -106,9 +106,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         formLay.addMember(form);
         formLay.addMember(reloadButton);
 
-//        this.addMember(formLay);
 
-        this.addMember(reloadButton);
+        this.addMember(formLay);
 
 //        productsListGrid.setMargin(20);
 
@@ -188,7 +187,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         this.storeService.fetchAllStores(new AsyncCallback<List<Store>>() {
 
             public void onFailure(Throwable caught) {
-                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
+                SC.say("Niestety pobranie listy sklepów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
 
                 listOfStoresLoaded = false;
             }
@@ -204,22 +203,46 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     public void fillWithData() {
-         /* pobranie produktow do tabeli */
-        this.productService.fetchAllProducts(getSelectedStore(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
+//         /* pobranie produktow do tabeli */
+//        this.productService.fetchAllProducts(getSelectedStore(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
+//
+//            public void onFailure(Throwable caught) {
+//                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
+//                listOfProductsLoaded = false;
+//            }
+//
+//            public void onSuccess(List<Product> result) {
+//
+//                listOfProductsLoaded = true;
+//                listOfProducts = result;
+//
+//                refreshProductsGrid();
+//            }
+//        });
+        
+        this.deliveryService.fetchDeliveriesFrom(getSelectedStoreId(), new AsyncCallback<List<Delivery>>() {
 
             public void onFailure(Throwable caught) {
-                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
-                listOfProductsLoaded = false;
+
             }
 
-            public void onSuccess(List<Product> result) {
+            public void onSuccess(List<Delivery> result) {
 
-                listOfProductsLoaded = true;
-                listOfProducts = result;
+                listOfDeliveriesLoaded = true;
+                listOfDeliveries = result;
 
                 refreshProductsGrid();
             }
+
         });
+                
+    }
+
+    private long getSelectedStoreId() {
+        String value = this.selectStoreCombo.getValueAsString();
+
+        long l = Long.parseLong(value);
+        return l;
     }
 
     public void dataChanged() {

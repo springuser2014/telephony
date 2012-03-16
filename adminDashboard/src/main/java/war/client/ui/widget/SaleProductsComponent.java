@@ -11,6 +11,7 @@ import com.smartgwt.client.util.DateDisplayFormatter;
 import com.smartgwt.client.util.DateUtil;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -67,6 +68,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
     private IButton selectUnselectButton;
     private SelectItem selectUserCombo;
     private DateItem selectSaleDate;
+    private Label numberOfElementsLabel;
 
     public SaleProductsComponent() {
         super();
@@ -115,6 +117,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
                             deleteFromSelectedProductsListWhereImei(record.getImei());
                             getProductsListGrid().removeData(record);
                             refreshProductsGrid();
+                            refreshProductsGridInfo();
                         }
 
 
@@ -164,7 +167,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         formLay.setMembersMargin(10);
 
         formLay.addMember(form);
-//        formLay.addMember(reloadButton);
+
 
         this.addMember(formLay);
 
@@ -256,6 +259,11 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
         this.addMember(productsListGrid);
 
+        this.numberOfElementsLabel = new Label();
+        this.numberOfElementsLabel.setContents("Ilość produktów : 0");
+
+        this.addMember(numberOfElementsLabel);
+
         this.loadData();
 
         Log.debug("EditStoreComponent was initialized..");
@@ -326,6 +334,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
                 if (result.getStatus().equals(RPCServiceStatus.Status.SUCCESS)) {
                     clearData();
                     refreshProductsGrid();
+                    refreshProductsGridInfo();
                 }
             }
         });
@@ -344,6 +353,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
         this.saleTitle.setValue("");
 
         refreshProductsGrid();
+        refreshProductsGridInfo();
     }
 
     private void tryToAddProductToList() {
@@ -389,11 +399,16 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
                     clearForm();
 
                     refreshProductsGrid();
+                    refreshProductsGridInfo();
                 }
 
             }
         });
     }
+
+    private void refreshProductsGridInfo() {
+            this.numberOfElementsLabel.setContents("Ilość produktów : " + this.listOfSelectedProducts.size());
+        }
 
     private void clearForm() {
         this.imeibox.setValue("");
@@ -545,6 +560,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 //                listOfProducts = result;
 
                 refreshProductsGrid();
+                refreshProductsGridInfo();
             }
         });
 

@@ -36,6 +36,5 @@ public interface DeliveryService {
     public List<Delivery> fetchAllDeliveries();
 
 
-
-
+    List<Delivery> fetchAllDeliveriesFrom(Long aLong);
 }

@@ -22,7 +22,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         super(Product.class);
     }
 
-    @Override
     public List<Product> findCreatedByUserId(Long userId, ProductStatus productStatus) {
         logger.debug("findCreatedByUserId starts");
         logger.debug("params : [ userId : {} , productStatus : {} ]", userId, productStatus);
@@ -37,7 +36,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    @Override
     public List<Product> findByStoreId(Long storeId, ProductStatus productStatus) {
         logger.debug("findByStoreId starts");
         logger.debug("params : [ storeId : {} , productStatus : {} ]", storeId, productStatus);
@@ -142,14 +140,12 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    
 
-    @Override
     public Product findByImei(String imei) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+
     public List<String> fetchImeisList() {
         logger.debug("ProductServiceImpl.fetchImeisList starts");
         
@@ -165,7 +161,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return  res;
     }
 
-    @Override
     public List<String> fetchProducersList() {
         logger.debug("ProductServiceImpl.fetchProducersList starts");
 
@@ -183,7 +178,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return  res;
     }
 
-    @Override
+
     public List<String> fetchModelsList() {
         logger.debug("ProductServiceImpl.fetchModelsList starts");
 

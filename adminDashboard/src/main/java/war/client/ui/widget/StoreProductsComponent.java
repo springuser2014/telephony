@@ -93,13 +93,15 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
-        ListGridField field1 = new ListGridField("imei", "IMEI", 200);
-        ListGridField field2 = new ListGridField("color", "Kolor", 200);
-        ListGridField field3 = new ListGridField("producer", "Producent", 200);
-        ListGridField field4 = new ListGridField("model", "Model", 200);
-        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 200);
+        ListGridField field1 = new ListGridField("imei", "IMEI", 160);
+        ListGridField field2 = new ListGridField("color", "Kolor", 160);
+        ListGridField field3 = new ListGridField("producer", "Producent", 120);
+        ListGridField field4 = new ListGridField("model", "Model", 120);
+        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 120);
+        ListGridField field6 = new ListGridField("date_in", "Data dodania", 120);
+        ListGridField field7 = new ListGridField("delivery_title", "Nazwa dostawy", 200);
 
-        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5});
+        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6, field7});
 
         this.numberOfElementsLabel = new Label();
         this.numberOfElementsLabel.setContents("Ilość produktów : 0");
@@ -199,6 +201,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         formdel3.setTitleWidth(100);
         deliveryDateFrom = new DateItem();
         deliveryDateFrom.setTitle("Data dostawy od ");
+        deliveryDateFrom.setValue(new Date("01-01-2012"));
 
         DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
             public String format(Date date) {
@@ -252,6 +255,16 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
             setProducer(product.getProducer());
             setModel(product.getModel());
             setPriceIn(product.getPriceIn());
+            setDateIn(product.getDelivery().getDateIn());
+            setDeliveryTitle(product.getDelivery().getLabel());
+        }
+
+        public void setDateIn(Date dateIn) {
+            setAttribute("date_in", dateIn);
+        }
+        
+        public void setDeliveryTitle(String label) {
+            setAttribute("delivery_title", label);
         }
 
         public void setImei(String imei) {

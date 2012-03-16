@@ -9,6 +9,7 @@ import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -62,6 +63,7 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
     //    private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Store> listOfStores = new ArrayList<Store>();
     private List<User> listOfUsers = new ArrayList<User>();
+    private Label numberOfElementsLabel;
 
     public MoveProductsComponent() {
         super();
@@ -112,6 +114,7 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
                             deleteFromSelectedProductsListWhereImei(record.getImei());
                             getProductsListGrid().removeData(record);
                             refreshProductsGrid();
+                            refreshProductsGridInfo();
                         }
                     });
 
@@ -235,6 +238,11 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
 
         this.addMember(productsListGrid);
 
+        this.numberOfElementsLabel = new Label();
+        this.numberOfElementsLabel.setContents("Ilość produktów : 0");
+
+        this.addMember(numberOfElementsLabel);
+
         this.loadData();
 
         Log.debug("MoveProductsComponent was initialized..");
@@ -325,6 +333,11 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
 
 
         refreshProductsGrid();
+        refreshProductsGridInfo();
+    }
+
+    private void refreshProductsGridInfo() {
+        this.numberOfElementsLabel.setContents("Ilość produktów : " + this.listOfSelectedProducts.size());
     }
 
     private String validateData() {
@@ -393,6 +406,7 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
 
                     clearForm();
                     refreshProductsGrid();
+                    refreshProductsGridInfo();
                 }
 
             }

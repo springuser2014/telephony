@@ -11,6 +11,7 @@ import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.DateDisplayFormatter;
 import com.smartgwt.client.util.DateUtil;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.*;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
@@ -79,6 +80,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
     private List<Product> listOfNewProducts = new ArrayList<Product>();
     private TextItem deliveryTitle;
+    private Label numberOfElementsLabel ;
 
 
     public AddStoreComponent() {
@@ -129,6 +131,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
                         public void onClick(ClickEvent event) {
                             deleteRecordWhereImei(record.getImei());
                             getProductsListGrid().removeData(record);
+                            refreshProductsGridInfo();
                             refreshProductsGrid();
                         }
                     });
@@ -294,12 +297,16 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         });
 
         formLaybottom.addMember(form7);
-
         formLaybottom.setHeight(25);
-        this.addMember(formLaybottom);
 
+        this.addMember(formLaybottom);
         this.addMember(productsListGrid);
 
+        this.numberOfElementsLabel = new Label();
+        this.numberOfElementsLabel.setContents("Ilość produktów : 0");
+
+        this.addMember(numberOfElementsLabel);
+        
         this.loadData();
 
         Log.debug("AddStoreComponent widget was initialized..");
@@ -446,6 +453,11 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         this.imeibox.focusInItem();
 
         this.refreshProductsGrid();
+        this.refreshProductsGridInfo();
+    }
+
+    private void refreshProductsGridInfo() {
+        this.numberOfElementsLabel.setContents("Ilość produktów : " + this.listOfNewProducts.size());
     }
 
     private String validteNewProduct() {

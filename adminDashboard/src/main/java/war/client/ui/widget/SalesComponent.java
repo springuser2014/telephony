@@ -72,10 +72,10 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         ListGridField field2 = new ListGridField("number_of_elements", "Ilość produktów", 150);
         ListGridField field3 = new ListGridField("date_out", "Data sprzedaży", 100);
         ListGridField field4 = new ListGridField("who", "Sprzedający", 200);
-        ListGridField field5 = new ListGridField("store", "Magazyn sprzedaży", 150);
+//        ListGridField field5 = new ListGridField("store", "Magazyn sprzedaży", 150);
         ListGridField field6 = new ListGridField("sum_price_out", "Sumaryczna kwota sprzedaży", 150);
 
-        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
+        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field6});
 
         this.selectStoreCombo = new SelectItem();
         selectStoreCombo.setTitle("Magazyn");
@@ -101,6 +101,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
 
         formLay.setMembersMargin(10);
+        formLay.addMember(form);
         formLay.addMember(reloadButton);
 
         this.addMember(formLay);
@@ -181,7 +182,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         this.storeService.fetchAllStores(new AsyncCallback<List<Store>>() {
 
             public void onFailure(Throwable caught) {
-                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
+                SC.say("Niestety pobranie sklepów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
 
                 listOfStoresLoaded = false;
             }
