@@ -5,11 +5,10 @@ import war.server.core.entity.common.BaseEntity;
 import war.server.core.entity.common.Money;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "products")
-public class Product extends BaseEntity implements Serializable {
+public class Product extends BaseEntity {
 
     @Column(name = "imei", nullable = false, length = 100)
     private String imei;
@@ -18,11 +17,11 @@ public class Product extends BaseEntity implements Serializable {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "delivery_id" , nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id", nullable = false)
     private Delivery delivery;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sale_id" , nullable = true)
     private Sale sale;
 
@@ -71,6 +70,9 @@ public class Product extends BaseEntity implements Serializable {
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
+
+//        if (delivery != null)
+//            delivery.getProducts().add(this);
     }
 
     public Sale getSale() {

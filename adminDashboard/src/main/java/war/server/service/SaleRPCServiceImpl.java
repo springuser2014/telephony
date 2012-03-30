@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import war.client.service.SaleRPCService;
 import war.server.core.entity.Product;
 import war.server.core.entity.Sale;
+import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.service.interfaces.SaleService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
@@ -39,13 +40,13 @@ public class SaleRPCServiceImpl extends GuicePersistentRemoteServiceServlet impl
         return res;
     }
 
-    public RPCServiceStatus addNewSale(Sale sale, List<Product> products, User user) {
+    public RPCServiceStatus addNewSale(Sale sale, List<Product> products, User user, Store store) {
         logger.debug("SaleRPCServiceImpl.addNewSale starts");
 
         RPCServiceStatus result = new RPCServiceStatus();
 
         try {
-            saleService.addNewSale(sale, products, user);
+            saleService.addNewSale(sale, products, user, store);
             result.setStatus(RPCServiceStatus.Status.SUCCESS);
             result.setOperationStatusInfo("Operacja przebiegła pomyślnie");
 
@@ -55,5 +56,16 @@ public class SaleRPCServiceImpl extends GuicePersistentRemoteServiceServlet impl
         }
 
         return result;
+    }
+
+    public List<Sale> fetchSalesFrom(Store store) {
+        logger.debug("SaleRPCServiceImpl.addNewSale starts");
+
+        List<Sale> result = saleService.fetchAllSalesFrom(store);
+
+        logger.debug("SaleRPCServiceImpl.addNewSale ends");
+
+        return result;
+
     }
 }

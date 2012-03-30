@@ -45,14 +45,15 @@ public class DeliveryServiceImpl implements DeliveryService {
         em.getTransaction().begin();
         
         delivery.setCreatedAt(new Date());
-        delivery.setCreatedBy(user.getId());
+        delivery.setCreator(user);
+        delivery.setStore(store);
         
         delivery = deliveriesDao.save(delivery);
         for (Product p : productList) {
             p.setStore(store);
             p.setDelivery(delivery);
             p.setCreatedAt(new Date());
-            p.setCreatedBy(user.getId());
+            p.setCreator(user);
             
             prodctsDao.save(p);
         }
@@ -73,15 +74,13 @@ public class DeliveryServiceImpl implements DeliveryService {
         return res;
     }
 
-    public List<Delivery> fetchAllDeliveriesFrom(Long aLong) {
+    public List<Delivery> fetchAllDeliveriesFrom(Store aLong) {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
         
-        
-        List<Delivery> result = deliveriesDao.findByStoreId(aLong);
+        List<Delivery> result = deliveriesDao.findByStore(aLong);
         
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom ends");
+
+        return result;
     }
 }
-
-
-

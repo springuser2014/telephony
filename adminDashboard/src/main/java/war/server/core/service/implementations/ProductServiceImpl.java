@@ -105,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
         
         for (Product p : products) {
             p.setStore(store);
-            p.setEditedBy(user.getId());
+            p.setEditor(user);
             p.setEditedAt(new Date());
 
             productsDao.save(p);

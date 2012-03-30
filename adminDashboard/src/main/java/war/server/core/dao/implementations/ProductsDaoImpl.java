@@ -37,7 +37,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     }
 
     public List<Product> findByStoreId(Long storeId, ProductStatus productStatus) {
-        logger.debug("findByStoreId starts");
+        logger.debug("findByStore starts");
         logger.debug("params : [ storeId : {} , productStatus : {} ]", storeId, productStatus);
 
         List<Product> res = null;
@@ -62,7 +62,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
                     .getResultList();
         }
 
-        logger.debug("findByStoreId returns {} elements", res.size());
+        logger.debug("findByStore returns {} elements", res.size());
 
         return res;
     }

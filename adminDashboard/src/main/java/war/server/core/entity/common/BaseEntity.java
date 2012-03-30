@@ -2,6 +2,7 @@ package war.server.core.entity.common;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import net.sf.gilead.pojo.gwt.LightEntity;
+import war.server.core.entity.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,22 +27,34 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Column(name = "created_by")
-    private Long createdBy;
+//    @Column(name = "created_by")
+//    private Long createdBy;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "created_by", nullable = false)
+    private User creator;
 
     @Column(name = "edited_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date editedAt;
 
-    @Column(name = "edited_by")
-    private Long editedBy;
+//    @Column(name = "edited_by")
+//    private Long editedBy;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "edited_by", nullable = false)
+    private User editor;
 
     @Column(name = "deleted_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
 
-    @Column(name = "deleted_by")
-    private Long deletedBy;
+//    @Column(name = "deleted_by")
+//    private Long deletedBy;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "deleted_by", nullable = false)
+    private User deleter;
 
     public BaseEntity() {
     }
@@ -139,13 +152,13 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         this.createdAt = createdAt;
     }
 
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
+//    public Long getCreatedBy() {
+//        return createdBy;
+//    }
+//
+//    public void setCreatedBy(Long createdBy) {
+//        this.createdBy = createdBy;
+//    }
 
     public Date getEditedAt() {
         return editedAt;
@@ -155,13 +168,13 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         this.editedAt = editedAt;
     }
 
-    public Long getEditedBy() {
-        return editedBy;
-    }
-
-    public void setEditedBy(Long editedBy) {
-        this.editedBy = editedBy;
-    }
+//    public Long getEditedBy() {
+//        return editedBy;
+//    }
+//
+//    public void setEditedBy(Long editedBy) {
+//        this.editedBy = editedBy;
+//    }
 
     public Date getDeletedAt() {
         return deletedAt;
@@ -171,12 +184,36 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         this.deletedAt = deletedAt;
     }
 
-    public Long getDeletedBy() {
-        return deletedBy;
+//    public Long getDeletedBy() {
+//        return deletedBy;
+//    }
+//
+//    public void setDeletedBy(Long deletedBy) {
+//        this.deletedBy = deletedBy;
+//    }
+
+    public User getCreator() {
+        return creator;
     }
 
-    public void setDeletedBy(Long deletedBy) {
-        this.deletedBy = deletedBy;
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public User getEditor() {
+        return editor;
+    }
+
+    public void setEditor(User editor) {
+        this.editor = editor;
+    }
+
+    public User getDeleter() {
+        return deleter;
+    }
+
+    public void setDeleter(User deleter) {
+        this.deleter = deleter;
     }
 }
 

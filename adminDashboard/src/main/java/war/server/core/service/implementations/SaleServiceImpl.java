@@ -7,6 +7,7 @@ import war.server.core.dao.interfaces.ProductsDao;
 import war.server.core.dao.interfaces.SalesDao;
 import war.server.core.entity.Product;
 import war.server.core.entity.Sale;
+import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.service.interfaces.SaleService;
 
@@ -37,24 +38,35 @@ public class SaleServiceImpl implements SaleService {
         return res;
     }
 
-    public void addNewSale(Sale sale, List<Product> products, User user) {
+    public void addNewSale(Sale sale, List<Product> products, User user, Store store) {
 
         logger.debug("SaleServiceImpl.addNewSale starts");
 
         em.getTransaction().begin();
 
         sale.setCreatedAt(new Date());
-        sale.setCreatedBy(user.getId());
+        sale.setCreator(user);
+        sale.setStore(store);
         sale = salesDao.save(sale);
         
         for (Product p : products) {
             p.setEditedAt(new Date());
-            p.setEditedBy(user.getId());
+            p.setEditor(user);
             p.setSale(sale);
             productsDao.save(p);
         }
 
         em.getTransaction().commit();
+    }
+
+    public List<Sale> fetchAllSalesFrom(Store store) {
+        logger.debug("SaleServiceImpl.fetchAllSalesFrom starts");
+
+        List<Sale> result = salesDao.findByStore(store);
+
+        logger.debug("SaleServiceImpl.fetchAllSalesFrom ends");
+
+        return result;
     }
 
 

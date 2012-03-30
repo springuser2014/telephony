@@ -19,5 +19,5 @@ public interface DeliveryRPCService extends RemoteService {
     
     public RPCServiceStatus addNewDelivery(Delivery delivery, List<Product> products, User user, Store store);
 
-    List<Delivery> fetchDeliveriesFrom(long selectedStoreId);
+    List<Delivery> fetchDeliveriesFrom(Store store);
 }

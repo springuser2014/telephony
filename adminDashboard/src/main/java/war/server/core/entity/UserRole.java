@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user_roles")
-public class UserRole extends BaseEntity implements Serializable {
+public class UserRole extends BaseEntity {
 
     @Column(name = "role_name", nullable = false, length = 20)
     private String roleName;

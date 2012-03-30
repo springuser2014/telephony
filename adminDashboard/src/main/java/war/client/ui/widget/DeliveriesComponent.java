@@ -3,6 +3,7 @@ package war.client.ui.widget;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
@@ -21,7 +22,7 @@ import war.client.ui.widget.interfaces.TelephonyComponent;
 import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
-import war.server.core.entity.common.ProductStatus;
+import war.server.core.entity.User;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,7 +32,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     private final ProductRPCServiceAsync productService = GWT.create(ProductRPCService.class);
     private final StoreRPCServiceAsync storeService = GWT.create(StoreRPCService.class);
-    private final DeliveryRPCServiceAsync deliveryService= GWT.create(DeliveryRPCService.class);
+    private final DeliveryRPCServiceAsync deliveryService = GWT.create(DeliveryRPCService.class);
+    private final UserRPCServiceAsync userService = GWT.create(UserRPCService.class);
 
     private ListGrid productsListGrid;
     private SelectItem selectStoreCombo;
@@ -39,13 +41,29 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private IButton reloadButton;
 
     /* ladowanie danych */
-    private boolean listOfStoresLoaded   = false;
+    private boolean listOfStoresLoaded = false;
     private boolean listOfProductsLoaded = false;
 
-    private List<Product> listOfProducts = new ArrayList<Product>();
-    private List<Store> listOfStores     = new ArrayList<Store>();
+    //    private List<Delivery> listOfDeliveries = new ArrayList<Delivery>();
+    private List<Store> listOfStores = new ArrayList<Store>();
     private boolean listOfDeliveriesLoaded;
-    private List<Delivery> listOfDeliveries;
+    private List<Delivery> listOfDeliveries = new ArrayList<Delivery>();
+    ;
+
+    private boolean listOfColorsLoaded = false;
+    private boolean listOfProducersLoaded = false;
+    private boolean listOfModelsLoaded = false;
+    private boolean listOfUsersLoaded = false;
+
+    private List<String> listOfColors = new ArrayList<String>();
+    private List<String> listOfProducers = new ArrayList<String>();
+    private List<String> listOfModels = new ArrayList<String>();
+    private List<User> listOfUsers = new ArrayList<User>();
+
+    private SelectItem selectUserCombo;
+    private IButton doButton;
+    private SelectItem selectPage;
+
 
     public DeliveriesComponent() {
         super();
@@ -63,13 +81,28 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
-        ListGridField field1 = new ListGridField("label", "Tytuł zakupu", 250);
-        ListGridField field2 = new ListGridField("number_of_elements", "Ilość produktów", 150);
-        ListGridField field3 = new ListGridField("date_in", "Data zakupu", 100);
-        ListGridField field4 = new ListGridField("who", "Odbierający", 200);
-        ListGridField field6 = new ListGridField("sum_price_in", "Sumaryczna kwota dostawy", 200);
+        ListGridField field0 = new ListGridField("label", "Tytuł zakupu", 250);
+        ListGridField field1 = new ListGridField("imei", "IMEI", 150);
+        ListGridField field2 = new ListGridField("producer", "Producent", 120);
+        ListGridField field3 = new ListGridField("model", "Model", 150);
+        ListGridField field4 = new ListGridField("color", "Kolor", 100);
+        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 100);
+        ListGridField field6 = new ListGridField("delete", "Usuń", 80);
 
-        this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field6});
+        field0.setCanEdit(false);
+
+
+//        ListGridField field2 = new ListGridField("number_of_products", "Ilość produktów", 150);
+//        ListGridField field3 = new ListGridField("date_in", "Data zakupu", 100);
+//        ListGridField field4 = new ListGridField("who", "Odbierający", 200);
+//        ListGridField field6 = new ListGridField("sum_price_in", "Sumaryczna kwota dostawy", 200);
+
+        this.productsListGrid.setFields(new ListGridField[]{field0, field1, field2, field3, field4, field5, field6});
+
+        productsListGrid.setShowAllRecords(true);
+        productsListGrid.setCanEdit(true);
+        productsListGrid.setGroupStartOpen(GroupStartOpen.FIRST);
+        productsListGrid.setGroupByField("label");
 
         this.selectStoreCombo = new SelectItem();
         selectStoreCombo.setTitle("Magazyn");
@@ -93,6 +126,35 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 //        });
 
 
+        DynamicForm form4 = new DynamicForm();
+        selectUserCombo = new SelectItem();
+        selectUserCombo.setTitle("Edytujący");
+        form4.setFields(selectUserCombo);
+
+        doButton = new IButton("Zapisz zmiany");
+
+
+        doButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+//                tryToAddNewSale();
+            }
+        });
+
+        HLayout form2Lay = new HLayout();
+        form2Lay.setWidth100();
+        form2Lay.setHeight(10);
+        form2Lay.setMembersMargin(10);
+
+        form2Lay.addMember(form4);
+        form2Lay.addMember(doButton);
+
+        this.selectPage = new SelectItem();
+        selectPage.setTitle("Zmień stronę");
+
+        DynamicForm form9 = new DynamicForm();
+        form9.setFields(selectPage);
+        form9.setTitleWidth(120);
+
 
         DynamicForm form = new DynamicForm();
         form.setFields(selectStoreCombo);
@@ -104,10 +166,11 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         formLay.setMembersMargin(10);
 
         formLay.addMember(form);
+        formLay.addMember(form9);
         formLay.addMember(reloadButton);
 
-
         this.addMember(formLay);
+        this.addMember(form2Lay);
 
 //        productsListGrid.setMargin(20);
 
@@ -118,18 +181,20 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         Log.debug("ContentBox DeliveriesComponent was initialized..");
     }
 
-    class StoreProductsComponentRecord extends ListGridRecord {
 
-        public StoreProductsComponentRecord() {
+    class DeliveriesComponentRecord extends ListGridRecord {
+
+        public DeliveriesComponentRecord() {
         }
 
-        public StoreProductsComponentRecord(Product product) {
-            setLabel("label");
-            setDateIn("dateIn");
-            setNumberOfProducts("numberOfProducts");
-            setStore("store");
-            setWho("who");
-            setSumPriceIn("sumPriceIn");
+        public DeliveriesComponentRecord(String label, Product product) {
+
+            setLabel(label);
+            setModel(product.getModel());
+            setProducer(product.getProducer());
+            setColor(product.getColor());
+            setImei(product.getImei());
+            setPriceIn(product.getPriceIn().toString());
         }
 
         public void setLabel(String label) {
@@ -140,45 +205,162 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             return getAttributeAsString("label");
         }
 
-        public void setDateIn(String label) {
-            setAttribute("date_in", label);
+        public void setImei(String imei) {
+            setAttribute("imei", imei);
         }
 
-        public String getDateIn() {
-            return getAttributeAsString("date_in");
+        public void setProducer(String producer) {
+            setAttribute("producer", producer);
         }
 
-        public void setNumberOfProducts(String label) {
-            setAttribute("number_of_products", label);
+        public void setModel(String model) {
+            setAttribute("model", model);
         }
 
-        public String getNumberOfProducts() {
-            return getAttributeAsString("number_of_products");
+        public void setColor(String color) {
+            setAttribute("color", color);
         }
 
-        public void setStore(String label) {
-            setAttribute("store", label);
+        public void setPriceIn(String priceIn) {
+            setAttribute("price_in", priceIn);
         }
 
-        public String getStore() {
-            return getAttributeAsString("store");
+//        public void setDateIn(String label) {
+//            setAttribute("date_in", label);
+//        }
+//
+//        public String getDateIn() {
+//            return getAttributeAsString("date_in");
+//        }
+//
+//        public void setNumberOfProducts(String label) {
+//            setAttribute("number_of_products", label);
+//        }
+//
+//        public String getNumberOfProducts() {
+//            return getAttributeAsString("number_of_products");
+//        }
+//
+//        public void setStore(String label) {
+//            setAttribute("store", label);
+//        }
+//
+//        public String getStore() {
+//            return getAttributeAsString("store");
+//        }
+//
+//        public void setWho(String label) {
+//            setAttribute("who", label);
+//        }
+//
+//        public String getWho() {
+//            return getAttributeAsString("who");
+//        }
+//
+//        public void setSumPriceIn(String label) {
+//            setAttribute("sum_price_in", label);
+//        }
+//
+//        public String getSumPriceIn() {
+//            return getAttributeAsString("sum_price_in");
+//        }
+    }
+
+    private User getChangedUser() {
+        String userIdStr = this.selectUserCombo.getValueAsString();
+        Long userId = null;
+
+        try {
+            userId = Long.parseLong(userIdStr);
+        } catch (Exception e) {
         }
 
-        public void setWho(String label) {
-            setAttribute("who", label);
+        for (User u : this.listOfUsers) {
+            if (u.getId().equals(userId)) {
+                return u;
+            }
         }
 
-        public String getWho() {
-            return getAttributeAsString("who");
+        return null;
+    }
+
+    private void refreshUserComboValues() {
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        for (User user : listOfUsers) {
+            valueMap.put(user.getId().toString(), user.getEmail());
         }
 
-        public void setSumPriceIn(String label) {
-            setAttribute("sum_price_in", label);
-        }
+        this.selectUserCombo.setValueMap(valueMap);
+        this.selectUserCombo.setDefaultToFirstOption(true);
+    }
 
-        public String getSumPriceIn() {
-            return getAttributeAsString("sum_price_in");
-        }
+    private void loadUsers() {
+        this.userService.fetchAllUsers(new AsyncCallback<List<User>>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
+
+                listOfUsersLoaded = false;
+            }
+
+            public void onSuccess(List<User> result) {
+                listOfUsers = result;
+                listOfUsersLoaded = true;
+
+                dataChanged();
+            }
+        });
+    }
+
+    private void loadProducers() {
+        this.productService.fetchAllProducers(new AsyncCallback<List<String>>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
+
+                listOfProducersLoaded = false;
+            }
+
+            public void onSuccess(List<String> result) {
+                listOfProducers = result;
+                listOfProducersLoaded = true;
+
+                dataChanged();
+            }
+        });
+    }
+
+    private void loadModels() {
+        this.productService.fetchAllModels(new AsyncCallback<List<String>>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
+
+                listOfModelsLoaded = false;
+            }
+
+            public void onSuccess(List<String> result) {
+                listOfModels = result;
+                listOfModelsLoaded = true;
+
+                dataChanged();
+            }
+        });
+    }
+
+    private void loadColors() {
+        this.productService.fetchAllColors(new AsyncCallback<List<String>>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
+
+                listOfColorsLoaded = false;
+            }
+
+            public void onSuccess(List<String> result) {
+                listOfColors = result;
+                listOfColorsLoaded = true;
+
+                dataChanged();
+            }
+        });
     }
 
     public void loadData() {
@@ -200,11 +382,16 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             }
         });
 
+        loadColors();
+        loadProducers();
+        loadModels();
+        loadUsers();
+
     }
 
     public void fillWithData() {
 //         /* pobranie produktow do tabeli */
-//        this.productService.fetchAllProducts(getSelectedStore(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
+//        this.productService.fetchAllProducts(getSelectedStoreId(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
 //
 //            public void onFailure(Throwable caught) {
 //                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
@@ -214,16 +401,15 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 //            public void onSuccess(List<Product> result) {
 //
 //                listOfProductsLoaded = true;
-//                listOfProducts = result;
+//                listOfDeliveries = result;
 //
 //                refreshProductsGrid();
 //            }
 //        });
-        
-        this.deliveryService.fetchDeliveriesFrom(getSelectedStoreId(), new AsyncCallback<List<Delivery>>() {
+
+        this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), new AsyncCallback<List<Delivery>>() {
 
             public void onFailure(Throwable caught) {
-
             }
 
             public void onSuccess(List<Delivery> result) {
@@ -231,11 +417,20 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                 listOfDeliveriesLoaded = true;
                 listOfDeliveries = result;
 
+//                SC.say("found " + result.size() + " elements " );
+//
+//                for (int i = 0 ; i < result.size() ; i++) {
+//
+//                    if (result.get(i) != null && result.get(i).getProducts() != null) {
+//                        SC.say( i + " element have " + result.get(i).getProducts().size() + " products");
+//                    }
+//                }
+
                 refreshProductsGrid();
             }
 
         });
-                
+
     }
 
     private long getSelectedStoreId() {
@@ -247,8 +442,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     public void dataChanged() {
         if (isDataLoaded()) {
-            refreshProductsStatusCombo();
             refreshStoresCombo();
+            refreshUserComboValues();
         }
     }
 
@@ -261,34 +456,35 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     public boolean isDataLoaded() {
-        return (this.listOfStoresLoaded);
+        return (this.listOfStoresLoaded && this.listOfModelsLoaded &&
+                this.listOfColorsLoaded && this.listOfProducersLoaded &&
+                this.listOfUsersLoaded);
     }
 
     private void refreshProductsGrid() {
 
-        ListGridRecord [] records = this.productsListGrid.getRecords();
+        ListGridRecord[] records = this.productsListGrid.getRecords();
 
-        for (int i = 0; i < records.length; i++ ) {
+        for (int i = 0; i < records.length; i++) {
             this.productsListGrid.removeData(records[i]);
         }
 
-        for (Product p : listOfProducts) {
-            StoreProductsComponentRecord record = new StoreProductsComponentRecord(p);
-            this.productsListGrid.addData(record);
+
+        for (Delivery d : this.listOfDeliveries) {
+
+            String label = d.getLabel() + " ( data dodania :" + d.getDateIn() + ", ilość produktów " + d.getProducts().size() + " ) ";
+
+            if (d.getProducts() != null)
+                SC.say(d.getId() + " id - ma elementow " + d.getProducts().size());
+
+            for (Product p : d.getProducts()) {
+                DeliveriesComponentRecord record = new DeliveriesComponentRecord(label, p);
+                this.productsListGrid.addData(record);
+            }
+
         }
     }
-    
-    
-    protected void refreshProductsStatusCombo() {
-        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
 
-        valueMap.put(ProductStatus.IN_STORE.toString(), "Na magazynie");
-        valueMap.put(ProductStatus.SOLD.toString(), "Sprzedane");
-
-        this.selectProductStatusCombo.setValueMap(valueMap);
-        this.selectProductStatusCombo.setDefaultToFirstOption(true);
-    }
-    
 
     public void refreshData() {
 
@@ -300,7 +496,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     private void refreshStoresCombo() {
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
-        
+
         for (Store store : listOfStores) {
             valueMap.put(store.getId().toString(), store.getLabel());
         }
@@ -309,27 +505,18 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         this.selectStoreCombo.setDefaultToFirstOption(true);
     }
 
-    public void validate() {}
-
-    public Long getSelectedStore() {
-        String val = this.selectStoreCombo.getValueAsString();
-        long l = Long.parseLong(val);
-        return l;
+    public void validate() {
     }
 
-    public ProductStatus getSelectedProductsStatus() {
-//        String val = this.selectProductStatusCombo.getValueAsString();
-//
-//        if (val.equals(ProductStatus.IN_STORE.toString())) {
-//            return ProductStatus.IN_STORE;
-//        }
-////        else if (val.equals(ProductStatus.SOLD.toString())) {
-//        else {
-//            return ProductStatus.SOLD;
-//        }
+    public Store getSelectedStore() {
+        long l = getSelectedStoreId();
 
-        return ProductStatus.IN_STORE;
+        for (Store store : listOfStores) {
+            if (store.getId().equals(l))
+                return store;
+        }
 
+        return null;
     }
 }
 

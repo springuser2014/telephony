@@ -54,12 +54,12 @@ public class DeliveryRPCServiceImpl extends GuicePersistentRemoteServiceServlet 
         return status;
     }
 
-    public List<Delivery> fetchDeliveriesFrom(long selectedStoreId) {
+    public List<Delivery> fetchDeliveriesFrom(Store store) {
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery start");
-        logger.debug("params : [ storeId : {} ] ", selectedStoreId);
+        logger.debug("params : [ storeId : {} ] ", store.getId());
         
-        List<Delivery> result = deliveryService.fetchAllDeliveriesFrom(new Long(selectedStoreId));
+        List<Delivery> result = deliveryService.fetchAllDeliveriesFrom(store);
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery ends");
 

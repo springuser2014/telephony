@@ -320,7 +320,7 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
     private void AddNewSale() {
 
-        this.saleService.addNewSale(getNewSale(), getSelectedProdcuts(), getSelectedUser(), new AsyncCallback<RPCServiceStatus>() {
+        this.saleService.addNewSale(getNewSale(), getSelectedProdcuts(), getSelectedUser(), getSelectedStore(), new AsyncCallback<RPCServiceStatus>() {
 
             public void onFailure(Throwable caught) {
                 SC.say("Niestety wystąpił błąd podczas zapisu, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");

@@ -50,6 +50,9 @@ public class TelephonyServletModule extends ServletModule {
         serve(SaleRPCService.FULL_SERVICE_PATH).with(SaleRPCServiceImpl.class);
         bind(SaleRPCService.class).to(SaleRPCServiceImpl.class);
 
+        serve(InformationRPCService.FULL_SERVICE_PATH).with(InformationRPCServiceImpl.class);
+        bind(InformationRPCService.class).to(InformationRPCServiceImpl.class);
+
         logger.debug("TelephonyServletModule ends configuring servlets");
     }
 

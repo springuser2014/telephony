@@ -113,6 +113,7 @@ create table deliveries (
   label varchar(100),
 
   date_in timestamp not null,
+  store_id bigint not null references stores(id),
 
   created_at timestamp not null,
   created_by bigint not null,
@@ -135,6 +136,7 @@ create table sales (
   label varchar(100),
 
   date_out timestamp not null,
+  store_id bigint not null references stores(id),
 
   created_at timestamp not null,
   created_by bigint not null,

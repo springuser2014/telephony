@@ -4,15 +4,12 @@ package war.server.core.entity;
 import war.server.core.entity.common.BaseEntity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-
-    private static final long serialVersionUID = -2138014923802092975L;
 
     @Column(name = "email", nullable = false, length = 100)
     private String email;
