@@ -58,10 +58,10 @@ public class SaleRPCServiceImpl extends GuicePersistentRemoteServiceServlet impl
         return result;
     }
 
-    public List<Sale> fetchSalesFrom(Store store) {
+    public List<Product> fetchSalesFrom(Store store, int page) {
         logger.debug("SaleRPCServiceImpl.addNewSale starts");
 
-        List<Sale> result = saleService.fetchAllSalesFrom(store);
+        List<Product> result = saleService.fetchAllSalesFrom(store, page);
 
         logger.debug("SaleRPCServiceImpl.addNewSale ends");
 

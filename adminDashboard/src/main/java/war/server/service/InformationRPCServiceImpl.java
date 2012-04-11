@@ -1,7 +1,11 @@
 package war.server.service;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.sf.gilead.core.PersistentBeanManager;
 import war.client.service.InformationRPCService;
+import war.server.core.entity.Store;
+import war.server.core.service.interfaces.InformationService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
 
 
@@ -9,11 +13,19 @@ import war.server.gilead.GuicePersistentRemoteServiceServlet;
 @Singleton
 public class InformationRPCServiceImpl extends GuicePersistentRemoteServiceServlet implements InformationRPCService {
 
-    public Integer getNumberOfDeliveries() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    @Inject
+    private InformationService informationService;
+
+    @Inject
+    public InformationRPCServiceImpl(PersistentBeanManager beanManager) {
+        setBeanManager(beanManager);
+    }
+    
+    public Long getNumberOfDeliveries(Store store) {
+        return informationService.getNumberOfDeliveries(store);
     }
 
-    public Integer getNumberOfSales() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Long getNumberOfSales(Store store) {
+        return informationService.getNumberOfSales(store);
     }
 }

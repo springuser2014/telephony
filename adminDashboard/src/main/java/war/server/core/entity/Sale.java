@@ -39,11 +39,6 @@ public class Sale extends BaseEntity {
         return products;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
-        product.setSale(this);
-    }
-
     public void setProducts(Collection<Product> products) {
         this.products = products;
     }

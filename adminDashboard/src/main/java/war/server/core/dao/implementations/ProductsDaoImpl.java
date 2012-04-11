@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.server.core.dao.interfaces.ProductsDao;
 import war.server.core.entity.Product;
-import war.server.core.entity.Delivery ;
 import war.server.core.entity.common.ProductStatus;
 
 import javax.persistence.Query;
@@ -71,9 +70,9 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         StringBuilder sb = new StringBuilder();
         sb.append(" select p from Product p ");
-        sb.append(" left join p.delivery d ");
-        sb.append(" left join p.store st ");
-        sb.append(" left join p.sale sa ");
+        sb.append(" join fetch p.delivery d ");
+        sb.append(" join fetch p.store st ");
+        sb.append(" left join fetch p.sale sa ");
         sb.append(" where 1=1 ");
 
         if (imei != null && imei.length() > 0)
@@ -96,7 +95,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         if (deliveryDateEnd != null)
             sb.append("and d.dateIn <= :deliveryDateEnd ");
-        
+
         if (productStatus == ProductStatus.IN_STORE) {
             sb.append("and sa.id is null ");
         }
@@ -136,6 +135,14 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         res = query.getResultList();
         
         logger.debug("found {} elements ");
+        
+        logger.info(" findByCriteria result :");
+        logger.info(" size : {}",  res.size() );
+        
+//        for (Product p : res) {
+//            logger.info(" id : {} , delivery id ",  p.getId(), p.getDelivery().getId()  );
+//        }
+        
 
         return res;
     }
@@ -209,5 +216,20 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
                         .getSingleResult();
 
         return  res;
+    }
+    
+    public List<Product> findAll() {
+
+        logger.debug("ProductsDaoImpl.findAll starts ");
+        logger.debug("entity type : {} ", entityClass.getName());
+
+        List<Product> lst = em.createQuery("select e from Product e " +
+                                           " join fetch e.delivery d " +
+                                           " join fetch e.store s ")
+                        .getResultList();
+
+        logger.debug("found {} elements", lst.size());
+
+        return lst;
     }
 }

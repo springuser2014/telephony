@@ -2,18 +2,23 @@ package war.client.ui.widget;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.grid.ListGrid;
-import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.grid.*;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import war.client.configuration.SIZE;
@@ -23,6 +28,7 @@ import war.server.core.entity.Product;
 import war.server.core.entity.Sale;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
+import war.server.core.entity.common.Money;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,6 +40,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private final ProductRPCServiceAsync productService = GWT.create(ProductRPCService.class);
     private final StoreRPCServiceAsync storeService = GWT.create(StoreRPCService.class);
     private final SaleRPCServiceAsync saleService = GWT.create(SaleRPCService.class);
+    private final InformationRPCServiceAsync informationService = GWT.create(InformationRPCService.class);
 
     private ListGrid productsListGrid;
     private SelectItem selectStoreCombo;
@@ -44,7 +51,13 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private boolean listOfStoresLoaded = false;
     private boolean listOfProductsLoaded = false;
 
+    private boolean numberOfSalesLoaded = false;
+
+    private List<Product> listOfEditedProducts = new ArrayList<Product>();
+    private List<Product> listOfDeletedProducts = new ArrayList<Product>();
+
     private List<Product> listOfProducts = new ArrayList<Product>();
+
     private List<Store> listOfStores = new ArrayList<Store>();
 
     private boolean listOfColorsLoaded = false;
@@ -61,6 +74,45 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private IButton doButton;
     private SelectItem selectPage;
     private boolean listOfUsersLoaded;
+    private Long numberOfSales;
+    private boolean listOfSalesLoaded;
+
+    private List<Product> getListOfEditedProducts() {
+        return listOfEditedProducts;
+    }
+
+    private List<Product> getListOfDeletedProducts() {
+        return listOfDeletedProducts;
+    }
+
+
+    private void tryAddProductToEditingList(Product editingProduct) {
+
+        boolean added = false;
+        for (Product p : getListOfEditedProducts()) {
+            if (p.getId().equals(editingProduct.getId())) {
+                added = true;
+            }
+        }
+
+        if (added == false) {
+            getListOfEditedProducts().add(editingProduct);
+        }
+    }
+
+    private void tryAddProductToDeletingList(Product deleteingProduct) {
+
+        boolean added = false;
+        for (Product p : getListOfDeletedProducts()) {
+            if (p.getId().equals(deleteingProduct.getId())) {
+                added = true;
+            }
+        }
+
+        if (added == false) {
+            getListOfDeletedProducts().add(deleteingProduct);
+        }
+    }
 
 
     public SalesComponent() {
@@ -83,15 +135,28 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
-        ListGridField field0 = new ListGridField("label", "Tytuł zakupu", 250);
+        ListGridField field0 = new ListGridField("label", "Tytuł sprzedaży", 200);
         ListGridField field1 = new ListGridField("imei", "IMEI", 150);
         ListGridField field2 = new ListGridField("producer", "Producent", 120);
-        ListGridField field3 = new ListGridField("model", "Model", 150);
+        ListGridField field3 = new ListGridField("model", "Model", 120);
         ListGridField field4 = new ListGridField("color", "Kolor", 100);
-        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 100);
+        ListGridField field5 = new ListGridField("price_in", "Cena zakupu", 90);
         ListGridField field6 = new ListGridField("price_out", "Cena sprzedaży", 100);
+        ListGridField field7 = new ListGridField("cancel_sale", "Wycofaj sprzedaż", 100);
 
-        this.productsListGrid.setFields(new ListGridField[]{field0, field1, field2, field3, field4, field5, field6});
+        field0.setCanEdit(false);
+        field1.setCanEdit(false);
+        field2.setCanEdit(false);
+        field3.setCanEdit(false);
+        field4.setCanEdit(false);
+        field5.setCanEdit(false);
+
+        this.productsListGrid.setFields(new ListGridField[]{field0, field1, field2, field3, field4, field5, field6, field7});
+
+        this.productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setCanEdit(true);
+        this.productsListGrid.setGroupStartOpen(GroupStartOpen.FIRST);
+        this.productsListGrid.setGroupByField("label");
 
         this.selectStoreCombo = new SelectItem();
         selectStoreCombo.setTitle("Magazyn");
@@ -139,6 +204,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
             }
         });
 
+
         HLayout form2Lay = new HLayout();
         form2Lay.setWidth100();
         form2Lay.setHeight(10);
@@ -156,6 +222,72 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         this.loadData();
 
         Log.debug("ContentBox SalesComponent was initialized..");
+    }
+
+    public ListGrid getProductsListGrid() {
+        return this.productsListGrid;
+    }
+
+    private void setupEditorCustomizer() {
+        this.productsListGrid.setEditorCustomizer(new ListGridEditorCustomizer() {
+
+            private SaleComponentRecord record;
+            private Product editingProduct;
+
+            public FormItem getEditor(ListGridEditorContext context) {
+                ListGridField field = context.getEditField();
+
+                String imei = record.getAttribute("imei");
+
+                editingProduct = findProductByImei(imei);
+
+                if (field.getName().equals("cancel_sale")) {
+                    record = (SaleComponentRecord) context.getEditedRecord();
+
+                    ButtonItem button = new ButtonItem();
+                    button.setTitle("anuluj");
+
+                    button.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+                        public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+                            getProductsListGrid().removeData(record);
+                            tryAddProductToDeletingList(editingProduct);
+                            getProductsListGrid().refreshFields();
+                        }
+                    });
+
+                    return button;
+                }
+
+                if (field.getName().equals("price_out")) {
+                    record = (SaleComponentRecord) context.getEditedRecord();
+
+                    TextItem textfield = new TextItem();
+
+                    textfield.addChangedHandler(new ChangedHandler() {
+                        public void onChanged(ChangedEvent event) {
+                            new Money();
+                            editingProduct.setProducer(record.getAttribute("color"));
+                        }
+                    });
+
+
+                    return textfield;
+                }
+
+                return context.getDefaultProperties();
+            }
+        });
+    }
+
+    private Product findProductByImei(String imei) {
+
+        for (Product product : this.listOfProducts) {
+            if (product.getImei().equals(imei)) {
+                return product;
+            }
+        }
+
+        return null;
     }
 
     private void refreshUserComboValues() {
@@ -192,7 +324,6 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         public SaleComponentRecord() {
         }
 
-
         public SaleComponentRecord(String label, Product product) {
 
             setLabel(label);
@@ -203,7 +334,6 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
             setPriceIn(product.getPriceIn().toString());
             setPriceOut(product.getPriceOut().toString());
         }
-
 
         public void setLabel(String label) {
             setAttribute("label", label);
@@ -236,54 +366,44 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         public void setPriceOut(String priceOut) {
             setAttribute("price_out", priceOut);
         }
+    }
 
-//        public void setLabel(String label) {
-//            setAttribute("label", label);
-//        }
-//
-//        public String getLabel() {
-//            return getAttributeAsString("label");
-//        }
-//
-//        public void setDateOut(String label) {
-//            setAttribute("date_out", label);
-//        }
-//
-//        public String getDateOut() {
-//            return getAttributeAsString("date_out");
-//        }
-//
-//        public void setNumberOfProducts(String label) {
-//            setAttribute("number_of_products", label);
-//        }
-//
-//        public String getNumberOfProducts() {
-//            return getAttributeAsString("number_of_products");
-//        }
-//
-//        public void setStore(String label) {
-//            setAttribute("store", label);
-//        }
-//
-//        public String getStore() {
-//            return getAttributeAsString("store");
-//        }
-//
-//        public void setWho(String label) {
-//            setAttribute("who", label);
-//        }
-//
-//        public String getWho() {
-//            return getAttributeAsString("who");
-//        }
-//
-//        public void setSumPriceOut(String sumPriceOut) {
-//            setAttribute("sum_price_out", sumPriceOut);
-//        }
-//
-//        public void getSumPriceOut(String sumPriceOut) {
-//            setAttribute("sum_price_out", sumPriceOut);
-//        }
+    private void loadNumberOfSales() {
+
+        this.informationService.getNumberOfSales(getSelectedStore(), new AsyncCallback<Long>() {
+            public void onFailure(Throwable caught) {
+                numberOfSalesLoaded = false;
+            }
+
+            public void onSuccess(Long result) {
+                numberOfSalesLoaded = true;
+                numberOfSales = result;
+
+                Log.debug("informationservice.getNumberOfSales : " + result);
+
+                refreshPager();
+
+                dataChanged();
+            }
+        });
+    }
+
+    private void refreshPager() {
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        Long numberOfPages = this.numberOfSales / 10L;
+        Long rest = this.numberOfSales % 10L;
+
+        if (rest > 0)
+            numberOfPages++;
+
+        if (numberOfPages == 0L) numberOfPages = 1L;
+
+        for (int i = 1; i <= numberOfPages; i++)
+            valueMap.put(Integer.toString(i - 1), Integer.toString(i));
+
+        selectPage.setValueMap(valueMap);
+        selectPage.setDefaultToFirstOption(true);
     }
 
     private void loadUsers() {
@@ -356,7 +476,16 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
     public void loadData() {
 
-        /* pobranie listy sklepów do tabeli */
+        loadStores();
+        loadColors();
+        loadModels();
+        loadProducers();
+        loadUsers();
+
+    }
+
+    private void loadStores() {
+
         this.storeService.fetchAllStores(new AsyncCallback<List<Store>>() {
 
             public void onFailure(Throwable caught) {
@@ -369,39 +498,30 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
                 listOfStores = stores;
                 listOfStoresLoaded = true;
 
+                refreshStoresCombo();
+
+                loadNumberOfSales();
+
                 dataChanged();
             }
         });
-
-        loadColors();
-        loadModels();
-        loadProducers();
-        loadUsers();
     }
 
     public void fillWithData() {
 
-
-        this.saleService.fetchSalesFrom(getSelectedStore(), new AsyncCallback<List<Sale>>() {
+        this.saleService.fetchSalesFrom(getSelectedStore(), getSelectedPage(), new AsyncCallback<List<Product>>() {
 
             public void onFailure(Throwable caught) {
 
                 listOfProductsLoaded = false;
             }
 
-            public void onSuccess(List<Sale> result) {
+            public void onSuccess(List<Product> result) {
+
                 listOfProductsLoaded = true;
+                listOfProducts = result;
 
-                SC.say("found " + result.size() + " elements ");
-
-                for (int i = 0; i < result.size(); i++) {
-
-                    if (result.get(i) != null && result.get(i).getProducts() != null) {
-                        SC.say(i + " element have " + result.get(i).getProducts().size() + " products");
-                    }
-                }
-
-
+                refreshProductsGrid();
             }
         });
     }
@@ -420,8 +540,8 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
     public void dataChanged() {
         if (isDataLoaded()) {
-            refreshStoresCombo();
             refreshUserComboValues();
+            setupEditorCustomizer();
         }
     }
 
@@ -434,9 +554,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     }
 
     public boolean isDataLoaded() {
-        return (this.listOfStoresLoaded && this.listOfModelsLoaded &&
-                this.listOfColorsLoaded && this.listOfProducersLoaded &&
-                this.listOfUsersLoaded);
+        return (this.listOfStoresLoaded && this.listOfUsersLoaded && this.numberOfSalesLoaded);
     }
 
     private void refreshProductsGrid() {
@@ -447,28 +565,22 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
             this.productsListGrid.removeData(records[i]);
         }
 
-        for (Sale d : this.listOfSales) {
+        Log.debug("SalesComponentRecord - number of sales : " + this.listOfProducers.size());
 
-            String label = d.getLabel() + " ( data dodania :" + d.getDateOut() + ", ilość produktów " + d.getProducts().size() + " ) ";
+        for (Product p : this.listOfProducts) {
+            Sale s = p.getSale();
 
-            if (d.getProducts() != null)
-                SC.say(d.getId() + " id - ma elementow " + d.getProducts().size());
+            String date = DateTimeFormat.getFormat("dd-MM-yyyy").format(s.getDateOut());
+            String label = s.getLabel() + " ( data sprzedaży : " + date + ", id " + s.getId() + " ) ";
 
-            for (Product p : d.getProducts()) {
-                SaleComponentRecord record = new SaleComponentRecord(label, p);
-                this.productsListGrid.addData(record);
-            }
+            SaleComponentRecord record = new SaleComponentRecord(label, p);
+            this.productsListGrid.addData(record);
 
         }
     }
 
     public void refreshData() {
-
-//        this.refreshProductsGrid();
-//        this.refreshProductsStatusCombo();
-//        this.refreshStoresCombo();
     }
-
 
     private void refreshStoresCombo() {
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
@@ -478,7 +590,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         }
 
         this.selectStoreCombo.setValueMap(valueMap);
-        this.selectStoreCombo.setDefaultToFirstOption(true);
+        this.selectStoreCombo.setDefaultValue(this.listOfStores.get(0).getId().toString());
     }
 
     public void validate() {
@@ -488,6 +600,12 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         String val = this.selectStoreCombo.getValueAsString();
         long l = Long.parseLong(val);
         return l;
+    }
+
+    public int getSelectedPage() {
+        String val = this.selectPage.getValueAsString();
+
+        return Integer.parseInt(val);
     }
 
 

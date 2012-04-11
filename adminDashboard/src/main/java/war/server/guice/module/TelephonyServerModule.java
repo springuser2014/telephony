@@ -25,5 +25,6 @@ public class TelephonyServerModule extends AbstractModule {
         bind(StoreService.class).to(StoreServiceImpl.class);
         bind(UserService.class).to(UserServiceImpl.class);
         bind(SaleService.class).to(SaleServiceImpl.class);
+        bind(InformationService.class).to(InformationServiceImpl.class);
     }
 }

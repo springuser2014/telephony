@@ -12,6 +12,7 @@ import war.server.core.entity.User;
 import war.server.core.service.interfaces.SaleService;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,10 +60,20 @@ public class SaleServiceImpl implements SaleService {
         em.getTransaction().commit();
     }
 
-    public List<Sale> fetchAllSalesFrom(Store store) {
+    public List<Product> fetchAllSalesFrom(Store store, int page) {
         logger.debug("SaleServiceImpl.fetchAllSalesFrom starts");
 
-        List<Sale> result = salesDao.findByStore(store);
+        int numberOfElements = 10;
+        
+        List<Sale> sales = salesDao.findLastest(store, numberOfElements*page, numberOfElements);
+
+        ArrayList<Long> ids = new ArrayList<Long>();
+        
+        for (Sale s : sales) {
+            ids.add(s.getId());
+        }
+        
+        List<Product> result = salesDao.findProductsBySalesIds(ids);
 
         logger.debug("SaleServiceImpl.fetchAllSalesFrom ends");
 

@@ -127,7 +127,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
 //            }
 //        });
 
-
+//        Log.debug("ContentBox widget initalizing - step 1 ");
         DynamicForm form = new DynamicForm();
         form.setFields(selectStoreCombo);
 
@@ -165,6 +165,8 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
             }
         });
 
+
+//        Log.debug("ContentBox widget initalizing - step 2 ");
         imeibox.setTitle("IMEI");
         imeibox.setWidth(160);
         form0.setTitleWidth(40);
@@ -201,7 +203,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         formdel3.setTitleWidth(100);
         deliveryDateFrom = new DateItem();
         deliveryDateFrom.setTitle("Data dostawy od ");
-        deliveryDateFrom.setValue(new Date("01-01-2012"));
+//        deliveryDateFrom.setValue(new Date("01-01-2012"));
 
         DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
             public String format(Date date) {
@@ -214,6 +216,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
 
         });
 
+//        Log.debug("ContentBox widget initalizing - step 3 ");
         deliveryDateTo = new DateItem();
         deliveryDateTo.setTitle("Data dostawy do ");
 
@@ -255,8 +258,11 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
             setProducer(product.getProducer());
             setModel(product.getModel());
             setPriceIn(product.getPriceIn());
-            setDateIn(product.getDelivery().getDateIn());
-            setDeliveryTitle(product.getDelivery().getLabel());
+            if (product.getDelivery() != null ) {
+
+                setDateIn(product.getDelivery().getDateIn());
+                setDeliveryTitle(product.getDelivery().getLabel());
+            }
         }
 
         public void setDateIn(Date dateIn) {

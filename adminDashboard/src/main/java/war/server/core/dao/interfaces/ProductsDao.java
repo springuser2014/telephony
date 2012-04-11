@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface ProductsDao extends GenericDao<Product> {
+    
+
 
     List<Product> findCreatedByUserId(Long userId, ProductStatus productStatus);
 

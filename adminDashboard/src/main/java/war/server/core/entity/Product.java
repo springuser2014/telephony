@@ -17,12 +17,12 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_id", nullable = false)
     private Delivery delivery;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sale_id" , nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sale_id", nullable = true)
     private Sale sale;
 
     @Column(name = "producer" , length = 100, nullable = false)
@@ -46,7 +46,9 @@ public class Product extends BaseEntity {
     })
     private Money priceOut = new Money();
 
-    public Product() {}
+    public Product() {
+
+    }
 
     public String getImei() {
         return imei;
@@ -106,14 +108,6 @@ public class Product extends BaseEntity {
     public void setColor(String color) {
         this.color = color;
     }
-
-//    public ProductStatus getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(ProductStatus status) {
-//        this.status = status;
-//    }
 
     public Money getPriceIn() {
         return priceIn;

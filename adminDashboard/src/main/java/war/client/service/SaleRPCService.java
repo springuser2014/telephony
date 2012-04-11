@@ -1,6 +1,5 @@
 package war.client.service;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import war.server.core.configuration.Constant;
@@ -22,7 +21,7 @@ public interface SaleRPCService extends RemoteService {
 
     public RPCServiceStatus addNewSale(Sale sale, List<Product> products, User user, Store store);
     
-    public List<Sale> fetchSalesFrom(Store store);
+    public List<Product> fetchSalesFrom(Store store, int page);
 
     
 }

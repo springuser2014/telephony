@@ -2,6 +2,7 @@ package war.client.ui.widget;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -10,10 +11,12 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.grid.ListGrid;
-import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.form.fields.*;
+import com.smartgwt.client.widgets.form.fields.events.BlurEvent;
+import com.smartgwt.client.widgets.form.fields.events.BlurHandler;
+import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
+import com.smartgwt.client.widgets.grid.*;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import war.client.configuration.SIZE;
@@ -23,6 +26,7 @@ import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
+import war.server.core.entity.common.Money;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,36 +38,43 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private final StoreRPCServiceAsync storeService = GWT.create(StoreRPCService.class);
     private final DeliveryRPCServiceAsync deliveryService = GWT.create(DeliveryRPCService.class);
     private final UserRPCServiceAsync userService = GWT.create(UserRPCService.class);
+    private final InformationRPCServiceAsync informationService = GWT.create(InformationRPCService.class);
 
     private ListGrid productsListGrid;
     private SelectItem selectStoreCombo;
     private SelectItem selectProductStatusCombo;
     private IButton reloadButton;
-
-    /* ladowanie danych */
-    private boolean listOfStoresLoaded = false;
-    private boolean listOfProductsLoaded = false;
-
-    //    private List<Delivery> listOfDeliveries = new ArrayList<Delivery>();
-    private List<Store> listOfStores = new ArrayList<Store>();
-    private boolean listOfDeliveriesLoaded;
-    private List<Delivery> listOfDeliveries = new ArrayList<Delivery>();
-    ;
+    private SelectItem selectUserCombo;
+    private IButton doButton;
+    private SelectItem selectPage;
 
     private boolean listOfColorsLoaded = false;
     private boolean listOfProducersLoaded = false;
     private boolean listOfModelsLoaded = false;
     private boolean listOfUsersLoaded = false;
+    private boolean numberOfDeliveriesLoaded = false;
+    private boolean listOfStoresLoaded = false;
+    private boolean listOfProductsLoaded = false;
+
+    private List<Product> listOfEditedProducts = new ArrayList<Product>();
+    private List<Product> listOfDeletedProducts = new ArrayList<Product>();
+
+    private Long numberOfDeliveries;
 
     private List<String> listOfColors = new ArrayList<String>();
     private List<String> listOfProducers = new ArrayList<String>();
     private List<String> listOfModels = new ArrayList<String>();
     private List<User> listOfUsers = new ArrayList<User>();
+    private List<Store> listOfStores = new ArrayList<Store>();
+    private List<Product> listOfProducts = new ArrayList<Product>();
 
-    private SelectItem selectUserCombo;
-    private IButton doButton;
-    private SelectItem selectPage;
+    private List<Product> getListOfEditedProducts() {
+        return listOfEditedProducts;
+    }
 
+    private List<Product> getListOfDeletedProducts() {
+        return listOfDeletedProducts;
+    }
 
     public DeliveriesComponent() {
         super();
@@ -81,7 +92,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         productsListGrid.setHeight(400);
         productsListGrid.setShowAllRecords(true);
 
-        ListGridField field0 = new ListGridField("label", "Tytuł zakupu", 250);
+        ListGridField field0 = new ListGridField("label", "Tytuł dostawy", 250);
         ListGridField field1 = new ListGridField("imei", "IMEI", 150);
         ListGridField field2 = new ListGridField("producer", "Producent", 120);
         ListGridField field3 = new ListGridField("model", "Model", 150);
@@ -90,12 +101,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         ListGridField field6 = new ListGridField("delete", "Usuń", 80);
 
         field0.setCanEdit(false);
-
-
-//        ListGridField field2 = new ListGridField("number_of_products", "Ilość produktów", 150);
-//        ListGridField field3 = new ListGridField("date_in", "Data zakupu", 100);
-//        ListGridField field4 = new ListGridField("who", "Odbierający", 200);
-//        ListGridField field6 = new ListGridField("sum_price_in", "Sumaryczna kwota dostawy", 200);
+        field1.setCanEdit(false);
 
         this.productsListGrid.setFields(new ListGridField[]{field0, field1, field2, field3, field4, field5, field6});
 
@@ -117,14 +123,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             }
         });
 
-//        reloadButton.addClickHandler(new ClickHandler() {
-//            @Override
-//            public void onClick(ClickEvent event) {
-//
-//                fillWithData();
-//            }
-//        });
-
 
         DynamicForm form4 = new DynamicForm();
         selectUserCombo = new SelectItem();
@@ -136,7 +134,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         doButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-//                tryToAddNewSale();
+//                Log.debug("doButton 1" + listOfEditedProducts.size());
+//                Log.debug("doButton 2" + listOfDeletedProducts.size());
             }
         });
 
@@ -181,6 +180,237 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         Log.debug("ContentBox DeliveriesComponent was initialized..");
     }
 
+    public ListGrid getProductsListGrid() {
+        return this.productsListGrid;
+    }
+
+    private void setupEditorCustomizers() {
+        this.productsListGrid.setEditorCustomizer(new ListGridEditorCustomizer() {
+
+            private DeliveriesComponentRecord record;
+            private Product editingProduct;
+            private Money oldPriceIn;
+
+            public FormItem getEditor(ListGridEditorContext context) {
+                ListGridField field = context.getEditField();
+
+                record = (DeliveriesComponentRecord) context.getEditedRecord();
+
+                String imei = record.getAttribute("imei");
+
+
+                editingProduct = findProductByImei(imei);
+                oldPriceIn = editingProduct.getPriceIn();
+
+                if (field.getName().equals("delete")) {
+
+                    ButtonItem button = new ButtonItem();
+                    button.setTitle("usuń");
+
+                    button.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+                        public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+                            getProductsListGrid().removeData(record);
+                            tryAddProductToDeletingList(editingProduct);
+                            getProductsListGrid().refreshFields();
+                        }
+                    });
+
+                    return button;
+                }
+
+                if (field.getName().equals("producer")) {
+
+                    ComboBoxItem producer = new ComboBoxItem();
+
+                    LinkedHashMap<String, String> producers = getProducersValueMap();
+                    producer.setValueMap(producers);
+                    producer.setAddUnknownValues(true);
+
+
+                    producer.addChangeHandler(new ChangeHandler() {
+                        public void onChange(ChangeEvent event) {
+
+                            editingProduct.setProducer(record.getAttribute("producer"));
+                            tryAddProductToEditingList(editingProduct);
+                        }
+                    });
+
+                    return producer;
+                }
+
+                if (field.getName().equals("model")) {
+
+                    ComboBoxItem model = new ComboBoxItem();
+                    model.setAddUnknownValues(true);
+
+                    LinkedHashMap<String, String> models = getModelsValueMap();
+                    model.setValueMap(models);
+
+                    model.addChangeHandler(new ChangeHandler() {
+                        public void onChange(ChangeEvent event) {
+                            editingProduct.setProducer(record.getAttribute("model"));
+                            tryAddProductToEditingList(editingProduct);
+                        }
+                    });
+
+                    return model;
+                }
+
+                if (field.getName().equals("color")) {
+
+                    ComboBoxItem color = new ComboBoxItem();
+
+                    LinkedHashMap<String, String> colors = getColorsValueMap();
+                    color.setValueMap(colors);
+                    color.setAddUnknownValues(true);
+
+                    color.addChangeHandler(new ChangeHandler() {
+                        public void onChange(ChangeEvent event) {
+                            editingProduct.setProducer(record.getAttribute("color"));
+                            tryAddProductToEditingList(editingProduct);
+                        }
+                    });
+
+                    return color;
+                }
+                if (field.getName().equals("price_in")) {
+
+                    TextItem priceIn = new TextItem();
+
+                    priceIn.addBlurHandler(new BlurHandler() {
+                        public void onBlur(BlurEvent event) {
+                            String priceInStr = record.getAttribute("price_in");
+
+                            Log.debug("priceInStr before: " + priceInStr);
+
+                            priceInStr = priceInStr.replace(".", "");
+                            priceInStr = priceInStr.replace(",", "");
+
+                            Money m = null;
+                            try {
+                                Log.debug("priceInStr after: " + priceInStr);
+                                Long priceIn = Long.parseLong(priceInStr);
+                                m = new Money(priceIn);
+                                editingProduct.setPriceIn(m);
+
+                                tryAddProductToEditingList(editingProduct);
+                            } catch (Exception e) {
+                                Log.debug("Error", e);
+                                SC.say("Prawidlowy format ceny to X.YZ ");
+
+                                record.setPriceIn(oldPriceIn.toString());
+                            }
+                        }
+                    });
+
+//                    priceIn.addChangeHandler(new ChangeHandler() {
+//                        public void onChange(ChangeEvent event) {
+//
+//                            String priceInStr = record.getAttribute("price_in");
+//
+//                            Log.debug("priceInStr before: " + priceInStr);
+//
+//                            priceInStr = priceInStr.replace(".", "");
+//                            priceInStr = priceInStr.replace(",", "");
+//
+//                            Money m = null;
+//                            try {
+//                                Log.debug("priceInStr after: " + priceInStr);
+//                                Long priceIn = Long.parseLong(priceInStr);
+//                                m = new Money(priceIn);
+//                                editingProduct.setPriceIn(m);
+//
+//                                tryAddProductToEditingList(editingProduct);
+//                            } catch (Exception e) {
+//                                Log.debug("Error", e);
+//                                SC.say("Prawidlowy format ceny to X.YZ ");
+//
+//                                record.setPriceIn(oldPriceIn.toString());
+//                            }
+//
+//                        }
+//                    });
+
+                    return priceIn;
+
+                }
+
+                return context.getDefaultProperties();
+            }
+        });
+    }
+
+    private void tryAddProductToEditingList(Product editingProduct) {
+
+        boolean added = false;
+        for (Product p : getListOfEditedProducts()) {
+            if (p.getId().equals(editingProduct.getId())) {
+                added = true;
+            }
+        }
+
+        if (added == false) {
+            getListOfEditedProducts().add(editingProduct);
+        }
+    }
+
+    private void tryAddProductToDeletingList(Product deleteingProduct) {
+
+        boolean added = false;
+        for (Product p : getListOfDeletedProducts()) {
+            if (p.getId().equals(deleteingProduct.getId())) {
+                added = true;
+            }
+        }
+
+        if (added == false) {
+            getListOfDeletedProducts().add(deleteingProduct);
+        }
+    }
+
+    private Product findProductByImei(String imei) {
+
+        for (Product product : this.listOfProducts) {
+            if (product.getImei().equals(imei)) {
+                return product;
+            }
+        }
+
+        return null;
+    }
+
+    private LinkedHashMap<String, String> getColorsValueMap() {
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        valueMap.put("", "");
+        for (String color : listOfColors) {
+            valueMap.put(color, color);
+        }
+
+        return valueMap;
+    }
+
+    private LinkedHashMap<String, String> getModelsValueMap() {
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        valueMap.put("", "");
+        for (String color : listOfColors) {
+            valueMap.put(color, color);
+        }
+
+        return valueMap;
+    }
+
+    private LinkedHashMap<String, String> getProducersValueMap() {
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        for (String producer : listOfProducers) {
+            valueMap.put(producer, producer);
+        }
+
+        return valueMap;
+    }
+
 
     class DeliveriesComponentRecord extends ListGridRecord {
 
@@ -195,6 +425,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             setColor(product.getColor());
             setImei(product.getImei());
             setPriceIn(product.getPriceIn().toString());
+
+//            setAttribute("delete", "");
         }
 
         public void setLabel(String label) {
@@ -225,45 +457,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             setAttribute("price_in", priceIn);
         }
 
-//        public void setDateIn(String label) {
-//            setAttribute("date_in", label);
-//        }
-//
-//        public String getDateIn() {
-//            return getAttributeAsString("date_in");
-//        }
-//
-//        public void setNumberOfProducts(String label) {
-//            setAttribute("number_of_products", label);
-//        }
-//
-//        public String getNumberOfProducts() {
-//            return getAttributeAsString("number_of_products");
-//        }
-//
-//        public void setStore(String label) {
-//            setAttribute("store", label);
-//        }
-//
-//        public String getStore() {
-//            return getAttributeAsString("store");
-//        }
-//
-//        public void setWho(String label) {
-//            setAttribute("who", label);
-//        }
-//
-//        public String getWho() {
-//            return getAttributeAsString("who");
-//        }
-//
-//        public void setSumPriceIn(String label) {
-//            setAttribute("sum_price_in", label);
-//        }
-//
-//        public String getSumPriceIn() {
-//            return getAttributeAsString("sum_price_in");
-//        }
     }
 
     private User getChangedUser() {
@@ -295,7 +488,11 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         this.selectUserCombo.setDefaultToFirstOption(true);
     }
 
+
     private void loadUsers() {
+
+        Log.debug("DeliveriesComponent.loadUsers");
+
         this.userService.fetchAllUsers(new AsyncCallback<List<User>>() {
             public void onFailure(Throwable caught) {
                 SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
@@ -313,6 +510,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadProducers() {
+        Log.debug("DeliveriesComponent.loadProducers");
+
         this.productService.fetchAllProducers(new AsyncCallback<List<String>>() {
             public void onFailure(Throwable caught) {
                 SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
@@ -330,6 +529,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadModels() {
+        Log.debug("DeliveriesComponent.loadModels");
+
         this.productService.fetchAllModels(new AsyncCallback<List<String>>() {
             public void onFailure(Throwable caught) {
                 SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
@@ -347,6 +548,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadColors() {
+        Log.debug("DeliveriesComponent.loadColors");
+
         this.productService.fetchAllColors(new AsyncCallback<List<String>>() {
             public void onFailure(Throwable caught) {
                 SC.say("Niestety nie powiodło się pobranie wszystkich wymaganych danych");
@@ -365,7 +568,17 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     public void loadData() {
 
-        /* pobranie listy sklepów do tabeli */
+        loadStores();
+        loadColors();
+        loadProducers();
+        loadModels();
+        loadUsers();
+
+    }
+
+    private void loadStores() {
+        Log.debug("DeliveriesComponent.loadStores");
+
         this.storeService.fetchAllStores(new AsyncCallback<List<Store>>() {
 
             public void onFailure(Throwable caught) {
@@ -378,53 +591,65 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                 listOfStores = stores;
                 listOfStoresLoaded = true;
 
+                refreshStoresCombo();
+
+                loadNumberOfDeliveries();
+
                 dataChanged();
             }
         });
+    }
 
-        loadColors();
-        loadProducers();
-        loadModels();
-        loadUsers();
+    private void loadNumberOfDeliveries() {
+        Log.debug("DeliveriesComponent.loadNumberOfDeliveries");
 
+        this.informationService.getNumberOfDeliveries(getSelectedStore(), new AsyncCallback<Long>() {
+            public void onFailure(Throwable caught) {
+
+                SC.say("Niestety pobranie listy sklepów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
+                numberOfDeliveriesLoaded = false;
+            }
+
+            public void onSuccess(Long result) {
+                numberOfDeliveriesLoaded = true;
+                numberOfDeliveries = result;
+
+                refreshPager();
+
+                dataChanged();
+            }
+        });
+    }
+
+    private void refreshPager() {
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        long numberOfPages = this.numberOfDeliveries / 10L;
+        long rest = this.numberOfDeliveries % 10L;
+
+        if (rest > 0)
+            numberOfPages++;
+
+        if (numberOfPages == 0L) numberOfPages = 1L;
+
+        for (int i = 1; i <= numberOfPages; i++)
+            valueMap.put(Integer.toString(i - 1), Integer.toString(i));
+
+        selectPage.setValueMap(valueMap);
+        selectPage.setDefaultToFirstOption(true);
     }
 
     public void fillWithData() {
-//         /* pobranie produktow do tabeli */
-//        this.productService.fetchAllProducts(getSelectedStoreId(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
-//
-//            public void onFailure(Throwable caught) {
-//                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
-//                listOfProductsLoaded = false;
-//            }
-//
-//            public void onSuccess(List<Product> result) {
-//
-//                listOfProductsLoaded = true;
-//                listOfDeliveries = result;
-//
-//                refreshProductsGrid();
-//            }
-//        });
 
-        this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), new AsyncCallback<List<Delivery>>() {
+        this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), getSelectedPage(), new AsyncCallback<List<Product>>() {
 
             public void onFailure(Throwable caught) {
             }
 
-            public void onSuccess(List<Delivery> result) {
+            public void onSuccess(List<Product> result) {
 
-                listOfDeliveriesLoaded = true;
-                listOfDeliveries = result;
-
-//                SC.say("found " + result.size() + " elements " );
-//
-//                for (int i = 0 ; i < result.size() ; i++) {
-//
-//                    if (result.get(i) != null && result.get(i).getProducts() != null) {
-//                        SC.say( i + " element have " + result.get(i).getProducts().size() + " products");
-//                    }
-//                }
+                listOfProductsLoaded = true;
+                listOfProducts = result;
 
                 refreshProductsGrid();
             }
@@ -442,8 +667,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     public void dataChanged() {
         if (isDataLoaded()) {
-            refreshStoresCombo();
             refreshUserComboValues();
+            setupEditorCustomizers();
         }
     }
 
@@ -458,7 +683,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     public boolean isDataLoaded() {
         return (this.listOfStoresLoaded && this.listOfModelsLoaded &&
                 this.listOfColorsLoaded && this.listOfProducersLoaded &&
-                this.listOfUsersLoaded);
+                this.listOfUsersLoaded && this.numberOfDeliveriesLoaded);
     }
 
     private void refreshProductsGrid() {
@@ -469,46 +694,41 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             this.productsListGrid.removeData(records[i]);
         }
 
+        Log.debug("DeliveriesComponentRecord - number of deliveries : " + this.listOfProducts.size());
 
-        for (Delivery d : this.listOfDeliveries) {
+        for (Product p : this.listOfProducts) {
+            Delivery d = p.getDelivery();
 
-            String label = d.getLabel() + " ( data dodania :" + d.getDateIn() + ", ilość produktów " + d.getProducts().size() + " ) ";
+            String date = DateTimeFormat.getFormat("dd-MM-yyyy").format(d.getDateIn());
+            String label = d.getLabel() + " ( data dostawy : " + date + ", id " + d.getId() + " ) ";
 
-            if (d.getProducts() != null)
-                SC.say(d.getId() + " id - ma elementow " + d.getProducts().size());
-
-            for (Product p : d.getProducts()) {
-                DeliveriesComponentRecord record = new DeliveriesComponentRecord(label, p);
-                this.productsListGrid.addData(record);
-            }
-
+            DeliveriesComponentRecord record = new DeliveriesComponentRecord(label, p);
+            this.productsListGrid.addData(record);
         }
     }
 
-
     public void refreshData() {
-
-//        this.refreshProductsGrid();
-//        this.refreshProductsStatusCombo();
-//        this.refreshStoresCombo();
     }
-
 
     private void refreshStoresCombo() {
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+        Log.debug("DeliververiesComponentRecord - refreshStoresCombo");
 
         for (Store store : listOfStores) {
+
+            Log.debug("id : " + store.getId().toString() + " label : " + store.getLabel());
             valueMap.put(store.getId().toString(), store.getLabel());
         }
 
         this.selectStoreCombo.setValueMap(valueMap);
-        this.selectStoreCombo.setDefaultToFirstOption(true);
+        this.selectStoreCombo.setDefaultValue(this.listOfStores.get(0).getId().toString());
     }
 
     public void validate() {
     }
 
     public Store getSelectedStore() {
+
         long l = getSelectedStoreId();
 
         for (Store store : listOfStores) {
@@ -518,5 +738,12 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         return null;
     }
+
+    public int getSelectedPage() {
+        String val = this.selectPage.getValueAsString();
+
+        return Integer.parseInt(val);
+    }
 }
+
 

@@ -4,6 +4,7 @@ package war.server.core.entity;
 import war.server.core.entity.common.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,11 +19,11 @@ public class Delivery extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIn;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "delivery", fetch=FetchType.EAGER)
     private Collection<Product> products;
 
     public String getLabel() {
@@ -37,16 +38,22 @@ public class Delivery extends BaseEntity {
         return products;
     }
     
-    public void addProduct(Product product) {
-        products.add(product);
-        product.setDelivery(this);
-    }
+//    public void addProduct(Product product) {
+//        products.add(product);
+//        product.setDelivery(this);
+//    }
 
     public void setProducts(Collection<Product> products) {
         this.products = products;
+        
+//        for (Product p :products) {
+//            p.setDelivery(this);
+//        }
     }
 
-    public Delivery() {}
+    public Delivery() {
+        products = new ArrayList<Product>();
+    }
 
     public Date getDateIn() {
         return dateIn;

@@ -131,7 +131,11 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> result = productsDao.findByCriteria(imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status);
 
-        logger.debug("ProductServiceImpl.fetchAllProductsByCriteria ends");
+        logger.info("ProductServiceImpl.fetchAllProductsByCriteria ends");
+        
+        for(Product p : result) {
+            logger.info(" model : {} , producer : {} ", p.getModel(), p.getProducer() );
+        }
 
         return  result;
     }

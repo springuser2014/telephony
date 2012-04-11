@@ -14,5 +14,5 @@ public interface SaleService {
     
     void addNewSale(Sale sale, List<Product> products, User user, Store store);
 
-    List<Sale> fetchAllSalesFrom(Store store);
+    List<Product> fetchAllSalesFrom(Store store, int page);
 }

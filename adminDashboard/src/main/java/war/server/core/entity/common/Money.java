@@ -36,7 +36,7 @@ public class Money implements Serializable {
         else {
             StringBuilder sb = new StringBuilder();
             sb.append((long) Math.floor(v.longValue() / 100.0));
-            sb.append(",");
+            sb.append(".");
 
             long gr = v.longValue() % 100;
             if (gr < 10)
