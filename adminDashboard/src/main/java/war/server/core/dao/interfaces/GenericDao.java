@@ -1,5 +1,6 @@
 package war.server.core.dao.interfaces;
 
+import war.server.core.entity.User;
 import war.server.core.entity.common.BaseEntity;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface GenericDao<E extends BaseEntity> {
     
     public E markAsDeleted(E entity, Long userId);
 
-    public List<E> markAsDeleted(List<E> entities, Long userId);
+    public List<E> markAsDeleted(List<E> entities, User user);
 
     public void permanentDeleteById(Long id);
 

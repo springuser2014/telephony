@@ -12,10 +12,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.*;
-import com.smartgwt.client.widgets.form.fields.events.BlurEvent;
-import com.smartgwt.client.widgets.form.fields.events.BlurHandler;
-import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
+import com.smartgwt.client.widgets.form.fields.events.*;
 import com.smartgwt.client.widgets.grid.*;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -27,6 +24,7 @@ import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.entity.common.Money;
+import war.shared.RPCServiceStatus;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -119,6 +117,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         this.reloadButton = new IButton("Odśwież listę");
         reloadButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                clearBuffor();
                 fillWithData();
             }
         });
@@ -134,8 +133,10 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         doButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-//                Log.debug("doButton 1" + listOfEditedProducts.size());
-//                Log.debug("doButton 2" + listOfDeletedProducts.size());
+                Log.debug("doButton 1" + listOfEditedProducts.size());
+                Log.debug("doButton 2" + listOfDeletedProducts.size());
+                
+                updateProducts();
             }
         });
 
@@ -178,6 +179,39 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         this.loadData();
 
         Log.debug("ContentBox DeliveriesComponent was initialized..");
+    }
+
+    private void updateProducts() {
+        
+        Log.debug("nb of edited products : " + getListOfEditedProducts().size());
+        Log.debug("nb of deleted products : " + getListOfDeletedProducts().size());
+
+        this.productService.updateProducts(getListOfEditedProducts(), getListOfDeletedProducts(), getEmptyList(), getChangedUser(), new AsyncCallback<RPCServiceStatus>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety wystąpił błąd podczas wykonywania operacji");
+
+                clearBuffor();
+            }
+
+            public void onSuccess(RPCServiceStatus result) {
+                
+                SC.say(result.getOperationStatusInfo());
+
+                if (result.getStatus().equals(RPCServiceStatus.Status.SUCCESS)) {
+                    clearBuffor();
+                    fillWithData();
+                }
+            }
+        });
+    }
+
+    private void clearBuffor() {
+        this.listOfEditedProducts  = getEmptyList();
+        this.listOfDeletedProducts = getEmptyList();
+    }
+
+    private List<Product> getEmptyList() {
+        return new ArrayList<Product>();
     }
 
     public ListGrid getProductsListGrid() {
@@ -226,14 +260,25 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                     producer.setValueMap(producers);
                     producer.setAddUnknownValues(true);
 
-
-                    producer.addChangeHandler(new ChangeHandler() {
-                        public void onChange(ChangeEvent event) {
-
+//                    producer.addKeyUpHandler(new KeyUpHandler() {
+//                        public void onKeyUp(KeyUpEvent event) {
+//                            
+//                        }
+//                    });
+                    
+                    producer.addBlurHandler(new BlurHandler() {
+                        public void onBlur(BlurEvent event) {
                             editingProduct.setProducer(record.getAttribute("producer"));
                             tryAddProductToEditingList(editingProduct);
                         }
                     });
+
+//                    producer.addChangeHandler(new ChangeHandler() {
+//                        public void onChange(ChangeEvent event) {
+//
+//                            
+//                        }
+//                    });
 
                     return producer;
                 }
@@ -245,13 +290,25 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
                     LinkedHashMap<String, String> models = getModelsValueMap();
                     model.setValueMap(models);
-
-                    model.addChangeHandler(new ChangeHandler() {
-                        public void onChange(ChangeEvent event) {
-                            editingProduct.setProducer(record.getAttribute("model"));
+                    
+//                    model.addKeyUpHandler(new KeyUpHandler() {
+//                        public void onKeyUp(KeyUpEvent event) {
+//                            
+//                        }
+//                    });
+                    
+                    model.addBlurHandler(new BlurHandler() {
+                        public void onBlur(BlurEvent event) {
+                            editingProduct.setModel(record.getAttribute("model"));
                             tryAddProductToEditingList(editingProduct);
                         }
                     });
+                            
+//                    model.addChangeHandler(new ChangeHandler() {
+//                        public void onChange(ChangeEvent event) {
+//                            
+//                        }
+//                    });
 
                     return model;
                 }
@@ -263,13 +320,25 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                     LinkedHashMap<String, String> colors = getColorsValueMap();
                     color.setValueMap(colors);
                     color.setAddUnknownValues(true);
-
-                    color.addChangeHandler(new ChangeHandler() {
-                        public void onChange(ChangeEvent event) {
-                            editingProduct.setProducer(record.getAttribute("color"));
+                    
+                    color.addBlurHandler(new BlurHandler() {
+                        public void onBlur(BlurEvent event) {
+                            editingProduct.setColor(record.getAttribute("color"));
                             tryAddProductToEditingList(editingProduct);
                         }
                     });
+                    
+//                    color.addKeyUpHandler(new KeyUpHandler() {
+//                        public void onKeyUp(KeyUpEvent event) {
+//                       
+//                        }
+//                    });
+
+//                    color.addChangeHandler(new ChangeHandler() {
+//                        public void onChange(ChangeEvent event) {
+//                            
+//                        }
+//                    });
 
                     return color;
                 }
@@ -303,36 +372,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                         }
                     });
 
-//                    priceIn.addChangeHandler(new ChangeHandler() {
-//                        public void onChange(ChangeEvent event) {
-//
-//                            String priceInStr = record.getAttribute("price_in");
-//
-//                            Log.debug("priceInStr before: " + priceInStr);
-//
-//                            priceInStr = priceInStr.replace(".", "");
-//                            priceInStr = priceInStr.replace(",", "");
-//
-//                            Money m = null;
-//                            try {
-//                                Log.debug("priceInStr after: " + priceInStr);
-//                                Long priceIn = Long.parseLong(priceInStr);
-//                                m = new Money(priceIn);
-//                                editingProduct.setPriceIn(m);
-//
-//                                tryAddProductToEditingList(editingProduct);
-//                            } catch (Exception e) {
-//                                Log.debug("Error", e);
-//                                SC.say("Prawidlowy format ceny to X.YZ ");
-//
-//                                record.setPriceIn(oldPriceIn.toString());
-//                            }
-//
-//                        }
-//                    });
-
                     return priceIn;
-
                 }
 
                 return context.getDefaultProperties();
@@ -745,5 +785,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         return Integer.parseInt(val);
     }
 }
+
 
 

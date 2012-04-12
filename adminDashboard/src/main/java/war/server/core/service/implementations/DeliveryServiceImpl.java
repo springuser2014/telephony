@@ -78,7 +78,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public List<Product> fetchAllDeliveriesFrom(Store store, int page) {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
 
-        int numberOfElements = 10;
+        int numberOfElements = 6;
 
         List<Delivery> deliveries = deliveriesDao.findLastest(store, numberOfElements*page, numberOfElements);
 

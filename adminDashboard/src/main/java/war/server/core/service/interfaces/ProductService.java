@@ -26,7 +26,6 @@ public interface ProductService {
      */
     public List<String> fetchAllProducers();
 
-
     /**
      * Zwraca listę nazw wszystkich modeli produktów z bazy
      *
@@ -49,17 +48,13 @@ public interface ProductService {
      */
     public List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
 
-    /**
-     * Przenosi
-     *
-     * @param store
-     * @param products
-     * @param user
-     */
     public void moveProducts(Store store, List<Product> products, User user);
 
+    public Product fetchProductByImeiAndStoreId(String imei, Long storeId);
 
-    Product fetchProductByImeiAndStoreId(String imei, Long storeId);
+    public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status);
 
-    List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status);
+    public void updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor);
+
+    public void cancelProductsSale(List<Product> productsToCancelTheSale, User editor);
 }

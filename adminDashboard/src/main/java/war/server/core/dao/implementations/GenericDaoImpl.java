@@ -5,6 +5,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.server.core.dao.interfaces.GenericDao;
+import war.server.core.entity.User;
 import war.server.core.entity.common.BaseEntity;
 
 import javax.persistence.EntityManager;
@@ -223,16 +224,18 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         return e;
     }
 
-    public List<E> markAsDeleted(List<E> entities, Long userId) {
+    public List<E> markAsDeleted(List<E> entities, User user) {
         logger.debug("markAsDeleted starts ");
         logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("params : [ userId : {} ]", userId);
+        logger.debug("params : [ userId : {} ]", user);
         logger.debug("number of elements: {} ", entities.size());
     
         List<E> result = new ArrayList<E>();
 
         for( E entity : entities) {
 
+            entity.setDeletedAt(new Date());
+            entity.setDeleter(user);
             E e = em.merge(entity);
             result.add(e);
         }

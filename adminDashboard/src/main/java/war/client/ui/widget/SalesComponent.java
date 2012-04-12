@@ -16,8 +16,8 @@ import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.form.fields.events.BlurEvent;
+import com.smartgwt.client.widgets.form.fields.events.BlurHandler;
 import com.smartgwt.client.widgets.grid.*;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -29,6 +29,7 @@ import war.server.core.entity.Sale;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.entity.common.Money;
+import war.shared.RPCServiceStatus;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -114,6 +115,40 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         }
     }
 
+    private void updateProducts() {
+
+        Log.debug("nb of edited products : " + getListOfEditedProducts().size());
+        Log.debug("nb of deleted products : " + getListOfDeletedProducts().size());
+
+        this.productService.updateProducts(getListOfEditedProducts(), getEmptyList(), getListOfDeletedProducts(), getChangedUser(), new AsyncCallback<RPCServiceStatus>() {
+            public void onFailure(Throwable caught) {
+                SC.say("Niestety wystąpił błąd podczas wykonywania operacji");
+
+                clearBuffor();
+            }
+
+            public void onSuccess(RPCServiceStatus result) {
+
+                SC.say(result.getOperationStatusInfo());
+
+                if (result.getStatus().equals(RPCServiceStatus.Status.SUCCESS)) {
+                    clearBuffor();
+                    fillWithData();
+                }
+
+            }
+        });
+    }
+
+    private void clearBuffor() {
+        this.listOfEditedProducts = getEmptyList();
+        this.listOfDeletedProducts = getEmptyList();
+    }
+
+    private List<Product> getEmptyList() {
+        return new ArrayList<Product>();
+    }
+
 
     public SalesComponent() {
         super();
@@ -165,6 +200,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         this.reloadButton = new IButton("Odśwież listę");
         reloadButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                clearBuffor();
                 fillWithData();
             }
         });
@@ -200,7 +236,10 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
         doButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-//                tryToAddNewSale();
+                Log.debug("doButton 1" + listOfEditedProducts.size());
+                Log.debug("doButton 2" + listOfDeletedProducts.size());
+
+                updateProducts();
             }
         });
 
@@ -224,6 +263,8 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         Log.debug("ContentBox SalesComponent was initialized..");
     }
 
+
+
     public ListGrid getProductsListGrid() {
         return this.productsListGrid;
     }
@@ -233,16 +274,19 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
             private SaleComponentRecord record;
             private Product editingProduct;
+            private Money oldPriceOut;
 
             public FormItem getEditor(ListGridEditorContext context) {
                 ListGridField field = context.getEditField();
 
+                record = (SaleComponentRecord) context.getEditedRecord();
+
                 String imei = record.getAttribute("imei");
 
                 editingProduct = findProductByImei(imei);
+                oldPriceOut = editingProduct.getPriceOut();
 
                 if (field.getName().equals("cancel_sale")) {
-                    record = (SaleComponentRecord) context.getEditedRecord();
 
                     ButtonItem button = new ButtonItem();
                     button.setTitle("anuluj");
@@ -259,19 +303,37 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
                 }
 
                 if (field.getName().equals("price_out")) {
-                    record = (SaleComponentRecord) context.getEditedRecord();
 
-                    TextItem textfield = new TextItem();
+                    TextItem priceOut = new TextItem();
 
-                    textfield.addChangedHandler(new ChangedHandler() {
-                        public void onChanged(ChangedEvent event) {
-                            new Money();
-                            editingProduct.setProducer(record.getAttribute("color"));
+                    priceOut.addBlurHandler(new BlurHandler() {
+                        public void onBlur(BlurEvent event) {
+                            String priceOutStr = record.getAttribute("price_out");
+
+                            Log.debug("priceOutStr before: " + priceOutStr);
+
+                            priceOutStr = priceOutStr.replace(".", "");
+                            priceOutStr = priceOutStr.replace(",", "");
+
+                            Money m = null;
+                            try {
+                                Log.debug("priceOutStr after: " + priceOutStr);
+                                Long priceOut = Long.parseLong(priceOutStr);
+                                m = new Money(priceOut);
+                                editingProduct.setPriceOut(m);
+
+                                tryAddProductToEditingList(editingProduct);
+                            } catch (Exception e) {
+                                Log.debug("Error", e);
+                                SC.say("Prawidlowy format ceny to X.YZ ");
+
+                                record.setPriceOut(oldPriceOut.toString());
+                            }
                         }
                     });
 
 
-                    return textfield;
+                    return priceOut;
                 }
 
                 return context.getDefaultProperties();

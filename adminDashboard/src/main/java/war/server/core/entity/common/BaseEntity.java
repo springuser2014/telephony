@@ -27,37 +27,27 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-//    @Column(name = "created_by")
-//    private Long createdBy;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "created_by", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by"  ,nullable = false)
     private User creator;
 
     @Column(name = "edited_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date editedAt;
 
-//    @Column(name = "edited_by")
-//    private Long editedBy;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "edited_by", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "edited_by" , nullable = true)
     private User editor;
 
     @Column(name = "deleted_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
 
-//    @Column(name = "deleted_by")
-//    private Long deletedBy;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "deleted_by", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deleted_by", nullable = true)
     private User deleter;
 
-    public BaseEntity() {
-    }
+    public BaseEntity() { }
 
     /**
      * {@inheritDoc}

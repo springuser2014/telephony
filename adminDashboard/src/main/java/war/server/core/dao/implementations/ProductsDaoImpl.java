@@ -25,7 +25,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("findCreatedByUserId starts");
         logger.debug("params : [ userId : {} , productStatus : {} ]", userId, productStatus);
 
-        List<Product> res = em.createQuery("select p from Product p where p.createdBy = ?1 and p.status = ?2 ")
+        List<Product> res = em.createQuery("select p from Product p where p.creator = ?1 and p.status = ?2 ")
                               .setParameter(1, userId)
                               .setParameter(2, productStatus)
                               .getResultList();
@@ -133,15 +133,8 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         }
 
         res = query.getResultList();
-        
-        logger.debug("found {} elements ");
-        
-        logger.info(" findByCriteria result :");
+
         logger.info(" size : {}",  res.size() );
-        
-//        for (Product p : res) {
-//            logger.info(" id : {} , delivery id ",  p.getId(), p.getDelivery().getId()  );
-//        }
         
 
         return res;
@@ -166,6 +159,23 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("ProductServiceImpl.fetchImeisList ends");
 
         return  res;
+    }
+
+    public List<Product> findUndeleted() {
+
+        logger.debug("findUndeleted starts ");
+
+        List<Product> lst = em.createQuery(" select e from Product e" +
+                                           " join fetch e.delivery d " +
+                                           " join fetch e.store s " +
+                                           " join fetch e.creator c " +
+                                           " left join fetch e.sale sa "+
+                                           " where e.deleter is null")
+                        .getResultList();
+
+        logger.debug("found {} elements", lst.size());
+
+        return lst;
     }
 
     public List<String> fetchProducersList() {
@@ -225,7 +235,8 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         List<Product> lst = em.createQuery("select e from Product e " +
                                            " join fetch e.delivery d " +
-                                           " join fetch e.store s ")
+                                           " join fetch e.store s " +
+                                           " left join fetch e.sale sa ")
                         .getResultList();
 
         logger.debug("found {} elements", lst.size());

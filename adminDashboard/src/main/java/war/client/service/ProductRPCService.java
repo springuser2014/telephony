@@ -33,5 +33,7 @@ public interface ProductRPCService extends RemoteService {
     List<String> fetchAllModels();
 
     List<String> fetchAllColors();
+
+    RPCServiceStatus updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor);
 }
 

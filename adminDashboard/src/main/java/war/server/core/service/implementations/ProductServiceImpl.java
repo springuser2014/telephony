@@ -8,6 +8,7 @@ import war.server.core.dao.interfaces.ProductsDao;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
+import war.server.core.entity.common.Money;
 import war.server.core.entity.common.ProductStatus;
 import war.server.core.service.interfaces.ProductService;
 
@@ -40,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
         logger.debug("ProductServiceImpl.fetchAllProducers starts");
         
         List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.findAll();
+        List<Product> products = productsDao.findUndeleted();
 
         for (Product p : products) {
             if (!res.contains(p.getProducer()))
@@ -56,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         logger.debug("ProductServiceImpl.fetchAllModels starts");
 
         List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.findAll();
+        List<Product> products = productsDao.findUndeleted();
 
         for (Product p : products) {
             if (!res.contains(p.getModel()))
@@ -72,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         logger.debug("ProductServiceImpl.fetchAllModels starts");
 
         List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.findAll();
+        List<Product> products = productsDao.findUndeleted();
 
         for (Product p : products) {
             if (!res.contains(p.getColor()))
@@ -138,6 +139,50 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return  result;
+    }
+
+    public void updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor) {
+        logger.debug("ProductServiceImpl.updateProducts starts");
+
+        for (Product p : productsToUpdate) {
+            for (Product p1 : productsToDelete) {
+                if (p1.getId().equals(p.getId())) {
+                    productsToUpdate.remove(p);
+                }
+            }
+            
+            for (Product p2 : productsToCancelTheSale) {
+                if (p2.getId().equals(p.getId())) {
+                    productsToUpdate.remove(p);
+                }
+            }
+
+        }
+
+        if (productsToUpdate.size() > 0) {
+            productsDao.saveOrUpdate(productsToUpdate);
+        }
+
+        if (productsToDelete.size() > 0) {
+            productsDao.markAsDeleted(productsToDelete, editor);
+        }
+
+        if (productsToCancelTheSale.size() > 0) {
+            this.cancelProductsSale(productsToCancelTheSale, editor);
+        }
+    }
+
+    public void cancelProductsSale(List<Product> productsToCancelTheSale, User editor) {
+        logger.debug("ProductServiceImpl.cancelProductsSale starts");
+
+        for (Product p : productsToCancelTheSale) {
+            p.setSale(null);
+            p.setPriceOut(new Money(0,0));
+            p.setEditedAt(new Date());
+            p.setEditor(editor);
+        }
+
+        productsDao.saveOrUpdate(productsToCancelTheSale);
     }
 
 

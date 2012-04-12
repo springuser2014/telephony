@@ -63,7 +63,7 @@ public class SaleServiceImpl implements SaleService {
     public List<Product> fetchAllSalesFrom(Store store, int page) {
         logger.debug("SaleServiceImpl.fetchAllSalesFrom starts");
 
-        int numberOfElements = 10;
+        int numberOfElements = 6;
         
         List<Sale> sales = salesDao.findLastest(store, numberOfElements*page, numberOfElements);
 

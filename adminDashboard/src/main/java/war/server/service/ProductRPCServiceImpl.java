@@ -80,7 +80,7 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
         try {
             productService.moveProducts(store, products, user);
             result.setStatus(RPCServiceStatus.Status.SUCCESS);
-            result.setOperationStatusInfo("Zmiany zostały zapisane");
+            result.setOperationStatusInfo("Zmiany zostały wprowadzone");
         } catch (Exception e) {
             logger.error("error message : {} , stackTrack : {}", e.getMessage(), e.getStackTrace());
             result.setStatus(RPCServiceStatus.Status.FAILED);
@@ -112,5 +112,28 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
         List<String> colors = productService.fetchAllColors();
 
         return colors;
+    }
+
+    public RPCServiceStatus updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor) {
+        logger.debug("ProductRPCServiceImpl.updateProducts starts");
+
+        RPCServiceStatus result = new RPCServiceStatus();
+
+        try {
+            em.getTransaction().begin();
+            productService.updateProducts(productsToUpdate, productsToDelete, productsToCancelTheSale, editor);
+            result.setStatus(RPCServiceStatus.Status.SUCCESS);
+            result.setOperationStatusInfo("Zmiany zostały wprowadzone");
+            em.getTransaction().commit();
+        }
+        catch (Exception e) {
+//            em.getTransaction().rollback();
+            logger.error("error message : {} , stackTrack : {}", e.getMessage(), e.getStackTrace());
+            result.setStatus(RPCServiceStatus.Status.FAILED);
+            result.setOperationStatusInfo("Wystąpił błąd podczas wykonywania operacji");
+        }
+
+        return result;
+
     }
 }
