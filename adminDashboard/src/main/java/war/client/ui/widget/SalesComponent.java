@@ -47,23 +47,23 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private SelectItem selectStoreCombo;
     private SelectItem selectProductStatusCombo;
     private IButton reloadButton;
-
-    /* ladowanie danych */
-    private boolean listOfStoresLoaded = false;
-    private boolean listOfProductsLoaded = false;
-
-    private boolean numberOfSalesLoaded = false;
+    private SelectItem selectUserCombo;
+    private IButton doButton;
+    private SelectItem selectPage;
 
     private List<Product> listOfEditedProducts = new ArrayList<Product>();
     private List<Product> listOfDeletedProducts = new ArrayList<Product>();
-
     private List<Product> listOfProducts = new ArrayList<Product>();
-
     private List<Store> listOfStores = new ArrayList<Store>();
 
+    private boolean listOfStoresLoaded = false;
+    private boolean listOfProductsLoaded = false;
+    private boolean numberOfSalesLoaded = false;
     private boolean listOfColorsLoaded = false;
     private boolean listOfProducersLoaded = false;
     private boolean listOfModelsLoaded = false;
+    private boolean listOfUsersLoaded = false;
+    private boolean listOfSalesLoaded = false;
 
     private List<String> listOfColors = new ArrayList<String>();
     private List<String> listOfProducers = new ArrayList<String>();
@@ -71,12 +71,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private List<User> listOfUsers = new ArrayList<User>();
     private List<Sale> listOfSales = new ArrayList<Sale>();
 
-    private SelectItem selectUserCombo;
-    private IButton doButton;
-    private SelectItem selectPage;
-    private boolean listOfUsersLoaded;
     private Long numberOfSales;
-    private boolean listOfSalesLoaded;
 
     private List<Product> getListOfEditedProducts() {
         return listOfEditedProducts;
@@ -155,20 +150,15 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
         Log.debug("Initializing SalesComponent widget..");
 
-
         this.setMembersMargin(10);
-
-        // initialise the layout container
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
-
         this.setAlign(Alignment.CENTER);
-
         this.setAlign(VerticalAlignment.TOP);
 
         this.productsListGrid = new ListGrid();
-        productsListGrid.setWidth(1010);
-        productsListGrid.setHeight(400);
-        productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setWidth(1010);
+        this.productsListGrid.setHeight(400);
+        this.productsListGrid.setShowAllRecords(true);
 
         ListGridField field0 = new ListGridField("label", "Tytuł sprzedaży", 200);
         ListGridField field1 = new ListGridField("imei", "IMEI", 150);
@@ -194,11 +184,10 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         this.productsListGrid.setGroupByField("label");
 
         this.selectStoreCombo = new SelectItem();
-        selectStoreCombo.setTitle("Magazyn");
-
+        this.selectStoreCombo.setTitle("Magazyn");
 
         this.reloadButton = new IButton("Odśwież listę");
-        reloadButton.addClickHandler(new ClickHandler() {
+        this.reloadButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 clearBuffor();
                 fillWithData();
@@ -206,7 +195,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         });
 
         this.selectPage = new SelectItem();
-        selectPage.setTitle("Zmień stronę");
+        this.selectPage.setTitle("Zmień stronę");
 
         DynamicForm form9 = new DynamicForm();
         form9.setFields(selectPage);
@@ -227,14 +216,13 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         formLay.addMember(reloadButton);
 
         DynamicForm form4 = new DynamicForm();
-        selectUserCombo = new SelectItem();
-        selectUserCombo.setTitle("Edytujący");
+        this.selectUserCombo = new SelectItem();
+        this.selectUserCombo.setTitle("Edytujący");
         form4.setFields(selectUserCombo);
 
-        doButton = new IButton("Zapisz zmiany");
+        this.doButton = new IButton("Zapisz zmiany");
 
-
-        doButton.addClickHandler(new ClickHandler() {
+        this.doButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 Log.debug("doButton 1" + listOfEditedProducts.size());
                 Log.debug("doButton 2" + listOfDeletedProducts.size());
@@ -252,18 +240,14 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         form2Lay.addMember(form4);
         form2Lay.addMember(doButton);
 
-
         this.addMember(formLay);
         this.addMember(form2Lay);
-
         this.addMember(productsListGrid);
 
         this.loadData();
 
         Log.debug("ContentBox SalesComponent was initialized..");
     }
-
-
 
     public ListGrid getProductsListGrid() {
         return this.productsListGrid;

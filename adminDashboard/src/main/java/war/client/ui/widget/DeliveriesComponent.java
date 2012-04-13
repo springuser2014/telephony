@@ -54,9 +54,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private boolean listOfStoresLoaded = false;
     private boolean listOfProductsLoaded = false;
 
-    private List<Product> listOfEditedProducts = new ArrayList<Product>();
-    private List<Product> listOfDeletedProducts = new ArrayList<Product>();
-
     private Long numberOfDeliveries;
 
     private List<String> listOfColors = new ArrayList<String>();
@@ -65,6 +62,9 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private List<User> listOfUsers = new ArrayList<User>();
     private List<Store> listOfStores = new ArrayList<Store>();
     private List<Product> listOfProducts = new ArrayList<Product>();
+    private List<Product> listOfEditedProducts = new ArrayList<Product>();
+    private List<Product> listOfDeletedProducts = new ArrayList<Product>();
+
 
     private List<Product> getListOfEditedProducts() {
         return listOfEditedProducts;
@@ -81,14 +81,12 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.setMembersMargin(10);
         this.setAlign(VerticalAlignment.TOP);
-        // initialise the layout container
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
-//        this.setBackgroundColor(COLOR.CONTENT_BOX_BACKGROUND);
 
         this.productsListGrid = new ListGrid();
-        productsListGrid.setWidth(1010);
-        productsListGrid.setHeight(400);
-        productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setWidth(1010);
+        this.productsListGrid.setHeight(400);
+        this.productsListGrid.setShowAllRecords(true);
 
         ListGridField field0 = new ListGridField("label", "Tytuł dostawy", 250);
         ListGridField field1 = new ListGridField("imei", "IMEI", 150);
@@ -102,20 +100,19 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         field1.setCanEdit(false);
 
         this.productsListGrid.setFields(new ListGridField[]{field0, field1, field2, field3, field4, field5, field6});
-
-        productsListGrid.setShowAllRecords(true);
-        productsListGrid.setCanEdit(true);
-        productsListGrid.setGroupStartOpen(GroupStartOpen.FIRST);
-        productsListGrid.setGroupByField("label");
+        this.productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setCanEdit(true);
+        this.productsListGrid.setGroupStartOpen(GroupStartOpen.FIRST);
+        this.productsListGrid.setGroupByField("label");
 
         this.selectStoreCombo = new SelectItem();
-        selectStoreCombo.setTitle("Magazyn");
+        this.selectStoreCombo.setTitle("Magazyn");
 
         this.selectProductStatusCombo = new SelectItem();
-        selectProductStatusCombo.setTitle("Status produktu");
+        this.selectProductStatusCombo.setTitle("Status produktu");
 
         this.reloadButton = new IButton("Odśwież listę");
-        reloadButton.addClickHandler(new ClickHandler() {
+        this.reloadButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 clearBuffor();
                 fillWithData();
@@ -124,14 +121,14 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
 
         DynamicForm form4 = new DynamicForm();
-        selectUserCombo = new SelectItem();
-        selectUserCombo.setTitle("Edytujący");
+        this.selectUserCombo = new SelectItem();
+        this.selectUserCombo.setTitle("Edytujący");
         form4.setFields(selectUserCombo);
 
-        doButton = new IButton("Zapisz zmiany");
+        this.doButton = new IButton("Zapisz zmiany");
 
 
-        doButton.addClickHandler(new ClickHandler() {
+        this.doButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 Log.debug("doButton 1" + listOfEditedProducts.size());
                 Log.debug("doButton 2" + listOfDeletedProducts.size());
@@ -149,7 +146,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         form2Lay.addMember(doButton);
 
         this.selectPage = new SelectItem();
-        selectPage.setTitle("Zmień stronę");
+        this.selectPage.setTitle("Zmień stronę");
 
         DynamicForm form9 = new DynamicForm();
         form9.setFields(selectPage);
@@ -171,9 +168,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.addMember(formLay);
         this.addMember(form2Lay);
-
-//        productsListGrid.setMargin(20);
-
         this.addMember(productsListGrid);
 
         this.loadData();
@@ -260,25 +254,12 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                     producer.setValueMap(producers);
                     producer.setAddUnknownValues(true);
 
-//                    producer.addKeyUpHandler(new KeyUpHandler() {
-//                        public void onKeyUp(KeyUpEvent event) {
-//                            
-//                        }
-//                    });
-                    
                     producer.addBlurHandler(new BlurHandler() {
                         public void onBlur(BlurEvent event) {
                             editingProduct.setProducer(record.getAttribute("producer"));
                             tryAddProductToEditingList(editingProduct);
                         }
                     });
-
-//                    producer.addChangeHandler(new ChangeHandler() {
-//                        public void onChange(ChangeEvent event) {
-//
-//                            
-//                        }
-//                    });
 
                     return producer;
                 }
@@ -290,25 +271,12 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
                     LinkedHashMap<String, String> models = getModelsValueMap();
                     model.setValueMap(models);
-                    
-//                    model.addKeyUpHandler(new KeyUpHandler() {
-//                        public void onKeyUp(KeyUpEvent event) {
-//                            
-//                        }
-//                    });
-                    
                     model.addBlurHandler(new BlurHandler() {
                         public void onBlur(BlurEvent event) {
                             editingProduct.setModel(record.getAttribute("model"));
                             tryAddProductToEditingList(editingProduct);
                         }
                     });
-                            
-//                    model.addChangeHandler(new ChangeHandler() {
-//                        public void onChange(ChangeEvent event) {
-//                            
-//                        }
-//                    });
 
                     return model;
                 }
@@ -327,18 +295,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                             tryAddProductToEditingList(editingProduct);
                         }
                     });
-                    
-//                    color.addKeyUpHandler(new KeyUpHandler() {
-//                        public void onKeyUp(KeyUpEvent event) {
-//                       
-//                        }
-//                    });
-
-//                    color.addChangeHandler(new ChangeHandler() {
-//                        public void onChange(ChangeEvent event) {
-//                            
-//                        }
-//                    });
 
                     return color;
                 }
@@ -465,8 +421,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             setColor(product.getColor());
             setImei(product.getImei());
             setPriceIn(product.getPriceIn().toString());
-
-//            setAttribute("delete", "");
         }
 
         public void setLabel(String label) {
@@ -683,8 +637,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), getSelectedPage(), new AsyncCallback<List<Product>>() {
 
-            public void onFailure(Throwable caught) {
-            }
+            public void onFailure(Throwable caught) { }
 
             public void onSuccess(List<Product> result) {
 
@@ -693,9 +646,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
                 refreshProductsGrid();
             }
-
         });
-
     }
 
     private long getSelectedStoreId() {

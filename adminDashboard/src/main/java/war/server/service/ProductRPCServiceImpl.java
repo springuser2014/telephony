@@ -127,7 +127,6 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
             em.getTransaction().commit();
         }
         catch (Exception e) {
-//            em.getTransaction().rollback();
             logger.error("error message : {} , stackTrack : {}", e.getMessage(), e.getStackTrace());
             result.setStatus(RPCServiceStatus.Status.FAILED);
             result.setOperationStatusInfo("Wystąpił błąd podczas wykonywania operacji");

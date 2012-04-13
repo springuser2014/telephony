@@ -21,18 +21,8 @@ public class TopSubmenu extends HLayout {
 
         Log.debug("Initializing TopSubmenu widget..");
 
-        // initialise the layout container
         this.setHeight(SIZE.TOP_SUBMENU_HEIGHT);
         this.setBackgroundColor(COLOR.SUBMENU_BACKGROUND);
-
-        // initialise the masthead label
-//        label = new Label();
-//        label.setContents("TopSubmenu");
-//        label.setAlign(Alignment.CENTER);
-//        label.setOverflow(Overflow.HIDDEN);
-//
-//        // add the label to the layout container
-//        this.addMember(label);
 
         ToolStrip toolStrip = new ToolStrip();
         toolStrip.setWidth("100%");

@@ -49,9 +49,6 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
 
     public BaseEntity() { }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -63,9 +60,6 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         return str.toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj)
@@ -84,9 +78,6 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         if (id == null)
@@ -95,41 +86,18 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
             return id.hashCode();
     }
 
-
-    /**
-     * Zwraca klucz/identyfikator obiektu.
-     *
-     * @return Identyfikator obiektu lub null jeżeli nie posiada on tożsamości.
-     */
     public Long getId() {
         return this.id;
     }
 
-    /**
-     * Ustawia identyfikator obiektu.
-     *
-     * @param id nowa wartość identyfikatora.
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * Zwraca nr wersji obiektu.
-     * Protected - na potrzeby Gilead.
-     *
-     * @return wersja obiektu.
-     */
     protected int getVersion() {
         return this.version;
     }
 
-    /**
-     * Ustawia nr wersji obiektu.
-     * Protected - na potrzeby Gilead.
-     *
-     * @param version nowa wersja obiektu.
-     */
     protected void setVersion(int version) {
         this.version = version;
     }
@@ -142,14 +110,6 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         this.createdAt = createdAt;
     }
 
-//    public Long getCreatedBy() {
-//        return createdBy;
-//    }
-//
-//    public void setCreatedBy(Long createdBy) {
-//        this.createdBy = createdBy;
-//    }
-
     public Date getEditedAt() {
         return editedAt;
     }
@@ -158,14 +118,6 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         this.editedAt = editedAt;
     }
 
-//    public Long getEditedBy() {
-//        return editedBy;
-//    }
-//
-//    public void setEditedBy(Long editedBy) {
-//        this.editedBy = editedBy;
-//    }
-
     public Date getDeletedAt() {
         return deletedAt;
     }
@@ -173,14 +125,6 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
     }
-
-//    public Long getDeletedBy() {
-//        return deletedBy;
-//    }
-//
-//    public void setDeletedBy(Long deletedBy) {
-//        this.deletedBy = deletedBy;
-//    }
 
     public User getCreator() {
         return creator;

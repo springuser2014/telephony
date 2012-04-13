@@ -13,5 +13,5 @@ public interface UserRPCService extends RemoteService {
     public static final String PATH = "user";
     public static final String FULL_SERVICE_PATH = Constant.APPLICATION_URL_PREFIX + PATH;
 
-    List<User> fetchAllUsers();
+    public List<User> fetchAllUsers();
 }

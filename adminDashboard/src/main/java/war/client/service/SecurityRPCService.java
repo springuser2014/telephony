@@ -11,8 +11,8 @@ public interface SecurityRPCService extends RemoteService {
     public static final String PATH = "security";
     public static final String FULL_SERVICE_URL = Constant.APPLICATION_URL_PREFIX + PATH;
 
-    LoginResult login(String username, String password, boolean rememberMe);
+    public LoginResult login(String username, String password, boolean rememberMe);
 
-    void logout();
+    public void logout();
 
 }

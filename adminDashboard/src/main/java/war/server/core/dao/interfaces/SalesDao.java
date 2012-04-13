@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface SalesDao extends GenericDao<Sale>{
-    List<Sale> findByStore(Store store);
 
-    long getNumberOfSales(Store store);
+    public List<Sale> findByStore(Store store);
 
-    List<Sale> findLastest(Store store, int i, int numberOfElements);
+    public long getNumberOfSales(Store store);
 
-    List<Product> findProductsBySalesIds(ArrayList<Long> ids);
+    public List<Sale> findLastest(Store store, int i, int numberOfElements);
+
+    public List<Product> findProductsBySalesIds(ArrayList<Long> ids);
 }

@@ -37,18 +37,9 @@ public class Delivery extends BaseEntity {
     public Collection<Product> getProducts() {
         return products;
     }
-    
-//    public void addProduct(Product product) {
-//        products.add(product);
-//        product.setDelivery(this);
-//    }
 
     public void setProducts(Collection<Product> products) {
         this.products = products;
-        
-//        for (Product p :products) {
-//            p.setDelivery(this);
-//        }
     }
 
     public Delivery() {

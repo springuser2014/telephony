@@ -15,9 +15,6 @@ import war.client.configuration.SIZE;
 import war.client.gin.GuiInjector;
 
 
-/**
- * Klasa reprezentująca obiekt górnego menu aplikacji
- */
 public class TopMenu extends HLayout {
 
     private final GuiInjector injector = GWT.create(GuiInjector.class);
@@ -26,8 +23,6 @@ public class TopMenu extends HLayout {
         super();
 
         Log.debug("Initializing TopMenu widget..");
-
-        // initialise the layout container
         this.setHeight(SIZE.TOPMENU_HEIGHT);
         this.setBackgroundColor(COLOR.TOPMENU_BACKGROUND);
 

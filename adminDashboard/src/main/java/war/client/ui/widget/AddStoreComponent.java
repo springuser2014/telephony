@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+
 public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
     private final ProductRPCServiceAsync productService = GWT.create(ProductRPCService.class);
@@ -48,15 +49,16 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     private SelectItem selectStoreCombo;
     private SelectItem selectSalemanCombo;
     private DateItem selectDate;
-
     private TextItem imeibox;
     private TextItem pricebox;
-
     private ComboBoxItem selectProducerCombo;
     private ComboBoxItem selectModelCombo;
     private ComboBoxItem selectColorCombo;
+    private TextItem deliveryTitle;
+    private Label numberOfElementsLabel;
+    private ButtonItem addButton;
+    private ButtonItem saveDelivery;
 
-    /* ladowanie danych */
     private boolean listOfStoresLoaded = false;
     private boolean listOfProductsLoaded = false;
     private boolean listOfUsersLoaded = false;
@@ -72,34 +74,23 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     private List<String> listOfProducers = new ArrayList<String>();
     private List<String> listOfModels = new ArrayList<String>();
     private List<String> listOfImeis = new ArrayList<String>();
-
     private List<String> listOfNewImeis = new ArrayList<String>();
-
-    private ButtonItem addButton;
-    private ButtonItem saveDelivery;
-
     private List<Product> listOfNewProducts = new ArrayList<Product>();
-    private TextItem deliveryTitle;
-    private Label numberOfElementsLabel ;
-
 
     public AddStoreComponent() {
         super();
 
         Log.debug("Initializing AddStoreComponent widget..");
 
-        // initialise the layout container
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
-//        this.setBackgroundColor(COLOR.CONTENT_BOX_BACKGROUND);
-
         this.setAlign(Alignment.CENTER);
         this.setAlign(VerticalAlignment.TOP);
         this.setMembersMargin(10);
 
         this.productsListGrid = new ListGrid();
-        productsListGrid.setWidth(1010);
-        productsListGrid.setHeight(400);
-        productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setWidth(1010);
+        this.productsListGrid.setHeight(400);
+        this.productsListGrid.setShowAllRecords(true);
 
         ListGridField field1 = new ListGridField("imei", "IMEI", 180);
         ListGridField field2 = new ListGridField("color", "Kolor", 180);
@@ -146,11 +137,8 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         productsListGrid.setCanEdit(true);
         productsListGrid.setEditEvent(ListGridEditEvent.CLICK);
 
-//        field6.setType(ListGridFieldType.);
-
         this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
 
-        // górna-ogólna część formularza
         HLayout formLaydelivery = new HLayout();
         formLaydelivery.setMembersMargin(30);
         formLaydelivery.setHeight(25);
@@ -199,7 +187,6 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
         this.addMember(formLaydelivery);
 
-        // dolna-ogólna część formularza
         DynamicForm form = new DynamicForm();
         imeibox = new TextItem();
         imeibox.addKeyUpHandler(new KeyUpHandler() {
@@ -249,7 +236,6 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         form5.setTitleWidth(70);
         form5.setWidth(200);
         form5.setFields(pricebox);
-
 
         DynamicForm form6 = new DynamicForm();
         addButton = new ButtonItem();
@@ -306,7 +292,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         this.numberOfElementsLabel.setContents("Ilość produktów : 0");
 
         this.addMember(numberOfElementsLabel);
-        
+
         this.loadData();
 
         Log.debug("AddStoreComponent widget was initialized..");

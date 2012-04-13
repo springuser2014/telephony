@@ -51,8 +51,14 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
     private SelectItem selectStoreCombo;
     private SelectItem selectProductStatusCombo;
     private IButton reloadButton;
+    private TextItem imeibox;
+    private ComboBoxItem selectColorCombo;
+    private ComboBoxItem selectProducerCombo;
+    private ComboBoxItem selectModelCombo;
+    private DateItem deliveryDateFrom;
+    private DateItem deliveryDateTo;
+    private Label numberOfElementsLabel;
 
-    /* ladowanie danych */
     private boolean listOfStoresLoaded = false;
     private boolean listOfProductsLoaded = false;
     private boolean listOfColorsLoaded = false;
@@ -65,33 +71,19 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
     private List<String> listOfProducers = new ArrayList<String>();
     private List<String> listOfModels = new ArrayList<String>();
 
-    private TextItem imeibox;
-    private ComboBoxItem selectColorCombo;
-    private ComboBoxItem selectProducerCombo;
-
-    private ComboBoxItem selectModelCombo;
-    private DateItem deliveryDateFrom;
-    private DateItem deliveryDateTo;
-    private Label numberOfElementsLabel;
-
-
     public StoreProductsComponent() {
         super();
 
         Log.debug("Initializing ContextBox widget..");
 
         this.setMembersMargin(10);
-
-        // initialise the layout container
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
-//        this.setBackgroundColor(COLOR.CONTENT_BOX_BACKGROUND);
-
         this.setAlign(Alignment.CENTER);
         this.setAlign(VerticalAlignment.TOP);
         this.productsListGrid = new ListGrid();
-        productsListGrid.setWidth(1010);
-        productsListGrid.setHeight(400);
-        productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setWidth(1010);
+        this.productsListGrid.setHeight(400);
+        this.productsListGrid.setShowAllRecords(true);
 
         ListGridField field1 = new ListGridField("imei", "IMEI", 160);
         ListGridField field2 = new ListGridField("color", "Kolor", 160);
@@ -107,57 +99,38 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         this.numberOfElementsLabel.setContents("Ilość produktów : 0");
 
         this.selectStoreCombo = new SelectItem();
-        selectStoreCombo.setTitle("Magazyn");
+        this.selectStoreCombo.setTitle("Magazyn");
 
         this.selectProductStatusCombo = new SelectItem();
-        selectProductStatusCombo.setTitle("Status produktu");
+        this.selectProductStatusCombo.setTitle("Status produktu");
 
         this.reloadButton = new IButton("Pokaż produkty");
-        reloadButton.addClickHandler(new ClickHandler() {
+        this.reloadButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 fillWithData();
             }
         });
 
-//        reloadButton.addClickHandler(new ClickHandler() {
-//            @Override
-//            public void onClick(ClickEvent event) {
-//
-//                fillWithData();
-//            }
-//        });
-
-//        Log.debug("ContentBox widget initalizing - step 1 ");
         DynamicForm form = new DynamicForm();
         form.setFields(selectStoreCombo);
 
         HLayout formLay = new HLayout();
         formLay.setWidth100();
         formLay.setHeight(10);
-
         formLay.setMembersMargin(10);
-
         formLay.addMember(form);
         formLay.addMember(reloadButton);
 
         this.addMember(formLay);
 
-//        this.addMember(reloadButton);
-
-//        productsListGrid.setMargin(20);
-
-
         Pager pager = new Pager();
         pager.setNumberOfElements(2000);
         pager.setNumberOfElementsPerPage(Pager.PerPage.TEN);
-
-
         HLayout filterLayout = new HLayout();
 
-        // dolna-ogólna część formularza
         DynamicForm form0 = new DynamicForm();
-        imeibox = new TextItem();
-        imeibox.addKeyUpHandler(new KeyUpHandler() {
+        this.imeibox = new TextItem();
+        this.imeibox.addKeyUpHandler(new KeyUpHandler() {
             public void onKeyUp(KeyUpEvent event) {
                 if (event.getKeyName().equals("Enter")) {
                     fillWithData();
@@ -165,35 +138,33 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
             }
         });
 
-
-//        Log.debug("ContentBox widget initalizing - step 2 ");
-        imeibox.setTitle("IMEI");
-        imeibox.setWidth(160);
+        this.imeibox.setTitle("IMEI");
+        this.imeibox.setWidth(160);
         form0.setTitleWidth(40);
-        imeibox.setTitleAlign(Alignment.LEFT);
+        this.imeibox.setTitleAlign(Alignment.LEFT);
         form0.setFields(imeibox);
 
         DynamicForm form2 = new DynamicForm();
-        selectColorCombo = new ComboBoxItem();
-        selectColorCombo.setTitle("Kolor");
-        selectColorCombo.setWidth(160);
+        this.selectColorCombo = new ComboBoxItem();
+        this.selectColorCombo.setTitle("Kolor");
+        this.selectColorCombo.setWidth(160);
         form2.setTitleWidth(40);
-        selectColorCombo.setTitleAlign(Alignment.LEFT);
+        this.selectColorCombo.setTitleAlign(Alignment.LEFT);
         form2.setFields(selectColorCombo);
 
         DynamicForm form3 = new DynamicForm();
-        selectProducerCombo = new ComboBoxItem();
-        selectProducerCombo.setTitle("Producent");
-        selectProducerCombo.setTitleAlign(Alignment.LEFT);
-        selectProducerCombo.setWidth(150);
+        this.selectProducerCombo = new ComboBoxItem();
+        this.selectProducerCombo.setTitle("Producent");
+        this.selectProducerCombo.setTitleAlign(Alignment.LEFT);
+        this.selectProducerCombo.setWidth(150);
         form3.setTitleWidth(50);
         form3.setFields(selectProducerCombo);
 
         DynamicForm form4 = new DynamicForm();
-        selectModelCombo = new ComboBoxItem();
-        selectModelCombo.setTitle("Model");
-        selectModelCombo.setTitleAlign(Alignment.LEFT);
-        selectModelCombo.setWidth(160);
+        this.selectModelCombo = new ComboBoxItem();
+        this.selectModelCombo.setTitle("Model");
+        this.selectModelCombo.setTitleAlign(Alignment.LEFT);
+        this.selectModelCombo.setWidth(160);
         form4.setTitleWidth(40);
         form4.setFields(selectModelCombo);
         form4.setWidth(200);
@@ -201,9 +172,8 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         DynamicForm formdel3 = new DynamicForm();
         formdel3.setWidth(300);
         formdel3.setTitleWidth(100);
-        deliveryDateFrom = new DateItem();
-        deliveryDateFrom.setTitle("Data dostawy od ");
-//        deliveryDateFrom.setValue(new Date("01-01-2012"));
+        this.deliveryDateFrom = new DateItem();
+        this.deliveryDateFrom.setTitle("Data dostawy od ");
 
         DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
             public String format(Date date) {
@@ -216,10 +186,8 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
 
         });
 
-//        Log.debug("ContentBox widget initalizing - step 3 ");
         deliveryDateTo = new DateItem();
         deliveryDateTo.setTitle("Data dostawy do ");
-
         formdel3.setFields(deliveryDateFrom, deliveryDateTo);
 
         filterLayout.addMember(form0);
@@ -229,9 +197,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         filterLayout.addMember(formdel3);
 
         this.addMember(filterLayout);
-
         this.addMember(productsListGrid);
-
         this.addMember(numberOfElementsLabel);
 
         this.loadData();
@@ -258,7 +224,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
             setProducer(product.getProducer());
             setModel(product.getModel());
             setPriceIn(product.getPriceIn());
-            if (product.getDelivery() != null ) {
+            if (product.getDelivery() != null) {
 
                 setDateIn(product.getDelivery().getDateIn());
                 setDeliveryTitle(product.getDelivery().getLabel());
@@ -268,7 +234,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         public void setDateIn(Date dateIn) {
             setAttribute("date_in", dateIn);
         }
-        
+
         public void setDeliveryTitle(String label) {
             setAttribute("delivery_title", label);
         }
@@ -316,8 +282,6 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
         loadColors();
         loadModels();
         loadProducers();
-//        loadUsers();
-//        loadImeisInUse();
     }
 
     private void loadProducers() {
@@ -390,7 +354,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
     }
 
     public void fillWithData() {
-        /* pobranie produktow do tabeli */
+
         this.productService.fetchAllProductsByCriteria(getImei(), getProducer(), getModel(), getColor(), getSelectedStore(), getDeliveryDateStart(), getDeliveryDateEnd(), getSelectedProductsStatus(), new AsyncCallback<List<Product>>() {
 
 
@@ -529,18 +493,7 @@ public class StoreProductsComponent extends VLayout implements TelephonyComponen
     }
 
     public ProductStatus getSelectedProductsStatus() {
-//        String val = this.selectProductStatusCombo.getValueAsString();
-//
-//        if (val.equals(ProductStatus.IN_STORE.toString())) {
-//            return ProductStatus.IN_STORE;
-//        }
-////        else if (val.equals(ProductStatus.SOLD.toString())) {
-//        else {
-//            return ProductStatus.SOLD;
-//        }
-
         return ProductStatus.IN_STORE;
-
     }
 
 

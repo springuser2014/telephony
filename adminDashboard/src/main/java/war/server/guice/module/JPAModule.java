@@ -27,11 +27,5 @@ public class JPAModule extends AbstractModule {
         bind(EntityManagerFactory.class).toProvider(EntityManagerFactoryProvider.class).in(Singleton.class);
         bind(EntityManager.class).toProvider(EntityManagerProvider.class).in(Singleton.class);
         bind(PersistentBeanManager.class).toProvider(PersistentBeanManagerProvider.class).in(Singleton.class);
-
-        configureJPA();
     }
-
-    protected void configureJPA() {
-    }
-
 }

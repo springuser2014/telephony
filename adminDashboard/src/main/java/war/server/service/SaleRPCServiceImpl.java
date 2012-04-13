@@ -29,7 +29,6 @@ public class SaleRPCServiceImpl extends GuicePersistentRemoteServiceServlet impl
         setBeanManager(beanManager);
     }
 
-
     public List<Sale> fetchAllSales() {
         logger.debug("SaleRPCServiceImpl.fetchAllSales starts");
 

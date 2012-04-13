@@ -23,7 +23,6 @@ public class TelephonyServletContextListener extends GuiceServletContextListener
         return Guice.createInjector(
                 new TelephonyServletModule()
                 ,new TelephonyServerModule()
-//              ,new SecurityModule()
         );
     }
 }

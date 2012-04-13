@@ -16,9 +16,7 @@ import war.client.gin.GuiInjector;
 import war.client.ui.widget.*;
 
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
+
 public class adminDashboard implements EntryPoint {
 
     private final GuiInjector injector = GWT.create(GuiInjector.class);
@@ -78,16 +76,14 @@ public class adminDashboard implements EntryPoint {
         topTabSet.addTab(tTab5);
         topTabSet.addTab(tTab6);
 
-        // initialise the main layout container
         mainLayout = new VLayout();
         mainLayout.setWidth100();
         mainLayout.setHeight100();
         mainLayout.setAlign(VerticalAlignment.TOP);
 
-        // add the top menu container to the main layout container
         mainLayout.addMember(topTabSet);
 
-        // add the main layout container to GWT's root panel
+
         RootLayoutPanel.get().add(mainLayout);
     }
 

@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface SaleService {
 
-    List<Sale> findAllSales();
+    public List<Sale> findAllSales();
     
-    void addNewSale(Sale sale, List<Product> products, User user, Store store);
+    public void addNewSale(Sale sale, List<Product> products, User user, Store store);
 
-    List<Product> fetchAllSalesFrom(Store store, int page);
+    public List<Product> fetchAllSalesFrom(Store store, int page);
 }

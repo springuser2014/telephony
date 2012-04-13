@@ -4,4 +4,5 @@ import war.server.core.entity.UserRole;
 
 
 public interface UserRolesDao extends GenericDao<UserRole> {
+
 }

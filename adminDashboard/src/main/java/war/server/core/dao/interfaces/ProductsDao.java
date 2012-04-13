@@ -9,21 +9,19 @@ import java.util.List;
 
 public interface ProductsDao extends GenericDao<Product> {
     
+    public List<Product> findCreatedByUserId(Long userId, ProductStatus productStatus);
 
-
-    List<Product> findCreatedByUserId(Long userId, ProductStatus productStatus);
-
-    List<Product> findByStoreId(Long storeId, ProductStatus productStatus);
+    public List<Product> findByStoreId(Long storeId, ProductStatus productStatus);
     
-    List<Product> findByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus productStatus);
+    public List<Product> findByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus productStatus);
 
-    Product findByImei(String imei);
+    public Product findByImei(String imei);
 
-    List<String> fetchImeisList();
+    public List<String> fetchImeisList();
 
-    List<String> fetchProducersList();
+    public List<String> fetchProducersList();
 
-    List<String> fetchModelsList();
+    public List<String> fetchModelsList();
 
-    Product findByImeiAndStoreId(String imei, Long storeId);
+    public Product findByImeiAndStoreId(String imei, Long storeId);
 }

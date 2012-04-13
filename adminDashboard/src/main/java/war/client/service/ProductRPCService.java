@@ -18,22 +18,22 @@ public interface ProductRPCService extends RemoteService {
     public static String PATH = "product";
     public static String FULL_SERVICE_PATH = Constant.APPLICATION_URL_PREFIX + PATH;
 
-    List<String> fetchAllImeiInUse();
+    public List<String> fetchAllImeiInUse();
     
-    List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
+    public List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
     
-    List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status);
+    public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status);
     
     public Product fetchProductByImeiAndStoreId(String imei, Long storeId);
     
-    RPCServiceStatus moveProducts(Store store, List<Product> products, User user);
+    public RPCServiceStatus moveProducts(Store store, List<Product> products, User user);
 
-    List<String> fetchAllProducers();
+    public List<String> fetchAllProducers();
 
-    List<String> fetchAllModels();
+    public List<String> fetchAllModels();
 
-    List<String> fetchAllColors();
+    public List<String> fetchAllColors();
 
-    RPCServiceStatus updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor);
+    public RPCServiceStatus updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor);
 }
 

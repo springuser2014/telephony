@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface DeliveriesDao extends GenericDao<Delivery> {
     
-    List<Product> findProductsByDeliveriesIds(List<Long> ids);
+    public List<Product> findProductsByDeliveriesIds(List<Long> ids);
     
-    List<Delivery> findLastest(Store store, int startPosition, int numberOfElements);
+    public List<Delivery> findLastest(Store store, int startPosition, int numberOfElements);
 
-    long getNumberOfDeliveries(Store store);
+    public long getNumberOfDeliveries(Store store);
 }

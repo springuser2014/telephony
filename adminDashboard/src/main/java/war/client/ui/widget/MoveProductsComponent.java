@@ -52,36 +52,30 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
     private IButton doButton;
     private IButton selectUnselectButton;
     private SelectItem selectUserCombo;
+    private Label numberOfElementsLabel;
 
-    /* ladowanie danych */
     private boolean listOfStoresLoaded = false;
-    //    private boolean listOfProductsLoaded = false;
     private boolean listOfUsersLoaded = false;
 
-
     private List<Product> listOfSelectedProducts = new ArrayList<Product>();
-    //    private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Store> listOfStores = new ArrayList<Store>();
     private List<User> listOfUsers = new ArrayList<User>();
-    private Label numberOfElementsLabel;
 
     public MoveProductsComponent() {
         super();
 
         Log.debug("Initializing MoveProductsComponent widget..");
 
-        // initialise the layout container
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
 
         this.setMembersMargin(10);
         this.setAlign(Alignment.CENTER);
         this.setAlign(VerticalAlignment.TOP);
         this.productsListGrid = new ListGrid();
-        productsListGrid.setWidth(1010);
-        productsListGrid.setHeight(400);
-        productsListGrid.setShowAllRecords(true);
+        this.productsListGrid.setWidth(1010);
+        this.productsListGrid.setHeight(400);
+        this.productsListGrid.setShowAllRecords(true);
 
-//        ListGridField field0 = new ListGridField("selected", " ", 10);
         ListGridField field1 = new ListGridField("imei", "IMEI", 180);
         ListGridField field2 = new ListGridField("color", "Kolor", 180);
         ListGridField field3 = new ListGridField("producer", "Producent", 180);
@@ -125,14 +119,14 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
             }
         });
 
-        productsListGrid.setCanEdit(true);
-        productsListGrid.setEditEvent(ListGridEditEvent.CLICK);
+        this.productsListGrid.setCanEdit(true);
+        this.productsListGrid.setEditEvent(ListGridEditEvent.CLICK);
 
         this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
 
         this.selectStoreCombo = new SelectItem();
-        selectStoreCombo.setTitle("Magazyn");
-        selectStoreCombo.addChangedHandler(new ChangedHandler() {
+        this.selectStoreCombo.setTitle("Magazyn");
+        this.selectStoreCombo.addChangedHandler(new ChangedHandler() {
             public void onChanged(ChangedEvent event) {
                 refreshDestinationStoreComboValues();
                 clearData();
@@ -140,16 +134,8 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
         });
 
         this.selectProductStatusCombo = new SelectItem();
-        selectProductStatusCombo.setTitle("Status produktu");
+        this.selectProductStatusCombo.setTitle("Status produktu");
 
-//        this.reloadButton = new IButton("Odśwież listę");
-//        reloadButton.addClickHandler(new ClickHandler() {
-//            public void onClick(ClickEvent event) {
-//                fillWithData();
-//            }
-//        });
-
-        // formularz wyboru magazynu
         DynamicForm form = new DynamicForm();
         form.setFields(selectStoreCombo);
         form.setWidth(400);
@@ -158,20 +144,15 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
         HLayout formLay = new HLayout();
         formLay.setWidth100();
         formLay.setHeight(5);
-
         formLay.setMembersMargin(10);
-
         formLay.addMember(form);
-//        formLay.addMember(reloadButton);
-
         this.addMember(formLay);
 
-        // formularz wyboru produktu po IMEI
         DynamicForm form2 = new DynamicForm();
-        imeibox = new TextItem();
-        imeibox.setTitle("Zaznacz/odznacz produkt (wg imei)");
+        this.imeibox = new TextItem();
+        this.imeibox.setTitle("Zaznacz/odznacz produkt (wg imei)");
 
-        imeibox.addKeyUpHandler(new KeyUpHandler() {
+        this.imeibox.addKeyUpHandler(new KeyUpHandler() {
             public void onKeyUp(KeyUpEvent event) {
                 if (event.getKeyName().equals("Enter")) {
                     tryToAddProductToList();
@@ -188,10 +169,10 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
         formLay2.setMembersMargin(10);
         formLay2.addMember(form2);
 
-        selectUnselectButton = new IButton("Zaznacz/odznacz");
+        this.selectUnselectButton = new IButton("Zaznacz/odznacz");
         formLay2.addMember(selectUnselectButton);
 
-        selectUnselectButton.addClickHandler(new ClickHandler() {
+        this.selectUnselectButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 tryToAddProductToList();
             }
@@ -200,10 +181,8 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
         form2.setFields(imeibox);
         form2.setWidth(400);
         form2.setTitleWidth(200);
-
         this.addMember(formLay2);
 
-        // formularz przenoszenia produktów do innego magazynu
         HLayout formLay3 = new HLayout();
         formLay3.setWidth100();
         formLay3.setHeight(5);
@@ -211,31 +190,29 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
 
 
         DynamicForm form3 = new DynamicForm();
-        selectDestinationStoreCombo = new SelectItem();
-        selectDestinationStoreCombo.setTitle("Zaznaczone produkty przenieś do");
+        this.selectDestinationStoreCombo = new SelectItem();
+        this.selectDestinationStoreCombo.setTitle("Zaznaczone produkty przenieś do");
         form3.setTitleWidth(200);
         form3.setFields(selectDestinationStoreCombo);
         form3.setWidth(400);
         formLay3.addMember(form3);
 
         DynamicForm form4 = new DynamicForm();
-        selectUserCombo = new SelectItem();
-        selectUserCombo.setTitle("przenoszący");
+        this.selectUserCombo = new SelectItem();
+        this.selectUserCombo.setTitle("przenoszący");
         form4.setFields(selectUserCombo);
 
         formLay3.addMember(form4);
-        doButton = new IButton("Wykonaj");
+        this.doButton = new IButton("Wykonaj");
 
-        doButton.addClickHandler(new ClickHandler() {
+        this.doButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 tryToMoveProducts();
             }
         });
 
         formLay3.addMember(doButton);
-
         this.addMember(formLay3);
-
         this.addMember(productsListGrid);
 
         this.numberOfElementsLabel = new Label();
@@ -307,24 +284,7 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
     }
 
     private List<Product> getSelectedProdcuts() {
-//        ListGridRecord[] records = this.productsListGrid.getSelectedRecords();
-//
-//        List<Product> result = new ArrayList<Product>();
-//
-//        for (int i = 0; i < records.length; i++) {
-//
-//            MoveProductsComponentRecord record = (MoveProductsComponentRecord) records[i];
-//
-//            for (Product p : this.listOfProducts) {
-//                if (p.getImei().equals(record.getImei())) {
-//                    result.add(p);
-//                }
-//            }
-//        }
-
         return this.listOfSelectedProducts;
-
-//        return result;
     }
 
     private void clearData() {
@@ -417,24 +377,6 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
         this.imeibox.setValue("");
         this.imeibox.focusInItem();
     }
-
-//    private void selectProductWithImei(String imei) {
-//
-//        for (Product p : this.listOfProducts) {
-//            if (p.getImei().equals(imei)) {
-//                listOfSelectedProducts.add(p);
-//            }
-//        }
-//    }
-//
-//    private void unselectProductWithImei(String imei) {
-//        for (Product p : this.listOfProducts) {
-//            if (p.getImei().equals(imei)) {
-//                listOfSelectedProducts.remove(p);
-//            }
-//        }
-//
-//    }
 
     class MoveProductsComponentRecord extends ListGridRecord {
 
@@ -534,29 +476,6 @@ public class MoveProductsComponent extends VLayout implements TelephonyComponent
             }
         });
     }
-
-//    public void fillWithData() {
-//        loadProducts();
-//    }
-
-//    private void loadProducts() {
-//        /* pobranie produktow do tabeli */
-//        this.productService.fetchAllProducts(getSelectedStoreId(), ProductStatus.IN_STORE, new AsyncCallback<List<Product>>() {
-//
-//            public void onFailure(Throwable caught) {
-//                SC.say("Niestety pobranie produktów nie powiodło się, jeżeli problem będzie się powtarzał skontaktuj się z administratorem");
-//                listOfProductsLoaded = false;
-//            }
-//
-//            public void onSuccess(List<Product> result) {
-//
-//                listOfProductsLoaded = true;
-//                listOfProducts = result;
-//
-//                refreshProductsGrid();
-//            }
-//        });
-//    }
 
     private long getSelectedStoreId() {
 
