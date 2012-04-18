@@ -4,6 +4,9 @@ package war.client.ui.widget.component;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 
+/**
+ * @todo delete?
+ */
 public class Pager extends HLayout {
 
     private int numberOfElements;

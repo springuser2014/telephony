@@ -16,7 +16,26 @@ import war.client.gin.GuiInjector;
 import war.client.ui.widget.*;
 
 
+/**
+ * GENERAL 'ARCHITECTURE' REFACTORING ELEMENTS TODO :
 
+ * @todo refactor constants, labels etc
+ * @todo better logging on client side
+ * @todo better logging on server side
+ * @todo sending client side errors to remote server
+ * @todo divide GUI into components
+ * @todo internationalization GUI elements
+ * @todo better integration with guice injection (gin)
+ * @todo better integration with guice (server side)
+ * @todo integration with gwtp : event bus, dispatch
+ * @todo prepare continuous integration server and app config
+ * @todo prepare second instance of producation server for preview
+ *
+ * GENERAL APPLICATION FEATURES TODO :
+ * @todo add searching, filtering, ordering products in deliveries and sales pages
+ * @todo sign in, users management, stores management
+ *
+ */
 public class adminDashboard implements EntryPoint {
 
     private final GuiInjector injector = GWT.create(GuiInjector.class);

@@ -2,6 +2,8 @@ package war.client.gin;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
+import war.client.ui.config.BasicDataLoader;
+import war.client.ui.config.BasicDataLoaderImpl;
 import war.client.ui.widget.*;
 import war.client.ui.widget.form.LoginForm;
 
@@ -19,5 +21,7 @@ public class TelephonyClientModule extends AbstractGinModule {
         
         bind(AddStoreComponent.class).in(Singleton.class);
         bind(MoveProductsComponent.class).in(Singleton.class);
+
+        bind(BasicDataLoader.class).to(BasicDataLoaderImpl.class);
     }
 }

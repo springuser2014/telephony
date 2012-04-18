@@ -3,6 +3,7 @@ package war.client.gin;
 
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
+import war.client.ui.config.BasicDataLoader;
 import war.client.ui.widget.*;
 import war.client.ui.widget.form.LoginForm;
 
@@ -25,4 +26,6 @@ public interface GuiInjector extends Ginjector {
     MoveProductsComponent getEditStoreComponent();
 
     SaleProductsComponent getSalesProductsComponent();
+
+    BasicDataLoader getBasicDataLoader();
 }

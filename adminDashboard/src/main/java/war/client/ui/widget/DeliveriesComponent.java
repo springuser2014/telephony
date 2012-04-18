@@ -77,7 +77,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     public DeliveriesComponent() {
         super();
 
-        Log.debug("Initializing DeliveriesComponent widget..");
+        Log.debug("Initializing DeliveriesComponent widget");
 
         this.setMembersMargin(10);
         this.setAlign(VerticalAlignment.TOP);
@@ -172,13 +172,15 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.loadData();
 
-        Log.debug("ContentBox DeliveriesComponent was initialized..");
+        Log.debug("DeliveriesComponent widget was initialized..");
     }
 
     private void updateProducts() {
+
+        Log.debug("DeliveriesComponent - updateProducts");
         
-        Log.debug("nb of edited products : " + getListOfEditedProducts().size());
-        Log.debug("nb of deleted products : " + getListOfDeletedProducts().size());
+        Log.debug("Number of edited products : " + getListOfEditedProducts().size());
+        Log.debug("Number of deleted products : " + getListOfDeletedProducts().size());
 
         this.productService.updateProducts(getListOfEditedProducts(), getListOfDeletedProducts(), getEmptyList(), getChangedUser(), new AsyncCallback<RPCServiceStatus>() {
             public void onFailure(Throwable caught) {
@@ -485,7 +487,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     private void loadUsers() {
 
-        Log.debug("DeliveriesComponent.loadUsers");
+        Log.debug("DeliveriesComponent - loadUsers");
 
         this.userService.fetchAllUsers(new AsyncCallback<List<User>>() {
             public void onFailure(Throwable caught) {
@@ -504,7 +506,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadProducers() {
-        Log.debug("DeliveriesComponent.loadProducers");
+        Log.debug("DeliveriesComponent - loadProducers");
 
         this.productService.fetchAllProducers(new AsyncCallback<List<String>>() {
             public void onFailure(Throwable caught) {
@@ -523,7 +525,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadModels() {
-        Log.debug("DeliveriesComponent.loadModels");
+        Log.debug("DeliveriesComponent - loadModels");
 
         this.productService.fetchAllModels(new AsyncCallback<List<String>>() {
             public void onFailure(Throwable caught) {
@@ -542,7 +544,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadColors() {
-        Log.debug("DeliveriesComponent.loadColors");
+        Log.debug("DeliveriesComponent - loadColors");
 
         this.productService.fetchAllColors(new AsyncCallback<List<String>>() {
             public void onFailure(Throwable caught) {
@@ -571,7 +573,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadStores() {
-        Log.debug("DeliveriesComponent.loadStores");
+        Log.debug("DeliveriesComponent - loadStores");
 
         this.storeService.fetchAllStores(new AsyncCallback<List<Store>>() {
 
@@ -595,7 +597,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void loadNumberOfDeliveries() {
-        Log.debug("DeliveriesComponent.loadNumberOfDeliveries");
+        Log.debug("DeliveriesComponent - loadNumberOfDeliveries");
 
         this.informationService.getNumberOfDeliveries(getSelectedStore(), new AsyncCallback<Long>() {
             public void onFailure(Throwable caught) {
@@ -702,8 +704,9 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void refreshStoresCombo() {
+        Log.debug("DeliveriesComponent - refreshStoresCombo");
+
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
-        Log.debug("DeliververiesComponentRecord - refreshStoresCombo");
 
         for (Store store : listOfStores) {
 
@@ -719,6 +722,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     public Store getSelectedStore() {
+        Log.debug("DeliveriesComponent - getSelectedStore");
 
         long l = getSelectedStoreId();
 
@@ -731,6 +735,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     public int getSelectedPage() {
+        Log.debug("DeliveriesComponent - getSelectedPage");
+
         String val = this.selectPage.getValueAsString();
 
         return Integer.parseInt(val);

@@ -80,7 +80,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
     public AddStoreComponent() {
         super();
 
-        Log.debug("Initializing AddStoreComponent widget..");
+        Log.debug("Initializing AddStoreComponent widget");
 
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
         this.setAlign(Alignment.CENTER);
@@ -134,8 +134,8 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
             }
         });
 
-        productsListGrid.setCanEdit(true);
-        productsListGrid.setEditEvent(ListGridEditEvent.CLICK);
+        this.productsListGrid.setCanEdit(true);
+        this.productsListGrid.setEditEvent(ListGridEditEvent.CLICK);
 
         this.productsListGrid.setFields(new ListGridField[]{field1, field2, field3, field4, field5, field6});
 
@@ -146,26 +146,26 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         DynamicForm form0 = new DynamicForm();
         form0.setTitleWidth(100);
         form0.setWidth(300);
-        deliveryTitle = new TextItem();
-        deliveryTitle.setTitle("Tytuł dostawy");
-        form0.setFields(deliveryTitle);
+        this.deliveryTitle = new TextItem();
+        this.deliveryTitle.setTitle("Tytuł dostawy");
+        form0.setFields(this.deliveryTitle);
 
         DynamicForm formdel = new DynamicForm();
         formdel.setTitleWidth(60);
-        selectStoreCombo = new SelectItem();
-        selectStoreCombo.setTitle("Magazyn");
-        formdel.setFields(selectStoreCombo);
+        this.selectStoreCombo = new SelectItem();
+        this.selectStoreCombo.setTitle("Magazyn");
+        formdel.setFields(this.selectStoreCombo);
 
         DynamicForm formdel2 = new DynamicForm();
-        selectSalemanCombo = new SelectItem();
-        selectSalemanCombo.setTitle("Dodający");
-        formdel2.setFields(selectSalemanCombo);
+        this.selectSalemanCombo = new SelectItem();
+        this.selectSalemanCombo.setTitle("Dodający");
+        formdel2.setFields(this.selectSalemanCombo);
 
         DynamicForm formdel3 = new DynamicForm();
         formdel3.setWidth(300);
         formdel3.setTitleWidth(100);
-        selectDate = new DateItem();
-        selectDate.setTitle("Data dostawy");
+        this.selectDate = new DateItem();
+        this.selectDate.setTitle("Data dostawy");
 
         DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
             public String format(Date date) {
@@ -178,7 +178,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
         });
 
-        formdel3.setFields(selectDate);
+        formdel3.setFields(this.selectDate);
 
         formLaydelivery.addMember(form0);
         formLaydelivery.addMember(formdel);
@@ -188,8 +188,8 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         this.addMember(formLaydelivery);
 
         DynamicForm form = new DynamicForm();
-        imeibox = new TextItem();
-        imeibox.addKeyUpHandler(new KeyUpHandler() {
+        this.imeibox = new TextItem();
+        this.imeibox.addKeyUpHandler(new KeyUpHandler() {
             public void onKeyUp(KeyUpEvent event) {
                 if (event.getKeyName().equals("Enter")) {
                     tryToAddProductToList();
@@ -197,57 +197,57 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
             }
         });
 
-        imeibox.setTitle("IMEI");
-        imeibox.setWidth(160);
+        this.imeibox.setTitle("IMEI");
+        this.imeibox.setWidth(160);
         form.setTitleWidth(40);
-        imeibox.setTitleAlign(Alignment.LEFT);
-        form.setFields(imeibox);
+        this.imeibox.setTitleAlign(Alignment.LEFT);
+        form.setFields(this.imeibox);
 
         DynamicForm form2 = new DynamicForm();
-        selectColorCombo = new ComboBoxItem();
-        selectColorCombo.setTitle("Kolor");
-        selectColorCombo.setWidth(160);
+        this.selectColorCombo = new ComboBoxItem();
+        this.selectColorCombo.setTitle("Kolor");
+        this.selectColorCombo.setWidth(160);
         form2.setTitleWidth(40);
-        selectColorCombo.setTitleAlign(Alignment.LEFT);
-        form2.setFields(selectColorCombo);
+        this.selectColorCombo.setTitleAlign(Alignment.LEFT);
+        form2.setFields(this.selectColorCombo);
 
         DynamicForm form3 = new DynamicForm();
-        selectProducerCombo = new ComboBoxItem();
-        selectProducerCombo.setTitle("Producent");
-        selectProducerCombo.setTitleAlign(Alignment.LEFT);
-        selectProducerCombo.setWidth(150);
+        this.selectProducerCombo = new ComboBoxItem();
+        this.selectProducerCombo.setTitle("Producent");
+        this.selectProducerCombo.setTitleAlign(Alignment.LEFT);
+        this.selectProducerCombo.setWidth(150);
         form3.setTitleWidth(50);
-        form3.setFields(selectProducerCombo);
+        form3.setFields(this.selectProducerCombo);
 
         DynamicForm form4 = new DynamicForm();
-        selectModelCombo = new ComboBoxItem();
-        selectModelCombo.setTitle("Model");
-        selectModelCombo.setTitleAlign(Alignment.LEFT);
-        selectModelCombo.setWidth(160);
+        this.selectModelCombo = new ComboBoxItem();
+        this.selectModelCombo.setTitle("Model");
+        this.selectModelCombo.setTitleAlign(Alignment.LEFT);
+        this.selectModelCombo.setWidth(160);
         form4.setTitleWidth(40);
-        form4.setFields(selectModelCombo);
+        form4.setFields(this.selectModelCombo);
         form4.setWidth(200);
 
         DynamicForm form5 = new DynamicForm();
 
-        pricebox = new TextItem();
-        pricebox.setTitle("Cena zakupu");
-        pricebox.setWidth(130);
+        this.pricebox = new TextItem();
+        this.pricebox.setTitle("Cena zakupu");
+        this.pricebox.setWidth(130);
         form5.setTitleWidth(70);
         form5.setWidth(200);
-        form5.setFields(pricebox);
+        form5.setFields(this.pricebox);
 
         DynamicForm form6 = new DynamicForm();
-        addButton = new ButtonItem();
-        addButton.setTitle("Dodaj produkt");
+        this.addButton = new ButtonItem();
+        this.addButton.setTitle("Dodaj produkt");
 
-        addButton.addClickHandler(new ClickHandler() {
+        this.addButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 tryToAddProductToList();
             }
         });
 
-        form6.setFields(addButton);
+        form6.setFields(this.addButton);
         HLayout formLay = new HLayout();
         formLay.setWidth100();
         formLay.setHeight(25);
@@ -265,11 +265,11 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
         HLayout formLaybottom = new HLayout();
         DynamicForm form7 = new DynamicForm();
-        saveDelivery = new ButtonItem();
-        saveDelivery.setTitle("Zapisz dostawę");
-        form7.setFields(saveDelivery);
+        this.saveDelivery = new ButtonItem();
+        this.saveDelivery.setTitle("Zapisz dostawę");
+        form7.setFields(this.saveDelivery);
 
-        saveDelivery.addClickHandler(new ClickHandler() {
+        this.saveDelivery.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
 
                 String msg = validateAll();
@@ -286,7 +286,7 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
         formLaybottom.setHeight(25);
 
         this.addMember(formLaybottom);
-        this.addMember(productsListGrid);
+        this.addMember(this.productsListGrid);
 
         this.numberOfElementsLabel = new Label();
         this.numberOfElementsLabel.setContents("Ilość produktów : 0");
@@ -295,10 +295,12 @@ public class AddStoreComponent extends VLayout implements TelephonyComponent {
 
         this.loadData();
 
-        Log.debug("AddStoreComponent widget was initialized..");
+        Log.debug("AddStoreComponent widget was initialized");
     }
 
     private void tryToAddDelivery() {
+
+        Log.debug("AddStoreComponent - tryToAddDelivery");
 
         this.deliveryService.addNewDelivery(getDelivery(), getProducts(), getUser(), getStore(), new AsyncCallback<RPCServiceStatus>() {
             public void onFailure(Throwable caught) {

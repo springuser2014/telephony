@@ -21,6 +21,9 @@ import war.client.service.SecurityRPCServiceAsync;
 import war.shared.LoginResult;
 
 
+/**
+ * @todo delete?
+ */
 public class LoginForm extends DynamicForm {
 
 

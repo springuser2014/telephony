@@ -77,7 +77,6 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
         // initialise the layout container
         this.setHeight(SIZE.CONTEXT_BOX_HEIGHT);
-//        this.setBackgroundColor(COLOR.CONTENT_BOX_BACKGROUND);
         this.setAlign(VerticalAlignment.TOP);
         this.setMembersMargin(10);
 
@@ -146,13 +145,6 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
 
         this.selectProductStatusCombo = new SelectItem();
         selectProductStatusCombo.setTitle("Status produktu");
-
-//        this.reloadButton = new IButton("Odśwież listę");
-//        reloadButton.addClickHandler(new ClickHandler() {
-//            public void onClick(ClickEvent event) {
-//                fillWithData();
-//            }
-//        });
 
         // formularz wyboru magazynu
         DynamicForm form = new DynamicForm();
