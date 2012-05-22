@@ -12,6 +12,7 @@ import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.service.interfaces.SaleService;
 import war.server.gilead.GuicePersistentRemoteServiceServlet;
+import war.shared.ListOrder;
 import war.shared.RPCServiceStatus;
 
 import java.util.List;
@@ -57,10 +58,10 @@ public class SaleRPCServiceImpl extends GuicePersistentRemoteServiceServlet impl
         return result;
     }
 
-    public List<Product> fetchSalesFrom(Store store, int page) {
+    public List<Product> fetchSalesFrom(Store store, int page, ListOrder order) {
         logger.debug("SaleRPCServiceImpl.addNewSale starts");
 
-        List<Product> result = saleService.fetchAllSalesFrom(store, page);
+        List<Product> result = saleService.fetchAllSalesFrom(store, page, order);
 
         logger.debug("SaleRPCServiceImpl.addNewSale ends");
 

@@ -22,6 +22,6 @@ public class TelephonyClientModule extends AbstractGinModule {
         bind(AddStoreComponent.class).in(Singleton.class);
         bind(MoveProductsComponent.class).in(Singleton.class);
 
-        bind(BasicDataLoader.class).to(BasicDataLoaderImpl.class);
+        bind(BasicDataLoader.class).to(BasicDataLoaderImpl.class).in(Singleton.class);
     }
 }

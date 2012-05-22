@@ -5,7 +5,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Side;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -108,7 +107,7 @@ public class adminDashboard implements EntryPoint {
 
     private void configModule() {
         GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
-            @Override
+
             public void onUncaughtException(Throwable e) {
 
                 Log.error("UncaughtException : ",e);

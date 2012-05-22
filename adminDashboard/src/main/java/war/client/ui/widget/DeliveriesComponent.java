@@ -24,6 +24,7 @@ import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.entity.common.Money;
+import war.shared.ListOrder;
 import war.shared.RPCServiceStatus;
 
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private SelectItem selectUserCombo;
     private IButton doButton;
     private SelectItem selectPage;
+    private SelectItem selectOrder  ;
+    private TextItem imeibox    ;
+    private IButton filterButton;
 
     private boolean listOfColorsLoaded = false;
     private boolean listOfProducersLoaded = false;
@@ -64,6 +68,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Product> listOfEditedProducts = new ArrayList<Product>();
     private List<Product> listOfDeletedProducts = new ArrayList<Product>();
+
 
 
     private List<Product> getListOfEditedProducts() {
@@ -151,7 +156,12 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         DynamicForm form9 = new DynamicForm();
         form9.setFields(selectPage);
         form9.setTitleWidth(120);
-
+        
+        this.selectOrder = new SelectItem();
+        this.selectOrder.setTitle("Sortuj wg");
+        
+        DynamicForm form8 = new DynamicForm();
+        form8.setFields(selectOrder);
 
         DynamicForm form = new DynamicForm();
         form.setFields(selectStoreCombo);
@@ -164,12 +174,29 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         formLay.addMember(form);
         formLay.addMember(form9);
+        formLay.addMember(form8);
         formLay.addMember(reloadButton);
 
-        this.addMember(formLay);
+        this.imeibox = new TextItem();
+        this.imeibox.setTitle("IMEI");
+        
+        DynamicForm form0 = new DynamicForm();
+        form0.setFields(this.imeibox);
+
+        this.filterButton = new IButton();
+        this.filterButton.setTitle("Filtruj");
+
+        HLayout form3Lay = new HLayout();
+        form3Lay.setWidth100();
+        form3Lay.addMember(form0);
+        form3Lay.setHeight(10);
+        form3Lay.addMember(filterButton);
+
+        this.addMember(form3Lay);
         this.addMember(form2Lay);
         this.addMember(productsListGrid);
-
+        this.addMember(formLay);
+        
         this.loadData();
 
         Log.debug("DeliveriesComponent widget was initialized..");
@@ -637,7 +664,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
     public void fillWithData() {
 
-        this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), getSelectedPage(), new AsyncCallback<List<Product>>() {
+        this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), getSelectedPage(), getSelectedOrder(), new AsyncCallback<List<Product>>() {
 
             public void onFailure(Throwable caught) { }
 
@@ -651,6 +678,20 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         });
     }
 
+    private ListOrder getSelectedOrder() {
+
+        String value = this.selectOrder.getValueAsString();
+
+        if (value.equals(ListOrder.BY_DATE_ASC.toString()))
+            return ListOrder.BY_DATE_ASC;
+        else if (value.equals(ListOrder.BY_DATE_DESC.toString()))
+            return ListOrder.BY_DATE_DESC;
+        else if (value.equals(ListOrder.BY_TITLE_ASC.toString()))
+            return ListOrder.BY_TITLE_ASC;
+        else
+            return ListOrder.BY_TITLE_DESC;
+    }
+
     private long getSelectedStoreId() {
         String value = this.selectStoreCombo.getValueAsString();
 
@@ -661,6 +702,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     public void dataChanged() {
         if (isDataLoaded()) {
             refreshUserComboValues();
+            refreshOrderCombo();
             setupEditorCustomizers();
         }
     }
@@ -716,6 +758,20 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.selectStoreCombo.setValueMap(valueMap);
         this.selectStoreCombo.setDefaultValue(this.listOfStores.get(0).getId().toString());
+    }
+
+    private void refreshOrderCombo() {
+        Log.debug("DeliveriesComponent - refreshOrderCombo");
+
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        valueMap.put(ListOrder.BY_DATE_ASC.toString(), "daty dodania rosnąco" );
+        valueMap.put(ListOrder.BY_DATE_DESC.toString(), "daty dodania malejąco" );
+        valueMap.put(ListOrder.BY_TITLE_ASC.toString(), "tytułu dostawy rosnąco");
+        valueMap.put(ListOrder.BY_TITLE_DESC.toString(), "tytułu dostawy malejąco");
+
+        this.selectOrder.setValueMap(valueMap);
+        this.selectOrder.setDefaultValue(ListOrder.BY_DATE_ASC.toString());
     }
 
     public void validate() {

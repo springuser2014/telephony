@@ -7,6 +7,7 @@ import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
+import war.shared.ListOrder;
 import war.shared.RPCServiceStatus;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface DeliveryRPCService extends RemoteService {
     
     public RPCServiceStatus addNewDelivery(Delivery delivery, List<Product> products, User user, Store store);
 
-    public List<Product> fetchDeliveriesFrom(Store store, int page);
+    public List<Product> fetchDeliveriesFrom(Store store, int page, ListOrder order);
 }

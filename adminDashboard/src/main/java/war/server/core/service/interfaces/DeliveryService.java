@@ -5,6 +5,7 @@ import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
+import war.shared.ListOrder;
 
 import java.util.List;
 
@@ -36,5 +37,5 @@ public interface DeliveryService {
     public List<Delivery> fetchAllDeliveries();
 
 
-    public List<Product> fetchAllDeliveriesFrom(Store aLong, int page);
+    public List<Product> fetchAllDeliveriesFrom(Store aLong, int page, ListOrder order);
 }

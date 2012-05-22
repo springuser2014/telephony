@@ -29,6 +29,7 @@ import war.server.core.entity.Sale;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.entity.common.Money;
+import war.shared.ListOrder;
 import war.shared.RPCServiceStatus;
 
 import java.util.ArrayList;
@@ -48,8 +49,10 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private SelectItem selectProductStatusCombo;
     private IButton reloadButton;
     private SelectItem selectUserCombo;
+    private SelectItem selectOrder;
     private IButton doButton;
     private SelectItem selectPage;
+    private IButton filterButton;
 
     private List<Product> listOfEditedProducts = new ArrayList<Product>();
     private List<Product> listOfDeletedProducts = new ArrayList<Product>();
@@ -72,6 +75,8 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     private List<Sale> listOfSales = new ArrayList<Sale>();
 
     private Long numberOfSales;
+    private TextItem imeibox;
+
 
     private List<Product> getListOfEditedProducts() {
         return listOfEditedProducts;
@@ -210,9 +215,16 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         formLay.setWidth100();
         formLay.setHeight(10);
 
+        this.selectOrder = new SelectItem();
+        this.selectOrder.setTitle("Sortuj wg");
+
+        DynamicForm form8 = new DynamicForm();
+        form8.setFields(selectOrder);
+
         formLay.setMembersMargin(10);
         formLay.addMember(form);
         formLay.addMember(form9);
+        formLay.addMember(form8);
         formLay.addMember(reloadButton);
 
         DynamicForm form4 = new DynamicForm();
@@ -231,7 +243,6 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
             }
         });
 
-
         HLayout form2Lay = new HLayout();
         form2Lay.setWidth100();
         form2Lay.setHeight(10);
@@ -240,9 +251,25 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         form2Lay.addMember(form4);
         form2Lay.addMember(doButton);
 
-        this.addMember(formLay);
+        this.imeibox = new TextItem();
+        this.imeibox.setTitle("IMEI");
+
+        DynamicForm form0 = new DynamicForm();
+        form0.setFields(this.imeibox);
+
+        this.filterButton = new IButton();
+        this.filterButton.setTitle("Filtruj");
+
+        HLayout form3Lay = new HLayout();
+        form3Lay.setWidth100();
+        form3Lay.setHeight(10);
+        form3Lay.addMember(form0);
+        form3Lay.addMember(filterButton);
+
+        this.addMember(form3Lay);
         this.addMember(form2Lay);
         this.addMember(productsListGrid);
+        this.addMember(formLay);
 
         this.loadData();
 
@@ -452,6 +479,20 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
         selectPage.setDefaultToFirstOption(true);
     }
 
+    private void refreshOrderCombo() {
+        Log.debug("DeliveriesComponent - refreshOrderCombo");
+
+        LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+
+        valueMap.put(ListOrder.BY_DATE_ASC.toString(), "daty dodania rosnąco" );
+        valueMap.put(ListOrder.BY_DATE_DESC.toString(), "daty dodania malejąco" );
+        valueMap.put(ListOrder.BY_TITLE_ASC.toString(), "tytułu dostawy rosnąco");
+        valueMap.put(ListOrder.BY_TITLE_DESC.toString(), "tytułu dostawy malejąco");
+
+        this.selectOrder.setValueMap(valueMap);
+        this.selectOrder.setDefaultValue(ListOrder.BY_DATE_ASC.toString());
+    }
+
     private void loadUsers() {
         this.userService.fetchAllUsers(new AsyncCallback<List<User>>() {
             public void onFailure(Throwable caught) {
@@ -555,7 +596,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
     public void fillWithData() {
 
-        this.saleService.fetchSalesFrom(getSelectedStore(), getSelectedPage(), new AsyncCallback<List<Product>>() {
+        this.saleService.fetchSalesFrom(getSelectedStore(), getSelectedPage(), getSelectedOrder(), new AsyncCallback<List<Product>>() {
 
             public void onFailure(Throwable caught) {
 
@@ -570,6 +611,21 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
                 refreshProductsGrid();
             }
         });
+    }
+
+    private ListOrder getSelectedOrder() {
+        
+        String value = this.selectOrder.getValueAsString();
+
+        if (value.equals(ListOrder.BY_DATE_ASC.toString()))
+            return ListOrder.BY_DATE_ASC;
+        else if (value.equals(ListOrder.BY_DATE_DESC.toString()))
+            return ListOrder.BY_DATE_DESC;
+        else if (value.equals(ListOrder.BY_TITLE_ASC.toString()))
+            return ListOrder.BY_TITLE_ASC;
+//        else if (value.equals(ListOrder.BY_TITLE_DESC.toString()))
+        else
+            return ListOrder.BY_TITLE_DESC;
     }
 
     private Store getSelectedStore() {
@@ -587,6 +643,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     public void dataChanged() {
         if (isDataLoaded()) {
             refreshUserComboValues();
+            refreshOrderCombo();
             setupEditorCustomizer();
         }
     }

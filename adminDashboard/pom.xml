@@ -55,7 +55,7 @@
     <properties>
         <!-- Convenience property to set the GWT version -->
 
-        <!--<gwtp.version>0.6</gwtp.version>-->
+        <gwtp.version>0.8-SNAPSHOT</gwtp.version>
         <!-- GWT needs at least java 1.5 -->
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -104,49 +104,50 @@
         </dependency>
 
         <!-- MVP component -->
-        <!--<dependency>-->
-        <!--<groupId>com.gwtplatform</groupId>-->
-        <!--<artifactId>gwtp-mvp-client</artifactId>-->
-        <!--<version>${gwtp.version}</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-mvp-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Dispatch component -->
-        <!--<dependency>-->
-        <!--<groupId>com.gwtplatform</groupId>-->
-        <!--<artifactId>gwtp-dispatch-client</artifactId>-->
-        <!--<version>${gwtp.version}</version>-->
-        <!--<scope>provided</scope>-->
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Remove for GWTP 0.5.1 and earlier -->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.gwtplatform</groupId>-->
-        <!--<artifactId>gwtp-dispatch-server-guice</artifactId>-->
-        <!--<version>${gwtp.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>com.gwtplatform</groupId>
+        <artifactId>gwtp-dispatch-server-guice</artifactId>
+        <version>${gwtp.version}</version>
+        </dependency>
 
         <!-- Crawler component -->
-        <!--<dependency>-->
-        <!--<groupId>com.gwtplatform</groupId>-->
-        <!--<artifactId>gwtp-crawler</artifactId>-->
-        <!--<version>${gwtp.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>com.gwtplatform</groupId>
+        <artifactId>gwtp-crawler</artifactId>
+        <version>${gwtp.version}</version>
+        </dependency>
 
         <!-- Annotation component -->
-        <!--<dependency>-->
-        <!--<groupId>com.gwtplatform</groupId>-->
-        <!--<artifactId>gwtp-processors</artifactId>-->
-        <!--<version>${gwtp.version}</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>com.gwtplatform</groupId>
+        <artifactId>gwtp-processors</artifactId>
+        <version>${gwtp.version}</version>
+        <scope>provided</scope>
+        </dependency>
 
         <!-- Tester component -->
-        <!--<dependency>-->
-        <!--<groupId>com.gwtplatform</groupId>-->
-        <!--<artifactId>gwtp-tester</artifactId>-->
-        <!--<version>${gwtp.version}</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>com.gwtplatform</groupId>
+        <artifactId>gwtp-tester</artifactId>
+        <version>${gwtp.version}</version>
+        <scope>test</scope>
+        </dependency>
 
         <!-- Logger -->
         <!--<dependency>-->
@@ -214,13 +215,20 @@
             <version>1.0.0.Final</version>
         </dependency>
 
-        <!-- Junit + guice + mockito = jukito -->
         <dependency>
-            <groupId>org.jukito</groupId>
-            <artifactId>jukito</artifactId>
-            <version>1.1</version>
-            <scope>test</scope>
+            <groupId>com.googlecode.flyway</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>1.6.1</version>
         </dependency>
+
+
+        <!-- Junit + guice + mockito = jukito -->
+        <!--<dependency>-->
+        <!--<groupId>org.jukito</groupId>-->
+        <!--<artifactId>jukito</artifactId>-->
+        <!--<version>1.1</version>-->
+        <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
         <!-- junit -->
         <dependency>
@@ -232,7 +240,7 @@
 
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
+            <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
@@ -246,9 +254,9 @@
 
         <!-- Goole Guava for server-side -->
         <!--<dependency>-->
-            <!--<groupId>com.google.guava</groupId>-->
-            <!--<artifactId>guava</artifactId>-->
-            <!--<version>11.0.1</version>-->
+        <!--<groupId>com.google.guava</groupId>-->
+        <!--<artifactId>guava</artifactId>-->
+        <!--<version>11.0.1</version>-->
         <!--</dependency>-->
 
         <!-- Goole Guava for client-side -->
@@ -405,6 +413,24 @@
                     <webappDirectory>${webappDirectory}</webappDirectory>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.googlecode.flyway</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>1.6.1</version>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/telephony</url>
+                    <user>postgres</user>
+                    <password>postgres</password>
+                    <!--<schemas></schemas>-->
+                    <table>schema_history</table>
+                    <initialVersion>1</initialVersion>
+                    <initialDescription>Starts with production import</initialDescription>
+                </configuration>
+            </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

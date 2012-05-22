@@ -7,6 +7,7 @@ import net.sf.gilead.core.PersistentBeanManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import war.client.service.DeliveryRPCService;
+import war.shared.ListOrder;
 import war.shared.RPCServiceStatus;
 import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
@@ -54,12 +55,12 @@ public class DeliveryRPCServiceImpl extends GuicePersistentRemoteServiceServlet 
         return status;
     }
 
-    public List<Product> fetchDeliveriesFrom(Store store, int page) {
+    public List<Product> fetchDeliveriesFrom(Store store, int page, ListOrder order) {
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery start");
         logger.debug("params : [ storeId : {} ] ", store.getId());
         
-        List<Product> result = deliveryService.fetchAllDeliveriesFrom(store, page);
+        List<Product> result = deliveryService.fetchAllDeliveriesFrom(store, page, order);
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery ends");
 

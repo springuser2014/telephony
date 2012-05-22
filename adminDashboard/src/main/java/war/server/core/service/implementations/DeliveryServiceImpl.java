@@ -11,6 +11,7 @@ import war.server.core.entity.Product;
 import war.server.core.entity.Store;
 import war.server.core.entity.User;
 import war.server.core.service.interfaces.DeliveryService;
+import war.shared.ListOrder;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -75,12 +76,12 @@ public class DeliveryServiceImpl implements DeliveryService {
         return res;
     }
 
-    public List<Product> fetchAllDeliveriesFrom(Store store, int page) {
+    public List<Product> fetchAllDeliveriesFrom(Store store, int page, ListOrder order) {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
 
         int numberOfElements = 6;
 
-        List<Delivery> deliveries = deliveriesDao.findLastest(store, numberOfElements*page, numberOfElements);
+        List<Delivery> deliveries = deliveriesDao.findLastest(store, numberOfElements*page, numberOfElements, order);
 
         ArrayList<Long> ids = new ArrayList<Long>();
         

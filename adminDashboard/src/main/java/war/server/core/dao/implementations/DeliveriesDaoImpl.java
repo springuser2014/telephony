@@ -4,6 +4,7 @@ import war.server.core.dao.interfaces.DeliveriesDao;
 import war.server.core.entity.Delivery;
 import war.server.core.entity.Product;
 import war.server.core.entity.Store;
+import war.shared.ListOrder;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -32,18 +33,34 @@ public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements Deliv
         return result;
     }
 
-    public List<Delivery> findLastest(Store store, int startPosition, int numberOfElements) {
-        logger.debug("DeliveriesDaoImpl.findLastest starts");
-        logger.debug("params : [ startPos : {} , numberOfElements : {} ]", startPosition, numberOfElements);
+    public List<Delivery> findLastest(Store store, int startPosition, int numberOfElements, ListOrder order) {
+        logger.info("DeliveriesDaoImpl.findLastest starts");
+        logger.info("params : [ startPos : {} , numberOfElements : {} ]", startPosition, numberOfElements);
+        logger.info("params : [ order : {} ]", order);
+        
+        String orderBy = "";
 
-        List<Delivery> result = em.createQuery("select d from Delivery d " +
-                                               " inner join d.store s " +
-                                               " where d.deleter is null " +
-                                               " and s.id = ?1 ")
-                                               .setParameter(1, store.getId())
-                                               .setFirstResult(startPosition)
-                                               .setMaxResults(numberOfElements)
-                                               .getResultList();
+        if (order.equals(ListOrder.BY_DATE_ASC.toString()))
+            orderBy = " order by d.dateIn asc ";
+
+        if (order.equals(ListOrder.BY_DATE_DESC.toString()))
+            orderBy = " order by d.dateIn desc ";
+
+        if (order.equals(ListOrder.BY_TITLE_ASC.toString()))
+            orderBy = " order by d.label asc ";
+
+        if (order.equals(ListOrder.BY_TITLE_DESC.toString()))
+            orderBy = " order by d.label desc";
+
+        Query query = em.createQuery("select d from Delivery d " +
+                                     " inner join d.store s " +
+                                     " where d.deleter is null " +
+                                     " and s.id = ?1 " + orderBy);
+
+        List<Delivery> result = query.setParameter(1, store.getId())
+                                     .setFirstResult(startPosition)
+                                     .setMaxResults(numberOfElements)
+                                     .getResultList();
 
         logger.debug("found {} elements", result.size());
 
