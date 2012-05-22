@@ -7,6 +7,11 @@ It's very experimental and I am just a student ;-)
 
 It's quite simple app for managing products in electronic store.
 
+Main features included: 
+- Managing products in stores
+- Managing stores, users (admins, workers), credentials
+- Managing deliveries, sales and reclamations
+
 Used tech stuff:
 - Google web Toolkit 2.4
 - SmartGWT 3.0
@@ -14,10 +19,11 @@ Used tech stuff:
 - Maven 2
 - JPA 2.0 (Hibernate 3.5)
 - Guice 3.0
+- GWT-platform 0.7
+- Flyway 1.6.1
 
 Project is now under havily development, in next few weeks there will appear:
 - Unit tests
-- Mvp4g integration
 - UI archtecture improvement
 - Many new features including authentication (Apache Shiro), mailing (JavaMail) and others.
 
