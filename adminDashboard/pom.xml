@@ -49,6 +49,17 @@
             <url>https://oss.sonatype.org/content/repositories/JBoss</url>
         </repository>
 
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
     </repositories>
 
     <!-- SOME PROPERTIES -->
@@ -121,32 +132,39 @@
 
         <!-- Remove for GWTP 0.5.1 and earlier -->
         <dependency>
-        <groupId>com.gwtplatform</groupId>
-        <artifactId>gwtp-dispatch-server-guice</artifactId>
-        <version>${gwtp.version}</version>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-server-guice</artifactId>
+            <version>${gwtp.version}</version>
         </dependency>
 
         <!-- Crawler component -->
         <dependency>
-        <groupId>com.gwtplatform</groupId>
-        <artifactId>gwtp-crawler</artifactId>
-        <version>${gwtp.version}</version>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-crawler</artifactId>
+            <version>${gwtp.version}</version>
         </dependency>
 
         <!-- Annotation component -->
         <dependency>
-        <groupId>com.gwtplatform</groupId>
-        <artifactId>gwtp-processors</artifactId>
-        <version>${gwtp.version}</version>
-        <scope>provided</scope>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-processors</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Tester component -->
         <dependency>
-        <groupId>com.gwtplatform</groupId>
-        <artifactId>gwtp-tester</artifactId>
-        <version>${gwtp.version}</version>
-        <scope>test</scope>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-tester</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.gwt-test-utils</groupId>
+            <artifactId>gwt-test-utils</artifactId>
+            <version>0.39-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Logger -->
@@ -392,7 +410,7 @@
                 <configuration>
                     <runTarget>adminDashboard.html</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <i18nMessagesBundle>war.client.Messages</i18nMessagesBundle>
+                    <i18nMessagesBundle>telephony.client.Messages</i18nMessagesBundle>
                 </configuration>
             </plugin>
 
@@ -438,6 +456,14 @@
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Xmx512M -XX:MaxPermSize=128M</argLine>
                 </configuration>
             </plugin>
         </plugins>

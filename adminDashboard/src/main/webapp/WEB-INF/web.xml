@@ -7,7 +7,7 @@
 
     <!-- defined listener -->
     <listener>
-        <listener-class>war.server.guice.listener.TelephonyServletContextListener</listener-class>
+        <listener-class>telephony.server.guice.listener.TelephonyServletContextListener</listener-class>
     </listener>
 
     <!-- defined filters -->

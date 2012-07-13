@@ -3,12 +3,12 @@
     <persistence-unit name="telephony" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-        <class>war.server.core.entity.User</class>
-        <class>war.server.core.entity.Store</class>
-        <class>war.server.core.entity.Delivery</class>
-        <class>war.server.core.entity.Product</class>
-        <class>war.server.core.entity.Sale</class>
-        <class>war.server.core.entity.UserRole</class>
+        <class>telephony.server.core.entity.User</class>
+        <class>telephony.server.core.entity.Store</class>
+        <class>telephony.server.core.entity.Delivery</class>
+        <class>telephony.server.core.entity.Product</class>
+        <class>telephony.server.core.entity.Sale</class>
+        <class>telephony.server.core.entity.UserRole</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
