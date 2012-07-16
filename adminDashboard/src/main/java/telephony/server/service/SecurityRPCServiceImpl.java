@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.client.service.SecurityRPCService;
 import telephony.server.gilead.GuicePersistentRemoteServiceServlet;
-import telephony.shared.LoginResult;
+import telephony.shared.gwtp.result.LoginResult;
 
 @SuppressWarnings("serial")
 @Singleton

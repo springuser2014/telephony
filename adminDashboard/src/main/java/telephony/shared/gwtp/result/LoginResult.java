@@ -1,9 +1,10 @@
-package telephony.shared;
+package telephony.shared.gwtp.result;
 
-import java.io.Serializable;
+import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
+import com.gwtplatform.dispatch.shared.Result;
+import telephony.shared.UserContext;
 
-public class LoginResult implements Serializable {
-    private static final long serialVersionUID = -5076270075962361818L;
+public class LoginResult implements Result {
 
     private boolean success;
     private String errorMessage;
@@ -15,6 +16,8 @@ public class LoginResult implements Serializable {
 
     public boolean isSuccess() {
         return success;
+
+        ActionHandler
     }
 
     public void setSuccess(boolean success) {

@@ -3,7 +3,7 @@ package telephony.client.service;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import telephony.server.core.configuration.Constant;
-import telephony.shared.LoginResult;
+import telephony.shared.gwtp.result.LoginResult;
 
 @RemoteServiceRelativePath(SecurityRPCService.PATH)
 public interface SecurityRPCService extends RemoteService {

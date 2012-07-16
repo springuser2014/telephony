@@ -3,12 +3,16 @@ package telephony.client.gin;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.RootPresenter;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.proxy.ParameterTokenFormatter;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
+import telephony.client.gin.provider.FirstClientActionHandlerProvider;
 import telephony.client.gwtp.MyPlaceManager;
+import telephony.client.gwtp.action.MyFirstAction;
+import telephony.client.gwtp.handler.FirstClientActionHandler;
 import telephony.client.gwtp.presenter.MainPagePresenter;
 import telephony.client.gwtp.presenter.ResponsePresenter;
 import telephony.client.gwtp.view.MainPageView;
@@ -17,6 +21,8 @@ import telephony.client.gwtp.view.ResponseView;
 
 public class GwtpModule extends AbstractPresenterModule {
     protected void configure() {
+
+        install(new DispatchAsyncModule(TelephonyClientActionHandlerRegistry.class));
 
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(PlaceManager.class).to(MyPlaceManager.class).in(Singleton.class);
@@ -31,6 +37,8 @@ public class GwtpModule extends AbstractPresenterModule {
             MainPageView.class, MainPagePresenter.MyProxy.class);
         bindPresenter(ResponsePresenter.class, ResponsePresenter.MyView.class,
             ResponseView.class, ResponsePresenter.MyProxy.class);
+        
+        bind(FirstClientActionHandler.class).toProvider(FirstClientActionHandlerProvider.class)
 
 
 

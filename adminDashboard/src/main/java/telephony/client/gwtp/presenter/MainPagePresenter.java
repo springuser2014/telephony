@@ -2,6 +2,7 @@ package telephony.client.gwtp.presenter;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -15,6 +16,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 import telephony.shared.gwtp.FieldVerifier;
+import telephony.shared.gwtp.action.LoginAction;
+import telephony.shared.gwtp.result.LoginResult;
 
 public class MainPagePresenter extends
         Presenter<MainPagePresenter.MyView, MainPagePresenter.MyProxy> {
@@ -79,6 +82,20 @@ public class MainPagePresenter extends
 
     private void sendNameToServer() {
         getView().setError("");
+
+
+        getDispatcher().execute(new LoginAction(),
+        new AsyncCallback<LoginResult>() {
+            public void onFailure(Throwable caught) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            public void onSuccess(LoginResult result) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
+
 
         String textToServer = getView().getName();
 

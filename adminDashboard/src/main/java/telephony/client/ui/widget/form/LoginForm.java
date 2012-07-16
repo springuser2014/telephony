@@ -18,7 +18,7 @@ import telephony.client.configuration.CSS;
 import telephony.client.configuration.REGEX;
 import telephony.client.service.SecurityRPCService;
 import telephony.client.service.SecurityRPCServiceAsync;
-import telephony.shared.LoginResult;
+import telephony.shared.gwtp.result.LoginResult;
 
 
 /**
