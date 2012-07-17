@@ -35,7 +35,7 @@ import telephony.client.ui.widget.*;
  * @todo sign in, users management, stores management
  *
  */
-public class adminDashboard implements EntryPoint {
+public class Start implements EntryPoint {
 
     private final GuiInjector injector = GWT.create(GuiInjector.class);
 

@@ -1,6 +1,5 @@
 package telephony.shared.gwtp.result;
 
-import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.Result;
 import telephony.shared.UserContext;
 
@@ -16,8 +15,6 @@ public class LoginResult implements Result {
 
     public boolean isSuccess() {
         return success;
-
-        ActionHandler
     }
 
     public void setSuccess(boolean success) {

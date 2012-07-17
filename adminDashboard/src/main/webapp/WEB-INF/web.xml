@@ -23,7 +23,7 @@
 
     <!-- Default page to serve -->
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
+        <welcome-file>start.html</welcome-file>
     </welcome-file-list>
 
     <security-constraint>

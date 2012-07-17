@@ -11,7 +11,6 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 import telephony.client.gin.provider.FirstClientActionHandlerProvider;
 import telephony.client.gwtp.MyPlaceManager;
-import telephony.client.gwtp.action.MyFirstAction;
 import telephony.client.gwtp.handler.FirstClientActionHandler;
 import telephony.client.gwtp.presenter.MainPagePresenter;
 import telephony.client.gwtp.presenter.ResponsePresenter;
@@ -29,8 +28,6 @@ public class GwtpModule extends AbstractPresenterModule {
         bind(TokenFormatter.class).to(ParameterTokenFormatter.class).in(
             Singleton.class);
         bind(RootPresenter.class).asEagerSingleton();
-//        bind(AsyncCallFailHandler.class).to(AsyncCallFailEvent.class).in(
-//            Singleton.class);
 
         // Presenters
         bindPresenter(MainPagePresenter.class, MainPagePresenter.MyView.class,
@@ -38,7 +35,7 @@ public class GwtpModule extends AbstractPresenterModule {
         bindPresenter(ResponsePresenter.class, ResponsePresenter.MyView.class,
             ResponseView.class, ResponsePresenter.MyProxy.class);
         
-        bind(FirstClientActionHandler.class).toProvider(FirstClientActionHandlerProvider.class)
+        bind(FirstClientActionHandler.class).toProvider(FirstClientActionHandlerProvider.class);
 
 
 

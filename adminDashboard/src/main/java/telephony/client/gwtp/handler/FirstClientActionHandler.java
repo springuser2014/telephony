@@ -8,6 +8,7 @@ import com.gwtplatform.dispatch.client.actionhandler.ExecuteCommand;
 import com.gwtplatform.dispatch.client.actionhandler.UndoCommand;
 
 
+import com.gwtplatform.dispatch.shared.DispatchRequest;
 import telephony.client.gwtp.action.MyFirstAction;
 import telephony.client.gwtp.result.MyFirstResult;
 
@@ -18,29 +19,30 @@ public class FirstClientActionHandler extends AbstractClientActionHandler<MyFirs
         super(MyFirstAction.class);
     }
 
-    @Override
-    public void execute(final MyFirstAction action, final AsyncCallback<MyFirstResult> resultCallback, ExecuteCommand<MyFirstAction, MyFirstResult> dispatch) {
-        
-        final MyFirstResult result = null;
-        
-        if (result != null) {
-            resultCallback.onSuccess(result);
-        }
-        else {
-            dispatch.execute(action, new AsyncCallback<MyFirstResult>() {
-                public void onFailure(Throwable caught) {
-                    resultCallback.onFailure(caught);
-                }
+    public DispatchRequest execute(final MyFirstAction action, final AsyncCallback<MyFirstResult> resultCallback, ExecuteCommand<MyFirstAction, MyFirstResult> dispatch) {
 
-                public void onSuccess(MyFirstResult result) {
-                    resultCallback.onSuccess(result);
-                }
-            });
-        }
+        return dispatch.execute(action, resultCallback);
+
+//        final MyFirstResult result = null;
+//
+//        if (result != null) {
+//            resultCallback.onSuccess(result);
+//        }
+//        else {
+//            dispatch.execute(action, new AsyncCallback<MyFirstResult>() {
+//                public void onFailure(Throwable caught) {
+//                    resultCallback.onFailure(caught);
+//                }
+//
+//                public void onSuccess(MyFirstResult result) {
+//                    resultCallback.onSuccess(result);
+//                }
+//            });
+//        }
     }
 
-    @Override
-    public void undo(MyFirstAction action, MyFirstResult result, AsyncCallback<Void> callback, UndoCommand<MyFirstAction, MyFirstResult> dispatch) {
-        dispatch.undo(action, result, callback);
+
+    public DispatchRequest undo(MyFirstAction action, MyFirstResult result, AsyncCallback<Void> callback, UndoCommand<MyFirstAction, MyFirstResult> dispatch) {
+        return dispatch.undo(action, result, callback);
     }
 }
