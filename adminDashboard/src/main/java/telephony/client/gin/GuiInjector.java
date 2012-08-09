@@ -4,11 +4,16 @@ package telephony.client.gin;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
+import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import telephony.client.gwtp.presenter.MainPagePresenter;
-import telephony.client.gwtp.presenter.ResponsePresenter;
+import telephony.client.gwtp.presenter.DashboardPresenter;
+import telephony.client.gwtp.presenter.HeaderPresenter;
+import telephony.client.gwtp.presenter.LoginPresenter;
 import telephony.client.ui.config.BasicDataLoader;
+import telephony.client.ui.layout.TelephonyContentLayout;
+import telephony.client.ui.layout.TelephonyHeaderLayout;
+import telephony.client.ui.layout.TelephonyMainLayout;
 import telephony.client.ui.widget.*;
 import telephony.client.ui.widget.form.LoginForm;
 
@@ -20,9 +25,13 @@ public interface GuiInjector extends Ginjector {
 
     EventBus getEventBus();
 
-    AsyncProvider<ResponsePresenter> getResponsePresenter();
+    /* Presenters */
 
-    AsyncProvider<MainPagePresenter> getMainPagePresenter();
+    Provider<DashboardPresenter> getMainPagePresenter();
+
+    AsyncProvider<HeaderPresenter> getHeaderPresenter();
+
+    AsyncProvider<LoginPresenter> getLoginPresenter();
 
     /* TelephonyClientModule */
     TopMenu getTopMenu();
@@ -44,4 +53,13 @@ public interface GuiInjector extends Ginjector {
     SaleProductsComponent getSalesProductsComponent();
 
     BasicDataLoader getBasicDataLoader();
+
+    TelephonyMainLayout getMainLayout();
+
+    TelephonyContentLayout getContentLayout();
+
+    TelephonyHeaderLayout getHeaderLayout();
+
+
+
 }

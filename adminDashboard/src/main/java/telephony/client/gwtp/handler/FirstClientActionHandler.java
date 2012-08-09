@@ -10,7 +10,7 @@ import com.gwtplatform.dispatch.client.actionhandler.UndoCommand;
 
 import com.gwtplatform.dispatch.shared.DispatchRequest;
 import telephony.client.gwtp.action.MyFirstAction;
-import telephony.client.gwtp.result.MyFirstResult;
+import telephony.shared.gwtp.result.MyFirstResult;
 
 public class FirstClientActionHandler extends AbstractClientActionHandler<MyFirstAction, MyFirstResult> {
 

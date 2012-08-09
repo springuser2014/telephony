@@ -60,23 +60,52 @@
             </releases>
         </repository>
 
+        <repository>
+            <id>people.apache.snapshots</id>
+            <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <!-- SOME PROPERTIES -->
     <properties>
         <!-- Convenience property to set the GWT version -->
-
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
         <!-- GWT needs at least java 1.5 -->
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <shiro-version>1.1.0</shiro-version>
+        <shiro-version>${jukito.version}.0</shiro-version>
         <smartgwt.version>${guice.version}</smartgwt.version>
         <junit.version>4.7</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <guice.version>3.0</guice.version>
         <gilead.version>1.3.2</gilead.version>
         <gwt.version>2.4.0</gwt.version>
+        <guava.version>12.0.1</guava.version>
+        <jukito.version>1.1</jukito.version>
+        <slf4j.version>1.6.1</slf4j.version>
+        <flyway.version>1.6.1</flyway.version>
+        <gin.version>1.5.0</gin.version>
     </properties>
 
     <!-- DEPENDENCIES -->
@@ -87,6 +116,7 @@
             <artifactId>smartgwt</artifactId>
             <version>${smartgwt.version}</version>
         </dependency>
+
         <!-- GWT servlet -->
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -94,6 +124,8 @@
             <version>${gwt.version}</version>
             <!--<scope>runtime</scope>-->
         </dependency>
+
+        <!-- GWT -->
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
@@ -160,30 +192,24 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.googlecode.gwt-test-utils</groupId>
-            <artifactId>gwt-test-utils</artifactId>
-            <version>0.39-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Logger -->
         <!--<dependency>-->
-        <!--<groupId>log4j</groupId>-->
-        <!--<artifactId>log4j</artifactId>-->
-        <!--<version>1.2.16</version>-->
+        <!--<groupId>com.googlecode.gwt-test-utils</groupId>-->
+        <!--<artifactId>gwt-test-utils</artifactId>-->
+        <!--<version>0.39-SNAPSHOT</version>-->
+        <!--&lt;!&ndash;<scope>test</scope>&ndash;&gt;-->
         <!--</dependency>-->
 
         <!-- SLF4J dependencies -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
+            <version>${slf4j.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- Db connector driver -->
@@ -236,17 +262,17 @@
         <dependency>
             <groupId>com.googlecode.flyway</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>1.6.1</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
 
         <!-- Junit + guice + mockito = jukito -->
-        <!--<dependency>-->
-        <!--<groupId>org.jukito</groupId>-->
-        <!--<artifactId>jukito</artifactId>-->
-        <!--<version>1.1</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId>
+            <version>${jukito.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- junit -->
         <dependency>
@@ -256,6 +282,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -271,24 +298,24 @@
         </dependency>
 
         <!-- Goole Guava for server-side -->
-        <!--<dependency>-->
-        <!--<groupId>com.google.guava</groupId>-->
-        <!--<artifactId>guava</artifactId>-->
-        <!--<version>11.0.1</version>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+        </dependency>
 
         <!-- Goole Guava for client-side -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava-gwt</artifactId>
-            <version>11.0.1</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- GWT INjection -->
         <dependency>
             <groupId>com.google.gwt.inject</groupId>
             <artifactId>gin</artifactId>
-            <version>1.5.0</version>
+            <version>${gin.version}</version>
         </dependency>
 
         <!-- Shiro Dependencies -->
@@ -399,7 +426,7 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
-                            <!--<goal>test</goal>-->
+                            <goal>test</goal>
                             <goal>i18n</goal>
                             <goal>generateAsync</goal>
                         </goals>
@@ -435,7 +462,7 @@
             <plugin>
                 <groupId>com.googlecode.flyway</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>1.6.1</version>
+                <version>${flyway.version}</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/telephony</url>
@@ -447,7 +474,6 @@
                     <initialDescription>Starts with production import</initialDescription>
                 </configuration>
             </plugin>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -462,10 +488,33 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12</version>
                 <configuration>
                     <argLine>-Xmx512M -XX:MaxPermSize=128M</argLine>
+                    <!--<includes>-->
+                        <!--<include>src/test/java/*</include>-->
+                    <!--</includes>-->
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.12</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0-SNAPSHOT</version>
+                <configuration>
+                    <url>http://127.0.0.1:8080/manager/html</url>
+                    <warFile>${project.build.directory}/${project.build.finalName}.war</warFile>
+                    <server>tomcat7</server>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

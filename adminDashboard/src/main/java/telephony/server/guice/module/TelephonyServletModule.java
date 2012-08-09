@@ -3,6 +3,7 @@ package telephony.server.guice.module;
 import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.shared.ActionImpl;
+import com.gwtplatform.dispatch.shared.DispatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.client.service.*;
@@ -20,6 +21,8 @@ public class TelephonyServletModule extends ServletModule {
     protected void configureServlets() {
 
         logger.debug("TelephonyServletModule initialization");
+
+        bind(DispatchService.class).to(DispatchServiceImpl.class);
 
         bindJpa();
         bindServlets();

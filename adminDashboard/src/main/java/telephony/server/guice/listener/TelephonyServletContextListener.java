@@ -22,8 +22,9 @@ public class TelephonyServletContextListener extends GuiceServletContextListener
         logger.debug("Injector configuration");
 
         return Guice.createInjector(
-                new TelephonyServletModule(),
                 new TelephonyServerModule(),
+                new TelephonyServletModule(),
+
                 new HandlersModule()
         );
     }

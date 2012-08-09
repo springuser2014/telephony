@@ -1,0 +1,8 @@
+package telephony.client.gwtp.uihandlers;
+
+
+import com.gwtplatform.mvp.client.UiHandlers;
+
+public interface LoginHandlers extends UiHandlers {
+    void onOkButtonClicked();
+}

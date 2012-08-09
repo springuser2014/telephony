@@ -1,7 +1,5 @@
 package telephony.client.gwtp.presenter;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -10,19 +8,19 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
-import telephony.shared.gwtp.FieldVerifier;
+import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
+import telephony.client.gwtp.place.Token;
+import telephony.client.ui.layout.TelephonyContentLayout;
+import telephony.client.ui.layout.TelephonyHeaderLayout;
 import telephony.shared.gwtp.action.LoginAction;
 import telephony.shared.gwtp.result.LoginResult;
 
-public class MainPagePresenter extends
-        Presenter<MainPagePresenter.MyView, MainPagePresenter.MyProxy> {
-
-    public static final String nameToken = "main";
+public class DashboardPresenter extends
+        Presenter<DashboardPresenter.StartView, DashboardPresenter.StartProxy> {
 
     private final PlaceManager placeManager;
 
@@ -34,20 +32,25 @@ public class MainPagePresenter extends
         return dispatcher;
     }
 
-    public interface MyView extends View {
+    public interface StartView extends View {
+
+        TelephonyHeaderLayout getHeaderLayout();
+        TelephonyContentLayout getContentLayout();
+
         String getName();
         Button getSendButton();
         void resetAndFocus();
         void setError(String errorText);
     }
 
-    @ProxyCodeSplit
-    @NameToken(nameToken)
-    public interface MyProxy extends ProxyPlace<MainPagePresenter> {
+    @ProxyStandard
+    @NameToken(Token.MAIN_PRESENTER)
+    @NoGatekeeper
+    public interface StartProxy extends ProxyPlace<DashboardPresenter> {
     }
 
     @Inject
-    public MainPagePresenter(final EventBus eventBus1, final DispatchAsync dispatchAsync, final PlaceManager placeManager1, MyView view, MyProxy proxy) {
+    public DashboardPresenter(final EventBus eventBus1, final DispatchAsync dispatchAsync, final PlaceManager placeManager1, StartView view, StartProxy proxy) {
         super(eventBus1, view, proxy);
 
         this.eventBus = eventBus1;
@@ -59,13 +62,6 @@ public class MainPagePresenter extends
     protected void onBind() {
         super.onBind();
 
-        registerHandler(getView().getSendButton().addClickHandler(
-                new ClickHandler() {
-                    public void onClick(ClickEvent event) {
-                        sendNameToServer();
-                    }
-                }
-        ));
     }
 
     @Override
@@ -77,7 +73,7 @@ public class MainPagePresenter extends
 
     @Override
     protected void revealInParent() {
-        RevealRootContentEvent.fire(this, this);
+        RevealRootLayoutContentEvent.fire(this, this);
     }
 
     private void sendNameToServer() {
@@ -97,14 +93,14 @@ public class MainPagePresenter extends
 
 
 
-        String textToServer = getView().getName();
+//        String textToServer = getView().getName();
 
-        if (FieldVerifier.isValidUserName(textToServer)) {
-            placeManager.revealPlace(new PlaceRequest(ResponsePresenter.nameToken)
-                        .with(ResponsePresenter.textToServerParam, textToServer));
-        }
-        else {
-            getView().setError("Please enter at least four characters");
-        }
+//        if (FieldVerifier.isValidUserName(textToServer)) {
+//            placeManager.revealPlace(new PlaceRequest(ResponsePresenter.nameToken)
+//                        .with(ResponsePresenter.textToServerParam, textToServer));
+//        }
+//        else {
+//            getView().setError("Please enter at least four characters");
+//        }
     }
 }

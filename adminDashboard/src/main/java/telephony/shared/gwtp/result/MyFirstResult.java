@@ -1,4 +1,4 @@
-package telephony.client.gwtp.result;
+package telephony.shared.gwtp.result;
 
 import com.gwtplatform.dispatch.shared.Result;
 

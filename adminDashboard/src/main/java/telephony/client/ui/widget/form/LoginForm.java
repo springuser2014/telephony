@@ -22,7 +22,10 @@ import telephony.shared.gwtp.result.LoginResult;
 
 
 /**
+ *
+ * @todo refactor me
  * @todo delete?
+ *
  */
 public class LoginForm extends DynamicForm {
 
