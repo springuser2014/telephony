@@ -20,7 +20,7 @@ Used tech stuff:
 - JPA 2.0 (Hibernate 3.5)
 - Guice 3.0
 - GWT-platform 0.7
-- Flyway 1.6.1
+- Flyway 1.7.0
 
 Project is now under havily development, in next few weeks there will appear:
 - Unit tests
