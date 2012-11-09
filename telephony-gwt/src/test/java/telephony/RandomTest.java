@@ -11,8 +11,8 @@ import static junit.framework.Assert.assertTrue;
 public class RandomTest {                       // (1)
 
 
-  @Test
-  public void testSimple() {                                              // (3)
-    assertTrue(true);
-  }
+    @Test
+    public void testSimple() {                                              // (3)
+        assertTrue(true);
+    }
 }

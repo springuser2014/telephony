@@ -68,7 +68,7 @@ public class SecurityRPCServiceImpl extends GuicePersistentRemoteServiceServlet 
         } catch (AuthenticationException ae) {
             // unexpected condition - error?
 
-            logger.debug("AuthenticationException : " + ae.getStackTrace() );
+            logger.debug("AuthenticationException : " + ae.getStackTrace());
             result.setErrorMessage("Wystąpił nieznany błąd");
         }
     }

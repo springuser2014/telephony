@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 public interface ProductsDao extends GenericDao<Product> {
-    
+
     public List<Product> findCreatedByUserId(Long userId, ProductStatus productStatus);
 
     public List<Product> findByStoreId(Long storeId, ProductStatus productStatus);
-    
+
     public List<Product> findByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus productStatus);
 
     public Product findByImei(String imei);

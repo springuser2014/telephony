@@ -26,19 +26,19 @@ public class SendTextToServerHandler implements ActionHandler<SendTextToServer, 
     }
 
     public SendTextToServerResult execute(SendTextToServer action, ExecutionContext context)
-    throws ActionException {
+            throws ActionException {
         String input = action.getTextToServer();
-        
+
         if (!FieldVerifier.isValidUserName(input)) {
             throw new ActionException("Name must be at least 4 characters long");
         }
-        
+
         String serverInfo = servletContext.getServerInfo();
-        String userAgent  = requestProvider.get().getHeader("User-Agent");
+        String userAgent = requestProvider.get().getHeader("User-Agent");
 
         return new SendTextToServerResult("Hello, " + input
-        + "!<br><br>I am running " + serverInfo
-        + ".<br><br>It looks like you are using :<br>" + userAgent);
+                + "!<br><br>I am running " + serverInfo
+                + ".<br><br>It looks like you are using :<br>" + userAgent);
     }
 
     public Class<SendTextToServer> getActionType() {
@@ -46,7 +46,7 @@ public class SendTextToServerHandler implements ActionHandler<SendTextToServer, 
     }
 
     public void undo(SendTextToServer action, SendTextToServerResult result, ExecutionContext context)
-        throws ActionException {
+            throws ActionException {
 
     }
 

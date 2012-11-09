@@ -19,6 +19,7 @@ public class FirstClientActionHandler extends AbstractClientActionHandler<MyFirs
         super(MyFirstAction.class);
     }
 
+
     public DispatchRequest execute(final MyFirstAction action, final AsyncCallback<MyFirstResult> resultCallback, ExecuteCommand<MyFirstAction, MyFirstResult> dispatch) {
 
         return dispatch.execute(action, resultCallback);

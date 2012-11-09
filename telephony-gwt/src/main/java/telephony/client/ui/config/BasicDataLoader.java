@@ -7,11 +7,11 @@ import telephony.server.core.entity.User;
 import java.util.List;
 
 public interface BasicDataLoader {
-    
+
     public List<Store> getStores();
 
     public void forceReloadStores();
-    
+
     public List<User> getUsers();
 
     public void forceReloadUsers();
@@ -35,7 +35,7 @@ public interface BasicDataLoader {
     public Long getNumberOfSales();
 
     public void forceReloadNumberOfSales();
-    
+
     public List<String> getImeisInUse();
 
     public void forceReloadImeisInUse();

@@ -37,10 +37,10 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
 
     public long getNumberOfSales(Store store) {
         Query query = em.createQuery("select count(sa) from Sale sa " +
-                    " inner join sa.store s " +
-                    " where sa.deleter is null " +
-                    " and s.id = ?1 ")
-                    .setParameter(1, store.getId());
+                " inner join sa.store s " +
+                " where sa.deleter is null " +
+                " and s.id = ?1 ")
+                .setParameter(1, store.getId());
 
         Number res = (Number) query.getSingleResult();
         Long res2 = (Long) res;
@@ -68,13 +68,13 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
             orderBy = " order by d.label desc";
 
         List<Sale> result = em.createQuery("select sa from Sale sa " +
-                                           " inner join sa.store s " +
-                                           " where sa.deleter is null " +
-                                           " and s.id = ?1 " + orderBy)
-                                           .setParameter(1, store.getId())
-                                           .setFirstResult(startPosition)
-                                           .setMaxResults(numberOfElements)
-                                           .getResultList();
+                " inner join sa.store s " +
+                " where sa.deleter is null " +
+                " and s.id = ?1 " + orderBy)
+                .setParameter(1, store.getId())
+                .setFirstResult(startPosition)
+                .setMaxResults(numberOfElements)
+                .getResultList();
 
         logger.debug("found {} elements", result.size());
 
@@ -85,15 +85,15 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
         logger.debug("SalesDaoImpl.findProductsBySalesIds starts");
 
         List<Product> result = em.createQuery("  select p from Product p " +
-                                               " join fetch p.delivery d" +
-                                               " join fetch d.store s" +
-                                               " join fetch p.sale sa" +
-                                               " where sa.id in (?1) " +
-                                               " and p.deleter is null " +
-                                               " and p.sale is not null" +
-                                               " order by d.id desc ")
-                                               .setParameter(1, ids)
-                                               .getResultList();
+                " join fetch p.delivery d" +
+                " join fetch d.store s" +
+                " join fetch p.sale sa" +
+                " where sa.id in (?1) " +
+                " and p.deleter is null " +
+                " and p.sale is not null" +
+                " order by d.id desc ")
+                .setParameter(1, ids)
+                .getResultList();
 
         logger.debug(" found {} elements", result.size());
 

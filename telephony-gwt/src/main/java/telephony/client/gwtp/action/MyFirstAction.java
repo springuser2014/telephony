@@ -7,7 +7,8 @@ import telephony.client.service.SecurityRPCService;
 
 public class MyFirstAction implements Action<MyFirstResult> {
 
-    public MyFirstAction() {}
+    public MyFirstAction() {
+    }
 
     public String getServiceName() {
         return SecurityRPCService.FULL_SERVICE_URL;  //To change body of implemented methods use File | Settings | File Templates.

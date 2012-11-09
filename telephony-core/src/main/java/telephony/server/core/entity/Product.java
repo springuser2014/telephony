@@ -2,6 +2,7 @@ package telephony.server.core.entity;
 
 
 import javax.persistence.*;
+
 import telephony.server.core.entity.common.BaseEntity;
 import telephony.server.core.entity.common.Money;
 
@@ -24,28 +25,29 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "sale_id", nullable = true)
     private Sale sale;
 
-    @Column(name = "producer" , length = 100, nullable = false)
+    @Column(name = "producer", length = 100, nullable = false)
     private String producer;
 
-    @Column(name = "model" , length = 100, nullable = false)
+    @Column(name = "model", length = 100, nullable = false)
     private String model;
 
-    @Column(name = "color" , length = 20, nullable = false)
+    @Column(name = "color", length = 20, nullable = false)
     private String color;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column=@Column(name = "price_in", nullable = true))
+            @AttributeOverride(name = "value", column = @Column(name = "price_in", nullable = true))
     })
     private Money priceIn = new Money();
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column=@Column(name = "price_out", nullable = true))
+            @AttributeOverride(name = "value", column = @Column(name = "price_out", nullable = true))
     })
     private Money priceOut = new Money();
 
-    public Product() {}
+    public Product() {
+    }
 
     public String getImei() {
         return imei;

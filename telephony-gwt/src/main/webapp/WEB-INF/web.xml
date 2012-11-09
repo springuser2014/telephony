@@ -35,36 +35,36 @@
     </welcome-file-list>
 
     <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>-->
-                <!--Protected Site-->
-            <!--</web-resource-name>-->
-            <!--&lt;!&ndash; This would protect the entire site &ndash;&gt;-->
-            <!--<url-pattern>/*</url-pattern>-->
-            <!--&lt;!&ndash; If you list http methods,-->
-       <!--only those methods are protected &ndash;&gt;-->
-            <!--<http-method>DELETE</http-method>-->
-            <!--<http-method>GET</http-method>-->
-            <!--<http-method>POST</http-method>-->
-            <!--<http-method>PUT</http-method>-->
-        <!--</web-resource-collection>-->
-        <!--<auth-constraint>-->
-            <!--&lt;!&ndash; Roles that have access &ndash;&gt;-->
-            <!--<role-name>questuser</role-name>-->
-            <!--<role-name>admin</role-name>-->
-        <!--</auth-constraint>-->
+    <!--<web-resource-collection>-->
+    <!--<web-resource-name>-->
+    <!--Protected Site-->
+    <!--</web-resource-name>-->
+    <!--&lt;!&ndash; This would protect the entire site &ndash;&gt;-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--&lt;!&ndash; If you list http methods,-->
+    <!--only those methods are protected &ndash;&gt;-->
+    <!--<http-method>DELETE</http-method>-->
+    <!--<http-method>GET</http-method>-->
+    <!--<http-method>POST</http-method>-->
+    <!--<http-method>PUT</http-method>-->
+    <!--</web-resource-collection>-->
+    <!--<auth-constraint>-->
+    <!--&lt;!&ndash; Roles that have access &ndash;&gt;-->
+    <!--<role-name>questuser</role-name>-->
+    <!--<role-name>admin</role-name>-->
+    <!--</auth-constraint>-->
     <!--</security-constraint>-->
 
     <!-- BASIC authentication -->
     <!--<login-config>-->
-        <!--<auth-method>BASIC</auth-method>-->
-        <!--<realm-name>Telephony autoryzacja</realm-name>-->
+    <!--<auth-method>BASIC</auth-method>-->
+    <!--<realm-name>Telephony autoryzacja</realm-name>-->
     <!--</login-config>-->
 
     <!-- Define security roles -->
     <!--<security-role>-->
-        <!--<description>Telephony application's user role</description>-->
-        <!--<role-name>questuser</role-name>-->
+    <!--<description>Telephony application's user role</description>-->
+    <!--<role-name>questuser</role-name>-->
     <!--</security-role>-->
 
 </web-app>

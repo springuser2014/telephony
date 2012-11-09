@@ -14,8 +14,8 @@ import java.util.List;
 
 
 public class ProductsDaoImpl extends GenericDaoImpl<Product> implements ProductsDao {
-    
-    private Logger logger =  LoggerFactory.getLogger(getClass());
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public ProductsDaoImpl() {
         super(Product.class);
@@ -26,9 +26,9 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("params : [ userId : {} , productStatus : {} ]", userId, productStatus);
 
         List<Product> res = em.createQuery("select p from Product p where p.creator = ?1 and p.status = ?2 ")
-                              .setParameter(1, userId)
-                              .setParameter(2, productStatus)
-                              .getResultList();
+                .setParameter(1, userId)
+                .setParameter(2, productStatus)
+                .getResultList();
 
         logger.debug("findCreatedByUserId returns {} elements", res.size());
 
@@ -50,8 +50,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
                     "where st.id = ?1 and sa.id is null")
                     .setParameter(1, storeId)
                     .getResultList();
-        }
-        else if (productStatus.toString().equals(ProductStatus.SOLD.toString())) {
+        } else if (productStatus.toString().equals(ProductStatus.SOLD.toString())) {
             res = em.createQuery("select p from Product p " +
                     "left join p.delivery d " +
                     "left join p.store st " +
@@ -98,8 +97,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         if (productStatus == ProductStatus.IN_STORE) {
             sb.append("and sa.id is null ");
-        }
-        else if (productStatus == ProductStatus.SOLD) {
+        } else if (productStatus == ProductStatus.SOLD) {
             sb.append("and sa.id is not null ");
         }
 
@@ -134,8 +132,8 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         res = query.getResultList();
 
-        logger.info(" size : {}",  res.size() );
-        
+        logger.info(" size : {}", res.size());
+
 
         return res;
     }
@@ -148,17 +146,17 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
     public List<String> fetchImeisList() {
         logger.debug("ProductServiceImpl.fetchImeisList starts");
-        
+
         List<Product> list = this.findUndeleted();
         List<String> res = new ArrayList<String>();
-        
+
         for (Product p : list) {
             res.add(p.getImei());
         }
-        
+
         logger.debug("ProductServiceImpl.fetchImeisList ends");
 
-        return  res;
+        return res;
     }
 
     public List<Product> findUndeleted() {
@@ -166,12 +164,12 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("findUndeleted starts ");
 
         List<Product> lst = em.createQuery(" select e from Product e" +
-                                           " join fetch e.delivery d " +
-                                           " join fetch e.store s " +
-                                           " join fetch e.creator c " +
-                                           " left join fetch e.sale sa "+
-                                           " where e.deleter is null")
-                        .getResultList();
+                " join fetch e.delivery d " +
+                " join fetch e.store s " +
+                " join fetch e.creator c " +
+                " left join fetch e.sale sa " +
+                " where e.deleter is null")
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
 
@@ -183,7 +181,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         List<Product> list = this.findAll();
         List<String> res = new ArrayList<String>();
-        
+
         for (Product p : list) {
             if (!res.contains(p.getProducer())) {
                 res.add(p.getProducer());
@@ -192,7 +190,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         logger.debug("found {} elements", res.size());
 
-        return  res;
+        return res;
     }
 
 
@@ -210,7 +208,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         logger.debug("found {} elements", res.size());
 
-        return  res;
+        return res;
     }
 
     public Product findByImeiAndStoreId(String imei, Long storeId) {
@@ -218,26 +216,26 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("params : [ imei : {} , storeId : {} ]", imei, storeId);
 
         Product res = (Product) em.createQuery("select p from Product p " +
-                                               "left join p.store st " +
-                                               "left join p.sale sa " +
-                                               "where st.id = ?1 and p.imei = ?2 and sa.id is null")
-                        .setParameter(1, storeId)
-                        .setParameter(2, imei)
-                        .getSingleResult();
+                "left join p.store st " +
+                "left join p.sale sa " +
+                "where st.id = ?1 and p.imei = ?2 and sa.id is null")
+                .setParameter(1, storeId)
+                .setParameter(2, imei)
+                .getSingleResult();
 
-        return  res;
+        return res;
     }
-    
+
     public List<Product> findAll() {
 
         logger.debug("ProductsDaoImpl.findAll starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
         List<Product> lst = em.createQuery("select e from Product e " +
-                                           " join fetch e.delivery d " +
-                                           " join fetch e.store s " +
-                                           " left join fetch e.sale sa ")
-                        .getResultList();
+                " join fetch e.delivery d " +
+                " join fetch e.store s " +
+                " left join fetch e.sale sa ")
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
 

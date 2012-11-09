@@ -21,7 +21,7 @@ public interface ProductService {
 
     /**
      * Zwraca listę nazw wszystkich producentów z bazy
-     * 
+     *
      * @return
      */
     public List<String> fetchAllProducers();
@@ -32,7 +32,7 @@ public interface ProductService {
      * @return
      */
     public List<String> fetchAllModels();
-    
+
     public List<String> fetchAllColors();
 
     /**
@@ -44,6 +44,7 @@ public interface ProductService {
 
     /**
      * Zwraca listę produktów według przekazanych kryteriów
+     *
      * @return
      */
     public List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);

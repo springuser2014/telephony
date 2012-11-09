@@ -23,7 +23,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Inject
     private DeliveriesDao deliveriesDao;
-    
+
     @Inject
     private StoresDao storesDao;
 
@@ -43,20 +43,20 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     public void addNewDelivery(Delivery delivery, Store store, List<Product> productList, User user) {
         logger.debug("DeliveryServiceImpl.addNewDelivery starts");
-                     
+
         em.getTransaction().begin();
-        
+
         delivery.setCreatedAt(new Date());
         delivery.setCreator(user);
         delivery.setStore(store);
-        
+
         delivery = deliveriesDao.save(delivery);
         for (Product p : productList) {
             p.setStore(store);
             p.setDelivery(delivery);
             p.setCreatedAt(new Date());
             p.setCreator(user);
-            
+
             prodctsDao.save(p);
         }
 
@@ -81,16 +81,16 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         int numberOfElements = 6;
 
-        List<Delivery> deliveries = deliveriesDao.findLastest(store, numberOfElements*page, numberOfElements, order);
+        List<Delivery> deliveries = deliveriesDao.findLastest(store, numberOfElements * page, numberOfElements, order);
 
         ArrayList<Long> ids = new ArrayList<Long>();
-        
+
         for (Delivery d : deliveries) {
             ids.add(d.getId());
         }
-        
+
         List<Product> result = deliveriesDao.findProductsByDeliveriesIds(ids);
-        
+
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom ends");
 
         return result;

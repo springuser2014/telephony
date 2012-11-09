@@ -28,7 +28,7 @@ public class InformationServiceImpl implements InformationService {
     public long getNumberOfSales(Store store) {
 
         logger.debug("InformationServiceImpl.getNumberOfSales starts");
-        
+
         return salesDao.getNumberOfSales(store);
     }
 }

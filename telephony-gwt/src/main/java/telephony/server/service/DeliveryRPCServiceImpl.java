@@ -23,7 +23,7 @@ import java.util.List;
 public class DeliveryRPCServiceImpl extends GuicePersistentRemoteServiceServlet implements DeliveryRPCService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     @Inject
     private DeliveryService deliveryService;
 
@@ -37,17 +37,14 @@ public class DeliveryRPCServiceImpl extends GuicePersistentRemoteServiceServlet 
 
         RPCServiceStatus status = new RPCServiceStatus();
 
-        try
-        {
-            deliveryService.addNewDelivery(delivery,  store, products, user);
+        try {
+            deliveryService.addNewDelivery(delivery, store, products, user);
             status.setOperationStatusInfo("Dostawa została dodana");
             status.setStatus(RPCServiceStatus.Status.SUCCESS);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             status.setOperationStatusInfo("Wystąpił błąd podczas dodawania dostawy");
             status.setStatus(RPCServiceStatus.Status.FAILED);
-            logger.error("Error during adding new delivery cause {} , message {} , stacktrace {} " , new Object[] { e.getCause(), e.getMessage(), e.getStackTrace() });
+            logger.error("Error during adding new delivery cause {} , message {} , stacktrace {} ", new Object[]{e.getCause(), e.getMessage(), e.getStackTrace()});
         }
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery ends");
@@ -59,7 +56,7 @@ public class DeliveryRPCServiceImpl extends GuicePersistentRemoteServiceServlet 
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery start");
         logger.debug("params : [ storeId : {} ] ", store.getId());
-        
+
         List<Product> result = deliveryService.fetchAllDeliveriesFrom(store, page, order);
 
         logger.debug("DeliveryRPCServiceImpl.addNewDelivery ends");

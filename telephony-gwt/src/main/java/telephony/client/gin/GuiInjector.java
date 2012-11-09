@@ -17,7 +17,7 @@ import telephony.client.ui.layout.TelephonyMainLayout;
 import telephony.client.ui.widget.*;
 import telephony.client.ui.widget.form.LoginForm;
 
-@GinModules( { TelephonyClientModule.class, GwtpModule.class } )
+@GinModules({TelephonyClientModule.class, GwtpModule.class})
 public interface GuiInjector extends Ginjector {
 
     /* GwtpModule */
@@ -59,7 +59,6 @@ public interface GuiInjector extends Ginjector {
     TelephonyContentLayout getContentLayout();
 
     TelephonyHeaderLayout getHeaderLayout();
-
 
 
 }

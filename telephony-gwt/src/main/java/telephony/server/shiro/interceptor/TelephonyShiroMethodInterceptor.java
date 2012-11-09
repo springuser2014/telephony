@@ -9,20 +9,20 @@ import java.lang.reflect.Method;
 
 public class TelephonyShiroMethodInterceptor implements MethodInterceptor {
 
-	private RoleAnnotationMethodInterceptor roleAnnotationMethodInterceptor = new RoleAnnotationMethodInterceptor();
+    private RoleAnnotationMethodInterceptor roleAnnotationMethodInterceptor = new RoleAnnotationMethodInterceptor();
 
-	@Override
-	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		return roleAnnotationMethodInterceptor.invoke(new ShiroMethodInvocation(methodInvocation));
-	}
+    @Override
+    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+        return roleAnnotationMethodInterceptor.invoke(new ShiroMethodInvocation(methodInvocation));
+    }
 
-	private static class ShiroMethodInvocation implements org.apache.shiro.aop.MethodInvocation {
+    private static class ShiroMethodInvocation implements org.apache.shiro.aop.MethodInvocation {
 
-		private MethodInvocation methodInvocation;
+        private MethodInvocation methodInvocation;
 
-		public ShiroMethodInvocation(MethodInvocation methodInvocation) {
-			this.methodInvocation = methodInvocation;
-		}
+        public ShiroMethodInvocation(MethodInvocation methodInvocation) {
+            this.methodInvocation = methodInvocation;
+        }
 
         @Override
         public Object proceed() throws Throwable {

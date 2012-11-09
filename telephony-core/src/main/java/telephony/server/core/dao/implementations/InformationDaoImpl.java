@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 
 public class InformationDaoImpl implements InformationDao {
 
-    private Logger logger =  LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
     protected EntityManager em;

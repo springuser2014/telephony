@@ -11,7 +11,8 @@ public class UserContext implements IsSerializable {
     protected HashMap<String, String> privileges;
     protected String sessionId;
 
-    public UserContext() {}
+    public UserContext() {
+    }
 
     public String getUsername() {
         return username;

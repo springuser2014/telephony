@@ -30,17 +30,17 @@ public class ProductServiceImpl implements ProductService {
 
     public List<String> fetchAllImeiInUse() {
         logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
-        
+
         List<String> res = productsDao.fetchImeisList();
-        
+
         logger.debug("found {} elements", res.size());
-        
+
         return res;
     }
 
     public List<String> fetchAllProducers() {
         logger.debug("ProductServiceImpl.fetchAllProducers starts");
-        
+
         List<String> res = new ArrayList<String>();
         List<Product> products = productsDao.findUndeleted();
 
@@ -48,9 +48,9 @@ public class ProductServiceImpl implements ProductService {
             if (!res.contains(p.getProducer()))
                 res.add(p.getProducer());
         }
-        
-        logger.debug("found {} elements " , res.size());
-        
+
+        logger.debug("found {} elements ", res.size());
+
         return res;
     }
 
@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
                 res.add(p.getModel());
         }
 
-        logger.debug("found {} elements " , res.size());
+        logger.debug("found {} elements ", res.size());
 
         return res;
     }
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
                 res.add(p.getColor());
         }
 
-        logger.debug("found {} elements " , res.size());
+        logger.debug("found {} elements ", res.size());
 
         return res;
     }
@@ -96,15 +96,15 @@ public class ProductServiceImpl implements ProductService {
 
         logger.debug("ProductServiceImpl.fetchAllProducts ends");
 
-        return  result;
+        return result;
     }
 
-    public void moveProducts(Store store, List<Product> products, User user) {        
+    public void moveProducts(Store store, List<Product> products, User user) {
         logger.debug("ProductServiceImpl.moveProducts starts ");
-        logger.debug("params : [ storeId : {} , number of products: {} , userId : {}] ", new Object[] {store, products, user});
-        
+        logger.debug("params : [ storeId : {} , number of products: {} , userId : {}] ", new Object[]{store, products, user});
+
         em.getTransaction().begin();
-        
+
         for (Product p : products) {
             p.setStore(store);
             p.setEditor(user);
@@ -112,35 +112,35 @@ public class ProductServiceImpl implements ProductService {
 
             productsDao.save(p);
         }
-        
+
         em.getTransaction().commit();
-        
-        logger.debug("ProductServiceImpl.fetchAllProducts ends");        
+
+        logger.debug("ProductServiceImpl.fetchAllProducts ends");
     }
 
     public Product fetchProductByImeiAndStoreId(String imei, Long storeId) {
         logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
-        
+
         Product p = productsDao.findByImeiAndStoreId(imei, storeId);
-        
+
         return p;
     }
 
     @Transactional
     public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status) {
         logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
-        Object[] params = new Object[] {imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status};
+        Object[] params = new Object[]{imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status};
         logger.debug("params : [ imei : {} , producer : {} , model : {} , color : {} , storeId : {} , deliveryDateStart : {} , deliveryDateEnd : {}, productStatus : {} ] ", params);
 
         List<Product> result = productsDao.findByCriteria(imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status);
 
         logger.info("ProductServiceImpl.fetchAllProductsByCriteria ends");
-        
-        for(Product p : result) {
-            logger.info(" model : {} , producer : {} ", p.getModel(), p.getProducer() );
+
+        for (Product p : result) {
+            logger.info(" model : {} , producer : {} ", p.getModel(), p.getProducer());
         }
 
-        return  result;
+        return result;
     }
 
     public void updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor) {
@@ -152,7 +152,7 @@ public class ProductServiceImpl implements ProductService {
                     productsToUpdate.remove(p);
                 }
             }
-            
+
             for (Product p2 : productsToCancelTheSale) {
                 if (p2.getId().equals(p.getId())) {
                     productsToUpdate.remove(p);
@@ -179,7 +179,7 @@ public class ProductServiceImpl implements ProductService {
 
         for (Product p : productsToCancelTheSale) {
             p.setSale(null);
-            p.setPriceOut(new Money(0,0));
+            p.setPriceOut(new Money(0, 0));
             p.setEditedAt(new Date());
             p.setEditor(editor);
         }

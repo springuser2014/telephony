@@ -30,23 +30,20 @@ public class GwtpModule extends AbstractPresenterModule {
         bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
         bind(PlaceManager.class).to(TelephonyPlaceManager.class).in(Singleton.class);
         bind(TokenFormatter.class).to(ParameterTokenFormatter.class).in(
-            Singleton.class);
+                Singleton.class);
         bind(RootPresenter.class).asEagerSingleton();
         bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class).in(Singleton.class);
 
         // Presenters
         bindPresenter(DashboardPresenter.class, DashboardPresenter.StartView.class,
                 DashboardView.class, DashboardPresenter.StartProxy.class);
-        
+
         bindPresenter(HeaderPresenter.class, HeaderPresenter.HeaderView.class,
-                      HeaderView.class, HeaderPresenter.HeaderProxy.class );
+                HeaderView.class, HeaderPresenter.HeaderProxy.class);
         bindPresenter(LoginPresenter.class, LoginPresenter.LoginView.class,
-                      LoginView.class, LoginPresenter.LoginProxy.class);
-        
+                LoginView.class, LoginPresenter.LoginProxy.class);
+
         bind(FirstClientActionHandler.class).toProvider(FirstClientActionHandlerProvider.class);
-
-
-
 
 
     }

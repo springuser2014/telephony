@@ -17,10 +17,8 @@ import telephony.client.service.SecurityRPCServiceAsync;
 
 
 /**
- *
  * @todo refactor me
  * @todo delete?
- *
  */
 public class LoginForm extends DynamicForm {
 
@@ -31,7 +29,7 @@ public class LoginForm extends DynamicForm {
     private DataSourcePasswordField passwordField;
     private HeaderItem errorsItem;
     private HeaderItem headerItem;
-    private PasswordItem passwordItem ;
+    private PasswordItem passwordItem;
     private TextItem emailItem;
 //    private IButton validateItem;
 

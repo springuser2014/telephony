@@ -21,8 +21,8 @@ public class TelephonyPlaceManager extends PlaceManagerImpl {
     }
 
     /**
-     * @todo Handle transition to UnauthorizedPlace
      * @param unauthorizedHistoryToken
+     * @todo Handle transition to UnauthorizedPlace
      */
     @Override
     public void revealUnauthorizedPlace(String unauthorizedHistoryToken) {
@@ -32,8 +32,8 @@ public class TelephonyPlaceManager extends PlaceManagerImpl {
     }
 
     /**
-     * @todo Handle transition to ErrorPlace
      * @param invalidHistoryToken
+     * @todo Handle transition to ErrorPlace
      */
     @Override
     public void revealErrorPlace(String invalidHistoryToken) {

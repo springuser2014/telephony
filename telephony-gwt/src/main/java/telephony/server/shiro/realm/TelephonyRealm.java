@@ -65,7 +65,7 @@ public class TelephonyRealm extends AuthorizingRealm {
             return null;
         }
 
-            logger.debug("Principal found for authenticating user with username: " + usernamePasswordToken.getUsername());
+        logger.debug("Principal found for authenticating user with username: " + usernamePasswordToken.getUsername());
 
 
         return new SimpleAccount(principal.getUsername(), principal.getPassword(), getName(),

@@ -11,9 +11,10 @@ import java.util.Date;
 @Table(name = "sales")
 public class Sale extends BaseEntity {
 
-    public Sale() {}
+    public Sale() {
+    }
 
-    @Column(name = "label", nullable =false)
+    @Column(name = "label", nullable = false)
     private String label;
 
     @Column(name = "date_out")
@@ -24,7 +25,7 @@ public class Sale extends BaseEntity {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToMany(mappedBy = "sale", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
     private Collection<Product> products;
 
     public String getLabel() {

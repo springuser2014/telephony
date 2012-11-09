@@ -57,8 +57,8 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
     @Transactional
     public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status) {
         logger.debug("ProductRPCServiceImpl.fetchAllProductsByCriteria starts");
-        
-        Object[] params = new Object[] {imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status};
+
+        Object[] params = new Object[]{imei, producer, model, color, storeId, deliveryDateStart, deliveryDateEnd, status};
 
         logger.debug("params : [ imei : {} , producer : {} , model : {} , color : {} , storeId : {} , deliveryDateStart : {} , deliveryDateEnd : {}, productStatus : {} ] ", params);
 
@@ -127,8 +127,7 @@ public class ProductRPCServiceImpl extends GuicePersistentRemoteServiceServlet i
             result.setStatus(RPCServiceStatus.Status.SUCCESS);
             result.setOperationStatusInfo("Zmiany zostały wprowadzone");
             em.getTransaction().commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.error("error message : {} , stackTrack : {}", e.getMessage(), e.getStackTrace());
             result.setStatus(RPCServiceStatus.Status.FAILED);
             result.setOperationStatusInfo("Wystąpił błąd podczas wykonywania operacji");

@@ -22,12 +22,12 @@ public class StoreServiceImpl implements StoreService {
     private StoresDao storesDao;
 
     public List<Store> fetchAllStores() {
-        
+
         logger.debug("StoreServiceImpl.fetchAllStores starts");
-        
+
         List<Store> stores = storesDao.findUndeleted();
-        
-        logger.debug("found {} elements " , stores.size());
+
+        logger.debug("found {} elements ", stores.size());
 
         return stores;
     }

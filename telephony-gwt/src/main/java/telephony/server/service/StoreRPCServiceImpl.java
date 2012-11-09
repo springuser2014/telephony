@@ -18,7 +18,7 @@ import java.util.List;
 public class StoreRPCServiceImpl extends GuicePersistentRemoteServiceServlet implements StoreRPCService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     @Inject
     private StoreService storeService;
 
@@ -30,7 +30,7 @@ public class StoreRPCServiceImpl extends GuicePersistentRemoteServiceServlet imp
     @Override
     public List<Store> fetchAllStores() {
         logger.debug("StoreRPCServiceImpl.fetchAllStores starts");
-        
+
         List<Store> stores = storeService.fetchAllStores();
 
         logger.debug("found {} elements", stores.size());

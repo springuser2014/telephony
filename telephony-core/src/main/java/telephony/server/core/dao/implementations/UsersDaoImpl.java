@@ -28,7 +28,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
         logger.debug("entity type : {} ", entityClass.getName());
 
         List<User> lst = em.createQuery("select e from User e where e.deleter is null")
-                           .getResultList();
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
 

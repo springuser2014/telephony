@@ -47,7 +47,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
 
         List<E> lst = em.createQuery("select e from " + entityClass.getName() + " e")
-                        .getResultList();
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
 
@@ -60,7 +60,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
 
         List<E> lst = em.createQuery("select e from " + entityClass.getName() + " e where e.deleter is null")
-                        .getResultList();
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
 
@@ -74,10 +74,10 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("no params");
 
         List<E> lst = em.createQuery("select e from " + entityClass.getName() + " e where e.deleter is not null")
-                        .getResultList();
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
-        
+
         return lst;
     }
 
@@ -100,9 +100,9 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("number of params : {} ", ids.size());
 
 
-        List<E> res =   em.createQuery("select e from " + entityClass.getName() + " e where e.id in (?1) ")
-                          .setParameter(1, ids)
-                          .getResultList();
+        List<E> res = em.createQuery("select e from " + entityClass.getName() + " e where e.id in (?1) ")
+                .setParameter(1, ids)
+                .getResultList();
 
         logger.debug("findByIds found number of elements : {} ", res.size());
 
@@ -114,9 +114,9 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", ids.size());
 
-        List<E> res =   em.createQuery("select e from " + entityClass.getName() + " e where e.id in (?1) and e.deleter is null")
-                          .setParameter(1, ids)
-                          .getResultList();
+        List<E> res = em.createQuery("select e from " + entityClass.getName() + " e where e.id in (?1) and e.deleter is null")
+                .setParameter(1, ids)
+                .getResultList();
 
         logger.debug("findUndeletedByIds found number of elements : {} ", res.size());
 
@@ -129,8 +129,8 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("number of params : {} ", ids.size());
 
         List<E> res = em.createQuery("select e from " + entityClass.getName() + " e where e.id in (?1) and e.deleter is not null")
-                        .setParameter(1, ids)
-                        .getResultList();
+                .setParameter(1, ids)
+                .getResultList();
 
         logger.debug("findDeletedByIds found number of elements : {} ", res.size());
 
@@ -155,7 +155,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("save stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
-        
+
         List<E> res = new ArrayList<E>();
 
         for (E entity : entities) {
@@ -185,10 +185,10 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("params : [ id : {}, userId : {} ]", id, userId);
 
         int touched = em.createQuery("update " + entityClass.getName() + " e set e.deleter = ?1 , e.deleteAt = ?2 where e.id = ?3")
-                        .setParameter(1, userId)
-                        .setParameter(2, new Date(), TemporalType.TIMESTAMP)
-                        .setParameter(3, id)
-                        .executeUpdate();
+                .setParameter(1, userId)
+                .setParameter(2, new Date(), TemporalType.TIMESTAMP)
+                .setParameter(3, id)
+                .executeUpdate();
 
         logger.debug("markAsDeletedById touched {} elements", touched);
     }
@@ -200,10 +200,10 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("number of elements: {} ", ids.size());
 
         int touched = em.createQuery("update " + entityClass.getName() + " e set e.deleter = ?1 , e.deleteAt = ?2 where e.id in (?3)")
-                        .setParameter(1, userId)
-                        .setParameter(2, new Date(), TemporalType.TIMESTAMP)
-                        .setParameter(3, ids)
-                        .executeUpdate();
+                .setParameter(1, userId)
+                .setParameter(2, new Date(), TemporalType.TIMESTAMP)
+                .setParameter(3, ids)
+                .executeUpdate();
 
         logger.debug("markAsDeletedByIds touched {} elements", touched);
     }
@@ -220,7 +220,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         E e = em.merge(entity);
 
         logger.debug("markAsDeleted ends");
-        
+
         return e;
     }
 
@@ -229,19 +229,19 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("params : [ userId : {} ]", user);
         logger.debug("number of elements: {} ", entities.size());
-    
+
         List<E> result = new ArrayList<E>();
 
-        for( E entity : entities) {
+        for (E entity : entities) {
 
             entity.setDeletedAt(new Date());
             entity.setDeleter(user);
             E e = em.merge(entity);
             result.add(e);
         }
-    
+
         logger.debug("markAsDeleted ends");
-        
+
         return result;
     }
 
@@ -251,8 +251,8 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
 
         int updated = em.createQuery("delete from " + entityClass.getName() + " e where e.id in (?1)")
-                        .setParameter(1, id)
-                        .executeUpdate();
+                .setParameter(1, id)
+                .executeUpdate();
 
         logger.debug("permanentDeleteById updated {} elements ", updated);
     }
@@ -263,8 +263,8 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("number of params : {} ", ids.size());
 
         int updated = em.createQuery("delete from " + entityClass.getName() + " e where e.id in (?1)")
-                        .setParameter(1, ids)
-                        .executeUpdate();
+                .setParameter(1, ids)
+                .executeUpdate();
 
         logger.debug("permanentDeleteByIds updated {} elements ", updated);
     }

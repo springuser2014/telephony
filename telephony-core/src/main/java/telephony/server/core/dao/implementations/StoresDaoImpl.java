@@ -15,14 +15,14 @@ public class StoresDaoImpl extends GenericDaoImpl<Store> implements StoresDao {
     public StoresDaoImpl() {
         super(Store.class);
     }
-    
+
     public List<Store> findUndeleted() {
 
         logger.debug("findUndeleted starts ");
 
         List<Store> lst = em.createQuery(" select e from Store e " +
-                                         " where e.deleter is null")
-                            .getResultList();
+                " where e.deleter is null")
+                .getResultList();
 
         logger.debug("found {} elements", lst.size());
 

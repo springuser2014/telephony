@@ -15,8 +15,8 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="base_entity_seq")
-    @SequenceGenerator(name="base_entity_seq", sequenceName="base_entity_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_seq")
+    @SequenceGenerator(name = "base_entity_seq", sequenceName = "base_entity_seq", allocationSize = 1)
     private Long id;
 
     @Version
@@ -28,7 +28,7 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     private Date createdAt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by"  ,nullable = false)
+    @JoinColumn(name = "created_by", nullable = false)
     private User creator;
 
     @Column(name = "edited_at")
@@ -36,7 +36,7 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     private Date editedAt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "edited_by" , nullable = true)
+    @JoinColumn(name = "edited_by", nullable = true)
     private User editor;
 
     @Column(name = "deleted_at")
@@ -47,7 +47,8 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     @JoinColumn(name = "deleted_by", nullable = true)
     private User deleter;
 
-    public BaseEntity() { }
+    public BaseEntity() {
+    }
 
     @Override
     public String toString() {

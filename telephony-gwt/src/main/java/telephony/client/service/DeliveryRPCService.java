@@ -17,7 +17,7 @@ public interface DeliveryRPCService extends RemoteService {
 
     public static final String PATH = "delivery";
     public static final String FULL_SERVICE_PATH = Constant.APPLICATION_URL_PREFIX + PATH;
-    
+
     public RPCServiceStatus addNewDelivery(Delivery delivery, List<Product> products, User user, Store store);
 
     public List<Product> fetchDeliveriesFrom(Store store, int page, ListOrder order);

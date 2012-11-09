@@ -1,7 +1,6 @@
 package telephony.server.gilead.handler;
 
 
-
 import java.lang.reflect.InvocationTargetException;
 
 import net.sf.gilead.gwt.GileadRPCHelper;

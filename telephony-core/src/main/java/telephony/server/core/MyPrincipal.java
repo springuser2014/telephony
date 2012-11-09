@@ -13,7 +13,7 @@ public class MyPrincipal {
 
     public MyPrincipal() {
         username = "pawel";
-        password  = "pawel123";
+        password = "pawel123";
 
         roles.add("admin");
         roles.add("user");

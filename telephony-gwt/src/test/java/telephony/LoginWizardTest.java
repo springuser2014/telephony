@@ -31,14 +31,17 @@ public class LoginWizardTest {
 //            @Override
 //            protected void configureMockHandlers() {
 //                bindMockActionHandler(new MyFirstAction(), new MyFirstResult(), firstClientActionHandler);
+//                bindMockClientActionHandler();
+//                bindMockActionHandler(,firstClientActionHandler);
 //            }
 //        });
 
+
 //        DispatchAsync dispatcher = injector.getInstance(DispatchAsync.class);
 //
-//        presenter = new LoginPresenter(null, view, proxy, dispatcher, null );
-        
-        
+//        presenter = new LoginPresenter(null, view, proxy, dispatcher, null);
+//
+//        presenter.onOkButtonClicked();
 
 
     }

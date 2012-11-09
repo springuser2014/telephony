@@ -18,8 +18,7 @@ import java.util.*;
  * need to modify it to have a single invoke and a single encode method
  * </b>
  */
-public final class RPCGilead
-{
+public final class RPCGilead {
 
     /**
      * Maps primitive wrapper classes to their corresponding primitive class.
@@ -34,8 +33,7 @@ public final class RPCGilead
 
     private static final HashMap<String, Class<?>> TYPE_NAMES;
 
-    static
-    {
+    static {
         PRIMITIVE_WRAPPER_CLASS_TO_PRIMITIVE_CLASS.put(Boolean.class, Boolean.TYPE);
         PRIMITIVE_WRAPPER_CLASS_TO_PRIMITIVE_CLASS.put(Byte.class, Byte.TYPE);
         PRIMITIVE_WRAPPER_CLASS_TO_PRIMITIVE_CLASS.put(Character.class, Character.TYPE);
@@ -61,35 +59,34 @@ public final class RPCGilead
     /**
      * Returns an {@link RPCRequest} that is built by decoding the contents of an
      * encoded RPC request.
-     *
+     * <p/>
      * <p>
      * This method is equivalent to calling {@link #decodeRequest(String, Class)}
      * with <code>null</code> for the type parameter.
      * </p>
      *
      * @param encodedRequest a string that encodes the {@link RemoteService}
-     *          interface, the service method to call, and the arguments to for
-     *          the service method
+     *                       interface, the service method to call, and the arguments to for
+     *                       the service method
      * @return an {@link com.google.gwt.user.server.rpc.RPCRequest} instance
-     *
-     * @throws IncompatibleRemoteServiceException if any of the following
-     *           conditions apply:
-     *           <ul>
-     *           <li>if the types in the encoded request cannot be deserialized</li>
-     *           <li>if the {@link ClassLoader} acquired from
-     *           <code>Thread.currentThread().getContextClassLoader()</code>
-     *           cannot load the service interface or any of the types specified
-     *           in the encodedRequest</li>
-     *           <li>the requested interface is not assignable to
-     *           {@link RemoteService}</li>
-     *           <li>the service method requested in the encodedRequest is not a
-     *           member of the requested service interface</li>
-     *           <li>the type parameter is not <code>null</code> and is not
-     *           assignable to the requested {@link RemoteService} interface
-     *           </ul>
+     * @throws IncompatibleRemoteServiceException
+     *          if any of the following
+     *          conditions apply:
+     *          <ul>
+     *          <li>if the types in the encoded request cannot be deserialized</li>
+     *          <li>if the {@link ClassLoader} acquired from
+     *          <code>Thread.currentThread().getContextClassLoader()</code>
+     *          cannot load the service interface or any of the types specified
+     *          in the encodedRequest</li>
+     *          <li>the requested interface is not assignable to
+     *          {@link RemoteService}</li>
+     *          <li>the service method requested in the encodedRequest is not a
+     *          member of the requested service interface</li>
+     *          <li>the type parameter is not <code>null</code> and is not
+     *          assignable to the requested {@link RemoteService} interface
+     *          </ul>
      */
-    public static RPCRequest decodeRequest(String encodedRequest)
-    {
+    public static RPCRequest decodeRequest(String encodedRequest) {
         return decodeRequest(encodedRequest, null);
     }
 
@@ -99,7 +96,7 @@ public final class RPCGilead
      * request. If the type parameter is not <code>null</code>, the
      * implementation checks that the type is assignable to the
      * {@link RemoteService} interface requested in the encoded request string.
-     *
+     * <p/>
      * <p>
      * Invoking this method with <code>null</code> for the type parameter,
      * <code>decodeRequest(encodedRequest, null)</code>, is equivalent to
@@ -107,33 +104,32 @@ public final class RPCGilead
      * </p>
      *
      * @param encodedRequest a string that encodes the {@link RemoteService}
-     *          interface, the service method, and the arguments to pass to the
-     *          service method
-     * @param type if not <code>null</code>, the implementation checks that the
-     *          type is assignable to the {@link RemoteService} interface encoded
-     *          in the encoded request string.
+     *                       interface, the service method, and the arguments to pass to the
+     *                       service method
+     * @param type           if not <code>null</code>, the implementation checks that the
+     *                       type is assignable to the {@link RemoteService} interface encoded
+     *                       in the encoded request string.
      * @return an {@link RPCRequest} instance
-     *
-     * @throws NullPointerException if the encodedRequest is <code>null</code>
+     * @throws NullPointerException     if the encodedRequest is <code>null</code>
      * @throws IllegalArgumentException if the encodedRequest is an empty string
-     * @throws IncompatibleRemoteServiceException if any of the following
-     *           conditions apply:
-     *           <ul>
-     *           <li>if the types in the encoded request cannot be deserialized</li>
-     *           <li>if the {@link ClassLoader} acquired from
-     *           <code>Thread.currentThread().getContextClassLoader()</code>
-     *           cannot load the service interface or any of the types specified
-     *           in the encodedRequest</li>
-     *           <li>the requested interface is not assignable to
-     *           {@link RemoteService}</li>
-     *           <li>the service method requested in the encodedRequest is not a
-     *           member of the requested service interface</li>
-     *           <li>the type parameter is not <code>null</code> and is not
-     *           assignable to the requested {@link RemoteService} interface
-     *           </ul>
+     * @throws IncompatibleRemoteServiceException
+     *                                  if any of the following
+     *                                  conditions apply:
+     *                                  <ul>
+     *                                  <li>if the types in the encoded request cannot be deserialized</li>
+     *                                  <li>if the {@link ClassLoader} acquired from
+     *                                  <code>Thread.currentThread().getContextClassLoader()</code>
+     *                                  cannot load the service interface or any of the types specified
+     *                                  in the encodedRequest</li>
+     *                                  <li>the requested interface is not assignable to
+     *                                  {@link RemoteService}</li>
+     *                                  <li>the service method requested in the encodedRequest is not a
+     *                                  member of the requested service interface</li>
+     *                                  <li>the type parameter is not <code>null</code> and is not
+     *                                  assignable to the requested {@link RemoteService} interface
+     *                                  </ul>
      */
-    public static RPCRequest decodeRequest(String encodedRequest, Class<?> type)
-    {
+    public static RPCRequest decodeRequest(String encodedRequest, Class<?> type) {
         return decodeRequest(encodedRequest, type, null);
     }
 
@@ -143,7 +139,7 @@ public final class RPCGilead
      * request. If the type parameter is not <code>null</code>, the
      * implementation checks that the type is assignable to the
      * {@link RemoteService} interface requested in the encoded request string.
-     *
+     * <p/>
      * <p>
      * If the serializationPolicyProvider parameter is not <code>null</code>,
      * it is asked for a {@link SerializationPolicy} to use to restrict the set of
@@ -152,69 +148,63 @@ public final class RPCGilead
      * {@link com.google.gwt.user.client.rpc.IsSerializable IsSerializable} or
      * types which have custom field serializers can be decoded.
      * </p>
-     *
+     * <p/>
      * <p>
      * Invoking this method with <code>null</code> for the type parameter,
      * <code>decodeRequest(encodedRequest, null)</code>, is equivalent to
      * calling <code>decodeRequest(encodedRequest)</code>.
      * </p>
      *
-     * @param encodedRequest a string that encodes the {@link RemoteService}
-     *          interface, the service method, and the arguments to pass to the
-     *          service method
-     * @param type if not <code>null</code>, the implementation checks that the
-     *          type is assignable to the {@link RemoteService} interface encoded
-     *          in the encoded request string.
+     * @param encodedRequest              a string that encodes the {@link RemoteService}
+     *                                    interface, the service method, and the arguments to pass to the
+     *                                    service method
+     * @param type                        if not <code>null</code>, the implementation checks that the
+     *                                    type is assignable to the {@link RemoteService} interface encoded
+     *                                    in the encoded request string.
      * @param serializationPolicyProvider if not <code>null</code>, the
-     *          implementation asks this provider for a
-     *          {@link SerializationPolicy} which will be used to restrict the set
-     *          of types that can be decoded from this request
+     *                                    implementation asks this provider for a
+     *                                    {@link SerializationPolicy} which will be used to restrict the set
+     *                                    of types that can be decoded from this request
      * @return an {@link RPCRequest} instance
-     *
-     * @throws NullPointerException if the encodedRequest is <code>null</code>
+     * @throws NullPointerException     if the encodedRequest is <code>null</code>
      * @throws IllegalArgumentException if the encodedRequest is an empty string
-     * @throws IncompatibleRemoteServiceException if any of the following
-     *           conditions apply:
-     *           <ul>
-     *           <li>if the types in the encoded request cannot be deserialized</li>
-     *           <li>if the {@link ClassLoader} acquired from
-     *           <code>Thread.currentThread().getContextClassLoader()</code>
-     *           cannot load the service interface or any of the types specified
-     *           in the encodedRequest</li>
-     *           <li>the requested interface is not assignable to
-     *           {@link RemoteService}</li>
-     *           <li>the service method requested in the encodedRequest is not a
-     *           member of the requested service interface</li>
-     *           <li>the type parameter is not <code>null</code> and is not
-     *           assignable to the requested {@link RemoteService} interface
-     *           </ul>
+     * @throws IncompatibleRemoteServiceException
+     *                                  if any of the following
+     *                                  conditions apply:
+     *                                  <ul>
+     *                                  <li>if the types in the encoded request cannot be deserialized</li>
+     *                                  <li>if the {@link ClassLoader} acquired from
+     *                                  <code>Thread.currentThread().getContextClassLoader()</code>
+     *                                  cannot load the service interface or any of the types specified
+     *                                  in the encodedRequest</li>
+     *                                  <li>the requested interface is not assignable to
+     *                                  {@link RemoteService}</li>
+     *                                  <li>the service method requested in the encodedRequest is not a
+     *                                  member of the requested service interface</li>
+     *                                  <li>the type parameter is not <code>null</code> and is not
+     *                                  assignable to the requested {@link RemoteService} interface
+     *                                  </ul>
      */
-    public static RPCRequest decodeRequest(String encodedRequest, Class<?> type, SerializationPolicyProvider serializationPolicyProvider)
-    {
-        if (encodedRequest == null)
-        {
+    public static RPCRequest decodeRequest(String encodedRequest, Class<?> type, SerializationPolicyProvider serializationPolicyProvider) {
+        if (encodedRequest == null) {
             throw new NullPointerException("encodedRequest cannot be null");
         }
 
-        if (encodedRequest.length() == 0)
-        {
+        if (encodedRequest.length() == 0) {
             throw new IllegalArgumentException("encodedRequest cannot be empty");
         }
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        try
-        {
+        try {
             ServerSerializationStreamReader streamReader = new ServerSerializationStreamReader(classLoader, serializationPolicyProvider);
             streamReader.prepareToRead(encodedRequest);
 
             // Read the name of the RemoteService interface
             String serviceIntfName = streamReader.readString();
 
-            if (type != null)
-            {
-                if (!implementsInterface(type, serviceIntfName))
-                {
+            if (type != null) {
+                if (!implementsInterface(type, serviceIntfName)) {
                     // The service does not implement the requested interface
                     throw new IncompatibleRemoteServiceException("Blocked attempt to access interface '" + serviceIntfName + "', which is not implemented by '" + printTypeName(type)
                             + "'; this is either misconfiguration or a hack attempt");
@@ -223,17 +213,14 @@ public final class RPCGilead
 
             SerializationPolicy serializationPolicy = streamReader.getSerializationPolicy();
             Class<?> serviceIntf;
-            try
-            {
+            try {
                 serviceIntf = getClassFromSerializedName(serviceIntfName, classLoader);
-                if (!RemoteService.class.isAssignableFrom(serviceIntf))
-                {
+                if (!RemoteService.class.isAssignableFrom(serviceIntf)) {
                     // The requested interface is not a RemoteService interface
                     throw new IncompatibleRemoteServiceException("Blocked attempt to access interface '" + printTypeName(serviceIntf)
                             + "', which doesn't extend RemoteService; this is either misconfiguration or a hack attempt");
                 }
-            } catch (ClassNotFoundException e)
-            {
+            } catch (ClassNotFoundException e) {
                 throw new IncompatibleRemoteServiceException("Could not locate requested interface '" + serviceIntfName + "' in default classloader", e);
             }
 
@@ -242,39 +229,32 @@ public final class RPCGilead
             int paramCount = streamReader.readInt();
             Class<?>[] parameterTypes = new Class[paramCount];
 
-            for (int i = 0; i < parameterTypes.length; i++)
-            {
+            for (int i = 0; i < parameterTypes.length; i++) {
                 String paramClassName = streamReader.readString();
                 if (paramClassName.indexOf('/') > -1)
                     paramClassName = paramClassName.substring(0, paramClassName.indexOf('/'));
-                try
-                {
+                try {
                     parameterTypes[i] = getClassFromSerializedName(paramClassName, classLoader);
-                } catch (ClassNotFoundException e)
-                {
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                     throw new IncompatibleRemoteServiceException("Parameter " + i + " of is of an unknown type '" + paramClassName + "'", e);
                 }
             }
 
-            try
-            {
+            try {
                 Method method = serviceIntf.getMethod(serviceMethodName, parameterTypes);
 
                 Object[] parameterValues = new Object[parameterTypes.length];
-                for (int i = 0; i < parameterValues.length; i++)
-                {
+                for (int i = 0; i < parameterValues.length; i++) {
                     parameterValues[i] = streamReader.deserializeValue(parameterTypes[i]);
                 }
 
                 return new RPCRequest(method, parameterValues, serializationPolicy, 0);
 
-            } catch (NoSuchMethodException e)
-            {
+            } catch (NoSuchMethodException e) {
                 throw new IncompatibleRemoteServiceException(formatMethodNotFoundErrorMessage(serviceIntf, serviceMethodName, parameterTypes));
             }
-        } catch (SerializationException ex)
-        {
+        } catch (SerializationException ex) {
             throw new IncompatibleRemoteServiceException(ex.getMessage(), ex);
         }
     }
@@ -285,17 +265,15 @@ public final class RPCGilead
      * method's list of checked exceptions.
      *
      * @param serviceMethod the method that threw the exception, may be
-     *          <code>null</code>
-     * @param cause the {@link Throwable} that was thrown
+     *                      <code>null</code>
+     * @param cause         the {@link Throwable} that was thrown
      * @return a string that encodes the exception
-     *
-     * @throws NullPointerException if the the cause is <code>null</code>
+     * @throws NullPointerException   if the the cause is <code>null</code>
      * @throws SerializationException if the result cannot be serialized
-     * @throws UnexpectedException if the result was an unexpected exception (a
-     *           checked exception not declared in the serviceMethod's signature)
+     * @throws UnexpectedException    if the result was an unexpected exception (a
+     *                                checked exception not declared in the serviceMethod's signature)
      */
-    public static String encodeResponseForFailure(Method serviceMethod, Throwable cause) throws SerializationException
-    {
+    public static String encodeResponseForFailure(Method serviceMethod, Throwable cause) throws SerializationException {
         return encodeResponseForFailure(serviceMethod, cause, getDefaultSerializationPolicy());
     }
 
@@ -303,7 +281,7 @@ public final class RPCGilead
      * Returns a string that encodes an exception. If method is not
      * <code>null</code>, it is an error if the exception is not in the
      * method's list of checked exceptions.
-     *
+     * <p/>
      * <p>
      * If the serializationPolicy parameter is not <code>null</code>, it is
      * used to determine what types can be encoded as part of this response. If
@@ -312,32 +290,27 @@ public final class RPCGilead
      * types which have custom field serializers may be encoded.
      * </p>
      *
-     * @param serviceMethod the method that threw the exception, may be
-     *          <code>null</code>
-     * @param cause the {@link Throwable} that was thrown
+     * @param serviceMethod       the method that threw the exception, may be
+     *                            <code>null</code>
+     * @param cause               the {@link Throwable} that was thrown
      * @param serializationPolicy determines the serialization policy to be used
      * @return a string that encodes the exception
-     *
-     * @throws NullPointerException if the the cause or the serializationPolicy
-     *           are <code>null</code>
+     * @throws NullPointerException   if the the cause or the serializationPolicy
+     *                                are <code>null</code>
      * @throws SerializationException if the result cannot be serialized
-     * @throws UnexpectedException if the result was an unexpected exception (a
-     *           checked exception not declared in the serviceMethod's signature)
+     * @throws UnexpectedException    if the result was an unexpected exception (a
+     *                                checked exception not declared in the serviceMethod's signature)
      */
-    public static String encodeResponseForFailure(Method serviceMethod, Throwable cause, SerializationPolicy serializationPolicy) throws SerializationException
-    {
-        if (cause == null)
-        {
+    public static String encodeResponseForFailure(Method serviceMethod, Throwable cause, SerializationPolicy serializationPolicy) throws SerializationException {
+        if (cause == null) {
             throw new NullPointerException("cause cannot be null");
         }
 
-        if (serializationPolicy == null)
-        {
+        if (serializationPolicy == null) {
             throw new NullPointerException("serializationPolicy");
         }
 
-        if (serviceMethod != null && !RPCGilead.isExpectedException(serviceMethod, cause))
-        {
+        if (serviceMethod != null && !RPCGilead.isExpectedException(serviceMethod, cause)) {
             throw new UnexpectedException("Service method '" + getSourceRepresentation(serviceMethod) + "' threw an unexpected exception: " + cause.toString(), cause);
         }
 
@@ -349,24 +322,22 @@ public final class RPCGilead
      * an object that is not assignable to the service method's return type.
      *
      * @param serviceMethod the method whose result we are encoding
-     * @param object the instance that we wish to encode
+     * @param object        the instance that we wish to encode
      * @return a string that encodes the object, if the object is compatible with
      *         the service method's declared return type
-     *
      * @throws IllegalArgumentException if the result is not assignable to the
-     *           service method's return type
-     * @throws NullPointerException if the service method is <code>null</code>
-     * @throws SerializationException if the result cannot be serialized
+     *                                  service method's return type
+     * @throws NullPointerException     if the service method is <code>null</code>
+     * @throws SerializationException   if the result cannot be serialized
      */
-    public static String encodeResponseForSuccess(Method serviceMethod, Object object) throws SerializationException
-    {
+    public static String encodeResponseForSuccess(Method serviceMethod, Object object) throws SerializationException {
         return encodeResponseForSuccess(serviceMethod, object, getDefaultSerializationPolicy());
     }
 
     /**
      * Returns a string that encodes the object. It is an error to try to encode
      * an object that is not assignable to the service method's return type.
-     *
+     * <p/>
      * <p>
      * If the serializationPolicy parameter is not <code>null</code>, it is
      * used to determine what types can be encoded as part of this response. If
@@ -375,44 +346,36 @@ public final class RPCGilead
      * types which have custom field serializers may be encoded.
      * </p>
      *
-     * @param serviceMethod the method whose result we are encoding
-     * @param object the instance that we wish to encode
+     * @param serviceMethod       the method whose result we are encoding
+     * @param object              the instance that we wish to encode
      * @param serializationPolicy determines the serialization policy to be used
      * @return a string that encodes the object, if the object is compatible with
      *         the service method's declared return type
-     *
      * @throws IllegalArgumentException if the result is not assignable to the
-     *           service method's return type
-     * @throws NullPointerException if the serviceMethod or the
-     *           serializationPolicy are <code>null</code>
-     * @throws SerializationException if the result cannot be serialized
+     *                                  service method's return type
+     * @throws NullPointerException     if the serviceMethod or the
+     *                                  serializationPolicy are <code>null</code>
+     * @throws SerializationException   if the result cannot be serialized
      */
-    public static String encodeResponseForSuccess(Method serviceMethod, Object object, SerializationPolicy serializationPolicy) throws SerializationException
-    {
-        if (serviceMethod == null)
-        {
+    public static String encodeResponseForSuccess(Method serviceMethod, Object object, SerializationPolicy serializationPolicy) throws SerializationException {
+        if (serviceMethod == null) {
             throw new NullPointerException("serviceMethod cannot be null");
         }
 
-        if (serializationPolicy == null)
-        {
+        if (serializationPolicy == null) {
             throw new NullPointerException("serializationPolicy");
         }
 
         Class<?> methodReturnType = serviceMethod.getReturnType();
-        if (methodReturnType != void.class && object != null)
-        {
+        if (methodReturnType != void.class && object != null) {
             Class<?> actualReturnType;
-            if (methodReturnType.isPrimitive())
-            {
+            if (methodReturnType.isPrimitive()) {
                 actualReturnType = getPrimitiveClassFromWrapper(object.getClass());
-            } else
-            {
+            } else {
                 actualReturnType = object.getClass();
             }
 
-            if (actualReturnType == null || !methodReturnType.isAssignableFrom(actualReturnType))
-            {
+            if (actualReturnType == null || !methodReturnType.isAssignableFrom(actualReturnType)) {
                 throw new IllegalArgumentException("Type '" + printTypeName(object.getClass()) + "' does not match the return type in the method's signature: '"
                         + getSourceRepresentation(serviceMethod) + "'");
             }
@@ -426,42 +389,39 @@ public final class RPCGilead
      *
      * @return the default serialization policy.
      */
-    public static SerializationPolicy getDefaultSerializationPolicy()
-    {
+    public static SerializationPolicy getDefaultSerializationPolicy() {
         return LegacySerializationPolicy.getInstance();
     }
 
     /**
      * Returns a string that encodes the result of calling a service method, which
      * could be the value returned by the method or an exception thrown by it.
-     *
+     * <p/>
      * <p>
      * This method does no security checking; security checking must be done on
      * the method prior to this invocation.
      * </p>
      *
-     * @param target instance on which to invoke the serviceMethod
+     * @param target        instance on which to invoke the serviceMethod
      * @param serviceMethod the method to invoke
-     * @param args arguments used for the method invocation
+     * @param args          arguments used for the method invocation
      * @return a string which encodes either the method's return or a checked
      *         exception thrown by the method
-     *
-     * @throws SecurityException if the method cannot be accessed or if the number
-     *           or type of actual and formal arguments differ
+     * @throws SecurityException      if the method cannot be accessed or if the number
+     *                                or type of actual and formal arguments differ
      * @throws SerializationException if an object could not be serialized by the
-     *           stream
-     * @throws UnexpectedException if the serviceMethod throws a checked exception
-     *           that is not declared in its signature
+     *                                stream
+     * @throws UnexpectedException    if the serviceMethod throws a checked exception
+     *                                that is not declared in its signature
      */
-    public static String invokeAndEncodeResponse(Object target, Method serviceMethod, Object[] args) throws SerializationException
-    {
+    public static String invokeAndEncodeResponse(Object target, Method serviceMethod, Object[] args) throws SerializationException {
         return invokeAndEncodeResponse(target, serviceMethod, args, getDefaultSerializationPolicy());
     }
 
     /**
      * Returns a string that encodes the result of calling a service method, which
      * could be the value returned by the method or an exception thrown by it.
-     *
+     * <p/>
      * <p>
      * If the serializationPolicy parameter is not <code>null</code>, it is
      * used to determine what types can be encoded as part of this response. If
@@ -469,58 +429,50 @@ public final class RPCGilead
      * {@link com.google.gwt.user.client.rpc.IsSerializable IsSerializable} or
      * types which have custom field serializers may be encoded.
      * </p>
-     *
+     * <p/>
      * <p>
      * This method does no security checking; security checking must be done on
      * the method prior to this invocation.
      * </p>
      *
-     * @param target instance on which to invoke the serviceMethod
-     * @param serviceMethod the method to invoke
-     * @param args arguments used for the method invocation
+     * @param target              instance on which to invoke the serviceMethod
+     * @param serviceMethod       the method to invoke
+     * @param args                arguments used for the method invocation
      * @param serializationPolicy determines the serialization policy to be used
      * @return a string which encodes either the method's return or a checked
      *         exception thrown by the method
-     *
-     * @throws NullPointerException if the serviceMethod or the
-     *           serializationPolicy are <code>null</code>
-     * @throws SecurityException if the method cannot be accessed or if the number
-     *           or type of actual and formal arguments differ
+     * @throws NullPointerException   if the serviceMethod or the
+     *                                serializationPolicy are <code>null</code>
+     * @throws SecurityException      if the method cannot be accessed or if the number
+     *                                or type of actual and formal arguments differ
      * @throws SerializationException if an object could not be serialized by the
-     *           stream
-     * @throws UnexpectedException if the serviceMethod throws a checked exception
-     *           that is not declared in its signature
+     *                                stream
+     * @throws UnexpectedException    if the serviceMethod throws a checked exception
+     *                                that is not declared in its signature
      */
-    public static String invokeAndEncodeResponse(Object target, Method serviceMethod, Object[] args, SerializationPolicy serializationPolicy) throws SerializationException
-    {
-        if (serviceMethod == null)
-        {
+    public static String invokeAndEncodeResponse(Object target, Method serviceMethod, Object[] args, SerializationPolicy serializationPolicy) throws SerializationException {
+        if (serviceMethod == null) {
             throw new NullPointerException("serviceMethod");
         }
 
-        if (serializationPolicy == null)
-        {
+        if (serializationPolicy == null) {
             throw new NullPointerException("serializationPolicy");
         }
 
         String responsePayload;
-        try
-        {
+        try {
             Object result = serviceMethod.invoke(target, args);
 
             responsePayload = encodeResponseForSuccess(serviceMethod, result, serializationPolicy);
-        } catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             SecurityException securityException = new SecurityException(formatIllegalAccessErrorMessage(target, serviceMethod));
             securityException.initCause(e);
             throw securityException;
-        } catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             SecurityException securityException = new SecurityException(formatIllegalArgumentErrorMessage(target, serviceMethod, args));
             securityException.initCause(e);
             throw securityException;
-        } catch (InvocationTargetException e)
-        {
+        } catch (InvocationTargetException e) {
             // Try to encode the caught exception
             //
             Throwable cause = e.getCause();
@@ -534,36 +486,29 @@ public final class RPCGilead
     /**
      * Single invoke method
      */
-    public static Object invoke(Object target, Method serviceMethod, Object[] args) throws SerializationException, InvocationTargetException
-    {
+    public static Object invoke(Object target, Method serviceMethod, Object[] args) throws SerializationException, InvocationTargetException {
         return invoke(target, serviceMethod, args, getDefaultSerializationPolicy());
     }
 
     /**
      * Single invoke method.
      */
-    public static Object invoke(Object target, Method serviceMethod, Object[] args, SerializationPolicy serializationPolicy) throws SerializationException, InvocationTargetException
-    {
-        if (serviceMethod == null)
-        {
+    public static Object invoke(Object target, Method serviceMethod, Object[] args, SerializationPolicy serializationPolicy) throws SerializationException, InvocationTargetException {
+        if (serviceMethod == null) {
             throw new NullPointerException("serviceMethod");
         }
 
-        if (serializationPolicy == null)
-        {
+        if (serializationPolicy == null) {
             throw new NullPointerException("serializationPolicy");
         }
 
-        try
-        {
+        try {
             return serviceMethod.invoke(target, args);
-        } catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             SecurityException securityException = new SecurityException(formatIllegalAccessErrorMessage(target, serviceMethod));
             securityException.initCause(e);
             throw securityException;
-        } catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             SecurityException securityException = new SecurityException(formatIllegalArgumentErrorMessage(target, serviceMethod, args));
             securityException.initCause(e);
             throw securityException;
@@ -574,21 +519,19 @@ public final class RPCGilead
      * Returns a string that encodes the results of an RPC call. Private overload
      * that takes a flag signaling the preamble of the response payload.
      *
-     * @param object the object that we wish to send back to the client
+     * @param object    the object that we wish to send back to the client
      * @param wasThrown if true, the object being returned was an exception thrown
-     *          by the service method; if false, it was the result of the service
-     *          method's invocation
+     *                  by the service method; if false, it was the result of the service
+     *                  method's invocation
      * @return a string that encodes the response from a service method
      * @throws SerializationException if the object cannot be serialized
      */
-    private static String encodeResponse(Class<?> responseClass, Object object, boolean wasThrown, SerializationPolicy serializationPolicy) throws SerializationException
-    {
+    private static String encodeResponse(Class<?> responseClass, Object object, boolean wasThrown, SerializationPolicy serializationPolicy) throws SerializationException {
 
         ServerSerializationStreamWriter stream = new ServerSerializationStreamWriter(serializationPolicy);
 
         stream.prepareToWrite();
-        if (responseClass != void.class)
-        {
+        if (responseClass != void.class) {
             stream.serializeValue(object, responseClass);
         }
 
@@ -596,15 +539,13 @@ public final class RPCGilead
         return bufferStr;
     }
 
-    private static String formatIllegalAccessErrorMessage(Object target, Method serviceMethod)
-    {
+    private static String formatIllegalAccessErrorMessage(Object target, Method serviceMethod) {
         StringBuffer sb = new StringBuffer();
         sb.append("Blocked attempt to access inaccessible method '");
         sb.append(getSourceRepresentation(serviceMethod));
         sb.append("'");
 
-        if (target != null)
-        {
+        if (target != null) {
             sb.append(" on target '");
             sb.append(printTypeName(target.getClass()));
             sb.append("'");
@@ -615,15 +556,13 @@ public final class RPCGilead
         return sb.toString();
     }
 
-    private static String formatIllegalArgumentErrorMessage(Object target, Method serviceMethod, Object[] args)
-    {
+    private static String formatIllegalArgumentErrorMessage(Object target, Method serviceMethod, Object[] args) {
         StringBuffer sb = new StringBuffer();
         sb.append("Blocked attempt to invoke method '");
         sb.append(getSourceRepresentation(serviceMethod));
         sb.append("'");
 
-        if (target != null)
-        {
+        if (target != null) {
             sb.append(" on target '");
             sb.append(printTypeName(target.getClass()));
             sb.append("'");
@@ -631,25 +570,21 @@ public final class RPCGilead
 
         sb.append(" with invalid arguments");
 
-        if (args != null && args.length > 0)
-        {
+        if (args != null && args.length > 0) {
             sb.append(Arrays.asList(args));
         }
 
         return sb.toString();
     }
 
-    private static String formatMethodNotFoundErrorMessage(Class<?> serviceIntf, String serviceMethodName, Class<?>[] parameterTypes)
-    {
+    private static String formatMethodNotFoundErrorMessage(Class<?> serviceIntf, String serviceMethodName, Class<?>[] parameterTypes) {
         StringBuffer sb = new StringBuffer();
 
         sb.append("Could not locate requested method '");
         sb.append(serviceMethodName);
         sb.append("(");
-        for (int i = 0; i < parameterTypes.length; ++i)
-        {
-            if (i > 0)
-            {
+        for (int i = 0; i < parameterTypes.length; ++i) {
+            if (i > 0) {
                 sb.append(", ");
             }
             sb.append(printTypeName(parameterTypes[i]));
@@ -667,15 +602,13 @@ public final class RPCGilead
      * Returns the {@link Class} instance for the named class or primitive type.
      *
      * @param serializedName the serialized name of a class or primitive type
-     * @param classLoader the classLoader used to load {@link Class}es
+     * @param classLoader    the classLoader used to load {@link Class}es
      * @return Class instance for the given type name
      * @throws ClassNotFoundException if the named type was not found
      */
-    private static Class<?> getClassFromSerializedName(String serializedName, ClassLoader classLoader) throws ClassNotFoundException
-    {
+    private static Class<?> getClassFromSerializedName(String serializedName, ClassLoader classLoader) throws ClassNotFoundException {
         Class<?> value = TYPE_NAMES.get(serializedName);
-        if (value != null)
-        {
+        if (value != null) {
             return value;
         }
 
@@ -689,8 +622,7 @@ public final class RPCGilead
      * @param wrapperClass primitive wrapper class
      * @return primitive class
      */
-    private static Class<?> getPrimitiveClassFromWrapper(Class<?> wrapperClass)
-    {
+    private static Class<?> getPrimitiveClassFromWrapper(Class<?> wrapperClass) {
         return PRIMITIVE_WRAPPER_CLASS_TO_PRIMITIVE_CLASS.get(wrapperClass);
     }
 
@@ -700,8 +632,7 @@ public final class RPCGilead
      * @param method method to get the source signature for
      * @return source representation for a method signature
      */
-    private static String getSourceRepresentation(Method method)
-    {
+    private static String getSourceRepresentation(Method method) {
         return method.toString().replace('$', '.');
     }
 
@@ -709,34 +640,25 @@ public final class RPCGilead
      * Used to determine whether the specified interface name is implemented by
      * the service class. This is done without loading the class (for security).
      */
-    private static boolean implementsInterface(Class<?> service, String intfName)
-    {
-        synchronized (serviceToImplementedInterfacesMap)
-        {
+    private static boolean implementsInterface(Class<?> service, String intfName) {
+        synchronized (serviceToImplementedInterfacesMap) {
             // See if it's cached.
             //
             Set<String> interfaceSet = serviceToImplementedInterfacesMap.get(service);
-            if (interfaceSet != null)
-            {
-                if (interfaceSet.contains(intfName))
-                {
+            if (interfaceSet != null) {
+                if (interfaceSet.contains(intfName)) {
                     return true;
                 }
-            } else
-            {
+            } else {
                 interfaceSet = new HashSet<String>();
                 serviceToImplementedInterfacesMap.put(service, interfaceSet);
             }
 
-            if (!service.isInterface())
-            {
-                while ((service != null) && !RemoteServiceServlet.class.equals(service))
-                {
+            if (!service.isInterface()) {
+                while ((service != null) && !RemoteServiceServlet.class.equals(service)) {
                     Class<?>[] intfs = service.getInterfaces();
-                    for (Class<?> intf : intfs)
-                    {
-                        if (implementsInterfaceRecursive(intf, intfName))
-                        {
+                    for (Class<?> intf : intfs) {
+                        if (implementsInterfaceRecursive(intf, intfName)) {
                             interfaceSet.add(intfName);
                             return true;
                         }
@@ -747,10 +669,8 @@ public final class RPCGilead
                     //
                     service = service.getSuperclass();
                 }
-            } else
-            {
-                if (implementsInterfaceRecursive(service, intfName))
-                {
+            } else {
+                if (implementsInterfaceRecursive(service, intfName)) {
                     interfaceSet.add(intfName);
                     return true;
                 }
@@ -763,21 +683,17 @@ public final class RPCGilead
     /**
      * Only called from implementsInterface().
      */
-    private static boolean implementsInterfaceRecursive(Class<?> clazz, String intfName)
-    {
+    private static boolean implementsInterfaceRecursive(Class<?> clazz, String intfName) {
         assert (clazz.isInterface());
 
-        if (clazz.getName().equals(intfName))
-        {
+        if (clazz.getName().equals(intfName)) {
             return true;
         }
 
         // search implemented interfaces
         Class<?>[] intfs = clazz.getInterfaces();
-        for (Class<?> intf : intfs)
-        {
-            if (implementsInterfaceRecursive(intf, intfName))
-            {
+        for (Class<?> intf : intfs) {
+            if (implementsInterfaceRecursive(intf, intfName)) {
                 return true;
             }
         }
@@ -793,17 +709,15 @@ public final class RPCGilead
      * application would never have been allowed to run.
      *
      * @param serviceIntfMethod the method from the RPC request
-     * @param cause the exception that the method threw
+     * @param cause             the exception that the method threw
      * @return true if the exception's type is in the method's signature
      */
-    private static boolean isExpectedException(Method serviceIntfMethod, Throwable cause)
-    {
+    private static boolean isExpectedException(Method serviceIntfMethod, Throwable cause) {
         assert (serviceIntfMethod != null);
         assert (cause != null);
 
         Class<?>[] exceptionsThrown = serviceIntfMethod.getExceptionTypes();
-        if (exceptionsThrown.length <= 0)
-        {
+        if (exceptionsThrown.length <= 0) {
             // The method is not specified to throw any exceptions
             //
             return false;
@@ -811,12 +725,10 @@ public final class RPCGilead
 
         Class<? extends Throwable> causeType = cause.getClass();
 
-        for (Class<?> exceptionThrown : exceptionsThrown)
-        {
+        for (Class<?> exceptionThrown : exceptionsThrown) {
             assert (exceptionThrown != null);
 
-            if (exceptionThrown.isAssignableFrom(causeType))
-            {
+            if (exceptionThrown.isAssignableFrom(causeType)) {
                 return true;
             }
         }
@@ -829,40 +741,30 @@ public final class RPCGilead
      * {@link com.google.gwt.dev.util.TypeInfo#getSourceRepresentation(Class)} to
      * avoid runtime dependency on gwt-dev.
      */
-    private static String printTypeName(Class<?> type)
-    {
+    private static String printTypeName(Class<?> type) {
         // Primitives
         //
-        if (type.equals(Integer.TYPE))
-        {
+        if (type.equals(Integer.TYPE)) {
             return "int";
-        } else if (type.equals(Long.TYPE))
-        {
+        } else if (type.equals(Long.TYPE)) {
             return "long";
-        } else if (type.equals(Short.TYPE))
-        {
+        } else if (type.equals(Short.TYPE)) {
             return "short";
-        } else if (type.equals(Byte.TYPE))
-        {
+        } else if (type.equals(Byte.TYPE)) {
             return "byte";
-        } else if (type.equals(Character.TYPE))
-        {
+        } else if (type.equals(Character.TYPE)) {
             return "char";
-        } else if (type.equals(Boolean.TYPE))
-        {
+        } else if (type.equals(Boolean.TYPE)) {
             return "boolean";
-        } else if (type.equals(Float.TYPE))
-        {
+        } else if (type.equals(Float.TYPE)) {
             return "float";
-        } else if (type.equals(Double.TYPE))
-        {
+        } else if (type.equals(Double.TYPE)) {
             return "double";
         }
 
         // Arrays
         //
-        if (type.isArray())
-        {
+        if (type.isArray()) {
             Class<?> componentType = type.getComponentType();
             return printTypeName(componentType) + "[]";
         }
@@ -875,8 +777,7 @@ public final class RPCGilead
     /**
      * Static classes have no constructability.
      */
-    private RPCGilead()
-    {
+    private RPCGilead() {
         // Not instantiable
     }
 }

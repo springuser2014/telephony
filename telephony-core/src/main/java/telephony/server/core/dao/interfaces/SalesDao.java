@@ -9,7 +9,7 @@ import telephony.shared.ListOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface SalesDao extends GenericDao<Sale>{
+public interface SalesDao extends GenericDao<Sale> {
 
     public List<Sale> findByStore(Store store);
 

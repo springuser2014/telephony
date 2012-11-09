@@ -12,7 +12,7 @@ public class EntityManagerProvider implements Provider<EntityManager> {
     private EntityManagerFactory emf;
 
     @Inject
-    EntityManagerProvider(EntityManagerFactory emf)  {
+    EntityManagerProvider(EntityManagerFactory emf) {
         this.emf = emf;
     }
 

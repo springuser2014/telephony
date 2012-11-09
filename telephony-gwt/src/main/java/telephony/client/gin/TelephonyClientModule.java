@@ -22,24 +22,27 @@ public class TelephonyClientModule extends AbstractGinModule {
 
         bind(DeliveriesComponent.class).in(Singleton.class);
         bind(SalesComponent.class).in(Singleton.class);
-        
+
         bind(AddStoreComponent.class).in(Singleton.class);
         bind(MoveProductsComponent.class).in(Singleton.class);
 
         bind(BasicDataLoader.class).to(BasicDataLoaderImpl.class).in(Singleton.class);
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public TelephonyMainLayout getMainLayout() {
         return new TelephonyMainLayout();
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public TelephonyContentLayout getContentLayout() {
         return new TelephonyContentLayout();
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public TelephonyHeaderLayout getHeaderLayout() {
         return new TelephonyHeaderLayout();
     }

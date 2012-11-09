@@ -12,7 +12,7 @@ public class EntityManagerFactoryProvider implements Provider<EntityManagerFacto
     private String persistenceUnitName;
 
     @Inject
-    EntityManagerFactoryProvider(@Named("persistence.unit.name") String persistenceUnitName)  {
+    EntityManagerFactoryProvider(@Named("persistence.unit.name") String persistenceUnitName) {
         this.persistenceUnitName = persistenceUnitName;
     }
 

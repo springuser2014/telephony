@@ -11,15 +11,15 @@ import java.util.List;
 
 
 public class UserServiceImpl implements UserService {
-    
+
     private Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     @Inject
     private UsersDao usersDao;
 
     public List<User> findAllUsers() {
         logger.debug("UserServiceImpl.findAllUsers starts");
-        
+
         List<User> res = usersDao.findUndeleted();
 
         logger.debug("found {} elements ", res.size());

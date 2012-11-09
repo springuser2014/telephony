@@ -484,8 +484,8 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
 
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
 
-        valueMap.put(ListOrder.BY_DATE_ASC.toString(), "daty dodania rosnąco" );
-        valueMap.put(ListOrder.BY_DATE_DESC.toString(), "daty dodania malejąco" );
+        valueMap.put(ListOrder.BY_DATE_ASC.toString(), "daty dodania rosnąco");
+        valueMap.put(ListOrder.BY_DATE_DESC.toString(), "daty dodania malejąco");
         valueMap.put(ListOrder.BY_TITLE_ASC.toString(), "tytułu dostawy rosnąco");
         valueMap.put(ListOrder.BY_TITLE_DESC.toString(), "tytułu dostawy malejąco");
 
@@ -614,7 +614,7 @@ public class SalesComponent extends VLayout implements TelephonyComponent {
     }
 
     private ListOrder getSelectedOrder() {
-        
+
         String value = this.selectOrder.getValueAsString();
 
         if (value.equals(ListOrder.BY_DATE_ASC.toString()))

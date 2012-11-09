@@ -21,8 +21,8 @@ public interface SaleRPCService extends RemoteService {
     public List<Sale> fetchAllSales();
 
     public RPCServiceStatus addNewSale(Sale sale, List<Product> products, User user, Store store);
-    
+
     public List<Product> fetchSalesFrom(Store store, int page, ListOrder order);
 
-    
+
 }

@@ -59,7 +59,6 @@ public class LoginView extends ViewWithUiHandlers<LoginHandlers> implements Logi
     }
 
 
-
     @Override
     public Widget asWidget() {
         return layout;

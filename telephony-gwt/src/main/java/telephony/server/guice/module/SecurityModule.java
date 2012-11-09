@@ -18,32 +18,32 @@ import telephony.server.shiro.interceptor.TelephonyShiroMethodInterceptor;
 
 public class SecurityModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
+    @Override
+    protected void configure() {
 
-		bind(Realm.class).to(TelephonyRealm.class);
-		bindInterceptor(Matchers.any(), Matchers.annotatedWith(RequiresRoles.class),
-		        new TelephonyShiroMethodInterceptor());
-	}
+        bind(Realm.class).to(TelephonyRealm.class);
+        bindInterceptor(Matchers.any(), Matchers.annotatedWith(RequiresRoles.class),
+                new TelephonyShiroMethodInterceptor());
+    }
 
-	@Provides
-	@Singleton
+    @Provides
+    @Singleton
     WebSecurityManager provideSecurityManager(Realm realm, SessionManager sessionManager, RememberMeManager rememberMeManager) {
-		DefaultWebSecurityManager result = new DefaultWebSecurityManager(realm);
-		result.setSessionManager(sessionManager);
-		result.setRememberMeManager(rememberMeManager);
-		return result;
-	}
+        DefaultWebSecurityManager result = new DefaultWebSecurityManager(realm);
+        result.setSessionManager(sessionManager);
+        result.setRememberMeManager(rememberMeManager);
+        return result;
+    }
 
-	@Provides
-	@Singleton
+    @Provides
+    @Singleton
     SessionManager provideSessionManager() {
-	    return new ServletContainerSessionManager();
-	}
+        return new ServletContainerSessionManager();
+    }
 
-	@Provides
-	@Singleton
+    @Provides
+    @Singleton
     RememberMeManager provideRememberMeManager() {
-	    return new CookieRememberMeManager();
-	}
+        return new CookieRememberMeManager();
+    }
 }

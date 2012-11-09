@@ -5,33 +5,61 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.bitbucket.pawelhenek.telephony</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>telephony-parent</artifactId>
         <version>0.1</version>
     </parent>
 
-    <artifactId>core</artifactId>
+    <artifactId>telephony-core</artifactId>
     <packaging>jar</packaging>
     <name>Telephony core</name>
 
-    <properties>
+    <repositories>
+        <repository>
+            <id>maven-restlet</id>
+            <name>Public online Restlet repository</name>
+            <url>http://maven.restlet.org</url>
+        </repository>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <shiro-version>${jukito.version}.0</shiro-version>
-        <smartgwt.version>${guice.version}</smartgwt.version>
-        <junit.version>4.7</junit.version>
-        <mockito.version>1.9.0</mockito.version>
-        <guice.version>3.0</guice.version>
-
-        <gilead.version>1.3.2</gilead.version>
-        <gwt.version>2.4.0</gwt.version>
-        <guava.version>12.0.1</guava.version>
-        <jukito.version>1.1</jukito.version>
-        <slf4j.version>1.6.1</slf4j.version>
-        <flyway.version>1.6.1</flyway.version>
-
-    </properties>
+    </repositories>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.gwt</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.json</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.xml</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.servlet</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.crypto</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
+
         <!-- Guice -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -53,7 +81,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.5.4-Final</version>
+            <version>${hibernate-core.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
@@ -64,7 +92,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
-            <version>3.5.4-Final</version>
+            <version>${hibernate-core.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
@@ -75,7 +103,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.1.0.Final</version>
+            <version>${hibernate-validator.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
@@ -86,7 +114,7 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.0.Final</version>
+            <version>${hibernate-jpa-api.version}</version>
         </dependency>
 
         <dependency>
@@ -135,19 +163,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
     </dependencies>
 
     <build>
 
         <resources>
-              <resource>
+            <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                  <include>**/*.java</include>
-                  <include>**/*.gwt.xml</include>
+                    <include>**/*.java</include>
+                    <include>**/*.gwt.xml</include>
                 </includes>
-              </resource>
-            </resources>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

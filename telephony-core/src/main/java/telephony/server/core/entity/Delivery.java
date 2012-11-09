@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "deliveries")
 public class Delivery extends BaseEntity {
 
-    @Column(name = "label", nullable =false)
+    @Column(name = "label", nullable = false)
     private String label;
 
     @Column(name = "date_in")
@@ -23,7 +23,7 @@ public class Delivery extends BaseEntity {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToMany(mappedBy = "delivery", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Collection<Product> products;
 
     public String getLabel() {

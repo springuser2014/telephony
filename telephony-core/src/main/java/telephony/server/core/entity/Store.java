@@ -14,7 +14,8 @@ public class Store extends BaseEntity {
     @Column(name = "label", nullable = false)
     private String label;
 
-    public Store() {}
+    public Store() {
+    }
 
     public String getLabel() {
         return label;

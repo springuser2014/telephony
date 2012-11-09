@@ -12,9 +12,10 @@ public class Pager extends HLayout {
     private int numberOfElements;
     private PerPage numberOfElementsPerPage;
 
-    private SelectItem selectPage  ;
+    private SelectItem selectPage;
 
-    public Pager() {}
+    public Pager() {
+    }
 
     public void setNumberOfElementsPerPage(PerPage ten) {
         this.numberOfElementsPerPage = ten;

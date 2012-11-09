@@ -21,7 +21,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Inject
     private SalesDao salesDao;
-    
+
     @Inject
     private ProductsDao productsDao;
 
@@ -32,9 +32,9 @@ public class SaleServiceImpl implements SaleService {
 
     public List<Sale> findAllSales() {
         logger.debug("SaleServiceImpl.findAllSales starts");
-        
+
         List<Sale> res = salesDao.findUndeleted();
-        
+
         logger.debug("SaleServiceImpl.findAllSales starts");
 
         return res;
@@ -50,7 +50,7 @@ public class SaleServiceImpl implements SaleService {
         sale.setCreator(user);
         sale.setStore(store);
         sale = salesDao.save(sale);
-        
+
         for (Product p : products) {
             p.setEditedAt(new Date());
             p.setEditor(user);
@@ -65,15 +65,15 @@ public class SaleServiceImpl implements SaleService {
         logger.debug("SaleServiceImpl.fetchAllSalesFrom starts");
 
         int numberOfElements = 6;
-        
-        List<Sale> sales = salesDao.findLastest(store, numberOfElements*page, numberOfElements, order);
+
+        List<Sale> sales = salesDao.findLastest(store, numberOfElements * page, numberOfElements, order);
 
         ArrayList<Long> ids = new ArrayList<Long>();
-        
+
         for (Sale s : sales) {
             ids.add(s.getId());
         }
-        
+
         List<Product> result = salesDao.findProductsBySalesIds(ids);
 
         logger.debug("SaleServiceImpl.fetchAllSalesFrom ends");

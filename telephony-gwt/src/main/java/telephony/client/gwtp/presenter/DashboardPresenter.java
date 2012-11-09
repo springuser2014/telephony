@@ -35,11 +35,15 @@ public class DashboardPresenter extends
     public interface StartView extends View {
 
         TelephonyHeaderLayout getHeaderLayout();
+
         TelephonyContentLayout getContentLayout();
 
         String getName();
+
         Button getSendButton();
+
         void resetAndFocus();
+
         void setError(String errorText);
     }
 
@@ -81,16 +85,15 @@ public class DashboardPresenter extends
 
 
         getDispatcher().execute(new LoginAction(),
-        new AsyncCallback<LoginResult>() {
-            public void onFailure(Throwable caught) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
+                new AsyncCallback<LoginResult>() {
+                    public void onFailure(Throwable caught) {
+                        //To change body of implemented methods use File | Settings | File Templates.
+                    }
 
-            public void onSuccess(LoginResult result) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
-
+                    public void onSuccess(LoginResult result) {
+                        //To change body of implemented methods use File | Settings | File Templates.
+                    }
+                });
 
 
 //        String textToServer = getView().getName();

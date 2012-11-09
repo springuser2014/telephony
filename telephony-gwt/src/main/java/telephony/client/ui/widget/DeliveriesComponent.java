@@ -46,8 +46,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private SelectItem selectUserCombo;
     private IButton doButton;
     private SelectItem selectPage;
-    private SelectItem selectOrder  ;
-    private TextItem imeibox    ;
+    private SelectItem selectOrder;
+    private TextItem imeibox;
     private IButton filterButton;
 
     private boolean listOfColorsLoaded = false;
@@ -68,7 +68,6 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private List<Product> listOfProducts = new ArrayList<Product>();
     private List<Product> listOfEditedProducts = new ArrayList<Product>();
     private List<Product> listOfDeletedProducts = new ArrayList<Product>();
-
 
 
     private List<Product> getListOfEditedProducts() {
@@ -137,7 +136,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             public void onClick(ClickEvent event) {
                 Log.debug("doButton 1" + listOfEditedProducts.size());
                 Log.debug("doButton 2" + listOfDeletedProducts.size());
-                
+
                 updateProducts();
             }
         });
@@ -156,10 +155,10 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         DynamicForm form9 = new DynamicForm();
         form9.setFields(selectPage);
         form9.setTitleWidth(120);
-        
+
         this.selectOrder = new SelectItem();
         this.selectOrder.setTitle("Sortuj wg");
-        
+
         DynamicForm form8 = new DynamicForm();
         form8.setFields(selectOrder);
 
@@ -179,7 +178,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.imeibox = new TextItem();
         this.imeibox.setTitle("IMEI");
-        
+
         DynamicForm form0 = new DynamicForm();
         form0.setFields(this.imeibox);
 
@@ -196,7 +195,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
         this.addMember(form2Lay);
         this.addMember(productsListGrid);
         this.addMember(formLay);
-        
+
         this.loadData();
 
         Log.debug("DeliveriesComponent widget was initialized..");
@@ -205,7 +204,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     private void updateProducts() {
 
         Log.debug("DeliveriesComponent - updateProducts");
-        
+
         Log.debug("Number of edited products : " + getListOfEditedProducts().size());
         Log.debug("Number of deleted products : " + getListOfDeletedProducts().size());
 
@@ -217,7 +216,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
             }
 
             public void onSuccess(RPCServiceStatus result) {
-                
+
                 SC.say(result.getOperationStatusInfo());
 
                 if (result.getStatus().equals(RPCServiceStatus.Status.SUCCESS)) {
@@ -229,7 +228,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
     }
 
     private void clearBuffor() {
-        this.listOfEditedProducts  = getEmptyList();
+        this.listOfEditedProducts = getEmptyList();
         this.listOfDeletedProducts = getEmptyList();
     }
 
@@ -317,7 +316,7 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
                     LinkedHashMap<String, String> colors = getColorsValueMap();
                     color.setValueMap(colors);
                     color.setAddUnknownValues(true);
-                    
+
                     color.addBlurHandler(new BlurHandler() {
                         public void onBlur(BlurEvent event) {
                             editingProduct.setColor(record.getAttribute("color"));
@@ -666,7 +665,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         this.deliveryService.fetchDeliveriesFrom(getSelectedStore(), getSelectedPage(), getSelectedOrder(), new AsyncCallback<List<Product>>() {
 
-            public void onFailure(Throwable caught) { }
+            public void onFailure(Throwable caught) {
+            }
 
             public void onSuccess(List<Product> result) {
 
@@ -765,8 +765,8 @@ public class DeliveriesComponent extends VLayout implements TelephonyComponent {
 
         LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
 
-        valueMap.put(ListOrder.BY_DATE_ASC.toString(), "daty dodania rosnąco" );
-        valueMap.put(ListOrder.BY_DATE_DESC.toString(), "daty dodania malejąco" );
+        valueMap.put(ListOrder.BY_DATE_ASC.toString(), "daty dodania rosnąco");
+        valueMap.put(ListOrder.BY_DATE_DESC.toString(), "daty dodania malejąco");
         valueMap.put(ListOrder.BY_TITLE_ASC.toString(), "tytułu dostawy rosnąco");
         valueMap.put(ListOrder.BY_TITLE_DESC.toString(), "tytułu dostawy malejąco");
 

@@ -19,18 +19,19 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_to_store",
-               joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name ="store_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
     private Set<Store> allowedShops = new HashSet<Store>();
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "role_to_user",
-               joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"))
     private Set<UserRole> roles = new HashSet<UserRole>();
 
-    public User() {}
+    public User() {
+    }
 
     public String getEmail() {
         return email;

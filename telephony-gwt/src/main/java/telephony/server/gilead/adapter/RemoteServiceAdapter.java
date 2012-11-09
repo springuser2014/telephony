@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface RemoteServiceAdapter extends SerializationPolicyProvider {
     public RemoteService getRemoteService(Class<?> serviceClass);
+
     public void onAfterRequestDeserialized(RPCRequest req);
+
     public HttpServletRequest getRequest();
 }

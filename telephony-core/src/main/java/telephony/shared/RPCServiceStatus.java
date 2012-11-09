@@ -4,14 +4,17 @@ package telephony.shared;
 import java.io.Serializable;
 
 public class RPCServiceStatus implements Serializable {
-    
+
     private String operationStatusInfo;
 
-    public enum Status { SUCCESS, FAILED };
+    public enum Status {SUCCESS, FAILED}
+
+    ;
 
     private Status status;
-    
-    public RPCServiceStatus() {}
+
+    public RPCServiceStatus() {
+    }
 
     public RPCServiceStatus(String operationStatusInfo, Status status) {
         this.operationStatusInfo = operationStatusInfo;

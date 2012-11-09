@@ -69,11 +69,13 @@ public class LoginPresenter
     }
 
     public interface LoginView extends View, HasUiHandlers<LoginHandlers> {
-        
+
         String getPassword();
+
         String getLogin();
 
         void resetAndFocus();
+
         void setError(String error);
 
     }

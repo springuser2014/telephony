@@ -20,7 +20,7 @@ public class InformationRPCServiceImpl extends GuicePersistentRemoteServiceServl
     public InformationRPCServiceImpl(PersistentBeanManager beanManager) {
         setBeanManager(beanManager);
     }
-    
+
     public Long getNumberOfDeliveries(Store store) {
         return informationService.getNumberOfDeliveries(store);
     }

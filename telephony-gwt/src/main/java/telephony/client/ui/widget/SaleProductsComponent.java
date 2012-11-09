@@ -399,8 +399,8 @@ public class SaleProductsComponent extends VLayout implements TelephonyComponent
     }
 
     private void refreshProductsGridInfo() {
-            this.numberOfElementsLabel.setContents("Ilość produktów : " + this.listOfSelectedProducts.size());
-        }
+        this.numberOfElementsLabel.setContents("Ilość produktów : " + this.listOfSelectedProducts.size());
+    }
 
     private void clearForm() {
         this.imeibox.setValue("");

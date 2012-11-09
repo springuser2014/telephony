@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Improved version of gilead's PersistentRemoteService servlet.
  * Added guice integration with JPA support.
- *
+ * <p/>
  * Thanks to
  *
  * @link http://code.google.com/p/gwt-enterprise-patterns/
