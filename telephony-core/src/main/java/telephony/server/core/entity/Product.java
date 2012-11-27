@@ -10,6 +10,12 @@ import telephony.server.core.entity.common.Money;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_seq")
+    @SequenceGenerator(name = "products_seq", sequenceName = "products_seq", allocationSize = 1)
+    private Long id;
+
     @Column(name = "imei", nullable = false, length = 100)
     private String imei;
 

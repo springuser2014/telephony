@@ -11,6 +11,12 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
+    private Long id;
+
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
@@ -28,7 +34,7 @@ public class User extends BaseEntity {
     @JoinTable(name = "role_to_user",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"))
-    private Set<UserRole> roles = new HashSet<UserRole>();
+    private Set<Role> roles = new HashSet<Role>();
 
     public User() {
     }
@@ -57,11 +63,11 @@ public class User extends BaseEntity {
         this.allowedShops = allowedShops;
     }
 
-    public Set<UserRole> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<UserRole> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

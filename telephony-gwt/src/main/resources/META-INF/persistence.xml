@@ -8,7 +8,7 @@
         <class>telephony.server.core.entity.Delivery</class>
         <class>telephony.server.core.entity.Product</class>
         <class>telephony.server.core.entity.Sale</class>
-        <class>telephony.server.core.entity.UserRole</class>
+        <class>telephony.server.core.entity.Role</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>

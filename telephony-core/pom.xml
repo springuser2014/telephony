@@ -3,6 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <dbunit.version>1.0-beta-3</dbunit.version>
+    </properties>
     <parent>
         <groupId>org.bitbucket.pawelhenek.telephony</groupId>
         <artifactId>telephony-parent</artifactId>
@@ -23,6 +26,13 @@
     </repositories>
 
     <dependencies>
+
+        <dependency>
+        	<groupId>org.codehaus.mojo</groupId>
+        	<artifactId>dbunit-maven-plugin</artifactId>
+        	<version>${dbunit.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.restlet.jee</groupId>

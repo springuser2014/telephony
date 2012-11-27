@@ -1,0 +1,98 @@
+<mockup version="1.0" skin="sketch" measuredW="1644" measuredH="807" mockupW="1587" mockupH="807">
+  <controls>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="57" y="0" w="959" h="634" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::MenuBar" x="83" y="102" w="-1" h="-1" measuredW="497" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>Magazyn%2C%20Historia%20operacji%2C%20Faktury%2C%20Reklamacje%2C%20Administracja</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::ComboBox" x="630" y="103" w="-1" h="-1" measuredW="74" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Suszec</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::TextInput" x="734" y="102" w="-1" h="-1" measuredW="113" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Szukaj%20po%20IMEI</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::StickyNote" x="1234" y="511" w="410" h="233" measuredW="109" measuredH="123" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>To%20jest%20widok%20g%u0142%F3wnej%20podstrony%20%2C%20zak%u0142adka%20dostawcy%0A%20%0Amo%u017Cesz%20%3A%0A-%20przegl%u0105da%u0107%20dostawc%F3w%0A-%20dodawa%u0107%20nowego%20dostawc%u0119%0A-%20doda%u0107%20dostaw%u0119%20%28czyli%20wiele%20telefon%F3w%20w%20jednym%20szybszym%20kroku%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::DataGrid" x="83" y="190" w="909" h="253" measuredW="557" measuredH="148" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <rowHeight>30</rowHeight>
+        <text>Imi%u0119%2C%20Nazwisko%2C%20Nazwa%20firmy%2C%20Telefon%2C%20Tefelon%202%2C%20Email%0AAdam%2C%20Kaczynski%2C%20PISOL%2C%20600789551%2C%20%20%2C%20%20adam.kacz@pis.pl%0AAdrian%2C%20Nowak%2C%20HP%2C%20980785652%2C%20%20%2C%20%20adr.now@hp.pl%0APawe%u0142%2C%20M%u0105kiewicz%2C%20APPLE%2C%20546789546%2C%20%20%2C%20%20pawel666@jabko.pl%0AGrze%u015B%2C%20Lewicki%2C%20MICRO%2C%20623768252%2C%20%20%2C%20%20grze5@m.pl</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::Arrow" x="185" y="226" w="50" h="324" measuredW="150" measuredH="100" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <curvature>-1</curvature>
+        <direction>bottom</direction>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::StickyNote" x="98" y="550" w="168" h="257" measuredW="109" measuredH="123" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Jakie%20dane%20dostawc%F3w%3F%0A-%20Nazwa%0A-%20Imi%u0119%0A-%20Nazwisko%20%0A-%20Telefon%3F%20%0A-%20Email%3F%0A%20%0AMUSISZ%20TO%20GRZE%u015A%20ROZPISA%u0106%20NA%20PT</text>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::TabBar" x="83" y="165" w="909" h="278" measuredW="229" measuredH="100" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0</backgroundAlpha>
+        <selectedIndex>1</selectedIndex>
+        <text>Telefony%2C%20Dostawcy</text>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::PointyButton" x="899" y="222" w="-1" h="-1" measuredW="66" measuredH="28" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Wiecej</text>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::PointyButton" x="899" y="250" w="-1" h="-1" measuredW="66" measuredH="28" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Wiecej</text>
+      </controlProperties>
+    </control>
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::PointyButton" x="899" y="278" w="-1" h="-1" measuredW="66" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Wiecej</text>
+      </controlProperties>
+    </control>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::PointyButton" x="899" y="306" w="-1" h="-1" measuredW="66" measuredH="28" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Wiecej</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::Button" x="615" y="468" w="141" h="28" measuredW="120" measuredH="28" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Dodaj%20dostawc%u0119</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Button" x="827" y="468" w="165" h="28" measuredW="113" measuredH="28" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Dodaj%20dostaw%u0119</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::StickyNote" x="1163" y="182" w="429" h="111" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Po%20klikni%u0119ciu%20w%20wi%u0119cej%20mo%u017Cesz%20edytowa%u0107/usuwa%u0107%20dostawc%u0119</text>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Arrow" x="957" y="207" w="213" h="99" measuredW="150" measuredH="100" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <curvature>-1</curvature>
+        <direction>bottom</direction>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

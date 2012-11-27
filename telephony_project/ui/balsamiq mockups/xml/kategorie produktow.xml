@@ -1,0 +1,61 @@
+<mockup version="1.0" skin="sketch" measuredW="1046" measuredH="737" mockupW="1011" mockupH="737">
+  <controls>
+    <control controlID="101" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="56" y="0" w="959" h="634" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//</text>
+      </controlProperties>
+    </control>
+    <control controlID="102" controlTypeID="com.balsamiq.mockups::MenuBar" x="83" y="102" w="-1" h="-1" measuredW="497" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>4</selectedIndex>
+        <text>Magazyn%2C%20Historia%20operacji%2C%20Faktury%2C%20Reklamacje%2C%20Administracja</text>
+      </controlProperties>
+    </control>
+    <control controlID="103" controlTypeID="com.balsamiq.mockups::ComboBox" x="630" y="103" w="-1" h="-1" measuredW="74" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Suszec</text>
+      </controlProperties>
+    </control>
+    <control controlID="106" controlTypeID="com.balsamiq.mockups::TextInput" x="734" y="102" w="-1" h="-1" measuredW="113" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Szukaj%20po%20IMEI</text>
+      </controlProperties>
+    </control>
+    <control controlID="109" controlTypeID="com.balsamiq.mockups::StickyNote" x="495" y="550" w="551" h="187" measuredW="109" measuredH="123" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Widok%20modu%u0142u%20Administracja%20%0A-%0Adomy%u015Blnie%20za%u0142o%u017Cy%u0142em%20sobie%20%u017Ce%20dost%u0119p%20do%20tego%20modu%u0142u%20maj%u0105%20tylko%20administratorzy%2C%20ale%20tak%20de%20facto%20to%20trzeba%20u%u015Bci%u015Bli%u0107%20jakie%20dane%20maj%u0105%20by%u0107%20dost%u0119pne%20dla%20jakich%20os%F3b%2C%20nie%20tylko%20w%20tym%20module%2C%20ale%20tak%u017Ce%20np%20na%20listingu%20produkt%F3w%20-%20pamietam%20ze%20wspomina%u0142e%u015B%20%u017Ce%20cena%20zakupu%20ma%20nie%20by%u0107%20podana%20dla%20innych</text>
+      </controlProperties>
+    </control>
+    <control controlID="110" controlTypeID="com.balsamiq.mockups::DataGrid" x="85" y="192" w="909" h="241" measuredW="249" measuredH="178" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <rowHeight>30</rowHeight>
+        <text>Producent%2C%20Model%2C%20Kolor%0AApple%2C%20Iphone%203G%2020G%2C%20Bia%u0142y%0AApple%2C%20Iphone%203G%2010G%2C%20Czarny%0AApple%2C%20IPod%2010G%2C%20R%F3%u017Cowy%0ANokia%2C%20N95%2C%20Czarny%0ASamsung%2C%20Galaxy%20S2%2C%20CZarny</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="113" controlTypeID="com.balsamiq.mockups::Arrow" x="185" y="445" w="395" h="105" measuredW="150" measuredH="100" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <curvature>-1</curvature>
+        <direction>bottom</direction>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="114" controlTypeID="com.balsamiq.mockups::StickyNote" x="35" y="565" w="425" h="117" measuredW="109" measuredH="123" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Jakie%20dane%20jeszcze%20w%20kategoriach%20produkt%F3w%3F%0A%20%0AMUSISZ%20TO%20GRZE%u015A%20ROZPISA%u0106%20NA%20PT</text>
+      </controlProperties>
+    </control>
+    <control controlID="130" controlTypeID="com.balsamiq.mockups::TabBar" x="83" y="160" w="909" h="273" measuredW="321" measuredH="100" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0</backgroundAlpha>
+        <selectedIndex>0</selectedIndex>
+        <text>Kategorie%20produkt%F3w%2C%20U%u017Cytkownicy</text>
+      </controlProperties>
+    </control>
+    <control controlID="131" controlTypeID="com.balsamiq.mockups::Button" x="862" y="461" w="-1" h="-1" measuredW="122" measuredH="28" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Dodaj%20kategori%u0119</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

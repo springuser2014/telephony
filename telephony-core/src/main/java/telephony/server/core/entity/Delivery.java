@@ -12,6 +12,12 @@ import java.util.Date;
 @Table(name = "deliveries")
 public class Delivery extends BaseEntity {
 
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deliveries_seq")
+    @SequenceGenerator(name = "deliveries_seq", sequenceName = "deliveries_seq", allocationSize = 1)
+    private Long id;
+
     @Column(name = "label", nullable = false)
     private String label;
 

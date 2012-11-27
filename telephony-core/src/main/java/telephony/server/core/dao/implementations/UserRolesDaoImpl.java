@@ -1,11 +1,11 @@
 package telephony.server.core.dao.implementations;
 
 import telephony.server.core.dao.interfaces.UserRolesDao;
-import telephony.server.core.entity.UserRole;
+import telephony.server.core.entity.Role;
 
-public class UserRolesDaoImpl extends GenericDaoImpl<UserRole> implements UserRolesDao {
+public class UserRolesDaoImpl extends GenericDaoImpl<Role> implements UserRolesDao {
 
     public UserRolesDaoImpl() {
-        super(UserRole.class);
+        super(Role.class);
     }
 }

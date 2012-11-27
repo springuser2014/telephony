@@ -11,8 +11,11 @@ import java.util.Date;
 @Table(name = "sales")
 public class Sale extends BaseEntity {
 
-    public Sale() {
-    }
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sales_seq")
+    @SequenceGenerator(name = "sales_seq", sequenceName = "sales_seq", allocationSize = 1)
+    private Long id;
 
     @Column(name = "label", nullable = false)
     private String label;
@@ -27,6 +30,9 @@ public class Sale extends BaseEntity {
 
     @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
     private Collection<Product> products;
+
+    public Sale() {
+    }
 
     public String getLabel() {
         return label;

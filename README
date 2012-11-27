@@ -18,7 +18,7 @@ Used tech stuff:
 - Restlet 2.1
 - Maven 2
 - JPA 2.0 (Hibernate 3.5)
-- Guice 3.0
+- Guice 3.0 (GIN 2.0)
 - GWT-platform 0.7
 - Flyway 1.7
 

@@ -1,7 +1,6 @@
 package telephony.server.core.entity.common;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import net.sf.gilead.pojo.gwt.LightEntity;
 import telephony.server.core.entity.User;
 
 import javax.persistence.*;
@@ -9,19 +8,19 @@ import java.util.Date;
 
 
 @MappedSuperclass
-public abstract class BaseEntity extends LightEntity implements IsSerializable {
+public abstract class BaseEntity implements IsSerializable {
 
     private static final long serialVersionUID = -3858014970182092169L;
 
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_seq")
-    @SequenceGenerator(name = "base_entity_seq", sequenceName = "base_entity_seq", allocationSize = 1)
-    private Long id;
+//    @Id
+//    @Column(name = "id", updatable = false, nullable = false)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_entity_seq")
+//    @SequenceGenerator(name = "base_entity_seq", sequenceName = "base_entity_seq", allocationSize = 1)
+//    private Long id;
 
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+//    @Version
+//    @Column(name = "version")
+//    private int version = 0;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,13 +30,13 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     @JoinColumn(name = "created_by", nullable = false)
     private User creator;
 
-    @Column(name = "edited_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date editedAt;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "edited_by", nullable = true)
-    private User editor;
+//    @Column(name = "edited_at")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date editedAt;
+//
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "edited_by", nullable = true)
+//    private User editor;
 
     @Column(name = "deleted_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,8 +46,7 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
     @JoinColumn(name = "deleted_by", nullable = true)
     private User deleter;
 
-    public BaseEntity() {
-    }
+    public BaseEntity() {}
 
     @Override
     public String toString() {
@@ -87,21 +85,17 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
             return id.hashCode();
     }
 
-    public Long getId() {
-        return this.id;
-    }
+    public abstract Long getId();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public abstract void setId(Long id);
 
-    protected int getVersion() {
-        return this.version;
-    }
-
-    protected void setVersion(int version) {
-        this.version = version;
-    }
+//    protected int getVersion() {
+//        return this.version;
+//    }
+//
+//    protected void setVersion(int version) {
+//        this.version = version;
+//    }
 
     public Date getCreatedAt() {
         return createdAt;
@@ -111,13 +105,13 @@ public abstract class BaseEntity extends LightEntity implements IsSerializable {
         this.createdAt = createdAt;
     }
 
-    public Date getEditedAt() {
-        return editedAt;
-    }
-
-    public void setEditedAt(Date editedAt) {
-        this.editedAt = editedAt;
-    }
+//    public Date getEditedAt() {
+//        return editedAt;
+//    }
+//
+//    public void setEditedAt(Date editedAt) {
+//        this.editedAt = editedAt;
+//    }
 
     public Date getDeletedAt() {
         return deletedAt;
