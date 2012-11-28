@@ -3,6 +3,7 @@ package telephony.server.core.entity;
 import telephony.server.core.entity.common.BaseEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "contacts")
@@ -23,7 +24,12 @@ public class Contact extends BaseEntity {
     @Column(name = "type", nullable = false, length = 255)
     private String type;
 
-    public Contact() {}
+    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY)
+    private Collection<Delivery> deliveries;
+
+    public Contact() {
+        this.deliveries = new Arr
+    }
 
     @Override
     public Long getId() {
@@ -57,5 +63,9 @@ public class Contact extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Collection<Delivery> getDeliveries() {
+        return deliveries;
     }
 }

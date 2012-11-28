@@ -29,6 +29,10 @@ public class Delivery extends BaseEntity {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "contact_id", nullable = false)
+    private Contact contact;
+
     @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Collection<Product> products;
 
@@ -80,6 +84,7 @@ public class Delivery extends BaseEntity {
         if (label != null ? !label.equals(delivery.label) : delivery.label != null) return false;
         if (products != null ? !products.equals(delivery.products) : delivery.products != null) return false;
         if (store != null ? !store.equals(delivery.store) : delivery.store != null) return false;
+        if (contact != null ? !contact.equals(delivery.contact) : delivery.contact != null) return false;
 
         return true;
     }
@@ -91,6 +96,27 @@ public class Delivery extends BaseEntity {
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (store != null ? store.hashCode() : 0);
         result = 31 * result + (products != null ? products.hashCode() : 0);
+        result = 31 * result + (contact != null ? contact.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+
 }
