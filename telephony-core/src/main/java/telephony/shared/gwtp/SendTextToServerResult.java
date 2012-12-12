@@ -2,6 +2,9 @@ package telephony.shared.gwtp;
 
 import com.gwtplatform.dispatch.shared.Result;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class SendTextToServerResult implements Result {
 
     private static final long serialVersionUID = 4621412923270714510L;

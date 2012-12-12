@@ -1,6 +1,9 @@
 package telephony.shared;
 
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public enum ListOrder {
 
     BY_DATE_ASC,

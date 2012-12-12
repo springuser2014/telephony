@@ -6,6 +6,9 @@
 
     <!-- POM file generated with GWT webAppCreator -->
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <gwt-log.version>3.1.8</gwt-log.version>
+    </properties>
 
     <parent>
         <groupId>org.bitbucket.pawelhenek.telephony</groupId>
@@ -14,10 +17,10 @@
     </parent>
 
     <groupId>org.bitbucket.pawelhenek.telephony</groupId>
-    <artifactId>telephony-admin</artifactId>
+    <artifactId>telephony-gwt</artifactId>
     <packaging>war</packaging>
     <version>0.1</version>
-    <name>Telephony admin</name>
+    <name>Telephony gwt</name>
 
     <!-- REPOSITORIES -->
     <repositories>
@@ -140,13 +143,13 @@
         <dependency>
             <groupId>com.allen-sauer.gwt.log</groupId>
             <artifactId>gwt-log</artifactId>
-            <version>3.1.8</version>
+            <version>${gwt-log.version}</version>
         </dependency>
 
         <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
-            <version>1.0</version>
+            <version>${aopalliance.version}</version>
         </dependency>
 
         <!-- MVP component -->
@@ -193,12 +196,7 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!-- Db connector driver -->
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.2-504.jdbc4</version>
-        </dependency>
+
 
         <!-- Goole Guava for client-side -->
         <dependency>
@@ -322,7 +320,7 @@
                 <configuration>
                     <runTarget>start.html</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <i18nMessagesBundle>telephony.client.Messages</i18nMessagesBundle>
+                    <i18nMessagesBundle>telephony.gwt.client.Messages</i18nMessagesBundle>
                 </configuration>
             </plugin>
 

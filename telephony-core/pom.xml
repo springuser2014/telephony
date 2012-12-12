@@ -173,6 +173,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId>
+            <version>${jukito.version}</version>
+        </dependency>
 
     </dependencies>
 

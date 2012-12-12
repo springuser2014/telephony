@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import telephony.client.gwtp.handler.FirstClientActionHandler;
-import telephony.client.gwtp.presenter.LoginPresenter;
+import telephony.gwt.client.gwtp.handler.FirstClientActionHandler;
+import telephony.gwt.client.gwtp.presenter.LoginPresenter;
 
 import static org.junit.Assert.assertTrue;
 

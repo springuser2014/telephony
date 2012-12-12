@@ -3,6 +3,9 @@ package telephony.shared.gwtp.result;
 import com.gwtplatform.dispatch.shared.Result;
 import telephony.shared.UserContext;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class LoginResult implements Result {
 
     private boolean success;

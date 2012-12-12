@@ -15,7 +15,7 @@
     </servlet-mapping>
     <!-- defined listener -->
     <listener>
-        <listener-class>telephony.server.guice.listener.TelephonyServletContextListener</listener-class>
+        <listener-class>telephony.gwt.server.guice.listener.TelephonyServletContextListener</listener-class>
     </listener>
 
     <!-- defined filters -->

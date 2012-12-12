@@ -3,6 +3,10 @@ package telephony.shared;
 
 import java.io.Serializable;
 
+
+/**
+ * @todo Remove after migration to REST services
+ */
 public class RPCServiceStatus implements Serializable {
 
     private String operationStatusInfo;

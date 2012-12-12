@@ -1,5 +1,8 @@
 package telephony.shared.gwtp;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class FieldVerifier {
 
     /**
