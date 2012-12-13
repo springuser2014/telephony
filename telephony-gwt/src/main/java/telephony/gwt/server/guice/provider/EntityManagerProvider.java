@@ -6,6 +6,9 @@ import com.google.inject.Provider;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class EntityManagerProvider implements Provider<EntityManager> {
 
 

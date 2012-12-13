@@ -33,43 +33,6 @@
         	<version>${dbunit.version}</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.gwt</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.json</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.xml</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.crypto</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
         <!-- Guice -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -192,6 +155,7 @@
                 </includes>
             </resource>
         </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

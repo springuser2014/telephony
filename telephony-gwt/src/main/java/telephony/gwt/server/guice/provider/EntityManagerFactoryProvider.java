@@ -7,6 +7,9 @@ import com.google.inject.name.Named;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class EntityManagerFactoryProvider implements Provider<EntityManagerFactory> {
 
     private String persistenceUnitName;

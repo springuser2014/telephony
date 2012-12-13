@@ -1,4 +1,4 @@
-package telephony.gwt.server;
+package telephony.gwt.server.guice;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -17,7 +17,6 @@ public class TelephonyRestletServlet extends org.restlet.ext.servlet.ServerServl
         Application app = injector.getInstance(Application.class);
 
         app.setContext(parentContext.createChildContext());
-
 
         return app;
     }

@@ -12,6 +12,9 @@ import telephony.gwt.server.guice.provider.PersistentBeanManagerProvider;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class JPAModule extends AbstractModule {
 
     private String persistenceUnitName;

@@ -9,6 +9,9 @@ import net.sf.gilead.core.store.stateless.StatelessProxyStore;
 
 import javax.persistence.EntityManagerFactory;
 
+/**
+ * @todo Remove after migration to REST services
+ */
 public class PersistentBeanManagerProvider implements Provider<PersistentBeanManager> {
 
     private EntityManagerFactory emf;

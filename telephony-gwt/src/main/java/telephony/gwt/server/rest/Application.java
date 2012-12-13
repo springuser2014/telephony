@@ -1,4 +1,4 @@
-package ws.application;
+package telephony.gwt.server.rest;
 
 
 import org.restlet.Restlet;
@@ -8,8 +8,6 @@ import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.MapVerifier;
-import telephony.ws.resource.PingResource;
-import telephony.ws.resource.TestResource;
 
 
 /**

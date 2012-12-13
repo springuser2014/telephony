@@ -1,16 +1,12 @@
 package telephony;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import telephony.gwt.client.gwtp.handler.FirstClientActionHandler;
 import telephony.gwt.client.gwtp.presenter.LoginPresenter;
 
 import static org.junit.Assert.assertTrue;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class LoginWizardTest {
 
     @Mock
@@ -24,7 +20,7 @@ public class LoginWizardTest {
 
     private LoginPresenter presenter;
 
-    @Before
+//    @Before
     public void setUp() {
 
 //        Injector injector = Guice.createInjector(new MockHandlerModule() {
@@ -46,7 +42,7 @@ public class LoginWizardTest {
 
     }
 
-    @Test
+//    @Test
     public void test() {
         assertTrue(true);
     }

@@ -1,4 +1,4 @@
-package telephony.ws.resource;
+package telephony.gwt.server.rest;
 
 import java.io.IOException;
 import java.util.HashMap;

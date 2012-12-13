@@ -1,4 +1,4 @@
-package telephony.ws.resource;
+package telephony.gwt.server.rest;
 
 import org.restlet.data.ChallengeResponse;
 import org.restlet.resource.Get;

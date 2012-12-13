@@ -2,13 +2,11 @@ package telephony.gwt.server.guice.module;
 
 
 import com.google.inject.servlet.ServletModule;
-import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
-import com.gwtplatform.dispatch.shared.DispatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.Application;
 import telephony.core.configuration.Constant;
-import telephony.gwt.server.TelephonyRestletServlet;
+import telephony.gwt.server.guice.TelephonyRestletServlet;
+import telephony.gwt.server.rest.Application;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +22,6 @@ public class TelephonyServletModule extends ServletModule {
     protected void configureServlets() {
 
         logger.debug("TelephonyServletModule initialization");
-
-        /**
-         * @todo Remove after migration to REST services
-         */
-        bind(DispatchService.class).to(DispatchServiceImpl.class);
 
         bindJpa();
         bindServlets();
@@ -93,9 +86,6 @@ public class TelephonyServletModule extends ServletModule {
     private void bindJpa() {
         logger.debug("TelephonyServletModule starts configuring JPA module");
 
-        /**
-         * @todo Remove after migration to REST services
-         */
         install(new JPAModule(Constant.PERSISTENCE_UNIT_NAME));
 
         logger.debug("TelephonyServletModule ends configuring servlets");
