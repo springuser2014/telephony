@@ -44,43 +44,39 @@ persistence.xml (for production usage)
 
 
 persistence.xml (for local development and tests)
-{{{
-#!xml
 
-<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-test"/>
-<property name="hibernate.connection.username" value="postgres"/>
-<property name="hibernate.connection.password" value="postgres"/>
-}}}
+    :::xml
+    <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-test"/>
+    <property name="hibernate.connection.username" value="postgres"/>
+    <property name="hibernate.connection.password" value="postgres"/>
+
 
 For integration tests I use arquillian, here is its configuration:
 
-{{{
-#!xml
+    :::xml
+    <container qualifier="tomcat-remote-6" default="true">
+        <configuration>
+             <property name="catalinaHome">${user.home}/Servers/apache-tomcat-6.0.36</property>
+             <property name="user">arquillian</property>
+             <property name="pass">arquillian</property>
+             <property name="host">127.0.0.1</property>
+             <property name="bindHttpPort">8080</property>
+             <property name="serverConfig">server.xml</property>
+             <property name="unpackArchive">true</property>
+        </configuration>
+    </container>
 
- <container qualifier="tomcat-remote-6" default="true">
-     <configuration>
-         <property name="catalinaHome">${user.home}/Servers/apache-tomcat-6.0.36</property>
-         <property name="user">arquillian</property>
-         <property name="pass">arquillian</property>
-         <property name="host">127.0.0.1</property>
-         <property name="bindHttpPort">8080</property>
-         <property name="serverConfig">server.xml</property>
-         <property name="unpackArchive">true</property>
-     </configuration>
- </container>
-}}}
 
 To lanuch our integration tests we also need a properly configured tomcat 6 server.
 Here is a snippet from tomcat's bin/startup.sh file:
-{{{
-#!bash
 
-JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote "
-JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=8089 "
-JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false "
-JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false "
-export JAVA_OPTS;
-}}}
+    :::bash
+    JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote "
+    JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=8089 "
+    JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false "
+    JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false "
+    export JAVA_OPTS;
+
 
 Stay tuned!
 
