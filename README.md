@@ -37,13 +37,11 @@ First of all we need to setup:
 Here are some default configs:
 persistence.xml (for production usage)
 
-{{{
-#!xml
+    :::xml
+    <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony"/>
+    <property name="hibernate.connection.username" value="postgres"/>
+    <property name="hibernate.connection.password" value="postgres"/>
 
-<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony"/>
-<property name="hibernate.connection.username" value="postgres"/>
-<property name="hibernate.connection.password" value="postgres"/>
-}}}
 
 persistence.xml (for local development and tests)
 {{{
