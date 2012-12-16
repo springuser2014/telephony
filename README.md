@@ -9,42 +9,42 @@ It's very experimental and I am just a student ;-)
 
 It's quite simple app for managing products in electronic products store.
 
-== Features
+# Features
 
 Main features included: 
 * Managing products in stores
 * Managing stores, users (admins, workers), credentials
 * Managing deliveries, sales and reclamations
 
-== Prerequisities
+# Prerequisities
 
 Installed Java 1.6 >= and Maven 2
 
-== Technology
+# Technology
 
 Used tech stuff:
-    * Google web Toolkit 2.5
-    * SmartGWT 3.1
-    * Restlet 2.1
-    * Maven 2
-    * JPA 2.0 (Hibernate 3.5)
-    * Guice 3.0 (GIN 2.0)
-    * GWT-platform 0.7
-    * Flyway 1.7
+* Google web Toolkit 2.5
+* SmartGWT 3.1
+* Restlet 2.1
+* Maven 2
+* JPA 2.0 (Hibernate 3.5)
+* Guice 3.0 (GIN 2.0)
+* GWT-platform 0.7
+* Flyway 1.7
 
-== Todo
+# Todo
 
 Project is now under heavy development, in next few weeks there will appear:
-    * Unit tests
-    * UI archtecture improvement
-    * Many new features including authentication (Apache Shiro), mailing (JavaMail) and others.
+* Unit tests
+* UI archtecture improvement
+* Many new features including authentication (Apache Shiro), mailing (JavaMail) and others.
 
-== Testing
+# Testing
 
 After fetching code onto your computer, we need to prepare the development environment.
 First of all we need to setup:
-    - PostgreSQL database 8.4 >=
-    - Tomcat 6. (0.36) server
+- PostgreSQL database 8.4 >=
+- Tomcat 6. (0.36) server
 
 Here are some default configs:
 persistence.xml (for production usage)
