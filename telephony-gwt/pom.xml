@@ -6,9 +6,6 @@
 
     <!-- POM file generated with GWT webAppCreator -->
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <gwt-log.version>3.1.8</gwt-log.version>
-    </properties>
 
     <parent>
         <groupId>org.bitbucket.pawelhenek.telephony</groupId>
@@ -47,38 +44,33 @@
             <id>gilead</id>
             <url>https://gilead.svn.sourceforge.net/svnroot/gilead/gilead/maven-repo/</url>
         </repository>
-
         <repository>
             <id>jboss</id>
             <url>http://repository.jboss.org/maven2/</url>
         </repository>
-
         <repository>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>never</updatePolicy>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>never</updatePolicy>-->
+            <!--</snapshots>-->
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Repository Group</name>
             <url>http://repository.jboss.org/nexus/content/groups/public/</url>
         </repository>
-
-        <repository>
-            <id>deprecated</id>
-            <name>JBoss Deprecated</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/deprecated</url>
-        </repository>
-
+        <!--<repository>-->
+            <!--<id>deprecated</id>-->
+            <!--<name>JBoss Deprecated</name>-->
+            <!--<url>https://repository.jboss.org/nexus/content/repositories/deprecated</url>-->
+        <!--</repository>-->
         <repository>
             <id>JBoss</id>
             <name>jboss-maven2-release-repository</name>
             <url>https://oss.sonatype.org/content/repositories/JBoss</url>
         </repository>
-
         <repository>
             <id>sonatype-snapshots</id>
             <url>http://oss.sonatype.org/content/repositories/snapshots</url>
@@ -89,7 +81,6 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-
         <repository>
             <id>people.apache.snapshots</id>
             <url>http://repository.apache.org/content/groups/snapshots-group/</url>
@@ -100,13 +91,11 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-
         <repository>
             <id>maven-restlet</id>
             <name>Public online Restlet repository</name>
             <url>http://maven.restlet.org</url>
         </repository>
-
     </repositories>
 
     <pluginRepositories>
@@ -123,7 +112,6 @@
         </pluginRepository>
     </pluginRepositories>
 
-
     <!-- DEPENDENCIES -->
 
     <!--
@@ -133,97 +121,20 @@
     -->
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.bitbucket.pawelhenek.telephony</groupId>
+            <artifactId>telephony-ws</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.bitbucket.pawelhenek.telephony</groupId>
             <artifactId>telephony-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.servlet</artifactId>
             <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
-            <version>1.0.0.Final</version>
-            <type>pom</type>
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian</groupId>
-            <artifactId>arquillian-bom</artifactId>
-            <version>1.0.3.Final</version>
-            <scope>import</scope>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-tomcat-remote-6</artifactId>
-            <version>1.0.0.CR4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <version>1.0.2.Final</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-spi</artifactId>
-            <version>1.1.0-beta-1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-api</artifactId>
-            <version>1.0.0-cr-1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-extension-tomcat-6</artifactId>
-            <version>1.0.0-alpha-13</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-spi</artifactId>
-            <version>1.0.0-cr-1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-api</artifactId>
-            <version>1.1.0-beta-1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-impl</artifactId>
-            <version>1.1.0-beta-1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-        	<groupId>org.jboss.shrinkwrap.resolver</groupId>
-        	<artifactId>shrinkwrap-resolver-api-maven</artifactId>
-        	<version>1.1.0-alpha-3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.5</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -263,61 +174,6 @@
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>${hibernate-jpa-api.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.bitbucket.pawelhenek.telephony</groupId>
-            <artifactId>telephony-core</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.gwt</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>${restlet.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.gwt</groupId>
-                    <artifactId>gwt-dev</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.gwt</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.json</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.xml</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet.ext.crypto</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.restlet.jee</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>${restlet.version}</version>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.google.gwt</groupId>-->
-            <!--<artifactId>gwt-dev</artifactId>-->
-            <!--<version>2.4.0</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
         <!-- SmartGWT -->
         <dependency>
@@ -404,25 +260,6 @@
             <version>${gin.version}</version>
         </dependency>
 
-        <!-- Shiro Dependencies -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>${shiro-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>${shiro-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro-version}</version>
-        </dependency>
-
         <!-- Guice servlet extension -->
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
@@ -489,7 +326,7 @@
                                 <bannedDependencies>
                                     <excludes>
                                         <exclude>org.hibernate:ejb3-persistence</exclude>
-                                        <exclude>com.google.gwt:gwt-dev</exclude>
+                                        <!--<exclude>com.google.gwt:gwt-dev</exclude>-->
                                     </excludes>
 
                                 </bannedDependencies>

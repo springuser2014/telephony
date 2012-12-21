@@ -3,9 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <dbunit.version>1.0-beta-3</dbunit.version>
-    </properties>
+
     <parent>
         <groupId>org.bitbucket.pawelhenek.telephony</groupId>
         <artifactId>telephony-parent</artifactId>
@@ -22,16 +20,9 @@
             <name>Public online Restlet repository</name>
             <url>http://maven.restlet.org</url>
         </repository>
-
     </repositories>
 
     <dependencies>
-
-        <dependency>
-        	<groupId>org.codehaus.mojo</groupId>
-        	<artifactId>dbunit-maven-plugin</artifactId>
-        	<version>${dbunit.version}</version>
-        </dependency>
 
         <!-- Guice -->
         <dependency>
@@ -50,7 +41,6 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -93,6 +83,18 @@
         <dependency>
             <groupId>com.googlecode.flyway</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+
+        <!-- SLF4J dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
 
@@ -101,6 +103,12 @@
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
             <version>${gwt.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.gwt</groupId>
+                    <artifactId>gwt-dev</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- GWT/JPA support -->

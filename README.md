@@ -42,7 +42,7 @@ To prepare completed development environment we also need:
 
 # Todo
 
-Project is now under heavy development, in next few weeks there will appear:
+Project is now under intensive development, in next few weeks there will appear:
 
 - Complete unit tests for core module (via JUnit).
 - Complete integration tests for web services (via Arquillian).
