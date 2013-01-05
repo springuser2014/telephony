@@ -205,6 +205,7 @@
         </dependency>
     </dependencies>
     <build>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -263,6 +264,7 @@
                 <version>2.12</version>
                 <configuration>
                     <argLine>-Xmx512M -XX:MaxPermSize=128M</argLine>
+                    <!--<debugForkedProcess>true</debugForkedProcess>-->
                 </configuration>
                 <!--<dependencies>-->
                 <!--<dependency>-->

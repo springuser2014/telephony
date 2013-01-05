@@ -1,40 +1,29 @@
-package telephony.ws.rest;
+package telephony.ws.pre;
 
-import junit.framework.Assert;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OverProtocol;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import telephony.ws.Application;
 import telephony.ws.guice.TelephonyServletModule;
 import telephony.ws.resource.PingResource;
 import telephony.ws.resource.TestResource;
-import telephony.ws.rest.listener.TelephonyServletTestContextListener;
+import telephony.ws.listener.TelephonyServletTestContextListener;
 import telephony.ws.servlet.TelephonyRestletServlet;
 
-import javax.annotation.Resource;
+public class ArchivesBuilder {
 
-import static org.junit.Assert.assertTrue;
+    public static final String ArchiveName = "telephony-ws";
+    public static final String ArchiveExt = ".war";
 
-@RunWith(Arquillian.class)
-public class FirstWSTest {
-
-
-    @Deployment
-    @OverProtocol("Servlet 2.5")
-    public static WebArchive createArchiveAndDeploy() {
+    public static WebArchive createFirstWSTestWebArchive() {
 
         MavenDependencyResolver resolver = DependencyResolvers
-                    .use(MavenDependencyResolver.class)
-                    .loadMetadataFromPom("pom.xml");
+                .use(MavenDependencyResolver.class)
+                .loadMetadataFromPom("pom.xml");
 
         WebArchive jar = ShrinkWrap
-                .create(WebArchive.class, "telephony-ws.war")
+                .create(WebArchive.class, ArchiveName + ArchiveExt)
                 .addClasses(Application.class, PingResource.class, TestResource.class)
                 .addClasses(TelephonyServletTestContextListener.class, TelephonyServletModule.class, TelephonyRestletServlet.class)
 
@@ -57,24 +46,6 @@ public class FirstWSTest {
 
                 .setWebXML("web.xml");
 
-        System.out.println(jar.toString(true));
-
         return jar;
     }
-
-//    @ArquillianResource
-//    URL deploymentUrl;
-
-    @Resource(name = "alienName")
-    String alienName;
-
-    @Test
-    public void first() {
-        Assert.assertEquals("Ike", alienName);
-        assertTrue(true);
-    }
-
-
-
-
 }

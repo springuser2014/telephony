@@ -1,4 +1,4 @@
-package telephony.ws.rest.listener;
+package telephony.ws.listener;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -26,6 +26,7 @@ public class TelephonyServletTestContextListener extends GuiceServletContextList
                 getJpaModule(),
                 getCoreServicesModule(),
                 getServletModule()
+
         );
     }
 

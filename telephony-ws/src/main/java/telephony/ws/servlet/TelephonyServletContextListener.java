@@ -1,4 +1,4 @@
-package telephony.ws.rest.listener;
+package telephony.ws.servlet;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

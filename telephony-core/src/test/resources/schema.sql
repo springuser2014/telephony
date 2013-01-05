@@ -61,7 +61,6 @@ SELECT pg_catalog.setval('deliveries_seq', 1, false);
 
 CREATE TABLE products (
     id bigint NOT NULL,
-    version integer DEFAULT 0,
     imei character varying(100) NOT NULL,
     store_id bigint NOT NULL,
     delivery_id bigint NOT NULL,

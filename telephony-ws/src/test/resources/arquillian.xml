@@ -7,12 +7,10 @@
 
     <container qualifier="tomcat-remote-6" default="true">
         <configuration>
-            <!--<property name="catalinaHome">${user.home}/Servers/apache-tomcat-6.0.36</property>-->
             <property name="user">arquillian</property>
             <property name="pass">arquillian</property>
             <property name="host">127.0.0.1</property>
             <property name="bindHttpPort">8080</property>
-            <!--<property name="serverConfig">server.xml</property>-->
             <property name="unpackArchive">true</property>
         </configuration>
     </container>
