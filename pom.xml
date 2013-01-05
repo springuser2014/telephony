@@ -38,7 +38,7 @@
 
     <modules>
         <module>telephony-core</module>
-        <module>telephony-gwt</module>
+        <!--<module>telephony-gwt</module>-->
         <module>telephony-ws</module>
     </modules>
 
