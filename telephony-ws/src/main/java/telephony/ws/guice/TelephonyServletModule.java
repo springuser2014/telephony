@@ -4,7 +4,7 @@ package telephony.ws.guice;
 import com.google.inject.servlet.ServletModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.ws.Application;
+import telephony.ws.TelephonyApplication;
 import telephony.ws.servlet.TelephonyRestletServlet;
 
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class TelephonyServletModule extends ServletModule {
 
         logger.debug("TelephonyServletModule starts configuring Restlet services");
 
-        bind(org.restlet.Application.class).to(Application.class);
+        bind(org.restlet.Application.class).to(TelephonyApplication.class);
 
         Map<String, String> restparams = bindRestletParams();
         serve("/rest/*").with(TelephonyRestletServlet.class, restparams);
@@ -47,7 +47,7 @@ public class TelephonyServletModule extends ServletModule {
 
     private Map<String, String> bindRestletParams() {
         Map<String, String> options = new HashMap();
-        options.put("org.restlet.application", Application.class.toString());
+        options.put("org.restlet.application", TelephonyApplication.class.toString());
 
         return options;
     }

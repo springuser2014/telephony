@@ -10,12 +10,13 @@ import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.MapVerifier;
 import telephony.ws.resource.PingResource;
 import telephony.ws.resource.TestResource;
+import org.restlet.Application ;
 
 
 /**
  * Simple restlet application
  */
-public class Application extends org.restlet.Application {
+public class TelephonyApplication extends Application {
     public Restlet createInboundRoot() {
         Router router = new Router(getContext());
 

@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.restlet.data.ChallengeResponse;
 import org.restlet.data.Status;
 import org.restlet.resource.ClientResource;
-import telephony.ws.pre.ArchivesBuilder;
 import telephony.ws.pre.TestsConfig;
 
 import javax.annotation.Resource;

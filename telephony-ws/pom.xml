@@ -2,15 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>telephony-parent</artifactId>
         <groupId>org.bitbucket.pawelhenek.telephony</groupId>
         <version>0.1</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <artifactId>telephony-ws</artifactId>
     <name>Telephony WebServices</name>
+    <packaging>war</packaging>
 
     <repositories>
         <repository>
@@ -18,9 +19,6 @@
             <url>http://nexus.xwiki.org/nexus/content/groups/public</url>
         </repository>
     </repositories>
-
-
-    <packaging>war</packaging>
 
     <dependencies>
         <dependency>

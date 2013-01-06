@@ -7,8 +7,8 @@ import com.google.inject.servlet.GuiceServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.guice.TelephonyCoreServicesModule;
-import telephony.ws.Config;
 import telephony.ws.guice.TelephonyServletModule;
+import telephony.ws.pre.TestsConfig;
 
 
 /**
@@ -31,7 +31,7 @@ public class TelephonyServletTestContextListener extends GuiceServletContextList
     }
 
     protected JpaPersistModule getJpaModule() {
-        return new JpaPersistModule(Config.PERSISTENCE);
+        return new JpaPersistModule(TestsConfig.PERSISTENCE);
     }
 
     protected TelephonyCoreServicesModule getCoreServicesModule() {
