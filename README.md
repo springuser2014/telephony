@@ -29,26 +29,20 @@ To prepare completed development environment we also need:
 
 ## Used technologies
 
-- <s>Google web Toolkit 2.5</s>
-- <s>SmartGWT 3.1</s>
 - Restlet 2.1
 - Maven 2
 - JPA 2.0 (Hibernate 3.5)
-- Guice 3.0 (<s>GIN 2.0</s>)
+- Guice 3.0
 - Flyway 2.0.1
 - Arquillian 1.0.2
-- <s>GWT-platform 0.7</s>
 - Mockito 1.9.5
 
 # Todo
 
 Project is now under intensive development, in next few weeks there will appear:
 
-- ~~Complete unit tests for core module (via JUnit).~~
-- ~Complete~ ~~integration~~ tests for web services (via Arquillian).
-- -Complete unit tests for UI (via mockito).-
-- <s>UI archtecture improvement (by using GWT-platform).</s>
-- <s>Many new features including authentication (Apache Shiro), mailing (JavaMail) and others.</s>
+- Complete unit tests for core module (via JUnit).
+- Complete integration tests for web services (via Arquillian).
 
 # Testing
 
