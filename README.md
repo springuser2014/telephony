@@ -46,7 +46,7 @@ Project is now under intensive development, in next few weeks there will appear:
 
 - Complete unit tests for core module (via JUnit).
 - Complete integration tests for web services (via Arquillian).
-- <s>Complete unit tests for UI (via mockito).</s>
+- -Complete unit tests for UI (via mockito).-
 - <s>UI archtecture improvement (by using GWT-platform).</s>
 - <s>Many new features including authentication (Apache Shiro), mailing (JavaMail) and others.</s>
 
