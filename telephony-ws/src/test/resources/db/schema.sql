@@ -16,7 +16,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: deliveries; Type: TABLE; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: deliveries; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
 --
 
 
@@ -56,12 +56,11 @@ ALTER TABLE public.deliveries_seq OWNER TO postgres;
 SELECT pg_catalog.setval('deliveries_seq', 1, false);
 
 --
--- Name: products; Type: TABLE; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: products; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
 --
 
 CREATE TABLE products (
     id bigint NOT NULL,
-    version integer DEFAULT 0,
     imei character varying(100) NOT NULL,
     store_id bigint NOT NULL,
     delivery_id bigint NOT NULL,
@@ -101,7 +100,7 @@ ALTER TABLE public.products_seq OWNER TO postgres;
 SELECT pg_catalog.setval('products_seq', 1, false);
 
 --
--- Name: sales; Type: TABLE; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: sales; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
 --
 
 CREATE TABLE sales (
@@ -141,7 +140,7 @@ SELECT pg_catalog.setval('sales_seq', 1, false);
 
 
 --
--- Name: stores; Type: TABLE; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: stores; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
 --
 
 CREATE TABLE stores (
@@ -346,13 +345,15 @@ ALTER TABLE public.system_logs_seq OWNER TO postgres;
 SELECT pg_catalog.setval('system_logs_seq', 1, false);
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
 --
 
 CREATE TABLE users (
     id bigint NOT NULL,
     email character varying(100) NOT NULL,
     password character varying(32),
+    session_validity timestamp without time zone NULL,
+    session_id character varying(32),
     created_at timestamp without time zone NOT NULL,
     created_by bigint NOT NULL,
     deleted_at timestamp without time zone,
@@ -422,7 +423,7 @@ ALTER TABLE ONLY system_logs
     ADD CONSTRAINT system_logs_pkey PRIMARY KEY (id);
 
 --
--- Name: deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY deliveries
@@ -438,7 +439,7 @@ ALTER TABLE ONLY user_stores
 
 
 --
--- Name: products_imei_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: products_imei_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY products
@@ -446,7 +447,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: products_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: products_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY products
@@ -454,7 +455,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: sales_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: sales_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY sales
@@ -462,7 +463,7 @@ ALTER TABLE ONLY sales
 
 
 --
--- Name: stores_label_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: stores_label_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY stores
@@ -470,7 +471,7 @@ ALTER TABLE ONLY stores
 
 
 --
--- Name: stores_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: stores_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY stores
@@ -478,7 +479,7 @@ ALTER TABLE ONLY stores
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY user_roles
@@ -493,7 +494,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: user_roles_role_name_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: user_roles_role_name_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY roles
@@ -508,7 +509,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -516,7 +517,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
 --
 
 ALTER TABLE ONLY users

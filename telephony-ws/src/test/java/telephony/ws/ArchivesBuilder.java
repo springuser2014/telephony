@@ -7,6 +7,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import telephony.ws.guice.TelephonyServletModule;
 import telephony.ws.listener.TelephonyServletTestContextListener;
 import telephony.ws.resource.PingResource;
+import telephony.ws.resource.SessionBeann;
+import telephony.ws.resource.SessionResource;
 import telephony.ws.resource.TestResource;
 import telephony.ws.servlet.TelephonyRestletServlet;
 
@@ -26,7 +28,9 @@ public class ArchivesBuilder {
                 .addClasses(TelephonyApplication.class, PingResource.class, TestResource.class)
                 .addClasses(TelephonyServletTestContextListener.class, TelephonyServletModule.class, TelephonyRestletServlet.class)
 
-                .addAsLibraries(resolver.artifact("org.restlet.jee:org.restlet:2.1-SNAPSHOT").resolveAsFiles())
+                .addClasses(SessionResource.class, SessionBeann.class)
+
+                .addAsLibraries(resolver.artifact("org.restlet.jee:org.restlet:2.1-SNAPSHOT").goOffline().resolveAsFiles())
                 .addAsLibraries(resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.1").goOffline().resolveAsFiles())
                 .addAsLibraries(resolver.artifact("com.google.inject.extensions:guice-servlet:3.0").resolveAsFiles())
                 .addAsLibraries(resolver.artifact("com.google.inject.extensions:guice-persist:3.0").resolveAsFiles())
@@ -40,9 +44,10 @@ public class ArchivesBuilder {
                 .addAsLibraries(resolver.artifact("org.slf4j:slf4j-log4j12").resolveAsFiles())
                 .addAsLibraries(resolver.artifact("org.slf4j:slf4j-api").resolveAsFiles())
 
+
                 .addAsManifestResource("persistence.xml")
-                .addAsWebResource("schema.sql")
-                .addAsWebResource("test-data.sql")
+                .addAsWebResource("db/schema.sql")
+                .addAsWebResource("db/test-data.sql")
 
                 .setWebXML("web.xml");
 

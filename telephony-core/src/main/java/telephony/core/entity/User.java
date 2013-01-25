@@ -4,6 +4,7 @@ package telephony.core.entity;
 import telephony.core.entity.common.BaseEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,13 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false, length = 32)
     private String password;
 
+    @Column(name = "session_id", nullable = true, length = 32)
+    private String sessionId;
+
+    @Column(name = "session_validity", nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date sessionValidity;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_stores",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -37,6 +45,22 @@ public class User extends BaseEntity {
     private Set<Role> roles = new HashSet<Role>();
 
     public User() {
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public Date getSessionValidity() {
+        return sessionValidity;
+    }
+
+    public void setSessionValidity(Date sessionValidity) {
+        this.sessionValidity = sessionValidity;
     }
 
     public String getEmail() {
@@ -84,7 +108,7 @@ public class User extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
         User user = (User) o;

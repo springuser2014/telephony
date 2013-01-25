@@ -5,3 +5,4 @@
 *.project
 *.settings*
 *.vpp~*
+telephony_project/*

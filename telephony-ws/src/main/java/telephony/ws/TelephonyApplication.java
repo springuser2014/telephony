@@ -8,8 +8,7 @@ import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.MapVerifier;
-import telephony.ws.resource.PingResource;
-import telephony.ws.resource.TestResource;
+import telephony.ws.resource.*;
 import org.restlet.Application ;
 
 
@@ -17,6 +16,7 @@ import org.restlet.Application ;
  * Simple restlet application
  */
 public class TelephonyApplication extends Application {
+
     public Restlet createInboundRoot() {
         Router router = new Router(getContext());
 
@@ -42,7 +42,30 @@ public class TelephonyApplication extends Application {
         dGuard.setNext(PingResource.class);
         router.attach("/guarded_digest", dGuard);
 
+        // some testing router binding
+        router.attach(SessionResource.URL, SessionResource.class);
+
         router.attach("/", new Directory(getContext(), "war:///"));
+
+//        router.attach("/users", UsersResource.class);
+//        router.attach("/users/{id}", UsersResource.class);
+//        router.attach("/store/users/{id}", StoreUsersResource.class);
+//        router.attach("/store/products/{id}", StoreProductsResource.class);
+//        router.attach("/store/roles/{id}", StoreRolesResource.class);
+//        router.attach("/stores", StoresResource.class);
+//        router.attach("/stores/{id}", StoresResource.class);
+//        router.attach("/store/roles/{id}", StoreRolesResource.class);
+//        router.attach("/roles", RolesResource.class);
+//        router.attach("/roles/{id}", RolesResource.class);
+//        router.attach("/user/roles/{id}", UserRolesResource.class);
+//        router.attach("/user/stores/{id}", UserStoresResource.class);
+//        router.attach("/deliveries", DeliveriesResource.class);
+//        router.attach("/deliveries/{id}", DeliveriesResource.class);
+//        router.attach("/sales", SalesResource.class);
+//        router.attach("/sales/{id}", SalesResource.class);
+//        router.attach("/contacts", ContactsResource.class);
+//        router.attach("/contacts/{id}", ContactsResource.class);
+
         return router;
 
     }

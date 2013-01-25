@@ -62,19 +62,19 @@
         </dependency>
 
         <!-- Dispatch component -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.gwtplatform</groupId>-->
+            <!--<artifactId>gwtp-dispatch-client</artifactId>-->
+            <!--<version>${gwtp.version}</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
 
         <!-- Remove for GWTP 0.5.1 and earlier -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-server-guice</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.gwtplatform</groupId>-->
+            <!--<artifactId>gwtp-dispatch-server-guice</artifactId>-->
+            <!--<version>${gwtp.version}</version>-->
+        <!--</dependency>-->
 
 
         <!-- Junit + guice + mockito = jukito -->

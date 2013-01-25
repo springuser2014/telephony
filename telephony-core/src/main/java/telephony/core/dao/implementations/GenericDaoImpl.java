@@ -220,7 +220,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("params : [ userId : {} ]", userId);
 
         entity.setDeletedAt(new Date());
-//        entity.setDeletedBy(userId);
 
         E e = getEntityManager().merge(entity);
 
@@ -255,7 +254,8 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("permanentDeleteById starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
-        int updated = getEntityManager().createQuery("delete from " + entityClass.getName() + " e where e.id in (?1)")
+        int updated = getEntityManager()
+                .createQuery("delete from " + entityClass.getName() + " e where e.id in (?1)")
                 .setParameter(1, id)
                 .executeUpdate();
 
@@ -267,7 +267,8 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", ids.size());
 
-        int updated = getEntityManager().createQuery("delete from " + entityClass.getName() + " e where e.id in (?1)")
+        int updated = getEntityManager()
+                .createQuery("delete from " + entityClass.getName() + " e where e.id in (?1)")
                 .setParameter(1, ids)
                 .executeUpdate();
 

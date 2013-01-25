@@ -29,7 +29,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(ContactsDao.class).to(ContactsDaoImpl.class);
         bind(InformationDao.class).to(InformationDaoImpl.class);
 
-        // binding dao layer objects
+        // binding service layer objects
 
         bind(DeliveryService.class).to(DeliveryServiceImpl.class);
         bind(ProductService.class).to(ProductServiceImpl.class);
@@ -41,5 +41,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(UserStoreService.class).to(UserStoreServiceImpl.class);
         bind(ContactService.class).to(ContactServiceImpl.class);
         bind(RoleService.class).to(RoleServiceImpl.class);
+        bind(SessionService.class).to(SessionServiceImpl.class);
+
     }
 }

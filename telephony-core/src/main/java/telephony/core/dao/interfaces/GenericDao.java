@@ -6,37 +6,10 @@ import telephony.core.entity.common.BaseEntity;
 import java.util.List;
 
 
-/**
- * The out-of-the-box Tomcat configuration was fine for my purposes,
- * though it’s worth mentioning that if your server is going to be accessed remotely,
- * you may want to change the default Tomcat port.
- * <p/>
- * To do this, you have to modify the Tomcat configuration a bit.
- * One of the things I dislike slightly about installing packages from the
- * Ubuntu repository is that I never know what the default paths are.
- *
- * @param <E>
- */
 public interface GenericDao<E extends BaseEntity> {
 
-    /**
-     * The out-of-the-box Tomcat configuration was fine for my purposes,
-     * though it’s worth mentioning that if your server is going to be accessed remotely,
-     * you may want to change the default Tomcat port.
-     * <p/>
-     * To do this, you have to modify the Tomcat configuration a bit.
-     * One of the things I dislike slightly about installing packages from the
-     * Ubuntu repository is that I never know what the default paths are.
-     *
-     * @param <E>
-     */
     public List<E> findAll();
 
-    /**
-     * The out-of-the-box Tomcat configuration was fine for my purposes,
-     * though it’s worth mentioning that if your server is going to be accessed remotely,
-     * you may want to change the default Tomcat port.
-     */
     public List<E> findUndeleted();
 
     public List<E> findDeleted();

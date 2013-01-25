@@ -26,4 +26,14 @@ public class UserServiceImpl implements UserService {
 
         return res;
     }
+
+    @Override
+    public User findUserByName(String name) {
+        logger.info("UserServiceImpl.findUserByName starts");
+        logger.info("params : [ name = {} ] ", name);
+
+        User u = usersDao.findByName(name);
+
+        return u;
+    }
 }

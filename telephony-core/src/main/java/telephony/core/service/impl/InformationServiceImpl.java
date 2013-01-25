@@ -9,6 +9,9 @@ import telephony.core.dao.interfaces.SalesDao;
 import telephony.core.entity.Store;
 import telephony.core.service.interfaces.InformationService;
 
+/**
+ * @todo complete later
+ */
 public class InformationServiceImpl implements InformationService {
 
     @Inject

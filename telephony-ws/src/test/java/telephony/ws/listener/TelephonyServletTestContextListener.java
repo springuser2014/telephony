@@ -20,13 +20,12 @@ public class TelephonyServletTestContextListener extends GuiceServletContextList
 
     @Override
     protected Injector getInjector() {
-        logger.debug("Injector configuration");
+        logger.info("Injector configuration");
 
         return Guice.createInjector(
                 getJpaModule(),
                 getCoreServicesModule(),
                 getServletModule()
-
         );
     }
 

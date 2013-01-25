@@ -15,7 +15,7 @@ import telephony.core.guice.TelephonyCoreServicesModule;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
-public class FirstTest {
+public class FirstTestz {
 
     @Inject
     private UsersDao usersDao;
@@ -36,7 +36,6 @@ public class FirstTest {
     public void initializer(PersistService service) {
         service.start();
     }
-
 
     @Test
     public void asd() {

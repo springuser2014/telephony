@@ -13,7 +13,7 @@ Main features includes:
 
 - Managing products in stores
 - Managing stores, users (admins, workers, etc) and theirs credentials
-- Managing deliveries, sales <s>and reclamations</s>
+- Managing deliveries, sales
 
 # Prerequisities
 
@@ -37,7 +37,7 @@ To prepare completed development environment we also need:
 - Arquillian 1.0.2
 - Mockito 1.9.5
 
-# Todo
+# TODO
 
 Project is now under intensive development, in next few weeks there will appear:
 
@@ -50,7 +50,7 @@ To launch tests it is required to prepare corresponding databases and configurat
 
 1. `telephony (telephony-gwt/src/main/resources/META-INF/persistence.xml)` - to production usage
 2. `telephony-test (telephony-core/src/test/resources/META-INF/persistence.xml)` - to unit/integration tests in core module
-3. `testphony-ws (telephony-ws/src/test/resources/META-INF/persistence.xml)` - to integration tests for web services
+3. `testphony-ws (telephony-ws/src/test/resources/META-INF/persistence.xml)` - to integration tests for web services module
 
 Here are some default configs:
 persistence.xml (1.)
@@ -71,7 +71,7 @@ persistence.xml (2.)
 persistence.xml (3.)
 
     :::xml
-    <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-ws"/>
+    <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-ws-test"/>
     <property name="hibernate.connection.username" value="postgres"/>
     <property name="hibernate.connection.password" value="postgres"/>
 

@@ -3,14 +3,22 @@ package telephony.ws.resource;
 import org.restlet.data.ChallengeResponse;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Resource that simply returns a plain text message.
  */
 public class PingResource extends ServerResource {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Get("txt")
     public String toText() {
+
+        logger.info("======================================================");
+        logger.info("PingResource starts");
+
         StringBuilder sb = new StringBuilder("Restlet server alive. Method: ");
         sb.append(getRequest().getMethod());
 

@@ -2,22 +2,22 @@
 -- USERS
 
 insert into users values (
-    1, 'user1@gmail.com', 'rfaysdhaiufsiuf', now(), 1, NULL, NULL
+    1, 'user1@gmail.com', 'rfaysdhaiufsiuf', now(), 'asdweasdweasdweasdweasdweasdwe21', now(), 1, NULL, NULL
 --  nextval('users_seq'), 'pawelhenek@gmail.com', 'rfaysdhaiufsiuf', now(), 1, NULL, NULL
 );
 
 insert into users values (
-    2, 'user2@gmail.com', 'sdaysdhaiufsiua', now(), 1, NULL, NULL
+    2, 'user2@gmail.com', 'sdaysdhaiufsiua', now(), 'asdweasdweasdweasdweasdweasdwe21', now(), 1, NULL, NULL
 --  nextval('users_seq'), 'andrzejhenek@gmail.com', 'sdaysdhaiufsiua', now(), 1, NULL, NULL
 );
 
 insert into users values (
-    3, 'boss@gmail.com', 'zwaysdhaiufsiko', now(), 1, NULL, NULL
+    3, 'boss@gmail.com', 'zwaysdhaiufsiko', now(), 'asdweasdweasdweasdweasdweasdwe21', now(), 1, NULL, NULL
 -- nextval('users_seq'), 'roberthenek@gmail.com', 'zwaysdhaiufsiko', now(), 1, NULL, NULL
 );
 
 insert into users values (
-    4, 'manager@gmail.com', 'wertsdhnbgfsiko', now(), 1, NULL, NULL
+    4, 'manager@gmail.com', 'wertsdhnbgfsiko', now(), 'asdweasdweasdweasdweasdweasdwe21', now(), 1, NULL, NULL
 -- nextval('users_seq'), 'jolantahenek@gmail.com', 'wertsdhnbgfsiko', now(), 1, NULL, NULL
 );
 
@@ -32,6 +32,7 @@ insert into stores values (
     2, 'raciborz', now(), 1, NULL, NULL
 -- nextval('stores_seq'), 'raciborz', now(), 1, NULL, NULL
 );
+
 
 -- USERS TO STORES
 
