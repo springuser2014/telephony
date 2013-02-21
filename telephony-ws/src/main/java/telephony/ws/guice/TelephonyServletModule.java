@@ -1,38 +1,57 @@
 package telephony.ws.guice;
 
 
-import com.google.inject.servlet.ServletModule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import telephony.ws.TelephonyApplication;
-import telephony.ws.servlet.TelephonyRestletServlet;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import telephony.ws.TelephonyApplication;
+import telephony.ws.servlet.TelephonyRestletServlet;
+
+import com.google.inject.matcher.Matchers;
+import com.google.inject.servlet.ServletModule;
+
 
 /**
+ * @author gam3r
  * Configuration of web applactions specifis modules : GuicePersist, GuiceServlet
  */
 public class TelephonyServletModule extends ServletModule {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     protected void configureServlets() {
 
         logger.debug("TelephonyServletModule initialization");
 
         bindServlets();
         bindAuth();
+        bindLogger();
 
         logger.debug("TelephonyServletModule is destroyed");
     }
 
+    /**
+     * asd.
+     */
+    protected void bindLogger() {
+        bindListener(Matchers.any(), new SLF4JTypeListener());
+    }
+
+    /**
+     * asd.
+     */
     private void bindAuth() {
 
 //        filter("/*").through(GuiceShiroFilter.class);
     }
 
+    /**
+     * asd.
+     */
     private void bindServlets() {
 
         logger.debug("TelephonyServletModule starts configuring Restlet services");
@@ -45,8 +64,12 @@ public class TelephonyServletModule extends ServletModule {
         logger.debug("TelephonyServletModule ends configuring servlets");
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     private Map<String, String> bindRestletParams() {
-        Map<String, String> options = new HashMap();
+        Map<String, String> options = new HashMap<String, String>();
         options.put("org.restlet.application", TelephonyApplication.class.toString());
 
         return options;

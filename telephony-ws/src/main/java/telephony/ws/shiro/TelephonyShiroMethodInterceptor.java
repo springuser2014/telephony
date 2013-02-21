@@ -1,25 +1,39 @@
-package telephony.ws.shiro.interceptor;
+package telephony.ws.shiro;
+
+import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.shiro.authz.aop.RoleAnnotationMethodInterceptor;
 
-import java.lang.reflect.Method;
-
-
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public class TelephonyShiroMethodInterceptor implements MethodInterceptor {
 
-    private RoleAnnotationMethodInterceptor roleAnnotationMethodInterceptor = new RoleAnnotationMethodInterceptor();
+    private final RoleAnnotationMethodInterceptor roleAnnotationMethodInterceptor
+    = new RoleAnnotationMethodInterceptor();
 
     @Override
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
         return roleAnnotationMethodInterceptor.invoke(new ShiroMethodInvocation(methodInvocation));
     }
 
+    /**
+     * asd.
+     * @author Paweł Henek <pawelhenek@gmail.com>
+     *
+     */
     private static class ShiroMethodInvocation implements org.apache.shiro.aop.MethodInvocation {
 
-        private MethodInvocation methodInvocation;
+        private final MethodInvocation methodInvocation;
 
+        /**
+         * asd.
+         * @param methodInvocation foo.
+         */
         public ShiroMethodInvocation(MethodInvocation methodInvocation) {
             this.methodInvocation = methodInvocation;
         }

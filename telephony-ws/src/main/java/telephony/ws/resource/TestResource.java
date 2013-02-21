@@ -1,5 +1,10 @@
 package telephony.ws.resource;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.ext.xml.DomRepresentation;
 import org.restlet.representation.Representation;
@@ -9,11 +14,8 @@ import org.restlet.resource.ServerResource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
+// TODO : remove later
 /**
  * Sample test resource that supports both JSON and XML representations of its
  * own data.
@@ -26,7 +28,7 @@ public class TestResource extends ServerResource {
     private Map<Object, Object> map;
 
     @Override
-    protected void doInit() throws ResourceException {
+    protected void doInit() {
         super.doInit();
         this.map = new HashMap<Object, Object>();
         map.put("key1", "value1");
@@ -37,10 +39,9 @@ public class TestResource extends ServerResource {
      * Returns the resource's representation with the JSON format.
      *
      * @return The resource's representation with the JSON format.
-     * @throws ResourceException
      */
     @Get("json")
-    public Representation toJson() throws ResourceException {
+    public Representation toJson() {
         return new JsonRepresentation(map);
     }
 
@@ -48,10 +49,9 @@ public class TestResource extends ServerResource {
      * Returns the resource's representation with the XML format.
      *
      * @return The resource's representation with the XML format.
-     * @throws ResourceException
      */
     @Get("xml")
-    public Representation toXml() throws ResourceException {
+    public Representation toXml() {
         try {
             DomRepresentation rep = new DomRepresentation();
             Document doc = rep.getDocument();

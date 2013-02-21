@@ -8,6 +8,11 @@
 
 	<web>
 		<link target="/">
+			<dir name="/media/EE542B58542B2337/linux/Projects/telephony/telephony-ws/target/m2e-wtp/web-resources">
+				<exclude name="/"/>
+			</dir>
+		</link>
+		<link target="/">
 			<dir name="/media/EE542B58542B2337/linux/Projects/telephony/telephony-ws/src/main/webapp">
 			</dir>
 		</link>

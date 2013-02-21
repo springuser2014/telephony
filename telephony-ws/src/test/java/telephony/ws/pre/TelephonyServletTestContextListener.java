@@ -1,10 +1,9 @@
-package telephony.ws.servlet;
+package telephony.ws.pre;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.guice.TelephonyCoreServicesModule;
-import telephony.ws.Config;
 import telephony.ws.guice.TelephonyServletModule;
 
 import com.google.inject.Guice;
@@ -17,13 +16,13 @@ import com.google.inject.servlet.GuiceServletContextListener;
  * @author gam3r
  * Defining which guice's modules are used in application
  */
-public class TelephonyServletContextListener extends GuiceServletContextListener {
+public class TelephonyServletTestContextListener extends GuiceServletContextListener {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     protected Injector getInjector() {
-        logger.debug("Injector configuration");
+        logger.info("Injector configuration");
 
         return Guice.createInjector(
                 getJpaModule(),
@@ -33,24 +32,24 @@ public class TelephonyServletContextListener extends GuiceServletContextListener
     }
 
     /**
-     * asd.
-     * @return asd.
+     * foo bar.
+     * @return foo bar.
      */
     protected JpaPersistModule getJpaModule() {
-        return new JpaPersistModule(Config.PERSISTENCE);
+        return new JpaPersistModule(TestsConfig.PERSISTENCE);
     }
 
     /**
-     * asd.
-     * @return asd.
+     * foo bar.
+     * @return foo bar.
      */
     protected TelephonyCoreServicesModule getCoreServicesModule() {
         return new TelephonyCoreServicesModule();
     }
 
     /**
-     * asd.
-     * @return asd.
+     * foo bar.
+     * @return foo bar.
      */
     protected TelephonyServletModule getServletModule() {
         return new TelephonyServletModule();

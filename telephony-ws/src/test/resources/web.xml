@@ -5,24 +5,24 @@
 
 <web-app>
 
-    <listener>
-        <listener-class>telephony.ws.listener.TelephonyServletTestContextListener</listener-class>
-    </listener>
+	<listener>
+		<listener-class>telephony.ws.listener.TelephonyServletTestContextListener</listener-class>
+	</listener>
 
-    <filter>
-        <filter-name>guiceFilter</filter-name>
-        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
-    </filter>
+	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
 
-    <filter-mapping>
-        <filter-name>guiceFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
-    <!-- Default page to serve -->
-    <!--<welcome-file-list>-->
-        <!--<welcome-file>start.html</welcome-file>-->
-    <!--</welcome-file-list>-->
+	<!-- Default page to serve -->
+	<!--<welcome-file-list> -->
+	<!--<welcome-file>start.html</welcome-file> -->
+	<!--</welcome-file-list> -->
 
 
 </web-app>

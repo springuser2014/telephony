@@ -7,26 +7,56 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
+/**
+ * Added some stupid comment.
+ * @author gam3r
+ *
+ */
 public class UsersResource extends ServerResource {
 
-    private Representation representation = new JsonRepresentation("");
+    /**
+     * Some text.
+     */
+    public static final String URL = "/users";
 
-    @Get
-    public Representation list() {
-        return representation;
+    /**
+     * Some text.
+     */
+    private Representation representation = new JsonRepresentation("hello");
+
+    /**
+     * Some text.
+     * @return asd
+     */
+    @Get("json")
+    public final Representation list() {
+        return new JsonRepresentation("pawel henek witaj");
     }
 
+    /**
+     * Some text.
+     * @return asd
+     */
     @Post
-    public Representation addNew() {
+    public final Representation addNew() {
         return representation;
     }
 
-    public Representation edit() {
+    /**
+     * Some text.
+     * @return asd
+     */
+    public final Representation edit() {
         return representation;
     }
 
+    /**
+     * Some text.
+     * @return asd
+     *
+     */
     @Delete
-    public Representation delete() {
+    public final Representation delete() {
         return representation;
     }
 }

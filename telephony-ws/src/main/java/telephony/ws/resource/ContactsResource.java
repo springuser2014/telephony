@@ -7,22 +7,44 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ */
 public class ContactsResource extends ServerResource {
 
-    private Representation rep = new JsonRepresentation("");
+    /**
+     * asd.
+	 */
+    private final Representation rep = new JsonRepresentation("");
 
-    @Get
-    public Representation get() {
+	/**
+	 * asd.
+	 *
+	 * @return asd.
+	 */
+    @Override
+	@Get
+	public final Representation get() {
         return rep;
     }
 
+	/**
+	 * asd.
+	 * @return asd.
+	 */
     @Post
-    public Representation post() {
+	public final Representation post() {
         return rep;
     }
 
-    @Delete
-    public Representation delete() {
+	/**
+	 * asd.
+	 * @return asd.
+	 */
+    @Override
+	@Delete
+	public final Representation delete() {
         return rep;
     }
 }
