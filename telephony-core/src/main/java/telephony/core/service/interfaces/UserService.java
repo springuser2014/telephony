@@ -1,14 +1,28 @@
 package telephony.core.service.interfaces;
 
-import telephony.core.entity.User;
-
 import java.util.List;
 
+import telephony.core.entity.User;
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface UserService {
 
-    public List<User> findAllUsers();
+    /**
+     * asd.
+     * @return asd.
+     */
+    List<User> findAllUsers();
 
-    public User findUserByName(String name);
+    /**
+     * asd.
+     * @param name asd.
+     * @return asd.
+     */
+    User findUserByName(String name);
 
 
 }

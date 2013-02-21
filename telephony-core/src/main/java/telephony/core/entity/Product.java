@@ -1,19 +1,39 @@
 package telephony.core.entity;
 
 
-import telephony.core.entity.common.BaseEntity;
-import telephony.core.entity.common.Money;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_seq")
-    @SequenceGenerator(name = "products_seq", sequenceName = "products_seq", allocationSize = 1)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "products_seq")
+    @SequenceGenerator(
+        name = "products_seq",
+        sequenceName = "products_seq",
+        allocationSize = 1)
     private Long id;
 
     @Column(name = "imei", nullable = false, length = 100)
@@ -42,108 +62,213 @@ public class Product extends BaseEntity {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column = @Column(name = "price_in", nullable = true))
+            @AttributeOverride(name = "value",
+                               column = @Column(
+                                   name = "price_in",
+                                   nullable = true))
     })
     private Money priceIn = new Money();
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column = @Column(name = "price_out", nullable = true))
+            @AttributeOverride(name = "value",
+                               column = @Column(
+                                   name = "price_out",
+                                   nullable = true))
     })
     private Money priceOut = new Money();
 
+    /**
+     * asd.
+     */
     public Product() {
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getImei() {
         return imei;
     }
 
+    /**
+     * asd.
+     * @param imei asd.
+     */
     public void setImei(String imei) {
         this.imei = imei;
     }
 
-    public Store getStore() {
+    /**
+     * asd.
+     * @return asd.
+     */
+    public final Store getStore() {
         return store;
     }
 
+    /**
+     * asd.
+     * @param store asd.
+     */
     public void setStore(Store store) {
         this.store = store;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Delivery getDelivery() {
         return delivery;
     }
 
+    /**
+     * asd.
+     * @param delivery asd
+     */
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Sale getSale() {
         return sale;
     }
 
+    /**
+     * asd.
+     * @param sale asd.
+     */
     public void setSale(Sale sale) {
         this.sale = sale;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getProducer() {
         return producer;
     }
 
+    /**
+     * asd.
+     * @param producer asd.
+     */
     public void setProducer(String producer) {
         this.producer = producer;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getModel() {
         return model;
     }
 
+    /**
+     * asd.
+     * @param model asd.
+     */
     public void setModel(String model) {
         this.model = model;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * asd.
+     * @param color asd.
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Money getPriceIn() {
         return priceIn;
     }
 
+    /**
+     * asd.
+     * @param priceIn asd.
+     */
     public void setPriceIn(Money priceIn) {
         this.priceIn = priceIn;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Money getPriceOut() {
         return priceOut;
     }
 
+    /**
+     * asd.
+     * @param priceOut asd.
+     */
     public void setPriceOut(Money priceOut) {
         this.priceOut = priceOut;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         Product product = (Product) o;
 
-        if (color != null ? !color.equals(product.color) : product.color != null) return false;
-        if (delivery != null ? !delivery.equals(product.delivery) : product.delivery != null) return false;
-        if (imei != null ? !imei.equals(product.imei) : product.imei != null) return false;
-        if (model != null ? !model.equals(product.model) : product.model != null) return false;
-        if (priceIn != null ? !priceIn.equals(product.priceIn) : product.priceIn != null) return false;
-        if (priceOut != null ? !priceOut.equals(product.priceOut) : product.priceOut != null) return false;
-        if (producer != null ? !producer.equals(product.producer) : product.producer != null) return false;
-        if (sale != null ? !sale.equals(product.sale) : product.sale != null) return false;
-        if (store != null ? !store.equals(product.store) : product.store != null) return false;
+        if (color != null ? !color.equals(product.color) : product.color != null) {
+            return false;
+        }
+        if (delivery != null ? !delivery.equals(product.delivery) : product.delivery != null) {
+            return false;
+        }
+        if (imei != null ? !imei.equals(product.imei) : product.imei != null) {
+            return false;
+        }
+        if (model != null ? !model.equals(product.model) : product.model != null) {
+            return false;
+        }
+        if (priceIn != null ? !priceIn.equals(product.priceIn) : product.priceIn != null) {
+            return false;
+        }
+        if (priceOut != null ? !priceOut.equals(product.priceOut) : product.priceOut != null) {
+            return false;
+        }
+        if (producer != null ? !producer.equals(product.producer) : product.producer != null) {
+            return false;
+        }
+        if (sale != null ? !sale.equals(product.sale) : product.sale != null) {
+            return false;
+        }
+        if (store != null ? !store.equals(product.store) : product.store != null) {
+            return false;
+        }
 
         return true;
     }

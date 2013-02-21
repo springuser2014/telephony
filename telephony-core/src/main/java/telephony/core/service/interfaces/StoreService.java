@@ -1,11 +1,20 @@
 package telephony.core.service.interfaces;
 
 
-import telephony.core.entity.Store;
-
 import java.util.List;
 
+import telephony.core.entity.Store;
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface StoreService {
 
-    public List<Store> fetchAllStores();
+    /**
+     * asd.
+     * @return asd.
+     */
+    List<Store> fetchAllStores();
 }

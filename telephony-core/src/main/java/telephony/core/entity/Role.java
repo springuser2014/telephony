@@ -1,10 +1,20 @@
 package telephony.core.entity;
 
 
-import telephony.core.entity.common.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 @Entity
 @Table(name = "roles")
 public class Role extends BaseEntity {
@@ -18,25 +28,46 @@ public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    public Role() {}
+    /**
+     * asd.
+     */
+    public Role() {
 
+    }
+
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * asd.
+     * @param name asd.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         Role role = (Role) o;
 
-        if (name != null ? !name.equals(role.name) : role.name != null) return false;
+        if (name != null ? !name.equals(role.name) : role.name != null) {
+            return false;
+        }
 
         return true;
     }

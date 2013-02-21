@@ -1,27 +1,45 @@
 package telephony.core.service.impl;
 
-import com.google.inject.Inject;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import telephony.core.dao.interfaces.StoresDao;
 import telephony.core.entity.Store;
 import telephony.core.service.interfaces.StoreService;
 
-import java.util.List;
+import com.google.inject.Inject;
 
 
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public class StoreServiceImpl implements StoreService {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     * asd.
+     */
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * asd.
+     */
     @Inject
     private StoresDao storesDao;
 
-    public List<Store> fetchAllStores() {
+    /**
+     * asd.
+     * @return asd.
+     */
+    @Override
+    public final List<Store> fetchAllStores() {
 
         logger.debug("StoreServiceImpl.fetchAllStores starts");
 
-        List<Store> stores = storesDao.findUndeleted();
+        List<Store> stores = storesDao.findNotRemoved();
 
         logger.debug("found {} elements ", stores.size());
 

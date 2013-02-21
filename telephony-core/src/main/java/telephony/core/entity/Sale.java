@@ -1,12 +1,30 @@
 package telephony.core.entity;
 
 
-import telephony.core.entity.common.BaseEntity;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 @Entity
 @Table(name = "sales")
 public class Sale extends BaseEntity {
@@ -35,45 +53,89 @@ public class Sale extends BaseEntity {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
+    /**
+     * asd.
+     */
     public Sale() {
+
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Contact getContact() {
         return contact;
     }
 
+    /**
+     * asd.
+     * @param contact asd.
+     */
     public void setContact(Contact contact) {
         this.contact = contact;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * asd.
+     * @param label asd.
+     */
     public void setLabel(String label) {
         this.label = label;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Collection<Product> getProducts() {
         return products;
     }
 
+    /**
+     * asd.
+     * @param products asd.
+     */
     public void setProducts(Collection<Product> products) {
         this.products = products;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Date getDateOut() {
         return dateOut;
     }
 
+    /**
+     * asd.
+     * @param dateOut asd.
+     */
     public void setDateOut(Date dateOut) {
         this.dateOut = dateOut;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Store getStore() {
         return store;
     }
 
+    /**
+     * asd.
+     * @param store asd.
+     */
     public void setStore(Store store) {
         this.store = store;
     }
@@ -90,16 +152,30 @@ public class Sale extends BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         Sale sale = (Sale) o;
 
-        if (dateOut != null ? !dateOut.equals(sale.dateOut) : sale.dateOut != null) return false;
-        if (label != null ? !label.equals(sale.label) : sale.label != null) return false;
-        if (products != null ? !products.equals(sale.products) : sale.products != null) return false;
-        if (store != null ? !store.equals(sale.store) : sale.store != null) return false;
+        if (dateOut != null ? !dateOut.equals(sale.dateOut) : sale.dateOut != null) {
+            return false;
+        }
+        if (label != null ? !label.equals(sale.label) : sale.label != null) {
+            return false;
+        }
+        if (products != null ? !products.equals(sale.products) : sale.products != null) {
+            return false;
+        }
+        if (store != null ? !store.equals(sale.store) : sale.store != null) {
+            return false;
+        }
 
         return true;
     }

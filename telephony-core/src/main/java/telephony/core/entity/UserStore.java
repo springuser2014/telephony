@@ -1,28 +1,61 @@
+
 package telephony.core.entity;
 
-import telephony.core.entity.common.BaseEntity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-import javax.persistence.*;
-
+/**
+ * asd.
+ *
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ */
 @Entity
 @Table(name = "user_stores")
 public class UserStore extends BaseEntity {
 
+    /**
+     * asd.
+     */
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_stores_seq")
-    @SequenceGenerator(name = "user_stores_seq", sequenceName = "user_stores_seq", allocationSize = 1)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "user_stores_seq")
+    @SequenceGenerator(
+        name = "user_stores_seq",
+        sequenceName = "user_stores_seq",
+        allocationSize = 1)
     private Long id;
 
-    public UserStore() {}
+    /**
+     * asd.
+     */
+    public UserStore() {
 
+    }
+
+    /**
+     * asd.
+     * @return asd.
+     */
     @Override
-    public Long getId() {
+    public final Long getId() {
+
         return this.id;
     }
 
+    /**
+     * asd.
+     * @param iD asd.
+     */
     @Override
-    public void setId(Long id) {
-        this.id = id;
+    public final void setId(final Long iD) {
+
+        this.id = iD;
     }
 }

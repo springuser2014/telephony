@@ -1,13 +1,31 @@
 package telephony.core.entity;
 
 
-import telephony.core.entity.common.BaseEntity;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -29,7 +47,7 @@ public class User extends BaseEntity {
 
     @Column(name = "session_validity", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date sessionValidity;
+    private Date sessionValidity;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_stores",
@@ -44,53 +62,106 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<Role>();
 
+    /**
+     * asd.
+     */
     public User() {
+
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getSessionId() {
         return sessionId;
     }
 
+    /**
+     * asd.
+     * @param sessionId asd.
+     */
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Date getSessionValidity() {
         return sessionValidity;
     }
 
+    /**
+     * asd.
+     * @param sessionValidity asd.
+     */
     public void setSessionValidity(Date sessionValidity) {
         this.sessionValidity = sessionValidity;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getEmail() {
         return email;
     }
 
+
+    /**
+     * asd.
+     * @param email asd.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * asd.
+     * @param password asd.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Set<Store> getAllowedShops() {
         return allowedShops;
     }
 
+    /**
+     * asd.
+     * @param allowedShops asd.
+     */
     public void setAllowedShops(Set<Store> allowedShops) {
         this.allowedShops = allowedShops;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Set<Role> getRoles() {
         return roles;
     }
 
+    /**
+     * asd.
+     * @param roles asd.
+     */
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
@@ -107,16 +178,31 @@ public class User extends BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         User user = (User) o;
 
-        if (allowedShops != null ? !allowedShops.equals(user.allowedShops) : user.allowedShops != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
+        if (allowedShops != null
+                        ? !allowedShops.equals(user.allowedShops) : user.allowedShops != null) {
+            return false;
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
+            return false;
+        }
+        if (password != null ? !password.equals(user.password) : user.password != null) {
+            return false;
+        }
+        if (roles != null ? !roles.equals(user.roles) : user.roles != null) {
+            return false;
+        }
 
         return true;
     }

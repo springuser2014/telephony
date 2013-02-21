@@ -2,7 +2,7 @@ package telephony.core.dao.interfaces;
 
 
 import telephony.core.entity.Product;
-import telephony.core.entity.common.ProductStatus;
+import telephony.core.entity.ProductStatus;
 
 import java.util.Date;
 import java.util.List;

@@ -1,26 +1,41 @@
 package telephony.core.dao.implementations;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import telephony.core.dao.interfaces.UsersDao;
-import telephony.core.entity.User;
-
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import telephony.core.dao.interfaces.UsersDao;
+import telephony.core.entity.User;
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 
+    /**
+     * asd.
+     */
     public UsersDaoImpl() {
         super(User.class);
     }
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public List<User> findUndeleted() {
+    /**
+     * asd.
+     * @return asd.
+     */
+	@Override
+    @SuppressWarnings("unchecked")
+    public List<User> findNotRemoved() {
 
         logger.debug("findUndeleted starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
+        logger.debug("entity type : {} ", getEntityClass().getName());
 
         List<User> lst = getEntityManager()
                 .createQuery("select e from User e where e.deleter is null")
@@ -55,7 +70,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
         User u = (User) getEntityManager()
                 .createQuery("select e from User e where e.email = ?1 and e.password = ?2")
                 .setParameter(1, name)
-                .setParameter(2, name)
+                .setParameter(2, password)
                 .getSingleResult();
 
         logger.info("found {} element", u);
@@ -66,17 +81,31 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
     @Override
     public boolean updateSession(Long userId, String sessionId, Date sessionValidaty) {
         logger.info("updateSession starts");
-//        logger.info("params : [ userId = {} , sessionId = {}, sessionValidaty]", userId, sessionId, sessionValidaty);
+//        logger.info("params : [ userId = {} , sessionId = {}, sessionValidaty]",
+//        userId, sessionId, sessionValidaty);
 
-        User u = (User) getEntityManager()
-                .createQuery("update User e set e.sessionId = ?1, e.sessionValidity = ?2 where e.id = ?3 ")
+        int i = getEntityManager()
+                .createQuery("update User e set e.sessionId = '?1', "
+                		+ "e.sessionValidity = '?2' where e.id = ?3 ")
                 .setParameter(1, sessionId)
                 .setParameter(2, sessionValidaty)
                 .setParameter(3, userId)
-                .getSingleResult();
+                .executeUpdate();
 
-        logger.info("found {} element", u);
+        logger.info("found {} element", i);
 
-        return true;
+        return i > 0;
+    }
+
+    @Override
+    public User findByNameAndSessionId(String username, String sessionId) {
+        User u = (User) getEntityManager()
+                .createQuery("select e from User e where e.email = ?1 and e.sessionId = ?2")
+                               .setParameter(1, username)
+                               .setParameter(2, sessionId)
+                               .getSingleResult();
+
+        return u;
+
     }
 }

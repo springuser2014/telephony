@@ -1,61 +1,117 @@
 package telephony.core.service.interfaces;
 
 
-import telephony.core.entity.Product;
-import telephony.core.entity.Store;
-import telephony.core.entity.User;
-import telephony.core.entity.common.ProductStatus;
-
 import java.util.Date;
 import java.util.List;
 
+import telephony.core.entity.Product;
+import telephony.core.entity.ProductStatus;
+import telephony.core.entity.Store;
+import telephony.core.entity.User;
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface ProductService {
 
     /**
-     * Zwraca listę wszystkich nr IMEI który zostały już użyte.
-     * (produkty są aktualnie w bazie lub zostały już kiedyś wcześniej sprzedane)
+     * asd.
      *
-     * @return
+     * @return asd.
      */
-    public List<String> fetchAllImeiInUse();
+    List<String> fetchAllImeiInUse();
 
     /**
-     * Zwraca listę nazw wszystkich producentów z bazy
+     * asd.
      *
-     * @return
+     * @return asd.
      */
-    public List<String> fetchAllProducers();
+    List<String> fetchAllProducers();
 
     /**
-     * Zwraca listę nazw wszystkich modeli produktów z bazy
+     * asd.
      *
-     * @return
+     * @return asd.
      */
-    public List<String> fetchAllModels();
-
-    public List<String> fetchAllColors();
+    List<String> fetchAllModels();
 
     /**
-     * Aktualizuje listę produktów w bazie danych
-     *
-     * @param products
+     * asd.
+     * @return asd.
      */
-    public void updateProducts(List<Product> products, User updatingUser);
+    List<String> fetchAllColors();
 
     /**
-     * Zwraca listę produktów według przekazanych kryteriów
+     * asd.
      *
-     * @return
+     * @param products asd.
+     * @param updatingUser asd.
      */
-    public List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
+    void updateProducts(List<Product> products, User updatingUser);
 
-    public void moveProducts(Store store, List<Product> products, User user);
+    /**
+     * asd.
+     * @param storeId asd.
+     * @param productStatus asd.
+     * @return asd.
+     */
+    List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
 
-    public Product fetchProductByImeiAndStoreId(String imei, Long storeId);
+    /**
+     * asd.
+     * @param store asd.
+     * @param products asd.
+     * @param user asd.
+     */
+    void moveProducts(Store store, List<Product> products, User user);
 
-    public List<Product> fetchAllProductsByCriteria(String imei, String producer, String model, String color, Long storeId, Date deliveryDateStart, Date deliveryDateEnd, ProductStatus status);
+    /**
+     * asd.
+     * @param imei asd.
+     * @param storeId asd.
+     * @return asd.
+     */
+    Product fetchProductByImeiAndStoreId(String imei, Long storeId);
 
-    public void updateProducts(List<Product> productsToUpdate, List<Product> productsToDelete, List<Product> productsToCancelTheSale, User editor);
+    // TODO: refactor method below
+    /**
+     * asd.
+     * @param imei asd.
+     * @param producer asd.
+     * @param model asd.
+     * @param color asd.
+     * @param storeId asd.
+     * @param deliveryDateStart asd.
+     * @param deliveryDateEnd asd.
+     * @param status asd.
+     * @return asd.
+     */
+    List<Product> fetchAllProductsByCriteria(
+        String imei, String producer, String model,
+        String color, Long storeId, Date deliveryDateStart,
+        Date deliveryDateEnd, ProductStatus status
+     );
 
-    public void cancelProductsSale(List<Product> productsToCancelTheSale, User editor);
+    /**
+     * asd.
+     * @param productsToUpdate asd.
+     * @param productsToDelete asd.
+     * @param productsToCancelTheSale asd.
+     * @param editor asd.
+     */
+    void updateProducts(
+        List<Product> productsToUpdate,
+        List<Product> productsToDelete,
+        List<Product> productsToCancelTheSale,
+        User editor
+     );
+
+    /**
+     * asd.
+     * @param productsToCancelTheSale asd.
+     * @param editor asd.
+     */
+    void cancelProductsSale(List<Product> productsToCancelTheSale, User editor);
 }

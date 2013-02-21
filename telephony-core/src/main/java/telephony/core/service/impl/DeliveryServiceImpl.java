@@ -1,8 +1,11 @@
 package telephony.core.service.impl;
 
-import com.google.inject.Inject;
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import telephony.core.dao.interfaces.DeliveriesDao;
 import telephony.core.dao.interfaces.ProductsDao;
 import telephony.core.dao.interfaces.StoresDao;
@@ -11,32 +14,63 @@ import telephony.core.entity.Product;
 import telephony.core.entity.Store;
 import telephony.core.entity.User;
 import telephony.core.service.interfaces.DeliveryService;
-import telephony.shared.ListOrder;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.google.inject.Inject;
 
 
-public class DeliveryServiceImpl extends AbstractBasicService implements DeliveryService {
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
+public class DeliveryServiceImpl
+    extends AbstractBasicService implements DeliveryService {
 
+    /**
+     * asd.
+     */
     @Inject
     private DeliveriesDao deliveriesDao;
 
+    /**
+     * asd.
+     */
     @Inject
     private StoresDao storesDao;
 
+    /**
+     * asd.
+     */
     @Inject
     private ProductsDao prodctsDao;
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     * asd.
+     */
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public Delivery fetchDeliveryInfo(Long deliveryId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    /**
+     * asd.
+     * @param deliveryId asd.
+     * @return asd.
+     */
+    @Override
+    public final Delivery fetchDeliveryInfo(final Long deliveryId) {
+        return null;
     }
 
-
-    public void addNewDelivery(Delivery delivery, Store store, List<Product> productList, User user) {
+    // TODO : do refactoring
+    /**
+     * asd.
+     * @param delivery asd.
+     * @param store asd.
+     * @param productList asd.
+     * @param user asd.
+     */
+    @Override
+    public final void addNewDelivery(
+        Delivery delivery, final Store store,
+        final List<Product> productList, final User user) {
         logger.debug("DeliveryServiceImpl.addNewDelivery starts");
 
         getEntityManager().getTransaction().begin();
@@ -61,33 +95,47 @@ public class DeliveryServiceImpl extends AbstractBasicService implements Deliver
     }
 
 
-    public List<Delivery> fetchAllDeliveries() {
+    /**
+     * asd.
+     * @return asd.
+     */
+    @Override
+    public final List<Delivery> fetchAllDeliveries() {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");
 
-        List<Delivery> res = deliveriesDao.findUndeleted();
+        List<Delivery> res = deliveriesDao.findNotRemoved();
 
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries ends");
 
         return res;
     }
 
-    public List<Product> fetchAllDeliveriesFrom(Store store, int page, ListOrder order) {
+    /**
+     * asd.
+     * @param store asd.
+     * @param page asd.
+     * @return asd.
+     */
+    public final List<Product> fetchAllDeliveriesFrom(
+        final Store store, final int page) {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
 
-        int numberOfElements = 6;
+//        int numberOfElements = 6;
+//
+//        List<Delivery> deliveries =
+//        deliveriesDao.findLastest(store, numberOfElements * page,
+//        numberOfElements, order);
+//
+//        ArrayList<Long> ids = new ArrayList<Long>();
+//
+//        for (Delivery d : deliveries) {
+//            ids.add(d.getId());
+//        }
+//
+//        List<Product> result = deliveriesDao.findProductsByDeliveriesIds(ids);
+//
+//        logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom ends");
 
-        List<Delivery> deliveries = deliveriesDao.findLastest(store, numberOfElements * page, numberOfElements, order);
-
-        ArrayList<Long> ids = new ArrayList<Long>();
-
-        for (Delivery d : deliveries) {
-            ids.add(d.getId());
-        }
-
-        List<Product> result = deliveriesDao.findProductsByDeliveriesIds(ids);
-
-        logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom ends");
-
-        return result;
+        return null;
     }
 }

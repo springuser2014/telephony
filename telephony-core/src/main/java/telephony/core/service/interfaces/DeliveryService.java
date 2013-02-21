@@ -1,41 +1,46 @@
 package telephony.core.service.interfaces;
 
 
+import java.util.List;
+
 import telephony.core.entity.Delivery;
 import telephony.core.entity.Product;
 import telephony.core.entity.Store;
 import telephony.core.entity.User;
-import telephony.shared.ListOrder;
 
-import java.util.List;
-
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface DeliveryService {
 
     /**
-     * Zwraca szczegółowe informacje na temat dostawy
+     * asd.
      *
-     * @param deliveryId
-     * @return
+     * @param deliveryId asd.
+     * @return asd.
      */
-    public Delivery fetchDeliveryInfo(Long deliveryId);
+    Delivery fetchDeliveryInfo(Long deliveryId);
 
     /**
-     * Dodaje nową dostawę do bazy danych według przekazanych danych
+     * asd.
      *
-     * @param delivery
-     * @param store
-     * @param productList
-     * @param creator
+     * @param delivery asd.
+     * @param store asd.
+     * @param productList asd.
+     * @param creator asd.
      */
-    public void addNewDelivery(Delivery delivery, Store store, List<Product> productList, User creator);
+    void addNewDelivery(
+        Delivery delivery, Store store,
+        List<Product> productList, User creator
+    );
 
     /**
-     * Pobiera listę zarejestrowanych dostaw
+     * asd.
      *
-     * @return
+     * @return asd.
      */
-    public List<Delivery> fetchAllDeliveries();
+    List<Delivery> fetchAllDeliveries();
 
-
-    public List<Product> fetchAllDeliveriesFrom(Store aLong, int page, ListOrder order);
 }

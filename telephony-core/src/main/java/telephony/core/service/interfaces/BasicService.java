@@ -2,7 +2,16 @@ package telephony.core.service.interfaces;
 
 import javax.persistence.EntityManager;
 
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface BasicService {
 
-    public EntityManager getEntityManager();
+    /**
+     * asd.
+     * @return asd.
+     */
+    EntityManager getEntityManager();
 }

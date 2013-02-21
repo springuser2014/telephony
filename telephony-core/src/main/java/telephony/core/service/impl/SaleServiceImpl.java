@@ -1,8 +1,11 @@
 package telephony.core.service.impl;
 
-import com.google.inject.Inject;
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import telephony.core.dao.interfaces.ProductsDao;
 import telephony.core.dao.interfaces.SalesDao;
 import telephony.core.entity.Product;
@@ -10,33 +13,60 @@ import telephony.core.entity.Sale;
 import telephony.core.entity.Store;
 import telephony.core.entity.User;
 import telephony.core.service.interfaces.SaleService;
-import telephony.shared.ListOrder;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.google.inject.Inject;
 
-public class SaleServiceImpl extends AbstractBasicService implements SaleService {
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
+public class SaleServiceImpl
+extends AbstractBasicService implements SaleService {
 
+    /**
+     * asd.
+     */
     @Inject
     private SalesDao salesDao;
 
+    /**
+     * asd.
+     */
     @Inject
     private ProductsDao productsDao;
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     * asd.
+     */
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public List<Sale> findAllSales() {
+    /**
+     * asd.
+     * @return asd.
+     */
+    @Override
+    public final List<Sale> findAllSales() {
         logger.debug("SaleServiceImpl.findAllSales starts");
 
-        List<Sale> res = salesDao.findUndeleted();
+        List<Sale> res = salesDao.findNotRemoved();
 
         logger.debug("SaleServiceImpl.findAllSales starts");
 
         return res;
     }
 
-    public void addNewSale(Sale sale, List<Product> products, User user, Store store) {
+    // TODO: refactor user parameter
+    /**
+     * asd.
+     * @param sale asd.
+     * @param products asd.
+     * @param user asd.
+     * @param store asd.
+     */
+    @Override
+    public final void addNewSale( Sale sale, final List<Product> products,
+        final User user, final Store store) {
 
         logger.debug("SaleServiceImpl.addNewSale starts");
 
@@ -55,24 +85,33 @@ public class SaleServiceImpl extends AbstractBasicService implements SaleService
         getEntityManager().getTransaction().commit();
     }
 
-    public List<Product> fetchAllSalesFrom(Store store, int page, ListOrder order) {
-        logger.debug("SaleServiceImpl.fetchAllSalesFrom starts");
-
-        int numberOfElements = 6;
-
-        List<Sale> sales = salesDao.findLastest(store, numberOfElements * page, numberOfElements, order);
-
-        ArrayList<Long> ids = new ArrayList<Long>();
-
-        for (Sale s : sales) {
-            ids.add(s.getId());
-        }
-
-        List<Product> result = salesDao.findProductsBySalesIds(ids);
-
-        logger.debug("SaleServiceImpl.fetchAllSalesFrom ends");
-
-        return result;
+   /**
+    * asd.
+    * @param store asd.
+    * @param page asd.
+    * @return asd.
+    */
+    public final List<Product> fetchAllSalesFrom(
+        final Store store, final int page) {
+//        logger.debug("SaleServiceImpl.fetchAllSalesFrom starts");
+//
+//        int numberOfElements = 6;
+//
+//        List<Sale> sales = salesDao.findLastest(
+//        store, numberOfElements * page, numberOfElements, order);
+//
+//        ArrayList<Long> ids = new ArrayList<Long>();
+//
+//        for (Sale s : sales) {
+//            ids.add(s.getId());
+//        }
+//
+//        List<Product> result = salesDao.findProductsBySalesIds(ids);
+//
+//        logger.debug("SaleServiceImpl.fetchAllSalesFrom ends");
+//
+//        return result;
+        return null;
     }
 
 

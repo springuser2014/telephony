@@ -1,9 +1,22 @@
 package telephony.core.entity;
 
-import telephony.core.entity.common.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 @Entity
 @Table(name = "user_roles")
 public class UserRole extends BaseEntity {
@@ -22,7 +35,12 @@ public class UserRole extends BaseEntity {
     @JoinColumn(name = "role_id", nullable = false)
     private Store roleId;
 
-    public UserRole() {}
+    /**
+     * asd.
+     */
+    public UserRole() {
+
+    }
 
     @Override
     public Long getId() {
@@ -34,33 +52,61 @@ public class UserRole extends BaseEntity {
         this.id = id;
     }
 
+    /***
+     * asd.
+     * @return asd.
+     */
     public Store getUserId() {
         return userId;
     }
 
+    /**
+     * asd.
+     * @param userId asd.
+     */
     public void setUserId(Store userId) {
         this.userId = userId;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     public Store getRoleId() {
         return roleId;
     }
 
+    /**
+     * asd.
+     * @param roleId asd.
+     */
     public void setRoleId(Store roleId) {
         this.roleId = roleId;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         UserRole userRole = (UserRole) o;
 
-        if (!id.equals(userRole.id)) return false;
-        if (!roleId.equals(userRole.roleId)) return false;
-        if (!userId.equals(userRole.userId)) return false;
+        if (!id.equals(userRole.id)) {
+            return false;
+        }
+        if (!roleId.equals(userRole.roleId)) {
+            return false;
+        }
+        if (!userId.equals(userRole.userId)) {
+            return false;
+        }
 
         return true;
     }

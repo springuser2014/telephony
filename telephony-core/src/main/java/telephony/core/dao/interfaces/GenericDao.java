@@ -1,7 +1,7 @@
 package telephony.core.dao.interfaces;
 
+import telephony.core.entity.BaseEntity;
 import telephony.core.entity.User;
-import telephony.core.entity.common.BaseEntity;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface GenericDao<E extends BaseEntity> {
 
     public List<E> findAll();
 
-    public List<E> findUndeleted();
+    public List<E> findNotRemoved();
 
     public List<E> findDeleted();
 
