@@ -1,8 +1,21 @@
 package telephony.core.dao.interfaces;
 
-
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface InformationDao {
-    public Long getNumberOfDeliveries();
 
-    public Long getNumberOfSales();
+    /**
+     * asd.
+     * @return asd.
+     */
+    Long getNumberOfDeliveries();
+
+    /**
+     * asd.
+     * @return asd.
+     */
+    Long getNumberOfSales();
 }

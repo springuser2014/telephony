@@ -65,7 +65,7 @@ extends AbstractBasicService implements SaleService {
      * @param store asd.
      */
     @Override
-    public final void addNewSale( Sale sale, final List<Product> products,
+    public final void addNewSale(Sale sale, final List<Product> products,
         final User user, final Store store) {
 
         logger.debug("SaleServiceImpl.addNewSale starts");

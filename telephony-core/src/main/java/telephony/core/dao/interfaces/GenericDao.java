@@ -1,48 +1,144 @@
 package telephony.core.dao.interfaces;
 
+import java.util.List;
+
 import telephony.core.entity.BaseEntity;
 import telephony.core.entity.User;
 
-import java.util.List;
 
-
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ * @param <E> asd.
+ */
 public interface GenericDao<E extends BaseEntity> {
 
-    public List<E> findAll();
+    /**
+     * asd.
+     * @return asd.
+     */
+     List<E> findAll();
 
-    public List<E> findNotRemoved();
+    /**
+     * asd.
+     * @return asd.
+     */
+    List<E> findNotRemoved();
 
-    public List<E> findDeleted();
+    /**
+     * asd.
+     * @return asd.
+     */
+    List<E> findDeleted();
 
-    public E findById(Long id);
+    /**
+     * asd.
+     * @param id asd.
+     * @return asd.
+     */
+    E findById(Long id);
 
-    public List<E> findByIds(List<Long> ids);
+    /**
+     * asd.
+     * @param ids asd.
+     * @return asd.
+     */
+    List<E> findByIds(List<Long> ids);
 
-    public List<E> findUndeletedByIds(List<Long> ids);
+    /**
+     * asd.
+     * @param ids asd.
+     * @return asd.
+     */
+    List<E> findUndeletedByIds(List<Long> ids);
 
-    public List<E> findDeletedByIds(List<Long> ids);
+    /**
+     * asd.
+     * @param ids asd.
+     * @return asd.
+     */
+    List<E> findDeletedByIds(List<Long> ids);
 
-    public E save(E entity);
+    /**
+     * asd.
+     * @param entity asd.
+     * @return asd.
+     */
+    E save(E entity);
 
-    public E saveOrUpdate(E entity);
+    /**
+     * asd.
+     * @param entity asd.
+     * @return asd.
+     */
+    E saveOrUpdate(E entity);
 
-    public List<E> save(List<E> entities);
+    /**
+     * asd.
+     * @param entities asd.
+     * @return asd.
+     */
+    List<E> save(List<E> entities);
 
-    public List<E> saveOrUpdate(List<E> entities);
+    /**
+     * asd.
+     * @param entities asd.
+     * @return asd.
+     */
+    List<E> saveOrUpdate(List<E> entities);
 
-    public void markAsDeletedById(Long id, Long userId);
+    /**
+     * asd.
+     * @param id asd.
+     * @param userId asd.
+     */
+    void markAsDeletedById(Long id, Long userId);
 
-    public void markAsDeletedByIds(List<Long> ids, Long userId);
+    /**
+     * asd.
+     * @param ids asd.
+     * @param userId asd.
+     */
+    void markAsDeletedByIds(List<Long> ids, Long userId);
 
-    public E markAsDeleted(E entity, Long userId);
+    /**
+     * asd.
+     * @param entity asd.
+     * @param userId asd.
+     * @return asd.
+     */
+    E markAsDeleted(E entity, Long userId);
 
-    public List<E> markAsDeleted(List<E> entities, User user);
+    /**
+     * asd.
+     * @param entities asd.
+     * @param user asd.
+     * @return asd.
+     */
+    List<E> markAsDeleted(List<E> entities, User user);
 
-    public void permanentDeleteById(Long id);
+    /**
+     * asd.
+     * @param id asd.
+     */
+    void permanentDeleteById(Long id);
 
-    public void permanentDeleteByIds(List<Long> ids);
+    /**
+     * asd.
+     * @param ids asd.
+     */
+    void permanentDeleteByIds(List<Long> ids);
 
-    public void permanentDelete(E entity);
+    /**
+     * asd.
+     * @param entity asd.
+     */
+    void permanentDelete(E entity);
 
-    public void permanentDelete(List<E> entities);
+    /**
+     * asd.
+     * @param entities asd.
+     */
+    void permanentDelete(List<E> entities);
 }

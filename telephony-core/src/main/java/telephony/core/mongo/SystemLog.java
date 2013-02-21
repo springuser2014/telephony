@@ -17,7 +17,7 @@ public class SystemLog {
      * asd.
      */
     @Id
-    ObjectId id;
+    private ObjectId id;
 
 
     /**
@@ -31,7 +31,7 @@ public class SystemLog {
 
     /**
      * asd.
-     * @param id asd.
+     * @param iD asd.
      */
     public final void setId(final ObjectId iD) {
 

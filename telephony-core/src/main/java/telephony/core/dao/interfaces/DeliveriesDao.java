@@ -1,16 +1,32 @@
 package telephony.core.dao.interfaces;
 
+import java.util.List;
+
 import telephony.core.entity.Delivery;
 import telephony.core.entity.Product;
 import telephony.core.entity.Store;
 
-import java.util.List;
-
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 public interface DeliveriesDao extends GenericDao<Delivery> {
 
-    public List<Product> findProductsByDeliveriesIds(List<Long> ids);
+    /**
+     * asd.
+     * @param ids asd.
+     * @return asd.
+     */
+    List<Product> findProductsByDeliveriesIds(List<Long> ids);
 
-//    public List<Delivery> findLastest(Store store, int startPosition, int numberOfElements, ListOrder order);
+//    public List<Delivery> findLastest(
+//    Store store, int startPosition, int numberOfElements, ListOrder order);
 
-    public long getNumberOfDeliveries(Store store);
+    /**
+     * asd.
+     * @param store asd.
+     * @return asd.
+     */
+    long getNumberOfDeliveries(Store store);
 }

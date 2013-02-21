@@ -185,9 +185,9 @@ public class ProductServiceImpl
         Object[] params = new Object[]{imei, producer, model, color,
             storeId, deliveryDateStart, deliveryDateEnd, status};
         logger.debug(
-            "params : [ imei : {} , producer : {} , model : {} , " +
-            "color : {} , storeId : {} , deliveryDateStart : {} , " +
-            "deliveryDateEnd : {}, productStatus : {} ] ", params);
+            "params : [ imei : {} , producer : {} , model : {} , "
+            + "color : {} , storeId : {} , deliveryDateStart : {} , "
+            + "deliveryDateEnd : {}, productStatus : {} ] ", params);
 
         List<Product> result = productsDao.findByCriteria(
             imei, producer, model, color, storeId,
