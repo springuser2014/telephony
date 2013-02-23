@@ -11,21 +11,21 @@
 	<artifactId>telephony-ws</artifactId>
 	<name>Telephony WebServices</name>
 	<packaging>war</packaging>
-
 	<repositories>
+	
 		<repository>
 			<id>loll</id>
 			<url>http://nexus.xwiki.org/nexus/content/groups/public</url>
 		</repository>
+		
 	</repositories>
-
 	<dependencies>
+	   
 		<dependency>
 			<groupId>org.bitbucket.pawelhenek.telephony</groupId>
 			<artifactId>telephony-core</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.restlet.gwt</groupId>
 			<artifactId>org.restlet</artifactId>
@@ -37,7 +37,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.gwt</artifactId>
@@ -68,6 +67,9 @@
 			<artifactId>org.restlet</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
+		
+		<!-- TODO: refactor dependencies - separate application and test librarires, dependencies versions to pom props
+		 -->
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
@@ -80,7 +82,7 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-bom</artifactId>
@@ -117,13 +119,11 @@
 			<artifactId>shrinkwrap-extension-tomcat-6</artifactId>
 			<version>1.0.0-alpha-13</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.arquillian.protocol</groupId>
 			<artifactId>arquillian-protocol-servlet</artifactId>
 			<version>1.0.2.Final</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-spi</artifactId>
@@ -148,7 +148,6 @@
 			<version>1.1.0-alpha-3</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
 			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
@@ -160,7 +159,6 @@
 			<version>1.5</version>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- Guice servlet extension -->
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
@@ -172,21 +170,17 @@
 			<artifactId>guice-assistedinject</artifactId>
 			<version>${guice.version}</version>
 		</dependency>
-
 		<!-- SLF4J dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
-
 		<!-- Shiro Dependencies -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -205,6 +199,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+	
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 
@@ -233,7 +228,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>${maven.war.plugin.version}</version>
 				<executions>
 					<execution>
 						<phase>compile</phase>
@@ -261,7 +256,6 @@
 							<rules>
 								<bannedDependencies>
 									<excludes>
-										<!--<exclude>org.hibernate:ejb3-persistence</exclude> -->
 										<exclude>com.google.gwt:gwt-dev</exclude>
 									</excludes>
 								</bannedDependencies>
@@ -274,7 +268,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -284,32 +278,49 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12</version>
+				<version>${maven.surefire.plugin.version}</version>
 				<configuration>
 					<argLine>-Xmx512M -XX:MaxPermSize=128M</argLine>
 				</configuration>
-				<!--<dependencies> -->
-				<!--<dependency> -->
-				<!--<groupId>org.apache.maven.surefire</groupId> -->
-				<!--<artifactId>surefire-junit47</artifactId> -->
-				<!--<version>2.12</version> -->
-				<!--</dependency> -->
-				<!--</dependencies> -->
 			</plugin>
+			
 		</plugins>
 	</build>
+	
 	<reporting>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.checkstyle.plugin.version}</version>
 				<configuration>
-					<configLocation>config/sun_checks.xml</configLocation>
+					<configLocation>../checkstyle.xml</configLocation>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven.findbugs.plugin.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven.pmd.plugin.version}</version>
+				<configuration>
+					<linkXref>true</linkXref>
+					<sourceEncoding>utf-8</sourceEncoding>
+					<minimumTokens>100</minimumTokens>
+					<targetJdk>1.6</targetJdk>
+					<excludeRoots>
+						<excludeRoot>target/</excludeRoot>
+					</excludeRoots>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</reporting>
-	<properties>
-		<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
-	</properties>
+	
 </project>
