@@ -7,6 +7,8 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
+import telephony.ws.AnyBean;
+
 /**
  * Added some stupid comment.
  * @author gam3r
@@ -22,15 +24,22 @@ public class UsersResource extends ServerResource {
     /**
      * Some text.
      */
-    private Representation representation = new JsonRepresentation("hello");
+    private final Representation representation = new JsonRepresentation("hello");
 
-    /**
+    private final AnyBean bean = new AnyBean();
+
+    private final telephony.core.AnyBean bean2 = new telephony.core.AnyBean();
+
+       /**
      * Some text.
      * @return asd
      */
     @Get("json")
     public final Representation list() {
-        return new JsonRepresentation("pawel henek witaj");
+        bean.setName("Pawełek ");
+        bean2.setMail("majl");
+
+        return new JsonRepresentation("pawel henek : witajcie!," + bean.getName() + bean2.getMail());
     }
 
     /**
@@ -55,6 +64,7 @@ public class UsersResource extends ServerResource {
      * @return asd
      *
      */
+    @Override
     @Delete
     public final Representation delete() {
         return representation;

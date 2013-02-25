@@ -4,6 +4,11 @@
 	<classpath>
 		<dir name="/media/EE542B58542B2337/linux/Projects/telephony/telephony-ws/target/classes">
 		</dir>
+		
+		<jar name="/media/EE542B58542B2337/linux/Projects/telephony/telephony-core/target/telephony-core-0.1.jar">
+		  <include name="telephony/core/**"/>
+		</jar>
+		
 	</classpath>
 
 	<web>

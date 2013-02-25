@@ -71,7 +71,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
                     + "where st.id = ?1 and sa.id is null")
                     .setParameter(1, storeId)
                     .getResultList();
-        } else if (productStatus.toString().equals(ProductStatus.SOLD.toString())) {
+        } else {
             res = getEntityManager().createQuery("select p from Product p "
                     + "left join p.delivery d "
                     + "left join p.store st "

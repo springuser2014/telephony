@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-// TODO : delete this entity
+// TODO : delete this entity and its dependencies
 
 /**
  * asd.

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.interfaces.DeliveriesDao;
 import telephony.core.dao.interfaces.ProductsDao;
-import telephony.core.dao.interfaces.StoresDao;
 import telephony.core.entity.Delivery;
 import telephony.core.entity.Product;
 import telephony.core.entity.Store;
@@ -35,8 +34,8 @@ public class DeliveryServiceImpl
     /**
      * asd.
      */
-    @Inject
-    private StoresDao storesDao;
+//    @Inject
+//    private StoresDao storesDao;
 
     /**
      * asd.

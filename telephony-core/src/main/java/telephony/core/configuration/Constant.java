@@ -22,4 +22,6 @@ public final class Constant {
      * asd.
      */
     public static final String APPLICATION_URL_PREFIX = "/adminDashboard/";
+
+    public static final String NONSENS_CONST = "asd";
 }

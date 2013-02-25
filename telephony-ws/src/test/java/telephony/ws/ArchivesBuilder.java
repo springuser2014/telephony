@@ -72,9 +72,10 @@ public final class ArchivesBuilder {
                 .addAsLibraries(
                     resolver.artifact("com.google.inject.extensions:guice-persist:3.0")
                     .resolveAsFiles())
-                .addAsLibraries(resolver.artifact("com.google.gwt:gwt-user:2.5.0").resolveAsFiles())
-                .addAsLibraries(resolver.artifact("com.google.gwt:gwt-servlet:2.5.0")
-                    .resolveAsFiles())
+                .addAsLibraries(
+                    resolver.artifact("com.google.gwt:gwt-user:2.5.0").resolveAsFiles())
+                .addAsLibraries(
+                    resolver.artifact("com.google.gwt:gwt-servlet:2.5.0").resolveAsFiles())
 
                 .addAsLibraries(
                     resolver.artifact("org.restlet.jee:org.restlet.ext.crypto:2.1-SNAPSHOT")
@@ -90,7 +91,8 @@ public final class ArchivesBuilder {
                     .resolveAsFiles())
                 .addAsLibraries(
                     resolver.artifact("org.slf4j:slf4j-log4j12:1.7.2").resolveAsFiles())
-                .addAsLibraries(resolver.artifact("org.slf4j:slf4j-api:1.7.2").resolveAsFiles())
+                .addAsLibraries(
+                    resolver.artifact("org.slf4j:slf4j-api:1.7.2").resolveAsFiles())
 
 
                 .addAsManifestResource("persistence.xml")
