@@ -12,15 +12,15 @@
 	<name>Telephony WebServices</name>
 	<packaging>war</packaging>
 	<repositories>
-	
+
 		<repository>
 			<id>loll</id>
 			<url>http://nexus.xwiki.org/nexus/content/groups/public</url>
 		</repository>
-		
+
 	</repositories>
 	<dependencies>
-	   
+
 		<dependency>
 			<groupId>org.bitbucket.pawelhenek.telephony</groupId>
 			<artifactId>telephony-core</artifactId>
@@ -67,9 +67,9 @@
 			<artifactId>org.restlet</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
-		
-		<!-- TODO: refactor dependencies - separate application and test librarires, dependencies versions to pom props
-		 -->
+
+		<!-- TODO: refactor dependencies - separate application and test librarires, 
+			dependencies versions to pom props -->
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
@@ -82,7 +82,7 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-bom</artifactId>
@@ -199,7 +199,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-	
+
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 
@@ -283,12 +283,18 @@
 					<argLine>-Xmx512M -XX:MaxPermSize=128M</argLine>
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
 	</build>
-	
+
 	<reporting>
 		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -322,5 +328,5 @@
 
 		</plugins>
 	</reporting>
-	
+
 </project>
