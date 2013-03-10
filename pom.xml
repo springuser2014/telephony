@@ -38,6 +38,7 @@
         <proxytoys.version>1.0</proxytoys.version>
         <cglib.version>[2.1_3,)</cglib.version>
         <common.math.version>2.2</common.math.version>
+        <logback.version>1.0.7</logback.version>
         
         <!-- Maven plugins properties -->
         <maven.pmd.plugin.version>3.0</maven.pmd.plugin.version>
