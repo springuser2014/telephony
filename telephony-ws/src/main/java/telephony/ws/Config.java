@@ -1,16 +1,16 @@
 package telephony.ws;
 
 /**
- * asd.
+ * Stores basic module configuration.
  * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public final class Config {
     public static final String PERSISTENCE = "telephony";
 
-    /**
-     * foo bar.
-     */
+
     private Config() {
 
     }
 }
+
+

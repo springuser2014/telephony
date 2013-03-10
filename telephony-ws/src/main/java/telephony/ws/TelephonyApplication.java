@@ -6,32 +6,36 @@ import org.restlet.Restlet;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
-import telephony.ws.resource.ContactsResource;
-import telephony.ws.resource.DeliveriesResource;
-import telephony.ws.resource.HelloWorldResource;
-import telephony.ws.resource.RolesResource;
-import telephony.ws.resource.SalesResource;
-import telephony.ws.resource.SessionResource;
-import telephony.ws.resource.StoreProductsResource;
-import telephony.ws.resource.StoreRolesResource;
-import telephony.ws.resource.StoreUsersResource;
-import telephony.ws.resource.StoresResource;
-import telephony.ws.resource.UserRolesResource;
-import telephony.ws.resource.UserStoresResource;
-import telephony.ws.resource.UsersResource;
-
+import telephony.ws.resource.impl.ContactsResource;
+import telephony.ws.resource.impl.DeliveriesResource;
+import telephony.ws.resource.impl.HelloWorldResource;
+import telephony.ws.resource.impl.RolesResource;
+import telephony.ws.resource.impl.SalesResource;
+import telephony.ws.resource.impl.SessionResource;
+import telephony.ws.resource.impl.StoreProductsResource;
+import telephony.ws.resource.impl.StoreRolesResource;
+import telephony.ws.resource.impl.StoreUsersResource;
+import telephony.ws.resource.impl.StoresResource;
+import telephony.ws.resource.impl.UserRolesResource;
+import telephony.ws.resource.impl.UserStoresResource;
+import telephony.ws.resource.impl.UsersResource;
 
 /**
- * @author gam3r
- * Simple restlet application
+ * Heart of telephony application.
+ *
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
  */
 public class TelephonyApplication extends Application {
 
+    /**
+     * Registering all REST resources.
+     */
     @Override
     public Restlet createInboundRoot() {
         Router router = new Router(getContext());
 
-        // some testing router binding
+        // TODO : refactor *Resource classes, URLs as constants, extract Resources interfaces
         router.attach(SessionResource.URL, SessionResource.class);
         router.attach(UsersResource.URL, UsersResource.class);
         router.attach("/hello", HelloWorldResource.class);

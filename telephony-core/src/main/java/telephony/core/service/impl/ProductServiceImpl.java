@@ -8,13 +8,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.interfaces.ProductsDao;
-import telephony.core.entity.Money;
-import telephony.core.entity.Product;
-import telephony.core.entity.ProductStatus;
-import telephony.core.entity.Store;
-import telephony.core.entity.User;
-import telephony.core.service.interfaces.ProductService;
+import telephony.core.dao.ProductsDao;
+import telephony.core.entity.jpa.Money;
+import telephony.core.entity.jpa.Product;
+import telephony.core.entity.jpa.ProductStatus;
+import telephony.core.entity.jpa.Store;
+import telephony.core.entity.jpa.User;
+import telephony.core.service.ProductService;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -234,7 +234,7 @@ public class ProductServiceImpl
         }
 
         if (productsToDelete.size() > 0) {
-            productsDao.markAsDeleted(productsToDelete, editor);
+            productsDao.markAsRemoved(productsToDelete, editor);
         }
 
         if (productsToCancelTheSale.size() > 0) {

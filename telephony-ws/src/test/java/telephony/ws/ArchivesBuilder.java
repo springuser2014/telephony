@@ -10,10 +10,10 @@ import telephony.ws.guice.SLF4JMembersJnjector;
 import telephony.ws.guice.SLF4JTypeListener;
 import telephony.ws.guice.TelephonyServletModule;
 import telephony.ws.pre.TelephonyServletTestContextListener;
-import telephony.ws.resource.PingResource;
 import telephony.ws.resource.SessionBeann;
-import telephony.ws.resource.SessionResource;
-import telephony.ws.resource.TestResource;
+import telephony.ws.resource.impl.PingResource;
+import telephony.ws.resource.impl.SessionResource;
+import telephony.ws.resource.impl.TestResource;
 import telephony.ws.servlet.TelephonyRestletServlet;
 
 /**

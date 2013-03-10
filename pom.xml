@@ -11,9 +11,10 @@
     <name>Telephony parent</name>
 
     <properties>
+    	<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        
         <dbunit.version>1.0-beta-3</dbunit.version>
-        <gwt-log.version>3.1.8</gwt-log.version>
-        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        <gwt-log.version>3.1.8</gwt-log.version>        
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <shiro-version>1.1.0</shiro-version>
@@ -25,7 +26,7 @@
         <guava.version>13.0.1</guava.version>
         <jukito.version>1.1</jukito.version>
         <slf4j.version>1.7.2</slf4j.version>
-        <flyway.version>2.0.1</flyway.version>
+        <flyway.version>2.0.3</flyway.version>
         <gin.version>2.0.0</gin.version>
         <hibernate-core.version>3.5.6-Final</hibernate-core.version>
         <hibernate-validator.version>4.1.0.Final</hibernate-validator.version>

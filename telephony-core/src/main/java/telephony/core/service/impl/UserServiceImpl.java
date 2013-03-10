@@ -5,9 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.interfaces.UsersDao;
-import telephony.core.entity.User;
-import telephony.core.service.interfaces.UserService;
+import telephony.core.dao.UsersDao;
+import telephony.core.entity.jpa.User;
+import telephony.core.service.UserService;
 
 import com.google.inject.Inject;
 

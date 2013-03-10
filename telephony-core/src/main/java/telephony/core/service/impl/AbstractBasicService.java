@@ -2,7 +2,7 @@ package telephony.core.service.impl;
 
 import javax.persistence.EntityManager;
 
-import telephony.core.service.interfaces.BasicService;
+import telephony.core.service.BasicService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

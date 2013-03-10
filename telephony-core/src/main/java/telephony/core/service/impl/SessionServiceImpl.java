@@ -2,10 +2,10 @@ package telephony.core.service.impl;
 
 import java.util.Date;
 
-import telephony.core.dao.interfaces.UsersDao;
-import telephony.core.entity.User;
+import telephony.core.dao.UsersDao;
+import telephony.core.entity.jpa.User;
+import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
-import telephony.core.service.interfaces.SessionService;
 import telephony.core.util.StringGenerator;
 
 import com.google.inject.Inject;

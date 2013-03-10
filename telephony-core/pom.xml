@@ -96,15 +96,20 @@
 			<version>${flyway.version}</version>
 		</dependency>
 		<!-- SLF4J dependencies -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.slf4j</groupId> -->
+<!-- 			<artifactId>slf4j-log4j12</artifactId> -->
+<!-- 			<version>${slf4j.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency> 
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-classic</artifactId>
+		  <version>1.0.7</version>
 		</dependency>
 		<!-- GWT -->
 		<dependency>
@@ -158,6 +163,18 @@
 
 		</resources>
 		<plugins>
+
+			<plugin>
+				<groupId>com.googlecode.flyway</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>2.0.3</version>
+				<configuration>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://localhost:5432/telephony</url>
+					<user>postgres</user>
+					<password>postgres</password>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>

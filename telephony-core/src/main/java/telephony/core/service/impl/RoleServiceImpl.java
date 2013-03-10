@@ -1,6 +1,6 @@
 package telephony.core.service.impl;
 
-import telephony.core.service.interfaces.RoleService;
+import telephony.core.service.RoleService;
 
 /**
  * asd.

@@ -16,6 +16,7 @@ import org.restlet.resource.ClientResource;
 
 import telephony.ws.ArchivesBuilder;
 import telephony.ws.pre.TestsConfig;
+import telephony.ws.resource.impl.SessionResource;
 
 /**
  * foo bar.

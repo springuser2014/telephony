@@ -4,10 +4,10 @@ package telephony.core.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.interfaces.DeliveriesDao;
-import telephony.core.dao.interfaces.SalesDao;
-import telephony.core.entity.Store;
-import telephony.core.service.interfaces.InformationService;
+import telephony.core.dao.DeliveriesDao;
+import telephony.core.dao.SalesDao;
+import telephony.core.entity.jpa.Store;
+import telephony.core.service.InformationService;
 
 import com.google.inject.Inject;
 

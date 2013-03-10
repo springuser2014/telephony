@@ -1,6 +1,6 @@
 package telephony.core.service.impl;
 
-import telephony.core.service.interfaces.UserStoreService;
+import telephony.core.service.UserStoreService;
 
 /**
  * asd.

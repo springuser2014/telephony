@@ -5,9 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.interfaces.StoresDao;
-import telephony.core.entity.Store;
-import telephony.core.service.interfaces.StoreService;
+import telephony.core.dao.StoresDao;
+import telephony.core.entity.jpa.Store;
+import telephony.core.service.StoreService;
 
 import com.google.inject.Inject;
 

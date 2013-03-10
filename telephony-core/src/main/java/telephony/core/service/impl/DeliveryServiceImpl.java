@@ -6,13 +6,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.interfaces.DeliveriesDao;
-import telephony.core.dao.interfaces.ProductsDao;
-import telephony.core.entity.Delivery;
-import telephony.core.entity.Product;
-import telephony.core.entity.Store;
-import telephony.core.entity.User;
-import telephony.core.service.interfaces.DeliveryService;
+import telephony.core.dao.DeliveriesDao;
+import telephony.core.dao.ProductsDao;
+import telephony.core.entity.jpa.Delivery;
+import telephony.core.entity.jpa.Product;
+import telephony.core.entity.jpa.Store;
+import telephony.core.entity.jpa.User;
+import telephony.core.service.DeliveryService;
 
 import com.google.inject.Inject;
 

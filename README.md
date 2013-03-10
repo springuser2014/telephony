@@ -2,13 +2,12 @@
 
 Hi!
 
-That's my personal project on university classes,
-so be careful while you use it for your own. It's very experimental
-and I don't take responsibility for using it ;-)
+This's my personal project on university classes,
+so be careful while you use it for your own. It's very experimental version, so I don't take responsibility for using it ;-)
 
 # Features
 
-It's quite simple RESTful services for managing products in electronic products store.
+It's quite simple set of RESTful services for managing products in electronic products store.
 Main features includes:
 
 - Managing products in stores
@@ -17,12 +16,12 @@ Main features includes:
 
 # Prerequisities
 
-Installed basic stuff from Java world:
+Properly installed basic stuff from Java world:
 
 - Java 1.6 >=
 - Maven 2
 
-To prepare completed development environment we also need:
+To prepare an completed development environment we also need:
 
 - PostgreSQL database >= 8.4
 - Tomcat 6. (0.36) server
@@ -76,7 +75,7 @@ persistence.xml (3.)
     <property name="hibernate.connection.password" value="postgres"/>
 
 
-For integration tests I use arquillian. To lanuch our integration tests except databases we also need a properly configured tomcat 6 server. Here is a snippet from tomcat's bin/startup.sh file:
+For integration tests telephony uses arquillian. To lanuch our integration tests except databases we also need a properly configured tomcat 6 server. Here is a snippet from tomcat's bin/startup.sh file:
 
     :::bash
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote "
@@ -85,7 +84,7 @@ For integration tests I use arquillian. To lanuch our integration tests except d
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false "
     export JAVA_OPTS;
 
-We need to add it at the beginning of the file to enable jmx deployment.
+We need to add this at the beginning of the file to enable deployment by jmx.
 
 Stay tuned!
 

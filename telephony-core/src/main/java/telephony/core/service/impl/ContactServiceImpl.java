@@ -1,6 +1,6 @@
 package telephony.core.service.impl;
 
-import telephony.core.service.interfaces.ContactService;
+import telephony.core.service.ContactService;
 
 /**
  * asd.

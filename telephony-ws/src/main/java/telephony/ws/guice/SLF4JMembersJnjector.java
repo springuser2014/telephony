@@ -28,6 +28,7 @@ public class SLF4JMembersJnjector<T> implements MembersInjector<T> {
         field.setAccessible(true);
     }
 
+    
     /**
      * asd.
      * @param instance asd.
