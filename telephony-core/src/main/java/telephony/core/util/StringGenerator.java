@@ -1,14 +1,13 @@
 package telephony.core.util;
 
 /**
- * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * Representation of strings generator.
  */
 public interface StringGenerator {
     /**
-     * asd.
-     * @return asd.
+     * Generates random string which can be used as password, hash etc.
+     * 
+     * @return random string
      */
     String nextSessionId();
 }

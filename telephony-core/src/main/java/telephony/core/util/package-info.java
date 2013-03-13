@@ -1,4 +1,4 @@
 /**
- * asd.
+ * Contains a few utility classes.
  */
-package  telephony.core.util;
+package telephony.core.util;

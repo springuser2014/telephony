@@ -5,29 +5,17 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 /**
- * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * Primary implementation of strings generator. 
  */
 public final class StringGeneratorImpl implements StringGenerator {
-
-    /**
-     * asd.
-     */
-    private static final int RANDOM_INT = 130;
-
-    /**
-     * asd.
-     */
-    private static final int HASH_LONG = 32;
-    /**
-     * asd.
-     */
+    
+    private static final int RANDOM_INT = 130;    
+    private static final int HASH_LONG = 32;    
     private final SecureRandom random = new SecureRandom();
 
     /**
-     * asd.
-     * @return asd.
+     * Generates session id.
+     * @return 32-length random string.
      */
     @Override
     public String nextSessionId() {
