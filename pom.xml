@@ -7,7 +7,7 @@
     <groupId>org.bitbucket.pawelhenek.telephony</groupId>
     <artifactId>telephony-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1</version>
+    <version>0.6</version>
     <name>Telephony parent</name>
 
     <properties>
@@ -52,7 +52,6 @@
 
     <modules>
         <module>telephony-core</module>
-        <!--<module>telephony-gwt</module>-->
         <module>telephony-ws</module>
     </modules>
 
