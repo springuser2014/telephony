@@ -102,7 +102,7 @@ public class DeliveryServiceImpl
     public final List<Delivery> fetchAllDeliveries() {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");
 
-        List<Delivery> res = deliveriesDao.findNotRemoved();
+        List<Delivery> res = deliveriesDao.find();
 
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries ends");
 

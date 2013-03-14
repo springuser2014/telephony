@@ -200,7 +200,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     public List<String> fetchImeisList() {
         logger.debug("ProductServiceImpl.fetchImeisList starts");
 
-        List<Product> list = this.findNotRemoved();
+        List<Product> list = this.find();
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
@@ -212,30 +212,11 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-	@Override
-    @SuppressWarnings("unchecked")
-    public List<Product> findNotRemoved() {
-
-        logger.debug("findUndeleted starts ");
-
-        List<Product> lst = getEntityManager().createQuery(" select e from Product e"
-                + " join fetch e.delivery d "
-                + " join fetch e.store s "
-                + " join fetch e.creator c "
-                + " left join fetch e.sale sa "
-                + " where e.deleter is null")
-                .getResultList();
-
-        logger.debug("found {} elements", lst.size());
-
-        return lst;
-    }
-
     @Override
     public List<String> fetchProducersList() {
         logger.debug("ProductServiceImpl.fetchProducersList starts");
 
-        List<Product> list = this.findAll();
+        List<Product> list = this.find();
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
@@ -254,7 +235,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     public List<String> fetchModelsList() {
         logger.debug("ProductServiceImpl.fetchModelsList starts");
 
-        List<Product> list = this.findAll();
+        List<Product> list = this.find();
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
@@ -287,7 +268,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
 	@Override
     @SuppressWarnings("unchecked")
-    public List<Product> findAll() {
+    public List<Product> find() {
 
         logger.debug("ProductsDaoImpl.findAll starts ");
         logger.debug("entity type : {} ", getEntityClass().getName());

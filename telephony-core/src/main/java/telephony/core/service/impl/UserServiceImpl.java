@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public final List<User> findAllUsers() {
         logger.debug("UserServiceImpl.findAllUsers starts");
 
-        List<User> res = usersDao.findNotRemoved();
+        List<User> res = usersDao.find();
 
         logger.debug("found {} elements ", res.size());
 

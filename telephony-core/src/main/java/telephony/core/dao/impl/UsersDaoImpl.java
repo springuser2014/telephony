@@ -26,26 +26,6 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     * @return asd.
-     */
-	@Override
-    @SuppressWarnings("unchecked")
-    public List<User> findNotRemoved() {
-
-        logger.debug("findUndeleted starts ");
-        logger.debug("entity type : {} ", getEntityClass().getName());
-
-        List<User> lst = getEntityManager()
-                .createQuery("select e from User e where e.deleter is null")
-                .getResultList();
-
-        logger.debug("found {} elements", lst.size());
-
-        return lst;
-    }
-
     @Override
     public User findByName(String name) {
 

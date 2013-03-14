@@ -73,7 +73,7 @@ public class FirstTest {
     @Test
     public void asd() {
 
-        usersDao.findAll();
+        usersDao.find();
 
         assertTrue(true);
     }

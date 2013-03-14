@@ -13,15 +13,6 @@ import telephony.core.entity.jpa.User;
  */
 public interface UsersDao extends GenericDao<User> {
 
-
-	/**
-	 * Looking for all not removed entities.
-	 *
-	 * @return List of found entities.
-	 */
-	@Override
-    List<User> findNotRemoved();
-
 	/**
 	 * Looking for a User with specified name.
 	 *

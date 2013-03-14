@@ -59,7 +59,7 @@ public class ProductServiceImpl
         logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
         List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.findNotRemoved();
+        List<Product> products = productsDao.find();
 
         for (Product p : products) {
             if (!res.contains(p.getProducer())) {
@@ -80,7 +80,7 @@ public class ProductServiceImpl
         logger.debug("ProductServiceImpl.fetchAllModels starts");
 
         List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.findNotRemoved();
+        List<Product> products = productsDao.find();
 
         for (Product p : products) {
             if (!res.contains(p.getModel())) {
@@ -101,7 +101,7 @@ public class ProductServiceImpl
         logger.debug("ProductServiceImpl.fetchAllModels starts");
 
         List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.findNotRemoved();
+        List<Product> products = productsDao.find();
 
         for (Product p : products) {
             if (!res.contains(p.getColor())) {
@@ -234,7 +234,7 @@ public class ProductServiceImpl
         }
 
         if (productsToDelete.size() > 0) {
-            productsDao.markAsRemoved(productsToDelete, editor);
+            productsDao.remove(productsToDelete);
         }
 
         if (productsToCancelTheSale.size() > 0) {

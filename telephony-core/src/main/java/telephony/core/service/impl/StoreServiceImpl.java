@@ -39,7 +39,7 @@ public class StoreServiceImpl implements StoreService {
 
         logger.debug("StoreServiceImpl.fetchAllStores starts");
 
-        List<Store> stores = storesDao.findNotRemoved();
+        List<Store> stores = storesDao.find();
 
         logger.debug("found {} elements ", stores.size());
 

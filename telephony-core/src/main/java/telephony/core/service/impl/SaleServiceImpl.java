@@ -49,7 +49,7 @@ extends AbstractBasicService implements SaleService {
     public final List<Sale> findAllSales() {
         logger.debug("SaleServiceImpl.findAllSales starts");
 
-        List<Sale> res = salesDao.findNotRemoved();
+        List<Sale> res = salesDao.find();
 
         logger.debug("SaleServiceImpl.findAllSales starts");
 

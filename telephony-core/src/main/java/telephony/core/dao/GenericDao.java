@@ -18,127 +18,74 @@ public interface GenericDao<E extends BaseEntity> {
      * Looks for all entities.
      * @return List consisting all elements.
      */
-     List<E> findAll();
+     List<E> find();
+    
 
     /**
-     * asd.
-     * @return asd.
-     */
-    List<E> findNotRemoved();
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    List<E> findRemoved();
-
-    /**
-     * asd.
-     * @param id asd.
-     * @return asd.
+     * Looks for entity indentified by pk.
+     * @param id Primary key.
+     * @return Found entity.
      */
     E findById(Long id);
 
     /**
-     * asd.
-     * @param ids asd.
-     * @return asd.
+     * Looks for set of entities with specified Ids.
+     * @param ids Set of entities Ids. 
+     * @return Set of found entities.
      */
     List<E> findByIds(List<Long> ids);
 
-    /**
-     * asd.
-     * @param ids asd.
-     * @return asd.
-     */
-    List<E> findUnremovedByIds(List<Long> ids);
 
     /**
-     * asd.
-     * @param ids asd.
-     * @return asd.
-     */
-    List<E> findRemovedByIds(List<Long> ids);
-
-    /**
-     * asd.
-     * @param entity asd.
-     * @return asd.
+     * Saves submitted entity.
+     * @param entity Entity to save.
+     * @return Freshly saved entity.
      */
     E save(E entity);
 
     /**
-     * asd.
-     * @param entity asd.
-     * @return asd.
+     * Saves (if not exists yet) or update entity in persistence layer. 
+     * @param entity Entity to save or update.
+     * @return Freshly saved (updated) entity.
      */
     E saveOrUpdate(E entity);
 
     /**
-     * asd.
-     * @param entities asd.
-     * @return asd.
+     * Saves submitted list of entities.
+     * @param entities List of entities to save. 
+     * @return List of freshly saved entities.
      */
     List<E> save(List<E> entities);
 
     /**
-     * asd.
-     * @param entities asd.
-     * @return asd.
+     * Saves (if not exists yet) or update entities in persistence layer.
+     * @param entities List of entities to save.
+     * @return List of freshly saved (updated) entities. 
      */
     List<E> saveOrUpdate(List<E> entities);
-
+    
+    
     /**
-     * asd.
-     * @param id asd.
-     * @param userId asd.
+     * Removes entity with specified id.
+     * @param id Entity's id.
      */
-    void markAsRemovedById(Long id, Long userId);
+    void removeById(Long id);
 
     /**
-     * asd.
-     * @param ids asd.
-     * @param userId asd.
+     * Removes entities with specified ids.
+     * @param ids List of ids entities to remove.
      */
-    void markAsRemovedByIds(List<Long> ids, Long userId);
+    void removeByIds(List<Long> ids);
 
     /**
-     * asd.
-     * @param entity asd.
-     * @param userId asd.
-     * @return asd.
-     */
-    E markAsRemoved(E entity, Long userId);
-
-    /**
-     * asd.
-     * @param entities asd.
-     * @param user asd.
-     * @return asd.
-     */
-    List<E> markAsRemoved(List<E> entities, User user);
-
-    /**
-     * asd.
-     * @param id asd.
-     */
-    void permanentRemoveById(Long id);
-
-    /**
-     * asd.
-     * @param ids asd.
-     */
-    void permanentRemoveByIds(List<Long> ids);
-
-    /**
-     * asd.
+     * Removes indicated entity from persistence layer. 
      * @param entity asd.
      */
-    void permanentRemove(E entity);
+    void remove(E entity);
 
     /**
-     * asd.
+     * Removes indicated entities from persistence layer.
      * @param entities asd.
      */
-    void permanentRemove(List<E> entities);
+    void remove(List<E> entities);
 }

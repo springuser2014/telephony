@@ -33,8 +33,7 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
      * asd.
      * @param store asd.
      * @return asd.
-     */
-	@Override
+     */	
     @SuppressWarnings("unchecked")
 	public List<Sale> findByStore(Store store) {
         logger.debug("SalesDaoImpl.findByStore starts");
@@ -76,42 +75,6 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
         return res2;
     }
 
-//    public List<Sale> findLastest(
-//    Store store, int startPosition, int numberOfElements, ListOrder order) {
-//        logger.info("SalesDaoImpl.findLastest starts");
-//        logger.info("params : [ startPos : {} , numberOfElements : {} ]",
-//    startPosition, numberOfElements);
-//        logger.info("params : [ order : {} ]", order);
-//
-//        String orderBy = "";
-//
-//        if (order.equals(ListOrder.BY_DATE_ASC.toString()))
-//            orderBy = " order by d.dateIn asc ";
-//
-//        if (order.equals(ListOrder.BY_DATE_DESC.toString()))
-//            orderBy = " order by d.dateIn desc ";
-//
-//        if (order.equals(ListOrder.BY_TITLE_ASC.toString()))
-//            orderBy = " order by d.label asc ";
-//
-//        if (order.equals(ListOrder.BY_TITLE_DESC.toString()))
-//            orderBy = " order by d.label desc";
-//
-//        List<Sale> result = getEntityManager().createQuery("select sa from Sale sa " +
-//                " inner join sa.store s " +
-//                " where sa.deleter is null " +
-//                " and s.id = ?1 " + orderBy)
-//                .setParameter(1, store.getId())
-//                .setFirstResult(startPosition)
-//                .setMaxResults(numberOfElements)
-//                .getResultList();
-//
-//        logger.debug("found {} elements", result.size());
-//
-//        return result;
-//    }
-
-	@Override
     @SuppressWarnings("unchecked")
     public List<Product> findProductsBySalesIds(ArrayList<Long> ids) {
         logger.debug("SalesDaoImpl.findProductsBySalesIds starts");

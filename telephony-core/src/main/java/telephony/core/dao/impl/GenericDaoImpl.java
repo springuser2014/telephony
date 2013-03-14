@@ -1,11 +1,9 @@
 package telephony.core.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TemporalType;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
-import telephony.core.entity.jpa.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -79,47 +76,13 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
 
 	@Override
     @SuppressWarnings("unchecked")
-	public List<E> findAll() {
+	public List<E> find() {
 
         logger.debug("findAll starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
         List<E> lst =
         getEntityManager().createQuery("select e from " + entityClass.getName() + " e")
-                .getResultList();
-
-        logger.debug("found {} elements", lst.size());
-
-        return lst;
-    }
-
-	@Override
-    @SuppressWarnings("unchecked")
-    public List<E> findNotRemoved() {
-
-        logger.debug("findUndeleted starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-
-        List<E> lst =
-        getEntityManager().createQuery("select e from "
-        + entityClass.getName() + " e where e.deleter is null")
-                .getResultList();
-
-        logger.debug("found {} elements", lst.size());
-
-        return lst;
-    }
-
-	@Override
-    @SuppressWarnings("unchecked")
-    public List<E> findRemoved() {
-
-        logger.debug("findDeleted starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("no params");
-
-        List<E> lst = getEntityManager().createQuery("select e from "
-        + entityClass.getName() + " e where e.deleter is not null")
                 .getResultList();
 
         logger.debug("found {} elements", lst.size());
@@ -155,40 +118,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
                 .getResultList();
 
         logger.debug("findByIds found number of elements : {} ", res.size());
-
-        return res;
-    }
-
-	@Override
-    @SuppressWarnings("unchecked")
-    public List<E> findUnremovedByIds(List<Long> ids) {
-        logger.debug("findUndeletedByIds starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("number of params : {} ", ids.size());
-
-        List<E> res = getEntityManager().createQuery("select e from "
-        + entityClass.getName() + " e where e.id in (?1) and e.deleter is null")
-                .setParameter(1, ids)
-                .getResultList();
-
-        logger.debug("findUndeletedByIds found number of elements : {} ", res.size());
-
-        return res;
-    }
-
-	@Override
-    @SuppressWarnings("unchecked")
-    public List<E> findRemovedByIds(List<Long> ids) {
-        logger.debug("findDeletedByIds starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("number of params : {} ", ids.size());
-
-        List<E> res = getEntityManager().createQuery("select e from "
-        + entityClass.getName() + " e where e.id in (?1) and e.deleter is not null")
-                .setParameter(1, ids)
-                .getResultList();
-
-        logger.debug("findDeletedByIds found number of elements : {} ", res.size());
 
         return res;
     }
@@ -241,81 +170,9 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
 
         return res;
     }
-
+    
     @Override
-    public void markAsRemovedById(Long id, Long userId) {
-        logger.debug("markAsDeletedById starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("params : [ id : {}, userId : {} ]", id, userId);
-
-        int touched = getEntityManager().createQuery("update "
-        + entityClass.getName() + " e set e.deleter = ?1 , e.deleteAt = ?2 where e.id = ?3")
-                .setParameter(1, userId)
-                .setParameter(2, new Date(), TemporalType.TIMESTAMP)
-                .setParameter(3, id)
-                .executeUpdate();
-
-        logger.debug("markAsDeletedById touched {} elements", touched);
-    }
-
-    @Override
-    public void markAsRemovedByIds(List<Long> ids, Long userId) {
-        logger.debug("markAsDeletedByIds starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("params : [ userId : {} ]", userId);
-        logger.debug("number of elements: {} ", ids.size());
-
-        int touched = getEntityManager().createQuery("update "
-        + entityClass.getName() + " e set e.deleter = ?1 , e.deleteAt = ?2 where e.id in (?3)")
-                .setParameter(1, userId)
-                .setParameter(2, new Date(), TemporalType.TIMESTAMP)
-                .setParameter(3, ids)
-                .executeUpdate();
-
-        logger.debug("markAsDeletedByIds touched {} elements", touched);
-    }
-
-
-    @Override
-    public E markAsRemoved(E entity, Long userId) {
-        logger.debug("markAsDeleted starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("params : [ userId : {} ]", userId);
-
-        entity.setDeletedAt(new Date());
-
-        E e = getEntityManager().merge(entity);
-
-        logger.debug("markAsDeleted ends");
-
-        return e;
-    }
-
-    @Override
-    public List<E> markAsRemoved(List<E> entities, User user) {
-        logger.debug("markAsDeleted starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-        logger.debug("params : [ userId : {} ]", user);
-        logger.debug("number of elements: {} ", entities.size());
-
-        List<E> result = new ArrayList<E>();
-
-        for (E entity : entities) {
-
-            entity.setDeletedAt(new Date());
-            entity.setDeleter(user);
-            E e = getEntityManager().merge(entity);
-            result.add(e);
-        }
-
-        logger.debug("markAsDeleted ends");
-
-        return result;
-    }
-
-
-    @Override
-    public void permanentRemoveById(Long id) {
+    public void removeById(Long id) {
         logger.debug("permanentDeleteById starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
@@ -328,7 +185,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void permanentRemoveByIds(List<Long> ids) {
+    public void removeByIds(List<Long> ids) {
         logger.debug("permanentDeleteByIds stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", ids.size());
@@ -342,7 +199,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void permanentRemove(E entity) {
+    public void remove(E entity) {
         logger.debug("permanentDelete starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
@@ -352,7 +209,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void permanentRemove(List<E> entities) {
+    public void remove(List<E> entities) {
         logger.debug("permanentDelete starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of elements : {} ", entities.size());
