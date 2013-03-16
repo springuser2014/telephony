@@ -16,7 +16,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: deliveries; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: deliveries; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 
@@ -33,7 +33,7 @@ CREATE TABLE deliveries (
 );
 
 
-ALTER TABLE public.deliveries OWNER TO gam3r;
+ALTER TABLE public.deliveries OWNER TO postgres;
 
 --
 -- Name: deliveries_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -56,7 +56,7 @@ ALTER TABLE public.deliveries_seq OWNER TO postgres;
 SELECT pg_catalog.setval('deliveries_seq', 1, false);
 
 --
--- Name: products; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE products (
@@ -77,7 +77,7 @@ CREATE TABLE products (
 );
 
 
-ALTER TABLE public.products OWNER TO gam3r;
+ALTER TABLE public.products OWNER TO postgres;
 
 --
 -- Name: products_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -100,7 +100,7 @@ ALTER TABLE public.products_seq OWNER TO postgres;
 SELECT pg_catalog.setval('products_seq', 1, false);
 
 --
--- Name: sales; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: sales; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE sales (
@@ -116,7 +116,7 @@ CREATE TABLE sales (
 );
 
 
-ALTER TABLE public.sales OWNER TO gam3r;
+ALTER TABLE public.sales OWNER TO postgres;
 
 --
 -- Name: sales_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -140,7 +140,7 @@ SELECT pg_catalog.setval('sales_seq', 1, false);
 
 
 --
--- Name: stores; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: stores; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE stores (
@@ -153,7 +153,7 @@ CREATE TABLE stores (
 );
 
 
-ALTER TABLE public.stores OWNER TO gam3r;
+ALTER TABLE public.stores OWNER TO postgres;
 
 --
 -- Name: stores_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -177,7 +177,7 @@ SELECT pg_catalog.setval('stores_seq', 1, false);
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE roles (
@@ -190,7 +190,7 @@ CREATE TABLE roles (
 );
 
 
-ALTER TABLE public.roles OWNER TO gam3r;
+ALTER TABLE public.roles OWNER TO postgres;
 
 --
 -- Name: roles_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -215,7 +215,7 @@ SELECT pg_catalog.setval('roles_seq', 1, false);
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE user_roles (
@@ -229,7 +229,7 @@ CREATE TABLE user_roles (
 );
 
 
-ALTER TABLE public.user_roles OWNER TO gam3r;
+ALTER TABLE public.user_roles OWNER TO postgres;
 
 --
 -- Name: user_roles_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -252,7 +252,7 @@ ALTER TABLE public.user_roles_seq OWNER TO postgres;
 SELECT pg_catalog.setval('user_roles_seq', 1, false);
 
 --
--- Name: user_stores; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: user_stores; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE user_stores (
@@ -266,7 +266,7 @@ CREATE TABLE user_stores (
 );
 
 
-ALTER TABLE public.user_stores OWNER TO gam3r;
+ALTER TABLE public.user_stores OWNER TO postgres;
 
 --
 -- Name: user_stores_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -290,7 +290,7 @@ SELECT pg_catalog.setval('user_stores_seq', 1, false);
 
 
 ---
---- Name: contacts; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+--- Name: contacts; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 ---
 
 CREATE TABLE contacts (
@@ -303,7 +303,7 @@ CREATE TABLE contacts (
   deleted_by bigint
 );
 
-ALTER TABLE public.contacts OWNER TO gam3r;
+ALTER TABLE public.contacts OWNER TO postgres;
 
 CREATE SEQUENCE contacts_seq
     START WITH 1
@@ -317,7 +317,7 @@ ALTER TABLE public.contacts_seq OWNER TO postgres;
 SELECT pg_catalog.setval('contacts_seq', 1, false);
 
 ---
---- Name: system_logs; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+--- Name: system_logs; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 ---
 
 CREATE TABLE system_logs (
@@ -331,7 +331,7 @@ CREATE TABLE system_logs (
   deleted_by bigint
 );
 
-ALTER TABLE public.system_logs OWNER TO gam3r;
+ALTER TABLE public.system_logs OWNER TO postgres;
 
 CREATE SEQUENCE system_logs_seq
     START WITH 1
@@ -345,7 +345,7 @@ ALTER TABLE public.system_logs_seq OWNER TO postgres;
 SELECT pg_catalog.setval('system_logs_seq', 1, false);
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: gam3r; Tablespace:
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE users (
@@ -361,7 +361,7 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE public.users OWNER TO gam3r;
+ALTER TABLE public.users OWNER TO postgres;
 
 --
 -- Name: users_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -384,7 +384,7 @@ ALTER TABLE public.users_seq OWNER TO postgres;
 SELECT pg_catalog.setval('users_seq', 1, false);
 
 --
--- Data for Name: stores; Type: TABLE DATA; Schema: public; Owner: gam3r
+-- Data for Name: stores; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 --COPY stores (id, version, label, created_at, created_by, edited_at, edited_by, deleted_at, deleted_by) FROM stdin;
@@ -397,7 +397,7 @@ SELECT pg_catalog.setval('users_seq', 1, false);
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: gam3r
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 --COPY users (id, version, email, password, created_at, created_by, edited_at, edited_by, deleted_at, deleted_by) FROM stdin;
@@ -409,21 +409,21 @@ SELECT pg_catalog.setval('users_seq', 1, false);
 --\.
 
 --
--- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY contacts
     ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
 
 --
--- Name: system_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: system_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY system_logs
     ADD CONSTRAINT system_logs_pkey PRIMARY KEY (id);
 
 --
--- Name: deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY deliveries
@@ -431,7 +431,7 @@ ALTER TABLE ONLY deliveries
 
 
 --
--- Name: user_stores; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: user_stores; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY user_stores
@@ -439,7 +439,7 @@ ALTER TABLE ONLY user_stores
 
 
 --
--- Name: products_imei_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: products_imei_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY products
@@ -447,7 +447,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: products_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY products
@@ -455,7 +455,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: sales_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: sales_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY sales
@@ -463,7 +463,7 @@ ALTER TABLE ONLY sales
 
 
 --
--- Name: stores_label_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: stores_label_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY stores
@@ -471,7 +471,7 @@ ALTER TABLE ONLY stores
 
 
 --
--- Name: stores_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: stores_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY stores
@@ -479,14 +479,14 @@ ALTER TABLE ONLY stores
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY user_roles
     ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
 
 --
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY roles
@@ -494,14 +494,14 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: user_roles_role_name_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: user_roles_role_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY roles
     ADD CONSTRAINT roles_name_key UNIQUE (name);
 
 --
--- Name: contacts_label_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: contacts_label_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY contacts
@@ -509,7 +509,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -517,7 +517,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: gam3r; Tablespace:
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -525,14 +525,14 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: deliveries_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: deliveries_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY deliveries
     ADD CONSTRAINT deliveries_store_id_fkey FOREIGN KEY (store_id) REFERENCES stores(id);
 
 --
--- Name: deliveries_contact_id_fkey ; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: deliveries_contact_id_fkey ; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY deliveries
@@ -540,7 +540,7 @@ ALTER TABLE ONLY deliveries
 
 
 --
--- Name: products_delivery_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: products_delivery_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY products
@@ -548,7 +548,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: products_sale_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: products_sale_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY products
@@ -556,7 +556,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: products_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: products_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY products
@@ -564,7 +564,7 @@ ALTER TABLE ONLY products
 
 
 --
--- Name: user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_roles
@@ -572,7 +572,7 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: user_roles_user_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: user_roles_user_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_roles
@@ -580,14 +580,14 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: sales_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: sales_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY sales
     ADD CONSTRAINT sales_store_id_fkey FOREIGN KEY (store_id) REFERENCES stores(id);
 
 --
--- Name: sales_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: sales_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY sales
@@ -595,7 +595,7 @@ ALTER TABLE ONLY sales
 
 
 --
--- Name: user_stores_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: user_stores_store_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_stores
@@ -603,7 +603,7 @@ ALTER TABLE ONLY user_stores
 
 
 --
--- Name: user_stores_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: gam3r
+-- Name: user_stores_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_stores
