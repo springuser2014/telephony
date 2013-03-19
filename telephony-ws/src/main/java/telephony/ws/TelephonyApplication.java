@@ -5,6 +5,11 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.Inject;
+import com.googlecode.flyway.core.Flyway;
 
 import telephony.ws.resource.impl.ContactsResource;
 import telephony.ws.resource.impl.DeliveriesResource;
@@ -27,9 +32,24 @@ import telephony.ws.resource.impl.UsersResource;
  *
  */
 public class TelephonyApplication extends Application {
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
+	/**
+	 * Starts the migration process.
+	 * @param migrator Migrator object defined within core module.
+	 */
+	@Inject
+	public TelephonyApplication(Flyway migrator) {
+		
+		logger.info("Migration starting..");
+		
+		logger.info("Number of executed migrations : " + Integer.toString(migrator.migrate()));
+	}
 
     /**
      * Registering all REST resources.
+     * @return asd.
      */
     @Override
     public Restlet createInboundRoot() {

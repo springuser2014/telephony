@@ -31,15 +31,6 @@ public abstract class BaseEntity implements IsSerializable {
     @JoinColumn(name = "created_by", nullable = false)
     private User creator;
 
-    @Column(name = "deleted_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deletedAt;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deleted_by", nullable = true)
-    private User deleter;
-
-
     /**
      * asd.
      */
@@ -134,22 +125,6 @@ public abstract class BaseEntity implements IsSerializable {
      * asd.
      * @return asd.
      */
-    public final Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    /**
-     * asd.
-     * @param deletedAt asd.
-     */
-    public final void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    /**
-     * asd.
-     * @return asd.
-     */
     public final User getCreator() {
         return creator;
     }
@@ -160,22 +135,6 @@ public abstract class BaseEntity implements IsSerializable {
      */
     public final void setCreator(User creator) {
         this.creator = creator;
-    }
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    public final User getDeleter() {
-        return deleter;
-    }
-
-    /**
-     * asd.
-     * @param deleter asd.
-     */
-    public final void setDeleter(User deleter) {
-        this.deleter = deleter;
     }
 }
 

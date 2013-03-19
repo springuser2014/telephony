@@ -46,17 +46,7 @@ public class FirstTest {
 
         injector.injectMembers(this);
     }
-
-
-    /**
-     * asd.
-     * @param ds foo.
-     */
-    @Inject
-    public void asd(DataSource ds) {
-        Flyway flyway = new Flyway();
-        flyway.setDataSource(ds);
-    }
+    
 
     /**
      * asd.
