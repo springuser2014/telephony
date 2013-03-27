@@ -202,6 +202,17 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.14</version>
+				<configuration>
+					<systemPropertyVariables>
+						<environment>TEST</environment>						
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
 
 		</plugins>
 

@@ -1,8 +1,9 @@
 package telephony;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import javax.sql.DataSource;
+import java.util.List;
 
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -10,26 +11,28 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import telephony.core.dao.UsersDao;
-import telephony.core.guice.TelephonyCoreServicesModule;
+import telephony.core.guice.env.SystemPropertyEnvironemntNameResolver;
+import telephony.core.guice.env.TelephonyCoreEnvironmentResolver;
+import telephony.core.service.UserService;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.persist.PersistService;
-import com.google.inject.persist.jpa.JpaPersistModule;
-import com.googlecode.flyway.core.Flyway;
 
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @RunWith(JukitoRunner.class)
 public class FirstTest {
 
     @Inject
     private UsersDao usersDao;
+    
+    @Inject
+    private UserService userService;
 
     private Injector injector;
 
@@ -39,11 +42,12 @@ public class FirstTest {
     @Before
     public void pre() {
 
-        injector = Guice.createInjector(
-                new JpaPersistModule(ConfigTests.PERSISTENCE_TEST),
-                new TelephonyCoreServicesModule()
-        );
-
+    	List<AbstractModule> modules = new TelephonyCoreEnvironmentResolver()
+    		.resolveWith(
+    				new SystemPropertyEnvironemntNameResolver()
+    		);
+    	
+        injector = Guice.createInjector(modules);
         injector.injectMembers(this);
     }
     
@@ -66,6 +70,15 @@ public class FirstTest {
         usersDao.find();
 
         assertTrue(true);
+    }
+
+    /**
+     * asd2.
+     */
+    @Test
+    public void asd2() {
+
+    	assertEquals(userService.findAllUsers().size() , 4);        
     }
 
 

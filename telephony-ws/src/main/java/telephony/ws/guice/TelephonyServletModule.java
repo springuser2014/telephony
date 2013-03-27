@@ -15,7 +15,6 @@ import com.google.inject.servlet.ServletModule;
 
 
 /**
- * @author gam3r
  * Configuration of web applactions specifis modules : GuicePersist, GuiceServlet
  */
 public class TelephonyServletModule extends ServletModule {
@@ -28,12 +27,12 @@ public class TelephonyServletModule extends ServletModule {
         logger.debug("TelephonyServletModule initialization");
 
         bindServlets();
-        bindAuth();
         bindLogger();
 
         logger.debug("TelephonyServletModule is destroyed");
     }
 
+    // TODO: remove, it doesnt work
     /**
      * asd.
      */
@@ -41,13 +40,6 @@ public class TelephonyServletModule extends ServletModule {
         bindListener(Matchers.any(), new SLF4JTypeListener());
     }
 
-    /**
-     * asd.
-     */
-    private void bindAuth() {
-
-//        filter("/*").through(GuiceShiroFilter.class);
-    }
 
     /**
      * asd.

@@ -344,13 +344,6 @@ ALTER TABLE ONLY contacts
     ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
 
 --
--- Name: system_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
---
-
-ALTER TABLE ONLY system_logs
-    ADD CONSTRAINT system_logs_pkey PRIMARY KEY (id);
-
---
 -- Name: deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
