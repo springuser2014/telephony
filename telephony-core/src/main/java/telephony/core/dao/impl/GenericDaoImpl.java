@@ -82,8 +82,9 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("entity type : {} ", entityClass.getName());
 
         List<E> lst =
-        getEntityManager().createQuery("select e from " + entityClass.getName() + " e")
-                .getResultList();
+        getEntityManager()
+        	.createQuery("select e from " + entityClass.getName() + " e")
+            .getResultList();
 
         logger.debug("found {} elements", lst.size());
 

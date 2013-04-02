@@ -189,4 +189,3 @@ insert into products(id, imei, store_id, delivery_id, sale_id, producer, model, 
 
 
 
-
