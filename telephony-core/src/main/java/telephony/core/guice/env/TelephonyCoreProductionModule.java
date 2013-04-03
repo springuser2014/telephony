@@ -30,7 +30,7 @@ public class TelephonyCoreProductionModule  extends AbstractModule {
 		install(new JpaPersistModule(PERSISTENCE));
 	}
 	
-    // TODO : move below method to another module
+
     /**
      * asd.
      * @return asd.
@@ -39,8 +39,6 @@ public class TelephonyCoreProductionModule  extends AbstractModule {
     @Singleton
     public Flyway migratorProvider() {
     	Flyway m = new Flyway();
-    	
-    	
     	
     	
     	// TODO : fetching connection params from persistence.xml or properties

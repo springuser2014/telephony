@@ -73,7 +73,6 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(RolesDao.class).to(RolesDaoImpl.class);
         bind(UserStoresDao.class).to(UserStoresDaoImpl.class);
         bind(UserRolesDao.class).to(UserRolesDaoImpl.class);
-        bind(SystemLogsDao.class).to(SystemLogsDaoImpl.class);
         bind(ContactsDao.class).to(ContactsDaoImpl.class);
         bind(InformationDao.class).to(InformationDaoImpl.class);
 
