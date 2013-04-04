@@ -27,12 +27,12 @@ public class Session {
 
     /**
      * asd.
-     * @param usernamE asd.
-     * @param sessionID asd.
+     * @param username asd.
+     * @param sessionId asd.
      */
-    public Session(final String usernamE, final String sessionID) {
-        this.username = usernamE;
-        this.sessionId = sessionID;
+    public Session(final String username, final String sessionId) {
+        this.username = username;
+        this.sessionId = sessionId;
     }
 
     /**

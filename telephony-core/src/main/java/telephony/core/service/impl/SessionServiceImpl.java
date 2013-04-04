@@ -18,15 +18,10 @@ import com.google.inject.Inject;
 public class SessionServiceImpl
     extends AbstractBasicService implements SessionService {
 
-    /**
-     * asd.
-     */
+    
     @Inject
     private UsersDao usersDao;
-
-    /**
-     * asd.
-     */
+    
     @Inject
     private StringGenerator generator;
 
@@ -36,9 +31,9 @@ public class SessionServiceImpl
      * @param password asd.
      * @return asd.
      */
-    @Override
     public final Session init(
-        final String username, final String password) {
+    		final String username, 
+    		final String password) {
 
         User u;
 
@@ -67,18 +62,19 @@ public class SessionServiceImpl
 
     /**
      * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * @param sessionToRefresh asd.
      * @return asd.
      */
-    @Override
-    public Session refresh(final String username, final String sessionId) {
+    public Session refresh(Session sessionToRefresh) {
         User u;
 
         try {
         getEntityManager().getTransaction().begin();
 
-        u = usersDao.findByNameAndSessionId(username, sessionId);
+        u = usersDao.findByNameAndSessionId(
+        		sessionToRefresh.getUsername(), 
+        		sessionToRefresh.getSessionId()
+        );
 
         Date expirationDate =
              new Date(u.getSessionValidity().getTime() + 30 * 60 * 1000);
@@ -102,20 +98,21 @@ public class SessionServiceImpl
 
     /**
      * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * @param sessionToDelete asd.
      * @return asd.
      */
-    @Override
-    public final boolean destroy(
-        final String username, final String sessionId) {
+    public final boolean destroy(Session sessionToDelete) {
 
         User u;
         try {
             getEntityManager().getTransaction().begin();
 
-            u = usersDao.findByNameAndSessionId(username, sessionId);
+            u = usersDao.findByNameAndSessionId(
+				sessionToDelete.getUsername(),
+				sessionToDelete.getSessionId()
+            );
 
+            // TODO : constant!
             Date expiredDate = new Date(1000);
             u.setSessionValidity(expiredDate);
             usersDao.saveOrUpdate(u);
@@ -128,4 +125,33 @@ public class SessionServiceImpl
 
         return true;
     }
+
+    /**
+     * asd.
+     * @param sessionToValidate asd.
+     * @return asd.
+     */
+	public boolean validate(Session sessionToValidate) {
+		User u;
+		
+		try {
+			getEntityManager().getTransaction().begin();
+			
+			u = usersDao.findByNameAndSessionId(
+					sessionToValidate.getUsername(), 
+					sessionToValidate.getSessionId()
+			);
+			
+			Date now = new Date();
+			if (u.getSessionValidity().before(now)) {
+				return false;
+			}
+			
+			getEntityManager().getTransaction().commit();
+		} catch (Exception e)  {
+			return false;
+		}
+		
+		return true;
+	}
 }

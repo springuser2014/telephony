@@ -10,7 +10,7 @@ import telephony.ws.guice.SLF4JMembersJnjector;
 import telephony.ws.guice.SLF4JTypeListener;
 import telephony.ws.guice.TelephonyServletModule;
 import telephony.ws.pre.TelephonyServletTestContextListener;
-import telephony.ws.resource.SessionBeann;
+import telephony.ws.resource.SessionBean;
 import telephony.ws.resource.impl.PingResource;
 import telephony.ws.resource.impl.SessionResource;
 import telephony.ws.resource.impl.TestResource;
@@ -58,7 +58,7 @@ public final class ArchivesBuilder {
 
                 .addClasses(SLF4JTypeListener.class, SLF4JMembersJnjector.class, Log.class)
 
-                .addClasses(SessionResource.class, SessionBeann.class)
+                .addClasses(SessionResource.class, SessionBean.class)
 
                 .addAsLibraries(
                     resolver.artifact("org.restlet.jee:org.restlet:2.1-SNAPSHOT")

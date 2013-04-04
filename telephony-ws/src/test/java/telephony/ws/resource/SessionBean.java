@@ -1,12 +1,12 @@
 package telephony.ws.resource;
 
-// TODO : do refactoring or remove later
+
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class SessionBeann {
+public class SessionBean {
 
     /**
      * asd.
@@ -23,7 +23,7 @@ public class SessionBeann {
      * @param username asd.
      * @param password asd.
      */
-    public SessionBeann(String username, String password) {
+    public SessionBean(String username, String password) {
         this.username = username;
         this.password = password;
     }

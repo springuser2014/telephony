@@ -39,6 +39,7 @@
         <cglib.version>[2.1_3,)</cglib.version>
         <common.math.version>2.2</common.math.version>
         <logback.version>1.0.7</logback.version>
+        <joda.version>2.2</joda.version>
         
         <!-- Maven plugins properties -->
         <maven.pmd.plugin.version>3.0</maven.pmd.plugin.version>

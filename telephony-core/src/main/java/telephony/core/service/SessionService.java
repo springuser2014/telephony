@@ -3,7 +3,7 @@ package telephony.core.service;
 import telephony.core.service.bean.Session;
 
 /**
- * asd.
+ * Describes basic operations on telephony's session service.
  *
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
@@ -11,7 +11,7 @@ import telephony.core.service.bean.Session;
 public interface SessionService {
 
     /**
-     * asd.
+     * Tries to initialize user session using given data.  
      * @param username asd.
      * @param password asd.
      * @return asd.
@@ -19,19 +19,24 @@ public interface SessionService {
     Session init(String username, String password);
 
     /**
-     * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * Tries to refresh user session.
+     * @param sessionToRefresh asd.
      * @return asd.
      */
-    Session refresh(String username, String sessionId);
+    Session refresh(Session sessionToRefresh);
 
     /**
-     * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * Tries to invalidate given user session.
+     * @param sessionToDelete TODO
      * @return asd.
      */
-    boolean destroy(String username, String sessionId);
+    boolean destroy(Session sessionToDelete);
+    
+    /**
+     * asd.
+     * @param sessionToDelete TODO
+     * @return asd.
+     */
+    boolean validate(Session sessionToValidate);
 
 }

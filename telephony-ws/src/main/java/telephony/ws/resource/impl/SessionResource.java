@@ -111,7 +111,7 @@ public class SessionResource extends ServerResource {
         logger.info(" username = {} ", name);
         logger.info(" sessionId = {} ", sessionId);
 
-        boolean success = sessionService.destroy(name, sessionId);
+        boolean success = sessionService.destroy(null);
 
         HashMap<String, String> res = new HashMap<String, String>();
         res.put("success", new Boolean(success).toString());
@@ -139,7 +139,7 @@ public class SessionResource extends ServerResource {
         logger.info(" username = {} ", name);
         logger.info(" sessionId = {} ", sessionId);
 
-        Session session = sessionService.refresh(name, sessionId);
+        Session session = sessionService.refresh(null);
 
         if (session == null) {
 			return new JsonRepresentation("Error occured");

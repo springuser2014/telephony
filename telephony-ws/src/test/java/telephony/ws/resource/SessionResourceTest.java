@@ -58,7 +58,7 @@ public class SessionResourceTest {
 //        clientResource.setChallengeResponse(
 //        new ChallengeResponse(
 //        org.restlet.data.ChallengeScheme.HTTP_BASIC, "login", "secret".toCharArray()));
-        JsonRepresentation repr = new JsonRepresentation(new SessionBeann("pawelhenek", "asdasd"));
+        JsonRepresentation repr = new JsonRepresentation(new SessionBean("pawelhenek", "asdasd"));
         clientResource.post(repr);
 
 //        doesn't work due to lack of resource's interface representation
