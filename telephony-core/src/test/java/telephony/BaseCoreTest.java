@@ -3,6 +3,7 @@ package telephony;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import telephony.core.guice.env.SystemPropertyEnvironemntNameResolver;
 import telephony.core.guice.env.TelephonyCoreEnvironmentResolver;
@@ -16,22 +17,19 @@ import com.googlecode.flyway.core.Flyway;
 
 
 /**
- * asd.
- * 
- * Please do not not annotate this class as @RunWith
+ * Do not annotate this class as @RunWith!
  */
-public class BaseCoreTest {
-    
-    @Inject 
-    private Flyway migrator;
+public class BaseCoreTest {    
 
     private Injector injector;
+    
+    protected static PersistService persistService;
 
     /**
-     * asd.
+     * Initializes test context and injects beans, services etc.
      */
     @Before
-    public void pre() {
+    public void preEveryTest() {
 
     	List<AbstractModule> modules = new TelephonyCoreEnvironmentResolver()
     		.resolveWith(
@@ -42,13 +40,24 @@ public class BaseCoreTest {
         injector.injectMembers(this);
     }
     
-
     /**
      * asd.
+     */
+    @BeforeClass
+    public static void preTests() {
+    	Flyway m = CoreTestHelper.migratorProvider();
+    	m.clean();
+    	m.init();
+    	m.migrate();
+    }
+    
+    /**
+     * Starts Guice-persist JPA module.
      * @param service asd.
      */
     @Inject
     public void initializer(PersistService service) {
         service.start();
+        persistService = service;
     }
 }

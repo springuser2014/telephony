@@ -27,7 +27,7 @@
 			<property name="hibernate.default_schema" value="public" />
 			<property name="hibernate.current_session_context_class" value="thread" />
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
-			<property name="hibernate.connection.pool_size" value="1" />
+			<property name="hibernate.connection.pool_size" value="3" />
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -1,5 +1,7 @@
 package telephony.core.guice.env;
 
+import java.util.Date;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -9,6 +11,7 @@ import telephony.core.guice.TelephonyCoreServicesModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.name.Names;
 import com.google.inject.persist.jpa.JpaPersistModule;
 import com.googlecode.flyway.core.Flyway;
 
@@ -19,12 +22,14 @@ import com.googlecode.flyway.core.Flyway;
 @Environment("PRODUCTION")
 public class TelephonyCoreProductionModule  extends AbstractModule {
 	
-	public static final String PERSISTENCE = "telephony";
+	public  static final String PERSISTENCE = "telephony";
+	private static final Integer SESSION_VALIDITY = new Integer(30 * 60 * 1000);
 
 	/**
 	 * asd.
 	 */
 	protected void configure() {
+		bind(Integer.class).annotatedWith(Names.named("sessionValidity")).toInstance(SESSION_VALIDITY);
 		
 		install(new TelephonyCoreServicesModule());
 		install(new JpaPersistModule(PERSISTENCE));

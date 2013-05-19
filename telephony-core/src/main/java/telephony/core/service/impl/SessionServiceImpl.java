@@ -9,6 +9,7 @@ import telephony.core.service.bean.Session;
 import telephony.core.util.StringGenerator;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * asd.
@@ -16,14 +17,24 @@ import com.google.inject.Inject;
  *
  */
 public class SessionServiceImpl
-    extends AbstractBasicService implements SessionService {
+    extends AbstractBasicService implements SessionService {   
 
+	private UsersDao usersDao;    
+	private StringGenerator generator;
+
+	private Integer sessionValidity;    
     
-    @Inject
-    private UsersDao usersDao;
+	@Inject
+    @Override
+	public void setUsersDao(UsersDao usersDao) {
+		this.usersDao = usersDao;
+	}
     
-    @Inject
-    private StringGenerator generator;
+	@Inject
+    @Override
+    public void setStringGenerator(StringGenerator stringGenerator) {
+    	this.generator = stringGenerator;
+    }
 
     /**
      * asd.
@@ -39,18 +50,19 @@ public class SessionServiceImpl
 
         try {
 
-        getEntityManager().getTransaction().begin();
-
-        u = usersDao.findByNameAndPassword(username, password);
-
-        String sessionId = generator.nextSessionId();
-
-        u.setSessionId(sessionId);
-        u.setSessionValidity(new Date());
-
-        usersDao.saveOrUpdate(u);
-
-        getEntityManager().getTransaction().commit();
+	        getEntityManager().getTransaction().begin();
+	
+	        u = usersDao.findByNameAndPassword(username, password);
+	
+	        String sessionId = generator.nextSessionId();
+	
+	        u.setSessionId(sessionId);
+	        u.setSessionValidity(new Date(new Date().getTime() + getSessionValidity()));
+	
+	        //usersDao.saveOrUpdate(u);
+	        usersDao.save(u);
+	
+	        getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
             return null;
@@ -60,7 +72,18 @@ public class SessionServiceImpl
         return session;
     }
 
-    /**
+    public Integer getSessionValidity() {
+		
+    	return sessionValidity;
+	}
+    
+    @Inject 
+    public void setSessionValidity(@Named("sessionValidity") Integer sessionValidity) {
+    	
+    	this.sessionValidity = sessionValidity;
+    }
+
+	/**
      * asd.
      * @param sessionToRefresh asd.
      * @return asd.
@@ -69,24 +92,25 @@ public class SessionServiceImpl
         User u;
 
         try {
-        getEntityManager().getTransaction().begin();
-
-        u = usersDao.findByNameAndSessionId(
-        		sessionToRefresh.getUsername(), 
-        		sessionToRefresh.getSessionId()
-        );
-
-        Date expirationDate =
-             new Date(u.getSessionValidity().getTime() + 30 * 60 * 1000);
-        Date today = new Date();
-
-        if (expirationDate.after(today)) {
-
-            u.setSessionValidity(today);
-            usersDao.saveOrUpdate(u);
-        }
-
-        getEntityManager().getTransaction().commit();
+	        getEntityManager().getTransaction().begin();
+	
+	        u = usersDao.findByNameAndSessionId(
+	        		sessionToRefresh.getUsername(), 
+	        		sessionToRefresh.getSessionId()
+	        );
+	        
+	        // TODO introduce constant
+	        Date expirationDate =
+	             new Date(u.getSessionValidity().getTime() + getSessionValidity());
+	        Date today = new Date();
+	
+	        if (expirationDate.after(today)) {
+	
+	            u.setSessionValidity(today);
+	            usersDao.saveOrUpdate(u);
+	        }
+	
+	        getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
             return null;
@@ -143,7 +167,7 @@ public class SessionServiceImpl
 			);
 			
 			Date now = new Date();
-			if (u.getSessionValidity().before(now)) {
+			if (u.getSessionValidity().before(now) || u.getSessionValidity().equals(now)) {
 				return false;
 			}
 			
@@ -153,5 +177,5 @@ public class SessionServiceImpl
 		}
 		
 		return true;
-	}
+	}	
 }

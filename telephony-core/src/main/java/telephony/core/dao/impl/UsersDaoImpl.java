@@ -47,6 +47,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
         logger.info("findByNameAndPassword starts");
         logger.info("params : [ name = {} , password = {} ]", name, password);
 
+        // TODO : use encrypted password
         User u = (User) getEntityManager()
                 .createQuery("select e from User e where e.email = ?1 and e.password = ?2")
                 .setParameter(1, name)
