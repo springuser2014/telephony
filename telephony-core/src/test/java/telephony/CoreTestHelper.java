@@ -38,8 +38,7 @@ public final class CoreTestHelper {
     	LOGGER.debug("TelephonyCoreTestModule.migratorProvider starts");
     	
     	Flyway m = new Flyway();
-    	LOGGER.debug("TelephonyCoreTestModule.migratorProvider 1");
-    	
+    	    	
     	// TODO : fetching connection params from persistence.xml or properties
     	DataSource dataSource = new SimpleDriverDataSource(
     			new org.postgresql.Driver(), 
@@ -49,7 +48,6 @@ public final class CoreTestHelper {
     	);
     	
     	m.setDataSource(dataSource);    
-    	
     	
     	LOGGER.debug("TelephonyCoreTestModule.migratorProvider ends");
     	

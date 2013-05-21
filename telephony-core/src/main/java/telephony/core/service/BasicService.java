@@ -4,8 +4,6 @@ import javax.persistence.EntityManager;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface BasicService {
 

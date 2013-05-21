@@ -8,7 +8,6 @@ import telephony.core.entity.jpa.User;
 
 /**
  * Defines set of basic operations on entities.
- * @author Paweł Henek <pawelhenek@gmail.com>
  *
  * @param <E> Entities superclass interface.
  */

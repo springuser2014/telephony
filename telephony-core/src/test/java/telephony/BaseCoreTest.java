@@ -41,7 +41,7 @@ public class BaseCoreTest {
     }
     
     /**
-     * asd.
+     * Runs database migrations.
      */
     @BeforeClass
     public static void preTests() {

@@ -8,34 +8,27 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.UserService;
+import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.exception.UserServiceException;
 
 import com.google.inject.Inject;
 
 
 /**
- * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * Implementation of basic UserService functionalities.
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractBasicService implements UserService {
 
-    /**
-     * asd.
-     */
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
     @Inject
     private UsersDao usersDao;
 
     /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     @Override
-    public final List<User> findAllUsers() {
+    public final List<User> findAllUsers(String username, String sessionId) {
         logger.debug("UserServiceImpl.findAllUsers starts");
 
         List<User> res = usersDao.find();
@@ -43,20 +36,33 @@ public class UserServiceImpl implements UserService {
         logger.debug("found {} elements ", res.size());
 
         return res;
-    }
+    } 
 
-    /**
-     * asd.
-     * @param name asd.
-     * @return asd.
-     */
-    @Override
-    public final User findUserByName(final String name) {
-        logger.info("UserServiceImpl.findUserByName starts");
-        logger.info("params : [ name = {} ] ", name);
+	@Override
+	public List<User> findUsersByStoreId(String username, String sessionId,
+			Long storeId) throws SessionServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        User u = usersDao.findByName(name);
+	@Override
+	public void deleteUserById(String username, String sessionId, Long userId)
+			throws SessionServiceException, UserServiceException {
+		// TODO Auto-generated method stub
+		
+	}
 
-        return u;
-    }
+	@Override
+	public void addUser(String username, String sessionId, User user)
+			throws SessionServiceException, UserServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateUser(String username, String sessionId, User user)
+			throws SessionServiceException, UserServiceException {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -2,27 +2,71 @@ package telephony.core.service;
 
 import java.util.List;
 
+import org.hibernate.SessionException;
+
 import telephony.core.entity.jpa.User;
+import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.exception.UserServiceException;
 
 /**
- * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * Describes basic operations on telephony's user service.
  */
 public interface UserService {
 
     /**
-     * asd.
-     * @return asd.
+     * Looks for all current users.
+     * @param username TODO
+     * @param sessionId TODO
+     * @throws SessionServiceException d.
+     * @return List of users.
      */
-    List<User> findAllUsers();
+    List<User> findAllUsers(String username, String sessionId) 
+    		throws SessionServiceException;
 
     /**
-     * asd.
-     * @param name asd.
-     * @return asd.
+     * a.
+     * @param username a.
+     * @param sessionId d.
+     * @param storeId d.
+     * @throws SessionServiceException a.
+     * @return d.
      */
-    User findUserByName(String name);
-
-
+    List<User> findUsersByStoreId(String username, String sessionId, Long storeId) 
+    		throws SessionServiceException;
+    
+    /**
+     * asd.
+     * @param username a.
+     * @param sessionId d.
+     * @param userId d.
+     * @throws SessionServiceException d.
+     * @throws UserServiceException a.
+     */
+    void deleteUserById(String username, String sessionId, Long userId)
+    		throws SessionServiceException, UserServiceException;
+    
+    /**
+     * a.
+     * @param username d.
+     * @param sessionId d.
+     * @param user d.
+     * @throws SessionServiceException d.
+     * @throws UserServiceException d.
+     */
+    void addUser(String username, String sessionId, User user)
+    		throws SessionServiceException, UserServiceException;
+    
+    /**
+     * a.
+     * @param username d.
+     * @param sessionId a.
+     * @param user w.
+     * @throws SessionServiceException d.
+     * @throws UserServiceException d.
+     */
+    void updateUser(String username, String sessionId, User user)
+    		throws SessionServiceException, UserServiceException;
+    
+    
+    
 }

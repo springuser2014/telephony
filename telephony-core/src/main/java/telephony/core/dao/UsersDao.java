@@ -8,8 +8,6 @@ import telephony.core.entity.jpa.User;
 
 /**
  * Defines basic operations on User entity.
- *
- * @author gam3r
  */
 public interface UsersDao extends GenericDao<User> {
 
@@ -21,7 +19,6 @@ public interface UsersDao extends GenericDao<User> {
 	 * @return User or null
 	 */
     User findByName(String name);
-
 
 	/**
 	 * Looking for User with specified name and password.
@@ -37,12 +34,9 @@ public interface UsersDao extends GenericDao<User> {
 	/**
 	 * Updates user's session validity.
 	 *
-	 * @param userId
-	 *            User's Id
-	 * @param sessionId
-	 *            User's session Id
-	 * @param sessionValidity
-	 *            Session expiration date
+	 * @param userId User's Id
+	 * @param sessionId User's session Id
+	 * @param sessionValidity Session's expiration date
 	 * @return asd.
 	 */
 	boolean updateSession(Long userId, String sessionId, Date sessionValidity);

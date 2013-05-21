@@ -9,9 +9,6 @@ import telephony.core.util.StringGenerator;
 
 /**
  * Describes basic operations on telephony's session service.
- *
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface SessionService {
 	
@@ -44,7 +41,8 @@ public interface SessionService {
     /**
      * Initializes user's session.
      * Looks for user with given name and password then tries to
-     * initialize session. Session's validity time is defined by {@link #setSessionValidity(Integer)}.
+     * initialize session. Session's validity time is defined 
+     * by {@link #setSessionValidity(Integer)}.
      * @param username asd.
      * @param password asd.
      * @return session object if initialized successfully otherwise null.

@@ -2,6 +2,9 @@ package telephony.core.service.impl;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.SessionService;
@@ -13,15 +16,14 @@ import com.google.inject.name.Named;
 
 /**
  * Implementation of basic SessionService functionalities.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SessionServiceImpl
     extends AbstractBasicService implements SessionService {   
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private UsersDao usersDao;    
 	private StringGenerator generator;
-
 	private Integer sessionValidity;    
     
 	/**
@@ -48,6 +50,8 @@ public class SessionServiceImpl
     public final Session init(
     		final String username, 
     		final String password) {
+    	
+    	logger.debug("SessionServiceImpl.init starts");
 
         User u;
 
@@ -63,10 +67,11 @@ public class SessionServiceImpl
 	        u.setSessionValidity(new Date(new Date().getTime() + getSessionValidity()));
 	
 	        usersDao.saveOrUpdate(u);
-	       
+	        
 	        getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
+        	logger.warn("Error occured during session initialization",e);
             return null;
         }
 
@@ -95,6 +100,9 @@ public class SessionServiceImpl
      * {@inheritDoc}
      */
     public Session refresh(Session sessionToRefresh) {
+    	
+    	logger.debug("SessionServiceImpl.refresh starts");
+    	
         User u;
 
         try {
@@ -118,6 +126,7 @@ public class SessionServiceImpl
 	        getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
+        	logger.warn("Error occured during session refreshing", e);
             return null;
         }
 
@@ -129,6 +138,8 @@ public class SessionServiceImpl
      * {@inheritDoc}
      */
     public final boolean destroy(Session sessionToDelete) {
+    	
+    	logger.debug("SessionServiceImpl.destroy starts");
 
         User u;
         try {
@@ -146,6 +157,7 @@ public class SessionServiceImpl
             getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
+        	logger.warn("Error occured during session destroying", e);
             return false;
         }
 
@@ -156,6 +168,9 @@ public class SessionServiceImpl
      * {@inheritDoc}
      */
 	public boolean validate(Session sessionToValidate) {
+		
+		logger.debug("SessionServiceImpl.validate starts");
+		
 		User u;
 		
 		try {
@@ -173,6 +188,7 @@ public class SessionServiceImpl
 			
 			getEntityManager().getTransaction().commit();
 		} catch (Exception e)  {
+			logger.warn("Error occured during session validation", e);
 			return false;
 		}
 		

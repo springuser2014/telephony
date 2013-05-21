@@ -34,6 +34,9 @@ public class SessionServiceTest extends BaseCoreTest {
 	private SessionService sessionServiceMock;
 
 	
+	/**
+	 * Stops persistence service after all tests.
+	 */
 	@AfterClass
 	public static void postTest() {
 		persistService.stop();
@@ -72,7 +75,11 @@ public class SessionServiceTest extends BaseCoreTest {
 		Session refreshedSession = sessionService.refresh(sessionToRefresh);
 		
 		// then
-		assertTrue("Refreshed session should have longer lifetime", sessionToRefresh.getValidity().before(refreshedSession.getValidity()));		
+		boolean isValidAfterRefresh = 
+				sessionToRefresh
+				.getValidity()
+				.before(refreshedSession.getValidity());
+		assertTrue("Refreshed session should have longer lifetime", isValidAfterRefresh);		
 	}
 	
 	/**
