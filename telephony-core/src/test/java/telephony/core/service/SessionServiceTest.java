@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Date;
+
 import org.jukito.JukitoRunner;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -30,8 +32,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	private SessionService sessionService;
 	
 	private SessionService sessionServiceMock;
-	
-	private UsersDao usersDaoMock;
+
 	
 	@AfterClass
 	public static void postTest() {
@@ -42,7 +43,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * asd.
 	 */
 	@Test
-	public void sessionInitializationAndDestroying() {
+	public void sessionInitialization() {
 		
 		// given 
 		String username = SessionServiceTestData.USER3_NAME;
@@ -52,7 +53,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		Session session = sessionService.init(username, password);
 		
 		// then
-		assertNotNull(session);
+		assertNotNull("For exisiting user should return session object", session);
 	}
 	
 	/**
@@ -60,18 +61,18 @@ public class SessionServiceTest extends BaseCoreTest {
 	 */
 	@Test
 	public void sessionRefreshing() {
-		
+
 		// given 
 		String username = SessionServiceTestData.USER4_NAME;
 		String password = SessionServiceTestData.USER4_PASSWORD;
-		Session sessionToRefresh = sessionService.init(username, password);
-		
+		sessionService.setSessionValidity(30 * 60 * 1000);
+		Session sessionToRefresh = sessionService.init(username, password);		
 		
 		// when 
 		Session refreshedSession = sessionService.refresh(sessionToRefresh);
 		
 		// then
-		assertNotNull(refreshedSession);		
+		assertTrue("Refreshed session should have longer lifetime", sessionToRefresh.getValidity().before(refreshedSession.getValidity()));		
 	}
 	
 	/**
@@ -84,20 +85,21 @@ public class SessionServiceTest extends BaseCoreTest {
 		String username = SessionServiceTestData.USER1_NAME;
 		String password = SessionServiceTestData.USER1_PASSWORD;
 		String sessionId = SessionServiceTestData.randomSessionId();
+		Date validity = new Date();
 		
 		// TODO: move mock definition to *Module
 		this.sessionServiceMock = mock(SessionService.class);		
 		when(this.sessionServiceMock.init(username , password))
-			.thenReturn(new Session(username, sessionId));
+			.thenReturn(new Session(username, sessionId, validity));
 		
 		// when
 		Session session = this.sessionServiceMock.init(username, password);
 				
 		// then
-		assertNotNull(session);
+		assertNotNull("should return initialized session's object",session);
 	}
 	
-	/**q
+	/**
 	 * asd.
 	 */
 	@Test
@@ -135,6 +137,25 @@ public class SessionServiceTest extends BaseCoreTest {
 		assertFalse("should return false for expired session", validated);
 	}
 	
-
-
+	/**
+	 * asd.
+	 */
+	@Test
+	public void sessionDestroying() {
+		
+		// given
+		String username = SessionServiceTestData.USER1_NAME;
+		String password = SessionServiceTestData.USER1_PASSWORD;
+		sessionService.setSessionValidity(new Integer(30 * 60 * 1000));
+		Session sessionToDelete = sessionService.init(username, password);
+		
+		// when
+		boolean destroyed = sessionService.destroy(sessionToDelete);
+		
+		// then
+		assertTrue("should destroy active session", destroyed);
+	}
+	
 }
+
+

@@ -1,5 +1,7 @@
 package telephony.core.service.bean;
 
+import java.util.Date;
+
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
@@ -16,6 +18,11 @@ public class Session {
      * asd.
      */
     private String sessionId;
+    
+    /**
+     * foo.
+     */
+    private Date validity;
 
     /**
      * asd.
@@ -30,9 +37,10 @@ public class Session {
      * @param username asd.
      * @param sessionId asd.
      */
-    public Session(final String username, final String sessionId) {
+    public Session(final String username, final String sessionId, final Date validity) {
         this.username = username;
         this.sessionId = sessionId;
+        this.validity = validity;
     }
 
     /**
@@ -89,6 +97,10 @@ public class Session {
         if (!username.equals(session.username)) {
             return false;
         }
+        
+        if(!validity.equals(session.getValidity())) {
+        	return false;
+        }
 
         return true;
     }
@@ -102,6 +114,24 @@ public class Session {
     public final int hashCode() {
         int result = username.hashCode();
         result = 31 * result + sessionId.hashCode();
+        result = 31 * result + validity.hashCode();
         return result;
     }
+
+
+    /**
+     * asd.
+     * @return asd.
+     */
+	public Date getValidity() {
+		return validity;
+	}
+
+	/**
+	 * asd.
+	 * @param validity asd.
+	 */
+	public void setValidity(Date validity) {
+		this.validity = validity;
+	}
 }

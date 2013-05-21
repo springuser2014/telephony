@@ -12,7 +12,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 /**
- * asd.
+ * Implementation of basic SessionService functionalities.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
@@ -24,12 +24,18 @@ public class SessionServiceImpl
 
 	private Integer sessionValidity;    
     
+	/**
+	 * {@inheritDoc}
+	 */
 	@Inject
     @Override
 	public void setUsersDao(UsersDao usersDao) {
 		this.usersDao = usersDao;
 	}
     
+	/**
+	 * {@inheritDoc}
+	 */
 	@Inject
     @Override
     public void setStringGenerator(StringGenerator stringGenerator) {
@@ -37,10 +43,7 @@ public class SessionServiceImpl
     }
 
     /**
-     * asd.
-     * @param username asd.
-     * @param password asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     public final Session init(
     		final String username, 
@@ -59,24 +62,29 @@ public class SessionServiceImpl
 	        u.setSessionId(sessionId);
 	        u.setSessionValidity(new Date(new Date().getTime() + getSessionValidity()));
 	
-	        //usersDao.saveOrUpdate(u);
-	        usersDao.save(u);
-	
+	        usersDao.saveOrUpdate(u);
+	       
 	        getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
             return null;
         }
 
-        Session session = new Session(u.getEmail(), u.getSessionId());
+        Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Integer getSessionValidity() {
 		
     	return sessionValidity;
 	}
     
+    /**
+     * {@inheritDoc}
+     */
     @Inject 
     public void setSessionValidity(@Named("sessionValidity") Integer sessionValidity) {
     	
@@ -84,9 +92,7 @@ public class SessionServiceImpl
     }
 
 	/**
-     * asd.
-     * @param sessionToRefresh asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     public Session refresh(Session sessionToRefresh) {
         User u;
@@ -98,15 +104,14 @@ public class SessionServiceImpl
 	        		sessionToRefresh.getUsername(), 
 	        		sessionToRefresh.getSessionId()
 	        );
-	        
-	        // TODO introduce constant
+	       
+	        Date today = new Date();
 	        Date expirationDate =
 	             new Date(u.getSessionValidity().getTime() + getSessionValidity());
-	        Date today = new Date();
-	
+	       	
 	        if (expirationDate.after(today)) {
 	
-	            u.setSessionValidity(today);
+	            u.setSessionValidity(new Date(today.getTime() + getSessionValidity()));
 	            usersDao.saveOrUpdate(u);
 	        }
 	
@@ -116,14 +121,12 @@ public class SessionServiceImpl
             return null;
         }
 
-        Session session = new Session(u.getEmail(), u.getSessionId());
+        Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
     }
 
     /**
-     * asd.
-     * @param sessionToDelete asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     public final boolean destroy(Session sessionToDelete) {
 
@@ -136,8 +139,7 @@ public class SessionServiceImpl
 				sessionToDelete.getSessionId()
             );
 
-            // TODO : constant!
-            Date expiredDate = new Date(1000);
+            Date expiredDate = new Date(new Date().getTime() - getSessionValidity());
             u.setSessionValidity(expiredDate);
             usersDao.saveOrUpdate(u);
 
@@ -151,9 +153,7 @@ public class SessionServiceImpl
     }
 
     /**
-     * asd.
-     * @param sessionToValidate asd.
-     * @return asd.
+     * {@inheritDoc}
      */
 	public boolean validate(Session sessionToValidate) {
 		User u;

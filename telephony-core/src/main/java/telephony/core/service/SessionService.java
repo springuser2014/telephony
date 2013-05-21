@@ -1,5 +1,8 @@
 package telephony.core.service;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 import telephony.core.dao.UsersDao;
 import telephony.core.service.bean.Session;
 import telephony.core.util.StringGenerator;
@@ -13,48 +16,53 @@ import telephony.core.util.StringGenerator;
 public interface SessionService {
 	
 	/**
-	 * asd.
-	 * @return foo.
+	 * Gives current value of session validity property.
+     * @return Session validity time in miliseconds.
 	 */
 	Integer getSessionValidity();
 	
 	/**
-	 * asd.
+	 * Sets value of session validity property (in miliseconds).
 	 * @param sessionValidity foo.
 	 */
-	void setSessionValidity(Integer sessionValidity);
+	@Inject
+	void setSessionValidity(@Named("sessionValidity") Integer sessionValidity);
 	
 	/**
-	 * TODO asd.
+	 * Sets UsersDao object.
 	 * @param usersDao foo.
 	 */
 	void setUsersDao(UsersDao usersDao);
 	
 	/**
-	 * TODO asd.
+	 * Sets StringGenerator object.
 	 * @param stringGenerator foo.
 	 */
+	@Inject
 	void setStringGenerator(StringGenerator stringGenerator);
 
     /**
-     * Tries to initialize user session using given data.  
+     * Initializes user's session.
+     * Looks for user with given name and password then tries to
+     * initialize session. Session's validity time is defined by {@link #setSessionValidity(Integer)}.
      * @param username asd.
      * @param password asd.
-     * @return asd.
+     * @return session object if initialized successfully otherwise null.
      */
     Session init(String username, String password);
 
     /**
-     * Tries to refresh user session.
-     * @param sessionToRefresh asd.
-     * @return asd.
+     * Refreshes user's session. 
+     * Session's life will be increased by value from {@link #getSessionValidity()}.
+     * @param sessionToRefresh User's existing session to refresh.
+     * @return Returns renewed session's object or the old one if expired.
      */
     Session refresh(Session sessionToRefresh);
 
     /**
-     * Tries to invalidate given user session.
+     * Tries to destroy a valid user's session.
      * @param sessionToDelete User's session.
-     * @return asd.
+     * @return if successfully destroyed true otherwise false.
      */
     boolean destroy(Session sessionToDelete);
     
