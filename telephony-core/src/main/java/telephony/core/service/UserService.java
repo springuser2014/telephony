@@ -11,7 +11,7 @@ import telephony.core.service.exception.UserServiceException;
 /**
  * Describes basic operations on telephony's user service.
  */
-public interface UserService {
+public interface UserService extends BasicService<User> {
 
     /**
      * Looks for all current users.
@@ -38,11 +38,11 @@ public interface UserService {
      * asd.
      * @param username a.
      * @param sessionId d.
-     * @param userId d.
+     * @param user d.
      * @throws SessionServiceException d.
      * @throws UserServiceException a.
      */
-    void deleteUserById(String username, String sessionId, Long userId)
+    void deleteUserById(String username, String sessionId, User user)
     		throws SessionServiceException, UserServiceException;
     
     /**
@@ -50,10 +50,11 @@ public interface UserService {
      * @param username d.
      * @param sessionId d.
      * @param user d.
+     * @return TODO
      * @throws SessionServiceException d.
      * @throws UserServiceException d.
      */
-    void addUser(String username, String sessionId, User user)
+    User addUser(String username, String sessionId, User user)
     		throws SessionServiceException, UserServiceException;
     
     /**
@@ -61,12 +62,18 @@ public interface UserService {
      * @param username d.
      * @param sessionId a.
      * @param user w.
+     * @return TODO
      * @throws SessionServiceException d.
      * @throws UserServiceException d.
      */
-    void updateUser(String username, String sessionId, User user)
+    User updateUser(String username, String sessionId, User user)
     		throws SessionServiceException, UserServiceException;
-    
-    
+
+    /**
+     * asd.
+     * @param username asd.
+     * @return
+     */
+	User findByName(String username);    
     
 }

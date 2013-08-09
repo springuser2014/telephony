@@ -9,4 +9,10 @@ import telephony.core.entity.jpa.UserStore;
  */
 public interface UserStoresDao extends GenericDao<UserStore> {
 
+	/**
+	 * remove.
+	 * @param userId as.
+	 */
+	void removeByUserId(Long userId);
+
 }

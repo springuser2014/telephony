@@ -6,3 +6,6 @@
 *.settings*
 *.vpp~*
 telephony_project/*
+/telephony-core/.checkstyle
+/telephony-core/.externalToolBuilders/net.sf.eclipsecs.core.CheckstyleBuilder.launch
+/telephony-core/.externalToolBuilders/org.zeroturnaround.eclipse.rebelXmlBuilder.launch

@@ -10,7 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * asd.
@@ -18,7 +17,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 @MappedSuperclass
-public abstract class BaseEntity implements IsSerializable {
+public abstract class BaseEntity {
 
     @SuppressWarnings("unused")
 	private static final long serialVersionUID = -3858014970182092169L;

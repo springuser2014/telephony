@@ -25,7 +25,7 @@ import com.google.inject.persist.Transactional;
  *
  */
 public class ProductServiceImpl
-    extends AbstractBasicService implements ProductService {
+    extends AbstractBasicService<Product> implements ProductService {
 
     /**
      * asd.
@@ -266,4 +266,10 @@ public class ProductServiceImpl
         final List<Product> products, final User updatingUser) {
 
     }
+    
+	@Override
+	public long count() {
+		
+		return productsDao.count();
+	}
 }

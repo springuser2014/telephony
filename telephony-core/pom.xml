@@ -23,38 +23,51 @@
 			<url>http://morphia.googlecode.com/svn/mavenrepo/</url>
 		</repository>
 		<repository>
-			<id>jboss</id>
-			<url>http://repository.jboss.org/maven2</url>
+			<id>springsource-repo</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.springsource.org/release</url>
 		</repository>
 
 	</repositories>
 	<dependencies>
-	
+
 		<dependency>
-		      <groupId>com.jayway.awaitility</groupId>
-		      <artifactId>awaitility</artifactId>
-		      <version>${awaitility.version}</version>
-		      <scope>test</scope>
+			<groupId>com.jayway.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>${awaitility.version}</version>
+			<scope>test</scope>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.mockito</groupId>
-	  		<artifactId>mockito-all</artifactId>
-	  		<version>${mockito.version}</version>
-	  		<scope>test</scope>			
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
 		</dependency>
-			
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>${joda.version}</version>
 		</dependency>
-	
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>3.2.0.RELEASE</version>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<!-- Guice -->
@@ -63,22 +76,26 @@
 			<artifactId>guice</artifactId>
 			<version>${guice.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
 			<artifactId>guice-persist</artifactId>
 			<version>${guice.version}</version>
 		</dependency>
+
 		<!-- Goole Guava for server-side -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate-core.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -90,6 +107,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
@@ -101,6 +119,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -112,39 +131,59 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>${hibernate-jpa-api.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.googlecode.flyway</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>${flyway.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.flyway-test-extensions</groupId>
+			<artifactId>flyway-dbunit-test</artifactId>
+			<version>${flyway.test.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.flyway-test-extensions</groupId>
+			<artifactId>flyway-spring-test</artifactId>
+			<version>${flyway.test.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.flyway-test-extensions</groupId>
+			<artifactId>flyway-test-sample-spring3</artifactId>
+			<version>${flyway.test.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- SLF4J dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency> 
-		  <groupId>ch.qos.logback</groupId>
-		  <artifactId>logback-classic</artifactId>
-		  <version>${logback.version}</version>
-		</dependency>
-		<!-- GWT -->
+
 		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-dev</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jukito</groupId>
 			<artifactId>jukito</artifactId>
@@ -173,71 +212,61 @@
 	</dependencies>
 	<build>
 
-		<resources>
-
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.java</include>
-					<include>**/*.gwt.xml</include>
-				</includes>
-			</resource>
-
-		</resources>
 		<plugins>
 
 			<plugin>
-				<groupId>com.googlecode.flyway</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>2.0.3</version>
-				<configuration>
-					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/telephony</url>
-					<user>postgres</user>
-					<password>postgres</password>
-				<initialVersion>0</initialVersion>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven.failsafe.plugin.version}</version>				
 			</plugin>
 
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.zeroturnaround</groupId> -->
-<!-- 				<artifactId>jrebel-maven-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>generate-rebel-xml</id> -->
-<!-- 						<phase>process-resources</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>generate</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven.resources.plugin.version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.14</version>
+				<version>${maven.surefire.plugin.version}</version>				
 				<configuration>
 					<systemPropertyVariables>
-						<environment>TEST</environment>						
+						<environment>TEST</environment>
 					</systemPropertyVariables>
+					<properties>
+						<property>
+							<name>listener</name>
+							<value>telephony.TelephonyCoreTestListener</value>
+						</property>
+					</properties>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.15</version>
+					</dependency>
+				</dependencies>				
 			</plugin>
-
 		</plugins>
 
 	</build>
+
 	<reporting>
 
 		<plugins>

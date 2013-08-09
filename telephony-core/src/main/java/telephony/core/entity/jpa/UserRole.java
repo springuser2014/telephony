@@ -29,11 +29,11 @@ public class UserRole extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    private Store userId;
+    private User userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
-    private Store roleId;
+    private Role roleId;
 
     /**
      * asd.
@@ -56,7 +56,7 @@ public class UserRole extends BaseEntity {
      * asd.
      * @return asd.
      */
-    public Store getUserId() {
+    public User getUserId() {
         return userId;
     }
 
@@ -64,7 +64,7 @@ public class UserRole extends BaseEntity {
      * asd.
      * @param userId asd.
      */
-    public void setUserId(Store userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
@@ -72,7 +72,7 @@ public class UserRole extends BaseEntity {
      * asd.
      * @return asd.
      */
-    public Store getRoleId() {
+    public Role getRoleId() {
         return roleId;
     }
 
@@ -80,7 +80,7 @@ public class UserRole extends BaseEntity {
      * asd.
      * @param roleId asd.
      */
-    public void setRoleId(Store roleId) {
+    public void setRoleId(Role roleId) {
         this.roleId = roleId;
     }
 

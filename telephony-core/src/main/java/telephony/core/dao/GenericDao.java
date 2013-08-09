@@ -62,13 +62,6 @@ public interface GenericDao<E extends BaseEntity> {
      * @return List of freshly saved (updated) entities. 
      */
     List<E> saveOrUpdate(List<E> entities);
-    
-    
-    /**
-     * Removes entity with specified id.
-     * @param id Entity's id.
-     */
-    void removeById(Long id);
 
     /**
      * Removes entities with specified ids.
@@ -87,4 +80,13 @@ public interface GenericDao<E extends BaseEntity> {
      * @param entities asd.
      */
     void remove(List<E> entities);
+    
+	/**
+	 * asd.
+	 * @return asd.
+	 */
+	long count();
+
+
+	void removeById(Long id);
 }

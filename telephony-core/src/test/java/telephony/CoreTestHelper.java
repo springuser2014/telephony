@@ -23,8 +23,28 @@ public final class CoreTestHelper {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CoreTestHelper.class);
 	
+	protected static final Flyway migrator 	= new Flyway();
+	
 	private CoreTestHelper() {
 		
+	}
+	
+	static {
+		
+		LOGGER.debug("TelephonyCoreTestModule.migratorProvider starts");
+	
+    	// TODO : fetching connection params from persistence.xml or properties
+    	DataSource dataSource = new SimpleDriverDataSource(
+    			new org.postgresql.Driver(), 
+    			JDBC_CONNECTION_ADDR, 
+    			DB_USERNAME,
+    			DB_PASSWORD
+    	);
+    	
+    	migrator.setDataSource(dataSource);
+    	
+    	LOGGER.debug("TelephonyCoreTestModule.migratorProvider ends");
+    	
 	}
 	
 	/**
@@ -35,23 +55,7 @@ public final class CoreTestHelper {
     @Singleton
     public static Flyway migratorProvider() {
     	
-    	LOGGER.debug("TelephonyCoreTestModule.migratorProvider starts");
-    	
-    	Flyway m = new Flyway();
-    	    	
-    	// TODO : fetching connection params from persistence.xml or properties
-    	DataSource dataSource = new SimpleDriverDataSource(
-    			new org.postgresql.Driver(), 
-    			JDBC_CONNECTION_ADDR, 
-    			DB_USERNAME,
-    			DB_PASSWORD
-    	);
-    	
-    	m.setDataSource(dataSource);    
-    	
-    	LOGGER.debug("TelephonyCoreTestModule.migratorProvider ends");
-    	
-    	return m;    	
+    	return migrator;    	
     }
 
 }

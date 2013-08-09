@@ -2,6 +2,7 @@ package telephony.core.service.impl;
 
 import javax.persistence.EntityManager;
 
+import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.BasicService;
 
 import com.google.inject.Inject;
@@ -12,7 +13,7 @@ import com.google.inject.Provider;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class AbstractBasicService implements BasicService {
+public abstract class AbstractBasicService<T extends BaseEntity> implements BasicService<T> {
 
     /**
      * asd.
@@ -28,4 +29,7 @@ public class AbstractBasicService implements BasicService {
     public final EntityManager getEntityManager() {
         return entityManagerProvider.get();
     }
+
+	@Override
+	abstract public long count() ;
 }

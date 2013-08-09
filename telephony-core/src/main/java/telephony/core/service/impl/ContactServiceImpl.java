@@ -10,4 +10,10 @@ import telephony.core.service.ContactService;
 public class ContactServiceImpl
     extends AbstractBasicService implements ContactService {
 
+	@Override
+	public long count() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -8,51 +8,57 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
-import org.jukito.JukitoRunner;
-import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import telephony.BaseCoreTest;
-import telephony.core.dao.UsersDao;
-import telephony.core.data.SessionServiceTestData;
+import telephony.core.data.TestData;
 import telephony.core.service.bean.Session;
+import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
+import com.google.inject.persist.PersistService;
+import com.googlecode.flyway.test.annotation.FlywayTest;
+import com.googlecode.flyway.test.dbunit.DBUnitSupport;
+import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+
 
 /**
  * asd.
- * @author pahe
- *
  */
-@RunWith(JukitoRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/META-INF/context.xml" })
+@TestExecutionListeners({
+	DependencyInjectionTestExecutionListener.class,
+    FlywayDBUnitTestExecutionListener.class 
+})
+@FlywayTest
 public class SessionServiceTest extends BaseCoreTest {
-	
+		
 	@Inject
 	private SessionService sessionService;
 	
 	private SessionService sessionServiceMock;
-
-	
-	/**
-	 * Stops persistence service after all tests.
-	 */
-	@AfterClass
-	public static void postTest() {
-		persistService.stop();
-	}
-	
+			
 	/**
 	 * asd.
+	 * @throws SessionServiceException 
 	 */
 	@Test
-	public void sessionInitialization() {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void sessionInitialization() throws SessionServiceException {
 		
 		// given 
-		String username = SessionServiceTestData.USER3_NAME;
-		String password = SessionServiceTestData.USER3_PASSWORD;
+		String username = TestData.USER3_NAME;
+		String password = TestData.USER3_PASSWORD;
 		
 		// when
+		sessionService.setSessionValidity(30 * 60 * 1000);
 		Session session = sessionService.init(username, password);
 		
 		// then
@@ -61,13 +67,15 @@ public class SessionServiceTest extends BaseCoreTest {
 	
 	/**
 	 * asd.
+	 * @throws SessionServiceException 
 	 */
 	@Test
-	public void sessionRefreshing() {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void sessionRefreshing() throws SessionServiceException {
 
 		// given 
-		String username = SessionServiceTestData.USER4_NAME;
-		String password = SessionServiceTestData.USER4_PASSWORD;
+		String username = TestData.USER4_NAME;
+		String password = TestData.USER4_PASSWORD;
 		sessionService.setSessionValidity(30 * 60 * 1000);
 		Session sessionToRefresh = sessionService.init(username, password);		
 		
@@ -84,14 +92,16 @@ public class SessionServiceTest extends BaseCoreTest {
 	
 	/**
 	 * asd.
+	 * @throws SessionServiceException 
 	 */
 	@Test
-	public void sessionInitializationMockTest() {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void sessionInitializationMockTest() throws SessionServiceException {
 
 		// given
-		String username = SessionServiceTestData.USER1_NAME;
-		String password = SessionServiceTestData.USER1_PASSWORD;
-		String sessionId = SessionServiceTestData.randomSessionId();
+		String username = TestData.USER1_NAME;
+		String password = TestData.USER1_PASSWORD;
+		String sessionId = TestData.randomSessionId();
 		Date validity = new Date();
 		
 		// TODO: move mock definition to *Module
@@ -103,18 +113,20 @@ public class SessionServiceTest extends BaseCoreTest {
 		Session session = this.sessionServiceMock.init(username, password);
 				
 		// then
-		assertNotNull("should return initialized session's object",session);
+		assertNotNull("Should return initialized session's object", session);
 	}
 	
 	/**
 	 * asd.
+	 * @throws SessionServiceException 
 	 */
 	@Test
-	public void sessionValidation1() {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void sessionValidation1() throws SessionServiceException {
 		
 		// given 
-		String username = SessionServiceTestData.USER1_NAME;
-		String password = SessionServiceTestData.USER1_PASSWORD;
+		String username = TestData.USER1_NAME;
+		String password = TestData.USER1_PASSWORD;
 		
 		// when 
 		Session sessionToValidate = sessionService.init(username, password);	
@@ -126,13 +138,15 @@ public class SessionServiceTest extends BaseCoreTest {
 	
 	/**
 	 * asd.
+	 * @throws SessionServiceException 
 	 */
 	@Test
-	public void sessionValidation2() {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void sessionValidation2() throws SessionServiceException {
 		
 		// given 
-		String username = SessionServiceTestData.USER2_NAME;
-		String password = SessionServiceTestData.USER2_PASSWORD;
+		String username = TestData.USER2_NAME;
+		String password = TestData.USER2_PASSWORD;
 		
 		sessionService.setSessionValidity(new Integer(-60 * 60 * 24));
 		Session sessionToValidate = sessionService.init(username, password);		
@@ -141,18 +155,20 @@ public class SessionServiceTest extends BaseCoreTest {
 		boolean validated = sessionService.validate(sessionToValidate);
 		
 		// then
-		assertFalse("should return false for expired session", validated);
+		assertFalse("Should return false for expired session", validated);
 	}
 	
 	/**
 	 * asd.
+	 * @throws SessionServiceException 
 	 */
 	@Test
-	public void sessionDestroying() {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void sessionDestroying() throws SessionServiceException {
 		
 		// given
-		String username = SessionServiceTestData.USER1_NAME;
-		String password = SessionServiceTestData.USER1_PASSWORD;
+		String username = TestData.USER1_NAME;
+		String password = TestData.USER1_PASSWORD;
 		sessionService.setSessionValidity(new Integer(30 * 60 * 1000));
 		Session sessionToDelete = sessionService.init(username, password);
 		
@@ -160,7 +176,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		boolean destroyed = sessionService.destroy(sessionToDelete);
 		
 		// then
-		assertTrue("should destroy active session", destroyed);
+		assertTrue("Should destroy active session", destroyed);
 	}
 	
 }

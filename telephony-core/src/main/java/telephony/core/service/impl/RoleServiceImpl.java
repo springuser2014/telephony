@@ -10,4 +10,10 @@ import telephony.core.service.RoleService;
 public class RoleServiceImpl
     extends AbstractBasicService implements RoleService {
 
+	@Override
+	public long count() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

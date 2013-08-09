@@ -114,5 +114,11 @@ extends AbstractBasicService implements SaleService {
         return null;
     }
 
+@Override
+public long count() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
 
 }

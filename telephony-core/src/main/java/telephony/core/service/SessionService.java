@@ -5,6 +5,7 @@ import com.google.inject.name.Named;
 
 import telephony.core.dao.UsersDao;
 import telephony.core.service.bean.Session;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.core.util.StringGenerator;
 
 /**
@@ -45,30 +46,33 @@ public interface SessionService {
      * by {@link #setSessionValidity(Integer)}.
      * @param username asd.
      * @param password asd.
+     * @throws SessionServiceException asd.
      * @return session object if initialized successfully otherwise null.
      */
-    Session init(String username, String password);
+    Session init(String username, String password) throws SessionServiceException;
 
     /**
      * Refreshes user's session. 
      * Session's life will be increased by value from {@link #getSessionValidity()}.
      * @param sessionToRefresh User's existing session to refresh.
+     * @throws SessionServiceException asd.
      * @return Returns renewed session's object or the old one if expired.
      */
-    Session refresh(Session sessionToRefresh);
+    Session refresh(Session sessionToRefresh) throws SessionServiceException;
 
     /**
      * Tries to destroy a valid user's session.
      * @param sessionToDelete User's session.
+     * @throws SessionServiceException d.
      * @return if successfully destroyed true otherwise false.
      */
-    boolean destroy(Session sessionToDelete);
+    boolean destroy(Session sessionToDelete) throws SessionServiceException;
     
     /**
      * Validates user session.
      * @param sessionToValidate User's session.
+     * @throws SessionServiceException sd.
      * @return True if session is valid otherwise false.
      */
-    boolean validate(Session sessionToValidate);
-
+    boolean validate(Session sessionToValidate) throws SessionServiceException;
 }

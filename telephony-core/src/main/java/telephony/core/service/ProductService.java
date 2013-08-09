@@ -14,7 +14,7 @@ import telephony.core.entity.jpa.User;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public interface ProductService {
+public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.

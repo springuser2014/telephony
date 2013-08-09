@@ -13,6 +13,8 @@ import telephony.core.util.StringGenerator;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import com.google.inject.persist.Transactional;
+import com.google.inject.persist.UnitOfWork;
 
 /**
  * Implementation of basic SessionService functionalities.
@@ -22,9 +24,11 @@ public class SessionServiceImpl
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private UsersDao usersDao;    
+	private UsersDao usersDao;
+	
 	private StringGenerator generator;
-	private Integer sessionValidity;    
+	
+	private Integer sessionValidity; 	
     
 	/**
 	 * {@inheritDoc}
@@ -71,8 +75,13 @@ public class SessionServiceImpl
 	        getEntityManager().getTransaction().commit();
 
         } catch (Exception e) {
-        	logger.warn("Error occured during session initialization",e);
+        	
+        	logger.error("Error occured during session initialization",e);
             return null;
+        } finally {
+        	if (getEntityManager().getTransaction().isActive()) {
+        		getEntityManager().getTransaction().rollback();
+        	}
         }
 
         Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
@@ -124,10 +133,14 @@ public class SessionServiceImpl
 	        }
 	
 	        getEntityManager().getTransaction().commit();
-
+	        // TODO : refactor
         } catch (Exception e) {
-        	logger.warn("Error occured during session refreshing", e);
+        	logger.error("Error occured during session refreshing", e);
             return null;
+        } finally {
+        	if (getEntityManager().getTransaction().isActive()) {
+        		getEntityManager().getTransaction().rollback();
+        	}
         }
 
         Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
@@ -159,6 +172,10 @@ public class SessionServiceImpl
         } catch (Exception e) {
         	logger.warn("Error occured during session destroying", e);
             return false;
+        } finally {
+        	if (getEntityManager().getTransaction().isActive()) {
+        		getEntityManager().getTransaction().rollback();
+        	}
         }
 
         return true;
@@ -167,6 +184,7 @@ public class SessionServiceImpl
     /**
      * {@inheritDoc}
      */
+    @Transactional
 	public boolean validate(Session sessionToValidate) {
 		
 		logger.debug("SessionServiceImpl.validate starts");
@@ -174,7 +192,7 @@ public class SessionServiceImpl
 		User u;
 		
 		try {
-			getEntityManager().getTransaction().begin();
+			//getEntityManager().getTransaction().begin();
 			
 			u = usersDao.findByNameAndSessionId(
 					sessionToValidate.getUsername(), 
@@ -184,14 +202,26 @@ public class SessionServiceImpl
 			Date now = new Date();
 			if (u.getSessionValidity().before(now) || u.getSessionValidity().equals(now)) {
 				return false;
-			}
+			}			
 			
-			getEntityManager().getTransaction().commit();
 		} catch (Exception e)  {
 			logger.warn("Error occured during session validation", e);
 			return false;
-		}
+		} finally {
+			
+//			getEntityManager().getTransaction().commit();
+//			
+//        	if (getEntityManager().getTransaction().isActive()) {
+//        		getEntityManager().getTransaction().rollback();
+//        	}
+        }
 		
 		return true;
+	}
+
+	@Override
+	public long count() {
+		
+		return usersDao.count();
 	}	
 }

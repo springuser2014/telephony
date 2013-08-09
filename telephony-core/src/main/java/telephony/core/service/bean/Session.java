@@ -30,7 +30,21 @@ public class Session {
     public Session() {
 
     }
-
+    
+    /**
+     * a.
+     * @param username d.
+     * @param sessionId d.
+     * @return s.
+     */
+    public static Session create(String username, String sessionId) {
+    	Session sess = new Session();
+    	sess.setSessionId(sessionId);
+    	sess.setUsername(username);
+    	sess.setValidity(null);
+    	
+    	return sess;
+    }
 
     /**
      * asd.
@@ -98,7 +112,7 @@ public class Session {
             return false;
         }
         
-        if(!validity.equals(session.getValidity())) {
+        if (!validity.equals(session.getValidity())) {
         	return false;
         }
 

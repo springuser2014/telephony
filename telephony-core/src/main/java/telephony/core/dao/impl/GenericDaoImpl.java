@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
+import telephony.core.entity.jpa.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -221,4 +224,17 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
 
         logger.debug("permanentDelete ends");
     }
+    
+	@Override
+	public long count() {
+		logger.debug("count starts");
+		logger.debug("entity type : {} ", entityClass.getName());
+		
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		cq.select(cb.count(cq.from(entityClass)));
+		
+		return getEntityManager().createQuery(cq).getSingleResult();
+	}
 }

@@ -29,7 +29,9 @@ public class TelephonyCoreProductionModule  extends AbstractModule {
 	 * asd.
 	 */
 	protected void configure() {
-		bind(Integer.class).annotatedWith(Names.named("sessionValidity")).toInstance(SESSION_VALIDITY);
+		bind(Integer.class)
+		.annotatedWith(Names.named("sessionValidity"))
+		.toInstance(SESSION_VALIDITY);
 		
 		install(new TelephonyCoreServicesModule());
 		install(new JpaPersistModule(PERSISTENCE));

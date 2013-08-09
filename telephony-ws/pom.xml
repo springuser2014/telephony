@@ -26,22 +26,7 @@
 			<artifactId>telephony-core</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.restlet.gwt</groupId>
-			<artifactId>org.restlet</artifactId>
-			<version>${restlet.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.gwt</groupId>
-					<artifactId>gwt-dev</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.restlet.jee</groupId>
-			<artifactId>org.restlet.ext.gwt</artifactId>
-			<version>${restlet.version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.json</artifactId>

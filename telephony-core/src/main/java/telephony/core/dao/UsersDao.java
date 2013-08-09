@@ -49,4 +49,13 @@ public interface UsersDao extends GenericDao<User> {
 	 * @return asd.
 	 */
     User findByNameAndSessionId(String username, String sessionId);
+
+    /**
+     * ad.
+     * @param storeId d.
+     * @return d.
+     */
+	List<User> findByStoreId(Long storeId);
+
+
 }
