@@ -1,8 +1,6 @@
 package telephony.core.dao.impl;
 
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +8,7 @@ import telephony.core.dao.StoresDao;
 import telephony.core.entity.jpa.Store;
 
 /**
- * asd.
+ * Stores management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

@@ -15,7 +15,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 
 /**
- * asd.
+ * Products management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

@@ -11,7 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 /**
- * asd.
+ * Information management DAO..
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

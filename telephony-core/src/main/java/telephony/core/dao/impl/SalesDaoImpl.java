@@ -14,7 +14,7 @@ import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
 
 /**
- * asd.
+ * Sales management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

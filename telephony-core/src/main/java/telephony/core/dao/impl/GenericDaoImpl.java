@@ -20,13 +20,12 @@ import com.google.inject.Provider;
 
 
 /**
- * asd.
+ * General entities management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  * @param <E> asd.
  */
 public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao<E> {
-
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

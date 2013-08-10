@@ -10,21 +10,20 @@ import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 
 /**
- * asd.
- * 
+ * Users management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  * 
  */
 public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
 	/**
 	 * asd.
 	 */
 	public UsersDaoImpl() {
 		super(User.class);
 	}
-
-	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public User findByName(String name) {

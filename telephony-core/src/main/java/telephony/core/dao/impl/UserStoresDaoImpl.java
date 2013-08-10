@@ -7,7 +7,7 @@ import telephony.core.dao.UserStoresDao;
 import telephony.core.entity.jpa.UserStore;
 
 /**
- * asd.
+ * UserStores management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

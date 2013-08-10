@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 
 /**
- * asd.
+ * Deliveries management DAO. 
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

@@ -1,5 +1,0 @@
-<module rename-to='core'>
-	<inherits name="com.google.gwt.user.User" />
-	<source path="shared" />
-
-</module>

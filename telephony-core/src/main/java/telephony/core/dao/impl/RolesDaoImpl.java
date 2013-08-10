@@ -4,7 +4,7 @@ import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
 
 /**
- * asd.
+ * Roles management DAO.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
