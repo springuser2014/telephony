@@ -13,20 +13,15 @@ import com.google.inject.Inject;
 
 
 /**
- * asd.
+ * Stores management service.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoreServiceImpl implements StoreService {
+public class StoreServiceImpl extends AbstractBasicService<Store> implements StoreService {
 
-    /**
-     * asd.
-     */
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
     @Inject
     private StoresDao storesDao;
 
@@ -45,4 +40,13 @@ public class StoreServiceImpl implements StoreService {
 
         return stores;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	public long count() {
+		
+		return storesDao.count();
+	}
 }

@@ -1,19 +1,26 @@
 package telephony.core.service.impl;
 
+import com.google.inject.Inject;
+
+import telephony.core.dao.RolesDao;
+import telephony.core.entity.jpa.Role;
 import telephony.core.service.RoleService;
 
 /**
- * asd.
+ * Roles management service.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
 public class RoleServiceImpl
-    extends AbstractBasicService implements RoleService {
+    extends AbstractBasicService<Role> implements RoleService {
 
+	@Inject
+	private RolesDao rolesDao;
+	
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return rolesDao.count();
 	}
 
 }

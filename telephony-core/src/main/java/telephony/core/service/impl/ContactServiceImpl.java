@@ -1,19 +1,24 @@
 package telephony.core.service.impl;
 
+import com.google.inject.Inject;
+
+import telephony.core.dao.ContactsDao;
+import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
 
 /**
- * asd.
+ * Contacts management service.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
 public class ContactServiceImpl
-    extends AbstractBasicService implements ContactService {
+    extends AbstractBasicService<Contact> implements ContactService {
+	
+	@Inject
+	private ContactsDao contactsDao;
 
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		return contactsDao.count();
 	}
-
 }

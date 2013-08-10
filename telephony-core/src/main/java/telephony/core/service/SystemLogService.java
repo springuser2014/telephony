@@ -20,6 +20,4 @@ public interface SystemLogService {
      * @return asd.
      */
     List<SystemLog> get(SystemLogQuery query);
-
-
 }

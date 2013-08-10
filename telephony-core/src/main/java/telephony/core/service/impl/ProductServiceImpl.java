@@ -1,6 +1,5 @@
 package telephony.core.service.impl;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,256 +19,253 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
 /**
- * asd.
+ * Products management service.
+ * 
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * 
  */
-public class ProductServiceImpl
-    extends AbstractBasicService<Product> implements ProductService {
+public class ProductServiceImpl extends AbstractBasicService<Product> implements
+		ProductService {
 
-    /**
-     * asd.
-     */
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
-    @Inject
-    private ProductsDao productsDao;
+	@Inject
+	private ProductsDao productsDao;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final List<String> fetchAllImeiInUse() {
-        logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final List<String> fetchAllImeiInUse() {
+		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
 
-        List<String> res = productsDao.fetchImeisList();
+		List<String> res = productsDao.fetchImeisList();
 
-        logger.debug("found {} elements", res.size());
+		logger.debug("found {} elements", res.size());
 
-        return res;
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final List<String> fetchAllProducers() {
-        logger.debug("ProductServiceImpl.fetchAllProducers starts");
+		return res;
+	}
 
-        List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.find();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final List<String> fetchAllProducers() {
+		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
-        for (Product p : products) {
-            if (!res.contains(p.getProducer())) {
-                res.add(p.getProducer());
-            }
-        }
+		List<String> res = new ArrayList<String>();
+		List<Product> products = productsDao.find();
 
-        logger.debug("found {} elements ", res.size());
+		for (Product p : products) {
+			if (!res.contains(p.getProducer())) {
+				res.add(p.getProducer());
+			}
+		}
 
-        return res;
-    }
+		logger.debug("found {} elements ", res.size());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final List<String> fetchAllModels() {
-        logger.debug("ProductServiceImpl.fetchAllModels starts");
+		return res;
+	}
 
-        List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.find();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final List<String> fetchAllModels() {
+		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
-        for (Product p : products) {
-            if (!res.contains(p.getModel())) {
-                res.add(p.getModel());
-            }
-        }
+		List<String> res = new ArrayList<String>();
+		List<Product> products = productsDao.find();
 
-        logger.debug("found {} elements ", res.size());
+		for (Product p : products) {
+			if (!res.contains(p.getModel())) {
+				res.add(p.getModel());
+			}
+		}
 
-        return res;
-    }
+		logger.debug("found {} elements ", res.size());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final List<String> fetchAllColors() {
-        logger.debug("ProductServiceImpl.fetchAllModels starts");
+		return res;
+	}
 
-        List<String> res = new ArrayList<String>();
-        List<Product> products = productsDao.find();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final List<String> fetchAllColors() {
+		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
-        for (Product p : products) {
-            if (!res.contains(p.getColor())) {
-                res.add(p.getColor());
-            }
-        }
+		List<String> res = new ArrayList<String>();
+		List<Product> products = productsDao.find();
 
-        logger.debug("found {} elements ", res.size());
+		for (Product p : products) {
+			if (!res.contains(p.getColor())) {
+				res.add(p.getColor());
+			}
+		}
 
-        return res;
-    }
+		logger.debug("found {} elements ", res.size());
 
+		return res;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final List<Product> fetchAllProducts(
-        final Long storeId, final ProductStatus productStatus) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final List<Product> fetchAllProducts(final Long storeId,
+			final ProductStatus productStatus) {
 
-        logger.debug("ProductServiceImpl.fetchAllProducts starts ");
-        logger.debug("params : [ storeId : {} , productStatus : {} ] ",
-            storeId, productStatus);
+		logger.debug("ProductServiceImpl.fetchAllProducts starts ");
+		logger.debug("params : [ storeId : {} , productStatus : {} ] ",
+				storeId, productStatus);
 
-        List<Product> result = productsDao.findByStoreId(
-            storeId, productStatus);
+		List<Product> result = productsDao
+				.findByStoreId(storeId, productStatus);
 
-        logger.debug("ProductServiceImpl.fetchAllProducts ends");
+		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 
-        return result;
-    }
+		return result;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void moveProducts(
-        final Store store, final List<Product> products, final User user) {
-        logger.debug("ProductServiceImpl.moveProducts starts ");
-        logger.debug(
-            "params : [ storeId : {} , number of products: {} , userId : {}] ",
-            new Object[]{store, products, user});
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public final void moveProducts(final Store store,
+			final List<Product> products, final User user) {
+		logger.debug("ProductServiceImpl.moveProducts starts ");
+		logger.debug(
+				"params : [ storeId : {} , number of products: {} , userId : {}] ",
+				new Object[] { store, products, user });
 
-        getEntityManager().getTransaction().begin();
+//		getEntityManager().getTransaction().begin();
 
-        for (Product p : products) {
-            p.setStore(store);
-            productsDao.save(p);
-        }
+		for (Product p : products) {
+			p.setStore(store);
+			productsDao.save(p);
+		}
 
-        getEntityManager().getTransaction().commit();
+//		getEntityManager().getTransaction().commit();
 
-        logger.debug("ProductServiceImpl.fetchAllProducts ends");
-    }
+		logger.debug("ProductServiceImpl.fetchAllProducts ends");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Product fetchProductByImeiAndStoreId(
-        final String imei, final Long storeId) {
-        logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Product fetchProductByImeiAndStoreId(final String imei,
+			final Long storeId) {
+		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
 
-        Product p = productsDao.findByImeiAndStoreId(imei, storeId);
+		Product p = productsDao.findByImeiAndStoreId(imei, storeId);
 
-        return p;
-    }
+		return p;
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public final List<Product> fetchAllProductsByCriteria(final String imei,
+			final String producer, final String model, final String color,
+			final Long storeId, final Date deliveryDateStart,
+			final Date deliveryDateEnd, final ProductStatus status) {
+		logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
+		Object[] params = new Object[] { imei, producer, model, color, storeId,
+				deliveryDateStart, deliveryDateEnd, status };
+		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
+				+ "color : {} , storeId : {} , deliveryDateStart : {} , "
+				+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
 
-    // TODO : do refactoring
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
-    public final List<Product> fetchAllProductsByCriteria(
-        final String imei, final String producer, final String model,
-        final String color, final Long storeId, final Date deliveryDateStart,
-        final Date deliveryDateEnd, final ProductStatus status) {
-        logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
-        Object[] params = new Object[]{imei, producer, model, color,
-            storeId, deliveryDateStart, deliveryDateEnd, status};
-        logger.debug(
-            "params : [ imei : {} , producer : {} , model : {} , "
-            + "color : {} , storeId : {} , deliveryDateStart : {} , "
-            + "deliveryDateEnd : {}, productStatus : {} ] ", params);
+		List<Product> result = productsDao.findByCriteria(imei, producer,
+				model, color, storeId, deliveryDateStart, deliveryDateEnd,
+				status);
 
-        List<Product> result = productsDao.findByCriteria(
-            imei, producer, model, color, storeId,
-            deliveryDateStart, deliveryDateEnd, status);
+		logger.info("ProductServiceImpl.fetchAllProductsByCriteria ends");
 
-        logger.info("ProductServiceImpl.fetchAllProductsByCriteria ends");
+		for (Product p : result) {
+			logger.info(" model : {} , producer : {} ", p.getModel(),
+					p.getProducer());
+		}
 
-        for (Product p : result) {
-            logger.info(" model : {} , producer : {} ",
-                p.getModel(), p.getProducer());
-        }
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public final void updateProducts(final List<Product> productsToUpdate,
+			final List<Product> productsToDelete,
+			final List<Product> productsToCancelTheSale, final User editor) {
+		logger.debug("ProductServiceImpl.updateProducts starts");
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void updateProducts(
-        final List<Product> productsToUpdate,
-        final List<Product> productsToDelete,
-        final List<Product> productsToCancelTheSale,
-        final User editor) {
-        logger.debug("ProductServiceImpl.updateProducts starts");
+		for (Product p : productsToUpdate) {
+			for (Product p1 : productsToDelete) {
+				if (p1.getId().equals(p.getId())) {
+					productsToUpdate.remove(p);
+				}
+			}
 
-        for (Product p : productsToUpdate) {
-            for (Product p1 : productsToDelete) {
-                if (p1.getId().equals(p.getId())) {
-                    productsToUpdate.remove(p);
-                }
-            }
+			for (Product p2 : productsToCancelTheSale) {
+				if (p2.getId().equals(p.getId())) {
+					productsToUpdate.remove(p);
+				}
+			}
 
-            for (Product p2 : productsToCancelTheSale) {
-                if (p2.getId().equals(p.getId())) {
-                    productsToUpdate.remove(p);
-                }
-            }
+		}
 
-        }
+		if (productsToUpdate.size() > 0) {
+			productsDao.saveOrUpdate(productsToUpdate);
+		}
 
-        if (productsToUpdate.size() > 0) {
-            productsDao.saveOrUpdate(productsToUpdate);
-        }
+		if (productsToDelete.size() > 0) {
+			productsDao.remove(productsToDelete);
+		}
 
-        if (productsToDelete.size() > 0) {
-            productsDao.remove(productsToDelete);
-        }
+		if (productsToCancelTheSale.size() > 0) {
+			this.cancelProductsSale(productsToCancelTheSale, editor);
+		}
+	}
 
-        if (productsToCancelTheSale.size() > 0) {
-            this.cancelProductsSale(productsToCancelTheSale, editor);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public final void cancelProductsSale(
+			final List<Product> productsToCancelTheSale, final User editor) {
+		logger.debug("ProductServiceImpl.cancelProductsSale starts");
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void cancelProductsSale(
-        final List<Product> productsToCancelTheSale, final User editor) {
-        logger.debug("ProductServiceImpl.cancelProductsSale starts");
+		for (Product p : productsToCancelTheSale) {
+			p.setSale(null);
+			p.setPriceOut(new Money(0, 0));
+		}
 
-        for (Product p : productsToCancelTheSale) {
-            p.setSale(null);
-            p.setPriceOut(new Money(0, 0));
-        }
+		productsDao.saveOrUpdate(productsToCancelTheSale);
+	}
 
-        productsDao.saveOrUpdate(productsToCancelTheSale);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public void updateProducts(final List<Product> products,
+			final User updatingUser) {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void updateProducts(
-        final List<Product> products, final User updatingUser) {
+	}
 
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public long count() {
-		
+
 		return productsDao.count();
 	}
 }

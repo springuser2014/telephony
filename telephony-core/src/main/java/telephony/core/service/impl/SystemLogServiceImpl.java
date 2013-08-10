@@ -7,7 +7,7 @@ import telephony.core.entity.mongo.SystemLogQuery;
 import telephony.core.service.SystemLogService;
 
 /**
- * asd.
+ * SystemLogs management service.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

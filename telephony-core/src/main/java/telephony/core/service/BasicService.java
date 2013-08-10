@@ -5,19 +5,19 @@ import javax.persistence.EntityManager;
 import telephony.core.entity.jpa.BaseEntity;
 
 /**
- * asd.
+ * Basic business services API.
+ * @param <T> Basic entity class.
  */
 public interface BasicService<T extends BaseEntity> {
 
     /**
-     * asd.
+     * Returns entityManager object.
      * @return asd.
      */
     EntityManager getEntityManager();
     
     /**
-     * asd 
-     * @return adsd.
-     */
-    <T> long count();
+	 * Counts number of entities in persistence layer.
+	 */
+	long count();
 }

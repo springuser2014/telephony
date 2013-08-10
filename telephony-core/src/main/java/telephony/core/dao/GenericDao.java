@@ -71,22 +71,25 @@ public interface GenericDao<E extends BaseEntity> {
 
     /**
      * Removes indicated entity from persistence layer. 
-     * @param entity asd.
+     * @param entity to remove.
      */
     void remove(E entity);
 
     /**
      * Removes indicated entities from persistence layer.
-     * @param entities asd.
+     * @param entities to remove.
      */
     void remove(List<E> entities);
     
 	/**
-	 * asd.
-	 * @return asd.
+	 * Counts all entities stores in persistence layer.
+	 * @return A number of all entitites.
 	 */
 	long count();
 
-
+	/**
+	 * Removes an entity with given primary key id.
+	 * @param id Entity's primary key.
+	 */
 	void removeById(Long id);
 }

@@ -9,27 +9,26 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 /**
- * asd.
+ * General usage basic service implementation.
+ * @param <T> Basic entities class type.
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public abstract class AbstractBasicService<T extends BaseEntity> implements BasicService<T> {
 
-    /**
-     * asd.
-     */
     @Inject
     private Provider<EntityManager> entityManagerProvider;
 
     /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     @Override
     public final EntityManager getEntityManager() {
         return entityManagerProvider.get();
     }
-
+    
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	abstract public long count() ;
+	public abstract long count();
 }

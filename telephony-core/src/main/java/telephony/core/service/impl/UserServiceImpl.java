@@ -21,7 +21,8 @@ import com.google.inject.persist.UnitOfWork;
 
 
 /**
- * Implementation of basic UserService functionalities.
+ * Users management service.
+ * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public class UserServiceImpl extends AbstractBasicService<User> implements UserService {
 
@@ -129,7 +130,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 	}
 
 	/**
-	 * asd.
+	 * {@inheritDoc} 
 	 */
 	@Override
 	public long count() {
@@ -139,6 +140,8 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 
 	/**
 	 * asd.
+	 * @param username asd.
+	 * @return asd.
 	 */
 	@Override
 	public User findByName(String username) {

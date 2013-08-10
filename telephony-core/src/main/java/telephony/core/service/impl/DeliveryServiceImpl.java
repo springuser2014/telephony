@@ -15,37 +15,22 @@ import telephony.core.entity.jpa.User;
 import telephony.core.service.DeliveryService;
 
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 
 /**
- * asd.
+ * Deliveries management service.
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class DeliveryServiceImpl
-    extends AbstractBasicService implements DeliveryService {
+    extends AbstractBasicService<Delivery> implements DeliveryService {
 
-    /**
-     * asd.
-     */
     @Inject
     private DeliveriesDao deliveriesDao;
 
-    /**
-     * asd.
-     */
-//    @Inject
-//    private StoresDao storesDao;
-
-    /**
-     * asd.
-     */
     @Inject
     private ProductsDao prodctsDao;
 
-    /**
-     * asd.
-     */
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
@@ -66,13 +51,14 @@ public class DeliveryServiceImpl
      * @param productList asd.
      * @param user asd.
      */
+    @Transactional
     @Override
     public final void addNewDelivery(
         Delivery delivery, final Store store,
         final List<Product> productList, final User user) {
         logger.debug("DeliveryServiceImpl.addNewDelivery starts");
 
-        getEntityManager().getTransaction().begin();
+//        getEntityManager().getTransaction().begin();
 
         delivery.setCreatedAt(new Date());
         delivery.setCreator(user);
@@ -88,7 +74,7 @@ public class DeliveryServiceImpl
             prodctsDao.save(p);
         }
 
-        getEntityManager().getTransaction().commit();
+//        getEntityManager().getTransaction().commit();
 
         logger.debug("DeliveryServiceImpl.addNewDelivery ends");
     }
@@ -119,28 +105,14 @@ public class DeliveryServiceImpl
         final Store store, final int page) {
         logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
 
-//        int numberOfElements = 6;
-//
-//        List<Delivery> deliveries =
-//        deliveriesDao.findLastest(store, numberOfElements * page,
-//        numberOfElements, order);
-//
-//        ArrayList<Long> ids = new ArrayList<Long>();
-//
-//        for (Delivery d : deliveries) {
-//            ids.add(d.getId());
-//        }
-//
-//        List<Product> result = deliveriesDao.findProductsByDeliveriesIds(ids);
-//
-//        logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom ends");
-
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		return deliveriesDao.count();
 	}
 }

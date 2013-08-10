@@ -12,29 +12,20 @@ import telephony.core.service.InformationService;
 import com.google.inject.Inject;
 
 
-// TODO : complete later
 /**
- * asd.
+ * Information management service.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
 public class InformationServiceImpl implements InformationService {
 
-    /**
-     * asd.
-     */
+
     @Inject
     private DeliveriesDao deliveriesDao;
 
-    /**
-     * asd.
-     */
     @Inject
     private SalesDao salesDao;
 
-    /**
-     * asd.
-     */
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
