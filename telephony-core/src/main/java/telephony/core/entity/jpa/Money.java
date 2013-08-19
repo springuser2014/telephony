@@ -7,9 +7,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 /**
- * aasd.
+ * Represents Money domain object.
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Embeddable
 public class Money implements Serializable {
@@ -21,14 +20,14 @@ public class Money implements Serializable {
 
 
     /**
-     * aasd.
+     * Initialize - 0 zł.
      */
     public Money() {
         this(new Long(0));
     }
 
     /**
-     * aasd.
+     * Initailize with given fractional part.
      * @param gr asd.
      */
     public Money(Long gr) {
@@ -36,7 +35,7 @@ public class Money implements Serializable {
     }
 
     /**
-     * aasd.
+     * Initailize with given entire and fractional part.
      * @param zl aasd.
      * @param gr aasd.
      */
@@ -52,8 +51,8 @@ public class Money implements Serializable {
 
 
     /**
-     * asd.
-     * @param v asd.
+     * Format given number to string representation of the decimal.
+     * @param v number in fractional part.
      * @return asd.
      */
     public static String formatValue(Long v) {
@@ -75,9 +74,9 @@ public class Money implements Serializable {
     }
 
     /**
-     * asd.
-     * @param obj asd.
-     * @return asd.
+     * Compares object with another one.
+     * @param obj to compare with.
+     * @return boolean value, if are equals returns true otherwise false.
      */
     @Override
     public final boolean equals(final Object obj) {
@@ -102,8 +101,8 @@ public class Money implements Serializable {
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Generates hashCode for given entity.
+     * @return A number.
      */
     @Override
     public final int hashCode() {
@@ -115,8 +114,8 @@ public class Money implements Serializable {
     }
 
     /**
-     * asd.
-     * @param value asd.
+     * Sets money value.
+     * @param value in the fractional part.
      */
     public final void setValue(Long value) {
         this.value = value;

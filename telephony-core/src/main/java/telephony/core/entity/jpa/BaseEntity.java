@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 
 
 /**
- * asd.
+ * Basic entity.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
@@ -31,15 +31,15 @@ public abstract class BaseEntity {
     private User creator;
 
     /**
-     * asd.
+     * Do nothing.
      */
     public BaseEntity() {
 
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Return basic properties of the entity.
+     * @return An entity description.
      */
     @Override
     public final String toString() {
@@ -47,15 +47,20 @@ public abstract class BaseEntity {
         str.append(getClass().getName());
         str.append("[id=");
         str.append(getId());
+        str.append(",created_at=");
+        str.append(getCreatedAt());
+        str.append(",created_by");
+        str.append(getCreator());
         str.append("]");
 
         return str.toString();
     }
 
     /**
-     * asd.
-     * @param obj asd.
-     * @return asd.
+     * Compares object with another one. 
+     * The comparison bases on entity's primary key. 
+     * @param obj to compare with.
+     * @return result of the comparison.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -80,8 +85,8 @@ public abstract class BaseEntity {
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Generates hashCode for given entity.
+     * @return A number.
      */
     @Override
     public int hashCode() {
@@ -93,44 +98,44 @@ public abstract class BaseEntity {
     }
 
     /**
-     * asd.
+     * Gets entity's primary key.
      * @return asd.
      */
     public abstract Long getId();
 
     /**
-     * asd.
-     * @param id asd.
+     * Sets entity's primary key.
+     * @param id Entity's primary key.
      */
     public abstract void setId(Long id);
 
     /**
-     * asd.
-     * @return asd.
+     * Gets entity creation date.
+     * @return creation date.
      */
     public final Date getCreatedAt() {
         return createdAt;
     }
 
     /**
-     * asd.
-     * @param createdAt asd.
+     * Sets entity's creation date.
+     * @param createdAt creation date.
      */
     public final void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Gets entity's creator.
+     * @return creator.
      */
     public final User getCreator() {
         return creator;
     }
 
     /**
-     * asd.
-     * @param creator asd.
+     * Sets entity's creator.
+     * @param creator creator.
      */
     public final void setCreator(User creator) {
         this.creator = creator;

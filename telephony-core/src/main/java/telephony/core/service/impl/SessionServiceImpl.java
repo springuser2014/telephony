@@ -73,7 +73,7 @@ public class SessionServiceImpl
      * {@inheritDoc}
      */
 	@Transactional
-    public final Session init(
+    public Session init(
     		final String username, 
     		final String password) {
     	
@@ -159,7 +159,7 @@ public class SessionServiceImpl
      * {@inheritDoc}
      */
 	@Transactional
-    public final boolean destroy(Session sessionToDelete) {
+    public boolean destroy(Session sessionToDelete) {
     	
     	logger.debug("SessionServiceImpl.destroy starts");
 

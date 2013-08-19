@@ -38,6 +38,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public final List<User> findAllUsers(String username, String sessionId) 
     		throws SessionServiceException {
        
@@ -57,6 +58,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      * {@inheritDoc}
      */
 	@Override
+	@Transactional
 	public List<User> findUsersByStoreId(String username, String sessionId,
 			Long storeId) throws SessionServiceException {
 		
@@ -103,6 +105,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      * {@inheritDoc}
      */
 	@Override
+	@Transactional
 	public User addUser(String username, String sessionId, User user)
 			throws SessionServiceException, UserServiceException {
 		
@@ -118,6 +121,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      * {@inheritDoc}
      */
 	@Override
+	@Transactional
 	public User updateUser(String username, String sessionId, User user)
 			throws SessionServiceException, UserServiceException {
 		
@@ -144,6 +148,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 	 * @return asd.
 	 */
 	@Override
+	@Transactional
 	public User findByName(String username) {
 		logger.debug("UserServiceImpl.findByName starts");
 		

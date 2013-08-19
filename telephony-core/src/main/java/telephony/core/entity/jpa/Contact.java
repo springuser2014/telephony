@@ -15,24 +15,26 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * asd.
+ * Represents Contact domain object.
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "contacts")
 public class Contact extends BaseEntity {
+	
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY
     )
     private Collection<Delivery> deliveries;
+    
     @Column(
         name     = "details",
         nullable = false,
         length   = 1000
     )
-    private String               details;
+    private String details;
+    
     @Id
     @Column(
         name           = "id",
@@ -48,29 +50,30 @@ public class Contact extends BaseEntity {
         sequenceName   = "contacts_seq",
         allocationSize = 1
     )
-    private Long                 id;
+    private Long id;
+    
     @Column(
         name     = "label",
         nullable = false,
         length   = 100
     )
-    private String               label;
+    private String label;
+    
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY
     )
-    private Collection<Sale>     sales;
+    private Collection<Sale> sales;
 
     /**
-     * asd.
+     * Do nothing.
      */
     public Contact() {
 
     }
 
     /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     @Override
     public final Long getId() {
@@ -78,8 +81,7 @@ public class Contact extends BaseEntity {
     }
 
     /**
-     * asd.
-     * @param id asd.
+     * {@inheritDoc}
      */
     @Override
     public final void setId(Long id) {
@@ -87,47 +89,47 @@ public class Contact extends BaseEntity {
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Gets contact's label.
+     * @return contact's label.
      */
     public final String getLabel() {
         return label;
     }
 
     /**
-     * asd.
-     * @param label asd.
+     * Sets contact's label.
+     * @param label the label.
      */
     public final void setLabel(String label) {
         this.label = label;
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Gets contact's details.
+     * @return contact's details.
      */
     public final String getDetails() {
         return details;
     }
 
     /**
-     * asd.
-     * @param details asd.
+     * Sets contact's details.
+     * @param details the details.
      */
     public final void setDetails(String details) {
         this.details = details;
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Gets contact's deliveries.
+     * @return Collection of deliveries.
      */
     public final Collection<Delivery> getDeliveries() {
         return deliveries;
     }
 
     /**
-     * asd.
+     * Gets contact's sales.
      * @return asd.
      */
     public final Collection<Sale> getSales() {
@@ -135,16 +137,16 @@ public class Contact extends BaseEntity {
     }
 
     /**
-     * asd.
-     * @param deliveries asd.
+     * Sets contact's deliveries.
+     * @param deliveries of contact.
      */
     public final void setDeliveries(Collection<Delivery> deliveries) {
         this.deliveries = deliveries;
     }
 
     /**
-     * asd.
-     * @param sales asd.
+     * Sets contact's sales.
+     * @param sales of contact.
      */
     public final void setSales(Collection<Sale> sales) {
         this.sales = sales;

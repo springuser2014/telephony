@@ -22,7 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * asd.
+ * Represents Delivery domain object.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
@@ -60,95 +60,95 @@ public class Delivery extends BaseEntity {
     private Collection<Product> products;
 
     /**
-     * asd.
-     * @return asd.
+     * Gets delivery's label.
+     * @return the label.
      */
     public final String getLabel() {
         return label;
     }
 
     /**
-     * asd.
-     * @param label asd.
+     * Sets delivery's label.
+     * @param label of delivery.
      */
     public final void setLabel(String label) {
         this.label = label;
     }
 
-
     /**
-     * asd.
-     * @return asd.
+     * Gets delivery's products.
+     * @return collection of the products.
      */
     public final Collection<Product> getProducts() {
         return products;
     }
 
     /**
-     * asd.
-     * @param products asd.
+     * Set delivery's products.
+     * @param products of delivery.
      */
     public final void setProducts(Collection<Product> products) {
         this.products = products;
     }
 
     /**
-     * asd.
+     * Initialize.
      */
     public Delivery() {
         products = new ArrayList<Product>();
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Gets delivery's date of arrival.
+     * @return the arrival date.
      */
     public final Date getDateIn() {
         return dateIn;
     }
 
     /**
-     * asd.
-     * @param dateIn asd.
+     * Sets delivery's date of arrival.
+     * @param dateIn arrival date.
      */
     public final void setDateIn(Date dateIn) {
         this.dateIn = dateIn;
     }
 
     /**
-     * asd.
-     * @return asd.
+     * Gets delivery's arrival store.
+     * @return the store.
      */
     public final Store getStore() {
         return store;
     }
 
     /**
-     * asd.
-     * @param store asd.
+     * Set delivery's arrival store
+     * @param store of delivery.
      */
     public final void setStore(Store store) {
         this.store = store;
     }
 
     /**
-     * asd.
-     * @param o asd.
-     * @return asd.
+     * Compares object with another one.
+     * The comparison bases on entity's properties.
+     * @param obj to compare with
+     * @return result of the comparison
      */
     @Override
-    public final boolean equals(Object o) {
-        if (this == o) {
+    public final boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
+        if (!super.equals(obj)) {
             return false;
         }
 
-        Delivery delivery = (Delivery) o;
+        Delivery delivery = (Delivery) obj;
 
         if (dateIn != null
             ? !dateIn.equals(delivery.dateIn) : delivery.dateIn != null) {
@@ -174,10 +174,9 @@ public class Delivery extends BaseEntity {
         return true;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
+   /**
+    * {@inheritDoc}
+    */
     @Override
     public final int hashCode() {
         int result = super.hashCode();
@@ -190,8 +189,7 @@ public class Delivery extends BaseEntity {
     }
 
     /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     @Override
     public final Long getId() {
@@ -199,8 +197,7 @@ public class Delivery extends BaseEntity {
     }
 
     /**
-     * asd.
-     * @param id asd.
+     * {@inheritDoc}
      */
     @Override
     public final void setId(Long id) {
