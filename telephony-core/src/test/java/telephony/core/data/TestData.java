@@ -3,17 +3,18 @@ package telephony.core.data;
 import telephony.core.util.StringGeneratorImpl;
 
 /**
- * asd.
- * @author pahe
+ * Class helps to handle references to data from .sql files.
+ * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public final class TestData {
+ 
 	
 	private TestData() {
 		
 	}
 	
 	/**
-	 * asd.
+	 * Some test data.
 	 */
 	public static final String USER1_NAME = "user1@gmail.com";
 	public static final String USER1_PASSWORD = "rfaysdhaiufsiuf";	

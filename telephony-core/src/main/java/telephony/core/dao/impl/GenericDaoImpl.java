@@ -35,7 +35,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     private final Class<E> entityClass;
 
     /**
-     * asd.
+     * Setup entity's class.
      * @param clazz asd.
      */
     public GenericDaoImpl(Class<E> clazz) {
@@ -43,7 +43,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     /**
-     * asd.
+     * Gets entity's class.
      * @return asd.
      */
     protected Class<E> getEntityClass() {
@@ -51,29 +51,11 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     /**
-     * asd.
+     * Gets entity's manager.
      * @return asd.
      */
     protected EntityManager getEntityManager() {
         return entityManagerProvider.get();
-    }
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    protected DetachedCriteria prepareCriteria() {
-        return prepareCriteria(getEntityClass());
-    }
-
-    /**
-     * asd.
-     * @param entityClass asd.
-     * @return asd.
-     */
-	protected DetachedCriteria prepareCriteria(Class<E> entityClass) {
-
-        return DetachedCriteria.forClass(entityClass);
     }
 
 	@Override
@@ -176,7 +158,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     
     @Override
     public void removeById(Long id) {
-        logger.debug("permanentDeleteById starts ");
+        logger.debug("removeById starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
         int updated = getEntityManager()
@@ -184,12 +166,12 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
                 .setParameter(1, id)
                 .executeUpdate();
 
-        logger.debug("permanentDeleteById updated {} elements ", updated);
+        logger.debug("removeById updated {} elements ", updated);
     }
 
     @Override
     public void removeByIds(List<Long> ids) {
-        logger.debug("permanentDeleteByIds stars ");
+        logger.debug("removeByIds stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", ids.size());
 
@@ -198,22 +180,22 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
                 .setParameter(1, ids)
                 .executeUpdate();
 
-        logger.debug("permanentDeleteByIds updated {} elements ", updated);
+        logger.debug("removeByIds updated {} elements ", updated);
     }
 
     @Override
     public void remove(E entity) {
-        logger.debug("permanentDelete starts ");
+        logger.debug("remove starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
         getEntityManager().remove(entity);
 
-        logger.debug("permanentDelete ends");
+        logger.debug("remove ends");
     }
 
     @Override
     public void remove(List<E> entities) {
-        logger.debug("permanentDelete starts ");
+        logger.debug("remove starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of elements : {} ", entities.size());
 
@@ -221,7 +203,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
             getEntityManager().remove(entity);
         }
 
-        logger.debug("permanentDelete ends");
+        logger.debug("remove ends");
     }
     
 	@Override

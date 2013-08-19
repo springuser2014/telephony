@@ -49,7 +49,7 @@ public class InformationServiceTest extends BaseCoreTest {
 	 */
 	@Before
 	public void initializer() {
-		injector.injectMembers(this);
+		getInjector().injectMembers(this);
 	}
 	
 	@Test

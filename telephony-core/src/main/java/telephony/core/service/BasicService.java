@@ -12,12 +12,13 @@ public interface BasicService<T extends BaseEntity> {
 
     /**
      * Returns entityManager object.
-     * @return asd.
+     * @return entities manager.
      */
     EntityManager getEntityManager();
     
     /**
 	 * Counts number of entities in persistence layer.
+	 * @return number of stored entities.
 	 */
 	long count();
 }

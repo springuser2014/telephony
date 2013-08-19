@@ -30,6 +30,8 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 /**
  * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -50,7 +52,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionInitialization() throws SessionServiceException {
 		
 		// given 
@@ -70,7 +72,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionRefreshing() throws SessionServiceException {
 
 		// given 
@@ -95,7 +97,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionInitializationMockTest() throws SessionServiceException {
 
 		// given
@@ -121,7 +123,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionValidation1() throws SessionServiceException {
 		
 		// given 
@@ -141,7 +143,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionValidation2() throws SessionServiceException {
 		
 		// given 
@@ -163,7 +165,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionDestroying() throws SessionServiceException {
 		
 		// given

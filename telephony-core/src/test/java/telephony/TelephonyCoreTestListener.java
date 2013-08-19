@@ -13,13 +13,19 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.persist.PersistService;
 
+/**
+ * Tests listener, which helps to handle with Guice-managed injections in tests.
+ * It starts and stops JPA persistence service.
+ * @author pawelhenek 
+ *
+ */
 public class TelephonyCoreTestListener extends RunListener {
 	
 	@Override
 	public void testRunFinished(Result result) throws Exception {
 		
-		if (BaseCoreTest.persistService != null) {
-			BaseCoreTest.persistService.stop();
+		if (BaseCoreTest.getPersistService() != null) {
+			BaseCoreTest.getPersistService().stop();
 		}
 		
 		super.testRunFinished(result);
@@ -33,12 +39,12 @@ public class TelephonyCoreTestListener extends RunListener {
 				new SystemPropertyEnvironemntNameResolver()
 		);
 	
-	    BaseCoreTest.injector = Guice.createInjector(modules);
+	    BaseCoreTest.setInjector(Guice.createInjector(modules));
 
-		BaseCoreTest.persistService = BaseCoreTest.injector.getInstance(PersistService.class);
+		BaseCoreTest.setPersistService(BaseCoreTest.getInjector().getInstance(PersistService.class));
 		
-		if (BaseCoreTest.persistService != null) {
-			BaseCoreTest.persistService.start();
+		if (BaseCoreTest.getPersistService() != null) {
+			BaseCoreTest.getPersistService().start();
 		}
 		
 		super.testRunStarted(description);

@@ -87,17 +87,12 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session sessionToValidate = Session.create(username, sessionId);
 		
 		try {
-			//getEntityManager().getTransaction().begin();
-			
 			sessionService.validate(sessionToValidate);
 			
 			usersDao.remove(user);
 			
-			
 		} catch (Exception e) {
 			logger.error("Error occured during deleting", e);
-		} finally {
-			//getEntityManager().getTransaction().commit();
 		}
 	}
 
@@ -143,9 +138,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 	}
 
 	/**
-	 * asd.
-	 * @param username asd.
-	 * @return asd.
+	 * {@inheritDoc}
 	 */
 	@Override
 	@Transactional

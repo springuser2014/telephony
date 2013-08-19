@@ -19,7 +19,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/**
-	 * asd.
+	 * Sets entities class.
 	 */
 	public UsersDaoImpl() {
 		super(User.class);
@@ -120,9 +120,8 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		super.remove(userId);			
 	}
 
-	/**
+	/*
 	 * maybe there will be a need to make it public API.
-	 * @param user asd.
  	 */
 	private void removeUserRoles(User user) {
 		
@@ -134,9 +133,8 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		return;
 	}
 
-	/**
+	/*
 	 * maybe there will be a need to make it public API..
-	 * @param user asd.
 	 */
 	private void removeUserStores(User user) {
 		

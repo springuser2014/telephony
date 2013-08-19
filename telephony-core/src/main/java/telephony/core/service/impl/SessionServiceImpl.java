@@ -82,9 +82,6 @@ public class SessionServiceImpl
         User u;
 
         try {
-
-	        //getEntityManager().getTransaction().begin();
-	
 	        u = usersDao.findByNameAndPassword(username, password);
 	
 	        String sessionId = generator.nextSessionId();
@@ -94,19 +91,12 @@ public class SessionServiceImpl
 	
 	        usersDao.saveOrUpdate(u);
 	        
-	        //getEntityManager().getTransaction().commit();
-
         } catch (Exception e) {
         	
         	logger.error("Error occured during session initialization",e);
             return null;
         } 
-//        finally {
-//        	if (getEntityManager().getTransaction().isActive()) {
-//        		getEntityManager().getTransaction().rollback();
-//        	}
-//        }
-
+        
         Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
     }
@@ -122,8 +112,7 @@ public class SessionServiceImpl
         User u;
 
         try {
-//	        getEntityManager().getTransaction().begin();
-	
+
 	        u = usersDao.findByNameAndSessionId(
 	        		sessionToRefresh.getUsername(), 
 	        		sessionToRefresh.getSessionId()
@@ -139,17 +128,11 @@ public class SessionServiceImpl
 	            usersDao.saveOrUpdate(u);
 	        }
 	
-//	        getEntityManager().getTransaction().commit();
 	        // TODO : refactor
         } catch (Exception e) {
         	logger.error("Error occured during session refreshing", e);
             return null;
         } 
-//        finally {
-//        	if (getEntityManager().getTransaction().isActive()) {
-//        		getEntityManager().getTransaction().rollback();
-//        	}
-//        }
 
         Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
@@ -165,7 +148,6 @@ public class SessionServiceImpl
 
         User u;
         try {
-//            getEntityManager().getTransaction().begin();
 
             u = usersDao.findByNameAndSessionId(
 				sessionToDelete.getUsername(),
@@ -176,17 +158,10 @@ public class SessionServiceImpl
             u.setSessionValidity(expiredDate);
             usersDao.saveOrUpdate(u);
 
-//            getEntityManager().getTransaction().commit();
-
         } catch (Exception e) {
         	logger.warn("Error occured during session destroying", e);
             return false;
         } 
-//        finally {
-//        	if (getEntityManager().getTransaction().isActive()) {
-//        		getEntityManager().getTransaction().rollback();
-//        	}
-//        }
 
         return true;
     }
@@ -202,8 +177,6 @@ public class SessionServiceImpl
 		User u;
 		
 		try {
-			//getEntityManager().getTransaction().begin();
-			
 			u = usersDao.findByNameAndSessionId(
 					sessionToValidate.getUsername(), 
 					sessionToValidate.getSessionId()
@@ -217,18 +190,14 @@ public class SessionServiceImpl
 		} catch (Exception e)  {
 			logger.warn("Error occured during session validation", e);
 			return false;
-		} finally {
-			
-//			getEntityManager().getTransaction().commit();
-//			
-//        	if (getEntityManager().getTransaction().isActive()) {
-//        		getEntityManager().getTransaction().rollback();
-//        	}
-        }
+		} 
 		
 		return true;
 	}
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public long count() {
 		

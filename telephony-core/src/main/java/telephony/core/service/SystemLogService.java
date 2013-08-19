@@ -5,7 +5,6 @@ import java.util.List;
 import telephony.core.entity.mongo.SystemLog;
 import telephony.core.entity.mongo.SystemLogQuery;
 
-// TODO: complete later
 
 /**
  * asd.

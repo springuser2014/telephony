@@ -26,10 +26,14 @@ import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
-@TestExecutionListeners( {
+@TestExecutionListeners({
 	DependencyInjectionTestExecutionListener.class,
     FlywayDBUnitTestExecutionListener.class 
 })
@@ -45,7 +49,7 @@ public class UserServiceTest extends BaseCoreTest {
 	 * @throws SessionServiceException 
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data"} )
+	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
 	public void testAddingNewUser() throws SessionServiceException, UserServiceException {
 		
 		// given
@@ -70,12 +74,13 @@ public class UserServiceTest extends BaseCoreTest {
 	
 	/**
 	 * asd.
-	 * @throws SessionServiceException
-	 * @throws UserServiceException
+	 * @throws SessionServiceException asd.
+	 * @throws UserServiceException asd.
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data"} )
-	public void testDeletingUser() throws SessionServiceException, UserServiceException {
+	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
+	public void testDeletingUser() 
+			throws SessionServiceException, UserServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
@@ -93,11 +98,12 @@ public class UserServiceTest extends BaseCoreTest {
 
 	/**
 	 * asd.
-	 * @throws SessionServiceException
+	 * @throws SessionServiceException asd.
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
-	public void testFindingAllUsers() throws SessionServiceException {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testFindingAllUsers() 
+			throws SessionServiceException {
 
 		// given
 		String username = TestData.USER1_NAME;
@@ -113,11 +119,12 @@ public class UserServiceTest extends BaseCoreTest {
 
 	/**
 	 * asd.
-	 * @throws SessionServiceException
+	 * @throws SessionServiceException asd.
 	 */
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
-	public void testFindingUsersByStoreId() throws SessionServiceException {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testFindingUsersByStoreId() 
+			throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
@@ -128,7 +135,7 @@ public class UserServiceTest extends BaseCoreTest {
 		List<User> lst = userService.findUsersByStoreId(username, sessionId, storeId);
 		
 		// then
-		assertTrue("asd", lst.size() == 2 );
+		assertTrue("asd", lst.size() == 2);
 	}
 	
 	
