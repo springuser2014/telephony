@@ -185,7 +185,6 @@
 	</dependencies>
 	<build>
 
-		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 
 			<plugin>
@@ -228,7 +227,7 @@
 				</configuration>
 
 			</plugin>
-
+			<!--  TODO : remove ??  -->
 			<plugin>
 				<artifactId>maven-enforcer-plugin</artifactId>
 				<executions>

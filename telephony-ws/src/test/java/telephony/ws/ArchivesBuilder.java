@@ -64,7 +64,7 @@ public final class ArchivesBuilder {
                     resolver.artifact("org.restlet.jee:org.restlet:2.1-SNAPSHOT")
                     .goOffline().resolveAsFiles())
                 .addAsLibraries(
-                    resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.1")
+                    resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.6")
                     .goOffline().resolveAsFiles())
                 .addAsLibraries(
                     resolver.artifact("com.google.inject.extensions:guice-servlet:3.0")
