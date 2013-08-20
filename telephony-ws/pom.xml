@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>telephony-parent</artifactId>
 		<groupId>org.bitbucket.pawelhenek.telephony</groupId>
-		<version>0.6</version>
+		<version>0.7</version>
 	</parent>
 	<artifactId>telephony-ws</artifactId>
 	<name>Telephony WebServices</name>
@@ -14,8 +14,14 @@
 	<repositories>
 
 		<repository>
-			<id>loll</id>
+			<id>nexus xwiki</id>
 			<url>http://nexus.xwiki.org/nexus/content/groups/public</url>
+		</repository>
+
+		<repository>
+			<id>maven-restlet</id>
+			<name>Public online Restlet repository</name>
+			<url>http://maven.restlet.org</url>
 		</repository>
 
 	</repositories>
@@ -139,6 +145,19 @@
 			<version>1.1.0-alpha-3</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-guice-bom</artifactId>
+			<version>1.0.0.Alpha2</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-guice-impl</artifactId>
+			<version>1.0.0.Alpha2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.5</version>
@@ -155,16 +174,23 @@
 			<artifactId>guice-assistedinject</artifactId>
 			<version>${guice.version}</version>
 		</dependency>
-		<!-- SLF4J dependencies -->		
+		<!-- SLF4J dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency> 
-		  <groupId>ch.qos.logback</groupId>
-		  <artifactId>logback-classic</artifactId>
-		  <version>${logback.version}</version>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 		<!-- Shiro Dependencies -->
 		<dependency>
@@ -184,7 +210,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 
 			<plugin>
@@ -227,7 +253,7 @@
 				</configuration>
 
 			</plugin>
-			<!--  TODO : remove ??  -->
+			<!-- TODO : remove ?? -->
 			<plugin>
 				<artifactId>maven-enforcer-plugin</artifactId>
 				<executions>

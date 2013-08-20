@@ -7,6 +7,6 @@ public class SystemPropertyEnvironemntNameResolver implements EnvironmentNameRes
 
 	@Override
 	public String getEnvironmentProperty() {
-		return System.getProperty("environment");
+		return System.getProperty("environment") != null ? System.getProperty("environment") : "PRODUCTION" ;
 	}
 }

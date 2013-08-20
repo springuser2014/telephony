@@ -46,6 +46,8 @@ public class TelephonyApplication extends Application {
 		
 		logger.info("Number of executed migrations : " + Integer.toString(migrator.migrate()));
 	}
+	
+	
 
     /**
      * Registering all REST resources.

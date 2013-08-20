@@ -5,6 +5,9 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import telephony.ws.resource.TelephonyServerResource;
 
 // TODO : remove later
 
@@ -13,19 +16,12 @@ import org.slf4j.Logger;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class HelloWorldResource extends ServerResource {
+public class HelloWorldResource extends TelephonyServerResource {
 
     public static final String URL = "/hello";
 
 
-    private Logger logger2;
-
-    /**
-     * asd.
-     */
-    public HelloWorldResource() {
-
-    }
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * asd.
@@ -34,7 +30,7 @@ public class HelloWorldResource extends ServerResource {
     @Get("json")
     public Representation hello() {
 
-        logger2.info("logger 2");
+    	logger.info("helloworld resource");
 
         return new JsonRepresentation("hello world");
     }

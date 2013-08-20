@@ -50,6 +50,7 @@ public final class ArchivesBuilder {
                 .use(MavenDependencyResolver.class)
                 .loadMetadataFromPom("pom.xml");
 
+        // TODO : refactor libraries dependencies - moves versions to constants
         WebArchive jar = ShrinkWrap
                 .create(WebArchive.class, ARCHIVE_NAME + ARCHIVE_EXT)
                 .addClasses(TelephonyApplication.class, PingResource.class, TestResource.class)
@@ -64,7 +65,7 @@ public final class ArchivesBuilder {
                     resolver.artifact("org.restlet.jee:org.restlet:2.1-SNAPSHOT")
                     .goOffline().resolveAsFiles())
                 .addAsLibraries(
-                    resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.6")
+                    resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.7")
                     .goOffline().resolveAsFiles())
                 .addAsLibraries(
                     resolver.artifact("com.google.inject.extensions:guice-servlet:3.0")
@@ -72,11 +73,7 @@ public final class ArchivesBuilder {
                 .addAsLibraries(
                     resolver.artifact("com.google.inject.extensions:guice-persist:3.0")
                     .resolveAsFiles())
-                .addAsLibraries(
-                    resolver.artifact("com.google.gwt:gwt-user:2.5.0").resolveAsFiles())
-                .addAsLibraries(
-                    resolver.artifact("com.google.gwt:gwt-servlet:2.5.0").resolveAsFiles())
-
+               
                 .addAsLibraries(
                     resolver.artifact("org.restlet.jee:org.restlet.ext.crypto:2.1-SNAPSHOT")
                     .resolveAsFiles())
@@ -90,14 +87,17 @@ public final class ArchivesBuilder {
                     resolver.artifact("org.restlet.jee:org.restlet.ext.servlet:2.1-SNAPSHOT")
                     .resolveAsFiles())
                 .addAsLibraries(
-                    resolver.artifact("org.slf4j:slf4j-log4j12:1.7.2").resolveAsFiles())
+                    resolver.artifact("ch.qos.logback:logback-classic:1.0.7").resolveAsFiles())
                 .addAsLibraries(
-                    resolver.artifact("org.slf4j:slf4j-api:1.7.2").resolveAsFiles())
+                    resolver.artifact("org.slf4j:slf4j-api:1.7.5").resolveAsFiles())
+                .addAsLibraries(
+                    resolver.artifact("org.slf4j:slf4j-simple:1.7.5").resolveAsFiles())
 
-
+		
                 .addAsManifestResource("persistence.xml")
-                .addAsWebResource("db/schema.sql")
-                .addAsWebResource("db/test-data.sql")
+                .addAsWebResource("db/V2__Basic_schema_structure.sql")
+                .addAsWebResource("db/V3__Preparation_to_use_hibernate_envers.sql")
+                .addAsWebResource("db/V4__Test_data.sql")
 
                 .setWebXML("web.xml");
 

@@ -83,6 +83,31 @@ For integration tests telephony uses arquillian. To lanuch our integration tests
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false "
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false "
     export JAVA_OPTS;
+   
+Or for windows .bat file (bin/startup.bat)
+
+   	:::cmd
+    set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote 
+    set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.port=8089 
+    set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.ssl=false 
+    set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.authenticate=false 
+         
+Of course tomcat-users.xml should like similar to:
+
+	:::xml
+	<tomcat-users>
+	
+	    <role rolename="manager-gui"/>
+	    <role rolename="manager-status"/>
+	    <role rolename="manager-script"/>
+	    <role rolename="manager-jmx"/>
+	    
+	    <user username="tomcat" password="tomcat" roles="manager-gui,manager-status,manager-script,manager-jmx"/>
+		
+	    <user username="arquillian" password="arquillian" roles="manager-gui,manager-status,manager-script,manager-jmx"/>
+	
+	</tomcat-users>
+
 
 We need to add this at the beginning of the file to enable deployment by jmx.
 

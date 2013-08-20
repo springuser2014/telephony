@@ -21,9 +21,11 @@
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
 			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-ws-test" />
 			<property name="hibernate.connection.username" value="postgres" />
-			<property name="hibernate.connection.password" value="flyway" />
+			<property name="hibernate.connection.password" value="postgres" />
 			<property name="hibernate.hbm2ddl.auto" value="create" />
-			<property name="hibernate.hbm2ddl.import_files" value="/db/schema.sql,/db/test-data.sql" />
+			
+			<property name="hibernate.hbm2ddl.import_files" value="/db/V2__Basic_schema_structure.sql,/db/V3__Preparation_to_use_hibernate_envers.sql,/db/data/V4_Test_data.sql" />
+			
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.default_schema" value="public" />
 			<property name="current_session_context_class" value="thread" />

@@ -16,7 +16,7 @@ import com.google.inject.persist.PersistService;
 /**
  * Tests listener, which helps to handle with Guice-managed injections in tests.
  * It starts and stops JPA persistence service.
- * @author pawelhenek 
+ * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
 public class TelephonyCoreTestListener extends RunListener {

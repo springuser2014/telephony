@@ -53,12 +53,13 @@ public class SessionResourceTest {
 
         URL baseURL = new URL(TESTING_APP + SessionResource.URL);
         ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
-
+//        public static final String USER1_NAME = "user1@gmail.com";
+//    	public static final String USER1_PASSWORD = "rfaysdhaiufsiuf";	
 
 //        clientResource.setChallengeResponse(
 //        new ChallengeResponse(
 //        org.restlet.data.ChallengeScheme.HTTP_BASIC, "login", "secret".toCharArray()));
-        JsonRepresentation repr = new JsonRepresentation(new SessionBean("pawelhenek", "asdasd"));
+        JsonRepresentation repr = new JsonRepresentation(new SessionBean("user1@gmail.com", "rfaysdhaiufsiuf"));
         clientResource.post(repr);
 
 //        doesn't work due to lack of resource's interface representation

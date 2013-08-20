@@ -29,6 +29,7 @@ public class TelephonyCoreProductionModule  extends AbstractModule {
 	 * asd.
 	 */
 	protected void configure() {
+		// TODO : refactor
 		bind(Integer.class)
 		.annotatedWith(Names.named("sessionValidity"))
 		.toInstance(SESSION_VALIDITY);

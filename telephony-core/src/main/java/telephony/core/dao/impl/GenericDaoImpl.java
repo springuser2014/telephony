@@ -117,8 +117,8 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
 
     @Override
     public E saveOrUpdate(E entity) {
-        logger.debug("saveOrUpdate stars ");
-        logger.debug("entity type : {} ", entityClass.getName());
+        logger.info("saveOrUpdate stars ");
+        logger.info("entity type : {} ", entityClass.getName());
 
         E e = getEntityManager().merge(entity);
         getEntityManager().flush();

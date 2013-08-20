@@ -17,7 +17,10 @@ import org.slf4j.LoggerFactory;
 import telephony.core.guice.TelephonyCoreServicesModule;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.Config;
+import telephony.ws.guice.env.TelephonyWebServicesProductionModule;
+import telephony.ws.resource.TelephonyServerResource;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -30,28 +33,13 @@ import com.google.inject.persist.jpa.JpaPersistModule;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class SessionResource extends ServerResource {
+public class SessionResource extends TelephonyServerResource {
 
     public static final String URL = "/session";
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
     private SessionService sessionService;
-
-    @SuppressWarnings("unused")
-    private final Representation representation = new JsonRepresentation("");
-
-    /**
-     * asd.
-     */
-    public SessionResource() {
-        Injector inj = Guice.createInjector(
-                new JpaPersistModule(Config.PERSISTENCE),
-                new TelephonyCoreServicesModule()
-        );
-
-        inj.injectMembers(this);
-    }
 
     /**
      * asd.
@@ -68,9 +56,11 @@ public class SessionResource extends ServerResource {
      * @return asd.
      * @throws JSONException asd.
      * @throws IOException asd.
+     * @throws SessionServiceException 
      */
     @Post("json")
-    public Representation startSession(Representation entity) throws JSONException, IOException {
+    public Representation startSession(Representation entity) 
+    		throws JSONException, IOException, SessionServiceException {
 
         logger.info("startSession starts");
 
@@ -80,10 +70,12 @@ public class SessionResource extends ServerResource {
 
         logger.info(" username = {} ", name);
         logger.info(" password = {} ", password);
-
-        Session session = sessionService.init(name, password);
-
-
+        Session session = null;
+        try {
+        	session = sessionService.init(name, password);	
+        } catch (Exception e) {
+        	logger.info("Error occured" , e);
+        }
 
         if (session == null) {
             return new JsonRepresentation("Error occured");
@@ -98,9 +90,11 @@ public class SessionResource extends ServerResource {
      * @return asd.
      * @throws IOException asd.
      * @throws JSONException asd.
+     * @throws SessionServiceException 
      */
     @Delete("json")
-    public Representation endSession(Representation entity) throws IOException, JSONException {
+    public Representation endSession(Representation entity)
+    		throws IOException, JSONException, SessionServiceException {
 
         logger.info("endSession starts");
 
@@ -125,10 +119,11 @@ public class SessionResource extends ServerResource {
      * @return asd.
      * @throws IOException asd.
      * @throws JSONException asd.
+     * @throws SessionServiceException 
      */
     @Put("json")
     public Representation refresh(Representation entity)
-    		throws IOException, JSONException {
+    		throws IOException, JSONException, SessionServiceException {
 
         logger.info("refresh starts");
 

@@ -5,19 +5,13 @@
 	<parent>
 		<groupId>org.bitbucket.pawelhenek.telephony</groupId>
 		<artifactId>telephony-parent</artifactId>
-		<version>0.6</version>
+		<version>0.7</version>
 	</parent>
 	<artifactId>telephony-core</artifactId>
-	<version>0.6</version>
 	<packaging>jar</packaging>
 	<name>Telephony core</name>
 	<repositories>
-
-		<repository>
-			<id>maven-restlet</id>
-			<name>Public online Restlet repository</name>
-			<url>http://maven.restlet.org</url>
-		</repository>
+		
 		<repository>
 			<id>maven-morphia</id>
 			<name>Public online Morphia repository</name>

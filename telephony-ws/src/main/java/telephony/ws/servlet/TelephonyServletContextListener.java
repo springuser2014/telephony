@@ -30,6 +30,10 @@ public class TelephonyServletContextListener extends GuiceServletContextListener
         		new SystemPropertyEnvironemntNameResolver()
         );
         
+        for (AbstractModule am : abstractModules) {
+        	logger.info("Defined module : " + am.getClass().getName());
+        }
+        
         return Guice.createInjector(abstractModules);
     }
 }

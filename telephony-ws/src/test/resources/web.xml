@@ -6,7 +6,7 @@
 <web-app>
 
 	<listener>
-		<listener-class>telephony.ws.listener.TelephonyServletTestContextListener</listener-class>
+		<listener-class>telephony.ws.pre.TelephonyServletTestContextListener</listener-class>
 	</listener>
 
 	<filter>

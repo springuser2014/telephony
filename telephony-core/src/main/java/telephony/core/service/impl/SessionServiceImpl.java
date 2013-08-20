@@ -77,7 +77,7 @@ public class SessionServiceImpl
     		final String username, 
     		final String password) {
     	
-    	logger.debug("SessionServiceImpl.init starts");
+    	logger.info("SessionServiceImpl.init starts");
 
         User u;
 
@@ -93,7 +93,7 @@ public class SessionServiceImpl
 	        
         } catch (Exception e) {
         	
-        	logger.error("Error occured during session initialization",e);
+        	logger.info("Error occured during session initialization",e);
             return null;
         } 
         
