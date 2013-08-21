@@ -5,7 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.guice.env.SystemPropertyEnvironemntNameResolver;
+import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 
 import com.google.inject.AbstractModule;
@@ -17,7 +17,7 @@ import com.google.inject.servlet.GuiceServletContextListener;
 /**
  * Defining which guice's modules are used in application.
  */
-public class TelephonyServletContextListener extends GuiceServletContextListener {
+public class TelephonyServletProductionContextListener extends GuiceServletContextListener {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -27,7 +27,7 @@ public class TelephonyServletContextListener extends GuiceServletContextListener
         
         List<AbstractModule> abstractModules = new TelephonyWebServicesEnvironmentResolver()
         	.resolveWith(
-        		new SystemPropertyEnvironemntNameResolver()
+        		new SystemPropertyEnvironmentNameResolver()
         );
         
         for (AbstractModule am : abstractModules) {

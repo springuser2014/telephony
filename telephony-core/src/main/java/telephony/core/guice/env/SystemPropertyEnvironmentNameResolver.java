@@ -3,7 +3,7 @@ package telephony.core.guice.env;
 /**
  * asd.
  */
-public class SystemPropertyEnvironemntNameResolver implements EnvironmentNameResolver {
+public class SystemPropertyEnvironmentNameResolver implements EnvironmentNameResolver {
 
 	@Override
 	public String getEnvironmentProperty() {

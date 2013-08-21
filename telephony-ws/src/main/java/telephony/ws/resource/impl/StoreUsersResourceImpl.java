@@ -10,7 +10,7 @@ import org.restlet.resource.ServerResource;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoreProductsResource extends ServerResource {
+public class StoreUsersResourceImpl extends ServerResource {
 
     private final Representation rep = new JsonRepresentation("");
 

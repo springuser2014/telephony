@@ -12,7 +12,7 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 @Environment("TEST")
 public class TelephonyCoreTestModule extends AbstractModule {
 	
-	public static final String PERSISTENCE_TEST = "telephony-test";
+	public  static final String PERSISTENCE_TEST = "telephony-test";
 	private static final Integer SESSION_VALIDITY = new Integer(30 * 60 * 1000);
 	
 	@Override

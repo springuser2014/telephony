@@ -33,7 +33,8 @@ import com.google.inject.persist.jpa.JpaPersistModule;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class SessionResource extends TelephonyServerResource {
+public class SessionResourceImpl extends TelephonyServerResource 
+	implements telephony.ws.resource.SessionResource {
 
     public static final String URL = "/session";
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -43,24 +44,14 @@ public class SessionResource extends TelephonyServerResource {
 
     /**
      * asd.
-     * @param persistService asd.
-     */
-    @Inject
-	protected final void init(final PersistService persistService) {
-        persistService.start();
-    }
-
-    /**
-     * asd.
      * @param entity asd.
      * @return asd.
      * @throws JSONException asd.
      * @throws IOException asd.
-     * @throws SessionServiceException 
      */
     @Post("json")
-    public Representation startSession(Representation entity) 
-    		throws JSONException, IOException, SessionServiceException {
+    public Representation start(Representation entity) 
+    		throws JSONException, IOException {
 
         logger.info("startSession starts");
 
@@ -74,7 +65,7 @@ public class SessionResource extends TelephonyServerResource {
         try {
         	session = sessionService.init(name, password);	
         } catch (Exception e) {
-        	logger.info("Error occured" , e);
+        	logger.info("Error occured during session initialization." , e);
         }
 
         if (session == null) {
@@ -90,11 +81,10 @@ public class SessionResource extends TelephonyServerResource {
      * @return asd.
      * @throws IOException asd.
      * @throws JSONException asd.
-     * @throws SessionServiceException 
      */
     @Delete("json")
-    public Representation endSession(Representation entity)
-    		throws IOException, JSONException, SessionServiceException {
+    public Representation end(Representation entity)
+    		throws IOException, JSONException {
 
         logger.info("endSession starts");
 
@@ -104,8 +94,13 @@ public class SessionResource extends TelephonyServerResource {
 
         logger.info(" username = {} ", name);
         logger.info(" sessionId = {} ", sessionId);
-
-        boolean success = sessionService.destroy(null);
+        
+        boolean success = false;
+        try {
+        	success = sessionService.destroy(null);
+        } catch (SessionServiceException e) { 
+        	logger.info("Error occured during session ending.", e);
+        }
 
         HashMap<String, String> res = new HashMap<String, String>();
         res.put("success", new Boolean(success).toString());
@@ -119,22 +114,27 @@ public class SessionResource extends TelephonyServerResource {
      * @return asd.
      * @throws IOException asd.
      * @throws JSONException asd.
-     * @throws SessionServiceException 
      */
     @Put("json")
     public Representation refresh(Representation entity)
-    		throws IOException, JSONException, SessionServiceException {
+    		throws IOException, JSONException {
 
         logger.info("refresh starts");
 
         JSONObject req = new JsonRepresentation(entity).getJsonObject();
         String name = req.getString("username");
         String sessionId = req.getString("sessionId");
-
+        Session sessionToRefresh = Session.create(name, sessionId);
+        
         logger.info(" username = {} ", name);
         logger.info(" sessionId = {} ", sessionId);
-
-        Session session = sessionService.refresh(null);
+        Session session = null;
+        
+        try {
+        	session = sessionService.refresh(sessionToRefresh);
+        } catch (SessionServiceException e) { 
+        	logger.info("Error occured during session refreshing.", e);
+        }        
 
         if (session == null) {
 			return new JsonRepresentation("Error occured");
@@ -142,5 +142,7 @@ public class SessionResource extends TelephonyServerResource {
 			return new JsonRepresentation(session);
 		}
     }
+
+	
 
 }

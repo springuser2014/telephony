@@ -6,7 +6,6 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import telephony.core.guice.TelephonyCoreServicesModule;
 import telephony.core.guice.env.Environment;
-import telephony.core.guice.env.TelephonyCoreProductionModule;
 import telephony.ws.guice.TelephonyServletModule;
 
 import com.google.inject.AbstractModule;
@@ -25,7 +24,6 @@ public class TelephonyWebServicesProductionModule  extends AbstractModule {
 	
 	public  static final String PERSISTENCE = "telephony";
 	private static final Integer SESSION_VALIDITY = new Integer(30 * 60 * 1000);
-
 
 	/**
 	 * asd.
@@ -54,7 +52,7 @@ public class TelephonyWebServicesProductionModule  extends AbstractModule {
     	// TODO : fetching connection params from persistence.xml or properties
     	DataSource dataSource = new SimpleDriverDataSource(
     			new org.postgresql.Driver(), 
-    			"jdbc:postgresql://localhost:5432/telephony", 
+    			"jdbc:postgresql://localhost:5432/" + PERSISTENCE, 
     			"postgres",
     			"flyway"
     	);

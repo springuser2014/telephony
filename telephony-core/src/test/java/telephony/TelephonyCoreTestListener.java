@@ -6,7 +6,7 @@ import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
-import telephony.core.guice.env.SystemPropertyEnvironemntNameResolver;
+import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.core.guice.env.TelephonyCoreEnvironmentResolver;
 
 import com.google.inject.AbstractModule;
@@ -36,7 +36,7 @@ public class TelephonyCoreTestListener extends RunListener {
 		
 		List<AbstractModule> modules = new TelephonyCoreEnvironmentResolver()
 		.resolveWith(
-				new SystemPropertyEnvironemntNameResolver()
+				new SystemPropertyEnvironmentNameResolver()
 		);
 	
 	    BaseCoreTest.setInjector(Guice.createInjector(modules));

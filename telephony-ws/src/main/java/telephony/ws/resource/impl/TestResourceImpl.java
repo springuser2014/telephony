@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
  * Sample test resource that supports both JSON and XML representations of its
  * own data.
  */
-public class TestResource extends ServerResource {
+public class TestResourceImpl extends ServerResource {
 
     /**
      * Map that stores the state of the resource.

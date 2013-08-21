@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author gam3r
  *
  */
-public class UsersResource extends ServerResource  {
+public class UsersResourceImpl extends ServerResource  {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

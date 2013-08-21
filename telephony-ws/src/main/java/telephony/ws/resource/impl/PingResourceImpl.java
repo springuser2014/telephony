@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //TODO : remove later
-public class PingResource extends ServerResource {
+public class PingResourceImpl extends ServerResource {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

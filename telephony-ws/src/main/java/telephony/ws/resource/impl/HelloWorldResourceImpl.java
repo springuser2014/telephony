@@ -7,6 +7,7 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.ws.resource.HelloWorldResource;
 import telephony.ws.resource.TelephonyServerResource;
 
 // TODO : remove later
@@ -16,18 +17,15 @@ import telephony.ws.resource.TelephonyServerResource;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class HelloWorldResource extends TelephonyServerResource {
-
-    public static final String URL = "/hello";
-
+public class HelloWorldResourceImpl extends TelephonyServerResource implements HelloWorldResource {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     * @return asd.
-     */
-    @Get("json")
+    /* (non-Javadoc)
+	 * @see telephony.ws.resource.impl.HelloWorldResource#hello()
+	 */
+    @Override
+	@Get("json")
     public Representation hello() {
 
     	logger.info("helloworld resource");

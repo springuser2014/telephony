@@ -10,9 +10,9 @@ import org.restlet.resource.ServerResource;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoreRolesResource extends ServerResource {
+public class UserStoresResourceImpl extends ServerResource {
 
-    private final Representation rep = new JsonRepresentation("");
+    private final Representation representation = new JsonRepresentation("");
 
     /**
      * asd.
@@ -20,6 +20,6 @@ public class StoreRolesResource extends ServerResource {
      */
     @Put
     public Representation set() {
-        return rep;
+        return representation;
     }
 }

@@ -8,33 +8,23 @@ import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
+
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class DeliveriesResource extends ServerResource {
+public class SalesResourceImpl extends ServerResource {
 
-    private final Representation representation = new JsonRepresentation("");
+    private final Representation rep = new JsonRepresentation("");
 
     /**
      * asd.
      * @return asd.
      */
-    @Override
     @Get
-    public Representation get() {
-        return representation;
-    }
-
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    @Put
-    public Representation put() {
-        return representation;
+    public Representation gest() {
+        return rep;
     }
 
     /**
@@ -43,7 +33,16 @@ public class DeliveriesResource extends ServerResource {
      */
     @Post
     public Representation post() {
-        return representation;
+        return rep;
+    }
+
+    /**
+     * asd.
+     * @return asd.
+     */
+    @Put
+    public Representation put() {
+        return rep;
     }
 
     /**
@@ -53,7 +52,6 @@ public class DeliveriesResource extends ServerResource {
     @Override
     @Delete
     public Representation delete() {
-        return representation;
+        return rep;
     }
-
 }

@@ -7,7 +7,7 @@
 
 
 	<listener>
-		<listener-class>telephony.ws.servlet.TelephonyServletContextListener</listener-class>
+		<listener-class>telephony.ws.servlet.TelephonyServletProductionContextListener</listener-class>
 	</listener>
 
 

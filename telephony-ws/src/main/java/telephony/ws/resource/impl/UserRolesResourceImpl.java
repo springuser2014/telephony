@@ -2,7 +2,7 @@ package telephony.ws.resource.impl;
 
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
-import org.restlet.resource.Get;
+import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
 /**
@@ -10,17 +10,16 @@ import org.restlet.resource.ServerResource;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoreUsersResource extends ServerResource {
+public class UserRolesResourceImpl extends ServerResource {
 
-    private final Representation rep = new JsonRepresentation("");
+    private final Representation representation = new JsonRepresentation("");
 
     /**
      * asd.
      * @return asd.
      */
-    @Get
-    public Representation list() {
-        return rep;
-
+    @Put
+    public Representation put() {
+        return representation;
     }
 }

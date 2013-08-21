@@ -11,7 +11,7 @@ import org.restlet.resource.ServerResource;
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  */
-public class ContactsResource extends ServerResource {
+public class ContactsResourceImpl extends ServerResource {
 
     /**
      * asd.

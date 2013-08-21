@@ -54,7 +54,7 @@ public class TelephonyCoreProductionModule  extends AbstractModule {
     			new org.postgresql.Driver(), 
     			"jdbc:postgresql://localhost:5432/telephony", 
     			"postgres",
-    			"postgres"
+    			"flyway"
     	);
     	
     	

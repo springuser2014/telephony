@@ -93,7 +93,7 @@ public class SessionServiceImpl
 	        
         } catch (Exception e) {
         	
-        	logger.info("Error occured during session initialization",e);
+        	logger.info("Error occured during session initialization", e);
             return null;
         } 
         

@@ -13,7 +13,7 @@ import org.restlet.resource.ServerResource;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoresResource extends ServerResource {
+public class StoresResourceImpl extends ServerResource {
 
     private final Representation rep = new JsonRepresentation("");
 

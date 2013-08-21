@@ -11,7 +11,8 @@ import telephony.core.service.UserStoreService;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class UserStoreServiceImpl extends AbstractBasicService<UserStore> implements UserStoreService {
+public class UserStoreServiceImpl 
+	extends AbstractBasicService<UserStore> implements UserStoreService {
 
 	@Inject
 	private UserStoresDao userStoresDao;

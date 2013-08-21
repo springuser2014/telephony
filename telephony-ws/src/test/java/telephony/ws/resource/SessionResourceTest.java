@@ -10,13 +10,18 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.restlet.Client;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.Method;
+import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
 import telephony.ws.ArchivesBuilder;
 import telephony.ws.pre.TestsConfig;
-import telephony.ws.resource.impl.SessionResource;
+import telephony.ws.resource.impl.SessionResourceImpl;
 
 /**
  * foo bar.
@@ -43,27 +48,50 @@ public class SessionResourceTest {
 
         return jar;
     }
+    
+    /**
+     * foo bar.
+     * @throws Exception foo bar.
+     */
+    @SuppressWarnings("deprecation")
+	@Test
+    public void first() throws Exception {
+
+        URL baseURL = new URL(TESTING_APP + HelloWorldResource.URL);
+        ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
+        
+        HelloWorldResource res = clientResource.wrap(HelloWorldResource.class);        
+        clientResource.get();
+        
+        assertTrue("response status is 200", 
+        		clientResource
+        		.getResponse()
+        		.getStatus().equals(Status.SUCCESS_OK));
+    }
 
     /**
      * foo bar.
      * @throws Exception foo bar.
      */
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void second() throws Exception {
 
-        URL baseURL = new URL(TESTING_APP + SessionResource.URL);
+        URL baseURL = new URL(TESTING_APP + SessionResourceImpl.URL);
         ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
-//        public static final String USER1_NAME = "user1@gmail.com";
-//    	public static final String USER1_PASSWORD = "rfaysdhaiufsiuf";	
-
-//        clientResource.setChallengeResponse(
-//        new ChallengeResponse(
-//        org.restlet.data.ChallengeScheme.HTTP_BASIC, "login", "secret".toCharArray()));
-        JsonRepresentation repr = new JsonRepresentation(new SessionBean("user1@gmail.com", "rfaysdhaiufsiuf"));
+        
+        SessionResource res = clientResource.wrap(SessionResource.class);
+        
+        JsonRepresentation repr = new JsonRepresentation(
+        		new SessionBean("user1@gmail.com", "rfaysdhaiufsiuf")
+        );
         clientResource.post(repr);
 
-//        doesn't work due to lack of resource's interface representation
-//        assertTrue("response content contains 'alive' msg " + res, res.contains("value2"));
-        assertTrue("reponse status is 200", clientResource.getStatus().equals(Status.SUCCESS_OK));
+        assertTrue("response status is 200", 
+        		clientResource
+        		.getResponse()
+        		.getStatus().equals(Status.SUCCESS_OK));
     }
 }
+
+

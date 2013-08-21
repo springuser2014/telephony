@@ -11,19 +11,20 @@ import org.slf4j.LoggerFactory;
 import com.google.inject.Inject;
 import com.googlecode.flyway.core.Flyway;
 
-import telephony.ws.resource.impl.ContactsResource;
-import telephony.ws.resource.impl.DeliveriesResource;
-import telephony.ws.resource.impl.HelloWorldResource;
-import telephony.ws.resource.impl.RolesResource;
-import telephony.ws.resource.impl.SalesResource;
-import telephony.ws.resource.impl.SessionResource;
-import telephony.ws.resource.impl.StoreProductsResource;
-import telephony.ws.resource.impl.StoreRolesResource;
-import telephony.ws.resource.impl.StoreUsersResource;
-import telephony.ws.resource.impl.StoresResource;
-import telephony.ws.resource.impl.UserRolesResource;
-import telephony.ws.resource.impl.UserStoresResource;
-import telephony.ws.resource.impl.UsersResource;
+import telephony.ws.resource.HelloWorldResource;
+import telephony.ws.resource.impl.ContactsResourceImpl;
+import telephony.ws.resource.impl.DeliveriesResourceImpl;
+import telephony.ws.resource.impl.HelloWorldResourceImpl;
+import telephony.ws.resource.impl.RolesResourceImpl;
+import telephony.ws.resource.impl.SalesResourceImpl;
+import telephony.ws.resource.impl.SessionResourceImpl;
+import telephony.ws.resource.impl.StoreProductsResourceImpl;
+import telephony.ws.resource.impl.StoreRolesResourceImpl;
+import telephony.ws.resource.impl.StoreUsersResourceImpl;
+import telephony.ws.resource.impl.StoresResourceImpl;
+import telephony.ws.resource.impl.UserRolesResourceImpl;
+import telephony.ws.resource.impl.UserStoresResourceImpl;
+import telephony.ws.resource.impl.UsersResourceImpl;
 
 /**
  * Heart of telephony application.
@@ -47,8 +48,6 @@ public class TelephonyApplication extends Application {
 		logger.info("Number of executed migrations : " + Integer.toString(migrator.migrate()));
 	}
 	
-	
-
     /**
      * Registering all REST resources.
      * @return asd.
@@ -58,27 +57,27 @@ public class TelephonyApplication extends Application {
         Router router = new Router(getContext());
 
         // TODO : refactor *Resource classes, URLs as constants, extract Resources interfaces
-        router.attach(SessionResource.URL, SessionResource.class);
-        router.attach(UsersResource.URL, UsersResource.class);
-        router.attach("/hello", HelloWorldResource.class);
+        router.attach(SessionResourceImpl.URL, SessionResourceImpl.class);
+        router.attach(UsersResourceImpl.URL, UsersResourceImpl.class);
+        router.attach(HelloWorldResource.URL, HelloWorldResourceImpl.class);
 
-        router.attach("/users/{id}", UsersResource.class);
-        router.attach("/store/users/{id}", StoreUsersResource.class);
-        router.attach("/store/products/{id}", StoreProductsResource.class);
-        router.attach("/store/roles/{id}", StoreRolesResource.class);
-        router.attach("/stores", StoresResource.class);
-        router.attach("/stores/{id}", StoresResource.class);
-        router.attach("/store/roles/{id}", StoreRolesResource.class);
-        router.attach("/roles", RolesResource.class);
-        router.attach("/roles/{id}", RolesResource.class);
-        router.attach("/user/roles/{id}", UserRolesResource.class);
-        router.attach("/user/stores/{id}", UserStoresResource.class);
-        router.attach("/deliveries", DeliveriesResource.class);
-        router.attach("/deliveries/{id}", DeliveriesResource.class);
-        router.attach("/sales", SalesResource.class);
-        router.attach("/sales/{id}", SalesResource.class);
-        router.attach("/contacts", ContactsResource.class);
-        router.attach("/contacts/{id}", ContactsResource.class);
+        router.attach("/users/{id}", UsersResourceImpl.class);
+        router.attach("/store/users/{id}", StoreUsersResourceImpl.class);
+        router.attach("/store/products/{id}", StoreProductsResourceImpl.class);
+        router.attach("/store/roles/{id}", StoreRolesResourceImpl.class);
+        router.attach("/stores", StoresResourceImpl.class);
+        router.attach("/stores/{id}", StoresResourceImpl.class);
+        router.attach("/store/roles/{id}", StoreRolesResourceImpl.class);
+        router.attach("/roles", RolesResourceImpl.class);
+        router.attach("/roles/{id}", RolesResourceImpl.class);
+        router.attach("/user/roles/{id}", UserRolesResourceImpl.class);
+        router.attach("/user/stores/{id}", UserStoresResourceImpl.class);
+        router.attach("/deliveries", DeliveriesResourceImpl.class);
+        router.attach("/deliveries/{id}", DeliveriesResourceImpl.class);
+        router.attach("/sales", SalesResourceImpl.class);
+        router.attach("/sales/{id}", SalesResourceImpl.class);
+        router.attach("/contacts", ContactsResourceImpl.class);
+        router.attach("/contacts/{id}", ContactsResourceImpl.class);
 
         router.attach("/", new Directory(getContext(), "war:///"));
 

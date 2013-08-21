@@ -5,8 +5,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.guice.env.SystemPropertyEnvironemntNameResolver;
+import telephony.core.guice.env.EnvironmentNameResolver;
+import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.core.guice.env.TelephonyCoreEnvironmentResolver;
+import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -25,11 +27,21 @@ public class TelephonyServletTestContextListener extends GuiceServletContextList
     protected Injector getInjector() {
         logger.info("Injector configuration");
         
-        TelephonyCoreEnvironmentResolver resolver = new TelephonyCoreEnvironmentResolver();
-        List<AbstractModule> modules = resolver.resolveWith(
-        		new SystemPropertyEnvironemntNameResolver()
+        List<AbstractModule> abstractModules = new TelephonyWebServicesEnvironmentResolver()
+        	.resolveWith(
+        		new EnvironmentNameResolver() {
+					
+					@Override
+					public String getEnvironmentProperty() {
+						return "TEST";
+					}
+				}
         );
         
-        return Guice.createInjector(modules);
+        for (AbstractModule am : abstractModules) {
+        	logger.info("Defined module : " + am.getClass().getName());
+        }
+        
+        return Guice.createInjector(abstractModules);
     }
 }
