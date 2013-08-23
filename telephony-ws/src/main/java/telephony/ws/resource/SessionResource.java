@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
@@ -30,7 +29,7 @@ public interface SessionResource {
 	 * 
 	 */
 	@Post("json") 
-	JsonRepresentation start(Representation entity) throws JSONException, IOException;
+	JsonRepresentation start(JsonRepresentation entity) throws JSONException, IOException;
 	
 
 	/**
@@ -41,7 +40,7 @@ public interface SessionResource {
 	 * @throws IOException 
 	 */
 	@Delete("json") 
-	JsonRepresentation end(Representation entity) throws IOException, JSONException;
+	JsonRepresentation end(JsonRepresentation entity) throws IOException, JSONException;
 
 	/**
 	 * asd. 
@@ -51,6 +50,6 @@ public interface SessionResource {
 	 * @throws IOException 
 	 */
 	@Put("json") 
-	JsonRepresentation refresh(Representation entity) throws IOException, JSONException;
+	JsonRepresentation refresh(JsonRepresentation entity) throws IOException, JSONException;
 
 }

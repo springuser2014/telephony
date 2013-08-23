@@ -5,12 +5,15 @@ import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.data.Form;
+import org.restlet.data.Status;
+import org.restlet.engine.header.Header;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
+import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +54,7 @@ public class SessionResourceImpl extends TelephonyServerResource
      * @throws IOException asd.
      */
     @Post("json")
-    public JsonRepresentation start(Representation entity) 
+    public JsonRepresentation start(JsonRepresentation entity) 
     		throws JSONException, IOException {
 
         logger.info("startSession starts");
@@ -68,8 +71,11 @@ public class SessionResourceImpl extends TelephonyServerResource
         } catch (Exception e) {
         	logger.info("Error occured during session initialization." , e);
         }
-
+        
         if (session == null) {
+
+        	getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        	
             return new JsonRepresentation("Error occured");
         } else {
             return new JsonRepresentation(session);
@@ -84,7 +90,7 @@ public class SessionResourceImpl extends TelephonyServerResource
      * @throws JSONException asd.
      */
     @Delete("json")
-    public JsonRepresentation end(Representation entity)
+    public JsonRepresentation end(JsonRepresentation entity)
     		throws IOException, JSONException {
 
         logger.info("endSession starts");
@@ -117,7 +123,7 @@ public class SessionResourceImpl extends TelephonyServerResource
      * @throws JSONException asd.
      */
     @Put("json")
-    public JsonRepresentation refresh(Representation entity)
+    public JsonRepresentation refresh(JsonRepresentation entity)
     		throws IOException, JSONException {
 
         logger.info("refresh starts");

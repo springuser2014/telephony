@@ -3,13 +3,15 @@ package telephony.ws.resource;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +26,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
-import telephony.ws.ArchivesBuilder;
-import telephony.ws.pre.TestsConfig;
 import telephony.ws.resource.impl.SessionResourceImpl;
 
 /**
@@ -34,27 +34,7 @@ import telephony.ws.resource.impl.SessionResourceImpl;
  *
  */
 @RunWith(Arquillian.class)
-public class SessionResourceTest {
-
-    private static final String TESTING_APP = TestsConfig.TESTING_HOST
-                    + ArchivesBuilder.ARCHIVE_NAME + TestsConfig.REST_ADDR;
-
-    // TODO : create a BaseWsTest class - similarily to BaseCoreTest
-    /**
-     * foo bar.
-     * @return foo bar.
-     */
-	//@Deployment
-	//@OverProtocol("Servlet 2.5")
-	public static WebArchive createArchiveAndDeploy() {
-
-		WebArchive jar = ArchivesBuilder.createFirstWSTestWebArchive();
-
-		System.out.println(jar.toString(true));
-
-		return jar;
-	}
-
+public class SessionResourceTest extends BaseWSTest {
 
     /**
      * foo bar.
@@ -62,7 +42,7 @@ public class SessionResourceTest {
      */
     @SuppressWarnings("deprecation")
 	@Test
-    public void checksUserAuthentication() throws Exception {
+    public void checksUserAuthenticationForValidUser() throws Exception {
     	
     	// TODO : refactor to constatnts
     	final String username = "admin@gmail.com";
@@ -96,6 +76,43 @@ public class SessionResourceTest {
         		sessionId != null 
         		&& uname.equals(username)
         		&& validity != null);
+	}
+    
+    /**
+     * foo bar.
+     * @throws IOException 
+     * @throws JSONException 
+     * @throws Exception foo bar.
+     */
+    @SuppressWarnings("deprecation")
+	@Test
+    public void checksUserAuthenticationForInvalidUser() throws JSONException, IOException {
+    	
+    	// TODO : refactor to constatnts
+    	final String username = "invaliduser@gmail.com";
+    	final String password = "rfaysdhaiufsiuf";
+
+        URL baseURL = new URL(TESTING_APP + SessionResourceImpl.URL);
+        ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
+        
+        SessionResource resource = clientResource.wrap(SessionResource.class);
+        
+        JsonRepresentation requestParam = new JsonRepresentation(
+        		new SessionBean(username, password)
+        );
+        
+        JsonRepresentation responseRep = null;
+        try {
+			responseRep = resource.start(requestParam);
+		} catch (org.restlet.resource.ResourceException e) {	
+			
+			assertTrue("should return 400 in exception content", e.toString().contains("400"));
+		}
+        
+        assertTrue("response status is 400", 
+        		clientResource
+        		.getResponse()
+        		.getStatus().equals(Status.CLIENT_ERROR_BAD_REQUEST));
 	}
 }
 

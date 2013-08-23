@@ -25,21 +25,10 @@ import telephony.ws.pre.TestsConfig;
  * 
  */
 @RunWith(Arquillian.class)
-public class HelloWorldResourceTest {
+public class HelloWorldResourceTest extends BaseWSTest {
 
 	private static final String TESTING_APP = TestsConfig.TESTING_HOST
 			+ ArchivesBuilder.ARCHIVE_NAME + TestsConfig.REST_ADDR;
-
-//	@Deployment
-//	@OverProtocol("Servlet 2.5")
-//	public static WebArchive createArchiveAndDeploy() {
-//
-//		WebArchive jar = ArchivesBuilder.createFirstWSTestWebArchive();
-//
-//		System.out.println(jar.toString(true));
-//
-//		return jar;
-//	}
 
 	@SuppressWarnings("deprecation")
 	@Test
@@ -61,5 +50,4 @@ public class HelloWorldResourceTest {
 				.getStatus().equals(Status.SUCCESS_OK));
 
 	}
-
 }
