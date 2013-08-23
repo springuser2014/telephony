@@ -19,7 +19,7 @@ Main features includes:
 Properly installed basic stuff from Java world:
 
 - Java 1.6 >=
-- Maven 2
+- Maven 3
 
 To prepare an completed development environment we also need:
 
@@ -29,11 +29,11 @@ To prepare an completed development environment we also need:
 ## Used technologies
 
 - Restlet 2.1
-- Maven 2
+- Maven 3
 - JPA 2.0 (Hibernate 3.5)
 - Guice 3.0
-- Flyway 2.0.1
-- Arquillian 1.0.2
+- Flyway 2.2 (+ flyway-test-extensions)
+- Arquillian 1.1.1
 - Mockito 1.9.5
 
 # TODO
@@ -42,6 +42,7 @@ Project is now under intensive development, in next few weeks there will appear:
 
 - Complete unit tests for core module (via JUnit).
 - Complete integration tests for web services (via Arquillian).
+- Build a GUI module (via Bootstrap, jQuery and others js libs)
 
 # Testing
 
@@ -54,7 +55,6 @@ To launch tests it is required to prepare corresponding databases and configurat
 Here are some default configs:
 persistence.xml (1.)
 
-    :::xml
     <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony"/>
     <property name="hibernate.connection.username" value="postgres"/>
     <property name="hibernate.connection.password" value="postgres"/>
@@ -62,14 +62,12 @@ persistence.xml (1.)
 
 persistence.xml (2.)
 
-    :::xml
     <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-test"/>
     <property name="hibernate.connection.username" value="postgres"/>
     <property name="hibernate.connection.password" value="postgres"/>
 
 persistence.xml (3.)
 
-    :::xml
     <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-ws-test"/>
     <property name="hibernate.connection.username" value="postgres"/>
     <property name="hibernate.connection.password" value="postgres"/>
@@ -77,7 +75,6 @@ persistence.xml (3.)
 
 For integration tests telephony uses arquillian. To lanuch our integration tests except databases we also need a properly configured tomcat 6 server. Here is a snippet from tomcat's bin/startup.sh file:
 
-    :::bash
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote "
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=8089 "
     JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false "
@@ -86,7 +83,6 @@ For integration tests telephony uses arquillian. To lanuch our integration tests
    
 Or for windows .bat file (bin/startup.bat)
 
-   	:::cmd
     set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote 
     set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.port=8089 
     set JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.ssl=false 
@@ -94,7 +90,6 @@ Or for windows .bat file (bin/startup.bat)
          
 Of course tomcat-users.xml should like similar to:
 
-	:::xml
 	<tomcat-users>
 	
 	    <role rolename="manager-gui"/>
