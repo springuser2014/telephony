@@ -72,7 +72,7 @@ public interface UserService extends BasicService<User> {
     /**
      * asd.
      * @param username asd.
-     * @return
+     * @return asd. 
      */
 	User findByName(String username);    
     

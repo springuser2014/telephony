@@ -20,6 +20,7 @@ import telephony.core.service.bean.Session;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.Config;
 import telephony.ws.guice.env.TelephonyWebServicesProductionModule;
+import telephony.ws.resource.SessionResource;
 import telephony.ws.resource.TelephonyServerResource;
 
 import com.google.inject.Guice;
@@ -34,13 +35,13 @@ import com.google.inject.persist.jpa.JpaPersistModule;
  *
  */
 public class SessionResourceImpl extends TelephonyServerResource 
-	implements telephony.ws.resource.SessionResource {
-
-    public static final String URL = "/session";
+	implements SessionResource {
+    
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
     private SessionService sessionService;
+    
 
     /**
      * asd.
@@ -50,7 +51,7 @@ public class SessionResourceImpl extends TelephonyServerResource
      * @throws IOException asd.
      */
     @Post("json")
-    public Representation start(Representation entity) 
+    public JsonRepresentation start(Representation entity) 
     		throws JSONException, IOException {
 
         logger.info("startSession starts");
@@ -83,7 +84,7 @@ public class SessionResourceImpl extends TelephonyServerResource
      * @throws JSONException asd.
      */
     @Delete("json")
-    public Representation end(Representation entity)
+    public JsonRepresentation end(Representation entity)
     		throws IOException, JSONException {
 
         logger.info("endSession starts");
@@ -116,7 +117,7 @@ public class SessionResourceImpl extends TelephonyServerResource
      * @throws JSONException asd.
      */
     @Put("json")
-    public Representation refresh(Representation entity)
+    public JsonRepresentation refresh(Representation entity)
     		throws IOException, JSONException {
 
         logger.info("refresh starts");

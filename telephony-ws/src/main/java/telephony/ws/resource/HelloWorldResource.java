@@ -1,6 +1,6 @@
 package telephony.ws.resource;
 
-import org.restlet.representation.Representation;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
 
 /**
@@ -20,6 +20,6 @@ public interface HelloWorldResource {
 	 * @return asd.
 	 */
 	@Get("json")
-	Representation hello();
+	JsonRepresentation hello();
 
 }

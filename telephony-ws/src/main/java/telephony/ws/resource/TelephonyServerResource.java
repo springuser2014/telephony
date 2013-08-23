@@ -6,6 +6,7 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.core.guice.env.EnvironmentNameResolver;
 import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 
@@ -25,6 +26,8 @@ public abstract class TelephonyServerResource extends ServerResource {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private static boolean persistServiceInitialized = false;
+	
+	private static Injector injector = null;
 	
 	/**
 	 * asd. 
@@ -50,18 +53,31 @@ public abstract class TelephonyServerResource extends ServerResource {
 		
 		logger.info("Loading Guice modules..");
 		
-		List<AbstractModule> modules = new TelephonyWebServicesEnvironmentResolver()
-		.resolveWith(
-				new SystemPropertyEnvironmentNameResolver()
-		);
+		if (injector == null) {
+			
+			// TODO : refacotr
 		
-		for (AbstractModule am : modules) {
-			logger.info("Defined module : " + am.getClass().getName());
+			List<AbstractModule> modules = new TelephonyWebServicesEnvironmentResolver()
+			.resolveWith(
+					new EnvironmentNameResolver() {
+						
+						@Override
+						public String getEnvironmentProperty() {
+							
+							return "PRODUCTION";
+						}
+					}
+			);
+			
+			for (AbstractModule am : modules) {
+				logger.info("Defined module : " + am.getClass().getName());
+			}
+			
+			injector = Guice.createInjector(modules);
+		
 		}
 		
-		Injector inj = Guice.createInjector(modules);
-		
-		inj.injectMembers(this);
+		injector.injectMembers(this);
 	}
 	
     /**
@@ -70,7 +86,7 @@ public abstract class TelephonyServerResource extends ServerResource {
      *  
      */
     @Inject
-	protected void init(final PersistService persistService) {
+	protected void init(PersistService persistService) {
     	
     	if (!isPersistServiceInitialized()) {
     		persistService.start();

@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.core.guice.env.EnvironmentNameResolver;
 import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 
@@ -27,7 +28,13 @@ public class TelephonyServletProductionContextListener extends GuiceServletConte
         
         List<AbstractModule> abstractModules = new TelephonyWebServicesEnvironmentResolver()
         	.resolveWith(
-        		new SystemPropertyEnvironmentNameResolver()
+        		new EnvironmentNameResolver() {
+					
+					@Override
+					public String getEnvironmentProperty() {
+						return "PRODUCTION";
+					}
+				}
         );
         
         for (AbstractModule am : abstractModules) {

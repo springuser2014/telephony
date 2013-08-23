@@ -1,7 +1,6 @@
 package telephony.ws.resource.impl;
 
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
@@ -26,7 +25,7 @@ public class HelloWorldResourceImpl extends TelephonyServerResource implements H
 	 */
     @Override
 	@Get("json")
-    public Representation hello() {
+    public JsonRepresentation hello() {
 
     	logger.info("helloworld resource");
 

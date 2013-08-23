@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>telephony-parent</artifactId>
 		<groupId>org.bitbucket.pawelhenek.telephony</groupId>
-		<version>0.7</version>
+		<version>0.8</version>
 	</parent>
 	<artifactId>telephony-ws</artifactId>
 	<name>Telephony WebServices</name>

@@ -1,12 +1,9 @@
 package telephony.ws;
 
-import java.io.IOException;
-
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
-import org.json.JSONException;
 
 import telephony.core.guice.env.EnvironmentNameResolver;
 import telephony.core.service.exception.SessionServiceException;
@@ -46,9 +43,6 @@ import telephony.ws.servlet.TelephonyRestletServlet;
  */
 public final class ArchivesBuilder {
 
-    /**
-     * asd foo.
-     */
     private ArchivesBuilder() {
 
     }
@@ -56,7 +50,7 @@ public final class ArchivesBuilder {
     /**
      * foo bar.
      */
-    public static final String ARCHIVE_NAME = "telephony-ws-0.7";
+    public static final String ARCHIVE_NAME = "telephony-ws-0.8";
 
     /**
      * foo bar.
@@ -77,43 +71,20 @@ public final class ArchivesBuilder {
         
         WebArchive jar = ShrinkWrap
                 .create(WebArchive.class, ARCHIVE_NAME + ARCHIVE_EXT)
-                .addClasses(TelephonyApplication.class,
-                			TelephonyServletTestContextListener.class,
-                			TelephonyServletModule.class, 
-                			TelephonyRestletServlet.class)
+              
+                .addPackage("telephony.ws")
+                .addPackage("telephony.ws.guice")
+                .addPackage("telephony.ws.guice.env")
+                .addPackage("telephony.ws.resource")
+                .addPackage("telephony.ws.resource.impl")
+                .addPackage("telephony.ws.servlet")                
+                .addPackage("telephony.ws.pre")
                 			
-                // TODO : add packages instead of single class files
-                .addClasses(TelephonyServerResource.class, 
-                			PingResourceImpl.class, 
-                			TestResourceImpl.class,
-                			HelloWorldResourceImpl.class,
-                			SessionResource.class,
-                			SessionResourceImpl.class,
-                			UsersResourceImpl.class,
-                			StoreUsersResourceImpl.class,
-                			StoreProductsResourceImpl.class,
-                			RolesResourceImpl.class,
-                			UserRolesResourceImpl.class,
-                			ContactsResourceImpl.class,
-                			SalesResourceImpl.class,
-                			DeliveriesResourceImpl.class,
-                			StoreRolesResourceImpl.class,
-                			StoresResourceImpl.class,
-                			UserStoresResourceImpl.class)
-                			
-                .addClasses(SLF4JTypeListener.class, SLF4JMembersJnjector.class, Log.class)
-                .addClasses(EnvironmentNameResolver.class, 
-                		TelephonyWebServicesEnvironmentResolver.class,
-                		TelephonyWebServicesTestModule.class,
-                		TelephonyWebServicesProductionModule.class)
-                .addClasses(SessionBean.class, SessionResource.class)
-                .addClasses(HelloWorldResource.class, SessionServiceException.class)
-                
-                .addAsLibraries(
+               .addAsLibraries(
                     resolver.artifact("org.restlet.jee:org.restlet:2.1-SNAPSHOT")
                     .goOffline().resolveAsFiles())
                 .addAsLibraries(
-                    resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.7")
+                    resolver.artifact("org.bitbucket.pawelhenek.telephony:telephony-core:0.8")
                     .goOffline().resolveAsFiles())
                 .addAsLibraries(
                     resolver.artifact("com.google.inject.extensions:guice-servlet:3.0")
@@ -121,7 +92,12 @@ public final class ArchivesBuilder {
                 .addAsLibraries(
                     resolver.artifact("com.google.inject.extensions:guice-persist:3.0")
                     .resolveAsFiles())
-               
+                .addAsLibraries(
+                    resolver.artifact("org.hibernate:hibernate-entitymanager:3.5.6-Final")
+                    .resolveAsFiles())       
+                .addAsLibraries(
+                    resolver.artifact("org.hibernate:hibernate-core:3.5.6-Final")
+                    .resolveAsFiles())       
                 .addAsLibraries(
                     resolver.artifact("org.restlet.jee:org.restlet.ext.crypto:2.1-SNAPSHOT")
                     .resolveAsFiles())
@@ -142,9 +118,7 @@ public final class ArchivesBuilder {
                     resolver.artifact("org.slf4j:slf4j-simple:1.7.5").resolveAsFiles())
 
                 .addAsManifestResource("persistence.xml")
-               // .addAsWebResource("db/V2__Basic_schema_structure.sql")
-               // .addAsWebResource("db/V3__Preparation_to_use_hibernate_envers.sql")
-               // .addAsWebResource("db/V4__Test_data.sql")
+                .addAsManifestResource("logback.xml")
 
                 .setWebXML("web.xml");
 

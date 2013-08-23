@@ -1,5 +1,7 @@
 package telephony.ws.guice.env;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -37,6 +39,7 @@ public class TelephonyWebServicesProductionModule  extends AbstractModule {
 		install(new TelephonyCoreServicesModule());
 		install(new JpaPersistModule(PERSISTENCE));
 		install(new TelephonyServletModule());
+		
 	}	
     
     /**
@@ -61,6 +64,12 @@ public class TelephonyWebServicesProductionModule  extends AbstractModule {
     	m.setDataSource(dataSource);
     	m.setLocations(new String []{"db"});
     	m.migrate();
+    	try {
+			dataSource.getConnection().close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	return m;    	
     }

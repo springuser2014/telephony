@@ -9,12 +9,14 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.ws.resource.TelephonyServerResource;
+
 /**
  * Added some stupid comment.
  * @author gam3r
  *
  */
-public class UsersResourceImpl extends ServerResource  {
+public class UsersResourceImpl extends TelephonyServerResource  {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -33,7 +35,7 @@ public class UsersResourceImpl extends ServerResource  {
      * @return asd
      */
     @Post
-    public final Representation addNew() {
+    public final Representation add() {
         return representation;
     }
 

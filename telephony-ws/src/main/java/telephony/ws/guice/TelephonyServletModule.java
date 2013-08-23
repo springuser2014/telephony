@@ -63,7 +63,8 @@ public class TelephonyServletModule extends ServletModule {
     private Map<String, String> bindRestletParams() {
         Map<String, String> options = new HashMap<String, String>();
         options.put("org.restlet.application", TelephonyApplication.class.toString());
-
+        options.put("org.restlet.clients", "HTTP");
+        
         return options;
     }
 }
