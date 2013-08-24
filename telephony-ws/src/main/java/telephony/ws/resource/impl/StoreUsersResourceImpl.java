@@ -5,22 +5,23 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
+import telephony.ws.resource.StoreUsersResource;
+import telephony.ws.resource.TelephonyServerResource;
+
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoreUsersResourceImpl extends ServerResource {
-
-    private final Representation rep = new JsonRepresentation("");
+public class StoreUsersResourceImpl extends TelephonyServerResource implements StoreUsersResource {
 
     /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
-    @Get
-    public Representation list() {
-        return rep;
+    @Override
+	@Get("json")
+    public JsonRepresentation list(JsonRepresentation entity) {
+        return new JsonRepresentation("asd");
 
     }
 }

@@ -1,7 +1,6 @@
 package telephony.ws.resource.impl;
 
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -10,64 +9,36 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.ws.resource.TelephonyServerResource;
+import telephony.ws.resource.UsersResource;
 
 /**
  * Added some stupid comment.
- * @author gam3r
+ * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class UsersResourceImpl extends TelephonyServerResource  {
+public class UsersResourceImpl extends TelephonyServerResource implements UsersResource  {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * Some text.
-     */
-    public static final String URL = "/users";
 
-    /**
-     * Some text.
-     */
-    private final Representation representation = new JsonRepresentation("hello");
-
-    /**
-     * Some text.
-     * @return asd
-     */
-    @Post
-    public final Representation add() {
-        return representation;
-    }
-
-    /**
-     * Some text.
-     * @return asd
-     */
-    public final Representation edit() {
-        return representation;
-    }
-
-    /**
-     * Some text.
-     * @return asd
-     *
-     */
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
-    @Delete
-    public final Representation delete() {
-        return representation;
+	@Post("json")
+    public final JsonRepresentation add(JsonRepresentation entity) {
+        return new JsonRepresentation("users resource add");
     }
 
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    @Get
-    public Representation list() {
+	/**
+	 * {@inheritDoc}
+	 */
+    @Override
+	@Get("json")
+    public JsonRepresentation list(JsonRepresentation entity) {
 
         logger.info("UsersResource.get method");
 
-        return new JsonRepresentation("efbgb!!");
+        return new JsonRepresentation("users resource list");
     }
 }

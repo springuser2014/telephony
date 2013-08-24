@@ -6,22 +6,23 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
+import telephony.ws.resource.TelephonyServerResource;
+
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class RolesResourceImpl extends ServerResource {
+public class RolesResourceImpl extends TelephonyServerResource
+	implements RolesResource {
 
-    private final Representation rep = new JsonRepresentation("");
 
-    /**
-     * asd.
-     * @return asd.
-     */
-    @Put
-    public Representation set() {
-        return rep;
+	/**
+	 * {@inheritDoc}
+	 */
+    @Put("json")
+    public Representation set(JsonRepresentation entity) {
+        return new JsonRepresentation("put");
     }
 
 

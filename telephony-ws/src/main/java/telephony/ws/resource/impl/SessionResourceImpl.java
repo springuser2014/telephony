@@ -10,6 +10,7 @@ import org.restlet.data.Status;
 import org.restlet.engine.header.Header;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
+import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
@@ -44,15 +45,11 @@ public class SessionResourceImpl extends TelephonyServerResource
 
     @Inject
     private SessionService sessionService;
-    
 
-    /**
-     * asd.
-     * @param entity asd.
-     * @return asd.
-     * @throws JSONException asd.
-     * @throws IOException asd.
-     */
+
+	/**
+	 * {@inheritDoc}
+	 */
     @Post("json")
     public JsonRepresentation start(JsonRepresentation entity) 
     		throws JSONException, IOException {
@@ -69,7 +66,7 @@ public class SessionResourceImpl extends TelephonyServerResource
         try {
         	session = sessionService.init(name, password);	
         } catch (Exception e) {
-        	logger.info("Error occured during session initialization." , e);
+        	logger.error("Error occured during session initialization." , e);
         }
         
         if (session == null) {
@@ -82,13 +79,10 @@ public class SessionResourceImpl extends TelephonyServerResource
         }
     }
 
-    /**
-     * asd.
-     * @param entity asd.
-     * @return asd.
-     * @throws IOException asd.
-     * @throws JSONException asd.
-     */
+
+	/**
+	 * {@inheritDoc}
+	 */
     @Delete("json")
     public JsonRepresentation end(JsonRepresentation entity)
     		throws IOException, JSONException {
@@ -106,7 +100,7 @@ public class SessionResourceImpl extends TelephonyServerResource
         try {
         	success = sessionService.destroy(null);
         } catch (SessionServiceException e) { 
-        	logger.info("Error occured during session ending.", e);
+        	logger.error("Error occured during session ending.", e);
         }
 
         HashMap<String, String> res = new HashMap<String, String>();
@@ -115,20 +109,17 @@ public class SessionResourceImpl extends TelephonyServerResource
         return new JsonRepresentation(res);
     }
 
-    /**
-     * asd.
-     * @param entity asd.
-     * @return asd.
-     * @throws IOException asd.
-     * @throws JSONException asd.
-     */
+
+	/**
+	 * {@inheritDoc}
+	 */
     @Put("json")
     public JsonRepresentation refresh(JsonRepresentation entity)
     		throws IOException, JSONException {
 
         logger.info("refresh starts");
 
-        JSONObject req = new JsonRepresentation(entity).getJsonObject();
+        JSONObject req = entity.getJsonObject();
         String name = req.getString("username");
         String sessionId = req.getString("sessionId");
         Session sessionToRefresh = Session.create(name, sessionId);
@@ -140,7 +131,7 @@ public class SessionResourceImpl extends TelephonyServerResource
         try {
         	session = sessionService.refresh(sessionToRefresh);
         } catch (SessionServiceException e) { 
-        	logger.info("Error occured during session refreshing.", e);
+        	logger.error("Error occured during session refreshing.", e);
         }        
 
         if (session == null) {
@@ -150,6 +141,37 @@ public class SessionResourceImpl extends TelephonyServerResource
 		}
     }
 
-	
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Get("json")
+	public JsonRepresentation validate(JsonRepresentation entity) 
+			throws IOException, JSONException {
+		
+		logger.info("validation starts");
+		
+		JSONObject req = entity.getJsonObject();
+		String name = req.getString("username");
+		String sessionId = req.getString("sessionId");
+		Session sessionToValidate = Session.create(name, sessionId);
+		
+		logger.info(" username = {} ", name);
+        logger.info(" sessionId = {} ", sessionId);
+        Boolean isValid = null;
+        try {
+        	isValid = new Boolean(sessionService.validate(sessionToValidate));
+        } catch (SessionServiceException e) {
+        	logger.error("Error occured during session validation", e);        	 	
+        }
+        
+        if (isValid == null) {
+        	getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+        	return new JsonRepresentation("Error occured");
+        } else if (isValid.booleanValue()) {
+        	return new JsonRepresentation("true");
+        } else {
+        	return new JsonRepresentation("false");
+        }		
+	}
 }

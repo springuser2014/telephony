@@ -1,4 +1,4 @@
-package telephony.ws.resource;
+package telephony.ws.bean;
 
 
 /**

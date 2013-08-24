@@ -26,6 +26,8 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
+import telephony.core.service.bean.Session;
+import telephony.ws.bean.SessionBean;
 import telephony.ws.resource.impl.SessionResourceImpl;
 
 /**
@@ -36,7 +38,9 @@ import telephony.ws.resource.impl.SessionResourceImpl;
 @RunWith(Arquillian.class)
 public class SessionResourceTest extends BaseWSTest {
 
-    /**
+    private static final String SESSION_RESOURCE_URL = TESTING_APP + SessionResourceImpl.URL;
+
+	/**
      * foo bar.
      * @throws Exception foo bar.
      */
@@ -48,7 +52,7 @@ public class SessionResourceTest extends BaseWSTest {
     	final String username = "admin@gmail.com";
     	final String password = "rfaysdhaiufsiuf";
 
-        URL baseURL = new URL(TESTING_APP + SessionResourceImpl.URL);
+        URL baseURL = new URL(SESSION_RESOURCE_URL);
         ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
         
         SessionResource resource = clientResource.wrap(SessionResource.class);
@@ -82,7 +86,6 @@ public class SessionResourceTest extends BaseWSTest {
      * foo bar.
      * @throws IOException 
      * @throws JSONException 
-     * @throws Exception foo bar.
      */
     @SuppressWarnings("deprecation")
 	@Test
@@ -92,7 +95,7 @@ public class SessionResourceTest extends BaseWSTest {
     	final String username = "invaliduser@gmail.com";
     	final String password = "rfaysdhaiufsiuf";
 
-        URL baseURL = new URL(TESTING_APP + SessionResourceImpl.URL);
+        URL baseURL = new URL(SESSION_RESOURCE_URL);
         ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
         
         SessionResource resource = clientResource.wrap(SessionResource.class);
@@ -114,6 +117,71 @@ public class SessionResourceTest extends BaseWSTest {
         		.getResponse()
         		.getStatus().equals(Status.CLIENT_ERROR_BAD_REQUEST));
 	}
+    
+    /**
+     * asd .
+     * @throws JSONException asd.
+     * @throws IOException asd.
+     */
+    @SuppressWarnings("deprecation")
+	@Test
+    public void checksValidSessionVerification() throws JSONException, IOException {
+    	// TODO : refactor to constatnts
+    	final String username = "admin@gmail.com";
+    	final String password = "rfaysdhaiufsiuf";
+    	
+    	URL baseURL = new URL(SESSION_RESOURCE_URL);
+        ClientResource clientResource = new ClientResource(baseURL.toExternalForm());
+        SessionResource resource = clientResource.wrap(SessionResource.class);
+        
+        JsonRepresentation startRequestParam = new JsonRepresentation(
+        		new SessionBean(username, password)
+        );
+        
+        JsonRepresentation responseRep = resource.start(startRequestParam);        
+        
+        assertTrue("response status is 200", 
+        		clientResource
+        		.getResponse()
+        		.getStatus().equals(Status.SUCCESS_OK));
+        
+        assertTrue("response representation != null", responseRep != null);
+        
+        JSONObject respObj = responseRep.getJsonObject();
+        String sessionId = respObj.getString("sessionId");
+        String userToValid = respObj.getString("username");
+        
+        JsonRepresentation validateRequestParam = new JsonRepresentation(
+        		Session.create(userToValid, sessionId)
+        );
+        
+        JsonRepresentation validateResponseRep = resource.validate(validateRequestParam);
+	    
+        assertTrue("response should contains true", validateResponseRep.getText().contains("true"));
+        assertTrue("should return 200", clientResource.getStatus().isSuccess());      
+    }
+    
+
+    /**
+     * asd .
+     * @throws JSONException asd.
+     * @throws IOException asd.
+     */
+    @Test
+    public void checksInvalidSessionVerification() throws JSONException, IOException {
+    	// TODO : fill up
+    }
+    
+
+    /**
+     * asd .
+     * @throws JSONException asd.
+     * @throws IOException asd.
+     */
+    @Test
+    public void checksSessionRefreshingVerification() throws JSONException, IOException {
+    	// TODO : fill up    	
+    }
 }
 
 

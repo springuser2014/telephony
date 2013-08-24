@@ -8,53 +8,37 @@ import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
+import telephony.ws.resource.StoresResource;
+import telephony.ws.resource.TelephonyServerResource;
+
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class StoresResourceImpl extends ServerResource {
-
-    private final Representation rep = new JsonRepresentation("");
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    @Get
-    public Representation list() {
-        return rep;
-
-    }
+public class StoresResourceImpl extends TelephonyServerResource 
+	implements StoresResource {
 
     /**
-     * asd.
-     * @return asd.
-     */
-    @Put
-    public Representation edit() {
-        return rep;
-
-    }
-
-    /**
-     * asd.
-     * @return asd.
-     */
-    @Post
-    public Representation add() {
-        return rep;
-
-    }
-
-    /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     @Override
-    @Delete
-    public Representation delete() {
-        return rep;
+	@Get("json")
+    public JsonRepresentation list(JsonRepresentation entity) {
+        return new JsonRepresentation("asd");
 
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	@Post("json")
+    public JsonRepresentation add(JsonRepresentation entity) {
+    	return new JsonRepresentation("asd");
+
+    }
+
+
 }

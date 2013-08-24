@@ -7,6 +7,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import telephony.core.guice.env.EnvironmentNameResolver;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.ws.bean.SessionBean;
 import telephony.ws.guice.Log;
 import telephony.ws.guice.SLF4JMembersJnjector;
 import telephony.ws.guice.SLF4JTypeListener;
@@ -16,7 +17,6 @@ import telephony.ws.guice.env.TelephonyWebServicesProductionModule;
 import telephony.ws.guice.env.TelephonyWebServicesTestModule;
 import telephony.ws.pre.TelephonyServletTestContextListener;
 import telephony.ws.resource.HelloWorldResource;
-import telephony.ws.resource.SessionBean;
 import telephony.ws.resource.SessionResource;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.impl.ContactsResourceImpl;
