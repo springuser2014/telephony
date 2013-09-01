@@ -250,6 +250,7 @@
 				<configuration>
 					<webappDirectory>${webappDirectory}</webappDirectory>
 					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+					<warName>telephony-ws</warName>
 				</configuration>
 
 			</plugin>

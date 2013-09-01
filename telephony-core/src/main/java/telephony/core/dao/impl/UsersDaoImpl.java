@@ -81,7 +81,10 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	public User findByNameAndSessionId(String username, String sessionId) {
 
 		logger.info("findByNameAndSessionId starts");
-
+		logger.info(
+				"params : [ username = {} , sessionId = {}]",
+				username, sessionId);
+		
 		User u = (User) getEntityManager()
 				.createQuery(
 						"select e from User e where e.email = ?1 and e.sessionId = ?2")

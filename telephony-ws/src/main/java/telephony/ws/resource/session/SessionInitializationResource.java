@@ -1,0 +1,33 @@
+package telephony.ws.resource.session;
+
+import java.io.IOException;
+
+import org.json.JSONException;
+import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.resource.Post;
+
+
+/**
+ * asd.
+ * @author Paweł Henek <pawelhenek@gmail.com>
+ *
+ */
+public interface SessionInitializationResource  {
+	
+	/**
+	 * asd.
+	 */
+    String URL = "/session/initialize";
+    
+	/**
+	 * asd.
+	 * @param entity asd. 
+	 * @return asd.
+	 * @throws IOException 
+	 * @throws JSONException 
+	 * 
+	 */
+	@Post("json") 
+	JsonRepresentation initialize(JsonRepresentation entity) throws JSONException, IOException;
+
+}
