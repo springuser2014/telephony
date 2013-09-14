@@ -7,6 +7,7 @@ import telephony.core.service.BasicService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.persist.Transactional;
 
 /**
  * General usage basic service implementation.

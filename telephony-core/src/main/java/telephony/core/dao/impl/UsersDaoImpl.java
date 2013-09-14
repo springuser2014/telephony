@@ -95,6 +95,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findByStoreId(Long storeId) {
 
@@ -104,7 +105,8 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		List<User> lst = (List<User>) getEntityManager()
 				.createQuery(
 						"select e from User e inner join fetch e.allowedShops s where s.id = ?1")
-				.setParameter(1, storeId).getResultList();
+				.setParameter(1, storeId)
+				.getResultList();
 
 		logger.info("found {} elements", lst.size());
 
@@ -129,7 +131,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	private void removeUserRoles(User user) {
 		
 		getEntityManager()
-		.createQuery("delete from UserRole ur where ur.userId = ?1")
+		.createQuery("delete from UserRole ur where ur.user = ?1")
 		.setParameter(1, user)
 		.executeUpdate();
 		
@@ -142,7 +144,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	private void removeUserStores(User user) {
 		
 		getEntityManager()
-		.createQuery("delete from UserStore us where us.userId = ?1")
+		.createQuery("delete from UserStore us where us.user = ?1")
 		.setParameter(1, user)
 		.executeUpdate();
 		

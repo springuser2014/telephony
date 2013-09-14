@@ -29,11 +29,11 @@ public class UserRole extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
-    private Role roleId;
+    private Role role;
 
     /**
      * asd.
@@ -56,32 +56,32 @@ public class UserRole extends BaseEntity {
      * asd.
      * @return asd.
      */
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     /**
      * asd.
      * @param userId asd.
      */
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
     }
 
     /**
      * asd.
      * @return asd.
      */
-    public Role getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
     /**
      * asd.
      * @param roleId asd.
      */
-    public void setRoleId(Role roleId) {
-        this.roleId = roleId;
+    public void setRole(Role roleId) {
+        this.role = roleId;
     }
 
     @Override
@@ -101,10 +101,10 @@ public class UserRole extends BaseEntity {
         if (!id.equals(userRole.id)) {
             return false;
         }
-        if (!roleId.equals(userRole.roleId)) {
+        if (!role.equals(userRole.role)) {
             return false;
         }
-        if (!userId.equals(userRole.userId)) {
+        if (!user.equals(userRole.user)) {
             return false;
         }
 
@@ -115,8 +115,8 @@ public class UserRole extends BaseEntity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + id.hashCode();
-        result = 31 * result + userId.hashCode();
-        result = 31 * result + roleId.hashCode();
+        result = 31 * result + user.hashCode();
+        result = 31 * result + role.hashCode();
         return result;
     }
 }

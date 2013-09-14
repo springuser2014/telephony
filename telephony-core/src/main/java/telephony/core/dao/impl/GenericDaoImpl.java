@@ -54,7 +54,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
      * Gets entity's manager.
      * @return asd.
      */
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return entityManagerProvider.get();
     }
 

@@ -17,21 +17,20 @@ import telephony.core.entity.jpa.Store;
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements DeliveriesDao {
+public class DeliveriesDaoImpl 
+	extends GenericDaoImpl<Delivery> implements DeliveriesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * asd.
+     * {@inheritDoc}
      */
     public DeliveriesDaoImpl() {
         super(Delivery.class);
     }
 
     /**
-     * asd.
-     * @param ids asd.
-     * @return asd.
+     * {@inheritDoc}
      */
 	@Override
     @SuppressWarnings("unchecked")
@@ -56,21 +55,40 @@ public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements Deliv
     }
 
 	/**
-	 * asd.
-	 * @param store asd.
-	 * @return asd.
-	 */
+     * {@inheritDoc}
+     */
     @Override
     public long getNumberOfDeliveries(Store store) {
-        Query query = getEntityManager().createQuery("select count(d) from Delivery d "
-                + " inner join d.store s "
-                + " where d.deleter is null "
-                + " and s.id = ?1 ")
-                .setParameter(1, store.getId());
+    	
+   	 logger.debug("DeliveriesDaoImpl.getNumberOfDeliveries starts");
+
+        Query query = 
+			getEntityManager()
+			.createQuery("select count(d) from Delivery d "
+	        + " inner join d.store s "
+	        + " where d.deleter is null "
+	        + " and s.id = ?1 ")
+	        .setParameter(1, store.getId());
 
         Number res = (Number) query.getSingleResult();
         Long res2 = (Long) res;
 
         return res2;
     }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Delivery> findByStore(Store stores) {
+		
+		Query query = getEntityManager()
+			.createQuery("select e from Delivery e where e.store = ?1")
+			.setParameter(1, stores);
+		
+		List<Delivery> res = (List<Delivery>) query.getResultList();
+		
+		return res;
+	}
 }

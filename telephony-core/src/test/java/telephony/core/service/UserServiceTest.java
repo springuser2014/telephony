@@ -1,5 +1,6 @@
 package telephony.core.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -20,6 +21,8 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
+import telephony.core.util.StringGenerator;
+import telephony.core.util.StringGeneratorImpl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.PersistService;
@@ -42,12 +45,31 @@ public class UserServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private UserService userService;
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testUpdate() throws SessionServiceException, UserServiceException {
+
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		User userToEdit = userService.findByName(TestData.USER2_NAME);
+		String newSessionId = new StringGeneratorImpl().nextSessionId();	
 		
-	/**
-	 * ad.
-	 * @throws UserServiceException 
-	 * @throws SessionServiceException 
-	 */
+		assertTrue("the old sessionId and the new one should be different", 
+				!newSessionId.equals(userToEdit.getSessionId()));
+		
+		// when
+		userToEdit.setSessionId(newSessionId);
+		userService.updateUser(username, sessionId, userToEdit);
+		
+		// then
+		User userAfterEdit = userService.findByName(TestData.USER2_NAME);
+		
+		assertTrue("after edit sessionId should be changed",
+				userAfterEdit.getSessionId().equals(newSessionId));
+	}
+	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
 	public void testAddingNewUser() throws SessionServiceException, UserServiceException {
@@ -71,12 +93,7 @@ public class UserServiceTest extends BaseCoreTest {
 		// then
 		assertTrue("Should create and return a new user", addedUser != null);
 	}
-	
-	/**
-	 * asd.
-	 * @throws SessionServiceException asd.
-	 * @throws UserServiceException asd.
-	 */
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
 	public void testDeletingUser() 
@@ -96,10 +113,6 @@ public class UserServiceTest extends BaseCoreTest {
 		assertTrue("Should decreased number of users ", countBefore - countAfter == 1);
 	}
 
-	/**
-	 * asd.
-	 * @throws SessionServiceException asd.
-	 */
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testFindingAllUsers() 
@@ -117,10 +130,6 @@ public class UserServiceTest extends BaseCoreTest {
 		assertTrue("Should find all 4 users", lst.size() == 4);
 	}
 
-	/**
-	 * asd.
-	 * @throws SessionServiceException asd.
-	 */
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testFindingUsersByStoreId() 
@@ -129,14 +138,15 @@ public class UserServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
-		long storeId = 2L;
+		long storeId = 2L; // TODO : change 'byStore' not 'byStoreId'
 		
 		// when
 		List<User> lst = userService.findUsersByStoreId(username, sessionId, storeId);
 		
 		// then
 		assertTrue("asd", lst.size() == 2);
-	}
-	
+	}	
 	
 }
+
+

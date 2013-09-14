@@ -6,6 +6,8 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
+import telephony.core.entity.jpa.Sale;
+import telephony.core.entity.jpa.Store;
 
 
 /**
@@ -25,11 +27,10 @@ public interface ProductsDao extends GenericDao<Product> {
 
     /**
      * asd.
-     * @param storeId asd.
-     * @param productStatus asd.
+     * @param store asd.
      * @return asd.
      */
-    List<Product> findByStoreId(Long storeId, ProductStatus productStatus);
+    List<Product> findByStore(Store store);
 
     /**
      * asd.
@@ -80,4 +81,11 @@ public interface ProductsDao extends GenericDao<Product> {
      * @return asd.
      */
     Product findByImeiAndStoreId(String imei, Long storeId);
+
+    /**
+     * asd.
+     * @param sale asd.
+     * @return asd.
+     */
+	List<Product> findBySale(Sale sale);
 }

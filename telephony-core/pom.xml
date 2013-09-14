@@ -11,7 +11,7 @@
 	<packaging>jar</packaging>
 	<name>Telephony core</name>
 	<repositories>
-		
+
 		<repository>
 			<id>maven-morphia</id>
 			<name>Public online Morphia repository</name>
@@ -25,7 +25,13 @@
 
 	</repositories>
 	<dependencies>
-
+	
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+            
 		<dependency>
 			<groupId>com.jayway.awaitility</groupId>
 			<artifactId>awaitility</artifactId>
@@ -95,36 +101,36 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate-core.version}</version>
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.hibernate</groupId> -->
-<!-- 					<artifactId>ejb3-persistence</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
+			<!-- <exclusions> -->
+			<!-- <exclusion> -->
+			<!-- <groupId>org.hibernate</groupId> -->
+			<!-- <artifactId>ejb3-persistence</artifactId> -->
+			<!-- </exclusion> -->
+			<!-- </exclusions> -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<version>${hibernate-core.version}</version>
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.hibernate</groupId> -->
-<!-- 					<artifactId>ejb3-persistence</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
+			<!-- <exclusions> -->
+			<!-- <exclusion> -->
+			<!-- <groupId>org.hibernate</groupId> -->
+			<!-- <artifactId>ejb3-persistence</artifactId> -->
+			<!-- </exclusion> -->
+			<!-- </exclusions> -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate-validator.version}</version>
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.hibernate</groupId> -->
-<!-- 					<artifactId>ejb3-persistence</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
+			<!-- <exclusions> -->
+			<!-- <exclusion> -->
+			<!-- <groupId>org.hibernate</groupId> -->
+			<!-- <artifactId>ejb3-persistence</artifactId> -->
+			<!-- </exclusion> -->
+			<!-- </exclusions> -->
 		</dependency>
 
 		<dependency>
@@ -210,54 +216,76 @@
 		<plugins>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>${maven.failsafe.plugin.version}</version>				
-			</plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.5.6.201201232323</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven.resources.plugin.version}</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${maven.failsafe.plugin.version}</version>
+				</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resources.plugin.version}</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven.surefire.plugin.version}</version>				
-				<configuration>
-					<systemPropertyVariables>
-						<environment>TEST</environment>
-					</systemPropertyVariables>
-					<properties>
-						<property>
-							<name>listener</name>
-							<value>telephony.TelephonyCoreTestListener</value>
-						</property>
-					</properties>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.surefire</groupId>
-						<artifactId>surefire-junit47</artifactId>
-						<version>2.15</version>
-					</dependency>
-				</dependencies>				
-			</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>
+					<configuration>
+						<systemPropertyVariables>
+							<environment>TEST</environment>
+						</systemPropertyVariables>
+						<properties>
+							<property>
+								<name>listener</name>
+								<value>telephony.TelephonyCoreTestListener</value>
+							</property>
+						</properties>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.surefire</groupId>
+							<artifactId>surefire-junit47</artifactId>
+							<version>2.15</version>
+						</dependency>
+					</dependencies>
+				</plugin>
 		</plugins>
 
 	</build>
@@ -302,6 +330,11 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${maven.jacoco.plugin.version}</version>
+			</plugin>
 		</plugins>
 
 	</reporting>

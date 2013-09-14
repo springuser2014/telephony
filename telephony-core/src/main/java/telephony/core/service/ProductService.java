@@ -8,6 +8,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.service.exception.SessionServiceException;
 
 /**
  * asd.
@@ -114,4 +115,14 @@ public interface ProductService extends BasicService<Product> {
      * @param editor asd.
      */
     void cancelProductsSale(List<Product> productsToCancelTheSale, User editor);
+
+    /**
+     * asd.
+     * @param username TODO
+     * @param sessionId TODO
+     * @param store asd.
+     * @return asd.
+     * @throws SessionServiceException 
+     */
+	List<Product> findByStore(String username, String sessionId, Store store) throws SessionServiceException;
 }

@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.ProductsDao;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
+import telephony.core.entity.jpa.Sale;
+import telephony.core.entity.jpa.Store;
+import telephony.core.entity.jpa.UserStore;
 
 /**
  * Products management DAO.
@@ -56,31 +59,15 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
 	@Override
     @SuppressWarnings("unchecked")
-    public List<Product> findByStoreId(Long storeId, ProductStatus productStatus) {
+    public List<Product> findByStore(Store store) {
         logger.debug("findByStore starts");
-        logger.debug("params : [ storeId : {} , productStatus : {} ]", storeId, productStatus);
+        logger.debug("params : [ storeId : {}  ]", store);
 
-        List<Product> res = null;
-
-        if (productStatus.toString().equals(ProductStatus.IN_STORE.toString())) {
-
-            res = getEntityManager().createQuery("select p from Product p "
-                    + "left join p.delivery d "
-                    + "left join p.store st "
-                    + "left join p.sale sa "
-                    + "where st.id = ?1 and sa.id is null")
-                    .setParameter(1, storeId)
-                    .getResultList();
-        } else {
-            res = getEntityManager().createQuery("select p from Product p "
-                    + "left join p.delivery d "
-                    + "left join p.store st "
-                    + "left join p.sale sa "
-                    + "where st.id = ?1 and sa.id is not null")
-                    .setParameter(1, storeId)
-                    .getResultList();
-        }
-
+        List<Product> res = getEntityManager()
+		.createQuery("select p from Product p where p.store = ?1")
+            .setParameter(1, store)
+            .getResultList();
+        
         logger.debug("findByStore returns {} elements", res.size());
 
         return res;
@@ -285,4 +272,22 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         return lst;
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> findBySale(Sale sale) {
+
+        logger.debug("ProductsDaoImpl.findBySale starts ");
+        logger.debug("entity type : {} ", getEntityClass().getName());
+
+		List<Product> lst = (List<Product>)
+			getEntityManager()
+			.createQuery(
+				"select e from Product e join fetch e.delivery d join fetch e.store s left join fetch e.sale sa where e.sale = ?1")
+				.setParameter(1, sale)
+                .getResultList();
+
+        logger.debug("found {} elements", lst.size());
+		return lst;
+	}
 }

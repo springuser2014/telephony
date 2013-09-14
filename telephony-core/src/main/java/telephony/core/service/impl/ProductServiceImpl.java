@@ -14,6 +14,9 @@ import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.ProductService;
+import telephony.core.service.SessionService;
+import telephony.core.service.bean.Session;
+import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -31,6 +34,9 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Inject
 	private ProductsDao productsDao;
+	
+	@Inject
+	private SessionService sessionService;
 
 	/**
 	 * {@inheritDoc}
@@ -120,12 +126,12 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		logger.debug("params : [ storeId : {} , productStatus : {} ] ",
 				storeId, productStatus);
 
-		List<Product> result = productsDao
-				.findByStoreId(storeId, productStatus);
+//		List<Product> result = productsDao
+//				.findByStore(null, null, storeId);
 
 		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 
-		return result;
+		return null;
 	}
 
 	/**
@@ -267,5 +273,21 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	public long count() {
 
 		return productsDao.count();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Product> findByStore(String username, String sessionId, Store store) 
+			throws SessionServiceException {
+		logger.info("findByStore starts");
+		logger.info("params : [ username  : {} , sessionId : {}, store : {} ]",
+				username, sessionId, store);
+		
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		return productsDao.findByStore(store);		
 	}
 }

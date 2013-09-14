@@ -42,7 +42,7 @@ public abstract class BaseEntity {
      * @return An entity description.
      */
     @Override
-    public final String toString() {
+    public String toString() {
         StringBuilder str = new StringBuilder();
         str.append(getClass().getName());
         str.append("[id=");

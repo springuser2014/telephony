@@ -4,6 +4,7 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
+import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
 
 /**
@@ -26,4 +27,11 @@ public interface DeliveriesDao extends GenericDao<Delivery> {
      * @return asd.
      */
     long getNumberOfDeliveries(Store store);
+
+    /**
+     * asd. 
+     * @param stores asd.
+     * @return asd.
+     */
+	List<Delivery> findByStore(Store stores);
 }

@@ -2,7 +2,9 @@ package telephony.core.entity.jpa;
 
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,13 +35,24 @@ public class Store extends BaseEntity {
     private String label;
     
     @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "allowedShops")
-    private List<User> users;
-
-    public List<User> getUsers() {
+    private Set<User> users = new HashSet<User>();
+    
+    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "store")
+    private Set<Role> requiredRoles = new HashSet<Role>();
+    
+    /**
+     * asd.
+     * @return as.
+     */
+    public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+    /**
+     * asd.
+     * @param users asd.
+     */
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 

@@ -1,5 +1,8 @@
 package telephony.core.dao;
 
+import java.util.List;
+
+import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.UserStore;
 
 /**
@@ -14,5 +17,12 @@ public interface UserStoresDao extends GenericDao<UserStore> {
 	 * @param userId as.
 	 */
 	void removeByUserId(Long userId);
+
+	/**
+	 * asd.
+	 * @param storeToDelete asd.
+	 * @return asd.
+	 */
+	List<UserStore> findByStore(Store storeToDelete);
 
 }

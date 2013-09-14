@@ -2,6 +2,8 @@ package telephony.core.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.entity.jpa.User;
 
@@ -12,6 +14,12 @@ import telephony.core.entity.jpa.User;
  * @param <E> Entities superclass interface.
  */
 public interface GenericDao<E extends BaseEntity> {
+	
+	/**
+	 * asd.
+	 * @return asd.
+	 */
+	EntityManager getEntityManager();
 
     /**
      * Looks for all entities.

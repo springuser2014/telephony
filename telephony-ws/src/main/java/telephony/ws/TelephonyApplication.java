@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import com.googlecode.flyway.core.Flyway;
 
 import telephony.ws.resource.HelloWorldResource;
-import telephony.ws.resource.a.HelloWorldResourceImpl;
+import telephony.ws.resource.HelloWorldResourceImpl;
 import telephony.ws.resource.contact.ContactsAddResource;
 import telephony.ws.resource.contact.ContactsDeleteResource;
 import telephony.ws.resource.contact.ContactsFetchResource;

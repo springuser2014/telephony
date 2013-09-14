@@ -1,8 +1,6 @@
 
 package telephony.core.entity.jpa;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +19,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_stores")
-
 public class UserStore extends BaseEntity {
 
     /**
@@ -40,26 +37,42 @@ public class UserStore extends BaseEntity {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
-    private Store storeId;
+    private Store store;
     
-    public User getUserId() {
-		return userId;
+    /**
+     * asd. 
+     * @return asd.
+     */
+    public User getUser() {
+		return user;
 	}
 
-	public void setUserId(User userId) {
-		this.userId = userId;
+    /**
+     * asd. 
+     * @param user asd.
+     */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Store getStoreId() {
-		return storeId;
+	/**
+	 * ads. 
+	 * @return asd.
+	 */
+	public Store getStore() {
+		return store;
 	}
 
-	public void setStoreId(Store storeId) {
-		this.storeId = storeId;
+	/**
+	 * asd.
+	 * @param store asd.
+	 */
+	public void setStore(Store store) {
+		this.store = store;
 	}
 
 	/**
@@ -74,8 +87,7 @@ public class UserStore extends BaseEntity {
      * @return asd.
      */
     @Override
-    public final Long getId() {
-
+    public Long getId() {
         return this.id;
     }
 
@@ -84,7 +96,7 @@ public class UserStore extends BaseEntity {
      * @param iD asd.
      */
     @Override
-    public final void setId(final Long iD) {
+    public void setId(Long iD) {
 
         this.id = iD;
     }

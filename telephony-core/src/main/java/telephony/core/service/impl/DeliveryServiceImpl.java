@@ -112,6 +112,7 @@ public class DeliveryServiceImpl
      * {@inheritDoc}
      */
 	@Override
+	@Transactional
 	public long count() {
 		return deliveriesDao.count();
 	}

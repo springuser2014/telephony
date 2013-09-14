@@ -6,6 +6,7 @@ import telephony.core.dao.InformationDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.dao.RolesDao;
 import telephony.core.dao.SalesDao;
+import telephony.core.dao.StoreRolesDao;
 import telephony.core.dao.StoresDao;
 import telephony.core.dao.UserRolesDao;
 import telephony.core.dao.UserStoresDao;
@@ -16,6 +17,7 @@ import telephony.core.dao.impl.InformationDaoImpl;
 import telephony.core.dao.impl.ProductsDaoImpl;
 import telephony.core.dao.impl.RolesDaoImpl;
 import telephony.core.dao.impl.SalesDaoImpl;
+import telephony.core.dao.impl.StoreRolesDaoImpl;
 import telephony.core.dao.impl.StoresDaoImpl;
 import telephony.core.dao.impl.UserRolesDaoImpl;
 import telephony.core.dao.impl.UserStoresDaoImpl;
@@ -27,6 +29,7 @@ import telephony.core.service.ProductService;
 import telephony.core.service.RoleService;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
+import telephony.core.service.StoreRoleService;
 import telephony.core.service.StoreService;
 import telephony.core.service.UserRoleService;
 import telephony.core.service.UserService;
@@ -38,6 +41,7 @@ import telephony.core.service.impl.ProductServiceImpl;
 import telephony.core.service.impl.RoleServiceImpl;
 import telephony.core.service.impl.SaleServiceImpl;
 import telephony.core.service.impl.SessionServiceImpl;
+import telephony.core.service.impl.StoreRoleServiceImpl;
 import telephony.core.service.impl.StoreServiceImpl;
 import telephony.core.service.impl.UserRoleServiceImpl;
 import telephony.core.service.impl.UserServiceImpl;
@@ -73,6 +77,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(UserRolesDao.class).to(UserRolesDaoImpl.class);
         bind(ContactsDao.class).to(ContactsDaoImpl.class);
         bind(InformationDao.class).to(InformationDaoImpl.class);
+        bind(StoreRolesDao.class).to(StoreRolesDaoImpl.class);
 
         // binding service layer objects
 
@@ -87,6 +92,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(ContactService.class).to(ContactServiceImpl.class);
         bind(RoleService.class).to(RoleServiceImpl.class);
         bind(SessionService.class).to(SessionServiceImpl.class);
+        bind(StoreRoleService.class).to(StoreRoleServiceImpl.class);
 
         // util classses
 

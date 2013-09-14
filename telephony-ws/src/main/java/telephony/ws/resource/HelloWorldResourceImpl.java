@@ -1,4 +1,4 @@
-package telephony.ws.resource.a;
+package telephony.ws.resource;
 
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
@@ -6,8 +6,6 @@ import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.ws.resource.HelloWorldResource;
-import telephony.ws.resource.TelephonyServerResource;
 
 // TODO : remove later
 

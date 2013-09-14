@@ -44,6 +44,7 @@
         <spring.version>3.1.0.RELEASE</spring.version>        
         
         <!-- Maven plugins properties -->
+        <maven.jacoco.plugin.version>0.5.6.201201232323</maven.jacoco.plugin.version>
         <maven.pmd.plugin.version>3.0</maven.pmd.plugin.version>
         <maven.checkstyle.plugin.version>2.10</maven.checkstyle.plugin.version>
         <maven.findbugs.plugin.version>2.5.3-SNAPSHOT</maven.findbugs.plugin.version>

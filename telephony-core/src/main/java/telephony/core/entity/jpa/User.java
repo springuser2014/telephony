@@ -216,5 +216,12 @@ public class User extends BaseEntity {
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + "]";
+	}
+    
+    
 }
 
