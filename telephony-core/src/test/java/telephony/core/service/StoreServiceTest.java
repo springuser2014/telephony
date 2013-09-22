@@ -116,28 +116,6 @@ public class StoreServiceTest extends BaseCoreTest {
 		
 	}
 	
-	// TODO : add editing store users
-	
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testingDeletingStore() throws SessionServiceException {
-		
-		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Store storeToDelete = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
-		long countBefore = storeService.count();
-		long countAfter = 0;
-		
-		// when
-		storeService.delete(username, sessionId, storeToDelete);
-		countAfter = storeService.count();
-		
-		// then
-		assertTrue("there should be one store less", (countAfter - countBefore) == -1);
-	}
-	
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -155,9 +133,31 @@ public class StoreServiceTest extends BaseCoreTest {
 		// then
 		List<Role> reqRoles = storeService.getRequestRoles(username, sessionId, store);
 		
-		assertEquals("number of submitted and fetched roles should be the same", roles.size(), reqRoles.size());
+		assertEquals("number of submitted and fetched roles should be the same",
+				roles.size(), reqRoles.size());
 		
-		assertTrue("all fetched elements should be the same as the submitted ones ", reqRoles.containsAll(roles));
-	}	
+		assertTrue("all fetched elements should be the same as the submitted ones ",
+				reqRoles.containsAll(roles));
+	}
+	
+	// TODO : add editing store users
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testingDeletingStore() throws SessionServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		Store storeToDelete = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
+		long countBefore = storeService.count();
+		long countAfter = 0;
+	
+		// when
+		storeService.delete(username, sessionId, storeToDelete);
+		countAfter = storeService.count();
+	
+		// then
+		assertTrue("there should be one store less", (countAfter - countBefore) == -1);
+	}
 	
 }

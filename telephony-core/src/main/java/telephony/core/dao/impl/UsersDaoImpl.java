@@ -33,7 +33,8 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 
 		User u = (User) getEntityManager()
 				.createQuery("select e from User e where e.email = ?1")
-				.setParameter(1, name).getSingleResult();
+				.setParameter(1, name)
+				.getSingleResult();
 
 		logger.info("found {} element", u);
 

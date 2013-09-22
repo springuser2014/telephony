@@ -3,8 +3,11 @@ package telephony.core.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.AssertTrue;
 
@@ -18,6 +21,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
+import telephony.core.entity.jpa.Role;
+import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
@@ -45,6 +50,12 @@ public class UserServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private UserService userService;
+	
+	@Inject
+	private RoleService roleService;
+
+	@Inject
+	private StoreService storeService;
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -145,8 +156,98 @@ public class UserServiceTest extends BaseCoreTest {
 		
 		// then
 		assertTrue("asd", lst.size() == 2);
-	}	
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testAddingRolesToUser() 
+			throws SessionServiceException, UserServiceException {
 	
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		String username2 = TestData.USER2_NAME;
+				
+		User user = userService.findByName(username2);
+		List<Role> rolesToAdd = roleService.fetchAll(username, sessionId);
+		
+		assertEquals(1, user.getRoles().size());
+		// when
+		userService.addRoles(username, sessionId, user, rolesToAdd);
+		userService.getEntityManager().refresh(user);
+		
+		// then
+		assertEquals(rolesToAdd.size(), user.getRoles().size());		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testDeleteingRolesFromUser() 
+			throws SessionServiceException, UserServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		String username2 = TestData.USER2_NAME;
+				
+		User user = userService.findByName(username2);
+		Set<Role> rolesToDelete = user.getRoles();
+		user.setRoles(new HashSet<Role>());
+		
+		// when
+		userService.updateUser(username, sessionId, user);
+		
+		// then
+		User user2 = userService.findByName(username2);
+		assertEquals(user2.getRoles().size(), 0);
+	}
+	
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testAssigningStoresToUser() 
+			throws SessionServiceException, UserServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		String username2 = TestData.USER2_NAME;
+		
+		User user = userService.findByName(username2);
+		List<Store> storesToAdd = storeService.fetchAllStores(username, sessionId);
+				
+		assertEquals(2, user.getAllowedShops().size());
+		// when
+		userService.addStores(username, sessionId, user, storesToAdd);
+		userService.getEntityManager().refresh(user);
+		
+		// then
+		assertEquals(storesToAdd.size(), user.getAllowedShops().size());
+	}
+	
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testRemovingUserFromStore() 
+			throws SessionServiceException, UserServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		String username2 = TestData.USER2_NAME;
+		
+		User user = userService.findByName(username2);
+		Set<Store> storesToDelete = user.getAllowedShops();
+		user.setAllowedShops(new HashSet<Store>());
+	
+		// when
+		userService.updateUser(username, sessionId, user);
+		
+		// then
+		User user2 = userService.findByName(username2);
+		assertEquals(0, user2.getAllowedShops().size());	
+	}
+
 }
 
 

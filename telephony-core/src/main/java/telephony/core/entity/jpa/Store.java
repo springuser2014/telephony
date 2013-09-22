@@ -34,13 +34,22 @@ public class Store extends BaseEntity {
     @Column(name = "label", nullable = false, length = 255)
     private String label;
     
-    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "allowedShops")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "allowedShops")
     private Set<User> users = new HashSet<User>();
     
-    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "store")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private Set<Role> requiredRoles = new HashSet<Role>();
     
-    /**
+    
+    public Set<Role> getRequiredRoles() {
+		return requiredRoles;
+	}
+
+	public void setRequiredRoles(Set<Role> requiredRoles) {
+		this.requiredRoles = requiredRoles;
+	}
+
+	/**
      * asd.
      * @return as.
      */

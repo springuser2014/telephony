@@ -127,33 +127,25 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public List<E> save(List<E> entities) {
+    public void save(List<E> entities) {
         logger.debug("save stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
 
-        List<E> res = new ArrayList<E>();
-
         for (E entity : entities) {
-            res.add(getEntityManager().merge(entity));
+            getEntityManager().persist(entity);
         }
-
-        return res;
     }
 
     @Override
-    public List<E> saveOrUpdate(List<E> entities) {
+    public void saveOrUpdate(List<E> entities) {
         logger.debug("saveOrUpdate starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
 
-        List<E> res = new ArrayList<E>();
-
         for (E entity : entities) {
-            res.add(getEntityManager().merge(entity));
+            getEntityManager().persist(entity);
         }
-
-        return res;
     }
     
     @Override

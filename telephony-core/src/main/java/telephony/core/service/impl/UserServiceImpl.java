@@ -1,13 +1,20 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.core.dao.UserRolesDao;
 import telephony.core.dao.UserStoresDao;
 import telephony.core.dao.UsersDao;
+import telephony.core.entity.jpa.Role;
+import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.entity.jpa.UserRole;
 import telephony.core.entity.jpa.UserStore;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
@@ -30,6 +37,12 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
     
     @Inject
     private UsersDao usersDao;
+    
+    @Inject 
+    private UserRolesDao userRolesDao;
+    
+    @Inject
+    private UserStoresDao userStoresDao;
     
     @Inject
     private SessionService sessionService;
@@ -132,6 +145,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 	 * {@inheritDoc} 
 	 */
 	@Override
+	@Transactional
 	public long count() {
 		
 		return usersDao.count();
@@ -143,8 +157,112 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 	@Override
 	@Transactional
 	public User findByName(String username) {
-		logger.debug("UserServiceImpl.findByName starts");
+		logger.debug("UserServiceImpl.findByName starts");		
+		logger.debug("params : [ username : {} ]", username);
+
 		
 		return usersDao.findByName(username);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public void addRoles(String username, String sessionId, User user,
+			List<Role> rolesToAdd) throws SessionServiceException {
+		
+		logger.debug("UserServiceImpl.addRoles starts");
+		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {username, sessionId, user, rolesToAdd});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		User creator = usersDao.findByName(username);
+		Date now = new Date();
+		List<UserRole> entities = new ArrayList<UserRole>();
+		
+		for(Role r : rolesToAdd) {
+			UserRole e = new UserRole();
+			e.setCreatedAt(now);
+			e.setCreator(creator);
+			e.setRole(r);
+			e.setUser(user);
+			entities.add(e);
+		}
+		
+		userRolesDao.saveOrUpdate(entities);
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	@Transactional
+	public void deleteRoles(String username, String sessionId, User user,
+			Set<Role> rolesToDelete) throws SessionServiceException {
+		
+		logger.debug("UserServiceImpl.addRoles starts");
+		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {username, sessionId, user, rolesToDelete});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		List<UserRole> entities = userRolesDao.findByUserAndRole(user, rolesToDelete);
+		userRolesDao.remove(entities);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public void addStores(String username, String sessionId, User user,
+			List<Store> storesToAdd) throws SessionServiceException {
+		
+		logger.debug("UserServiceImpl.addRoles starts");
+		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {username, sessionId, user, storesToAdd});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		User creator = usersDao.findByName(username);
+		Date now = new Date();
+		List<UserStore> entities = new ArrayList<UserStore>();
+		
+		for(Store s : storesToAdd) {
+			UserStore e = new UserStore();
+			e.setCreatedAt(now);
+			e.setCreator(creator);
+			e.setStore(s);
+			e.setUser(user);
+			
+			entities.add(e);
+		}
+		
+		userStoresDao.saveOrUpdate(entities);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */	
+	@Override
+	@Transactional
+	public void deleteStores(String username, String sessionId, User user,
+			Set<Store> storeToDelete) throws SessionServiceException {
+		
+		logger.debug("UserServiceImpl.addRoles starts");
+		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {username, sessionId, user, storeToDelete});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		List<UserStore> entities = userStoresDao.findByUserAndStore(user, storeToDelete);
+		userStoresDao.remove(entities);
+	}
+	
 }

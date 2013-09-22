@@ -1,9 +1,12 @@
 package telephony.core.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionException;
 
+import telephony.core.entity.jpa.Role;
+import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
@@ -74,6 +77,46 @@ public interface UserService extends BasicService<User> {
      * @param username asd.
      * @return asd. 
      */
-	User findByName(String username);    
+	User findByName(String username);
+	
+	/**
+	 * asd.
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param user asd.
+	 * @param rolesToAdd asd.
+	 * @throws SessionServiceException 
+	 */
+	void addRoles(String username, String sessionId, User user, List<Role> rolesToAdd) throws SessionServiceException;
+	
+	/**
+	 * asd.
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param user asd.
+	 * @param rolesToDelete asd.
+	 * @throws SessionServiceException 
+	 */
+	void deleteRoles(String username, String sessionId, User user, Set<Role> rolesToDelete) throws SessionServiceException;
+	
+	/**
+	 * asd.
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param user asd.
+	 * @param storesToAdd asd.
+	 * @throws SessionServiceException 
+	 */
+	void addStores(String username, String sessionId, User user, List<Store> storesToAdd) throws SessionServiceException;
+	
+	/**
+	 * asd.
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param user asd.
+	 * @param storesToDelete asd.
+	 * @throws SessionServiceException 
+	 */
+	void deleteStores(String username, String sessionId, User user, Set<Store> storesToDelete) throws SessionServiceException;
     
 }

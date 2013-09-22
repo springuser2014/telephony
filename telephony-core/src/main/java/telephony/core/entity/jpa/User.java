@@ -4,6 +4,7 @@ package telephony.core.entity.jpa;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -49,18 +50,18 @@ public class User extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionValidity;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_stores",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
-    private Set<Store> allowedShops = new HashSet<Store>();
+    private Set<Store> allowedShops;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles = new HashSet<Role>();
+    private Set<Role> roles;
 
     /**
      * asd.
@@ -220,8 +221,6 @@ public class User extends BaseEntity {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + "]";
-	}
-    
-    
+	}    
 }
 

@@ -12,6 +12,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.service.RoleService;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
+import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 /**
@@ -47,6 +48,30 @@ public class RoleServiceImpl
 		sessionService.validate(sessionToValidate);
 		
 		return rolesDao.find();		
+	}
+
+	@Override
+	public void add(String username, String sessionId, Role newrole)
+			throws SessionServiceException, RoleServiceException {
+		
+		logger.debug("RoleServiceImpl.add starts");
+		logger.debug("params : [ username : {}, sessionId : {}, newrole : {} ]", username, sessionId, newrole);
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+		
+		rolesDao.save(newrole);
+		
+	}
+
+	@Override
+	public void delete(String username, String sessionId, Role roleToDelete)
+			throws SessionServiceException, RoleServiceException {
+		
+		logger.debug("RoleServiceImpl.delete starts");
+		logger.debug("params : [ username : {}, sessionId : {}, roleToDelete : {}]", username, sessionId, roleToDelete);
+		
+		rolesDao.remove(roleToDelete);
 	}
 
 }

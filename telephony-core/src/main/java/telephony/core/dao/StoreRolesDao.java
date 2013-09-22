@@ -14,4 +14,11 @@ public interface StoreRolesDao extends GenericDao<StoreRole> {
 	 */
 	void removeStoreRolesByStore(Store store);
 
+	/**
+	 * asd.
+	 * @param storeToDelete asd.
+	 * @return asd.
+	 */
+	List<StoreRole> findByStore(Store storeToDelete);
+
 }

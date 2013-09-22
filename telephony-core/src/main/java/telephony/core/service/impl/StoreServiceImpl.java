@@ -71,9 +71,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
     private RolesDao rolesDao;
     
     /**
-     * asd.
-     * @return asd.
-     * @throws SessionServiceException 
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -195,7 +193,16 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		List<Delivery> deliveries = deliveriesDao.findByStore(storeToDelete);
 		deliveriesDao.remove(deliveries);
 		
-		storesDao.remove(storesDao.getEntityManager().contains(storeToDelete) ? storeToDelete : storesDao.getEntityManager().merge(storeToDelete));	
+		storeRolesDao.removeStoreRolesByStore(storeToDelete);
+		List<StoreRole> storeRoles = storeRolesDao.findByStore(storeToDelete);
+		storeRolesDao.remove(storeRoles);
+		
+		// TODO : check if it is used properly 
+		storesDao.remove(
+				storesDao.getEntityManager().contains(storeToDelete) 
+				? storeToDelete 
+				: storesDao.getEntityManager().merge(storeToDelete)
+		);	
 	}
 
 	/**
@@ -206,8 +213,12 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	public void setRequiredRoles(String username, String sessionId, Store store, List<Role> roles)
 			throws SessionServiceException, RoleServiceException {
 		
-		logger.debug("setRequiredRoles - params : [username : {} , sessionId : {}, store : {}, roles : {}]", 
-				new Object[] {username, sessionId, store, roles} );
+		logger.debug("setRequiredRoles - params : [" +
+				"username : {} , " +
+				"sessionId : {}, " +
+				"store : {}, " +
+				"roles : {}]", 
+				new Object[] {username, sessionId, store, roles});
 		
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
@@ -218,7 +229,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		Date createdAt = new Date();
 		User creator = usersDao.findByName(username);
 		
-		for(Role role : roles) { 
+		for (Role role : roles) { 
 			StoreRole sr = new StoreRole();
 			sr.setCreatedAt(createdAt);
 			sr.setCreator(creator);
@@ -238,7 +249,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	public List<Role> getRequestRoles(String username, String sessionId, Store store) 
 			throws SessionServiceException {
 		logger.debug("getRequestRoles - params : [username : {} , sessionId : {}, store : {}", 
-				new Object[] {username, sessionId, store} );
+				new Object[] {username, sessionId, store});
 		
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);

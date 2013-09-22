@@ -2,6 +2,7 @@ package telephony.core.service;
 
 
 import java.util.List;
+import java.util.Set;
 
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
@@ -20,9 +21,10 @@ public interface StoreService extends BasicService<Store> {
      * @param username ad.
      * @param sessionId asd.
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException  asd.
      */
-    List<Store> fetchAllStores(String username, String sessionId) throws SessionServiceException;
+    List<Store> fetchAllStores(String username, String sessionId) 
+    		throws SessionServiceException;
 
     /**
      * asd.
@@ -32,27 +34,30 @@ public interface StoreService extends BasicService<Store> {
      * @return asd.
      * @throws SessionServiceException 
      */
-	Store add(String username, String sessionId, Store store) throws SessionServiceException;
+	Store add(String username, String sessionId, Store store) 
+			throws SessionServiceException;
 
 	/**
 	 * Looks for the store with given label.
 	 * @param username TODO
 	 * @param sessionId TODO
 	 * @param storelabel asd.
-	 * @throws SessionServiceException
+	 * @throws SessionServiceException asd.
 	 * @return asd.
 	 */
-	Store findByLabel(String username, String sessionId, String storelabel) throws SessionServiceException;
+	Store findByLabel(String username, String sessionId, String storelabel) 
+			throws SessionServiceException;
 
 	/**
 	 * asd.
-	 * @param username
-	 * @param sessionId
-	 * @param storeToEdit
-	 * @return
-	 * @throws SessionServiceException 
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param storeToEdit asd.
+	 * @return asd.
+	 * @throws SessionServiceException asd.
 	 */
-	Store edit(String username, String sessionId, Store storeToEdit) throws SessionServiceException;
+	Store edit(String username, String sessionId, Store storeToEdit) 
+			throws SessionServiceException;
 
 	/**
 	 * asd.
@@ -61,7 +66,8 @@ public interface StoreService extends BasicService<Store> {
 	 * @param storeToDelete asd.
 	 * @throws SessionServiceException 
 	 */
-	void delete(String username, String sessionId, Store storeToDelete) throws SessionServiceException;
+	void delete(String username, String sessionId, Store storeToDelete) 
+			throws SessionServiceException;
 
 	/**
 	 * asd.
@@ -69,9 +75,10 @@ public interface StoreService extends BasicService<Store> {
 	 * @param username asd.
 	 * @param sessionId asd.
 	 * @return asd.
-	 * @throws SessionServiceException 
+	 * @throws SessionServiceException  asd.
 	 */
-	List<Role> getRequestRoles(String username, String sessionId, Store store) throws SessionServiceException;
+	List<Role> getRequestRoles(String username, String sessionId, Store store) 
+			throws SessionServiceException;
 
 
 	/**
@@ -80,10 +87,11 @@ public interface StoreService extends BasicService<Store> {
 	 * @param sessionId asd.
 	 * @param store asd.
 	 * @param roles as.
-	 * @throws SessionServiceException
-	 * @throws RoleServiceException
+	 * @throws SessionServiceException asd.
+	 * @throws RoleServiceException asd.
 	 */
 	void setRequiredRoles(String username, String sessionId, Store store,
 			List<Role> roles) throws SessionServiceException,
 			RoleServiceException;
+
 }

@@ -36,7 +36,7 @@ public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "store_roles",
     		joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
     		inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
