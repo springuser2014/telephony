@@ -81,15 +81,16 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	@Override
 	public User findByNameAndSessionId(String username, String sessionId) {
 
-		logger.info("findByNameAndSessionId starts");
-		logger.info(
+		logger.debug("findByNameAndSessionId starts");
+		logger.debug(
 				"params : [ username = {} , sessionId = {}]",
 				username, sessionId);
 		
 		User u = (User) getEntityManager()
 				.createQuery(
 						"select e from User e where e.email = ?1 and e.sessionId = ?2")
-				.setParameter(1, username).setParameter(2, sessionId)
+				.setParameter(1, username)
+				.setParameter(2, sessionId)
 				.getSingleResult();
 
 		return u;

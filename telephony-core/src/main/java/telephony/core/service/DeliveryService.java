@@ -4,6 +4,7 @@ package telephony.core.service;
 import java.util.List;
 
 import telephony.core.entity.jpa.Delivery;
+import telephony.core.entity.jpa.Product;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -20,12 +21,15 @@ public interface DeliveryService extends BasicService<Delivery>{
      * @param username asd.
      * @param sessionId  asd.
      * @param newDelivery asd.
+     * @param products TODO
+     * @param storeId TODO
+     * @param contactId TODO
      * @throws SessionServiceException 
      * @throws DeliveryServiceException 
      */
     void addNewDelivery(
         String username, String sessionId,
-        Delivery newDelivery
+        Delivery newDelivery, List<Product> products, Long storeId, Long contactId
     ) throws SessionServiceException, DeliveryServiceException;
 
     /**
@@ -60,12 +64,12 @@ public interface DeliveryService extends BasicService<Delivery>{
 
     /**
      * asd.
-     * @param userame asd.
+     * @param username asd.
      * @param sessionId asd.
      * @param deliveryId ads.
      * @return asd.
      * @throws DeliveryServiceException 
      * @throws SessionServiceException 
      */
-	Delivery findById(String userame, String sessionId, Long deliveryId) throws SessionServiceException, DeliveryServiceException;
+	Delivery findById(String username, String sessionId, Long deliveryId) throws SessionServiceException, DeliveryServiceException;
 }

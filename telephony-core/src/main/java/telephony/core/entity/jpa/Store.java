@@ -9,10 +9,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,19 +36,86 @@ public class Store extends BaseEntity {
     @Column(name = "label", nullable = false, length = 255)
     private String label;
     
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "allowedShops")
+    @ManyToMany(cascade = {CascadeType.MERGE}, mappedBy = "allowedShops")
     private Set<User> users = new HashSet<User>();
    
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "store")
+    @ManyToMany(cascade = {CascadeType.MERGE}, mappedBy = "store")
     private Set<Role> requiredRoles = new HashSet<Role>();
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="store")
+    private Set<Product> products = new HashSet<Product>();
     
-    public Set<Role> getRequiredRoles() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="store")
+    private Set<Delivery> deliveries = new HashSet<Delivery>();
+    
+    public void addDelivery(Delivery delivery) {
+    	
+    	if (deliveries.contains(delivery))
+    		return;
+    	
+    	deliveries.add(delivery);
+    	delivery.setStore(this);
+    }
+    
+    public void removeDelivery(Delivery delivery) {
+    	
+    	if (!deliveries.contains(delivery))
+    		return;
+    	
+    	deliveries.remove(delivery);
+    	delivery.setStore(null);
+    	
+    }
+    
+    public Set<Delivery> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(Set<Delivery> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public void addProduct(Product product) {
+    	
+    	if (products.contains(product))
+    		return;
+    	
+    	this.products.add(product);
+    	product.setStore(this);
+    }
+    
+    public void removeProduct(Product product) {
+    	
+    	if (!products.contains(product)) 
+    		return;
+    	
+    	products.remove(product);
+    	product.setStore(null);
+    }
+    
+    public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	public Set<Role> getRequiredRoles() {
 		return requiredRoles;
 	}
 
 	public void setRequiredRoles(Set<Role> requiredRoles) {
 		this.requiredRoles = requiredRoles;
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Store [id=" + id + ", label=" + label + ", users=" + users
+				+ ", requiredRoles=" + requiredRoles + ", products=" + products
+				+ ", deliveries=" + deliveries + "]";
 	}
 
 	/**

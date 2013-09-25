@@ -1,13 +1,20 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.core.dao.ContactsDao;
 import telephony.core.dao.DeliveriesDao;
+import telephony.core.dao.GenericDao;
 import telephony.core.dao.ProductsDao;
+import telephony.core.dao.StoresDao;
+import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
@@ -29,23 +36,32 @@ public class DeliveryServiceImpl
     extends AbstractBasicService<Delivery> implements DeliveryService {
 
     @Inject
-    private DeliveriesDao deliveriesDao;
+    DeliveriesDao deliveriesDao;
 
     @Inject
-    private ProductsDao prodctsDao;
+    ProductsDao prodctsDao;
     
     @Inject
-    private SessionService sessionService;
+    SessionService sessionService;
+    
+    @Inject
+    StoresDao storesDao;
+    
+    @Inject
+    ContactsDao contactsDao;
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
+	@Inject
+	ProductsDao productsDao;
+	
+    final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * {@inheritDoc}
      */
     @Transactional
     @Override
-    public void addNewDelivery(String username, String sessionId, Delivery newDelivery)
+    public void addNewDelivery(String username, String sessionId, 
+    		Delivery newDelivery, List<Product> products, Long storeId, Long contactId)
     		throws SessionServiceException, DeliveryServiceException {
     	
         logger.debug("DeliveryServiceImpl.addNewDelivery starts");        
@@ -55,8 +71,24 @@ public class DeliveryServiceImpl
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-        deliveriesDao.save(newDelivery);
-
+		Contact contact = contactsDao.findById(contactId);
+		
+		Store store = storesDao.findById(storeId);
+		
+		newDelivery.setContact(contact);
+		newDelivery.setStore(store);		
+		deliveriesDao.save(newDelivery);
+		
+		deliveriesDao.getEntityManager().flush();
+		deliveriesDao.getEntityManager().refresh(newDelivery);
+		
+		for (Product product : products) {
+			product.setStore(store);
+			newDelivery.addProduct(product);
+			product.setDelivery(newDelivery);
+			productsDao.save(product);
+		}
+		
         logger.debug("DeliveryServiceImpl.addNewDelivery ends");
     }
 

@@ -137,6 +137,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		
 		assertTrue("all fetched elements should be the same as the submitted ones ",
 				reqRoles.containsAll(roles));
+	
 	}
 	
 	// TODO : add editing store users
@@ -147,7 +148,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
-		Store storeToDelete = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
+		Store storeToDelete = storeService.findByLabel(username, sessionId, TestData.STORE2_LABEL);
 		long countBefore = storeService.count();
 		long countAfter = 0;
 		
@@ -156,6 +157,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		countAfter = storeService.count();
 				
 		assertTrue("there should be one store less", (countAfter - countBefore) == -1);
+		
 	}
 	
 }

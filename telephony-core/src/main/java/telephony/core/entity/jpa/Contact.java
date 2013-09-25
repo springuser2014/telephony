@@ -67,6 +67,43 @@ public class Contact extends BaseEntity {
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     private Collection<Sale> sales;
+    
+    public void addDelivery(Delivery delivery) {
+    	
+    	if (deliveries.contains(delivery))
+    		return;
+    	
+    	deliveries.add(delivery);
+    	delivery.setContact(this);
+		
+	}
+    
+    public void removeDelivery(Delivery delivery) {
+		
+    	if (!deliveries.contains(delivery))
+    		return;
+    	
+    	deliveries.remove(delivery);
+    	delivery.setContact(null);		
+	}
+    
+    public void addSale(Sale sale) {
+		
+    	if (sales.contains(sale))
+    		return;
+    	
+    	sales.add(sale);
+    	sale.setContact(this);
+	}
+    
+    public void removeSale(Sale sale) {
+    	
+    	if (!sales.contains(sale))
+    		return;
+    	
+    	sales.remove(sale);
+    	sale.setContact(null);
+	}
 
     /**
      * Do nothing.
@@ -154,4 +191,6 @@ public class Contact extends BaseEntity {
     public final void setSales(Collection<Sale> sales) {
         this.sales = sales;
     }
+
+	
 }

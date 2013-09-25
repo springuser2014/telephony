@@ -5,6 +5,8 @@ package telephony.core.entity.jpa;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -58,7 +60,7 @@ public class Delivery extends BaseEntity {
     private Contact contact;
 
     @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
-    private Collection<Product> products;
+    private Set<Product> products = new HashSet<Product>();
 
     /**
      * Gets delivery's label.
@@ -75,12 +77,38 @@ public class Delivery extends BaseEntity {
     public final void setLabel(String label) {
         this.label = label;
     }
+    
+    /**
+     * Adds product to delivery
+     * @param product to be added
+     */
+    public void addProduct(Product product) {
+    	
+    	if (products.contains(product)) 
+    		return;
+    	
+    	products.add(product);
+    	product.setDelivery(this);
+    }
+    
+    /**
+     * Removes product from delivery 
+     * @param product
+     */
+    public void removeProduct(Product product) {
+    	
+    	if (!products.contains(product))
+    		return;
+    	
+    	products.remove(product);
+    	product.setDelivery(null);
+    }
 
     /**
      * Gets delivery's products.
      * @return collection of the products.
      */
-    public final Collection<Product> getProducts() {
+    public final Set<Product> getProducts() {
         return products;
     }
 
@@ -88,7 +116,7 @@ public class Delivery extends BaseEntity {
      * Set delivery's products.
      * @param products of delivery.
      */
-    public final void setProducts(Collection<Product> products) {
+    public final void setProducts(Set<Product> products) {
         this.products = products;
     }
 
@@ -96,7 +124,7 @@ public class Delivery extends BaseEntity {
      * Initialize.
      */
     public Delivery() {
-        products = new ArrayList<Product>();
+        products = new HashSet<Product>();
     }
 
     /**
@@ -125,10 +153,28 @@ public class Delivery extends BaseEntity {
 
     /**
      * Set delivery's arrival store
-     * @param store of delivery.
+     * @param pmStore of delivery.
      */
-    public final void setStore(Store store) {
-        this.store = store;
+    public final void setStore(Store pmStore) {
+    	if (sameAsFormer(pmStore)) 
+    		return;
+    	
+        Store oldStore = this.store;
+        this.store = pmStore;
+        
+        if (oldStore != null) {
+        	oldStore.removeDelivery(this);
+        }
+        	
+        if (pmStore != null) {
+        	pmStore.addDelivery(this);
+        }
+    }
+    
+    private boolean sameAsFormer(Store store) {
+    	return this.store == null ?
+    				store == null :
+    					this.store.equals(store);
     }
 
     /**
@@ -184,7 +230,7 @@ public class Delivery extends BaseEntity {
         result = 31 * result + (label != null ? label.hashCode() : 0);
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (store != null ? store.hashCode() : 0);
-        result = 31 * result + (products != null ? products.hashCode() : 0);
+        result = 31 * result + (getProducts() != null ? getProducts().hashCode() : 0);
         result = 31 * result + (contact != null ? contact.hashCode() : 0);
         return result;
     }
@@ -218,8 +264,23 @@ public class Delivery extends BaseEntity {
      * @param contact asd.
      */
     public final void setContact(Contact contact) {
-        this.contact = contact;
+    	
+    	if (sameAsFormer(contact))
+    		return;
+    	
+    	Contact oldContact = this.contact;
+    	
+    	if (oldContact != null)
+    		oldContact.removeDelivery(this);
+    	
+    	this.contact = contact;
     }
+
+	private boolean sameAsFormer(Contact contact) {
+		return this.contact == null ?
+				contact == null :
+					this.contact.equals(contact);
+	}
 
 
 }

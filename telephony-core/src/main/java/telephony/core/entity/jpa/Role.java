@@ -44,6 +44,26 @@ public class Role extends BaseEntity {
     
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
+    
+    
+    public void addStore(Store store) {
+    	
+    }
+
+	public void removeStore(Store store) {
+		
+	}
+	
+    
+    public void addUser(User user) {
+    	
+    }
+
+	public void removeUser(User user) {
+		
+	}
+	
+	
 
     /**
      * asd.

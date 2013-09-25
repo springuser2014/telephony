@@ -110,10 +110,27 @@ public class Product extends BaseEntity {
 
     /**
      * asd.
-     * @param store asd.
+     * @param pmStore asd.
      */
-    public void setStore(Store store) {
-        this.store = store;
+    public void setStore(Store pmStore) {
+    	
+    	if (sameAsFormer(pmStore)) 
+    		return;
+    	
+        Store oldStore = this.store;
+        this.store = pmStore;
+        
+        if (oldStore != null)
+        	oldStore.removeProduct(this);
+        
+        if (pmStore != null)
+        	pmStore.addProduct(this);
+    }
+    
+    private boolean sameAsFormer(Store store) {
+    	return this.store == null ?
+    				store == null :
+    					this.store.equals(store);
     }
 
     /**
@@ -129,7 +146,23 @@ public class Product extends BaseEntity {
      * @param delivery asd
      */
     public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
+        
+        if (sameAsFormer(delivery))
+        	return;
+        
+        Delivery oldDelivery = this.delivery;
+        
+        if (oldDelivery != null)
+        	oldDelivery.removeProduct(this);
+        
+        if (delivery != null)        
+        	delivery.addProduct(this);
+    }
+    
+    private boolean sameAsFormer(Delivery delivery) {
+    	return this.delivery == null ? 
+    				delivery == null :
+    					this.delivery.equals(delivery);
     }
 
     /**
@@ -278,7 +311,7 @@ public class Product extends BaseEntity {
         int result = super.hashCode();
         result = 31 * result + (imei != null ? imei.hashCode() : 0);
         result = 31 * result + (store != null ? store.hashCode() : 0);
-        result = 31 * result + (delivery != null ? delivery.hashCode() : 0);
+        
         result = 31 * result + (sale != null ? sale.hashCode() : 0);
         result = 31 * result + (producer != null ? producer.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);

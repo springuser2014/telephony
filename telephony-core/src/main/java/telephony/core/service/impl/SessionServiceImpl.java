@@ -183,7 +183,8 @@ public class SessionServiceImpl
 			);
 			
 			Date now = new Date();
-			if (u.getSessionValidity().before(now) || u.getSessionValidity().getTime() == now.getTime()) {
+			if (u.getSessionValidity().before(now) || 
+					u.getSessionValidity().getTime() == now.getTime()) {
 				return false;
 			}			
 			
