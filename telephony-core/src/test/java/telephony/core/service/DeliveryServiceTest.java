@@ -157,4 +157,21 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		// then
 		assertTrue("Should decreased number of users ", countBefore - countAfter == 1);
 	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	public void fetchingAllDeliveries() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		long count = deliveryService.count();
+		
+		// when
+		deliveryService.fetchAllDeliveries(username, sessionId);	
+		
+		
+		// then
+		assertTrue("Should decreased number of users ", count == 5);
+	}
 }
