@@ -11,9 +11,7 @@ import telephony.core.dao.DeliveriesDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.dao.RolesDao;
 import telephony.core.dao.SalesDao;
-import telephony.core.dao.StoreRolesDao;
 import telephony.core.dao.StoresDao;
-import telephony.core.dao.UserStoresDao;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
@@ -41,8 +39,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
-    @Inject
-    private UserStoresDao userStoresDao;
     
     @Inject
     private ProductsDao productsDao;
@@ -59,8 +55,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
     @Inject
 	private SalesDao salesDao;
  
-    @Inject
-    private StoreRolesDao storeRolesDao;
 
     @Inject 
     private UsersDao usersDao;

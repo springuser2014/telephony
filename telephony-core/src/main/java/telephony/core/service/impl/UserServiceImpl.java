@@ -1,21 +1,15 @@
 package telephony.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.UserRolesDao;
-import telephony.core.dao.UserStoresDao;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
-import telephony.core.entity.jpa.UserRole;
-import telephony.core.entity.jpa.UserStore;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
 import telephony.core.service.bean.Session;
@@ -24,7 +18,6 @@ import telephony.core.service.exception.UserServiceException;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import com.google.inject.persist.UnitOfWork;
 
 
 /**
@@ -37,12 +30,6 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
     
     @Inject
     private UsersDao usersDao;
-    
-    @Inject 
-    private UserRolesDao userRolesDao;
-    
-    @Inject
-    private UserStoresDao userStoresDao;
     
     @Inject
     private SessionService sessionService;
@@ -198,8 +185,8 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-		List<UserRole> entities = userRolesDao.findByUserAndRole(user, rolesToDelete);
-		userRolesDao.remove(entities);
+//		List<UserRole> entities = userRolesDao.findByUserAndRole(user, rolesToDelete);
+//		userRolesDao.remove(entities);
 	}
 
 	/**
@@ -241,8 +228,8 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-		List<UserStore> entities = userStoresDao.findByUserAndStore(user, storeToDelete);
-		userStoresDao.remove(entities);
+//		List<UserStore> entities = userStoresDao.findByUserAndStore(user, storeToDelete);
+//		userStoresDao.remove(entities);
 	}
 	
 }

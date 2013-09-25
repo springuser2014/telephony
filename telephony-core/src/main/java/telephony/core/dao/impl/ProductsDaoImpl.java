@@ -15,7 +15,6 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.UserStore;
 
 /**
  * Products management DAO.
