@@ -168,10 +168,11 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		long count = deliveryService.count();
 		
 		// when
-		deliveryService.fetchAllDeliveries(username, sessionId);	
+		List<Delivery> lst = deliveryService.fetchAllDeliveries(username, sessionId);	
 		
 		
 		// then
-		assertTrue("Should decreased number of users ", count == 5);
+		assertTrue("Should return exact number of deliveries ", 
+				count == 5 && lst.size() == count);
 	}
 }

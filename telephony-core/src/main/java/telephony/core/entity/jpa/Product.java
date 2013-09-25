@@ -178,10 +178,27 @@ public class Product extends BaseEntity {
      * @param sale asd.
      */
     public void setSale(Sale sale) {
-        this.sale = sale;
+        
+    	if (sameAsFormer(sale))
+    		return; 
+    	
+    	Sale oldSale = this.sale;
+    	this.sale = sale;
+    	
+    	if (oldSale != null)
+    		sale.removeProduct(this);
+    	
+    	if (sale != null)
+    		sale.addProduct(this);
     }
 
-    /**
+    private boolean sameAsFormer(Sale sale) {
+		return this.sale == null ? 
+					sale == null :
+						this.sale.equals(sale);
+	}
+
+	/**
      * asd.
      * @return asd.
      */
@@ -306,13 +323,14 @@ public class Product extends BaseEntity {
         return true;
     }
 
+    // TODO : fix the hash code - currently sale and delivery properties are missed
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (imei != null ? imei.hashCode() : 0);
         result = 31 * result + (store != null ? store.hashCode() : 0);
         
-        result = 31 * result + (sale != null ? sale.hashCode() : 0);
+        
         result = 31 * result + (producer != null ? producer.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (color != null ? color.hashCode() : 0);

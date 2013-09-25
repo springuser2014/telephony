@@ -4,6 +4,7 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +48,7 @@ public class Sale extends BaseEntity {
     private Store store;
 
     @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
-    private Collection<Product> products;
+    private Set<Product> products;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id")
@@ -91,12 +92,30 @@ public class Sale extends BaseEntity {
     public void setLabel(String label) {
         this.label = label;
     }
+    
+	public void addProduct(Product product) {
+		
+		if (products.contains(product))
+			return;
+		
+		products.add(product);
+		product.setSale(this);		
+	}
+	
+	public void removeProduct(Product product) {
+		
+		if (!products.contains(product))
+			return;
+		
+		products.remove(product);
+		product.setSale(null);
+	}
 
     /**
      * asd.
      * @return asd.
      */
-    public Collection<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
@@ -104,7 +123,7 @@ public class Sale extends BaseEntity {
      * asd.
      * @param products asd.
      */
-    public void setProducts(Collection<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
@@ -190,4 +209,6 @@ public class Sale extends BaseEntity {
         result = 31 * result + products.hashCode();
         return result;
     }
+
+
 }

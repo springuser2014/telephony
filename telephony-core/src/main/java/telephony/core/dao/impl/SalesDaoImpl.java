@@ -39,16 +39,12 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
         logger.debug("SalesDaoImpl.findByStore starts");
 
         List<Sale> result = getEntityManager()
+//        		.createQuery(
+//        				"select s from Sale s join fetch s.products p where s.store = ?1 ")
         		.createQuery(
-        				"select s from Sale s join fetch s.products p where s.store = ?1 ")
+        				"select s from Sale s where s.store = ?1 ")
                 .setParameter(1, store)
                 .getResultList();
-
-//        if (result.size() > 0) {
-//            for (Sale sale : result) {
-//                sale.getProducts().size();
-//            }
-//        }
 
         logger.debug("found {} elements", result.size());
 
