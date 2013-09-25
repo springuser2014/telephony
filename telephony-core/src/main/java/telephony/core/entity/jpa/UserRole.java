@@ -22,11 +22,11 @@ import javax.persistence.Table;
 @Table(name = "user_roles")
 public class UserRole extends BaseEntity {
 
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_roles_seq")
-    @SequenceGenerator(name = "user_roles_seq", sequenceName = "user_roles_seq", allocationSize = 1)
-    private Long id;
+//    @Id
+//    @Column(name = "id", updatable = false, nullable = false)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_roles_seq")
+//    @SequenceGenerator(name = "user_roles_seq", sequenceName = "user_roles_seq", allocationSize = 1)
+//    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
@@ -45,12 +45,14 @@ public class UserRole extends BaseEntity {
 
     @Override
     public Long getId() {
-        return this.id;
+    	throw new UnsupportedOperationException();
+//        return this.id;
     }
 
     @Override
     public void setId(Long id) {
-        this.id = id;
+    	throw new UnsupportedOperationException();
+//        this.id = id;
     }
 
     /***
@@ -99,9 +101,9 @@ public class UserRole extends BaseEntity {
 
         UserRole userRole = (UserRole) o;
 
-        if (!id.equals(userRole.id)) {
-            return false;
-        }
+//        if (!id.equals(userRole.id)) {
+//            return false;
+//        }
         if (!role.equals(userRole.role)) {
             return false;
         }
@@ -115,7 +117,7 @@ public class UserRole extends BaseEntity {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + id.hashCode();
+//        result = 31 * result + id.hashCode();
         result = 31 * result + user.hashCode();
         result = 31 * result + role.hashCode();
         return result;

@@ -24,16 +24,16 @@ public class UserStore extends BaseEntity {
     /**
      * asd.
      */
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "user_stores_seq")
-    @SequenceGenerator(
-        name = "user_stores_seq",
-        sequenceName = "user_stores_seq",
-        allocationSize = 1)
-    private Long id;
+//    @Id
+//    @Column(name = "id", updatable = false, nullable = false)
+//    @GeneratedValue(
+//        strategy = GenerationType.SEQUENCE,
+//        generator = "user_stores_seq")
+//    @SequenceGenerator(
+//        name = "user_stores_seq",
+//        sequenceName = "user_stores_seq",
+//        allocationSize = 1)
+//    private Long id;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -88,7 +88,8 @@ public class UserStore extends BaseEntity {
      */
     @Override
     public Long getId() {
-        return this.id;
+    	throw new UnsupportedOperationException();
+//        return this.id;
     }
 
     /**
@@ -97,7 +98,7 @@ public class UserStore extends BaseEntity {
      */
     @Override
     public void setId(Long iD) {
-
-        this.id = iD;
+    	throw new UnsupportedOperationException();
+//        this.id = iD;
     }
 }

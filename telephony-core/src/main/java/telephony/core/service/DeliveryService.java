@@ -4,43 +4,68 @@ package telephony.core.service;
 import java.util.List;
 
 import telephony.core.entity.jpa.Delivery;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
+import telephony.core.service.exception.DeliveryServiceException;
+import telephony.core.service.exception.SessionServiceException;
 
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */
-public interface DeliveryService {
+public interface DeliveryService extends BasicService<Delivery>{
+
 
     /**
      * asd.
-     *
-     * @param deliveryId asd.
-     * @return asd.
-     */
-    Delivery fetchDeliveryInfo(Long deliveryId);
-
-    /**
-     * asd.
-     *
-     * @param delivery asd.
-     * @param store asd.
-     * @param productList asd.
-     * @param creator asd.
+     * @param username asd.
+     * @param sessionId  asd.
+     * @param newDelivery asd.
+     * @throws SessionServiceException 
+     * @throws DeliveryServiceException 
      */
     void addNewDelivery(
-        Delivery delivery, Store store,
-        List<Product> productList, User creator
-    );
+        String username, String sessionId,
+        Delivery newDelivery
+    ) throws SessionServiceException, DeliveryServiceException;
+
+    /**
+     * as.
+     * @param username ads.
+     * @param sessionId asd.
+     * @return
+     */
+    public List<Delivery> fetchAllDeliveries(String username, String sessionId)
+    		throws SessionServiceException, DeliveryServiceException;
+    
+    /**
+     * asd.
+     * @param username asd.
+     * @param sessionId asd.
+     * @throws SessionServiceException asd.
+     * @throws DeliveryServiceException asd.
+     */
+    void updateDelivery(String username, String sessionId, Delivery delvieryToUpdate)
+    	throws SessionServiceException, DeliveryServiceException;
 
     /**
      * asd.
-     *
-     * @return asd.
+     * @param username asd.
+     * @param sessionId asd.
+     * @param DeliveryToDelete asd.
+     * @throws SessionServiceException asd.
+     * @throws DeliveryServiceException asd.
      */
-    List<Delivery> fetchAllDeliveries();
+    void delete(String username, String sessionId, Delivery DeliveryToDelete)
+    	throws SessionServiceException, DeliveryServiceException;
 
+    /**
+     * asd.
+     * @param userame asd.
+     * @param sessionId asd.
+     * @param deliveryId ads.
+     * @return asd.
+     * @throws DeliveryServiceException 
+     * @throws SessionServiceException 
+     */
+	Delivery findById(String userame, String sessionId, Long deliveryId) throws SessionServiceException, DeliveryServiceException;
 }

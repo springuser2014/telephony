@@ -11,8 +11,11 @@ import telephony.core.dao.ProductsDao;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
 import telephony.core.service.DeliveryService;
+import telephony.core.service.SessionService;
+import telephony.core.service.bean.Session;
+import telephony.core.service.exception.DeliveryServiceException;
+import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -30,84 +33,56 @@ public class DeliveryServiceImpl
 
     @Inject
     private ProductsDao prodctsDao;
+    
+    @Inject
+    private SessionService sessionService;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     * @param deliveryId asd.
-     * @return asd.
-     */
-    @Override
-    public final Delivery fetchDeliveryInfo(final Long deliveryId) {
-        return null;
-    }
 
-    // TODO : do refactoring
     /**
-     * asd.
-     * @param delivery asd.
-     * @param store asd.
-     * @param productList asd.
-     * @param user asd.
+     * {@inheritDoc}
      */
     @Transactional
     @Override
-    public final void addNewDelivery(
-        Delivery delivery, final Store store,
-        final List<Product> productList, final User user) {
-        logger.debug("DeliveryServiceImpl.addNewDelivery starts");
+    public void addNewDelivery(String username, String sessionId, Delivery newDelivery)
+    		throws SessionServiceException, DeliveryServiceException {
+    	
+        logger.debug("DeliveryServiceImpl.addNewDelivery starts");        
+		logger.debug("params : [username : {}, sessionId : {}, newDelivery : {}]", 
+				new Object[] {username, sessionId, newDelivery});
 
-//        getEntityManager().getTransaction().begin();
-
-        delivery.setCreatedAt(new Date());
-        delivery.setCreator(user);
-        delivery.setStore(store);
-
-        delivery = deliveriesDao.save(delivery);
-        for (Product p : productList) {
-            p.setStore(store);
-            p.setDelivery(delivery);
-            p.setCreatedAt(new Date());
-            p.setCreator(user);
-
-            prodctsDao.save(p);
-        }
-
-//        getEntityManager().getTransaction().commit();
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+        deliveriesDao.save(newDelivery);
 
         logger.debug("DeliveryServiceImpl.addNewDelivery ends");
     }
 
 
     /**
-     * asd.
-     * @return asd.
+     * {@inheritDoc}
      */
     @Override
-    public final List<Delivery> fetchAllDeliveries() {
-        logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");
+    @Transactional
+    public List<Delivery> fetchAllDeliveries(String username, String sessionId)
+    		throws SessionServiceException, DeliveryServiceException{
+        
+        logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");        
+		logger.debug("params : [username : {}, sessionId : {}]", 
+				new Object[] {username, sessionId});
 
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
         List<Delivery> res = deliveriesDao.find();
 
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries ends");
 
         return res;
     }
-
-    /**
-     * asd.
-     * @param store asd.
-     * @param page asd.
-     * @return asd.
-     */
-    public final List<Product> fetchAllDeliveriesFrom(
-        final Store store, final int page) {
-        logger.debug("DeliveryServiceImpl.fetchAllDeliveriesFrom starts");
-
-        return null;
-    }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -115,5 +90,59 @@ public class DeliveryServiceImpl
 	@Transactional
 	public long count() {
 		return deliveriesDao.count();
+	}
+    
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public void updateDelivery(String username, String sessionId, Delivery delvieryToUpdate) 
+			throws SessionServiceException,
+			DeliveryServiceException {
+		
+		logger.debug("DeliveryServiceImpl.updateDelivery starts");        
+		logger.debug("params : [username : {}, sessionId : {}]", 
+				new Object[] {username, sessionId});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		deliveriesDao.saveOrUpdate(delvieryToUpdate);
+	}
+
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	public void delete(String username, String sessionId, Delivery delvieryToDelete) 
+		throws SessionServiceException, DeliveryServiceException {
+		
+		logger.debug("DeliveryServiceImpl.delete starts");        
+		logger.debug("params : [username : {}, sessionId : {}]", 
+				new Object[] {username, sessionId});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		deliveriesDao.remove(delvieryToDelete);			
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Delivery findById(String username, String sessionId, Long deliveryId) 
+			throws SessionServiceException, DeliveryServiceException {
+		
+		logger.debug("DeliveryServiceImpl.findById starts");        
+		logger.debug("params : [username : {}, sessionId : {}, deliveryId : {} ]", 
+				new Object[] {username, sessionId});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		Delivery delviery = deliveriesDao.findById(deliveryId);
+		
+		return delviery;
 	}
 }

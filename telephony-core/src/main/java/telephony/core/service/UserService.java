@@ -53,11 +53,10 @@ public interface UserService extends BasicService<User> {
      * @param username d.
      * @param sessionId d.
      * @param user d.
-     * @return TODO
      * @throws SessionServiceException d.
      * @throws UserServiceException d.
      */
-    User addUser(String username, String sessionId, User user)
+    void addUser(String username, String sessionId, User user)
     		throws SessionServiceException, UserServiceException;
     
     /**
@@ -65,11 +64,10 @@ public interface UserService extends BasicService<User> {
      * @param username d.
      * @param sessionId a.
      * @param user w.
-     * @return TODO
      * @throws SessionServiceException d.
      * @throws UserServiceException d.
      */
-    User updateUser(String username, String sessionId, User user)
+    void updateUser(String username, String sessionId, User user)
     		throws SessionServiceException, UserServiceException;
 
     /**

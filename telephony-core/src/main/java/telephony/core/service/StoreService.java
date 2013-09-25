@@ -31,10 +31,9 @@ public interface StoreService extends BasicService<Store> {
      * @param username asd. 
      * @param sessionId asd.
      * @param store aasd. 
-     * @return asd.
      * @throws SessionServiceException 
      */
-	Store add(String username, String sessionId, Store store) 
+	void add(String username, String sessionId, Store store) 
 			throws SessionServiceException;
 
 	/**
@@ -53,10 +52,9 @@ public interface StoreService extends BasicService<Store> {
 	 * @param username asd.
 	 * @param sessionId asd.
 	 * @param storeToEdit asd.
-	 * @return asd.
 	 * @throws SessionServiceException asd.
 	 */
-	Store edit(String username, String sessionId, Store storeToEdit) 
+	void edit(String username, String sessionId, Store storeToEdit) 
 			throws SessionServiceException;
 
 	/**

@@ -98,15 +98,10 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		logger.debug("UserServiceImpl.deleteUserById starts");
 		
 		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+			
+		usersDao.remove(user);
 		
-		try {
-			sessionService.validate(sessionToValidate);
-			
-			usersDao.remove(user);
-			
-		} catch (Exception e) {
-			logger.error("Error occured during deleting", e);
-		}
 	}
 
 	/**
@@ -114,7 +109,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      */
 	@Override
 	@Transactional
-	public User addUser(String username, String sessionId, User user)
+	public void addUser(String username, String sessionId, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.addUser starts");
@@ -122,7 +117,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
 		
-		return usersDao.save(user);
+		usersDao.saveOrUpdate(user);
 	}
 
 	/**
@@ -130,7 +125,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      */
 	@Override
 	@Transactional
-	public User updateUser(String username, String sessionId, User user)
+	public void updateUser(String username, String sessionId, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.updateUser starts");
@@ -138,7 +133,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
 		
-		return usersDao.saveOrUpdate(user);
+		usersDao.saveOrUpdate(user);
 	}
 
 	/**
@@ -179,20 +174,13 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-		User creator = usersDao.findByName(username);
-		Date now = new Date();
-		List<UserRole> entities = new ArrayList<UserRole>();
-		
-		for(Role r : rolesToAdd) {
-			UserRole e = new UserRole();
-			e.setCreatedAt(now);
-			e.setCreator(creator);
-			e.setRole(r);
-			e.setUser(user);
-			entities.add(e);
+		for (Role r : rolesToAdd) {
+			if (!user.getRoles().contains(r)) {
+				user.getRoles().add(r);
+			}
 		}
 		
-		userRolesDao.saveOrUpdate(entities);
+		usersDao.saveOrUpdate(user);
 	}
 
 	/**
@@ -229,21 +217,13 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-		User creator = usersDao.findByName(username);
-		Date now = new Date();
-		List<UserStore> entities = new ArrayList<UserStore>();
-		
-		for(Store s : storesToAdd) {
-			UserStore e = new UserStore();
-			e.setCreatedAt(now);
-			e.setCreator(creator);
-			e.setStore(s);
-			e.setUser(user);
-			
-			entities.add(e);
+		for (Store s : storesToAdd) {
+			if (!user.getAllowedShops().contains(s)) {
+				user.getAllowedShops().add(s);
+			}
 		}
 		
-		userStoresDao.saveOrUpdate(entities);
+		usersDao.saveOrUpdate(user);
 	}
 
 	/**

@@ -108,22 +108,19 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public E save(E entity) {
+    public void save(E entity) {
         logger.debug("save starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
-        return getEntityManager().merge(entity);
+        getEntityManager().persist(entity);
     }
 
     @Override
-    public E saveOrUpdate(E entity) {
+    public void saveOrUpdate(E entity) {
         logger.info("saveOrUpdate stars ");
         logger.info("entity type : {} ", entityClass.getName());
 
-        E e = getEntityManager().merge(entity);
-        getEntityManager().flush();
-
-        return e;
+        getEntityManager().merge(entity);
     }
 
     @Override
@@ -144,7 +141,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("number of params : {} ", entities.size());
 
         for (E entity : entities) {
-            getEntityManager().persist(entity);
+            getEntityManager().merge(entity);
         }
     }
     

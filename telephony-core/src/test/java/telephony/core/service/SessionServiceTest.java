@@ -29,7 +29,6 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 
 /**
- * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
  *
  */

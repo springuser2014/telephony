@@ -1,8 +1,8 @@
 package telephony.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +20,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.StoreRole;
 import telephony.core.entity.jpa.User;
-import telephony.core.entity.jpa.UserStore;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.core.service.bean.Session;
@@ -105,7 +103,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	 */
 	@Override
 	@Transactional
-	public Store add(String username, String sessionId, Store store) 
+	public void add(String username, String sessionId, Store store) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.add starts");
@@ -115,9 +113,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
         Session sessionToValidate = Session.create(username, sessionId);
         sessionService.validate(sessionToValidate);
 
-		Store storeRet = storesDao.save(store);
-		
-		return storeRet;
+		storesDao.save(store);
 		
 	}
 
@@ -147,7 +143,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	 */
 	@Transactional
 	@Override
-	public Store edit(String username, String sessionId, Store storeToEdit) 
+	public void edit(String username, String sessionId, Store storeToEdit) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.edit starts");
@@ -157,7 +153,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
 		
-		return storesDao.saveOrUpdate(storeToEdit);
+		storesDao.saveOrUpdate(storeToEdit);
 	}
 
 	/**
@@ -184,25 +180,17 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 				
 		salesDao.remove(sales);
 		
-		List<UserStore> userStores = userStoresDao.findByStore(storeToDelete);
-		userStoresDao.remove(userStores);
-		
 		List<Product> products = productsDao.findByStore(storeToDelete);
 		productsDao.remove(products);
 		
 		List<Delivery> deliveries = deliveriesDao.findByStore(storeToDelete);
 		deliveriesDao.remove(deliveries);
 		
-		storeRolesDao.removeStoreRolesByStore(storeToDelete);
-		List<StoreRole> storeRoles = storeRolesDao.findByStore(storeToDelete);
-		storeRolesDao.remove(storeRoles);
-		
-		// TODO : check if it is used properly 
-		storesDao.remove(
-				storesDao.getEntityManager().contains(storeToDelete) 
-				? storeToDelete 
-				: storesDao.getEntityManager().merge(storeToDelete)
-		);	
+		storeToDelete.setRequiredRoles(new HashSet<Role>());
+		storeToDelete.setUsers(new HashSet<User>());
+		storesDao.save(storeToDelete);
+		storesDao.remove(storeToDelete);
+
 	}
 
 	/**
@@ -213,32 +201,19 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	public void setRequiredRoles(String username, String sessionId, Store store, List<Role> roles)
 			throws SessionServiceException, RoleServiceException {
 		
-		logger.debug("setRequiredRoles - params : [" +
-				"username : {} , " +
-				"sessionId : {}, " +
-				"store : {}, " +
-				"roles : {}]", 
+		logger.debug(
+		"setRequiredRoles - params : [ username : {}, sessionId : {}, store : {}, roles : {}]", 
 				new Object[] {username, sessionId, store, roles});
 		
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
+				
+		Set<Role> rolesSet = new HashSet<Role>();
+		rolesSet.addAll(roles);
+		store.setRequiredRoles(rolesSet);
+		storesDao.saveOrUpdate(store);
+		storesDao.getEntityManager().flush();
 		
-		storeRolesDao.removeStoreRolesByStore(store);
-		
-		List<StoreRole> entities = new ArrayList<StoreRole>();
-		Date createdAt = new Date();
-		User creator = usersDao.findByName(username);
-		
-		for (Role role : roles) { 
-			StoreRole sr = new StoreRole();
-			sr.setCreatedAt(createdAt);
-			sr.setCreator(creator);
-			sr.setRole(role);
-			sr.setStore(store);
-			entities.add(sr);
-		}
-		
-		storeRolesDao.save(entities);
 	}
 
 	/**

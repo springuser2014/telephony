@@ -46,16 +46,14 @@ public interface GenericDao<E extends BaseEntity> {
     /**
      * Saves submitted entity.
      * @param entity Entity to save.
-     * @return Freshly saved entity.
      */
-    E save(E entity);
+    void save(E entity);
 
     /**
      * Saves (if not exists yet) or update entity in persistence layer. 
      * @param entity Entity to save or update.
-     * @return Freshly saved (updated) entity.
      */
-    E saveOrUpdate(E entity);
+    void saveOrUpdate(E entity);
 
     /**
      * Saves submitted list of entities.

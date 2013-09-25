@@ -72,11 +72,13 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 
 		getEntityManager().getTransaction().begin();
 
-		sale.setCreatedAt(new Date());
-		sale.setCreator(user);
+//		sale.setCreatedAt(new Date());
+//		sale.setCreator(user);
 		sale.setStore(store);
-		sale = salesDao.save(sale);
+		salesDao.save(sale);
 
+		salesDao.getEntityManager().refresh(sale);
+		
 		for (Product p : products) {
 			p.setSale(sale);
 			productsDao.save(p);

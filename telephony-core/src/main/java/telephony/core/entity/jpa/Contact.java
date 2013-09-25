@@ -4,6 +4,7 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +25,8 @@ public class Contact extends BaseEntity {
 	
     @OneToMany(
         mappedBy = "contact",
-        fetch    = FetchType.LAZY
+        fetch    = FetchType.LAZY,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     private Collection<Delivery> deliveries;
     
@@ -61,7 +63,8 @@ public class Contact extends BaseEntity {
     
     @OneToMany(
         mappedBy = "contact",
-        fetch    = FetchType.LAZY
+        fetch    = FetchType.LAZY,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     private Collection<Sale> sales;
 

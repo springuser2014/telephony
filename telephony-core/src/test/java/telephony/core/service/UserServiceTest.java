@@ -88,18 +88,18 @@ public class UserServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
-		User creator = userService.findByName(TestData.USER1_NAME);
+
 		User user = new User();
 		user.setId(5L);
 		user.setEmail("any@mail.com");
 		user.setPassword("somePa$$word");
-		user.setCreator(creator);
-		user.setCreatedAt(new Date());
 		user.setSessionId(null);
 		user.setSessionValidity(null);
 		
 		// when
-		User addedUser = userService.addUser(username, sessionId, user);
+		userService.addUser(username, sessionId, user);
+		
+		User addedUser = userService.findByName("any@mail.com");
 		
 		// then
 		assertTrue("Should create and return a new user", addedUser != null);
@@ -114,7 +114,7 @@ public class UserServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		User user = userService.findByName(TestData.USER4_NAME);
-		long countAfter, countBefore = userService.count();
+		long countAfter = -1, countBefore = userService.count();
 		
 		// when
 		userService.deleteUserById(username, sessionId, user);		
@@ -170,12 +170,13 @@ public class UserServiceTest extends BaseCoreTest {
 				
 		User user = userService.findByName(username2);
 		List<Role> rolesToAdd = roleService.fetchAll(username, sessionId);
+		userService.getEntityManager().refresh(user);
 		
 		assertEquals(1, user.getRoles().size());
 		// when
 		userService.addRoles(username, sessionId, user, rolesToAdd);
-		userService.getEntityManager().refresh(user);
 		
+
 		// then
 		assertEquals(rolesToAdd.size(), user.getRoles().size());		
 	}
@@ -191,7 +192,6 @@ public class UserServiceTest extends BaseCoreTest {
 		String username2 = TestData.USER2_NAME;
 				
 		User user = userService.findByName(username2);
-		Set<Role> rolesToDelete = user.getRoles();
 		user.setRoles(new HashSet<Role>());
 		
 		// when
@@ -215,11 +215,12 @@ public class UserServiceTest extends BaseCoreTest {
 		
 		User user = userService.findByName(username2);
 		List<Store> storesToAdd = storeService.fetchAllStores(username, sessionId);
-				
+		userService.getEntityManager().refresh(user);
+		
 		assertEquals(2, user.getAllowedShops().size());
 		// when
 		userService.addStores(username, sessionId, user, storesToAdd);
-		userService.getEntityManager().refresh(user);
+		
 		
 		// then
 		assertEquals(storesToAdd.size(), user.getAllowedShops().size());
@@ -237,7 +238,6 @@ public class UserServiceTest extends BaseCoreTest {
 		String username2 = TestData.USER2_NAME;
 		
 		User user = userService.findByName(username2);
-		Set<Store> storesToDelete = user.getAllowedShops();
 		user.setAllowedShops(new HashSet<Store>());
 	
 		// when

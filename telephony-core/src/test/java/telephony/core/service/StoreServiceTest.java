@@ -74,9 +74,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		List<Store> storesBeforeAdd = storeService.fetchAllStores(username, sessionId);
 		Store store = new Store();
-		store.setCreatedAt(new Date());
 		User creator = userService.findByName(TestData.USER2_NAME);
-		store.setCreator(creator);
 		store.setLabel("Rybnik");
 		long nbBefore = storeService.count();
 		
@@ -84,7 +82,8 @@ public class StoreServiceTest extends BaseCoreTest {
 		//store.setRoles(roles);
 		
 		// when
-		Store addedStore = storeService.add(username, sessionId, store);
+		storeService.add(username, sessionId, store);
+		Store addedStore = storeService.findByLabel(username, sessionId, "Rybnik");
 		List<Store> storesAfterAdd = storeService.fetchAllStores(username, sessionId);
 		long nbAfter = storeService.count();
 		
@@ -106,7 +105,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		
 		// when
 		storeToEdit.setLabel(STORE_NEW_LOCATION);
-		Store editedStore = storeService.edit(username, sessionId, storeToEdit);
+		storeService.edit(username, sessionId, storeToEdit);
 		Store searchEditedStore = storeService.findByLabel(username, sessionId, STORE_NEW_LOCATION);
 		long countAfter = storeService.count();
 		
@@ -151,12 +150,11 @@ public class StoreServiceTest extends BaseCoreTest {
 		Store storeToDelete = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
 		long countBefore = storeService.count();
 		long countAfter = 0;
-	
+		
 		// when
 		storeService.delete(username, sessionId, storeToDelete);
 		countAfter = storeService.count();
-	
-		// then
+				
 		assertTrue("there should be one store less", (countAfter - countBefore) == -1);
 	}
 	

@@ -17,16 +17,16 @@ import javax.persistence.Table;
 @Table(name = "store_roles")
 public class StoreRole extends BaseEntity {
 	
-	@Id
-	@Column(name = "id", updatable = false, nullable = false)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "store_roles_seq")
-	@SequenceGenerator(
-			name = "store_roles_seq",
-			sequenceName = "store_roles_seq",
-			allocationSize = 1)
-	private Long id;
+//	@Id
+//	@Column(name = "id", updatable = false, nullable = false)
+//	@GeneratedValue(
+//			strategy = GenerationType.SEQUENCE,
+//			generator = "store_roles_seq")
+//	@SequenceGenerator(
+//			name = "store_roles_seq",
+//			sequenceName = "store_roles_seq",
+//			allocationSize = 1)
+//	private Long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "store_id", nullable = false)
@@ -46,12 +46,14 @@ public class StoreRole extends BaseEntity {
 	
 	@Override
 	public Long getId() {
-		return this.id;
+		throw new UnsupportedOperationException();
+//		return this.id;
 	}
 
 	@Override
 	public void setId(Long id) {
-		this.id = id;
+		throw new UnsupportedOperationException();
+//		this.id = id;
 	}
 
 	public Store getStore() {
@@ -73,7 +75,7 @@ public class StoreRole extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "StoreRole [id=" + id + ", store=" + store + ", role=" + role
+		return "StoreRole [store=" + store + ", role=" + role
 				+ "]";
 	}
 
@@ -81,7 +83,7 @@ public class StoreRole extends BaseEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+//		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((store == null) ? 0 : store.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		return result;
@@ -89,28 +91,35 @@ public class StoreRole extends BaseEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		StoreRole other = (StoreRole) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+//		if (id == null) {
+//			if (other.id != null)
+//				return false;
+//		} else if (!id.equals(other.id))
+//			return false;
 		if (store == null) {
-			if (other.store != null)
+			if (other.store != null) {
 				return false;
-		} else if (!store.equals(other.store))
+			}
+		} else if (!store.equals(other.store)) {
 			return false;
+		}
 		if (role == null) {
-			if (other.role != null)
+			if (other.role != null) {
 				return false;
-		} else if (!role.equals(other.role))
+			}
+		} else if (!role.equals(other.role)) {
 			return false;
+		}
 		return true;
 	}
 
