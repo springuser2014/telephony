@@ -1,13 +1,13 @@
 package telephony.core.dao;
 
 
-import java.util.Date;
 import java.util.List;
 
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.service.ProductQueryCriteria;
 
 
 /**
@@ -34,20 +34,11 @@ public interface ProductsDao extends GenericDao<Product> {
 
     /**
      * asd.
-     * @param imei asd.
-     * @param producer asd.
-     * @param model asd.
-     * @param color asd.
-     * @param storeId asd.
-     * @param deliveryDateStart asd.
-     * @param deliveryDateEnd asd.
-     * @param productStatus asd.
+     * @param parameterObject TODO
      * @return asd.
      */
     List<Product> findByCriteria(
-        String imei, String producer, String model,
-        String color, Long storeId, Date deliveryDateStart,
-        Date deliveryDateEnd, ProductStatus productStatus);
+        ProductQueryCriteria parameterObject);
 
     /**
      * asd.

@@ -30,7 +30,7 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
-@TestExecutionListeners( {
+@TestExecutionListeners({
 	DependencyInjectionTestExecutionListener.class,
     FlywayDBUnitTestExecutionListener.class 
 })
@@ -45,8 +45,9 @@ public class ContactServiceTest extends BaseCoreTest {
 	
 		
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
-	public void deletingContact() throws SessionServiceException, ContactServiceException {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void deletingContact() 
+			throws SessionServiceException, ContactServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
@@ -64,7 +65,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	}
 	
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void addingNewContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
@@ -88,7 +89,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	}
 	
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void updatingContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
@@ -110,7 +111,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	
 	
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchingAllContacts() throws SessionServiceException, ContactServiceException {
 		
 		// given

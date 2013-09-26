@@ -52,4 +52,97 @@ public class ProductServiceTest extends BaseCoreTest {
 		// then
 		assertTrue("should found 24 items", products.size() == 24);
 	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingAllProducts() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingAllProducers() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void fetchingAllModels() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void fetchingAllColors() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void fetchingAllIMEIsInUse() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void fetchingProductByImeiAndStore() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void movingProductsToAnotherStore() {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		// when
+		
+		// then
+	}
+	
 }

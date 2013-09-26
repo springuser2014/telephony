@@ -1,7 +1,6 @@
 package telephony.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.service.ProductQueryCriteria;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
@@ -43,7 +43,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllImeiInUse() {
+	public List<String> fetchAllImeiInUse(String username, String sessionId) {
 		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
 
 		List<String> res = productsDao.fetchImeisList();
@@ -58,7 +58,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllProducers() {
+	public List<String> fetchAllProducers(String username, String sessionId) {
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
@@ -80,7 +80,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllModels() {
+	public List<String> fetchAllModels(String username, String sessionId) {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
@@ -102,7 +102,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllColors() {
+	public List<String> fetchAllColors(String username, String sessionId) {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
@@ -123,8 +123,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Product> fetchAllProducts(final Long storeId,
-			final ProductStatus productStatus) {
+	public List<Product> fetchAllProducts(String username,
+			String sessionId, final Long storeId, final ProductStatus productStatus) {
 
 		logger.debug("ProductServiceImpl.fetchAllProducts starts ");
 		logger.debug("params : [ storeId : {} , productStatus : {} ] ",
@@ -140,8 +140,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public void moveProducts(final Store store,
-			final List<Product> products, final User user) {
+	public void moveProducts(String username,
+			String sessionId, final Store store, final List<Product> products, final User user) {
 		logger.debug("ProductServiceImpl.moveProducts starts ");
 		logger.debug(
 				"params : [ storeId : {} , number of products: {} , userId : {}] ",
@@ -160,8 +160,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public Product fetchProductByImeiAndStoreId(final String imei,
-			final Long storeId) {
+	public Product fetchProductByImeiAndStoreId(String username,
+			String sessionId, final String imei, final Long storeId) {
 		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
 
 		Product p = productsDao.findByImeiAndStoreId(imei, storeId);
@@ -170,26 +170,24 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	}
 
 	
-	// TODO : inctroduce parameter obejcts
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Transactional
-	public List<Product> fetchAllProductsByCriteria(final String imei,
-			final String producer, final String model, final String color,
-			final Long storeId, final Date deliveryDateStart,
-			final Date deliveryDateEnd, final ProductStatus status) {
+	public List<Product> fetchAllProductsByCriteria(String username, String sessionId, ProductQueryCriteria parameterObject) {
 		logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
-		Object[] params = new Object[] { imei, producer, model, color, storeId,
-				deliveryDateStart, deliveryDateEnd, status };
+		Object[] params = new Object[] { parameterObject.getImei(), parameterObject.getProducer(), 
+				parameterObject.getModel(), parameterObject.getColor(), 
+				parameterObject.getStoreId(), parameterObject.getDeliveryDateStart(),
+				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
+		
+		// TODO : log parameterObject instaed of each part
 		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
 				+ "color : {} , storeId : {} , deliveryDateStart : {} , "
 				+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
 
-		List<Product> result = productsDao.findByCriteria(imei, producer,
-				model, color, storeId, deliveryDateStart, deliveryDateEnd,
-				status);
+		List<Product> result = productsDao.findByCriteria(parameterObject);
 
 		logger.info("ProductServiceImpl.fetchAllProductsByCriteria ends");
 
@@ -199,64 +197,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		}
 
 		return result;
-	}
-
-	// TODO : remove ?
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public void updateProducts(final List<Product> productsToUpdate,
-			final List<Product> productsToDelete,
-			final List<Product> productsToCancelTheSale, final User editor) {
-		logger.debug("ProductServiceImpl.updateProducts starts");
-
-		for (Product p : productsToUpdate) {
-			for (Product p1 : productsToDelete) {
-				if (p1.getId().equals(p.getId())) {
-					productsToUpdate.remove(p);
-				}
-			}
-
-			for (Product p2 : productsToCancelTheSale) {
-				if (p2.getId().equals(p.getId())) {
-					productsToUpdate.remove(p);
-				}
-			}
-
-		}
-
-		if (productsToUpdate.size() > 0) {
-			productsDao.saveOrUpdate(productsToUpdate);
-		}
-
-		if (productsToDelete.size() > 0) {
-			productsDao.remove(productsToDelete);
-		}
-
-		if (productsToCancelTheSale.size() > 0) {
-			this.cancelProductsSale(productsToCancelTheSale, editor);
-		}
-	}
-	
-	
-	// TODO : remove ??
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public void cancelProductsSale(
-			final List<Product> productsToCancelTheSale, final User editor) {
-		logger.debug("ProductServiceImpl.cancelProductsSale starts");
-
-		for (Product p : productsToCancelTheSale) {
-			p.setSale(null);
-			p.setPriceOut(new Money(0, 0));
-		}
-
-		productsDao.saveOrUpdate(productsToCancelTheSale);
 	}
 
 	/**

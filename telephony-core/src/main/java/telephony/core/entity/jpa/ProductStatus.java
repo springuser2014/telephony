@@ -1,6 +1,6 @@
 package telephony.core.entity.jpa;
 
-
+// TODO : remove
 /**
  * asd.
  */

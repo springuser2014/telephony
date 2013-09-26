@@ -35,7 +35,7 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
-@TestExecutionListeners( {
+@TestExecutionListeners({
 	DependencyInjectionTestExecutionListener.class,
     FlywayDBUnitTestExecutionListener.class 
 })
@@ -85,8 +85,9 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	}
 		
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
-	public void addingNewDelivery() throws SessionServiceException, DeliveryServiceException, ContactServiceException {
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void addingNewDelivery() 
+			throws SessionServiceException, DeliveryServiceException, ContactServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
@@ -117,13 +118,14 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		productsAfter = productService.count();
 	
 		// then
-		assertTrue("Should increased number of deliveries ", deliveriesAfter - deliveriesBefore == 1);
+		assertTrue("Should increased number of deliveries ", 
+				deliveriesAfter - deliveriesBefore == 1);
 		
 		assertTrue("Should increased number of products ", productsAfter - productsBefore == 2);
 	}
 
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void editingExistingDelivery() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
@@ -139,12 +141,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		Delivery updated = deliveryService.findById(username, sessionId, deliveryId);
 		
 		// then
-		assertTrue("Should create and return a new user", updated != null && updated.getLabel().contains("asd asd asd"));
+		assertTrue("Should create and return a new user", 
+				updated != null && updated.getLabel().contains("asd asd asd"));
 	}
 	
 
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void deletingDelivery() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
@@ -162,7 +165,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	}
 	
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchingAllDeliveries() throws SessionServiceException, DeliveryServiceException {
 		
 		// given

@@ -36,34 +36,65 @@ public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, 
+    			cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(name = "store_roles",
     		joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
     		inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
     private Set<Store> store = new HashSet<Store>();
     
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "roles")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, 
+    			mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
     
+
+    /**
+     * asd.
+     * @return asd.
+     */
+	public Set<Store> getStore() {
+		return store;
+	}
+
+	/**
+	 * asd.
+	 * @param store asd.
+	 */
+	public void setStore(Set<Store> store) {
+		this.store = store;
+	}
     
+    /**
+     * asd.
+     * @param store asd.
+     */
     public void addStore(Store store) {
     	
     }
 
+    /**
+     * asd.
+     * @param store asd.
+     */
 	public void removeStore(Store store) {
 		
 	}
 	
-    
+    /**
+     * asd.
+     * @param user asd.
+     */
     public void addUser(User user) {
     	
     }
 
+    /**
+     * asd.
+     * @param user asd.
+     */
 	public void removeUser(User user) {
 		
 	}
-	
-	
 
     /**
      * asd.
@@ -88,6 +119,11 @@ public class Role extends BaseEntity {
         this.name = name;
     }
 
+    /**
+     * asd.
+     * @param o asd.
+     * @return asd.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,6 +145,10 @@ public class Role extends BaseEntity {
         return true;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     @Override
     public int hashCode() {
         int result = super.hashCode();
@@ -116,23 +156,21 @@ public class Role extends BaseEntity {
         return result;
     }
 
+    /**
+     * asd.
+     * @return asd.
+     */
     @Override
     public Long getId() {
         return this.id;
     }
 
+    /**
+     * asd.
+     * @param id asd.
+     */
     @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-	public Set<Store> getStore() {
-		return store;
-	}
-
-	public void setStore(Set<Store> store) {
-		this.store = store;
-	}
-    
-    
+    }    
 }

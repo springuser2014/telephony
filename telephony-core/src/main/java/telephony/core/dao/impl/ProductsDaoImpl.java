@@ -2,7 +2,6 @@ package telephony.core.dao.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -10,11 +9,14 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.persist.Transactional;
+
 import telephony.core.dao.ProductsDao;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.service.ProductQueryCriteria;
 
 /**
  * Products management DAO.
@@ -33,10 +35,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     }
 
     /**
-     * asd.
-     * @param userId asd.
-     * @param productStatus asd.
-     * @return asd.
+     * {@inheritDoc}
      */
 	@Override
     @SuppressWarnings("unchecked")
@@ -56,6 +55,9 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
 	@Override
     @SuppressWarnings("unchecked")
     public List<Product> findByStore(Store store) {
@@ -72,25 +74,13 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-	// TOOD: refactor method below to use Query object or something
-	/**
-	 * asd.
-	 * @param imei asd.
-	 * @param producer asd.
-	 * @param model asd.
-	 * @param color asd.
-	 * @param storeId asd.
-	 * @param deliveryDateStart asd.
-	 * @param deliveryDateEnd asd.
-	 * @param productStatus asd.
-	 * @return asd.
-	 */
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> findByCriteria(
-        String imei, String producer, String model,
-        String color, Long storeId, Date deliveryDateStart,
-        Date deliveryDateEnd, ProductStatus productStatus) {
+        ProductQueryCriteria query) {
 
         StringBuilder sb = new StringBuilder();
         sb.append(" select p from Product p ");
@@ -99,75 +89,75 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         sb.append(" left join fetch p.sale sa ");
         sb.append(" where 1=1 ");
 
-        if (imei != null && imei.length() > 0) {
+        if (query.getImei() != null && query.getImei().length() > 0) {
             sb.append("and p.imei = :imei ");
         }
 
-        if (producer != null && producer.length() > 0) {
+        if (query.getProducer() != null && query.getProducer().length() > 0) {
             sb.append("and p.producer = :producer ");
         }
 
-        if (model != null && model.length() > 0) {
+        if (query.getModel() != null && query.getModel().length() > 0) {
             sb.append("and p.model = :model ");
         }
 
-        if (color != null && color.length() > 0) {
+        if (query.getColor() != null && query.getColor().length() > 0) {
             sb.append("and p.color = :color ");
         }
 
-        if (storeId != null && storeId > 0) {
+        if (query.getStoreId() != null && query.getStoreId() > 0) {
             sb.append("and st.id = :storeId ");
         }
 
-        if (deliveryDateStart != null) {
+        if (query.getDeliveryDateStart() != null) {
             sb.append("and d.dateIn >= :deliveryDateStart ");
         }
 
-        if (deliveryDateEnd != null) {
+        if (query.getDeliveryDateEnd() != null) {
             sb.append("and d.dateIn <= :deliveryDateEnd ");
         }
 
-        if (productStatus == ProductStatus.IN_STORE) {
+        if (query.getStatus() == ProductStatus.IN_STORE) {
             sb.append("and sa.id is null ");
-        } else if (productStatus == ProductStatus.SOLD) {
+        } else if (query.getStatus() == ProductStatus.SOLD) {
             sb.append("and sa.id is not null ");
         }
 
         List<Product> res = null;
 
-        Query query = getEntityManager().createQuery(sb.toString());
+        Query jpaQuery = getEntityManager().createQuery(sb.toString());
 
-        if (imei != null && imei.length() > 0) {
-            query.setParameter("imei", imei);
+        if (query.getImei() != null && query.getImei().length() > 0) {
+            jpaQuery.setParameter("imei", query.getImei());
         }
 
-        if (producer != null && producer.length() > 0) {
-            query.setParameter("producer", producer);
+        if (query.getProducer() != null && query.getProducer().length() > 0) {
+        	jpaQuery.setParameter("producer", query.getProducer());
         }
 
-        if (model != null && model.length() > 0) {
-            query.setParameter("model", model);
+        if (query.getModel() != null && query.getModel().length() > 0) {
+        	jpaQuery.setParameter("model", query.getModel());
         }
 
-        if (color != null && color.length() > 0) {
-            query.setParameter("color", color);
+        if (query.getColor() != null && query.getColor().length() > 0) {
+        	jpaQuery.setParameter("color", query.getColor());
         }
 
-        if (storeId != null && storeId > 0) {
-            query.setParameter("storeId", storeId);
+        if (query.getStoreId() != null && query.getStoreId() > 0) {
+        	jpaQuery.setParameter("storeId", query.getStoreId());
         }
 
-        if (deliveryDateStart != null) {
-            Timestamp deliveryDateStartTmp = new Timestamp(deliveryDateStart.getTime());
-            query.setParameter("deliveryDateStart", deliveryDateStartTmp);
+        if (query.getDeliveryDateStart() != null) {
+            Timestamp deliveryDateStartTmp = new Timestamp(query.getDeliveryDateStart().getTime());
+            jpaQuery.setParameter("deliveryDateStart", deliveryDateStartTmp);
         }
 
-        if (deliveryDateEnd != null) {
-            Timestamp deliveryDateEndTmp = new Timestamp(deliveryDateEnd.getTime());
-            query.setParameter("deliveryDateEnd", deliveryDateEndTmp);
+        if (query.getDeliveryDateEnd() != null) {
+            Timestamp deliveryDateEndTmp = new Timestamp(query.getDeliveryDateEnd().getTime());
+            jpaQuery.setParameter("deliveryDateEnd", deliveryDateEndTmp);
         }
 
-        res = query.getResultList();
+        res = jpaQuery.getResultList();
 
         logger.info(" size : {}", res.size());
 
@@ -175,13 +165,17 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Product findByImei(String imei) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> fetchImeisList() {
         logger.debug("ProductServiceImpl.fetchImeisList starts");
@@ -198,6 +192,9 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> fetchProducersList() {
         logger.debug("ProductServiceImpl.fetchProducersList starts");
@@ -216,7 +213,9 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> fetchModelsList() {
         logger.debug("ProductServiceImpl.fetchModelsList starts");
@@ -235,7 +234,11 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @Transactional
     public Product findByImeiAndStoreId(String imei, Long storeId) {
         logger.debug("ProductServiceImpl.findByImeiAndStoreId starts");
         logger.debug("params : [ imei : {} , storeId : {} ]", imei, storeId);
@@ -251,7 +254,10 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
 	@Override
     @SuppressWarnings("unchecked")
     public List<Product> find() {
@@ -272,6 +278,10 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return lst;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findBySale(Sale sale) {
@@ -282,7 +292,10 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 		List<Product> lst = (List<Product>)
 			getEntityManager()
 			.createQuery(
-				"select e from Product e join fetch e.delivery d join fetch e.store s left join fetch e.sale sa where e.sale = ?1")
+				"select e from Product e " +
+				"join fetch e.delivery d " +
+				"join fetch e.store s left " +
+				"join fetch e.sale sa where e.sale = ?1")
 				.setParameter(1, sale)
                 .getResultList();
 

@@ -29,6 +29,9 @@ public interface ContactService extends BasicService<Contact> {
 	 * @param username asd.
 	 * @param sessionId asd. 
 	 * @param newContact asd.
+	 * @throws SessionServiceException asd.
+	 * @throws ContactServiceException asd.
+	 * 
 	 */
 	void addNewContact(String username, String sessionId, Contact newContact)
 			throws SessionServiceException, ContactServiceException;
@@ -49,7 +52,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * asd.
 	 * @param username asd.
 	 * @param sessionId asd. 
-	 * @param contactToUpdate asd.
+	 * @param contactToDelete asd.
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */

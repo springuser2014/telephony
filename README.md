@@ -42,13 +42,13 @@ Project is now under intensive development, in next few weeks there will appear:
 
 - Complete unit tests for core module (via JUnit).
 - Complete integration tests for web services (via Arquillian).
-- Build a GUI module (via Bootstrap, jQuery and others js libs)
+- Build a GUI module (via Bootstrap, jQuery and other js libs)
 
 # Testing
 
 To launch tests it is required to prepare corresponding databases and configurations:
 
-1. `telephony (telephony-gwt/src/main/resources/META-INF/persistence.xml)` - to production usage
+1. `telephony (telephony-parent/src/main/resources/META-INF/persistence.xml)` - to production usage
 2. `telephony-test (telephony-core/src/test/resources/META-INF/persistence.xml)` - to unit/integration tests in core module
 3. `testphony-ws (telephony-ws/src/test/resources/META-INF/persistence.xml)` - to integration tests for web services module
 

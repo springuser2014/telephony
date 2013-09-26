@@ -68,38 +68,58 @@ public class Contact extends BaseEntity {
     )
     private Collection<Sale> sales;
     
+    /**
+     * asd.
+     * @param delivery asd.
+     */
     public void addDelivery(Delivery delivery) {
     	
-    	if (deliveries.contains(delivery))
-    		return;
+    	if (deliveries.contains(delivery)) {
+			return;
+		}
     	
     	deliveries.add(delivery);
     	delivery.setContact(this);
 		
 	}
     
+    /**
+     * asd.
+     * @param delivery asd.
+     */
     public void removeDelivery(Delivery delivery) {
 		
-    	if (!deliveries.contains(delivery))
-    		return;
+    	if (!deliveries.contains(delivery)) {
+			return;
+		}
     	
     	deliveries.remove(delivery);
     	delivery.setContact(null);		
 	}
     
+    /**
+     * asd.
+     * @param sale asd.
+     */
     public void addSale(Sale sale) {
 		
-    	if (sales.contains(sale))
-    		return;
+    	if (sales.contains(sale)) {
+			return;
+		}
     	
     	sales.add(sale);
     	sale.setContact(this);
 	}
     
+    /**
+     * asd.
+     * @param sale asd.
+     */
     public void removeSale(Sale sale) {
     	
-    	if (!sales.contains(sale))
-    		return;
+    	if (!sales.contains(sale)) {
+			return;
+		}
     	
     	sales.remove(sale);
     	sale.setContact(null);

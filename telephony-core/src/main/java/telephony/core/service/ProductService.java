@@ -1,7 +1,6 @@
 package telephony.core.service;
 
 
-import java.util.Date;
 import java.util.List;
 
 import telephony.core.entity.jpa.Product;
@@ -19,102 +18,87 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
+     * @param username TODO
+     * @param sessionId TODO
      *
      * @return asd.
      */
-    List<String> fetchAllImeiInUse();
+    List<String> fetchAllImeiInUse(String username, String sessionId);
 
     /**
      * asd.
+     * @param username TODO
+     * @param sessionId TODO
      *
      * @return asd.
      */
-    List<String> fetchAllProducers();
+    List<String> fetchAllProducers(String username, String sessionId);
 
     /**
      * asd.
+     * @param username TODO
+     * @param sessionId TODO
      *
      * @return asd.
      */
-    List<String> fetchAllModels();
+    List<String> fetchAllModels(String username, String sessionId);
 
     /**
      * asd.
+     * @param username TODO
+     * @param sessionId TODO
      * @return asd.
      */
-    List<String> fetchAllColors();
+    List<String> fetchAllColors(String username, String sessionId);
 
+    
     /**
      * asd.
-     *
-     * @param products asd.
-     * @param updatingUser asd.
-     */
-    void updateProducts(List<Product> products, User updatingUser);
-
-    /**
-     * asd.
+     * @param username TODO
+     * @param sessionId TODO
      * @param storeId asd.
      * @param productStatus asd.
      * @return asd.
      */
-    List<Product> fetchAllProducts(Long storeId, ProductStatus productStatus);
-
-    /**
-     * asd.
-     * @param store asd.
-     * @param products asd.
-     * @param user asd.
-     */
-    void moveProducts(Store store, List<Product> products, User user);
-
-    /**
-     * asd.
-     * @param imei asd.
-     * @param storeId asd.
-     * @return asd.
-     */
-    Product fetchProductByImeiAndStoreId(String imei, Long storeId);
+    List<Product> fetchAllProducts(
+    		String username, String sessionId, Long storeId, ProductStatus productStatus
+    );
 
     // TODO: refactor method below
     /**
      * asd.
+     * @param username TODO
+     * @param sessionId TODO
+     * @param store asd.
+     * @param products asd.
+     * @param user asd.
+     */
+    void moveProducts(
+    		String username, String sessionId, Store store, List<Product> products, User user
+    );
+
+    
+    /**
+     * asd.
+     * @param username TODO
+     * @param sessionId TODO
      * @param imei asd.
-     * @param producer asd.
-     * @param model asd.
-     * @param color asd.
      * @param storeId asd.
-     * @param deliveryDateStart asd.
-     * @param deliveryDateEnd asd.
-     * @param status asd.
+     * @return asd.
+     */
+    Product fetchProductByImeiAndStoreId(
+    		String username, String sessionId, String imei, Long storeId);
+
+    /**
+     * asd.
+     * @param username TODO
+     * @param sessionId TODO
+     * @param parameterObject TODO
      * @return asd.
      */
     List<Product> fetchAllProductsByCriteria(
-        String imei, String producer, String model,
-        String color, Long storeId, Date deliveryDateStart,
-        Date deliveryDateEnd, ProductStatus status
+        String username, String sessionId, ProductQueryCriteria parameterObject
      );
-
-    /**
-     * asd.
-     * @param productsToUpdate asd.
-     * @param productsToDelete asd.
-     * @param productsToCancelTheSale asd.
-     * @param editor asd.
-     */
-    void updateProducts(
-        List<Product> productsToUpdate,
-        List<Product> productsToDelete,
-        List<Product> productsToCancelTheSale,
-        User editor
-     );
-
-    /**
-     * asd.
-     * @param productsToCancelTheSale asd.
-     * @param editor asd.
-     */
-    void cancelProductsSale(List<Product> productsToCancelTheSale, User editor);
 
     /**
      * asd.
@@ -124,5 +108,6 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-	List<Product> findByStore(String username, String sessionId, Store store) throws SessionServiceException;
+	List<Product> findByStore(String username, String sessionId, Store store) 
+			throws SessionServiceException;
 }

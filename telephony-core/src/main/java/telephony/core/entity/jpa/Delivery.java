@@ -51,7 +51,8 @@ public class Delivery extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIn;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH } , 
+    		  fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
@@ -79,26 +80,28 @@ public class Delivery extends BaseEntity {
     }
     
     /**
-     * Adds product to delivery
+     * Adds product to delivery.
      * @param product to be added
      */
     public void addProduct(Product product) {
     	
-    	if (products.contains(product)) 
-    		return;
+    	if (products.contains(product)) {
+			return;
+		}
     	
     	products.add(product);
     	product.setDelivery(this);
     }
     
     /**
-     * Removes product from delivery 
-     * @param product
+     * Removes product from delivery.
+     * @param product sad.
      */
     public void removeProduct(Product product) {
     	
-    	if (!products.contains(product))
-    		return;
+    	if (!products.contains(product)) {
+			return;
+		}
     	
     	products.remove(product);
     	product.setDelivery(null);
@@ -152,12 +155,14 @@ public class Delivery extends BaseEntity {
     }
 
     /**
-     * Set delivery's arrival store
+     * Set delivery's arrival store.
      * @param pmStore of delivery.
      */
     public final void setStore(Store pmStore) {
-    	if (sameAsFormer(pmStore)) 
-    		return;
+    	
+    	if (sameAsFormer(pmStore)) {
+			return;
+		}
     	
         Store oldStore = this.store;
         this.store = pmStore;
@@ -265,21 +270,23 @@ public class Delivery extends BaseEntity {
      */
     public final void setContact(Contact contact) {
     	
-    	if (sameAsFormer(contact))
-    		return;
+    	if (sameAsFormer(contact)) {
+			return;
+		}
     	
     	Contact oldContact = this.contact;
     	
-    	if (oldContact != null)
-    		oldContact.removeDelivery(this);
+    	if (oldContact != null) {
+			oldContact.removeDelivery(this);
+		}
     	
     	this.contact = contact;
     }
 
 	private boolean sameAsFormer(Contact contact) {
-		return this.contact == null ?
-				contact == null :
-					this.contact.equals(contact);
+		return this.contact == null 
+				? contact == null 
+				: this.contact.equals(contact);
 	}
 
 
