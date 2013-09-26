@@ -108,8 +108,11 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		products.add(getProductB());
 			
 		// when
-		deliveryService.addNewDelivery(username, sessionId, 
-				newDelivery, products, store.getId(), contact.getId());		
+		deliveryService.addNewDelivery(
+				username, sessionId, 
+				newDelivery, products, 
+				store.getId(), contact.getId()
+		);		
 		deliveriesAfter = deliveryService.count();
 		productsAfter = productService.count();
 	

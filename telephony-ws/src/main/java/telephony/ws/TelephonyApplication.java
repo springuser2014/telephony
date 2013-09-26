@@ -89,17 +89,22 @@ public class TelephonyApplication extends Application {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
+	
+	public TelephonyApplication() {
+		
+	}
+	
 	/**
 	 * Starts the migration process.
 	 * @param migrator Migrator object defined within core module.
 	 */
-	@Inject
-	public TelephonyApplication(Flyway migrator) {
-		
-		logger.info("Migration starting..");
-		
-		logger.info("Number of executed migrations : " + Integer.toString(migrator.migrate()));
-	}
+//	@Inject
+//	public TelephonyApplication(Flyway migrator) {
+//		
+//		logger.info("Migration starting..");
+//		
+//		logger.info("Number of executed migrations : " + Integer.toString(migrator.migrate()));
+//	}
 	
     /**
      * Registering all REST resources.

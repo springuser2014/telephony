@@ -42,7 +42,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<String> fetchAllImeiInUse() {
+	@Transactional
+	public List<String> fetchAllImeiInUse() {
 		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
 
 		List<String> res = productsDao.fetchImeisList();
@@ -56,7 +57,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<String> fetchAllProducers() {
+	@Transactional
+	public List<String> fetchAllProducers() {
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
@@ -77,7 +79,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<String> fetchAllModels() {
+	@Transactional
+	public List<String> fetchAllModels() {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
@@ -98,7 +101,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<String> fetchAllColors() {
+	@Transactional
+	public List<String> fetchAllColors() {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
@@ -119,15 +123,12 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<Product> fetchAllProducts(final Long storeId,
+	public List<Product> fetchAllProducts(final Long storeId,
 			final ProductStatus productStatus) {
 
 		logger.debug("ProductServiceImpl.fetchAllProducts starts ");
 		logger.debug("params : [ storeId : {} , productStatus : {} ] ",
 				storeId, productStatus);
-
-//		List<Product> result = productsDao
-//				.findByStore(null, null, storeId);
 
 		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 
@@ -139,21 +140,17 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public final void moveProducts(final Store store,
+	public void moveProducts(final Store store,
 			final List<Product> products, final User user) {
 		logger.debug("ProductServiceImpl.moveProducts starts ");
 		logger.debug(
 				"params : [ storeId : {} , number of products: {} , userId : {}] ",
 				new Object[] { store, products, user });
 
-//		getEntityManager().getTransaction().begin();
-
 		for (Product p : products) {
 			p.setStore(store);
 			productsDao.save(p);
 		}
-
-//		getEntityManager().getTransaction().commit();
 
 		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 	}
@@ -162,7 +159,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Product fetchProductByImeiAndStoreId(final String imei,
+	@Transactional
+	public Product fetchProductByImeiAndStoreId(final String imei,
 			final Long storeId) {
 		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
 
@@ -171,12 +169,14 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return p;
 	}
 
+	
+	// TODO : inctroduce parameter obejcts
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Transactional
-	public final List<Product> fetchAllProductsByCriteria(final String imei,
+	public List<Product> fetchAllProductsByCriteria(final String imei,
 			final String producer, final String model, final String color,
 			final Long storeId, final Date deliveryDateStart,
 			final Date deliveryDateEnd, final ProductStatus status) {
@@ -201,12 +201,13 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return result;
 	}
 
+	// TODO : remove ?
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Transactional
-	public final void updateProducts(final List<Product> productsToUpdate,
+	public void updateProducts(final List<Product> productsToUpdate,
 			final List<Product> productsToDelete,
 			final List<Product> productsToCancelTheSale, final User editor) {
 		logger.debug("ProductServiceImpl.updateProducts starts");
@@ -238,13 +239,15 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 			this.cancelProductsSale(productsToCancelTheSale, editor);
 		}
 	}
-
+	
+	
+	// TODO : remove ??
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Transactional
-	public final void cancelProductsSale(
+	public void cancelProductsSale(
 			final List<Product> productsToCancelTheSale, final User editor) {
 		logger.debug("ProductServiceImpl.cancelProductsSale starts");
 
@@ -261,15 +264,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public void updateProducts(final List<Product> products,
-			final User updatingUser) {
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public long count() {
 
 		return productsDao.count();
@@ -279,6 +273,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional
 	public List<Product> findByStore(String username, String sessionId, Store store) 
 			throws SessionServiceException {
 		logger.info("findByStore starts");

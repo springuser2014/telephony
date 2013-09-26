@@ -1,5 +1,8 @@
 package telephony.ws.resource.contact;
 
+import java.io.IOException;
+
+import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -17,8 +20,10 @@ public interface ContactsFetchResource {
 	 * asd.
 	 * @param entity asd.
 	 * @return asd.
+	 * @throws IOException 
+	 * @throws JSONException 
 	 */
 	@Post("json")
-	JsonRepresentation fetch(JsonRepresentation entity);
+	JsonRepresentation fetch(JsonRepresentation entity) throws JSONException, IOException;
 
 }

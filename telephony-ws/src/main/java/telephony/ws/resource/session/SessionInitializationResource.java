@@ -23,8 +23,8 @@ public interface SessionInitializationResource  {
 	 * asd.
 	 * @param entity asd. 
 	 * @return asd.
-	 * @throws IOException 
-	 * @throws JSONException 
+	 * @throws IOException asd.
+	 * @throws JSONException asd.
 	 * 
 	 */
 	@Post("json") 
