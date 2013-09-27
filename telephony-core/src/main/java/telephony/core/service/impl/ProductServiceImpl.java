@@ -39,12 +39,17 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	private SessionService sessionService;
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc} 
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllImeiInUse(String username, String sessionId) {
+	public List<String> fetchAllImeiInUse(String username, String sessionId) 
+			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+
 
 		List<String> res = productsDao.fetchImeisList();
 
@@ -76,12 +81,16 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc} 
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllModels(String username, String sessionId) {
+	public List<String> fetchAllModels(String username, String sessionId) 
+			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
 
 		List<String> res = new ArrayList<String>();
 		List<Product> products = productsDao.find();
@@ -121,18 +130,26 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	/**
 	 * {@inheritDoc}
+	 * @throws SessionServiceException 
 	 */
 	@Override
 	public List<Product> fetchAllProducts(String username,
-			String sessionId, final Long storeId, final ProductStatus productStatus) {
+			String sessionId, final Long storeId, final ProductStatus productStatus) 
+					throws SessionServiceException {
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+
 
 		logger.debug("ProductServiceImpl.fetchAllProducts starts ");
 		logger.debug("params : [ storeId : {} , productStatus : {} ] ",
 				storeId, productStatus);
 
+		List<Product> lst = productsDao.findByStoreAndStatus(storeId, productStatus);
+		
 		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 
-		return null;
+		return lst;
 	}
 
 	/**
@@ -156,13 +173,19 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc} 
 	 */
 	@Override
 	@Transactional
 	public Product fetchProductByImeiAndStoreId(String username,
-			String sessionId, final String imei, final Long storeId) {
+			String sessionId, final String imei, final Long storeId) 
+					throws SessionServiceException {
+		
 		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+
 
 		Product p = productsDao.findByImeiAndStoreId(imei, storeId);
 
@@ -171,16 +194,22 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc} 
 	 */
 	@Override
 	@Transactional
-	public List<Product> fetchAllProductsByCriteria(String username, String sessionId, ProductQueryCriteria parameterObject) {
+	public List<Product> fetchAllProductsByCriteria(String username, String sessionId, 
+			ProductQueryCriteria parameterObject) 
+			throws SessionServiceException {
+		
 		logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
 		Object[] params = new Object[] { parameterObject.getImei(), parameterObject.getProducer(), 
 				parameterObject.getModel(), parameterObject.getColor(), 
 				parameterObject.getStoreId(), parameterObject.getDeliveryDateStart(),
 				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
 		
 		// TODO : log parameterObject instaed of each part
 		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
@@ -216,6 +245,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	@Transactional
 	public List<Product> findByStore(String username, String sessionId, Store store) 
 			throws SessionServiceException {
+		
 		logger.info("findByStore starts");
 		logger.info("params : [ username  : {} , sessionId : {}, store : {} ]",
 				username, sessionId, store);

@@ -2,6 +2,7 @@ package telephony.core.service;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Product;
+import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -55,15 +57,21 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void fetchingAllProducts() {
+	public void fetchingAllProducts() throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
+		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
 		
 		// when
+		List<Product> lst = 
+				productService.fetchAllProducts(
+						username, sessionId, store.getId(), ProductStatus.IN_STORE
+		);
 		
 		// then
+		assertTrue("there should be 18 products in the given store", lst.size() == 18); 
 	}
 	
 	@Test
@@ -75,21 +83,40 @@ public class ProductServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		// when
+		List<String> lst = productService.fetchAllProducers(username, sessionId);
+		
+		List<String> expected = new ArrayList<String>();
+		expected.add("apple");
+		expected.add("nokia");
 		
 		// then
+		assertTrue("should contains 2 products", lst.size() == expected.size());
+		assertTrue("exactly those 2 products", lst.containsAll(expected));
+		
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchingAllModels() {
+	public void fetchingAllModels() throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		// when
+		List<String> lst = productService.fetchAllModels(username, sessionId);
+		
+		List<String> expected = new ArrayList<String>();
+		expected.add("iphone 4s");
+		expected.add("6610s");
+		expected.add("6600n");
+		expected.add("iphone 3g");
+		expected.add("iphone 5g");
+		expected.add("3310");
 		
 		// then
+		assertTrue("should return 6 different products models", lst.size() == 6);
+		assertTrue("exactly those 6 products", lst.containsAll(expected));
 	}
 	
 	@Test
@@ -101,21 +128,31 @@ public class ProductServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		// when
+		List<String> lst = productService.fetchAllColors(username, sessionId);
+		List<String> expected = new ArrayList<String>();
+		expected.add("black");
+		expected.add("white");
+		expected.add("blue");
+		expected.add("red");
 		
 		// then
+		assertTrue("should return 4 different colors", lst.size() == 4);
+		assertTrue("exactly those 4 colors ", lst.containsAll(expected));
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchingAllIMEIsInUse() {
+	public void fetchingAllIMEIsInUse() throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		// when
-		
+		List<String> lst = productService.fetchAllImeiInUse(username, sessionId);
+
 		// then
+		assertTrue("should return 40 different IMEIs", lst.size() == 40);
 	}
 	
 	@Test

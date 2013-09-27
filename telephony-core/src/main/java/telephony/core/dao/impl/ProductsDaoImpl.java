@@ -278,7 +278,40 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return lst;
     }
 
-    /**
+    @SuppressWarnings("unchecked")
+	@Override
+	public List<Product> findByStoreAndStatus(Long storeId,
+			ProductStatus productStatus) {
+		
+    	 logger.debug("ProductServiceImpl.findByImeiAndStoreId starts");
+         logger.debug("params : [ productStatus : {} , storeId : {} ]", 
+        		 productStatus.toString(), storeId);
+         
+         List<Product> lst = null;
+         
+         if (productStatus.toString().equals(ProductStatus.IN_STORE.toString())) {
+        	 lst = (List<Product>) getEntityManager()
+	         .createQuery("select p from Product p "
+             + "left join p.store st "
+             + "left join p.sale sa "
+             + "where st.id = ?1 and sa.id is null")
+             .setParameter(1, storeId)                 
+             .getResultList();
+        	 
+         } else if (productStatus.toString().equals(ProductStatus.SOLD.toString())) {
+        	 lst = (List<Product>) getEntityManager()
+	         .createQuery("select p from Product p "
+             + "left join p.store st "
+             + "left join p.sale sa "
+             + "where st.id = ?1 and sa.id is not null")
+             .setParameter(1, storeId)                 
+             .getResultList();
+         }
+	         
+         return lst;
+    }
+
+	/**
      * {@inheritDoc}
      */
     @Transactional
@@ -302,4 +335,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("found {} elements", lst.size());
 		return lst;
 	}
+    
+    
 }
