@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
@@ -31,12 +32,14 @@ public class RoleServiceImpl
 	@Inject
 	private SessionService sessionService;
 	
+	@Transactional
 	@Override
 	public long count() {
 		
 		return rolesDao.count();
 	}
 
+	@Transactional
 	@Override
 	public List<Role> fetchAll(String username, String sessionId) 
 			throws SessionServiceException {
@@ -50,12 +53,14 @@ public class RoleServiceImpl
 		return rolesDao.find();		
 	}
 
+	@Transactional
 	@Override
 	public void add(String username, String sessionId, Role newrole)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.add starts");
-		logger.debug("params : [ username : {}, sessionId : {}, newrole : {} ]", username, sessionId, newrole);
+		logger.debug("params : [ username : {}, sessionId : {}, newrole : {} ]",
+				username, sessionId, newrole);
 		
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
@@ -64,14 +69,33 @@ public class RoleServiceImpl
 		
 	}
 
+	@Transactional
 	@Override
 	public void delete(String username, String sessionId, Role roleToDelete)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.delete starts");
-		logger.debug("params : [ username : {}, sessionId : {}, roleToDelete : {}]", username, sessionId, roleToDelete);
+		logger.debug("params : [ username : {}, sessionId : {}, roleToDelete : {}]", 
+				username, sessionId, roleToDelete);
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
 		
 		rolesDao.remove(roleToDelete);
+	}
+
+	@Override
+	@Transactional
+	public Role fetchByLabel(String username, String sessionId, String label) 
+			throws SessionServiceException {
+		logger.debug("RoleServiceImpl.findByLabel starts");
+		logger.debug("params : [ username : {}, sessionId : {}, label : {}]", 
+				username, sessionId, label);
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+		
+		return rolesDao.findByLabel(label);
 	}
 
 }

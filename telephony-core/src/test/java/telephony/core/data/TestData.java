@@ -31,6 +31,13 @@ public final class TestData {
 	
 	public static final String STORE1_LABEL = "cieszyn";	
 	public static final String STORE2_LABEL = "raciborz";
+		
+	public static final String CONTACT1_LABEL = "adam";
+	public static final String CONTACT2_LABEL = "leszek";
+	public static final String CONTACT3_LABEL = "grzegorz";
+	
+	public static final String SALE1_LABEL = "nowy rok cieszyn";
+	public static final String SALE2_LABEL = "nowy rok raciborz";
 	
 	/**
 	 * Generates random sessionId.

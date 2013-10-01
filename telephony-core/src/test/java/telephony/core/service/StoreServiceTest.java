@@ -88,7 +88,8 @@ public class StoreServiceTest extends BaseCoreTest {
 		long nbAfter = storeService.count();
 		
 		// then
-		assertEquals("should return one more store ", storesAfterAdd.size() - storesBeforeAdd.size(), 1);
+		assertEquals("should return one more store ", 
+				storesAfterAdd.size() - storesBeforeAdd.size(), 1);
 		assertEquals("check the name of added store", store.getLabel(), addedStore.getLabel());
 		assertTrue("should count one more store", nbAfter - nbBefore == 1);
 	}

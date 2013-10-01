@@ -19,6 +19,13 @@ public class ProductQueryCriteria {
 	private Date deliveryDateStart;
 	private Date deliveryDateEnd;
 	private ProductStatus status;
+	
+	/**
+	 * asd.
+	 */
+	public ProductQueryCriteria() {
+		
+	}
 
 	/**
 	 * asd.

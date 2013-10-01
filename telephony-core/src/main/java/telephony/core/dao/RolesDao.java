@@ -18,4 +18,11 @@ public interface RolesDao extends GenericDao<Role> {
 	 * @return asd.
 	 */
 	List<Role> findStoreRequiredRoles(Store store);
+
+	/**
+	 * asd.
+	 * @param label asd.
+	 * @return asd.
+	 */
+	Role findByLabel(String label);
 }

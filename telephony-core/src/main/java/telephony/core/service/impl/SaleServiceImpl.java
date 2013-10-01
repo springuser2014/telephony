@@ -34,19 +34,19 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 		SaleService {
 
 	@Inject
-	SalesDao salesDao;
+	private SalesDao salesDao;
 
 	@Inject
-	ProductsDao productsDao;
+	private ProductsDao productsDao;
 	
 	@Inject 
-	ContactsDao contactsDao;
+	private ContactsDao contactsDao;
 	
 	@Inject
-	StoresDao storesDao;
+	private StoresDao storesDao;
 	
 	@Inject
-	SessionService sessionService;
+	private SessionService sessionService;
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -148,7 +148,7 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 			throws SessionServiceException, SaleServiceException {
 		
 		logger.debug("SaleServiceImpl.addNewSale starts");        
-		logger.debug("params : [username : {}, sessionId : {}, newSale: {}, products : {}, store : {}, contact : {}]", 
+		logger.debug("params : [username : {}, sessionId : {}, newSale: {}, products : {}, storeId : {}, contactId : {}]", 
 				new Object[] {username, sessionId, sale, products, storeId, contactId});
 
 		Session session = Session.create(username, sessionId);
@@ -172,8 +172,24 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 			productsDao.save(product);
 		}
 		
-        logger.debug("SaleServiceImpl.addNewSale ends");
-		
+        logger.debug("SaleServiceImpl.addNewSale ends");	
 	}
+
+	@Override
+	@Transactional
+	public Sale findByLabel(String username, String sessionId, String label) 
+			throws SessionServiceException {
+		
+		logger.debug("SaleServiceImpl.addNewSale starts");        
+		logger.debug("params : [username : {}, sessionId : {}, label: {}]", 
+				new Object[] {username, sessionId, label});
+
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		return salesDao.findByLabel(label);
+	}
+	
+	
 
 }

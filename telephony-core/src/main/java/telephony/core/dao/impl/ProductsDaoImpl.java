@@ -335,6 +335,28 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         logger.debug("found {} elements", lst.size());
 		return lst;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> findByIMEIs(List<String> imeis) {
+	
+	    logger.debug("ProductsDaoImpl.findByIMEIs starts");
+        logger.debug("entity type : {} ", getEntityClass().getName());
+        
+        List<Product> lst = (List<Product>)
+        		getEntityManager()
+        		.createQuery(
+        		"select e from Product e " +
+        		"where e.imei in (?1)")
+				.setParameter(1, imeis)
+				.getResultList();
+        
+        logger.debug("found {} elements", lst.size());
+        
+        return lst;
+	}
+    
+    
     
     
 }

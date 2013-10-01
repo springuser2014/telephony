@@ -42,5 +42,22 @@ public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 		List<Role> l = new ArrayList<Role>();
 		l.addAll(store.getRequiredRoles());
 		return l;	
+	}
+
+	@Override
+	public Role findByLabel(String label) {
+		
+		logger.debug("findByLabel starts");
+		logger.debug("params : [ label: {}]", label);
+		
+		Role role = (Role) getEntityManager()
+		.createQuery("select e from Role e where e.name = ?1")
+		.setParameter(1, label)
+		.getSingleResult();
+		
+		return role;
+		
 	}    
+	
+	
 }

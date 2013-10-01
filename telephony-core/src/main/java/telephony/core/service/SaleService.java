@@ -70,4 +70,14 @@ public interface SaleService extends BasicService<Sale> {
     Sale findById(String username, String sessionId, Long saleId)
     		throws SessionServiceException, SaleServiceException;
 
+    /**
+     * asd.
+     * @param username asd.
+     * @param sessionId asd.
+     * @param label
+     * @return TODO
+     * @throws SessionServiceException 
+     */
+	Sale findByLabel(String username, String sessionId, String label) throws SessionServiceException;
+
 }

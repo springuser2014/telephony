@@ -157,12 +157,13 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public void moveProducts(String username,
-			String sessionId, final Store store, final List<Product> products, final User user) {
+	public void moveProducts(String username, String sessionId, 
+			Store store, List<Product> products) {
+		
 		logger.debug("ProductServiceImpl.moveProducts starts ");
 		logger.debug(
-				"params : [ storeId : {} , number of products: {} , userId : {}] ",
-				new Object[] { store, products, user });
+				"params : [username : {}, sessionId : {}, storeId : {} , products : {}] ",
+				new Object[] { username, sessionId, store, products});
 
 		for (Product p : products) {
 			p.setStore(store);
@@ -255,4 +256,20 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		
 		return productsDao.findByStore(store);		
 	}
+
+	@Override
+	public List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) 
+			throws SessionServiceException {
+
+		logger.info("findByStore starts");
+		logger.info("params : [ username  : {} , sessionId : {}, store : {} ]",
+				username, sessionId, imeis);
+		
+		Session session = Session.create(username, sessionId);
+		sessionService.validate(session);
+		
+		return productsDao.findByIMEIs(imeis);
+	}
+	
+	
 }

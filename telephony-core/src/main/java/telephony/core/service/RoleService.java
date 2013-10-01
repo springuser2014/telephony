@@ -45,6 +45,18 @@ public interface RoleService extends BasicService<Role> {
 	 */
 	void delete(String username, String sessionId, Role roleToDelete) 
 		throws SessionServiceException, RoleServiceException;
+
+
+	/**
+	 * asd.
+	 * @param username TODO
+	 * @param sessionId TODO
+	 * @param string asd.
+	 * @return asd.
+	 * @throws SessionServiceException 
+	 */
+	Role fetchByLabel(String username, String sessionId, String string) 
+			throws SessionServiceException;
 	
 	
 }

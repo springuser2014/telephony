@@ -225,5 +225,21 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		
 		return rolesDao.findStoreRequiredRoles(store);
 	}
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public Store findById(String username, String sessionId, long moveToStoreId) 
+			throws SessionServiceException {
+
+		logger.debug("findById - params : [username : {} , sessionId : {}, storeId : {}", 
+				new Object[] {username, sessionId, moveToStoreId});
+	
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+		
+		return storesDao.findById(moveToStoreId);
+	}
+
 	
 }

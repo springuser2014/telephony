@@ -37,4 +37,11 @@ public interface SalesDao extends GenericDao<Sale> {
      * @return asd.
      */
     List<Product> findProductsBySalesIds(ArrayList<Long> ids);
+
+    /**
+     * asd.
+     * @param label asd.
+     * @return asd.
+     */
+	Sale findByLabel(String label);
 }

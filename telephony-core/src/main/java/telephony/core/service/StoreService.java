@@ -92,4 +92,14 @@ public interface StoreService extends BasicService<Store> {
 			List<Role> roles) throws SessionServiceException,
 			RoleServiceException;
 
+	/**
+	 * asd.
+	 * @param username TODO
+	 * @param sessionId TODO
+	 * @param moveToStoreId asd.
+	 * @return asd.
+	 * @throws SessionServiceException 
+	 */
+	Store findById(String username, String sessionId, long moveToStoreId) throws SessionServiceException;
+
 }

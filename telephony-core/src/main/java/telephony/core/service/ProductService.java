@@ -6,7 +6,6 @@ import java.util.List;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
 import telephony.core.service.exception.SessionServiceException;
 
 /**
@@ -74,10 +73,9 @@ public interface ProductService extends BasicService<Product> {
      * @param sessionId TODO
      * @param store asd.
      * @param products asd.
-     * @param user asd.
      */
     void moveProducts(
-    		String username, String sessionId, Store store, List<Product> products, User user
+    		String username, String sessionId, Store store, List<Product> products
     );
 
     
@@ -116,4 +114,14 @@ public interface ProductService extends BasicService<Product> {
      */
 	List<Product> findByStore(String username, String sessionId, Store store) 
 			throws SessionServiceException;
+
+	/**
+	 * asd.
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param imeis asd.
+	 * @return asd.
+	 * @throws SessionServiceException 
+	 */
+	List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) throws SessionServiceException;
 }

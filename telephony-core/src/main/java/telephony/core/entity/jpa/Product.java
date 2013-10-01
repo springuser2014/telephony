@@ -114,17 +114,20 @@ public class Product extends BaseEntity {
      */
     public void setStore(Store pmStore) {
     	
-    	if (sameAsFormer(pmStore)) 
-    		return;
+    	if (sameAsFormer(pmStore)) {
+			return;
+		}
     	
         Store oldStore = this.store;
         this.store = pmStore;
         
-        if (oldStore != null)
-        	oldStore.removeProduct(this);
+        if (oldStore != null) {
+			oldStore.removeProduct(this);
+		}
         
-        if (pmStore != null)
-        	pmStore.addProduct(this);
+        if (pmStore != null) {
+			pmStore.addProduct(this);
+		}
     }
     
     private boolean sameAsFormer(Store store) {
@@ -147,16 +150,19 @@ public class Product extends BaseEntity {
      */
     public void setDelivery(Delivery delivery) {
         
-        if (sameAsFormer(delivery))
-        	return;
+        if (sameAsFormer(delivery)) {
+			return;
+		}
         
         Delivery oldDelivery = this.delivery;
         
-        if (oldDelivery != null)
-        	oldDelivery.removeProduct(this);
+        if (oldDelivery != null) {
+			oldDelivery.removeProduct(this);
+		}
         
-        if (delivery != null)        
-        	delivery.addProduct(this);
+        if (delivery != null) {
+			delivery.addProduct(this);
+		}
     }
     
     private boolean sameAsFormer(Delivery delivery) {
@@ -179,17 +185,20 @@ public class Product extends BaseEntity {
      */
     public void setSale(Sale sale) {
         
-    	if (sameAsFormer(sale))
-    		return; 
+    	if (sameAsFormer(sale)) {
+			return;
+		} 
     	
     	Sale oldSale = this.sale;
     	this.sale = sale;
     	
-    	if (oldSale != null)
-    		sale.removeProduct(this);
+    	if (oldSale != null) {
+			sale.removeProduct(this);
+		}
     	
-    	if (sale != null)
-    		sale.addProduct(this);
+    	if (sale != null) {
+			sale.addProduct(this);
+		}
     }
 
     private boolean sameAsFormer(Sale sale) {

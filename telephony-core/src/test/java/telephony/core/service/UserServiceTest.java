@@ -193,6 +193,7 @@ public class UserServiceTest extends BaseCoreTest {
 				
 		User user = userService.findByName(username2);
 		user.setRoles(new HashSet<Role>());
+		// TODO : use UserServiceImpl.deleteRoles
 		
 		// when
 		userService.updateUser(username, sessionId, user);
@@ -240,6 +241,8 @@ public class UserServiceTest extends BaseCoreTest {
 		User user = userService.findByName(username2);
 		user.setAllowedShops(new HashSet<Store>());
 	
+		// TODO : use UserServiceImpl.deleteStores
+		
 		// when
 		userService.updateUser(username, sessionId, user);
 		
@@ -247,6 +250,8 @@ public class UserServiceTest extends BaseCoreTest {
 		User user2 = userService.findByName(username2);
 		assertEquals(0, user2.getAllowedShops().size());	
 	}
+	
+	
 
 }
 

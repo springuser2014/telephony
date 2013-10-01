@@ -47,8 +47,23 @@ public class Role extends BaseEntity {
     			mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
     
+    /**
+     * asd.
+     * @return asd.
+     */
+    public Set<User> getUsers() {
+		return users;
+	}
 
     /**
+     * asd.
+     * @param users
+     */
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	/**
      * asd.
      * @return asd.
      */

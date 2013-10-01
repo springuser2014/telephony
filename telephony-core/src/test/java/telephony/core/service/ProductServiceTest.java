@@ -157,29 +157,79 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchingProductByImeiAndStore() {
+	public void fetchingProductByImeiAndStore() 
+			throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
+		String imei = "123456789000001";
+		long storeId = 1L;
 		
 		// when
+		Product prod = productService
+				.fetchProductByImeiAndStoreId(username, sessionId, imei, storeId);
 		
 		// then
+		assertTrue("should return appropriate product", 
+				prod.getImei().contains(imei) && prod.getImei().length() == imei.length());
 	}
 	
 
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void movingProductsToAnotherStore() {
+	public void movingProductsToAnotherStore() throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
+		long movedFromStoreId = 1L;
+		long moveToStoreId = 2L;
+		
+		Store store = storeService.findById(username, sessionId, moveToStoreId);
+		
+		ProductStatus productStatus = ProductStatus.IN_STORE;
+		List<Product> productsToMove = productService
+				.fetchAllProducts(username, sessionId, movedFromStoreId, productStatus);
+		
+		List<Product> produtsBeforeMove = productService
+				.fetchAllProducts(username, sessionId, moveToStoreId, productStatus);
+		
+		long toMoveCount = productsToMove.size();
+		long beforeMoved = produtsBeforeMove.size();
+		
 		// when
+		productService.moveProducts(username, sessionId, store, productsToMove);	
+
+		// then
+		List<Product> productsAfterMove = productService
+				.fetchAllProducts(username, sessionId, moveToStoreId, productStatus);
+		
+		long afterMoved = productsAfterMove.size();
+		
+		assertTrue("should move few products", beforeMoved + toMoveCount == afterMoved);		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void fetchAllProductsByCriteria() throws SessionServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		ProductQueryCriteria criteria = new ProductQueryCriteria(); 		
+		criteria.setImei("123456789000001");
+		
+		// when
+		List<Product> products = productService
+				.fetchAllProductsByCriteria(username, sessionId, criteria);
 		
 		// then
+		assertTrue("should return one product", products.size() == 1);
+		
+		assertTrue("should fetch product with given IMEI", 
+				products != null && products.get(0).getImei().contains("123456789000001")); 
 	}
 	
 }

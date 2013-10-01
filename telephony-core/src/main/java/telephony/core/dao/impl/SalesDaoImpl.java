@@ -74,7 +74,8 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
     public List<Product> findProductsBySalesIds(ArrayList<Long> ids) {
         logger.debug("SalesDaoImpl.findProductsBySalesIds starts");
 
-        List<Product> result = getEntityManager().createQuery("  select p from Product p "
+        List<Product> result = getEntityManager()
+        		.createQuery("select p from Product p "
                 + " join fetch p.delivery d"
                 + " join fetch d.store s"
                 + " join fetch p.sale sa"
@@ -89,4 +90,23 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
 
         return result;
     }
+
+	@Override
+	public Sale findByLabel(String label) {
+		logger.debug("SalesDaoImpl.findProductsBySalesIds starts");
+
+        Sale result = (Sale) getEntityManager()
+        		.createQuery("select p from Sale p "
+                + " join fetch p.contact c"
+                + " join fetch p.store s"
+                + " join fetch p.products sa"
+                + " where p.label = ?1 ")
+                .setParameter(1, label)
+                .getSingleResult();
+
+        return result;
+
+	}
+    
+    
 }
