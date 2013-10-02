@@ -32,7 +32,9 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		logger.info("params : [ name = {} ]", name);
 				
 		User u = (User) getEntityManager()
-				.createQuery("select e from User e LEFT JOIN FETCH e.roles LEFT JOIN FETCH e.allowedShops where e.email = ?1")
+				.createQuery(
+						"select e from User e LEFT JOIN FETCH e.roles " +
+						"LEFT JOIN FETCH e.allowedShops where e.email = ?1")
 				.setParameter(1, name)
 				.getSingleResult();
 
@@ -120,13 +122,10 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		
 		logger.info("removeById starts");
 		
-//		this.removeUserStores(userId);
-		
-//		this.removeUserRoles(userId);
-		
 		super.remove(userId);			
 	}
 
+	// TODO : delete unused method.
 	/*
 	 * maybe there will be a need to make it public API.
  	 */
@@ -140,6 +139,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		return;
 	}
 
+	// TODO : delete unused method.
 	/*
 	 * maybe there will be a need to make it public API..
 	 */

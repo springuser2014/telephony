@@ -228,8 +228,8 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-//		List<UserStore> entities = userStoresDao.findByUserAndStore(user, storeToDelete);
-//		userStoresDao.remove(entities);
+		user.getAllowedShops().removeAll(storeToDelete);
+		usersDao.saveOrUpdate(user);
 	}
 	
 }

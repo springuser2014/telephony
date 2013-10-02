@@ -85,7 +85,8 @@ public interface UserService extends BasicService<User> {
 	 * @param rolesToAdd asd.
 	 * @throws SessionServiceException 
 	 */
-	void addRoles(String username, String sessionId, User user, List<Role> rolesToAdd) throws SessionServiceException;
+	void addRoles(String username, String sessionId, User user, List<Role> rolesToAdd) 
+			throws SessionServiceException;
 	
 	/**
 	 * asd.
@@ -95,7 +96,8 @@ public interface UserService extends BasicService<User> {
 	 * @param rolesToDelete asd.
 	 * @throws SessionServiceException 
 	 */
-	void deleteRoles(String username, String sessionId, User user, Set<Role> rolesToDelete) throws SessionServiceException;
+	void deleteRoles(String username, String sessionId, User user, Set<Role> rolesToDelete) 
+			throws SessionServiceException;
 	
 	/**
 	 * asd.
@@ -105,7 +107,8 @@ public interface UserService extends BasicService<User> {
 	 * @param storesToAdd asd.
 	 * @throws SessionServiceException 
 	 */
-	void addStores(String username, String sessionId, User user, List<Store> storesToAdd) throws SessionServiceException;
+	void addStores(String username, String sessionId, User user, List<Store> storesToAdd) 
+			throws SessionServiceException;
 	
 	/**
 	 * asd.
@@ -115,6 +118,7 @@ public interface UserService extends BasicService<User> {
 	 * @param storesToDelete asd.
 	 * @throws SessionServiceException 
 	 */
-	void deleteStores(String username, String sessionId, User user, Set<Store> storesToDelete) throws SessionServiceException;
+	void deleteStores(String username, String sessionId, User user, Set<Store> storesToDelete) 
+			throws SessionServiceException;
     
 }

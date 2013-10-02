@@ -35,9 +35,7 @@ import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 /**
- * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -193,10 +191,30 @@ public class UserServiceTest extends BaseCoreTest {
 				
 		User user = userService.findByName(username2);
 		user.setRoles(new HashSet<Role>());
-		// TODO : use UserServiceImpl.deleteRoles
 		
 		// when
 		userService.updateUser(username, sessionId, user);
+		
+		// then
+		User user2 = userService.findByName(username2);
+		assertEquals(user2.getRoles().size(), 0);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testDeleteingRolesFromUserUsingDeleteRoles() 
+			throws SessionServiceException, UserServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		String username2 = TestData.USER2_NAME;
+				
+		User user = userService.findByName(username2);
+		Set<Role> rolesToDelete = user.getRoles();
+		
+		// when
+		userService.deleteRoles(username, sessionId, user, rolesToDelete);
 		
 		// then
 		User user2 = userService.findByName(username2);
@@ -222,7 +240,6 @@ public class UserServiceTest extends BaseCoreTest {
 		// when
 		userService.addStores(username, sessionId, user, storesToAdd);
 		
-		
 		// then
 		assertEquals(storesToAdd.size(), user.getAllowedShops().size());
 	}
@@ -240,8 +257,6 @@ public class UserServiceTest extends BaseCoreTest {
 		
 		User user = userService.findByName(username2);
 		user.setAllowedShops(new HashSet<Store>());
-	
-		// TODO : use UserServiceImpl.deleteStores
 		
 		// when
 		userService.updateUser(username, sessionId, user);
@@ -251,7 +266,26 @@ public class UserServiceTest extends BaseCoreTest {
 		assertEquals(0, user2.getAllowedShops().size());	
 	}
 	
-	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testRemovingUserFromStoreUsingDeleteStores() 
+			throws SessionServiceException, UserServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		String username2 = TestData.USER2_NAME;
+		
+		User user = userService.findByName(username2);
+		Set<Store> storesToDelete = user.getAllowedShops();
+		
+		// when
+		userService.deleteStores(username, sessionId, user, storesToDelete);
+		
+		// then
+		User user2 = userService.findByName(username2);
+		assertEquals(0, user2.getAllowedShops().size());	
+	}
 
 }
 
