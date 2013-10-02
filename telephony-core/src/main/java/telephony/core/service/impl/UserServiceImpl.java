@@ -185,8 +185,8 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-//		List<UserRole> entities = userRolesDao.findByUserAndRole(user, rolesToDelete);
-//		userRolesDao.remove(entities);
+		user.getRoles().removeAll(rolesToDelete);
+		usersDao.saveOrUpdate(user);
 	}
 
 	/**
