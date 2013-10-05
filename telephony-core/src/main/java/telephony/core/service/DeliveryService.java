@@ -36,15 +36,18 @@ public interface DeliveryService extends BasicService<Delivery>{
      * as.
      * @param username ads.
      * @param sessionId asd.
-     * @return
+     * @return asd.
+     * @throws SessionServiceException asd.
+     * @throws DeliveryServiceException asd.
      */
-    public List<Delivery> fetchAllDeliveries(String username, String sessionId)
+    List<Delivery> fetchAllDeliveries(String username, String sessionId)
     		throws SessionServiceException, DeliveryServiceException;
     
     /**
      * asd.
      * @param username asd.
      * @param sessionId asd.
+     * @param delvieryToUpdate asd.
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
@@ -55,11 +58,11 @@ public interface DeliveryService extends BasicService<Delivery>{
      * asd.
      * @param username asd.
      * @param sessionId asd.
-     * @param DeliveryToDelete asd.
+     * @param deliveryToDelete asd.
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    void delete(String username, String sessionId, Delivery DeliveryToDelete)
+    void delete(String username, String sessionId, Delivery deliveryToDelete)
     	throws SessionServiceException, DeliveryServiceException;
 
     /**
@@ -71,5 +74,6 @@ public interface DeliveryService extends BasicService<Delivery>{
      * @throws DeliveryServiceException 
      * @throws SessionServiceException 
      */
-	Delivery findById(String username, String sessionId, Long deliveryId) throws SessionServiceException, DeliveryServiceException;
+	Delivery findById(String username, String sessionId, Long deliveryId) 
+			throws SessionServiceException, DeliveryServiceException;
 }

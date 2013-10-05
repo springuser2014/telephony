@@ -1,9 +1,5 @@
 package telephony.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ContactsDao;
 import telephony.core.dao.DeliveriesDao;
-import telephony.core.dao.GenericDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.dao.StoresDao;
 import telephony.core.entity.jpa.Contact;
@@ -36,24 +31,24 @@ public class DeliveryServiceImpl
     extends AbstractBasicService<Delivery> implements DeliveryService {
 
     @Inject
-    DeliveriesDao deliveriesDao;
+    private DeliveriesDao deliveriesDao;
 
     @Inject
-    ProductsDao prodctsDao;
+    private ProductsDao prodctsDao;
     
     @Inject
-    SessionService sessionService;
+    private SessionService sessionService;
     
     @Inject
-    StoresDao storesDao;
+    private StoresDao storesDao;
     
     @Inject
-    ContactsDao contactsDao;
+    private ContactsDao contactsDao;
 
 	@Inject
-	ProductsDao productsDao;
+	private ProductsDao productsDao;
 	
-    final Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * {@inheritDoc}

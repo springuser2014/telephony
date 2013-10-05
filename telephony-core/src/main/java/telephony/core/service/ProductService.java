@@ -19,11 +19,11 @@ public interface ProductService extends BasicService<Product> {
      * asd.
      * @param username TODO
      * @param sessionId TODO
-     *
      * @return asd.
      * @throws SessionServiceException 
      */
-    List<String> fetchAllImeiInUse(String username, String sessionId) throws SessionServiceException;
+    List<String> fetchAllImeiInUse(String username, String sessionId) 
+    		throws SessionServiceException;
 
     /**
      * asd.
@@ -123,5 +123,6 @@ public interface ProductService extends BasicService<Product> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) throws SessionServiceException;
+	List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) 
+			throws SessionServiceException;
 }

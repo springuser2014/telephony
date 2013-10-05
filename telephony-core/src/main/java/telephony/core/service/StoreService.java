@@ -100,6 +100,7 @@ public interface StoreService extends BasicService<Store> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	Store findById(String username, String sessionId, long moveToStoreId) throws SessionServiceException;
+	Store findById(String username, String sessionId, long moveToStoreId) 
+			throws SessionServiceException;
 
 }

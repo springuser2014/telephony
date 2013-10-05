@@ -50,6 +50,7 @@ public class Session {
      * asd.
      * @param username asd.
      * @param sessionId asd.
+     * @param validity asd.
      */
     public Session(final String username, final String sessionId, final Date validity) {
         this.username = username;

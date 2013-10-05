@@ -1,8 +1,5 @@
 package telephony.core.dao;
 
-import java.util.List;
-
-import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 
 /**

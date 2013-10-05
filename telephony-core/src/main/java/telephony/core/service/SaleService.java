@@ -20,6 +20,8 @@ public interface SaleService extends BasicService<Sale> {
      * @param username asd.
      * @param sessionId asd.
      * @return asd.
+     * @throws SessionServiceException as.
+     * @throws SaleServiceException asd.
      */
     List<Sale> findAllSales(String username, String sessionId)
     	throws SessionServiceException, SaleServiceException;
@@ -32,8 +34,12 @@ public interface SaleService extends BasicService<Sale> {
      * @param products asd.
      * @param storeId TODO
      * @param contactId TODO
+     * @throws SessionServiceException asd.
+     * @throws SaleServiceException asd.
      */
-    void addNewSale(String username, String sessionId, Sale sale, List<Product> products, Long storeId, Long contactId)
+    void addNewSale(
+    		String username, String sessionId, Sale sale, List<Product> products, 
+    		Long storeId, Long contactId)
     	throws SessionServiceException, SaleServiceException;
     
     /**
@@ -74,10 +80,11 @@ public interface SaleService extends BasicService<Sale> {
      * asd.
      * @param username asd.
      * @param sessionId asd.
-     * @param label
+     * @param label asd.
      * @return TODO
      * @throws SessionServiceException 
      */
-	Sale findByLabel(String username, String sessionId, String label) throws SessionServiceException;
+	Sale findByLabel(String username, String sessionId, String label) 
+			throws SessionServiceException;
 
 }

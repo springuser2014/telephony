@@ -1,6 +1,5 @@
 package telephony.core.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import telephony.core.dao.ProductsDao;
 import telephony.core.dao.SalesDao;
 import telephony.core.dao.StoresDao;
 import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
@@ -48,7 +46,7 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 	@Inject
 	private SessionService sessionService;
 
-	Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * {@inheritDoc}  

@@ -209,7 +209,7 @@ public class UserServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		String username2 = TestData.USER2_NAME;
-				
+		
 		User user = userService.findByName(username2);
 		Set<Role> rolesToDelete = user.getRoles();
 		
