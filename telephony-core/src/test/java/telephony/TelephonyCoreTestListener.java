@@ -41,7 +41,9 @@ public class TelephonyCoreTestListener extends RunListener {
 	
 	    BaseCoreTest.setInjector(Guice.createInjector(modules));
 
-		BaseCoreTest.setPersistService(BaseCoreTest.getInjector().getInstance(PersistService.class));
+		BaseCoreTest.setPersistService(
+				BaseCoreTest.getInjector().getInstance(PersistService.class)
+		);
 		
 		if (BaseCoreTest.getPersistService() != null) {
 			BaseCoreTest.getPersistService().start();

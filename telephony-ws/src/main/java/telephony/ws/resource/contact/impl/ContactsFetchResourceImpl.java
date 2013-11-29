@@ -7,20 +7,22 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
-import org.restlet.resource.Delete;
-import org.restlet.resource.Get;
 import org.restlet.resource.Post;
-import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.inject.Inject;
-
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
+import telephony.core.service.exception.ContactServiceException;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
+import telephony.ws.resource.bean.ContactBean;
+import telephony.ws.resource.bean.ContactListResponse;
 import telephony.ws.resource.contact.ContactsFetchResource;
+
+import com.google.inject.Inject;
+
+import static telephony.ws.resource.bean.ContactBean.create;
 
 /**
  * asd.
@@ -40,10 +42,10 @@ public class ContactsFetchResourceImpl extends TelephonyServerResource
 	 * {@inheritDoc}
 	 */
 	@Post("json")
-	public final JsonRepresentation fetch(JsonRepresentation entity) 
-			throws JSONException, IOException {
+	public JsonRepresentation fetch(JsonRepresentation entity) 
+			throws JSONException, IOException, SessionServiceException, ContactServiceException {
         
-		logger.info("fetch starts");
+		logger.info("ContactsFetchResource.fetch starts");
 		JSONObject req = new JsonRepresentation(entity).getJsonObject();
 		
 		String name = req.getString("username");
@@ -52,22 +54,24 @@ public class ContactsFetchResourceImpl extends TelephonyServerResource
 		logger.info(" username = {} ", name);
         logger.info(" sessionId = {} ", sessionId);
         
-        List<Contact> contacts = new ArrayList<Contact>();
-        try {
-        	contacts = contactService.fetchAll(name, sessionId);
-        	
-        }  catch (Exception e) {
-        	logger.error("Error occured during session initialization", e);
-        }
+        List<Contact> contacts = contactService.fetchAll(name, sessionId);       
+        List<ContactBean> contactsToJsonize = convertToBeans(contacts);
         
-        List<telephony.ws.resource.bean.Contact> contactsToJsonize = 
-        		new ArrayList<telephony.ws.resource.bean.Contact>();
+        ContactListResponse response = new ContactListResponse();
+        response.setContacts(contactsToJsonize);
+        
+        return new JsonRepresentation(response);        
+    }
+
+
+	private List<ContactBean> convertToBeans(List<Contact> contacts) {
+		
+		List<ContactBean> contactsToJsonize =  new ArrayList<ContactBean>();
         
         for (Contact c : contacts) {
-        	contactsToJsonize.add(telephony.ws.resource.bean.Contact.create(c));
+        	contactsToJsonize.add(create(c));
         }
         
-        return new JsonRepresentation(contactsToJsonize);
-        
-    }
+		return contactsToJsonize;
+	}
 }

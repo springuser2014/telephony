@@ -55,7 +55,7 @@ public abstract class TelephonyServerResource extends ServerResource {
 		
 		if (injector == null) {
 			
-			// TODO : refacotr
+			// TODO : refactor
 		
 			List<AbstractModule> modules = new TelephonyWebServicesEnvironmentResolver()
 			.resolveWith(

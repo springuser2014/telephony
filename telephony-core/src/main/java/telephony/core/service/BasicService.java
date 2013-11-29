@@ -21,4 +21,6 @@ public interface BasicService<T extends BaseEntity> {
 	 * @return number of stored entities.
 	 */
 	long count();
+	
+	// TODO : add basic methods, for example findById
 }

@@ -54,7 +54,7 @@ public class SessionInitializationResourceImpl extends TelephonyServerResource
     public JsonRepresentation initialize(JsonRepresentation entity) 
     		throws JSONException, IOException {
 
-        logger.info("startSession starts");
+        logger.info("SessionInitializationResource.initialize");
 
         JSONObject req = new JsonRepresentation(entity).getJsonObject();
         String name = req.getString("username");
@@ -70,11 +70,10 @@ public class SessionInitializationResourceImpl extends TelephonyServerResource
         }
         
         if (session == null) {
-
         	getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-        	
             return new JsonRepresentation("Error occured");
         } else {
+    		getResponse().setStatus(Status.SUCCESS_OK);
             return new JsonRepresentation(session);
         }
     }

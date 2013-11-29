@@ -70,6 +70,14 @@ public interface ContactService extends BasicService<Contact> {
 	 */
 	Contact findByLabel(String username, String sessionId, String label)
 		throws SessionServiceException, ContactServiceException;
-	
-	
+
+	/**
+	 * asd.
+	 * @param username asd.
+	 * @param sessionId asd.
+	 * @param contactToDeleteId asd.
+	 * @return  as.
+	 * @throws SessionServiceException 
+	 */
+	Contact findById(String username, String sessionId, Long contactToDeleteId) throws SessionServiceException;
 }

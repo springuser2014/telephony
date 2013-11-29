@@ -29,8 +29,8 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
 import telephony.core.service.bean.Session;
-import telephony.ws.bean.SessionBean;
 import telephony.ws.bean.UserBean;
+import telephony.ws.resource.bean.SessionBean;
 import telephony.ws.resource.session.SessionDestroyResource;
 import telephony.ws.resource.session.SessionRefreshResource;
 import telephony.ws.resource.session.SessionInitializationResource;

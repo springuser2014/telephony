@@ -102,7 +102,6 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 		sessionService.validate(sessionToValidate);
 		
 		contactsDao.removeById(contactToDelete.getId());
-		
 	}
 
 	@Override
@@ -119,4 +118,22 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 		Contact contact = contactsDao.findByLabel(label);
 		return contact;
 	}
+
+	@Override
+	@Transactional
+	public Contact findById(String username, String sessionId,
+			Long contactToDeleteId) throws SessionServiceException {
+		
+		logger.debug("ContactServiceImpl.findById starts");
+		logger.debug("params : [username : {} , sessionId : {}, contactToDeleteId : {}]",
+			new Object[] { username, sessionId, contactToDeleteId});
+		
+		Session sessionToValidate = Session.create(username, sessionId);
+		sessionService.validate(sessionToValidate);
+
+		Contact contact = contactsDao.findById(contactToDeleteId);
+		return contact;
+	}
+	
+	
 }
