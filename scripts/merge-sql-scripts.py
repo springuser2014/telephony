@@ -1,60 +1,58 @@
-
-# struktura bazy danych (na producje, test itd)
 # C:\dev\Projects\telephony\telephony-core\src\main\resources\db\migration
 
-
-# dane testowe
 # C:\dev\Projects\telephony\telephony-core\src\test\resources\db\data
 
-
-# inny katalog
 # C:\dev\Projects\telephony\telephony-ws\src\main\resources\db\data
-
-
-# algorytm
-# 1. wczytac wszystkie nazwy plikow .sql
-# 2. posortowac je wedlug nazwy
-# 3. utworzyc nowy plik
-# 4. wlozyc do niego zawartosc plikow sql wedlug kolejnosci rosnacej
 
 from os import listdir, remove
 from os.path import isfile, join
 
-paths = ['C:/dev/Projects/telephony/telephony-core/src/test/resources/db/data',
-         'C:/dev/Projects/telephony/telephony-core/src/main/resources/db/migration']
+paths = ['./../telephony-core/src/test/resources/db/data',
+         './../telephony-core/src/main/resources/db/migration']
 
 onlyfiles = []
 fullpaths = []
+file_to_version = {}
+version_to_file = {}
+file_to_fullfilepath = {}
 
 for path in paths:
     for f in listdir(path):
         if isfile(join(path,f)):
-            fullpaths.append(join(path,f))
+            fullpath = join(path,f)
+            fullpaths.append(fullpath)
             onlyfiles.append(f)
+            file_to_fullfilepath[f] = fullpath
 
-if isfile('C:/dev/Projects/telephony/migrations.sql'):
-    remove('C:/dev/Projects/telephony/migrations.sql')
+if isfile('./../migrations.sql'):
+    remove('./../migrations.sql')
 
-if isfile('C:/dev/Projects/telephony/migrations_file_list.sql'):
-    remove('C:/dev/Projects/telephony/migrations_file_list.sql')
+if isfile('./../migrations_file_list.sql'):
+    remove('./../migrations_file_list.sql')
 
-file_to_write = open ('C:/dev/Projects/telephony/migrations.sql' , 'w')
-file_list_to_write = open ('C:/dev/Projects/telephony/migrations_file_list.sql' , 'w')
+file_to_write = open ('./../migrations.sql' , 'w')
+file_list_to_write = open ('./../migrations_file_list.sql' , 'w')
 
-onlyfiles = sorted(onlyfiles)
+for filename in onlyfiles:
+    splited = filename.split("__")
+    version = splited[0]
+    version = version.lstrip("Vv")
+    version = version.replace("_", ".")
+    version_to_file[float(version)] = filename
+    file_to_version[filename] = float(version)
 
-_4th, _5th = onlyfiles.index('V5_1__Store_to_role_test_data.sql'), onlyfiles.index('V5__Added_store_roles_table.sql')
-onlyfiles[_5th], onlyfiles[_4th] = onlyfiles[_4th], onlyfiles[_5th]
+version_to_file_sorted_keys = sorted(version_to_file.iteritems(), key=lambda (x,y): float(x))
 
-for file in onlyfiles:
-    file_to_write.write('--' + file + '\n')
-    file_list_to_write.write(file + '\n')
 
-    for fullfilepath in fullpaths:
-        if fullfilepath.find(file) > 0:
-            f = open(fullfilepath, 'r')
-            file_to_write.write(f.read() + '\n')
-            f.close()
+for k , v in version_to_file_sorted_keys:
+    filename = version_to_file[k]
+    file_to_write.write('--' + filename + '\n')
+    file_list_to_write.write(filename + '\n')
+
+    fullfilepath = file_to_fullfilepath[filename]
+    f = open (fullfilepath, 'r')
+    file_to_write.write(f.read() + '\n')
+    f.close()
 
 file_to_write.close()
 file_list_to_write.close()
