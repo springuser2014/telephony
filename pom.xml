@@ -13,6 +13,8 @@
     <properties>
     	<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     	
+    	<jdk.version>1.6</jdk.version>
+    	
         <!-- TODO : clean up vars -->
         <dbunit.version>2.4.8</dbunit.version>
         <gwt-log.version>3.1.8</gwt-log.version>        
@@ -59,6 +61,7 @@
     <modules>
         <module>telephony-core</module>
         <module>telephony-ws</module>
+        <module>telephony-web</module>
     </modules>
 
     <dependencies>

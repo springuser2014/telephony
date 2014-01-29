@@ -105,6 +105,10 @@ public class Store extends BaseEntity {
 		return requiredRoles;
 	}
 
+	/**
+	 * asd.
+	 * @param requiredRoles asd 
+	 */
 	public void setRequiredRoles(Set<Role> requiredRoles) {
 		this.requiredRoles = requiredRoles;
 	}

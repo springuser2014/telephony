@@ -231,6 +231,8 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<server>tomcat6</server>
+					<url>http://127.0.0.1:8080/manager</url>
+					<warFile>./target/telephony-ws.war</warFile>
 				</configuration>
 			</plugin>
 

@@ -57,7 +57,7 @@ public class Role extends BaseEntity {
 
     /**
      * asd.
-     * @param users
+     * @param users asd.
      */
 	public void setUsers(Set<User> users) {
 		this.users = users;

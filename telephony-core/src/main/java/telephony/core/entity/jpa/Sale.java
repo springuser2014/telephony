@@ -2,7 +2,6 @@ package telephony.core.entity.jpa;
 
 
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -93,19 +92,29 @@ public class Sale extends BaseEntity {
         this.label = label;
     }
     
+    /**
+     * asd.
+     * @param product asd.
+     */
 	public void addProduct(Product product) {
 		
-		if (products.contains(product))
+		if (products.contains(product)) {
 			return;
+		}
 		
 		products.add(product);
 		product.setSale(this);		
 	}
 	
+	/**
+	 * asd.
+	 * @param product asd.
+	 */
 	public void removeProduct(Product product) {
 		
-		if (!products.contains(product))
+		if (!products.contains(product)) {
 			return;
+		}
 		
 		products.remove(product);
 		product.setSale(null);
