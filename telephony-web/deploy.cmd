@@ -1,0 +1,1 @@
+call mvn tomcat:deploy -o -X -DskipTests

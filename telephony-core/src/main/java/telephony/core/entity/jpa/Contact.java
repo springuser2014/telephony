@@ -16,7 +16,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * Represents Contact domain object.
  * @author Paweł Henek <pawelhenek@gmail.com>
  */
 @Entity
@@ -26,7 +25,7 @@ public class Contact extends BaseEntity {
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+        cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
     )
     private Collection<Delivery> deliveries;
     

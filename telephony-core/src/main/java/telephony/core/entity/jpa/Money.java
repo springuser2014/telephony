@@ -8,7 +8,6 @@ import javax.persistence.Transient;
 
 /**
  * Represents Money domain object.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 @Embeddable
 public class Money implements Serializable {
