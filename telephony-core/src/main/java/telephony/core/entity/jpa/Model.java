@@ -49,7 +49,36 @@ public class Model extends BaseEntity {
 	public void setId(Long id) {			
 		this.id = id;
 	}
-	
-	
 
+	/**
+	 * asd.
+	 * @return asd.
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * asd.
+	 * @param label asd.
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	/**
+	 * asd.
+	 * @return asd.
+	 */
+	public Producer getProducer() {
+		return producer;
+	}
+
+	/**
+	 * asd.
+	 * @param producer asd.
+ 	 */
+	public void setProducer(Producer producer) {
+		this.producer = producer;
+	}
 }

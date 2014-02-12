@@ -9,8 +9,6 @@ import telephony.core.entity.jpa.User;
 
 /**
  * Contacts management DAO.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class ContactsDaoImpl extends GenericDaoImpl<Contact> implements ContactsDao {
 

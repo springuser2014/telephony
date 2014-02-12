@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,7 +29,7 @@ public class File extends BaseEntity {
         allocationSize = 1)
     private Long id;
 	
-	@Column(name = "label", length = 100, nullable = false)
+	@Column(name = "label", length = 100, nullable = false, unique = true)
 	private String label;
 	
 	@Column(name = "filename", length = 200, nullable = false)
@@ -40,8 +41,9 @@ public class File extends BaseEntity {
 	@Column(name = "size_in_bytes", nullable = false)
 	private Long sizeInBytes;
 	
-	@Column(name = "content", nullable = false)
-	private String content;
+//	@Lob
+//	@Column(name = "content", nullable = false)
+//	private String content;
 	
 	@Override
 	public Long getId() {
@@ -122,7 +124,8 @@ public class File extends BaseEntity {
 	 * @return ads.
 	 */
 	public String getContent() {
-		return content;
+		return null;
+//		return content;
 	}
 
 	/**
@@ -130,6 +133,6 @@ public class File extends BaseEntity {
 	 * @param content asd.
 	 */
 	public void setContent(String content) {
-		this.content = content;
+//		this.content = content;
 	}
 }

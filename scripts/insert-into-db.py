@@ -2,7 +2,7 @@ import psycopg2
 import psycopg2.extensions
 import logging
 
-db_to_remove = 'telephony-test-ws'
+db_to_remove = 'telephony-test'
 main_db = 'postgres'
 
 try:

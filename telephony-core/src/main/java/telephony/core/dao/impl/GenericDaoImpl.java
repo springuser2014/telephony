@@ -1,19 +1,16 @@
 package telephony.core.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
-import telephony.core.entity.jpa.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -33,7 +30,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     private Provider<EntityManager> entityManagerProvider;
 
     private final Class<E> entityClass;
-
+    
     /**
      * Setup entity's class.
      * @param clazz asd.

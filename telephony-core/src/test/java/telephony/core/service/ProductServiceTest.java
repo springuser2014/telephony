@@ -42,7 +42,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private StoreService storeService;
-	
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testingFindingProductsByStore() throws SessionServiceException {

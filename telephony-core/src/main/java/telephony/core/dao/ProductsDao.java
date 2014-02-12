@@ -12,8 +12,6 @@ import telephony.core.service.ProductQueryCriteria;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface ProductsDao extends GenericDao<Product> {
 

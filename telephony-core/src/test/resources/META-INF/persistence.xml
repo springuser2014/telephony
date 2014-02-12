@@ -13,12 +13,15 @@
 		<class>telephony.core.entity.jpa.Contact</class>
 		
 		<!-- 
-		<class>telephony.core.entity.jpa.Invoice</class>
 		<class>telephony.core.entity.jpa.SaleComplaint</class>
         <class>telephony.core.entity.jpa.ProductComplaint</class>
+        <class>telephony.core.entity.jpa.Complaint</class>
+        <class>telephony.core.entity.jpa.ComplaintComment</class>
+        <class>telephony.core.entity.jpa.Tax</class>
+        <class>telephony.core.entity.jpa.Pricing</class>
 	    -->
         <class>telephony.core.entity.jpa.File</class>
-        <class>telephony.core.entity.jpa.Complaint</class>
+        
         <class>telephony.core.entity.jpa.Model</class>
         <class>telephony.core.entity.jpa.Producer</class>
 
@@ -36,6 +39,7 @@
 			<property name="hibernate.current_session_context_class" value="thread" />
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
 			<property name="hibernate.connection.pool_size" value="-1" />
+			<property name="hibernate.jdbc.use_streams_for_binary" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>

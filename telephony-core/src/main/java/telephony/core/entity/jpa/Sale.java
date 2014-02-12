@@ -30,9 +30,18 @@ import javax.persistence.TemporalType;
 public class Sale extends BaseEntity {
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sales_seq")
-    @SequenceGenerator(name = "sales_seq", sequenceName = "sales_seq", allocationSize = 1)
+    @Column(
+    		name = "id", updatable = false, nullable = false
+    )
+    @GeneratedValue(
+    		strategy = GenerationType.SEQUENCE, 
+    		generator = "sales_seq"
+    )
+    @SequenceGenerator(
+    		name = "sales_seq", 
+    		sequenceName = "sales_seq", 
+    		allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "label", nullable = false)

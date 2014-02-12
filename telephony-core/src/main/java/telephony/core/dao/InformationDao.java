@@ -2,8 +2,6 @@ package telephony.core.dao;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface InformationDao {
 

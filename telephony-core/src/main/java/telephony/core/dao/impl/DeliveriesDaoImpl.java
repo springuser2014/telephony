@@ -22,8 +22,9 @@ public class DeliveriesDaoImpl
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+
     /**
-     * {@inheritDoc}
+     * basic constr.
      */
     public DeliveriesDaoImpl() {
         super(Delivery.class);

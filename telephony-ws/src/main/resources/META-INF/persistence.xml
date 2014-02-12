@@ -36,6 +36,7 @@
 			<property name="current_session_context_class" value="thread" />
 			<property name="cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
 			<property name="connection.pool_size" value="1" />
+			<property name="hibernate.jdbc.use_streams_for_binary" value="true"/>
 		</properties>
 	</persistence-unit>
 

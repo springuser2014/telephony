@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import telephony.core.entity.jpa.BaseEntity;
-import telephony.core.entity.jpa.User;
 
 
 /**
