@@ -13,14 +13,16 @@ conn.set_isolation_level(0)
 cur = conn.cursor()
 
 try:
-    cur.execute("DROP DATABASE " + db_to_remove )
-except:
-    print "I can't drop our test database!"
+    cur.execute("DROP DATABASE " + '"' + db_to_remove + '"' )
+except Exception, exc:
+    print "I cannot drop our test database!"
+    print exc.message
 
 try:
-    cur.execute("CREATE DATABASE " + db_to_remove)
-except:
-    print "I can't drop our test database!"
+    cur.execute("CREATE DATABASE " + '"' + db_to_remove + '"' )
+except Exception, exc:
+    print "I cannot re-create test database!"
+    print exc.message
 
 conn.commit()
 cur.close()
