@@ -12,9 +12,9 @@ public enum Environment {
 	
 	public static Environment getForString(String env) {
 		
-		if (env.equals(PROD.env))
+		if (PROD.env.equals(env))
 			return PROD;
-		else if (env.equals(TEST.env))
+		else if (TEST.env.equals(env))
 			return TEST;
 		else 
 			return TEST;
