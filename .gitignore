@@ -11,3 +11,5 @@ telephony_project/*
 /telephony-core/.externalToolBuilders/org.zeroturnaround.eclipse.rebelXmlBuilder.launch
 migrations.sql
 migrations_file_list.sql
+jrebel-5.5.2-nosetup.zip
+jrebel-5.5.2-nosetup/*
