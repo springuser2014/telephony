@@ -1,7 +1,5 @@
 package telephony.core.entity.jpa;
 
-
-
 import java.util.Collection;
 
 import javax.persistence.CascadeType;

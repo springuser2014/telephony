@@ -1,12 +1,7 @@
 package telephony.core.entity.jpa;
 
-
-
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +20,6 @@ import javax.persistence.TemporalType;
 /**
  * asd.
  * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "users")
@@ -45,19 +39,22 @@ public class User extends BaseEntity {
 
     @Column(name = "session_id", nullable = true, length = 32)
     private String sessionId;
+    
+    @Column(name = "isactive", nullable = false)
+    private Boolean isActive;
 
     @Column(name = "session_validity", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionValidity;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "user_stores",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
     private Set<Store> allowedShops;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

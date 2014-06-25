@@ -203,9 +203,9 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
-            if (!res.contains(p.getProducer())) {
-                res.add(p.getProducer());
-            }
+//            if (!res.contains(p.getProducer())) {
+//                res.add(p.getProducer());
+//            }
         }
 
         logger.debug("found {} elements", res.size());
@@ -225,7 +225,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         for (Product p : list) {
             if (!res.contains(p.getModel())) {
-                res.add(p.getModel());
+//                res.add(p.getModel());
             }
         }
 

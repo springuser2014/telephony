@@ -1,5 +1,7 @@
 package telephony.core.entity.jpa;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,6 +42,9 @@ public class Model extends BaseEntity {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "producer_id", nullable = false)
 	private Producer producer;
+	
+    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
+    private Set<Product> products;
 	
 	@Override
 	public Long getId() {		

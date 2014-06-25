@@ -68,10 +68,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		Product p = new Product();
 		p.setColor("niebieski");
 		p.setImei("123451234512345");
-		p.setModel("3310");
-		p.setProducer("Nokia");
-		p.setPriceIn(new Money(1000L));
-		p.setPriceIn(new Money(1000L));
+//		p.setModel("3310");
+//		p.setProducer("Nokia");
+//		p.setPriceIn(new Money(1000L));
+//		p.setPriceIn(new Money(1000L));
 		
 		return p;
 	}
@@ -80,10 +80,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		Product p = new Product();
 		p.setColor("zielony");
 		p.setImei("098760987609876");
-		p.setModel("Galaxy S 3");
-		p.setProducer("Samsung");
-		p.setPriceIn(new Money(1000L));
-		p.setPriceIn(new Money(1000L));
+//		p.setModel("Galaxy S 3");
+//		p.setProducer("Samsung");
+//		p.setPriceIn(new Money(1000L));
+//		p.setPriceIn(new Money(1000L));
 		
 		return p;
 	}

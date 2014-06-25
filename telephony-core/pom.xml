@@ -273,9 +273,13 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven.surefire.plugin.version}</version>					
 					<configuration>
-						<forkMode>once</forkMode>
+						<forkMode>never</forkMode>
 						<systemPropertyVariables>
 							<environment>TEST</environment>
+							 <property> 
+				               <name>java.util.logging.config.file</name>
+				               <value>src/test/resources/logging.properties</value>
+				             </property>				              
 						</systemPropertyVariables>
 						<properties>
 							<property>

@@ -11,17 +11,19 @@
 		<class>telephony.core.entity.jpa.Sale</class>
 		<class>telephony.core.entity.jpa.Role</class>
 		<class>telephony.core.entity.jpa.Contact</class>
-		
-		<!-- 
+<!-- 		
+		 
 		<class>telephony.core.entity.jpa.SaleComplaint</class>
         <class>telephony.core.entity.jpa.ProductComplaint</class>
         <class>telephony.core.entity.jpa.Complaint</class>
         <class>telephony.core.entity.jpa.ComplaintComment</class>
+        <class>telephony.core.entity.jpa.File</class>
+-->  
         <class>telephony.core.entity.jpa.Tax</class>
         <class>telephony.core.entity.jpa.Pricing</class>
-	    -->
-        <class>telephony.core.entity.jpa.File</class>
+	    
         
+      
         <class>telephony.core.entity.jpa.Model</class>
         <class>telephony.core.entity.jpa.Producer</class>
 
@@ -29,6 +31,7 @@
 		<properties>
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<!--<property name="hibernate.dialect" value="telephony.postgresql.TelephonyPostgreSQLDialect" /> -->
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
 			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-test" />
 			<property name="hibernate.connection.username" value="postgres" />
@@ -39,7 +42,7 @@
 			<property name="hibernate.current_session_context_class" value="thread" />
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
 			<property name="hibernate.connection.pool_size" value="-1" />
-			<property name="hibernate.jdbc.use_streams_for_binary" value="true"/>
+			
 		</properties>
 	</persistence-unit>
 </persistence>
