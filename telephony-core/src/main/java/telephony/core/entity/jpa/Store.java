@@ -1,9 +1,6 @@
 package telephony.core.entity.jpa;
 
-
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,71 +33,111 @@ public class Store extends BaseEntity {
     @Column(name = "label", nullable = false, length = 255)
     private String label;
     
-    @ManyToMany(cascade = {CascadeType.MERGE}, mappedBy = "allowedShops")
+    @ManyToMany(cascade = {CascadeType.MERGE }, mappedBy = "allowedShops")
     private Set<User> users = new HashSet<User>();
    
-    @ManyToMany(cascade = {CascadeType.MERGE}, mappedBy = "store")
+    @ManyToMany(cascade = {CascadeType.MERGE }, mappedBy = "store")
     private Set<Role> requiredRoles = new HashSet<Role>();
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="store")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
     private Set<Product> products = new HashSet<Product>();
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="store")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
     private Set<Delivery> deliveries = new HashSet<Delivery>();
     
+    /**
+     * sd.
+     * @param delivery a.
+     */
     public void addDelivery(Delivery delivery) {
     	
-    	if (deliveries.contains(delivery))
+    	if (deliveries.contains(delivery)) {
     		return;
+    	}
     	
     	deliveries.add(delivery);
     	delivery.setStore(this);
     }
     
+    /**
+     * asd.
+     * @param delivery a.
+     */
     public void removeDelivery(Delivery delivery) {
     	
-    	if (!deliveries.contains(delivery))
+    	if (!deliveries.contains(delivery)) {
     		return;
+    	}
     	
     	deliveries.remove(delivery);
     	delivery.setStore(null);
     	
     }
     
+    /**
+     * asd.
+     * @return a.
+     */
     public Set<Delivery> getDeliveries() {
 		return deliveries;
 	}
 
+    /**
+     * asd.
+     * @param deliveries a.
+     */
 	public void setDeliveries(Set<Delivery> deliveries) {
 		this.deliveries = deliveries;
 	}
 
+	/**
+	 * a.
+	 * @param product a.
+	 */
 	public void addProduct(Product product) {
     	
-    	if (products.contains(product))
+    	if (products.contains(product)) {
     		return;
+    	}
     	
     	this.products.add(product);
     	product.setStore(this);
     }
     
+	/**
+	 * asd.
+	 * @param product a.
+	 */
     public void removeProduct(Product product) {
     	
-    	if (!products.contains(product)) 
+    	if (!products.contains(product)) { 
     		return;
+    	}
     	
     	products.remove(product);
     	product.setStore(null);
     }
     
+    /**
+     * ad.
+     * @return a.
+     */
     public Set<Product> getProducts() {
 		return products;
 	}
 
+    /**
+     * a.
+     * @param products a.
+     */
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 
+	/**
+	 * asd.
+	 * @return a.
+	 */
 	public Set<Role> getRequiredRoles() {
 		return requiredRoles;
 	}

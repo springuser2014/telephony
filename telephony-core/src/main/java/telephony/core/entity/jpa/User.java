@@ -53,7 +53,6 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
     private Set<Store> allowedShops;
 
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

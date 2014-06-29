@@ -2,13 +2,18 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -61,9 +66,24 @@ public class Contact extends BaseEntity {
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
     )
     private Collection<Sale> sales;
+   
+    @CollectionTable(
+    		name = "emails",
+    		joinColumns = @JoinColumn(name = "contact_id")
+    )
+    @ElementCollection
+    private Collection<Email> emails;
+    
+    
+    @CollectionTable(
+    		name = "phonenumbers",
+    		joinColumns = @JoinColumn(name = "contact_id")
+    )
+    @ElementCollection
+    private Collection<PhoneNumber> phonenumbers;
     
     /**
      * asd.
