@@ -1,22 +1,22 @@
 package telephony.core.entity.jpa;
 
-import javax.persistence.Basic;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-
-
 /**
  * asd.
- *
  */
 @Entity
 @Table(name = "files")
@@ -44,6 +44,21 @@ public class File extends BaseEntity {
 	
 	@Column(name = "size_in_bytes", nullable = false)
 	private Long sizeInBytes;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@JoinTable(
+		name = "complaint_files",
+		joinColumns = @JoinColumn(
+			name = "file_id",
+			referencedColumnName = "id"
+		),
+		inverseJoinColumns = @JoinColumn(
+			name = "complaint_id",
+			referencedColumnName = "id"))
+	private Collection<Complaint> complaints;
+	
+	@ManyToMany(mappedBy = "files", fetch = FetchType.LAZY)
+	private Collection<Product> products;
 	
 //	@Lob
 //	@Column(name = "content", nullable = false)

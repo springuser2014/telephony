@@ -11,8 +11,6 @@ import telephony.core.entity.jpa.User;
 
 /**
  * Users management DAO.
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 

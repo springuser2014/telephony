@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 /**
  * ads.
- *
  */
 @Table
 @Entity(name = "producers")

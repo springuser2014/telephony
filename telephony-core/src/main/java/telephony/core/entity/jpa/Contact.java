@@ -19,7 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * @author Paweł Henek <pawelhenek@gmail.com>
+ * asd.
  */
 @Entity
 @Table(name = "contacts")

@@ -1,7 +1,6 @@
 package telephony.core.entity.jpa;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,8 +23,13 @@ public class ComplaintComment extends BaseEntity {
 
 	@Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "complaints_seq")
-    @SequenceGenerator(name = "complaints_seq", sequenceName = "complaints_seq", allocationSize = 1)
+    @GeneratedValue(
+		strategy = GenerationType.SEQUENCE, 
+		generator = "complaints_seq")
+    @SequenceGenerator(
+		name = "complaints_seq", 
+		sequenceName = "complaints_seq", 
+		allocationSize = 1)
     private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -114,7 +118,5 @@ public class ComplaintComment extends BaseEntity {
 	 */
 	public void setReportedDate(Date reportedDate) {
 		this.reportedDate = reportedDate;
-	}
-	
-	
+	}	
 }

@@ -14,10 +14,6 @@ import javax.persistence.Table;
 @Embeddable
 public class Email {
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "contact_id")
-//    private Contact contact;
-	
 	@Column(name = "content", nullable = false, length = 100)
 	private String content;
 
@@ -28,22 +24,6 @@ public class Email {
 	
 	}
 	
-	/**
-	 * asd.
-	 * @return a.
-	 */
-//	public Contact getContact() {
-//		return contact;
-//	}
-
-	/**
-	 * ad.
-	 * @param contact a.
-	 */
-//	public void setContact(Contact contact) {
-//		this.contact = contact;
-//	}
-
 	/**
 	 * ad.
 	 * @return a.

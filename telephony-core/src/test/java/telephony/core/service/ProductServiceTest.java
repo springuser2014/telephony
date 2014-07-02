@@ -1,33 +1,26 @@
 package telephony.core.service;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.service.exception.SessionServiceException;
-
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-
-/**
- * @author Paweł Henek <pawelhenek@gmail.com>
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
 @TestExecutionListeners({
@@ -119,7 +112,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		expected.add("3310");
 		
 		// then
-		assertTrue("should return 6 different products models", lst.size() == 6);
+		assertEquals("should return 6 different products models", 6, lst.size());
 		assertTrue("exactly those 6 products", lst.containsAll(expected));
 	}
 	
@@ -234,6 +227,5 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		assertTrue("should fetch product with given IMEI", 
 				products != null && products.get(0).getImei().contains("123456789000001")); 
-	}
-	
+	}	
 }

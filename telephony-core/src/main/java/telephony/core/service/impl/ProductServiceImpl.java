@@ -70,8 +70,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		List<Product> products = productsDao.find();
 
 		for (Product p : products) {
-			if (!res.contains(p.getModel().getProducer())) {
-//				res.add(p.getProducer());
+			if (!res.contains(p.getModel().getProducer().getLabel())) {
+				res.add(p.getModel().getProducer().getLabel());
 			}
 		}
 
@@ -96,8 +96,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		List<Product> products = productsDao.find();
 
 		for (Product p : products) {
-			if (!res.contains(p.getModel())) {
-//				res.add(p.getModel());
+			if (!res.contains(p.getModel().getLabel())) {
+				res.add(p.getModel().getLabel());
 			}
 		}
 

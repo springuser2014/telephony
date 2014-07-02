@@ -1,11 +1,8 @@
 package telephony.core.entity.jpa;
 
-
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,8 +21,6 @@ import javax.persistence.TemporalType;
 
 /**
  * Represents Delivery domain object.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "deliveries")
@@ -57,8 +52,8 @@ public class Delivery extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_id", nullable = false)
     private Contact contact;
-
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
+   
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = { CascadeType.ALL } )
     private Set<Product> products = new HashSet<Product>();
 
     /**

@@ -1,6 +1,8 @@
 package telephony.core.entity.jpa;
 
 import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +19,6 @@ import javax.persistence.Table;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 @Entity
 @Table(name = "products")
@@ -49,7 +50,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "sale_id", nullable = true)
     private Sale sale;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "model_id", nullable = false)
     private Model model;
 
@@ -58,17 +59,29 @@ public class Product extends BaseEntity {
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "product_taxes",
-    			joinColumns = { 
-    				@JoinColumn(name = "product_id", referencedColumnName = "id") 
-    			},
-    			inverseJoinColumns = { 
-    				@JoinColumn(name = "tax_id", referencedColumnName = "id")
-    			}
+		joinColumns = { 
+			@JoinColumn(name = "product_id", referencedColumnName = "id") 
+		},
+		inverseJoinColumns = { 
+			@JoinColumn(name = "tax_id", referencedColumnName = "id")
+		}
     )		
     private Collection<Tax> taxes;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")    
     private Collection<Pricing> pricings;
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@JoinTable(
+		name = "product_files",
+		joinColumns = @JoinColumn(
+			name = "product_id",
+			referencedColumnName = "id"
+		),
+		inverseJoinColumns = @JoinColumn(
+			name = "file_id",
+			referencedColumnName = "id"))
+    private Collection<File> files;
     
     
     /**
@@ -233,38 +246,6 @@ public class Product extends BaseEntity {
         this.color = color;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     
-    public Money getPriceIn() {
-        return priceIn;
-    }
-
-    /**
-     * asd.
-     * @param priceIn asd.
-     
-    public void setPriceIn(Money priceIn) {
-        this.priceIn = priceIn;
-    }*/
-
-    /**
-     * asd.
-     * @return asd.
-     
-    public Money getPriceOut() {
-        return priceOut;
-    }
-
-    /**
-     * asd.
-     * @param priceOut asd.
-     *
-    public void setPriceOut(Money priceOut) {
-        this.priceOut = priceOut;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -355,6 +336,5 @@ public class Product extends BaseEntity {
 	 */
 	public void setPricings(Collection<Pricing> pricings) {
 		this.pricings = pricings;
-	}   
-    
+	}
 }

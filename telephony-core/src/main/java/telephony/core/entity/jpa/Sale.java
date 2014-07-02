@@ -1,7 +1,5 @@
 package telephony.core.entity.jpa;
 
-
-
 import java.util.Date;
 import java.util.Set;
 
@@ -22,8 +20,6 @@ import javax.persistence.TemporalType;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "sales")

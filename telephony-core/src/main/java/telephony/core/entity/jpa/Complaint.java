@@ -1,3 +1,4 @@
+
 package telephony.core.entity.jpa;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -36,7 +38,7 @@ public abstract class Complaint extends BaseEntity {
 	private Long id;
 	
 	@Column(name = "description")
-	private String description;
+	private String description;	
 	
 	@Column(name = "reported_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,6 +55,9 @@ public abstract class Complaint extends BaseEntity {
 	
 	@OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
 	private Set<ComplaintComment> comments;
+	
+	@ManyToMany(mappedBy = "complaints", fetch = FetchType.LAZY)
+	private Set<File> files;
 		
 	@Override
 	public Long getId() {

@@ -1,7 +1,5 @@
 package telephony.core.entity.jpa;
 
-
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,17 +18,23 @@ import javax.persistence.Table;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "roles")
 public class Role extends BaseEntity {
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roles_seq")
-    @SequenceGenerator(name = "roles_seq", sequenceName = "roles_seq", allocationSize = 1)
+    @Column(
+		name = "id", 
+		updatable = false, 
+		nullable = false)
+    @GeneratedValue(
+		strategy = GenerationType.SEQUENCE, 
+		generator = "roles_seq")
+    @SequenceGenerator(
+		name = "roles_seq", 
+		sequenceName = "roles_seq", 
+		allocationSize = 1)
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -39,8 +43,13 @@ public class Role extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, 
     			cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(name = "store_roles",
-    		joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-    		inverseJoinColumns = @JoinColumn(name = "store_id", referencedColumnName = "id"))
+    		joinColumns = @JoinColumn(
+				name = "role_id", 
+				referencedColumnName = "id"),
+    		inverseJoinColumns = @JoinColumn(
+				name = "store_id", 
+				referencedColumnName = "id")
+    )
     private Set<Store> store = new HashSet<Store>();
     
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, 

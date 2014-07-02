@@ -17,17 +17,23 @@ import javax.persistence.TemporalType;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "taxes")
 public class Tax extends BaseEntity {
 	
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taxes_seq")
-    @SequenceGenerator(name = "taxes_seq", sequenceName = "taxes_seq", allocationSize = 1)
+    @Column(
+		name = "id", 
+		updatable = false, 
+		nullable = false)
+    @GeneratedValue(
+		strategy = GenerationType.SEQUENCE, 
+		generator = "taxes_seq")
+    @SequenceGenerator(
+		name = "taxes_seq", 
+		sequenceName = "taxes_seq", 
+		allocationSize = 1)
     private Long id;
     
     @Column(name = "from_date")

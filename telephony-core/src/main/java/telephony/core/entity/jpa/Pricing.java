@@ -17,16 +17,23 @@ import javax.persistence.TemporalType;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 @Entity
 @Table(name = "pricings")
 public class Pricing extends BaseEntity {
 		
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pricings_seq")
-    @SequenceGenerator(name = "pricings_seq", sequenceName = "pricings_seq", allocationSize = 1)
+    @Column(
+		name = "id", 
+		updatable = false, 
+		nullable = false)
+    @GeneratedValue(
+		strategy = GenerationType.SEQUENCE, 
+		generator = "pricings_seq")
+    @SequenceGenerator(
+		name = "pricings_seq", 
+		sequenceName = "pricings_seq", 
+		allocationSize = 1)
     private Long id;    
 
     @Column(name = "from_date")
@@ -101,7 +108,4 @@ public class Pricing extends BaseEntity {
 	public void setRate(Double rate) {
 		this.rate = rate;
 	}
-	
-	
-
 }

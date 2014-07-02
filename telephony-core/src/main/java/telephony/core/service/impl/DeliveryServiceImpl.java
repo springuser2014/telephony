@@ -71,18 +71,17 @@ public class DeliveryServiceImpl
 		Store store = storesDao.findById(storeId);
 		
 		newDelivery.setContact(contact);
-		newDelivery.setStore(store);		
-		deliveriesDao.save(newDelivery);
-		
-		deliveriesDao.getEntityManager().flush();
-		deliveriesDao.getEntityManager().refresh(newDelivery);
+		newDelivery.setStore(store);
+				
 		
 		for (Product product : products) {
 			product.setStore(store);
 			newDelivery.addProduct(product);
 			product.setDelivery(newDelivery);
-			productsDao.save(product);
+//			productsDao.save(product);
 		}
+		
+		deliveriesDao.save(newDelivery);	
 		
         logger.debug("DeliveryServiceImpl.addNewDelivery ends");
     }

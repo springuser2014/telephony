@@ -1,6 +1,5 @@
 package telephony.core.service;
 
-
 import java.util.List;
 
 import telephony.core.entity.jpa.Delivery;
@@ -10,10 +9,8 @@ import telephony.core.service.exception.SessionServiceException;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
-public interface DeliveryService extends BasicService<Delivery>{
+public interface DeliveryService extends BasicService<Delivery> {
 
 
     /**

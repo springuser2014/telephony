@@ -11,24 +11,19 @@
 		<class>telephony.core.entity.jpa.Sale</class>
 		<class>telephony.core.entity.jpa.Role</class>
 		<class>telephony.core.entity.jpa.Contact</class>
-		
-		 
 		<class>telephony.core.entity.jpa.SaleComplaint</class>
         <class>telephony.core.entity.jpa.ProductComplaint</class>
         <class>telephony.core.entity.jpa.Complaint</class>
         <class>telephony.core.entity.jpa.ComplaintComment</class>
-<!-- 
-        <class>telephony.core.entity.jpa.File</class>
--->  
         <class>telephony.core.entity.jpa.Email</class>
         <class>telephony.core.entity.jpa.PhoneNumber</class>
         <class>telephony.core.entity.jpa.Tax</class>
         <class>telephony.core.entity.jpa.Pricing</class>
-	    
-        
-      
         <class>telephony.core.entity.jpa.Model</class>
         <class>telephony.core.entity.jpa.Producer</class>
+        
+        <class>telephony.core.entity.jpa.File</class>
+          
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

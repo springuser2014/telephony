@@ -3,6 +3,7 @@ package telephony.core.service;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,9 @@ import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
+import telephony.core.entity.jpa.Model;
 import telephony.core.entity.jpa.Money;
+import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
@@ -64,26 +67,57 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	@Inject
 	private ProductService productService;
 	
+	@Inject
+	private ModelService modelService;
+	
 	private Product getProductB() {
 		Product p = new Product();
 		p.setColor("niebieski");
 		p.setImei("123451234512345");
-//		p.setModel("3310");
-//		p.setProducer("Nokia");
-//		p.setPriceIn(new Money(1000L));
-//		p.setPriceIn(new Money(1000L));
+		p.setModel(getNokia3310());
 		
 		return p;
+	}
+	
+	private Model getNokia3310() {
+		
+		Producer p = new Producer();
+		p.setLabel("Nokia");
+		
+		Model m = new Model();
+		m.setLabel("3310");
+		
+		Collection<Model> models = new ArrayList<Model>();
+		models.add(m);
+		p.setModels(models);
+		m.setProducer(p);
+		
+		return m;
+	}
+	
+	private Model getSamsungGalaxy() {
+		
+		
+		
+		Producer p = new Producer();
+		p.setLabel("Samsung");
+		
+		Model m = new Model();
+		m.setLabel("Galaxy S 3");
+		
+		Collection<Model> models = new ArrayList<Model>();
+		models.add(m);
+		p.setModels(models);
+		m.setProducer(p);
+		
+		return m;
 	}
 
 	private Product getProductA() {
 		Product p = new Product();
 		p.setColor("zielony");
 		p.setImei("098760987609876");
-//		p.setModel("Galaxy S 3");
-//		p.setProducer("Samsung");
-//		p.setPriceIn(new Money(1000L));
-//		p.setPriceIn(new Money(1000L));
+		p.setModel(getSamsungGalaxy());
 		
 		return p;
 	}
@@ -100,8 +134,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
 
 		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count();
-		long productsAfter = -1, productsBefore = productService.count();
-		
+		long productsAfter = -1, productsBefore = productService.count();		
 		
 		Delivery newDelivery = new Delivery();
 		
@@ -111,13 +144,19 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		List<Product> products = new ArrayList<Product>();
 		products.add(getProductA());
 		products.add(getProductB());
+		
+		try {
+			// when  
+			deliveryService.addNewDelivery(
+					username, sessionId, 
+					newDelivery, products, 
+					store.getId(), contact.getId()
+			);
 			
-		// when
-		deliveryService.addNewDelivery(
-				username, sessionId, 
-				newDelivery, products, 
-				store.getId(), contact.getId()
-		);		
+		} catch (Exception e) {
+			int i = 0; 
+			i = i + 1;
+		}
 		deliveriesAfter = deliveryService.count();
 		productsAfter = productService.count();
 	

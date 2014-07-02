@@ -17,26 +17,36 @@ import javax.persistence.Table;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity
 @Table(name = "stores")
 public class Store extends BaseEntity {
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stores_seq")
-    @SequenceGenerator(name = "stores_seq", sequenceName = "stores_seq", allocationSize = 1)
+    @Column(
+		name = "id", 
+		updatable = false, 
+		nullable = false)
+    @GeneratedValue(
+		strategy = GenerationType.SEQUENCE, 
+		generator = "stores_seq")
+    @SequenceGenerator(
+		name = "stores_seq", 
+		sequenceName = "stores_seq", 
+		allocationSize = 1)
     private Long id;
 
     @Column(name = "label", nullable = false, length = 255)
     private String label;
     
-    @ManyToMany(cascade = {CascadeType.MERGE }, mappedBy = "allowedShops")
+    @ManyToMany(
+		cascade = {CascadeType.MERGE }, 
+		mappedBy = "allowedShops")
     private Set<User> users = new HashSet<User>();
    
-    @ManyToMany(cascade = {CascadeType.MERGE }, mappedBy = "store")
+    @ManyToMany(
+		cascade = {CascadeType.MERGE }, 
+		mappedBy = "store")
     private Set<Role> requiredRoles = new HashSet<Role>();
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")

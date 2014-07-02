@@ -7,10 +7,8 @@ import javax.persistence.Entity;
 /**
  * asd.
  */
-
 @Entity
 @DiscriminatorValue("P")
 public class ProductComplaint extends Complaint {
-
 
 }
