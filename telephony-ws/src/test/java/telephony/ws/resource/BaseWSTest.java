@@ -7,8 +7,6 @@ import telephony.ws.pre.TestsConfig;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public abstract class BaseWSTest {
 

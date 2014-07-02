@@ -22,7 +22,6 @@ import com.google.inject.persist.Transactional;
 
 /**
  * Users management service.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public class UserServiceImpl extends AbstractBasicService<User> implements UserService {
 

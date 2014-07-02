@@ -1,6 +1,5 @@
 package telephony.core.service;
 
-import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.entity.jpa.Producer;
 
 /**

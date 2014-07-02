@@ -13,8 +13,6 @@ import telephony.ws.resource.sale.SalesAddResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SalesAddResourceImpl extends TelephonyServerResource 
 	implements SalesAddResource {

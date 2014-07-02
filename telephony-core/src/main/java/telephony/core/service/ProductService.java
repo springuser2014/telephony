@@ -15,8 +15,8 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username asd.
+     * @param sessionId asd.
      * @return asd.
      * @throws SessionServiceException 
      */
@@ -25,8 +25,8 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username asd.
+     * @param sessionId asd.
      *
      * @return asd.
      */
@@ -34,8 +34,8 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username asd.
+     * @param sessionId asd.
      *
      * @return asd.
      * @throws SessionServiceException 
@@ -44,8 +44,8 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username as.
+     * @param sessionId ad.
      * @return asd.
      */
     List<String> fetchAllColors(String username, String sessionId);
@@ -53,8 +53,8 @@ public interface ProductService extends BasicService<Product> {
     
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username asd.
+     * @param sessionId asd.
      * @param storeId asd.
      * @param productStatus asd.
      * @return asd.
@@ -67,8 +67,8 @@ public interface ProductService extends BasicService<Product> {
     // TODO: refactor method below
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username ad.
+     * @param sessionId ad.
      * @param store asd.
      * @param products asd.
      */
@@ -79,8 +79,8 @@ public interface ProductService extends BasicService<Product> {
     
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username ad.
+     * @param sessionId ad.
      * @param imei asd.
      * @param storeId asd.
      * @return asd.
@@ -92,9 +92,9 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
-     * @param parameterObject TODO
+     * @param username asd.
+     * @param sessionId asd.
+     * @param parameterObject asd.
      * @return asd.
      * @throws SessionServiceException 
      */
@@ -104,8 +104,8 @@ public interface ProductService extends BasicService<Product> {
 
     /**
      * asd.
-     * @param username TODO
-     * @param sessionId TODO
+     * @param username asd.
+     * @param sessionId asd.
      * @param store asd.
      * @return asd.
      * @throws SessionServiceException 

@@ -1,7 +1,5 @@
 package telephony.core.guice.env;
 
-import java.util.Date;
-
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -17,7 +15,6 @@ import com.googlecode.flyway.core.Flyway;
 
 /**
  * asd.
- *
  */
 @Environment("PRODUCTION")
 public class TelephonyCoreProductionModule  extends AbstractModule {

@@ -12,7 +12,6 @@ import com.google.inject.persist.Transactional;
 /**
  * General usage basic service implementation.
  * @param <T> Basic entities class type.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public abstract class AbstractBasicService<T extends BaseEntity> implements BasicService<T> {
 

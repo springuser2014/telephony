@@ -18,9 +18,9 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @param username asd.
      * @param sessionId  asd.
      * @param newDelivery asd.
-     * @param products TODO
-     * @param storeId TODO
-     * @param contactId TODO
+     * @param products asd.
+     * @param storeId asd.
+     * @param contactId asd.
      * @throws SessionServiceException 
      * @throws DeliveryServiceException 
      */

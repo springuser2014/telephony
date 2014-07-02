@@ -18,8 +18,6 @@ import telephony.core.service.exception.SessionServiceException;
 
 /**
  * Roles management service.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class RoleServiceImpl
     extends AbstractBasicService<Role> implements RoleService {

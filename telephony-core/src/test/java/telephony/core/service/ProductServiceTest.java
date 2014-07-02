@@ -1,22 +1,25 @@
 package telephony.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.service.exception.SessionServiceException;
+
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;

@@ -4,9 +4,6 @@ import java.util.Date;
 
 /**
  * asd.
- * 
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 public class SessionBean {
 

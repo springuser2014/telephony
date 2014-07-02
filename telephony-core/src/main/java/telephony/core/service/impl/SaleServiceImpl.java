@@ -24,9 +24,6 @@ import com.google.inject.persist.Transactional;
 
 /**
  * Sales management services.
- * 
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 		SaleService {

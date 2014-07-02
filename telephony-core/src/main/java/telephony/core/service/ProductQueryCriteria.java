@@ -6,8 +6,6 @@ import telephony.core.entity.jpa.ProductStatus;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class ProductQueryCriteria {
 	private String imei;

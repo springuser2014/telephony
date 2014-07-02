@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.guice.env.EnvironmentNameResolver;
-import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 
 import com.google.inject.AbstractModule;
@@ -18,8 +17,6 @@ import com.google.inject.persist.PersistService;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public abstract class TelephonyServerResource extends ServerResource {
 	

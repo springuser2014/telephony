@@ -14,8 +14,6 @@ import telephony.ws.resource.store.StoresEditResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class StoresEditResourceImpl extends TelephonyServerResource
 		implements StoresEditResource {

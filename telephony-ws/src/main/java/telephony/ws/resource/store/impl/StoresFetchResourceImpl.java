@@ -15,8 +15,6 @@ import telephony.ws.resource.store.StoresFetchResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class StoresFetchResourceImpl extends TelephonyServerResource 
 	implements StoresFetchResource {

@@ -21,9 +21,6 @@ import telephony.ws.resource.session.SessionValidationResource;
 
 /**
  * asd.
- * 
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 public class SessionValidationResourceImpl extends TelephonyServerResource
 		implements SessionValidationResource {

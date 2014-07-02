@@ -12,13 +12,14 @@ import telephony.core.entity.jpa.Store;
 
 /**
  * Roles management DAO.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * asd.
+	 */
 	public RolesDaoImpl() {
         super(Role.class);
     }

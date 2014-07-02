@@ -5,8 +5,6 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * Basic entity.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @MappedSuperclass
 public abstract class BaseEntity {

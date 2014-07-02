@@ -18,8 +18,6 @@ import com.google.inject.matcher.Matchers;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SecurityModule extends AbstractModule {
 

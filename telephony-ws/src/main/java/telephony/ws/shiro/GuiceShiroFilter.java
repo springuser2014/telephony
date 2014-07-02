@@ -8,8 +8,6 @@ import com.google.inject.Singleton;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Singleton
 public class GuiceShiroFilter extends AbstractShiroFilter {

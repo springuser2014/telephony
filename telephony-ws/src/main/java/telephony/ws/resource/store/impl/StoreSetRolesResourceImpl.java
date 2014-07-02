@@ -11,8 +11,6 @@ import telephony.ws.resource.store.StoreSetRolesResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class StoreSetRolesResourceImpl extends TelephonyServerResource
 	implements StoreSetRolesResource {

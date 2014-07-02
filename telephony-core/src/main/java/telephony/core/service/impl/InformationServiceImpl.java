@@ -14,8 +14,6 @@ import com.google.inject.Inject;
 
 /**
  * Information management service.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class InformationServiceImpl implements InformationService {
 

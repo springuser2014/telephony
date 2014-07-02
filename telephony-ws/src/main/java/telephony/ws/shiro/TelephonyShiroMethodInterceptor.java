@@ -8,8 +8,6 @@ import org.apache.shiro.authz.aop.RoleAnnotationMethodInterceptor;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class TelephonyShiroMethodInterceptor implements MethodInterceptor {
 
@@ -23,8 +21,6 @@ public class TelephonyShiroMethodInterceptor implements MethodInterceptor {
 
     /**
      * asd.
-     * @author Paweł Henek <pawelhenek@gmail.com>
-     *
      */
     private static class ShiroMethodInvocation implements org.apache.shiro.aop.MethodInvocation {
 

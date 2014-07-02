@@ -10,8 +10,6 @@ import telephony.ws.resource.delivery.DeliveriesDeleteResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class DeliveriesDeleteResourceImpl extends TelephonyServerResource
 	implements DeliveriesDeleteResource {

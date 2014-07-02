@@ -10,8 +10,6 @@ import telephony.ws.resource.user.UsersDeleteResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class UsersDeleteResourceImpl extends TelephonyServerResource implements
 		UsersDeleteResource {

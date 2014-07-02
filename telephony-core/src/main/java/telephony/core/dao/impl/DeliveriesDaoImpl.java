@@ -13,12 +13,9 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 
 /**
- * Deliveries management DAO. 
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * Deliveries management DAO.
  */
-public class DeliveriesDaoImpl 
-	extends GenericDaoImpl<Delivery> implements DeliveriesDao {
+public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements DeliveriesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

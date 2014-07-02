@@ -5,8 +5,6 @@ import org.restlet.resource.Get;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface HelloWorldResource {
 	

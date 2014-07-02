@@ -12,8 +12,6 @@ import telephony.ws.resource.TelephonyServerResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SalesDeleteResourceImpl extends TelephonyServerResource implements
 		SalesDeleteResource {

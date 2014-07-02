@@ -31,8 +31,6 @@ import telephony.ws.resource.session.SessionInitializationResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @RunWith(Arquillian.class)
 public class ContactResourceTest extends BaseWSTest {

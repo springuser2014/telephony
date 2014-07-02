@@ -12,8 +12,6 @@ import telephony.ws.resource.user.UserAddRolesResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class UserAddRolesResourceImpl extends TelephonyServerResource
 	implements UserAddRolesResource {

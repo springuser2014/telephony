@@ -23,7 +23,6 @@ import javax.persistence.TemporalType;
 
 /**
  * asd.
- *
  */
 @Entity
 @Inheritance

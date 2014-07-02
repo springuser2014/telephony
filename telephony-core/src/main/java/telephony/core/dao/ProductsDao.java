@@ -32,7 +32,7 @@ public interface ProductsDao extends GenericDao<Product> {
 
     /**
      * asd.
-     * @param parameterObject TODO
+     * @param parameterObject asd.
      * @return asd.
      */
     List<Product> findByCriteria(

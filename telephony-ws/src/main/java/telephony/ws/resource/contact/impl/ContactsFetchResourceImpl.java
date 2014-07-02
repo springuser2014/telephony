@@ -26,7 +26,6 @@ import static telephony.ws.resource.bean.ContactBean.create;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public class ContactsFetchResourceImpl extends TelephonyServerResource
 	implements ContactsFetchResource {

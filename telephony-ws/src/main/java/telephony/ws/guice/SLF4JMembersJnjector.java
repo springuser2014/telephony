@@ -9,8 +9,6 @@ import com.google.inject.MembersInjector;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  * @param <T> asd.
  */
 public class SLF4JMembersJnjector<T> implements MembersInjector<T> {

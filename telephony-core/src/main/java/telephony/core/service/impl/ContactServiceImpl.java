@@ -18,9 +18,6 @@ import telephony.core.service.exception.SessionServiceException;
 
 /**
  * Contacts management service.
- * 
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 		ContactService {

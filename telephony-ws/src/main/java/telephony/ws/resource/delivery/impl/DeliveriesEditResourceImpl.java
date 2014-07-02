@@ -11,8 +11,6 @@ import telephony.ws.resource.delivery.DeliveriesEditResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class DeliveriesEditResourceImpl extends TelephonyServerResource 
 	implements DeliveriesEditResource {

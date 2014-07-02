@@ -2,8 +2,6 @@ package telephony.ws.pre;
 
 /**
  * foo bar.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public final class TestsConfig {
     public static final String PERSISTENCE = "telephony-ws-test";

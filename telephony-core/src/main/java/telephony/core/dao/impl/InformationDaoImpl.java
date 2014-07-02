@@ -11,9 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 /**
- * Information management DAO..
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * Information management DAO.
  */
 public class InformationDaoImpl implements InformationDao {
 

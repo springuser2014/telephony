@@ -39,8 +39,6 @@ import telephony.ws.resource.session.impl.SessionInitializationResourceImpl;
 
 /**
  * foo bar.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @RunWith(Arquillian.class)
 public class SessionResourceTest extends BaseWSTest {

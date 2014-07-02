@@ -31,8 +31,6 @@ import com.google.inject.persist.Transactional;
 
 /**
  * Stores management service.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class StoreServiceImpl extends AbstractBasicService<Store> 
 	implements StoreService {

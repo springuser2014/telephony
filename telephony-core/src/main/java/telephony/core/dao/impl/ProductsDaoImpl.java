@@ -20,8 +20,6 @@ import telephony.core.service.ProductQueryCriteria;
 
 /**
  * Products management DAO.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class ProductsDaoImpl extends GenericDaoImpl<Product> implements ProductsDao {
 

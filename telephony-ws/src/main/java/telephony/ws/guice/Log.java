@@ -11,8 +11,6 @@ import javax.inject.Scope;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Scope
 @Documented

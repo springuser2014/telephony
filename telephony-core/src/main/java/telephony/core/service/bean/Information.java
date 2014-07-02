@@ -6,8 +6,6 @@ import telephony.core.entity.jpa.Role;
 
 /**
  * Represents a bean containing basic information about system status.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class Information {
 	

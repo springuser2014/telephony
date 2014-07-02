@@ -12,8 +12,6 @@ import telephony.core.service.exception.SessionServiceException;
 
 /**
  * ads.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface ContactsFetchResource {
 

@@ -8,8 +8,6 @@ import telephony.core.service.SystemLogService;
 
 /**
  * SystemLogs management service.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SystemLogServiceImpl implements SystemLogService {
 

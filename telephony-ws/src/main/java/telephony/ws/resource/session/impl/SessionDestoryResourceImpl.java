@@ -20,8 +20,6 @@ import telephony.ws.resource.session.SessionDestroyResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SessionDestoryResourceImpl extends TelephonyServerResource
 		implements SessionDestroyResource {

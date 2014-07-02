@@ -7,8 +7,6 @@ import com.google.code.morphia.annotations.Id;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 @Entity("system_logs")
 public class SystemLog {

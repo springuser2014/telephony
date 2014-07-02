@@ -1,6 +1,5 @@
 package telephony.core.service;
 
-import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.impl.AbstractBasicService;
 

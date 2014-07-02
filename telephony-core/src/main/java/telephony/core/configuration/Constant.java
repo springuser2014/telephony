@@ -3,7 +3,6 @@ package telephony.core.configuration;
 
 /**
  * Some basic costants.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public final class Constant {
     

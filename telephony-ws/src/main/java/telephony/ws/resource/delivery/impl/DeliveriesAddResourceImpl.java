@@ -10,8 +10,6 @@ import telephony.ws.resource.delivery.DeliveriesAddResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class DeliveriesAddResourceImpl extends TelephonyServerResource
 		implements DeliveriesAddResource {

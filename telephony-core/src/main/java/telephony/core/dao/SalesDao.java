@@ -27,8 +27,6 @@ public interface SalesDao extends GenericDao<Sale> {
      */
     long getNumberOfSales(Store store);
 
-//    public List<Sale> findLastest(Store store, int i, int numberOfElements, ListOrder order);
-
     /**
      * asd.
      * @param ids asd.

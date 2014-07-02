@@ -18,8 +18,7 @@ import com.google.inject.Provider;
 
 /**
  * General entities management DAO.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+
  * @param <E> asd.
  */
 public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao<E> {

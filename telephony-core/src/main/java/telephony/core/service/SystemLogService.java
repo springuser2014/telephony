@@ -8,8 +8,6 @@ import telephony.core.entity.mongo.SystemLogQuery;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface SystemLogService {
 

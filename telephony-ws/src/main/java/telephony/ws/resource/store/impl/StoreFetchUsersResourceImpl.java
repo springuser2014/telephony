@@ -13,8 +13,6 @@ import telephony.ws.resource.store.StoreFetchUsersResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class StoreFetchUsersResourceImpl extends TelephonyServerResource 
 	implements StoreFetchUsersResource {

@@ -81,9 +81,6 @@ import telephony.ws.resource.user.impl.UsersFetchResourceImpl;
 
 /**
  * Heart of telephony application.
- *
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class TelephonyApplication extends Application {
 	

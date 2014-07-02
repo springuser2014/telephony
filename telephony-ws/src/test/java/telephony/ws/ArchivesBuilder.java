@@ -6,9 +6,7 @@ import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 /**
- * foo bar.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
+ * asd.
  */
 public final class ArchivesBuilder {
 

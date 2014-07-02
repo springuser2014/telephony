@@ -65,9 +65,6 @@ import com.google.inject.AbstractModule;
 
 /**
  * Provides some default bindings for DAOs and services.
- *
- * @author Paweł Henek <pawelhenek@gmail.com>
- * @since 0.1
  */
 public class TelephonyCoreServicesModule extends AbstractModule {
 

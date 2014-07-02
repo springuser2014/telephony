@@ -36,8 +36,6 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SessionInitializationResourceImpl extends TelephonyServerResource 
 	implements SessionInitializationResource {    

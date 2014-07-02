@@ -15,8 +15,6 @@ import telephony.core.entity.jpa.Store;
 
 /**
  * Sales management DAO.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
 

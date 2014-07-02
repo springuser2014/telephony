@@ -20,9 +20,6 @@ import telephony.ws.pre.TestsConfig;
 
 /**
  * asd.
- * 
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 @RunWith(Arquillian.class)
 public class HelloWorldResourceTest extends BaseWSTest {

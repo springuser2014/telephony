@@ -6,7 +6,8 @@ import telephony.core.service.ComplaintService;
 /**
  * asd.
  */
-public class ComplaintServiceImpl extends AbstractBasicService<Complaint> implements ComplaintService {
+public class ComplaintServiceImpl 
+extends AbstractBasicService<Complaint> implements ComplaintService {
 
 	@Override
 	public long count() {

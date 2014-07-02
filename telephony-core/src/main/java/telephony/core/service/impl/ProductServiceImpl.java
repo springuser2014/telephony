@@ -23,9 +23,6 @@ import com.google.inject.persist.Transactional;
 
 /**
  * Products management service.
- * 
- * @author Paweł Henek <pawelhenek@gmail.com>
- * 
  */
 public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		ProductService {

@@ -15,8 +15,6 @@ import telephony.ws.resource.delivery.DeliveriesFetchResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class DeliveriesFetchResourceImpl extends TelephonyServerResource
 	implements DeliveriesFetchResource {

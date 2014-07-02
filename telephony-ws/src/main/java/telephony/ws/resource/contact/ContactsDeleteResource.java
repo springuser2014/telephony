@@ -20,8 +20,6 @@ import telephony.core.service.exception.SessionServiceException;
  *  	"contactToDeleteId" : ###
  *  }
  * </pre>
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface ContactsDeleteResource {
 

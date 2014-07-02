@@ -9,8 +9,6 @@ import telephony.ws.resource.TelephonyServerResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class UsersAddResourceImpl extends TelephonyServerResource implements
 		UsersAddResource {

@@ -6,8 +6,6 @@ import org.restlet.resource.Post;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface StoresFetchResource {
 	

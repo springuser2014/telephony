@@ -22,8 +22,6 @@ import telephony.ws.resource.role.RolesDeleteResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class RolesDeleteResourceImpl extends TelephonyServerResource 
 	implements RolesDeleteResource {

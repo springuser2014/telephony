@@ -24,8 +24,6 @@ import com.google.inject.Inject;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class RolesAddResourceImpl extends TelephonyServerResource
 	implements RolesAddResource {

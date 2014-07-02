@@ -39,8 +39,6 @@ import telephony.ws.resource.contact.ContactsAddResource;
  *  
  *  }
  * </pre>
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class ContactsAddResourceImpl extends TelephonyServerResource implements
 		ContactsAddResource {

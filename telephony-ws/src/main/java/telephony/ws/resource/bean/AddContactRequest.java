@@ -5,8 +5,6 @@ import telephony.ws.resource.bean.ContactBean;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class AddContactRequest {
 	

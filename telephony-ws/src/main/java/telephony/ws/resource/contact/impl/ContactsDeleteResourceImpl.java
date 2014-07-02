@@ -24,8 +24,6 @@ import telephony.ws.resource.contact.ContactsDeleteResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class ContactsDeleteResourceImpl extends TelephonyServerResource
 	implements ContactsDeleteResource {

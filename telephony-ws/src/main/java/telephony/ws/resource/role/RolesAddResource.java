@@ -10,8 +10,6 @@ import org.restlet.resource.Put;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface RolesAddResource {
 	

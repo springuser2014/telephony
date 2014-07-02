@@ -5,11 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,24 +19,17 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Model;
-import telephony.core.entity.jpa.Money;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
-import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-
-/**
- * @author Paweł Henek <pawelhenek@gmail.com>
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
 @TestExecutionListeners({

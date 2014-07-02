@@ -13,8 +13,6 @@ import telephony.ws.resource.user.UsersFetchResource;
 
 /**
  * Added some stupid comment.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class UsersFetchResourceImpl extends TelephonyServerResource 
 	implements UsersFetchResource {

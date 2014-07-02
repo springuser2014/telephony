@@ -25,7 +25,6 @@ import com.google.inject.persist.Transactional;
 
 /**
  * Deliveries management service.
- * @author Paweł Henek <pawelhenek@gmail.com>
  */
 public class DeliveryServiceImpl
     extends AbstractBasicService<Delivery> implements DeliveryService {

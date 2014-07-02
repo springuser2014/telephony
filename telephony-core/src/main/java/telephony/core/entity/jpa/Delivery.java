@@ -281,6 +281,4 @@ public class Delivery extends BaseEntity {
 				? contact == null 
 				: this.contact.equals(contact);
 	}
-
-
 }

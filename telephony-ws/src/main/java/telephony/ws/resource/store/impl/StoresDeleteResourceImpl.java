@@ -13,8 +13,6 @@ import telephony.ws.resource.store.StoresDeleteResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class StoresDeleteResourceImpl extends TelephonyServerResource implements
 		StoresDeleteResource {

@@ -8,8 +8,6 @@ import org.restlet.resource.Delete;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface RolesDeleteResource {
 	

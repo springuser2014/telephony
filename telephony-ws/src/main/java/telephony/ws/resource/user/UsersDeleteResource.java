@@ -4,8 +4,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public interface UsersDeleteResource {
 

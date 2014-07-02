@@ -20,8 +20,6 @@ import telephony.ws.resource.sale.SalesFetchResource;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class SalesFetchResourceImpl extends TelephonyServerResource 
 	implements SalesFetchResource {

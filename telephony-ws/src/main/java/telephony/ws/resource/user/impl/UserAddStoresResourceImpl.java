@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class UserAddStoresResourceImpl extends ServerResource {
 

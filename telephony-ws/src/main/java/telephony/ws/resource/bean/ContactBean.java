@@ -4,8 +4,6 @@ import telephony.core.entity.jpa.Contact;
 
 /**
  * asd.
- * @author Paweł Henek <pawelhenek@gmail.com>
- *
  */
 public class ContactBean {
 	
