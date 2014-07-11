@@ -18,8 +18,8 @@ import javax.persistence.Table;
 /**
  * asd.
  */
-@Table
-@Entity(name = "models")
+@Entity
+@Table(name = "models")
 public class Model extends BaseEntity {
 
 	@Id

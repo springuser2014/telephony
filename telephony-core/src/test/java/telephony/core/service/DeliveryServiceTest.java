@@ -71,43 +71,23 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	
 	private Model getNokia3310() {
 		
-		Producer p = new Producer();
-		p.setLabel("Nokia");
+		Model model = modelService.findByLabel("3310");
 		
-		Model m = new Model();
-		m.setLabel("3310");
-		
-		Collection<Model> models = new ArrayList<Model>();
-		models.add(m);
-		p.setModels(models);
-		m.setProducer(p);
-		
-		return m;
+		return model;
 	}
 	
-	private Model getSamsungGalaxy() {
+	private Model getIphone4S() {
 		
+		Model model = modelService.findByLabel("iphone 4s");
 		
-		
-		Producer p = new Producer();
-		p.setLabel("Samsung");
-		
-		Model m = new Model();
-		m.setLabel("Galaxy S 3");
-		
-		Collection<Model> models = new ArrayList<Model>();
-		models.add(m);
-		p.setModels(models);
-		m.setProducer(p);
-		
-		return m;
+		return model;
 	}
 
 	private Product getProductA() {
 		Product p = new Product();
 		p.setColor("zielony");
 		p.setImei("098760987609876");
-		p.setModel(getSamsungGalaxy());
+		p.setModel(getIphone4S());
 		
 		return p;
 	}
