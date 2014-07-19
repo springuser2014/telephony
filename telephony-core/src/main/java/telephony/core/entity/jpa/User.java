@@ -46,7 +46,7 @@ public class User extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionValidity;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
 		name = "user_stores",
         joinColumns = @JoinColumn(
@@ -79,6 +79,22 @@ public class User extends BaseEntity {
     }
 
     /**
+     * asd.
+     * @return a.
+     */
+    public Boolean getIsActive() {
+		return isActive;
+	}
+
+    /**
+	 * asd.
+     * @param isActive fo.
+     */
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	/**
      * asd.
      * @param sessionId asd.
      */

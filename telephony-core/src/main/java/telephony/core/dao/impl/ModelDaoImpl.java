@@ -26,38 +26,18 @@ public class ModelDaoImpl extends GenericDaoImpl<Model> implements ModelDao {
 	public Model findByLabel(String label) {
 		
         logger.debug("ModelDaoImpl.findByLabel starts");
-
-        String [] strs = label.split(" ");
         
-        String or = ""; 
+		String queryStr = " select m from Model m  where m.label like ?1 ";
         
-        {
-        	int i = 1;
-	        for (String s : strs) {
-	        	or += " m.label LIKE ?" + i;
-	        	
-	        	if (i != strs.length) {
-	        		or += " OR ";
-	        	}
-	        	
-	        	i++;
-	        }
-        }
-        
-		Query q =
-			getEntityManager().createQuery(
-        	  " select m from Model m "
-            + " where " + or);
+		logger.info("queryStr " + queryStr);
 		
-		int i = 1;
-		for (String s : strs) {
-			q.setParameter(i, s);
-			i++;
-		}
+		Query q = getEntityManager().createQuery(queryStr);
+		
+		q.setParameter(1, "%" + label + "%");
 		
 		Model result = (Model) q.getSingleResult();
 		
-        logger.debug(" found {} element", result);
+        logger.info(" found {} element", result);
 
 		return result;
 	}

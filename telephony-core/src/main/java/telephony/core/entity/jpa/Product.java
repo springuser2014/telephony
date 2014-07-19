@@ -2,7 +2,6 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +49,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "sale_id", nullable = true)
     private Sale sale;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id", nullable = false)
     private Model model;
 
@@ -71,7 +70,7 @@ public class Product extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")    
     private Collection<Pricing> pricings;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "product_files",
 		joinColumns = @JoinColumn(
@@ -161,6 +160,7 @@ public class Product extends BaseEntity {
 		}
         
         Delivery oldDelivery = this.delivery;
+        this.delivery = delivery;
         
         if (oldDelivery != null) {
 			oldDelivery.removeProduct(this);

@@ -51,8 +51,9 @@ public interface GenericDao<E extends BaseEntity> {
     /**
      * Saves (if not exists yet) or update entity in persistence layer. 
      * @param entity Entity to save or update.
+     * @return TODO
      */
-    void saveOrUpdate(E entity);
+    E saveOrUpdate(E entity);
 
     /**
      * Saves submitted list of entities.
@@ -63,8 +64,9 @@ public interface GenericDao<E extends BaseEntity> {
     /**
      * Saves (if not exists yet) or update entities in persistence layer.
      * @param entities List of entities to save.
+     * @return TODO
      */
-    void saveOrUpdate(List<E> entities);
+    List<E> saveOrUpdate(List<E> entities);
 
     /**
      * Removes entities with specified ids.

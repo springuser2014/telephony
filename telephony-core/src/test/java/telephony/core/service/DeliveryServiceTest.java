@@ -19,9 +19,11 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Model;
+import telephony.core.entity.jpa.Pricing;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
+import telephony.core.entity.jpa.Tax;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -38,6 +40,7 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 })
 @FlywayTest
 public class DeliveryServiceTest extends BaseCoreTest {
+	
 	
 	@Inject
 	private DeliveryService deliveryService;
@@ -65,6 +68,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p.setColor("niebieski");
 		p.setImei("123451234512345");
 		p.setModel(getNokia3310());
+		p.setPricings(new ArrayList<Pricing>());
+		p.setTaxes(new ArrayList<Tax>());
 		
 		return p;
 	}
@@ -88,6 +93,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p.setColor("zielony");
 		p.setImei("098760987609876");
 		p.setModel(getIphone4S());
+		p.setPricings(new ArrayList<Pricing>());
+		p.setTaxes(new ArrayList<Tax>());
 		
 		return p;
 	}
@@ -115,18 +122,11 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		products.add(getProductA());
 		products.add(getProductB());
 		
-		try {
-			// when  
-			deliveryService.addNewDelivery(
-					username, sessionId, 
-					newDelivery, products, 
-					store.getId(), contact.getId()
-			);
-			
-		} catch (Exception e) {
-			int i = 0; 
-			i = i + 1;
-		}
+		deliveryService.addNewDelivery(
+				username, sessionId, 
+				newDelivery, products, 
+				store.getId(), contact.getId()
+		);
 		deliveriesAfter = deliveryService.count();
 		productsAfter = productService.count();
 	

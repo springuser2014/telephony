@@ -1,5 +1,6 @@
 package telephony.core.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -71,16 +72,18 @@ public class DeliveryServiceImpl
 		
 		newDelivery.setContact(contact);
 		newDelivery.setStore(store);
-				
+		
+		newDelivery = deliveriesDao.saveOrUpdate(newDelivery);		
+		deliveriesDao.getEntityManager().flush();
 		
 		for (Product product : products) {
+			
 			product.setStore(store);
 			newDelivery.addProduct(product);
-			product.setDelivery(newDelivery);
-//			productsDao.save(product);
+			product.setDelivery(newDelivery);			
+			
+			productsDao.saveOrUpdate(product);		
 		}
-		
-		deliveriesDao.save(newDelivery);	
 		
         logger.debug("DeliveryServiceImpl.addNewDelivery ends");
     }

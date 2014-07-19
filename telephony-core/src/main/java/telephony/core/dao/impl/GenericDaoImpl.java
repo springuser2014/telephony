@@ -1,5 +1,6 @@
 package telephony.core.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -112,11 +113,11 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void saveOrUpdate(E entity) {
+    public E saveOrUpdate(E entity) {
         logger.info("saveOrUpdate stars ");
         logger.info("entity type : {} ", entityClass.getName());
 
-        getEntityManager().merge(entity);
+        return getEntityManager().merge(entity);
     }
 
     @Override
@@ -131,14 +132,17 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void saveOrUpdate(List<E> entities) {
+    public List<E> saveOrUpdate(List<E> entities) {
         logger.debug("saveOrUpdate starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
-
+        List<E> col = new ArrayList<E>();
+        
         for (E entity : entities) {
-            getEntityManager().merge(entity);
+            col.add(getEntityManager().merge(entity));
         }
+        
+        return col;
     }
     
     @Override

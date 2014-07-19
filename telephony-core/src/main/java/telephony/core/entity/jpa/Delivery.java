@@ -44,8 +44,7 @@ public class Delivery extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIn;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH } , 
-    		  fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
@@ -53,7 +52,7 @@ public class Delivery extends BaseEntity {
     @JoinColumn(name = "contact_id", nullable = false)
     private Contact contact;
    
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = { CascadeType.ALL } )
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Set<Product> products = new HashSet<Product>();
 
     /**

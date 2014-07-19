@@ -85,11 +85,11 @@ public class UserServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 
 		User user = new User();
-		user.setId(5L);
 		user.setEmail("any@mail.com");
 		user.setPassword("somePa$$word");
 		user.setSessionId(null);
 		user.setSessionValidity(null);
+		user.setIsActive(true);
 		
 		// when
 		userService.addUser(username, sessionId, user);

@@ -42,18 +42,12 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		String label = "iphone 4s";
 		
-		try {
 		// when
 		Model model = modelService.findByLabel(label);
 		
 		
 		// then
 		assertNotNull( model );
-		} catch (Exception e) {
-			int i = 0;
-			i = i + 1;
-			
-		}
 	}
 
 }

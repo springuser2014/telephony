@@ -39,14 +39,10 @@ public class Store extends BaseEntity {
     @Column(name = "label", nullable = false, length = 255)
     private String label;
     
-    @ManyToMany(
-		cascade = {CascadeType.MERGE }, 
-		mappedBy = "allowedShops")
+    @ManyToMany(mappedBy = "allowedShops")
     private Set<User> users = new HashSet<User>();
    
-    @ManyToMany(
-		cascade = {CascadeType.MERGE }, 
-		mappedBy = "store")
+    @ManyToMany(mappedBy = "store")
     private Set<Role> requiredRoles = new HashSet<Role>();
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")

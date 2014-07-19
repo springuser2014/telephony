@@ -2,7 +2,6 @@ package telephony.core.entity.jpa;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +37,7 @@ public class Model extends BaseEntity {
 	@Column(name = "label", nullable = false)
 	private String label;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "producer_id", nullable = false)
 	private Producer producer;
 	
