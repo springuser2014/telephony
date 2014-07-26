@@ -226,6 +226,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	/**
 	 * {@inheritDoc} 
 	 */
+	@Transactional
 	@Override
 	public Store findById(String username, String sessionId, long moveToStoreId) 
 			throws SessionServiceException {

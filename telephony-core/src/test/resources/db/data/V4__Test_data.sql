@@ -116,23 +116,23 @@ SELECT pg_catalog.setval('contacts_seq', 4, false);
 -- DELIVERIES
 
 insert into deliveries(id, label, created_at, date_in, created_by, store_id, contact_id) values (
-  1, 'nowy rok cieszyn 1', now(), now(), 1, 1, 1
+  1, 'nowy rok cieszyn 1', date '2005-01-01', date '2005-01-01', 1, 1, 1
 );
 
 insert into deliveries(id, label, created_at, date_in, created_by, store_id, contact_id) values (
-  2, 'nowy rok cieszyn 2', now(), now(), 1, 1, 2
+  2, 'nowy rok cieszyn 2', date '2011-01-01', date '2011-01-01', 1, 1, 2
 );
 
 insert into deliveries(id, label, created_at, date_in, created_by, store_id, contact_id) values (
-  3, 'nowy rok cieszyn 3', now(), now(), 1, 1, 2
+  3, 'nowy rok cieszyn 3', date '2012-07-01', date '2012-07-01', 1, 1, 2
 );
 
 insert into deliveries(id, label, created_at, date_in, created_by, store_id, contact_id) values (
-  4, 'nowy rok raciborz 1', now(), now(), 1, 2, 2
+  4, 'nowy rok raciborz 1', date '2013-07-01', date '2013-07-01', 1, 2, 2
 );
 
 insert into deliveries(id, label, created_at, date_in, created_by, store_id, contact_id) values (
-  5, 'nowy rok raciborz 2', now(), now(), 1, 2, 3
+  5, 'nowy rok raciborz 2', date '2014-01-01', date '2014-01-01', 1, 2, 3
 );
 
 SELECT pg_catalog.setval('deliveries_seq', 6, false);

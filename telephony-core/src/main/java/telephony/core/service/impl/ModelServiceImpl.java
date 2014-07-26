@@ -32,6 +32,7 @@ public class ModelServiceImpl extends AbstractBasicService<Model> implements Mod
 		return modelsDao.findByLabel(label);
 	}
 
+	@Transactional
 	@Override
 	public long count() {
 		// TODO Auto-generated method stub

@@ -3,6 +3,7 @@ package telephony.core.entity.jpa;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +48,7 @@ public class Tax extends BaseEntity {
     @Column(name = "rate")
     private Double rate;
     
-    @ManyToMany(mappedBy = "taxes", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "taxes", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
     private Collection<Product> products;
 
     /**

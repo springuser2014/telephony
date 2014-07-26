@@ -170,6 +170,9 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
         logger.debug("SaleServiceImpl.addNewSale ends");	
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Sale findByLabel(String username, String sessionId, String label) 

@@ -10,6 +10,7 @@ import telephony.core.entity.jpa.Store;
 import telephony.core.service.InformationService;
 
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 
 /**
@@ -31,6 +32,7 @@ public class InformationServiceImpl implements InformationService {
      * @param store asd.
      * @return asd.
      */
+    @Transactional
     @Override
     public final long getNumberOfDeliveries(final Store store) {
         logger.debug("InformationServiceImpl.getNumberOfDeliveries starts");
@@ -43,6 +45,7 @@ public class InformationServiceImpl implements InformationService {
      * @param store asd.
      * @return asd.
      */
+    @Transactional
     @Override
     public final long getNumberOfSales(final Store store) {
 

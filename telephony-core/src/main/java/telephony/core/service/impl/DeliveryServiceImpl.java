@@ -123,6 +123,7 @@ public class DeliveryServiceImpl
 	/**
      * {@inheritDoc}
      */
+	@Transactional
 	@Override
 	public void updateDelivery(String username, String sessionId, Delivery delvieryToUpdate) 
 			throws SessionServiceException,
@@ -141,6 +142,7 @@ public class DeliveryServiceImpl
     /**
      * {@inheritDoc}
      */
+	@Transactional
 	@Override
 	public void delete(String username, String sessionId, Delivery delvieryToDelete) 
 		throws SessionServiceException, DeliveryServiceException {
@@ -158,6 +160,7 @@ public class DeliveryServiceImpl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional
 	@Override
 	public Delivery findById(String username, String sessionId, Long deliveryId) 
 			throws SessionServiceException, DeliveryServiceException {

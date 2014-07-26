@@ -73,7 +73,13 @@ public interface GenericDao<E extends BaseEntity> {
      * @param ids List of ids entities to remove.
      */
     void removeByIds(List<Long> ids);
-
+    
+	/**
+	 * Removes an entity with given primary key id.
+	 * @param id Entity's primary key.
+	 */
+	void removeById(Long id);
+	
     /**
      * Removes indicated entity from persistence layer. 
      * @param entity to remove.
@@ -92,9 +98,4 @@ public interface GenericDao<E extends BaseEntity> {
 	 */
 	long count();
 
-	/**
-	 * Removes an entity with given primary key id.
-	 * @param id Entity's primary key.
-	 */
-	void removeById(Long id);
 }

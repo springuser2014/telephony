@@ -129,6 +129,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 * {@inheritDoc}
 	 * @throws SessionServiceException 
 	 */
+	@Transactional
 	@Override
 	public List<Product> fetchAllProducts(String username,
 			String sessionId, final Long storeId, final ProductStatus productStatus) 
@@ -254,6 +255,10 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return productsDao.findByStore(store);		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
 	@Override
 	public List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) 
 			throws SessionServiceException {

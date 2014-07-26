@@ -37,6 +37,9 @@ public class RoleServiceImpl
 		return rolesDao.count();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional
 	@Override
 	public List<Role> fetchAll(String username, String sessionId) 
@@ -51,6 +54,9 @@ public class RoleServiceImpl
 		return rolesDao.find();		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional
 	@Override
 	public void add(String username, String sessionId, Role newrole)
@@ -67,6 +73,9 @@ public class RoleServiceImpl
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional
 	@Override
 	public void delete(String username, String sessionId, Role roleToDelete)
@@ -82,6 +91,9 @@ public class RoleServiceImpl
 		rolesDao.remove(roleToDelete);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Role fetchByLabel(String username, String sessionId, String label) 

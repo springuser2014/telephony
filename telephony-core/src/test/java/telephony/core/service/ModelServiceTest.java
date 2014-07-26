@@ -19,6 +19,9 @@ import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 
+/**
+ * asd.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
 @TestExecutionListeners({
@@ -31,9 +34,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	@Inject
 	private ModelService modelService;
 	
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+	private Logger logger = LoggerFactory.getLogger(getClass());	
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -43,8 +44,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		String label = "iphone 4s";
 		
 		// when
-		Model model = modelService.findByLabel(label);
-		
+		Model model = modelService.findByLabel(label);		
 		
 		// then
 		assertNotNull( model );
