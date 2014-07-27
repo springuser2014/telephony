@@ -208,8 +208,7 @@ public class TaxServiceTest extends BaseCoreTest {
 		long after = taxService.count();
 		
 		// then
-		assertEquals(before - after, 1);
-		
+		assertEquals(before - after, 1);		
 	}
 
 

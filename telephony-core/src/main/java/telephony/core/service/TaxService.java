@@ -25,6 +25,13 @@ public interface TaxService extends BasicService<Tax> {
 	
 	/**
 	 * asd.
+	 * @param ids a.
+	 * @return a.
+	 */
+	Collection<Tax> findByIds(Collection<Long> ids);
+	
+	/**
+	 * asd.
 	 * @param from a.
 	 * @param to a. 
 	 * @return asd.

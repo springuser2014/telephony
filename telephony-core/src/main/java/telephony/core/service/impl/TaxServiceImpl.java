@@ -84,4 +84,12 @@ public class TaxServiceImpl extends AbstractBasicService<Tax> implements TaxServ
 		taxDao.removeById(taxToDelete.getId());
 	}
 
+	@Override
+	public Collection<Tax> findByIds(Collection<Long> ids) {
+		logger.debug("TaxServiceImpl.findByIds starts");
+		logger.debug("params : [ ids : {} ]", ids);
+
+		return taxDao.findByIds(ids);
+	}
+
 }

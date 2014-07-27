@@ -1,6 +1,7 @@
 package telephony.core.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -88,7 +89,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
 
 	@Override
     @SuppressWarnings("unchecked")
-    public List<E> findByIds(List<Long> ids) {
+    public Collection<E> findByIds(Collection<Long> ids) {
         logger.debug("findByIds starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", ids.size());

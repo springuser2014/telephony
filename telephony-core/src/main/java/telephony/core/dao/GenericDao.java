@@ -1,5 +1,6 @@
 package telephony.core.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -39,7 +40,7 @@ public interface GenericDao<E extends BaseEntity> {
      * @param ids Set of entities Ids. 
      * @return Set of found entities.
      */
-    List<E> findByIds(List<Long> ids);
+    Collection<E> findByIds(Collection<Long> ids);
 
 
     /**
