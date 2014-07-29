@@ -1,7 +1,8 @@
 package telephony.core.service;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 import telephony.core.entity.jpa.Tax;
+import telephony.core.entity.jpa.TestEntity;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -32,41 +34,110 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 public class AbstractGenericServiceTest extends BaseCoreTest {
 	
 	@Inject
-	private GenericService<Tax> genericService;
-	
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private GenericService<TestEntity> genericService;
 	
 	/*
-	 * TODO write more tests  for AbstractGenericService
+	 * TODO 1 write more tests  for AbstractGenericService
+	 * TODO 2 prepare tests with new TestEntity (not the tax entity)
 	 */
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testSave() {
+		
+		// given
+		
+		long nbOfEntitiesBefore = genericService.count();
+		TestEntity entity = new TestEntity();
+		entity.setLabel("aaa");
+		entity.setReportedDate(new Date());
+		
+		// when		
+		genericService.save(entity);
+		long nbOfEntitiesAfter = genericService.count();
+		
+		// then
+		assertEquals(nbOfEntitiesAfter - nbOfEntitiesBefore, 1);		
+	}
+	
+//	@Test
+//	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testFindById() {
+		
+		// given
+		long id = 2;
+		
+		// when
+		TestEntity tax = (TestEntity) genericService.findById(id);
+		
+		// then
+		Date from = new DateTime()
+					.withDate(2000, 1, 1)
+					.withTime(0, 0, 0, 0)
+					.toDate();
+		Date to = new DateTime()
+					.withDate(2010, 1, 1)
+					.withTime(0, 0, 0, 0)
+					.toDate();
+		
+		assertNotNull(tax);
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testFindByIds() {
+		
+	}
+	
+//	@Test
+//	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testCount() {
 		
 		// given
-		Date from = new DateTime()
-					.withDate(2002, 01, 01)
-					.withTime(0, 0, 0, 0)
-					.toDate();
 		
-		Date to = new DateTime()
-					.withDate(2012, 01, 01)
-					.withTime(0, 0, 0, 0)
-					.toDate();
-		
-		long taxesBefore = genericService.count();
-		Tax tax = new Tax();
-		tax.setRate(17.0);
-		tax.setFrom(from);
-		tax.setTo(to);
-		
-		
-		// when
-		long taxesAfter = genericService.count();
-		genericService.save(tax);
+		// when		
+		long taxesNumber = genericService.count();
 		
 		// then
-		assertEquals(taxesAfter - taxesBefore, 1);		
+		assertEquals(taxesNumber, 7);		
 	}
+
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testUpdate() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testBatchUpdate() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testRemove() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testBatchRemove() {
+		
+	}	
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testRemovById() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void testBatchRemoveByIds() {
+		
+	}
+	
 }

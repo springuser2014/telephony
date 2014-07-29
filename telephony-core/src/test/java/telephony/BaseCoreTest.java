@@ -15,9 +15,9 @@ public class BaseCoreTest {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(BaseCoreTest.class);
 
-    private static Injector injector;
+    protected static Injector injector;
     
-    private static PersistService persistService;
+    protected static PersistService persistService;
     
 	/**
 	 * Initialize Guice-managed tests classes members.

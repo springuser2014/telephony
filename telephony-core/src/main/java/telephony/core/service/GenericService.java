@@ -1,7 +1,6 @@
 package telephony.core.service;
 
 import java.util.Collection;
-
 import telephony.core.entity.jpa.BaseEntity;
 
 /**
@@ -35,7 +34,7 @@ extends BasicService<T> {
 	 * asd.
 	 * @param entities a.
 	 */
-	void saveBatch(Collection<T> entities);
+	void batchSave(Collection<T> entities);
 	
 	/**
 	 * asd.
@@ -61,7 +60,7 @@ extends BasicService<T> {
 	 * asd.
 	 * @param entities a.
 	 */
-	void removeBatch(Collection<T> entities);
+	void batchRemove(Collection<T> entities);
 	
 	/**
 	 * asd.
@@ -73,8 +72,5 @@ extends BasicService<T> {
 	 * ad.
 	 * @param ids asd.
 	 */
-	void removeBatchByIds(Collection<Long> ids);
-	
-	
-
+	void batchRemoveByIds(Collection<Long> ids);
 }

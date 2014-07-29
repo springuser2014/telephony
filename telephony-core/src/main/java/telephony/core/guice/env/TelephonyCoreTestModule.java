@@ -1,6 +1,9 @@
 package telephony.core.guice.env;
 
+import telephony.core.dao.GenericDao;
+import telephony.core.dao.impl.GenericDaoImpl;
 import telephony.core.entity.jpa.Tax;
+import telephony.core.entity.jpa.TestEntity;
 import telephony.core.guice.TelephonyCoreServicesModule;
 import telephony.core.service.GenericService;
 import telephony.core.service.impl.AbstractBasicService;
@@ -8,6 +11,7 @@ import telephony.core.service.impl.AbstractGenericService;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
@@ -27,10 +31,14 @@ public class TelephonyCoreTestModule extends AbstractModule {
 		.annotatedWith(Names.named("sessionValidity"))
 		.toInstance(SESSION_VALIDITY);
 		
-		bind(GenericService.class)
+		bind(new TypeLiteral<GenericService<TestEntity>>() { })
 		.toInstance(
-			new AbstractGenericService<Tax>() {
-			}
+			new AbstractGenericService<TestEntity>() { }
+		);
+
+		bind(new TypeLiteral<GenericDao<TestEntity>>() { })
+		.toInstance(
+			new GenericDaoImpl<TestEntity>(TestEntity.class) { }
 		);
 				
 		install(new TelephonyCoreServicesModule());

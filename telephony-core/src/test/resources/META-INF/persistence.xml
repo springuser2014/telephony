@@ -23,6 +23,8 @@
         <class>telephony.core.entity.jpa.Producer</class>
         
         <class>telephony.core.entity.jpa.File</class>
+        
+        <class>telephony.core.entity.jpa.TestEntity</class>
           
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

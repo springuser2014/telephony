@@ -109,7 +109,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     public void save(E entity) {
         logger.debug("save starts ");
         logger.debug("entity type : {} ", entityClass.getName());
-
+        
         getEntityManager().persist(entity);
     }
 

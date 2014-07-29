@@ -16,7 +16,9 @@ import telephony.core.service.TaxService;
 /**
  * asd.
  */
-public class TaxServiceImpl extends AbstractBasicService<Tax> implements TaxService {
+public class TaxServiceImpl 
+extends AbstractBasicService<Tax> 
+implements TaxService {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -57,21 +59,25 @@ public class TaxServiceImpl extends AbstractBasicService<Tax> implements TaxServ
 	@Transactional
 	@Override
 	public Collection<Tax> update(Collection<Tax> taxesToUpdate) {
-		// TODO Auto-generated method stub
+		logger.debug("TaxServiceImpl.update starts");
+		logger.debug("params : [ numberOfElements : {} ] ", taxesToUpdate.size());
+		
 		return null;
 	}
 
 	@Transactional
 	@Override
 	public void delete(Collection<Tax> taxesToDelete) {
-		// TODO Auto-generated method stub
+		logger.debug("TaxServiceImpl.delete starts");
+		logger.debug("params : [ numberOfElements : {} ] ", taxesToDelete.size());
 		
 	}
 
 	@Override
 	public Tax update(Tax tax) {
 		logger.debug("TaxServiceImpl.update starts");
-		
+		logger.debug("params : [ tax : {} ] ", tax);
+				
 		return taxDao.saveOrUpdate(tax);
 	}
 
@@ -79,7 +85,7 @@ public class TaxServiceImpl extends AbstractBasicService<Tax> implements TaxServ
 	@Override
 	public void delete(Tax taxToDelete) {
 		logger.debug("TaxServiceImpl.delete starts");
-		logger.debug("params : [ taxId : {} ]", taxToDelete.getId());
+		logger.debug("params : [ tax : {} ]", taxToDelete);
 		
 		taxDao.removeById(taxToDelete.getId());
 	}
