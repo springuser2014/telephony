@@ -37,7 +37,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	private GenericService<TestEntity> genericService;
 	
 	/*
-	 * TODO 1 write more tests  for AbstractGenericService
+	 * TODO 1 write more tests for AbstractGenericService
 	 * TODO 2 prepare tests with new TestEntity (not the tax entity)
 	 */
 
@@ -60,8 +60,8 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 		assertEquals(nbOfEntitiesAfter - nbOfEntitiesBefore, 1);		
 	}
 	
-//	@Test
-//	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testFindById() {
 		
 		// given
@@ -71,16 +71,16 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 		TestEntity tax = (TestEntity) genericService.findById(id);
 		
 		// then
-		Date from = new DateTime()
+		Date date = new DateTime()
 					.withDate(2000, 1, 1)
 					.withTime(0, 0, 0, 0)
 					.toDate();
-		Date to = new DateTime()
-					.withDate(2010, 1, 1)
-					.withTime(0, 0, 0, 0)
-					.toDate();
-		
+				
 		assertNotNull(tax);
+		assertTrue( tax.getId() == 2 );
+		assertEquals( tax.getLabel() , "drugi" );
+		assertEquals( tax.getReportedDate().getTime(), date.getTime());
+		
 		
 	}
 	
@@ -90,8 +90,8 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 		
 	}
 	
-//	@Test
-//	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testCount() {
 		
 		// given
@@ -100,7 +100,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 		long taxesNumber = genericService.count();
 		
 		// then
-		assertEquals(taxesNumber, 7);		
+		assertEquals(taxesNumber, 3);		
 	}
 
 	

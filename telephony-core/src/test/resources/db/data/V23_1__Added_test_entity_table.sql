@@ -37,3 +37,14 @@ ALTER TABLE  test_entity_table_seq OWNER TO postgres;
 
 ALTER TABLE ONLY  test_entity_table
     ADD CONSTRAINT test_entity_table_pkey PRIMARY KEY (id);
+
+INSERT INTO test_entity_table VALUES 
+( nextval ('public.test_entity_table_seq'),'pierwszy', timestamp '2000-01-01 00:00:00' );
+
+
+INSERT INTO test_entity_table VALUES 
+( nextval ('public.test_entity_table_seq'),'drugi', timestamp '2000-01-01 00:00:00' );
+
+
+INSERT INTO test_entity_table VALUES 
+( nextval ('public.test_entity_table_seq'),'trzeci', timestamp '2000-01-01 00:00:00' );
