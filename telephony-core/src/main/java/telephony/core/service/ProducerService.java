@@ -13,4 +13,11 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @return a.
 	 */
 	Producer findByLabel(String label);
+
+	/**
+	 * asd.
+	 * @param id
+	 * @return a.
+	 */
+	Producer findById(long id);
 }

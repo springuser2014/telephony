@@ -7,4 +7,11 @@ import telephony.core.entity.jpa.Producer;
  */
 public interface ProducerDao extends GenericDao<Producer> {
 
+	/**
+	 * asd.
+	 * @param label a.
+	 * @return d.
+	 */
+	Producer findByLabel(String label);
+
 }

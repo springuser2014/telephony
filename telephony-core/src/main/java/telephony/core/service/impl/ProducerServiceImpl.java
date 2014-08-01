@@ -1,26 +1,46 @@
 package telephony.core.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
+import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.service.ProducerService;
 
 /**
  * asd.
  */
-public class ProducerServiceImpl extends AbstractBasicService<Producer> implements ProducerService {
+public class ProducerServiceImpl 
+extends AbstractBasicService<Producer> 
+implements ProducerService {
+	
+	@Inject
+	private ProducerDao producerDao;
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
+	@Transactional
 	@Override
 	public Producer findByLabel(String label) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return producerDao.findByLabel(label);
 	}
 
 	@Transactional
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return producerDao.count();
+	}
+
+	@Transactional
+	@Override
+	public Producer findById(long id) {
+		
+		return producerDao.findById(id);
 	}
 
 }

@@ -1,11 +1,14 @@
 package telephony.core.service;
 
 import java.util.Collection;
+
+import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
 
 /**
  * asd.
  * @param <T> asd.
+ * @param <D> foo.
  */
 public interface GenericService<T extends BaseEntity> 
 extends BasicService<T> {

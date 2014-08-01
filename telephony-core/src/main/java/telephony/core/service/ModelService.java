@@ -14,4 +14,11 @@ public interface ModelService extends BasicService<Model> {
 	 */
 	Model findByLabel(String label);
 
+	/**
+	 * asd.
+	 * @param id a.
+	 * @return d.
+	 */
+	Model findById(long id);
+
 }

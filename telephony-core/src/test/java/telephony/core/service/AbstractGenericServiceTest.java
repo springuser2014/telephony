@@ -77,9 +77,9 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 					.toDate();
 				
 		assertNotNull(tax);
-		assertTrue( tax.getId() == 2 );
-		assertEquals( tax.getLabel() , "drugi" );
-		assertEquals( tax.getReportedDate().getTime(), date.getTime());
+		assertTrue(tax.getId() == 2);
+		assertEquals(tax.getLabel(), "drugi");
+		assertEquals(tax.getReportedDate().getTime(), date.getTime());
 		
 		
 	}

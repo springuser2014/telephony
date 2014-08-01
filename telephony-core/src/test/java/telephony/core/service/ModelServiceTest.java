@@ -1,11 +1,10 @@
 package telephony.core.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,6 +12,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 import telephony.core.entity.jpa.Model;
+import telephony.core.entity.jpa.Producer;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -33,12 +33,10 @@ public class ModelServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private ModelService modelService;
-	
-	private Logger logger = LoggerFactory.getLogger(getClass());	
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void finding_model_by_label() {
+	public void findingModelByLabel() {
 		
 		// given
 		String label = "iphone 4s";
@@ -47,7 +45,36 @@ public class ModelServiceTest extends BaseCoreTest {
 		Model model = modelService.findByLabel(label);		
 		
 		// then
-		assertNotNull( model );
+		assertNotNull(model);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findingById() {
+		
+		// given
+		long id = 1;
+		String expected = "6610s";
+		
+		// when
+		Model model = modelService.findById(id);
+		
+		// then
+		assertNotNull(model);
+		assertEquals(model.getLabel(), expected);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void countingModels() {
+		
+		// given
+		
+		// when
+		long count = modelService.count();		
+		
+		// then
+		assertEquals(count, 6);
 	}
 
 }

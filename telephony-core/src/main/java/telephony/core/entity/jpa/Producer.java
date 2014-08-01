@@ -14,8 +14,9 @@ import javax.persistence.Table;
 /**
  * ads.
  */
-@Table
-@Entity(name = "producers")
+
+@Entity
+@Table(name = "producers")
 public class Producer extends BaseEntity {
 
 	@Id
