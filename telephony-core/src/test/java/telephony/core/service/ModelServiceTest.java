@@ -160,7 +160,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		modelService.removeById(id1);
 		
 		// then
-		// exception should raise
+		// exception should arise
 	}
 	
 	@Test
@@ -210,6 +210,6 @@ public class ModelServiceTest extends BaseCoreTest {
 		modelService.removeById(ids);
 		
 		// then
-		// exception should raise
+		// exception should arise
 	}
 }
