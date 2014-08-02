@@ -122,7 +122,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void save(List<E> entities) {
+    public void save(Collection<E> entities) {
         logger.debug("save stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
@@ -133,7 +133,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public List<E> saveOrUpdate(List<E> entities) {
+    public List<E> saveOrUpdate(Collection<E> entities) {
         logger.debug("saveOrUpdate starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", entities.size());
@@ -160,7 +160,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
+    public void removeByIds(Collection<Long> ids) {
         logger.debug("removeByIds stars ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of params : {} ", ids.size());

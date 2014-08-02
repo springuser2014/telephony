@@ -1,6 +1,6 @@
 package telephony.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,12 +9,11 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.entity.jpa.Producer;
-
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+
+import telephony.BaseCoreTest;
 
 /**
  * asd.
@@ -26,10 +25,10 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
     FlywayDBUnitTestExecutionListener.class 
 })
 @FlywayTest
-public class ProducerServiceTest extends BaseCoreTest {
+public class PricingServiceTest extends BaseCoreTest {
 	
 	@Inject
-	private ProducerService producerService;
+	private PricingService pricingService;
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -37,41 +36,29 @@ public class ProducerServiceTest extends BaseCoreTest {
 		
 		// given
 		
-		// when
-		long count = producerService.count();
+		// when 
+		long pricingsOfNumber = pricingService.count();
 		
 		// then
-		assertEquals(count, 2);
+		assertEquals(pricingsOfNumber, 0);		
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingProducerByLabel() {
+	public void findByDateRange() {
 		
-		// given
-		String label = "nokia";
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findByRateRange() {
 		
-		// when
-		Producer producer = producerService.findByLabel(label);
-		
-		// then
-		assertNotNull(producer);
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void findingById() {
 		
-		// given
-		long id = 1;
-		String expected = "nokia";
-		
-		// when
-		Producer producer = producerService.findById(id);
-		
-		// then
-		assertNotNull(producer);
-		assertEquals(producer.getLabel(), expected);
 	}
 	
 	@Test
@@ -115,6 +102,4 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 		
 	}
-
-		
 }

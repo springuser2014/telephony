@@ -60,20 +60,20 @@ public interface GenericDao<E extends BaseEntity> {
      * Saves submitted list of entities.
      * @param entities List of entities to save. 
      */
-    void save(List<E> entities);
+    void save(Collection<E> entities);
 
     /**
      * Saves (if not exists yet) or update entities in persistence layer.
      * @param entities List of entities to save.
      * @return TODO
      */
-    List<E> saveOrUpdate(List<E> entities);
+    List<E> saveOrUpdate(Collection<E> entities);
 
     /**
      * Removes entities with specified ids.
      * @param ids List of ids entities to remove.
      */
-    void removeByIds(List<Long> ids);
+    void removeByIds(Collection<Long> ids);
     
 	/**
 	 * Removes an entity with given primary key id.

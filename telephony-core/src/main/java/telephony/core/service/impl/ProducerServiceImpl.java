@@ -16,11 +16,11 @@ import telephony.core.service.ProducerService;
 public class ProducerServiceImpl 
 extends AbstractBasicService<Producer> 
 implements ProducerService {
+
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
 	private ProducerDao producerDao;
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Transactional
 	@Override

@@ -1,5 +1,7 @@
 package telephony.core.dao;
 
+import java.util.Collection;
+
 import telephony.core.entity.jpa.Model;
 
 /**
@@ -12,7 +14,6 @@ public interface ModelDao extends GenericDao<Model> {
 	 * @param label a.
 	 * @return a.
 	 */
-	Model findByLabel(String label);
-	
+	Model findByLabel(String label);	
 
 }

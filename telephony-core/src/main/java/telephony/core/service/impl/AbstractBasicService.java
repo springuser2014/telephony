@@ -2,6 +2,9 @@ package telephony.core.service.impl;
 
 import javax.persistence.EntityManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.BasicService;
 
@@ -14,6 +17,8 @@ import com.google.inject.persist.Transactional;
  * @param <T> Basic entities class type.
  */
 public abstract class AbstractBasicService<T extends BaseEntity> implements BasicService<T> {
+	
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
     private Provider<EntityManager> entityManagerProvider;

@@ -1,5 +1,8 @@
 package telephony.core.service.impl;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +23,47 @@ implements ModelService {
     @Inject
     private ModelDao modelsDao;
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());	
+	
+	@Override
+	@Transactional
+	public Collection<Model> update(Collection<Model> coll) {
+
+		logger.debug("ModelServiceImpl.update starts");        
+		logger.debug("params : [ models: {} ]", coll.size());
+		
+		return modelsDao.saveOrUpdate(coll);	
+	}
+
+	@Override
+	@Transactional
+	public void removeById(Long id) {
+
+		logger.debug("ModelServiceImpl.remove starts");        
+		logger.debug("params : [ id: {} ]", id);
+		
+		modelsDao.removeById(id);		
+	}
+	
+	@Override
+	@Transactional
+	public void removeById(Collection<Long> ids) {
+
+		logger.debug("ModelServiceImpl.remove starts");        
+		logger.debug("params : [ ids: {} ]", ids.size());
+		
+		modelsDao.removeByIds(ids);		
+	}
+
+	@Transactional
+	@Override
+	public Model update(Model model) {
+	
+		logger.debug("ModelServiceImpl.update starts");        
+		logger.debug("params : [ model: {} ]", model);
+		
+		return modelsDao.saveOrUpdate(model);	
+	}	
 	
 	@Override
 	@Transactional
@@ -31,9 +74,9 @@ implements ModelService {
 
 		return modelsDao.findByLabel(label);
 	}
-
-	@Transactional
+	
 	@Override
+	@Transactional
 	public long count() {
 		return modelsDao.count();
 	}
@@ -47,5 +90,12 @@ implements ModelService {
 		return modelsDao.findById(id);
 	}
 	
+	@Override
+	@Transactional
+	public Collection<Model> findByIds(List<Long> ids) {
+		logger.debug("ModelServiceImpl.findByIds starts");        
+		logger.debug("params : [ ids: {} ]", ids.size());
 
+		return modelsDao.findByIds(ids);
+	}
 }

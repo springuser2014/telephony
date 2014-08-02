@@ -14,7 +14,7 @@ public interface TaxDao extends GenericDao<Tax> {
 	 * asd.
 	 * @param from a.
 	 * @param to ads.
-	 * @returna a.
+	 * @return a.
 	 */
 	Collection<Tax> findInDateRange(Date from, Date to);
 

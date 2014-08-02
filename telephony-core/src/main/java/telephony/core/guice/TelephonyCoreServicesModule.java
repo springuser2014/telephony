@@ -5,6 +5,7 @@ import telephony.core.dao.DeliveriesDao;
 import telephony.core.dao.FileDao;
 import telephony.core.dao.InformationDao;
 import telephony.core.dao.ModelDao;
+import telephony.core.dao.PricingsDao;
 import telephony.core.dao.ProducerDao;
 import telephony.core.dao.ProductComplaintDao;
 import telephony.core.dao.ProductsDao;
@@ -19,6 +20,7 @@ import telephony.core.dao.impl.DeliveriesDaoImpl;
 import telephony.core.dao.impl.FileDaoImpl;
 import telephony.core.dao.impl.InformationDaoImpl;
 import telephony.core.dao.impl.ModelDaoImpl;
+import telephony.core.dao.impl.PricingsDaoImpl;
 import telephony.core.dao.impl.ProducerDaoImpl;
 import telephony.core.dao.impl.ProductComplaintDaoImpl;
 import telephony.core.dao.impl.ProductsDaoImpl;
@@ -33,6 +35,7 @@ import telephony.core.service.DeliveryService;
 import telephony.core.service.FileService;
 import telephony.core.service.InformationService;
 import telephony.core.service.ModelService;
+import telephony.core.service.PricingService;
 import telephony.core.service.ProducerService;
 import telephony.core.service.ProductComplaintService;
 import telephony.core.service.ProductComplaintServiceImpl;
@@ -49,6 +52,7 @@ import telephony.core.service.impl.DeliveryServiceImpl;
 import telephony.core.service.impl.FileServiceImpl;
 import telephony.core.service.impl.InformationServiceImpl;
 import telephony.core.service.impl.ModelServiceImpl;
+import telephony.core.service.impl.PricingServiceImpl;
 import telephony.core.service.impl.ProducerServiceImpl;
 import telephony.core.service.impl.ProductServiceImpl;
 import telephony.core.service.impl.RoleServiceImpl;
@@ -90,6 +94,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(TaxDao.class).to(TaxDaoImpl.class);
         bind(SaleComplaintDao.class).to(SaleComplaintDaoImpl.class);
         bind(ProductComplaintDao.class).to(ProductComplaintDaoImpl.class);
+        bind(PricingsDao.class).to(PricingsDaoImpl.class);
         
 
         // binding service layer objects
@@ -109,7 +114,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(TaxService.class).to(TaxServiceImpl.class);
         bind(SaleComplaintService.class).to(SaleComplaintServiceImpl.class);
         bind(ProductComplaintService.class).to(ProductComplaintServiceImpl.class);
-        
+        bind(PricingService.class).to(PricingServiceImpl.class);
         
         // util classses
 

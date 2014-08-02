@@ -231,4 +231,53 @@ public class ProductServiceTest extends BaseCoreTest {
 		assertTrue("should fetch product with given IMEI", 
 				products != null && products.get(0).getImei().contains("123456789000001")); 
 	}	
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findingById() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findingByIds() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void update() {
+		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void updateCollection() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void remove() {
+		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void removeCollection() {
+		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void removeById() {
+		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void removeCollectionById() {
+		
+	}
+
 }

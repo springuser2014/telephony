@@ -11,7 +11,9 @@ import telephony.core.entity.jpa.Model;
 /**
  * asd.
  */
-public class ModelDaoImpl extends GenericDaoImpl<Model> implements ModelDao {
+public class ModelDaoImpl 
+extends GenericDaoImpl<Model> 
+implements ModelDao {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -41,5 +43,4 @@ public class ModelDaoImpl extends GenericDaoImpl<Model> implements ModelDao {
 
 		return result;
 	}
-
 }
