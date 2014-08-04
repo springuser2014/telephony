@@ -1,5 +1,8 @@
 package telephony.core.service.impl;
 
+import java.util.Collection;
+import java.util.Date;
+
 import telephony.core.dao.PricingsDao;
 import telephony.core.entity.jpa.Pricing;
 import telephony.core.service.PricingService;
@@ -19,8 +22,18 @@ implements PricingService {
 	@Override
 	public long count() {
 		
-		// TODO Auto-generated method stub
-		return 0;
+		logger.debug("PricingServiceImpl.count starts");
+
+		return pricingsDao.count();
+	}
+
+	@Override
+	public Collection<Pricing> findByDateRange(Date from, Date to) {
+
+		logger.debug("PricingServiceImpl.findByDateRange starts");        
+		logger.debug("params : [ from: {}, to : {} ]", from, to);
+
+		return pricingsDao.findByDateRange(from, to);
 	}
 
 }

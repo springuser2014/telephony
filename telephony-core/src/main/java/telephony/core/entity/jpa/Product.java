@@ -2,7 +2,10 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -44,6 +47,9 @@ public class Product extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_id", nullable = false)
     private Delivery delivery;
+    
+    @Column(name = "price_in", precision = 2)
+    private Double priceIn;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sale_id", nullable = true)
@@ -336,5 +342,21 @@ public class Product extends BaseEntity {
 	 */
 	public void setPricings(Collection<Pricing> pricings) {
 		this.pricings = pricings;
+	}
+
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public Double getPriceIn() {
+		return priceIn;
+	}
+
+	/**
+	 * ads.
+	 * @param priceIn a.
+	 */
+	public void setPriceIn(Double priceIn) {
+		this.priceIn = priceIn;
 	}
 }

@@ -43,8 +43,8 @@ public class TaxDaoImpl extends GenericDaoImpl<Tax> implements TaxDao {
         	
         	List<Tax> col = (List<Tax>) getEntityManager()
 	            .createQuery("select t from Tax t where (t.from >= :from and t.to < :to) " +
-	            		"or (to.from IS NULL and t.to < :to) " +
-	            		"or (to.from >= :from and t.to IS NULL) ")
+	            		"or (t.from IS NULL and t.to < :to) " +
+	            		"or (t.from >= :from and t.to IS NULL) ")
 	            .setParameter("from", from)
 	            .setParameter("to", to)
 	            .getResultList();

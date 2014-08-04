@@ -17,7 +17,6 @@ public class Money implements Serializable {
     @Column(name = "money_value")
     private Long value;
 
-
     /**
      * Initialize - 0 zł.
      */

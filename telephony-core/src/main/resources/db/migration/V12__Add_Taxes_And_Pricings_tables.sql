@@ -1,8 +1,7 @@
 
-
 CREATE TABLE taxes (
 	id bigint NOT NULL,
-	rate NUMERIC(2) NOT NULL,
+	rate float8 NOT NULL,
 	from_date timestamp without time zone NOT NULL,
 	to_date timestamp without time zone NOT NULL
 );
@@ -10,7 +9,7 @@ CREATE TABLE taxes (
 CREATE TABLE pricings (
 	id bigint NOT NULL,
 	product_id bigint NOT NULL,
-	rate NUMERIC(2) NOT NULL,
+	rate float8 NOT NULL,
 	from_date timestamp without time zone NOT NULL,
 	to_date timestamp without time zone NOT NULL
 );

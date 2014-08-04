@@ -95,7 +95,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		long count = modelService.count();		
 		
 		// then
-		assertEquals(count, 6);
+		assertEquals(count, 8);
 	}
 		
 	@Test

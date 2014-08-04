@@ -63,6 +63,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	@Inject
 	private ModelService modelService;
 	
+	// TODO : move to TestDataBuilder
 	private Product getProductB() {
 		Product p = new Product();
 		p.setColor("niebieski");
@@ -70,10 +71,12 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p.setModel(getNokia3310());
 		p.setPricings(new ArrayList<Pricing>());
 		p.setTaxes(new ArrayList<Tax>());
+		p.setPriceIn(100.0);
 		
 		return p;
 	}
 	
+	// TODO : move to TestDataBuilder
 	private Model getNokia3310() {
 		
 		Model model = modelService.findByLabel("3310");
@@ -81,6 +84,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		return model;
 	}
 	
+	// TODO : move to TestDataBuilder
 	private Model getIphone4S() {
 		
 		Model model = modelService.findByLabel("iphone 4s");
@@ -88,6 +92,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		return model;
 	}
 
+	// TODO : move to TestDataBuilder
 	private Product getProductA() {
 		Product p = new Product();
 		p.setColor("zielony");
@@ -95,6 +100,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p.setModel(getIphone4S());
 		p.setPricings(new ArrayList<Pricing>());
 		p.setTaxes(new ArrayList<Tax>());
+		p.setPriceIn(110.0);
 		
 		return p;
 	}

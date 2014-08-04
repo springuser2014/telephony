@@ -31,7 +31,7 @@ implements ModelDao {
         
 		String queryStr = " select m from Model m  where m.label like ?1 ";
         
-		logger.info("queryStr " + queryStr);
+		logger.debug("queryStr " + queryStr);
 		
 		Query q = getEntityManager().createQuery(queryStr);
 		

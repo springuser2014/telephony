@@ -41,7 +41,7 @@ public class ProductServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testingFindingProductsByStore() throws SessionServiceException {
+	public void findingProductsByStore() throws SessionServiceException {
 		
 		// given
 		String username = TestData.USER1_NAME;
@@ -76,22 +76,23 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void fetchingAllProducers() {
+	public void fetchingAllProducersInUse() {
 		
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		// when
-		List<String> lst = productService.fetchAllProducers(username, sessionId);
+		List<String> lst = productService.fetchAllProducersInUse(username, sessionId);
 		
 		List<String> expected = new ArrayList<String>();
 		expected.add("apple");
 		expected.add("nokia");
 		
 		// then
-		assertTrue("should contains 2 products", lst.size() == expected.size());
-		assertTrue("exactly those 2 products", lst.containsAll(expected));
+		assertEquals("should contains 2 ", new Integer(2), new Integer(lst.size()));
+		assertTrue("should contains 2 producers in use", lst.size() == expected.size());
+		assertTrue("exactly those 2 producers in use", lst.containsAll(expected));
 		
 	}
 	
@@ -235,6 +236,14 @@ public class ProductServiceTest extends BaseCoreTest {
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void findingById() {
+		
+		// given
+		long id = 1;
+		Product product = productService.findById(id);
+		
+		// when
+		
+		// then
 		
 	}
 	

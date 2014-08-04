@@ -30,7 +30,7 @@ public interface ProductService extends BasicService<Product> {
      *
      * @return asd.
      */
-    List<String> fetchAllProducers(String username, String sessionId);
+    List<String> fetchAllProducersInUse(String username, String sessionId);
 
     /**
      * asd.
@@ -123,4 +123,11 @@ public interface ProductService extends BasicService<Product> {
 	 */
 	List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) 
 			throws SessionServiceException;
+
+	/**
+	 * da.
+	 * @param id
+	 * @return
+	 */
+	Product findById(long id);
 }

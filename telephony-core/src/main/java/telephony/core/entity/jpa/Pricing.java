@@ -36,11 +36,11 @@ public class Pricing extends BaseEntity {
 		allocationSize = 1)
     private Long id;    
 
-    @Column(name = "from_date")
+    @Column(name = "from_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date from;    
 
-    @Column(name = "to_date")
+    @Column(name = "to_date", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date to;
     

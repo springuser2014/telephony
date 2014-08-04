@@ -2,6 +2,10 @@ package telephony.core.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collection;
+import java.util.Date;
+
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,6 +18,7 @@ import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.entity.jpa.Pricing;
 
 /**
  * asd.
@@ -40,13 +45,29 @@ public class PricingServiceTest extends BaseCoreTest {
 		long pricingsOfNumber = pricingService.count();
 		
 		// then
-		assertEquals(pricingsOfNumber, 0);		
+		assertEquals(pricingsOfNumber, 112);		
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findByDateRange() {
+	public void findByDateRange1() {
 		
+		// given
+		Date from = new DateTime()
+					.withDate(2000, 01, 01)
+					.withTime(0, 0, 0, 0)
+					.toDate();
+		
+		Date to = new DateTime()
+					.withDate(2008, 01, 01)
+					.withTime(0, 0, 0, 0)
+					.toDate();
+			
+		// when		
+		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		
+		// then
+		assertEquals(coll.size(), 8);
 	}
 	
 	@Test

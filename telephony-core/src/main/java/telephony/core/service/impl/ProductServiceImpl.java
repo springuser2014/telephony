@@ -60,7 +60,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllProducers(String username, String sessionId) {
+	public List<String> fetchAllProducersInUse(String username, String sessionId) {
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();

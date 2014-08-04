@@ -25,7 +25,7 @@ import com.google.inject.Provider;
  */
 public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao<E> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
     private Provider<EntityManager> entityManagerProvider;

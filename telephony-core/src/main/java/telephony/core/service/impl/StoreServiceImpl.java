@@ -148,6 +148,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		storesDao.saveOrUpdate(storeToEdit);
 	}
 
+	// TODO : refactor
 	/**
 	 * {@inheritDoc}
 	 */
@@ -159,6 +160,8 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		logger.debug("StoreServiceImpl.delete starts");
 		logger.debug("params : [username : {}, sessionId : {}, storeToDelete : {}]", 
 				username, sessionId, storeToDelete);
+		
+//		getEntityManager().getTransaction().begin();
 		
 		Session sessionToValidate = Session.create(username, sessionId);
 		sessionService.validate(sessionToValidate);
@@ -180,9 +183,10 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		
 		storeToDelete.setRequiredRoles(new HashSet<Role>());
 		storeToDelete.setUsers(new HashSet<User>());
-		storesDao.save(storeToDelete);
+		storeToDelete = storesDao.saveOrUpdate(storeToDelete);
 		storesDao.remove(storeToDelete);
-
+		
+//		getEntityManager().getTransaction().commit();
 	}
 
 	/**
