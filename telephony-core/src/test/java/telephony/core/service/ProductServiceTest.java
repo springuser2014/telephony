@@ -41,11 +41,6 @@ public class ProductServiceTest extends BaseCoreTest {
 	@Inject
 	private StoreService storeService;
 	
-	@Before
-	public void after() {
-		productService.getEntityManager().clear();
-	}
-
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void findingProductsByStore() throws SessionServiceException {

@@ -1,10 +1,13 @@
 package telephony;
 
+import javax.persistence.EntityManager;
+
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.Injector;
+import com.google.inject.Provider;
 import com.google.inject.persist.PersistService;
 
 
@@ -25,6 +28,8 @@ public class BaseCoreTest {
 	@Before
 	public void initializer() {
 		getInjector().injectMembers(this);
+		Provider<EntityManager> pem = getInjector().getProvider(EntityManager.class);
+		pem.get().clear();
 	}
 
 	/**
