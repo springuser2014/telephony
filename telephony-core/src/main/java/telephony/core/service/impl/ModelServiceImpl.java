@@ -98,4 +98,13 @@ implements ModelService {
 
 		return modelsDao.findByIds(ids);
 	}
+
+	@Transactional
+	@Override
+	public void remove(Model model) {
+		logger.debug("ModelServiceImpl.remove starts");        
+		logger.debug("params : [ model: {} ]", model);
+
+		modelsDao.remove(model);
+	}
 }

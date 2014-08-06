@@ -178,13 +178,14 @@ public abstract class GenericDaoImpl<E extends BaseEntity> implements GenericDao
         logger.debug("remove starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
+        getEntityManager().refresh(entity);        
         getEntityManager().remove(entity);
 
         logger.debug("remove ends");
     }
 
     @Override
-    public void remove(List<E> entities) {
+    public void remove(Collection<E> entities) {
         logger.debug("remove starts ");
         logger.debug("entity type : {} ", entityClass.getName());
         logger.debug("number of elements : {} ", entities.size());

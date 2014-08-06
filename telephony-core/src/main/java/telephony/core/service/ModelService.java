@@ -57,4 +57,11 @@ public interface ModelService extends BasicService<Model> {
 	 */
 	void removeById(Collection<Long> model);
 
+	/**
+	 * asd.
+	 * @param model a.
+	 * 
+	 */
+	void remove(Model model);
+
 }

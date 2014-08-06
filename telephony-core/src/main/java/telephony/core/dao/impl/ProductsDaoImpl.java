@@ -334,7 +334,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 		return lst;
 	}
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findByIMEIs(List<String> imeis) {
 	
@@ -350,6 +350,23 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 				.getResultList();
         
         logger.debug("found {} elements", lst.size());
+        
+        return lst;
+	}
+    
+	@Override
+	public Product findByIMEI(String imei) {
+	
+	    logger.debug("ProductsDaoImpl.findByIMEI starts");
+	    
+        Product lst = (Product) 
+        		getEntityManager()
+        		.createQuery(
+        		"select e from Product e " +
+        		"where e.imei in (?1)")
+				.setParameter(1, imei)
+				.getSingleResult();
+        
         
         return lst;
 	}

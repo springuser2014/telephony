@@ -92,4 +92,11 @@ public interface ProductsDao extends GenericDao<Product> {
 	 * @return asd.
 	 */
 	List<Product> findByIMEIs(List<String> imeis);
+
+	/**
+	 * asd.
+	 * @param imei a.
+	 * @return ad.
+	 */
+	Product findByIMEI(String imei);
 }

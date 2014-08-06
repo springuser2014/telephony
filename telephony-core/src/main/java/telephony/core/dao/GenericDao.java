@@ -91,7 +91,7 @@ public interface GenericDao<E extends BaseEntity> {
      * Removes indicated entities from persistence layer.
      * @param entities to remove.
      */
-    void remove(List<E> entities);
+    void remove(Collection<E> entities);
     
 	/**
 	 * Counts all entities stores in persistence layer.

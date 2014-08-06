@@ -1,6 +1,7 @@
 package telephony.core.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -35,9 +36,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	@Inject
 	private SessionService sessionService;
 
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Override
 	@Transactional
 	public List<String> fetchAllImeiInUse(String username, String sessionId) 
@@ -77,9 +75,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return res;
 	}
 
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Override
 	@Transactional
 	public List<String> fetchAllModels(String username, String sessionId) 
@@ -103,9 +98,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return res;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public List<String> fetchAllColors(String username, String sessionId) {
@@ -125,10 +117,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return res;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @throws SessionServiceException 
-	 */
+
 	@Transactional
 	@Override
 	public List<Product> fetchAllProducts(String username,
@@ -150,9 +139,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return lst;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public void moveProducts(String username, String sessionId, 
@@ -171,9 +157,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 	}
 
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Override
 	@Transactional
 	public Product fetchProductByImeiAndStoreId(String username,
@@ -191,10 +174,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return p;
 	}
 
-	
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Override
 	@Transactional
 	public List<Product> fetchAllProductsByCriteria(String username, String sessionId, 
@@ -227,9 +206,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public long count() {
@@ -237,9 +213,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return productsDao.count();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
 	@Transactional
 	public List<Product> findByStore(String username, String sessionId, Store store) 
@@ -273,11 +247,90 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return productsDao.findByIMEIs(imeis);
 	}
 
+
+	@Transactional
 	@Override
 	public Product findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		logger.info("findById starts");
+		logger.info("params : [ id : {} ]", id);
+		
+		return productsDao.findById(id);		
 	}
+
+	@Transactional
+	@Override
+	public Collection<Product> findById(Collection<Long> coll) {
+		logger.info("findById starts");
+		logger.info("params : [ numberOfIds : {} ]", coll.size());
+		
+		return productsDao.findByIds(coll);		
+	}
+
+
+	@Transactional
+	@Override
+	public Product update(Product product) {
+		logger.info("update starts");
+		logger.info("params : [ product : {} ]", product);
+		
+		return productsDao.saveOrUpdate(product);		
+	}
+	@Transactional
+	@Override
+	public Product findByIMEI(String imei) {
+		logger.info("update starts");
+		logger.info("params : [ imei: {} ]", imei);
+		
+		return productsDao.findByIMEI(imei);		
+	}
+
+	@Transactional
+	@Override
+	public Collection<Product> updateCollection(Collection<Product> coll) {
+		logger.info("updateCollection starts");
+		logger.info("params : [ numberOfProducts: {} ]", coll.size());
+		
+		return productsDao.saveOrUpdate(coll);		
+	}
+
+	@Transactional
+	@Override
+	public void remove(Product product) {
+		logger.info("remove starts");
+		logger.info("params : [ product: {} ]", product);
+		
+		productsDao.remove(product);		
+	}
+
+	@Transactional
+	@Override
+	public void removeCollection(Collection<Product> coll) {
+		logger.info("removeCollection starts");
+		logger.info("params : [ numberOfproduct: {} ]", coll.size());
+		
+		productsDao.remove(coll);		
+	}
+
+	@Transactional
+	@Override
+	public void removeCollectionByIds(Collection<Long> coll) {
+		logger.info("removeCollection starts");
+		logger.info("params : [ numberOfproduct: {} ]", coll.size());
+		
+		productsDao.removeByIds(coll);		
+	}
+
+	@Transactional
+	@Override
+	public void removeById(long id) {
+		logger.info("remove starts");
+		logger.info("params : [ id: {} ]", id);
+		
+		productsDao.removeById(id);		
+	}
+
+	
 	
 	
 }

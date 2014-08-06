@@ -165,6 +165,23 @@ public class ModelServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void remove() {
+		
+		// given
+		Model model = modelService.findByLabel("iphone 6g");
+		long countBefore = modelService.count();
+		
+		// when
+		modelService.remove(model);
+		long countAfter = modelService.count();
+		
+		// then
+		assertEquals(countBefore  - countAfter, 1);
+	}
+
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void removeById() {
 		
 		// given

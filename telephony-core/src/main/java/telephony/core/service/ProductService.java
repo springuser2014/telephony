@@ -1,6 +1,7 @@
 package telephony.core.service;
 
 
+import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.Product;
@@ -126,8 +127,60 @@ public interface ProductService extends BasicService<Product> {
 
 	/**
 	 * da.
-	 * @param id
-	 * @return
+	 * @param id as.
+	 * @return a.
 	 */
 	Product findById(long id);
+
+	/**
+	 * asd .
+	 * @param coll as.
+	 * @return as.
+	 */
+	Collection<Product> findById(Collection<Long> coll);
+
+	/**
+	 * asd.
+	 * @param product a.
+	 * @return asd.
+	 */
+	Product update(Product product);
+
+	/**
+	 * asd.
+	 * @param imei as.
+	 * @return asd.
+	 */
+	Product findByIMEI(String imei);
+
+	/**
+	 * asdsa.
+	 * @param coll a.
+	 * @return ad.
+	 */
+	Collection<Product> updateCollection(Collection<Product> coll);
+
+	/**
+	 * asd.
+	 * @param p a.
+	 */
+	void remove(Product p);
+
+	/**
+	 * asd.
+	 * @param coll a.
+	 */
+	void removeCollection(Collection<Product> coll);
+
+	/**
+	 * asd.
+	 * @param coll ads.
+	 */
+	void removeCollectionByIds(Collection<Long> coll);
+
+	/**
+	 * asd.
+	 * @param id ads.
+	 */
+	void removeById(long id);
 }

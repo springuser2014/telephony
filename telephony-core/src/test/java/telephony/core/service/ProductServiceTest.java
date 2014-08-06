@@ -1,9 +1,12 @@
 package telephony.core.service;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.After;
@@ -241,54 +244,167 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// given
 		long id = 1;
-		Product product = productService.findById(id);
 		
 		// when
-		
+		Product product = productService.findById(id);
+				
 		// then
-		
+		assertNotNull(product);
+		assertEquals(product.getImei(), "123456789000000");
+		assertEquals(product.getColor(), "black");
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void findingByIds() {
+		// given
+		long id1 = 1, id2 = 2;
+		Collection<Long> coll = Arrays.asList(id1, id2);
 		
+		// when
+		Collection<Product> products = productService.findById(coll);
+				
+		// then
+		assertNotNull(products);
+		assertEquals(products.size(), 2);
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void update() {
+	public void findByIMEI() throws SessionServiceException {
 		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;		
+		String imei = "123456789000047";
+		
+		// when
+		Product product = productService.findByIMEI(imei);
+		
+		// then
+		assertNotNull(product);
+		assertEquals(product.getColor(), "white");
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void update() throws SessionServiceException {
+		
+		// given
+		String username = TestData.USER1_NAME;
+		String sessionId = TestData.USER1_SESSIONID;
+		
+		String imei = "123456789000444";
+		long id = 1;
+		Product product = productService.findById(id);
+		
+		// when
+		product.setImei(imei);
+		productService.update(product);
+		
+		Product prod = productService.findByIMEI(imei);
+		
+		// then
+		assertNotNull(prod);
+		assertEquals(product.getColor(), "black");		
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void updateCollection() {
 		
+		// given
+		long id1 = 1, id2 = 2;
+		Product p1 = productService.findById(id1);
+		Product p2 = productService.findById(id2);
+		String imei1 = "123456789000888";
+		String imei2 = "123456789000777";
+		Product changed1 = null;
+		Product changed2 = null;
+		
+		// when
+		p1.setImei(imei1);
+		p2.setImei(imei2);
+		Collection<Product> coll = Arrays.asList(p1, p2);
+		productService.updateCollection(coll);
+		
+		// then
+		changed1 = productService.findByIMEI(imei1);
+		changed2 = productService.findByIMEI(imei2);
+		
+		assertNotNull(changed1);
+		assertNotNull(changed2);
+		assertEquals(p1.getColor(), "black");
+		assertEquals(p2.getColor(), "black");
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void remove() {
+
+		// given
+		long id = 1;
+		Product p = productService.findById(id);
+		long countBefore = productService.count();
 		
+		// when
+		productService.remove(p);
+		
+		// then
+		long countAfter = productService.count();
+		assertEquals(countBefore - countAfter, 1);
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void removeCollection() {
+	
+		// given
+		long id1 = 1, id2 = 2;
+		Product p1 = productService.findById(id1);
+		Product p2 = productService.findById(id2);
+		long countBefore = productService.count();
+		Collection<Product> coll = Arrays.asList(p1, p2);
 		
+		// when
+		productService.removeCollection(coll);
+		
+		// then
+		long countAfter = productService.count();
+		assertEquals(countBefore - countAfter, 2);
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void removeById() {
+
+		// given
+		long id = 1;
+		long countBefore = productService.count();
 		
+		// when
+		productService.removeById(id);
+		
+		// then
+		long countAfter = productService.count();
+		assertEquals(countBefore - countAfter, 1);
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void removeCollectionById() {
+
+		// given
+		long id1 = 1, id2 = 2;
+		long countBefore = productService.count();
+		Collection<Long> coll = Arrays.asList(id1, id2);
 		
+		// when
+		productService.removeCollectionByIds(coll);
+		
+		// then
+		long countAfter = productService.count();
+		assertEquals(countBefore - countAfter, 2);
 	}
 
 }
