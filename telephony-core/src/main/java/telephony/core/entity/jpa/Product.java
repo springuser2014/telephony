@@ -76,6 +76,7 @@ public class Product extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")    
     private Collection<Pricing> pricings;
     
+    /* TODO : implement later
     @ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "product_files",
@@ -87,7 +88,7 @@ public class Product extends BaseEntity {
 			name = "file_id",
 			referencedColumnName = "id"))
     private Collection<File> files;
-    
+    */
     
     /**
      * asd.

@@ -55,9 +55,11 @@ public abstract class Complaint extends BaseEntity {
 	@OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
 	private Set<ComplaintComment> comments;
 	
+	/* TODO : implement later
 	@ManyToMany(mappedBy = "complaints", fetch = FetchType.LAZY)
 	private Set<File> files;
-		
+	*/
+	
 	@Override
 	public Long getId() {
 		return this.id;
