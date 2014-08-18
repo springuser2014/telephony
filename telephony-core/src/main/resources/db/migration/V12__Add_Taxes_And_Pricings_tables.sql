@@ -68,4 +68,3 @@ ALTER TABLE ONLY product_taxes
     
 ALTER TABLE ONLY pricings
 	ADD CONSTRAINT pricings_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(id);
-    

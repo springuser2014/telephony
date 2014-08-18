@@ -9,13 +9,14 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 
+import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-/**
- * sda.
- */
 
+/**
+ * asd.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
 @TestExecutionListeners({
@@ -23,11 +24,14 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
     FlywayDBUnitTestExecutionListener.class 
 })
 @FlywayTest
-public class ProductComplaintTest extends BaseCoreTest {
+public class ComplaintServiceTest extends BaseCoreTest {
 	
+	@Inject
+	private ComplaintService complaintService;
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void as() {
+	public void t1() {
 		
 	}
 

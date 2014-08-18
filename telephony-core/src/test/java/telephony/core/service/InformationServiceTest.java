@@ -17,47 +17,21 @@ import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = { "/META-INF/context.xml" })
-//@TestExecutionListeners( {
-//	DependencyInjectionTestExecutionListener.class,
-//    FlywayDBUnitTestExecutionListener.class 
-//})
-//@FlywayTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/META-INF/context.xml" })
+@TestExecutionListeners({
+	DependencyInjectionTestExecutionListener.class,
+    FlywayDBUnitTestExecutionListener.class 
+})
+@FlywayTest
 public class InformationServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private InformationService informationService;
 	
-	/**
-	 * asd.
-	 * @param ps asd.
-	 */
-//	@Inject
-//	public void initialize(PersistService ps) { 
-//
-//		if (!persistServiceInitialized) {
-//		
-//			persistService = ps;
-//			persistService.start();
-//			persistServiceInitialized = true;
-//		}
-//	}
-	
-	/**
-	 * www.
-	 */
-	@Before
-	public void initializer() {
-		getInjector().injectMembers(this);
-	}
-	
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration" } )
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void contactasd() {
 		assertTrue(true);
 	}
-	
-
-
 }

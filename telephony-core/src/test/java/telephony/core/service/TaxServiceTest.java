@@ -39,8 +39,6 @@ public class TaxServiceTest extends BaseCoreTest {
 	@Inject
 	private TaxService taxService;
 	
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void add_tax() {

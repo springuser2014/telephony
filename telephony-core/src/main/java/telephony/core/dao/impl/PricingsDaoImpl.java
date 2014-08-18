@@ -49,22 +49,22 @@ implements PricingsDao {
 			
 			q.setParameter("from", from);
 			q.setParameter("to", to);
-				
+			
 		} else if (from != null && to == null) {
 
-			String qStr = "select p from Pricing p where p.from >= :from and p.to IS NULL";
+			String qStr = "select p from Pricing p where p.from >= :from";
 			q = getEntityManager().createQuery(qStr);
 			q.setParameter("from", from);
 			
 		} else if (from == null && to != null) {
 
-			String qStr = "select p from Pricing p where p.from IS NULL and p.to < :to";
+			String qStr = "select p from Pricing p where p.to <= :to";
 			q = getEntityManager().createQuery(qStr);
 			q.setParameter("to", to);
-
+			
 		} else {
 			
-			String qStr = "select p from Pricing p where p.from IS NULL and p.to IS NULL";
+			String qStr = "select p from Pricing p";
 			q = getEntityManager().createQuery(qStr);
 		}
 		
