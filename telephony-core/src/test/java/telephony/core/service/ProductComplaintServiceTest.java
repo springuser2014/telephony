@@ -24,10 +24,10 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
     FlywayDBUnitTestExecutionListener.class 
 })
 @FlywayTest
-public class ComplaintServiceTest extends BaseCoreTest {
+public class ProductComplaintServiceTest extends BaseCoreTest {
 	
 	@Inject
-	private ComplaintService complaintService;
+	private ProductComplaintService complaintService;
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })

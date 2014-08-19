@@ -49,6 +49,9 @@ public abstract class Complaint extends BaseEntity {
 	@Column(name = "title")
 	private String title;
 	
+	@Column(name = "item_id")
+	private String itemId;
+	
 	@Column(name = "unique_hash")
 	private String uniqueHash;
 	
@@ -149,6 +152,20 @@ public abstract class Complaint extends BaseEntity {
 	public void setUniqueHash(String uniqueHash) {
 		this.uniqueHash = uniqueHash;
 	}
-	
-	
+
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public String getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * asd.
+	 * @param itemId a.
+	 */
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
 }

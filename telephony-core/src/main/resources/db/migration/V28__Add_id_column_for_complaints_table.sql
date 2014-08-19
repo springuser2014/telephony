@@ -1,0 +1,1 @@
+ALTER TABLE complaints ADD COLUMN item_id character varying(40) NOT NULL;

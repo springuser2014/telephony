@@ -12,13 +12,14 @@ import telephony.core.service.GenericService;
 /**
  * asd.
  * @param <E> asd.
+ * @param <D> as.
  */
-public abstract class AbstractGenericService<E extends BaseEntity> 
+public abstract class AbstractGenericService<E extends BaseEntity, D extends GenericDao<E>> 
 extends AbstractBasicService<E> 
 implements GenericService<E> {
 	
 	@Inject
-	private GenericDao<E> dao;
+	private D dao;
 
 	@Transactional
 	@Override
@@ -36,71 +37,63 @@ implements GenericService<E> {
 	@Transactional
 	@Override
 	public Collection<E> findByIds(Collection<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.findByIds(ids);
 	}
 	
-//	@Transactional
+	@Transactional
 	@Override
 	public void save(E entity) {
 		
-		getEntityManager().getTransaction().begin();
-		
-		if (!getEntityManager().contains(entity)) {
-			
-			dao.save(entity);
-//			getEntityManager().persist(entity);
-			getEntityManager().flush();
-		}
-		
-		getEntityManager().getTransaction().commit();
-//		dao.save(entity);
+		dao.save(entity);
 	}
 	
 	@Transactional
 	@Override
 	public void batchSave(Collection<E> entities) {
+		
+		dao.save(entities);
 	}
 	
 	@Transactional
 	@Override
 	public E update(E entity) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.saveOrUpdate(entity);
 	}
 
 	@Transactional
 	@Override
 	public Collection<E> batchUpdate(Collection<E> entities) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dao.saveOrUpdate(entities);
 	}
 
 	@Transactional
 	@Override
 	public void remove(E entity) {
-		// TODO Auto-generated method stub
 		
+		dao.remove(entity);
 	}
 
 	@Transactional
 	@Override
 	public void batchRemove(Collection<E> entities) {
-		// TODO Auto-generated method stub
 		
+		dao.remove(entities);
 	}
 
 	@Transactional
 	@Override
 	public void removeById(Long id) {
-		// TODO Auto-generated method stub
-		
+
+		dao.removeById(id);
 	}
 
 	@Transactional
 	@Override
 	public void batchRemoveByIds(Collection<Long> ids) {
-		// TODO Auto-generated method stub
 		
+		dao.removeByIds(ids);
 	}
 }

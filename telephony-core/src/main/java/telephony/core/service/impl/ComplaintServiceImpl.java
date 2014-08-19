@@ -1,21 +1,78 @@
 package telephony.core.service.impl;
 
+import java.util.Collection;
+
 import com.google.inject.persist.Transactional;
 
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.ComplaintService;
+import telephony.core.service.bean.Session;
 
 /**
  * asd.
  */
 public class ComplaintServiceImpl 
-extends AbstractBasicService<Complaint> implements ComplaintService {
+extends AbstractBasicService<Complaint> implements ComplaintService<Complaint> {
 
 	@Transactional
 	@Override
 	public long count() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void report(Session session, Complaint complaint) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Complaint update(Session session, Complaint complaint) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection update(Session session, Collection complaints) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void markAsInProgress(Session session, long complaintId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void markAsAccepted(Session session, long complaintId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void markAsRejected(Session session, long complaintId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void markAsResolved(Session session, long complaintId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeById(Session session, long complaintId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeByIds(Session session, Collection complaintIds) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

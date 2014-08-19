@@ -1,5 +1,6 @@
 package telephony.core.guice;
 
+import telephony.core.dao.ComplaintCommentDao;
 import telephony.core.dao.ContactsDao;
 import telephony.core.dao.DeliveriesDao;
 import telephony.core.dao.InformationDao;
@@ -14,6 +15,7 @@ import telephony.core.dao.SalesDao;
 import telephony.core.dao.StoresDao;
 import telephony.core.dao.TaxDao;
 import telephony.core.dao.UsersDao;
+import telephony.core.dao.impl.ComplaintCommentDaoImpl;
 import telephony.core.dao.impl.ContactsDaoImpl;
 import telephony.core.dao.impl.DeliveriesDaoImpl;
 import telephony.core.dao.impl.InformationDaoImpl;
@@ -28,6 +30,7 @@ import telephony.core.dao.impl.SalesDaoImpl;
 import telephony.core.dao.impl.StoresDaoImpl;
 import telephony.core.dao.impl.TaxDaoImpl;
 import telephony.core.dao.impl.UsersDaoImpl;
+import telephony.core.service.ComplaintCommentService;
 import telephony.core.service.ContactService;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.InformationService;
@@ -44,6 +47,7 @@ import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.core.service.TaxService;
 import telephony.core.service.UserService;
+import telephony.core.service.impl.ComplaintCommentServiceImpl;
 import telephony.core.service.impl.ContactServiceImpl;
 import telephony.core.service.impl.DeliveryServiceImpl;
 import telephony.core.service.impl.InformationServiceImpl;
@@ -90,6 +94,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(SaleComplaintDao.class).to(SaleComplaintDaoImpl.class);
         bind(ProductComplaintDao.class).to(ProductComplaintDaoImpl.class);
         bind(PricingsDao.class).to(PricingsDaoImpl.class);
+        bind(ComplaintCommentDao.class).to(ComplaintCommentDaoImpl.class);
         
 
         // binding service layer objects
@@ -109,6 +114,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(SaleComplaintService.class).to(SaleComplaintServiceImpl.class);
         bind(ProductComplaintService.class).to(ProductComplaintServiceImpl.class);
         bind(PricingService.class).to(PricingServiceImpl.class);
+        bind(ComplaintCommentService.class).to(ComplaintCommentServiceImpl.class);
         
         // util classses
 
