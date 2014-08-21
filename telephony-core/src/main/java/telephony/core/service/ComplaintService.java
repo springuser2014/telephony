@@ -9,7 +9,7 @@ import telephony.core.service.bean.Session;
  * asd.
  * @param <T> asd.
  */
-public interface ComplaintService<T extends Complaint>  extends BasicService<T>  {
+public interface ComplaintService<T extends Complaint>  extends GenericService<T>  {
 	
 	/**
 	 * asd.

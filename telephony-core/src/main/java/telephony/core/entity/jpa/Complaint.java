@@ -1,6 +1,7 @@
 
 package telephony.core.entity.jpa;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
@@ -9,17 +10,23 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import telephony.core.entity.enumz.ComplaintStatus;
 
 /**
  * asd.
@@ -43,8 +50,9 @@ public abstract class Complaint extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reportedDate;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private String status;
+	private ComplaintStatus status;
 	
 	@Column(name = "title")
 	private String title;
@@ -57,6 +65,28 @@ public abstract class Complaint extends BaseEntity {
 	
 	@OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
 	private Set<ComplaintComment> comments;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "contact_id", nullable = false)
+	private Contact contact;
+	
+
+	/**
+	 * asd.
+	 * @param contact asd.
+	 */
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+	
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public Contact getContact() {
+		return this.contact;
+	}
+
 	
 	/* TODO : implement later
 	@ManyToMany(mappedBy = "complaints", fetch = FetchType.LAZY)
@@ -109,7 +139,7 @@ public abstract class Complaint extends BaseEntity {
 	 * as.
 	 * @return a.
 	 */
-	public String getStatus() {
+	public ComplaintStatus getStatus() {
 		return status;
 	}
 
@@ -117,7 +147,7 @@ public abstract class Complaint extends BaseEntity {
 	 * ad.
 	 * @param status a.
 	 */
-	public void setStatus(String status) {
+	public void setStatus(ComplaintStatus status) {
 		this.status = status;
 	}
 

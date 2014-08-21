@@ -77,6 +77,6 @@ public interface ContactService extends BasicService<Contact> {
 	 * @return  as.
 	 * @throws SessionServiceException 
 	 */
-	Contact findById(String username, String sessionId, Long contactToDeleteId) 
+	Contact findById(String username, String sessionId, Long contactId) 
 			throws SessionServiceException;
 }

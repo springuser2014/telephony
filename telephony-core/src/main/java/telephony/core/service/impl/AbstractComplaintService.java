@@ -2,8 +2,6 @@ package telephony.core.service.impl;
 
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-
 import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.GenericDao;
@@ -17,8 +15,14 @@ import telephony.core.service.bean.Session;
  * @param <T> a.
  * @param <D> asd .
  */
-public class AbstractComplaintService<T extends Complaint, D extends GenericDao<T>> 
+public class AbstractComplaintService<T extends Complaint, D extends GenericDao<T>>
+extends AbstractGenericService<T, D>
 implements ComplaintService<T> {
+
+	public AbstractComplaintService(Class<D> clazz) {
+		super(clazz);
+		// TODO Auto-generated constructor stub
+	}
 
 	private D complaintDao;
 	
@@ -28,19 +32,6 @@ implements ComplaintService<T> {
 	 */
 	protected D getComplaintDao() {
 		return complaintDao;
-	}
-	
-	@Override
-	public EntityManager getEntityManager() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Transactional
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Transactional
@@ -105,5 +96,5 @@ implements ComplaintService<T> {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
+

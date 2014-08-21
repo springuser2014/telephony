@@ -2,21 +2,35 @@ package telephony.core.service;
 
 import java.util.Collection;
 
+import telephony.core.dao.ProductComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.bean.Session;
 import telephony.core.service.impl.AbstractBasicService;
+import telephony.core.service.impl.AbstractComplaintService;
+import telephony.core.service.impl.AbstractGenericService;
 
 /**
  * asd.
  */
 public class ProductComplaintServiceImpl 
-extends AbstractBasicService<ProductComplaint> implements ProductComplaintService {
+extends AbstractGenericService<ProductComplaint, ProductComplaintDao> 
+implements ProductComplaintService {
+	
+	/**
+	 * asd.
+	 */
+	public ProductComplaintServiceImpl() {
+		super();
+	}
 
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+	/**
+	 * sad.
+	 * @param clazz a.
+	 */
+	public ProductComplaintServiceImpl(Class<ProductComplaintDao> clazz) {
+		super(clazz);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -73,4 +87,5 @@ extends AbstractBasicService<ProductComplaint> implements ProductComplaintServic
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

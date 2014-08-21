@@ -2,12 +2,12 @@ package telephony.core.service.impl;
 
 import java.util.Collection;
 
-import com.google.inject.Inject;
-import com.google.inject.persist.Transactional;
-
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.GenericService;
+
+import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 /**
  * asd.
@@ -20,6 +20,31 @@ implements GenericService<E> {
 	
 	@Inject
 	private D dao;
+	
+    private final Class<D> daoClazz;
+	
+    /**
+     * asd.
+     */
+    public AbstractGenericService() {
+    	daoClazz = null;
+    }
+    
+	/**
+	 * asd.
+	 * @param clazz asd.
+	 */
+	public AbstractGenericService(Class<D> clazz) {
+		daoClazz = clazz; 
+	}
+	
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	protected D dao() {
+		return dao;
+	}
 
 	@Transactional
 	@Override

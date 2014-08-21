@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.google.inject.persist.Transactional;
 
+import telephony.core.dao.ComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.ComplaintService;
 import telephony.core.service.bean.Session;
@@ -11,14 +12,24 @@ import telephony.core.service.bean.Session;
 /**
  * asd.
  */
-public class ComplaintServiceImpl 
-extends AbstractBasicService<Complaint> implements ComplaintService<Complaint> {
+public abstract class ComplaintServiceImpl 
+extends AbstractGenericService<Complaint, ComplaintDao> 
+implements ComplaintService<Complaint> {
+
+	/**
+	 * asd.
+	 * @param clazz a.
+	 */
+	public ComplaintServiceImpl(Class<ComplaintDao> clazz) {
+		super(clazz);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Transactional
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return dao().count();
 	}
 
 	@Override

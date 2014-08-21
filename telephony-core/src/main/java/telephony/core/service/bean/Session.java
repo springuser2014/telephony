@@ -67,10 +67,10 @@ public class Session {
 
     /**
      * asd.
-     * @param usernamE asd.
+     * @param username asd.
      */
-    public final void setUsername(final String usernamE) {
-        this.username = usernamE;
+    public final void setUsername(final String username) {
+        this.username = username;
     }
 
     /**
@@ -83,10 +83,10 @@ public class Session {
 
     /**
      * asd.
-     * @param sessionID asd.
+     * @param sessionId asd.
      */
-    public final void setSessionId(final String sessionID) {
-        this.sessionId = sessionID;
+    public final void setSessionId(final String sessionId) {
+        this.sessionId = sessionId;
     }
 
     /**
