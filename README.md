@@ -1,18 +1,14 @@
 # About
 
-Hi!
-
-This's my personal project on university classes,
-so be careful while you use it for your own. It's very experimental version, so I don't take responsibility for using it ;-)
+TBD
 
 # Features
 
-It's quite simple set of RESTful services for managing products in electronic products store.
-Main features includes:
+TBD
 
-- Managing products in stores
-- Managing stores, users (admins, workers, etc) and theirs credentials
-- Managing deliveries, sales
+# Inital configuration
+
+TBD
 
 # Prerequisities
 
@@ -24,7 +20,8 @@ Properly installed basic stuff from Java world:
 To prepare an completed development environment we also need:
 
 - PostgreSQL database >= 8.4
-- Tomcat 6. (0.36) server
+- MongoDB 2.6
+- Tomcat 6.0.36 server
 
 ## Used technologies
 
@@ -38,11 +35,7 @@ To prepare an completed development environment we also need:
 
 # TODO
 
-Project is now under intensive development, in next few weeks there will appear:
-
-- Complete unit tests for core module (via JUnit).
-- Complete integration tests for web services (via Arquillian).
-- Build a GUI module (via Bootstrap, jQuery and other js libs)
+[List of upcoming features](https://github.com/pawelhenek/telephony/issues)
 
 # Testing
 

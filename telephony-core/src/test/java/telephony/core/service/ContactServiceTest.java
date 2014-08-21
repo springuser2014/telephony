@@ -46,7 +46,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void deletingContact() 
+	public void testDeletingContact() 
 			throws SessionServiceException, ContactServiceException {
 		
 		// given
@@ -58,7 +58,6 @@ public class ContactServiceTest extends BaseCoreTest {
 
 		// when
 		contactService.deleteContact(username, sessionId, contactToDelete);
-
 		// then
 		countAfter = contactService.count();
 		assertTrue("should decreased number of given elements", (countBefore - countAfter) == 1);

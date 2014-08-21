@@ -1,6 +1,5 @@
 package telephony.core.service;
 
-import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ComplaintComment;
 import telephony.core.service.bean.Session;
 

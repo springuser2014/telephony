@@ -4,3 +4,8 @@ ALTER TABLE complaint_comments DROP CONSTRAINT complaint_comments_complaint_id_f
 ADD CONSTRAINT complaint_comments_complaint_id_fkey FOREIGN KEY (complaint_id)
 REFERENCES complaints(id)
 ON DELETE CASCADE;
+
+ALTER TABLE complaints DROP CONSTRAINT complaints_contact_id_fkey,
+ADD CONSTRAINT complaints_contact_id_fkey FOREIGN KEY (contact_id)
+REFERENCES contacts(id) 
+ON DELETE CASCADE;

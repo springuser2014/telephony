@@ -51,6 +51,7 @@ implements ComplaintCommentService {
 		complaintCommentDao.save(comment);
 	}
 
+	@Transactional
 	@Override
 	public void comment(String hashUnique, ComplaintComment comment) {
 		// TODO : session's validation
@@ -72,6 +73,7 @@ implements ComplaintCommentService {
 		complaintCommentDao.save(comment);
 	}
 
+	@Transactional
 	@Override
 	public long count() {
 
