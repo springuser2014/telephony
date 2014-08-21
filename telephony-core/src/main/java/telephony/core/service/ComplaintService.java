@@ -3,6 +3,7 @@ package telephony.core.service;
 import java.util.Collection;
 
 import telephony.core.entity.jpa.Complaint;
+import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.bean.Session;
 
 /**
@@ -10,6 +11,13 @@ import telephony.core.service.bean.Session;
  * @param <T> asd.
  */
 public interface ComplaintService<T extends Complaint>  extends GenericService<T>  {
+	
+	/**
+	 * asd.
+	 * @param hashUnique ad.
+	 * @return asd.
+	 */
+	T findByHash(String hashUnique);
 	
 	/**
 	 * asd.

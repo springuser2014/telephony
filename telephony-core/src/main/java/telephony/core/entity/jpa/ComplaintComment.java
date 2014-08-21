@@ -25,10 +25,10 @@ public class ComplaintComment extends BaseEntity {
     @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(
 		strategy = GenerationType.SEQUENCE, 
-		generator = "complaints_seq")
+		generator = "complaint_comments_seq")
     @SequenceGenerator(
-		name = "complaints_seq", 
-		sequenceName = "complaints_seq", 
+		name = "complaint_comments_seq", 
+		sequenceName = "complaint_comments_seq", 
 		allocationSize = 1)
     private Long id;
 
@@ -70,6 +70,8 @@ public class ComplaintComment extends BaseEntity {
 	 */
 	public void setComplaint(Complaint complaint) {
 		this.complaint = complaint;
+		
+		complaint.addComment(this);
 	}
 
 	/**

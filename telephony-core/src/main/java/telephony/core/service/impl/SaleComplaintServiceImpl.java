@@ -115,4 +115,11 @@ implements SaleComplaintService {
 		dao().removeByIds(complaintIds);
 	}
 
+	@Transactional
+	@Override
+	public SaleComplaint findByHash(String hashUnique) {
+
+		return dao().findByHash(hashUnique);
+	}
+
 }

@@ -1,5 +1,7 @@
 package telephony.core.dao.impl;
 
+import java.util.List;
+
 import telephony.core.dao.SaleComplaintDao;
 import telephony.core.entity.enumz.ComplaintStatus;
 import telephony.core.entity.jpa.SaleComplaint;
@@ -54,5 +56,21 @@ implements SaleComplaintDao {
 			.setParameter("status", ComplaintStatus.RESOLVED)
 			.executeUpdate();
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public SaleComplaint findByHash(String hashUnique) {
+		
+		List<SaleComplaint> list =  
+			(List<SaleComplaint>) getEntityManager()
+				.createQuery("select p from SaleComplaint p where p.uniqueHash like :hash")
+				.setParameter("hash", "%" + hashUnique + "%")
+				.getResultList();
+		
+		if (list.size() > 0) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+	}
 }

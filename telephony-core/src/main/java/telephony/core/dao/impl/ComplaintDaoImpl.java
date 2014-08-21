@@ -17,4 +17,14 @@ implements ComplaintDao {
 		super(Complaint.class);
 	}
 
+	@Override
+	public Complaint findByHash(String hashUnique) {
+		
+		return 
+			(Complaint) getEntityManager()
+				.createQuery("select from Complaint p where p.uniqueHash = :hash")
+				.setParameter("hash", hashUnique)
+				.getSingleResult();
+	}
+
 }

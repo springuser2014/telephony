@@ -96,5 +96,11 @@ implements ComplaintService<T> {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public T findByHash(String hashUnique) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 

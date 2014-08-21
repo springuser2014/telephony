@@ -119,5 +119,12 @@ implements ProductComplaintService {
 		
 		dao().removeByIds(complaintIds);
 	}
+
+	@Transactional
+	@Override
+	public ProductComplaint findByHash(String hashUnique) {
+
+		return dao().findByHash(hashUnique);
+	}
 	
 }

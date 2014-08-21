@@ -24,6 +24,13 @@ implements ComplaintService<Complaint> {
 		super(clazz);
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public Complaint findByHash(String hashUnique) {
+		
+		return dao().findByHash(hashUnique);
+	}
+
 
 	@Transactional
 	@Override

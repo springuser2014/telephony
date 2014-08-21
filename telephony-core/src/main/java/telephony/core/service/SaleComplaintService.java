@@ -8,4 +8,5 @@ import telephony.core.entity.jpa.SaleComplaint;
 public interface SaleComplaintService
 extends ComplaintService<SaleComplaint> {
 
+
 }

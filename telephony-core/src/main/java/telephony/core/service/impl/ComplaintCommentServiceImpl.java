@@ -1,7 +1,15 @@
 package telephony.core.service.impl;
 
+import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
+
+import telephony.core.dao.ComplaintCommentDao;
 import telephony.core.entity.jpa.ComplaintComment;
+import telephony.core.entity.jpa.ProductComplaint;
+import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.ComplaintCommentService;
+import telephony.core.service.ProductComplaintService;
+import telephony.core.service.SaleComplaintService;
 import telephony.core.service.bean.Session;
 
 /**
@@ -11,23 +19,63 @@ public class ComplaintCommentServiceImpl
 extends AbstractBasicService<ComplaintComment> 
 implements ComplaintCommentService {
 
+	@Inject
+	private ProductComplaintService productComplaint;
+	
+	@Inject
+	private SaleComplaintService saleComplaint;
+	
+	@Inject
+	private ComplaintCommentDao complaintCommentDao;
+	
+	@Transactional
 	@Override
-	public void comment(Session session, ComplaintComment comment,
-			long complaintId) {
-		// TODO Auto-generated method stub
+	public void comment(Session session, ComplaintComment comment,	long complaintId) {
 		
+		// TODO : session's validation
+		
+		ProductComplaint pc = productComplaint.findById(complaintId);
+		
+		SaleComplaint sc = saleComplaint.findById(complaintId);
+		
+		if (pc != null) {
+			comment.setComplaint(pc);
+			productComplaint.update(pc);
+		} else if (sc != null) {
+			comment.setComplaint(sc);
+			saleComplaint.update(sc);
+		} else {
+			throw new IllegalArgumentException(); 
+		}
+		
+		complaintCommentDao.save(comment);
 	}
 
 	@Override
 	public void comment(String hashUnique, ComplaintComment comment) {
-		// TODO Auto-generated method stub
+		// TODO : session's validation
 		
+		ProductComplaint pc = productComplaint.findByHash(hashUnique);
+		
+		SaleComplaint sc = saleComplaint.findByHash(hashUnique);
+		
+		if (pc != null) {
+			comment.setComplaint(pc);
+			productComplaint.update(pc);
+		} else if (sc != null) {
+			comment.setComplaint(sc);
+			saleComplaint.update(sc);
+		} else {
+			throw new IllegalArgumentException(); 
+		}
+		
+		complaintCommentDao.save(comment);
 	}
 
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return complaintCommentDao.count();
 	}
 
 }

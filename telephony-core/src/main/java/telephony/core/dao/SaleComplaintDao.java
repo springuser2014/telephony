@@ -30,4 +30,11 @@ public interface SaleComplaintDao extends GenericDao<SaleComplaint> {
 	 * @param complaintId a.
 	 */
 	void markAsResolved(long complaintId);
+
+	/**
+	 * asd.
+	 * @param hashUnique a.
+	 * @return a.
+	 */
+	SaleComplaint findByHash(String hashUnique);
 }

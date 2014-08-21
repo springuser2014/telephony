@@ -7,4 +7,11 @@ import telephony.core.entity.jpa.Complaint;
  */
 public interface ComplaintDao extends GenericDao<Complaint> {
 
+	/**
+	 * asd.
+	 * @param hashUnique a.
+	 * @return a.
+	 */
+	Complaint findByHash(String hashUnique);
+
 }

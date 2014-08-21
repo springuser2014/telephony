@@ -1,12 +1,9 @@
 
 package telephony.core.entity.jpa;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -18,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -63,13 +59,29 @@ public abstract class Complaint extends BaseEntity {
 	@Column(name = "unique_hash")
 	private String uniqueHash;
 	
-	@OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
 	private Set<ComplaintComment> comments;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "contact_id", nullable = false)
 	private Contact contact;
 	
+	
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public Set<ComplaintComment> getComments() {
+		return comments;
+	}
+
+	/**
+	 * asd.
+	 * @param comments a.
+	 */
+	public void setComments(Set<ComplaintComment> comments) {
+		this.comments = comments;
+	}
 
 	/**
 	 * asd.
@@ -197,5 +209,14 @@ public abstract class Complaint extends BaseEntity {
 	 */
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
+	}
+
+	/**
+	 * asd.
+	 * @param complaintComment a.
+	 */
+	public void addComment(ComplaintComment complaintComment) {
+		
+		this.comments.add(complaintComment);
 	}
 }
