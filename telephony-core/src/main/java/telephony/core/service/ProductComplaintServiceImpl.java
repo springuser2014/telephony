@@ -2,9 +2,13 @@ package telephony.core.service;
 
 import java.util.Collection;
 
+import com.google.inject.persist.Transactional;
+
 import telephony.core.dao.ProductComplaintDao;
+import telephony.core.dao.SaleComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ProductComplaint;
+import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.bean.Session;
 import telephony.core.service.impl.AbstractBasicService;
 import telephony.core.service.impl.AbstractComplaintService;
@@ -33,59 +37,87 @@ implements ProductComplaintService {
 		// TODO Auto-generated constructor stub
 	}
 
+
+	@Transactional
 	@Override
 	public void report(Session session, ProductComplaint complaint) {
-		// TODO Auto-generated method stub
 		
+		// TODO session's validation
+		
+		dao().save(complaint);		
 	}
 
+	@Transactional
 	@Override
 	public Complaint update(Session session, ProductComplaint complaint) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// TODO session's validation
+		
+		return dao().saveOrUpdate(complaint);
 	}
 
+	@Transactional
 	@Override
-	public Collection<ProductComplaint> update(Session session,
-			Collection<ProductComplaint> complaints) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<ProductComplaint> update(Session session, Collection<ProductComplaint> complaints) {
+		
+		// TODO session's validation
+		
+		return dao().saveOrUpdate(complaints);
 	}
 
+	@Transactional
 	@Override
 	public void markAsInProgress(Session session, long complaintId) {
-		// TODO Auto-generated method stub
+
+		// TODO session's validation
 		
+		dao().markAsInProgress(complaintId);
 	}
 
+
+	@Transactional
 	@Override
 	public void markAsAccepted(Session session, long complaintId) {
-		// TODO Auto-generated method stub
-		
+	
+		// TODO session's validation
+
+		dao().markAsAccepted(complaintId);
 	}
 
+	@Transactional
 	@Override
 	public void markAsRejected(Session session, long complaintId) {
-		// TODO Auto-generated method stub
-		
+
+		// TODO session's validation
+
+		dao().markAsRejected(complaintId);
 	}
 
+	@Transactional
 	@Override
 	public void markAsResolved(Session session, long complaintId) {
-		// TODO Auto-generated method stub
-		
+
+		// TODO session's validation
+
+		dao().markAsResolved(complaintId);		
 	}
 
+	@Transactional
 	@Override
 	public void removeById(Session session, long complaintId) {
-		// TODO Auto-generated method stub
 		
+		// TODO session's validation
+		
+		dao().removeById(complaintId);		
 	}
 
+	@Transactional
 	@Override
 	public void removeByIds(Session session, Collection<Long> complaintIds) {
-		// TODO Auto-generated method stub
+
+		// TODO session's validation
 		
+		dao().removeByIds(complaintIds);
 	}
 	
 }
