@@ -37,7 +37,7 @@ To prepare an completed development environment we also need:
 
 [List of upcoming features](https://github.com/pawelhenek/telephony/issues)
 
-# Testing
+# Testing configuration
 
 To launch tests it is required to prepare corresponding databases and configurations:
 
@@ -98,8 +98,3 @@ Of course tomcat-users.xml should like similar to:
 
 
 We need to add this at the beginning of the file to enable deployment by jmx.
-
-Stay tuned!
-
-Cheers 
-Paul
