@@ -12,6 +12,7 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.TaxDao;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.service.TaxService;
+import telephony.core.service.bean.Session;
 
 /**
  * asd.
@@ -33,7 +34,7 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public void addTax(Tax tax) {		
+	public void add(Session session, Tax tax) {		
 		logger.debug("TaxServiceImpl.addTax starts");
 		
 		taxDao.saveOrUpdate(tax);
@@ -41,7 +42,7 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public Tax findById(Long id) {
+	public Tax findById(Session session, Long id) {
 		logger.debug("TaxServiceImpl.findById starts");
 		
 		return taxDao.findById(id);
@@ -49,7 +50,7 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public Collection<Tax> findInDateRange(Date from, Date to) {
+	public Collection<Tax> findInDateRange(Session session, Date from, Date to) {
 		logger.debug("TaxServiceImpl.findInDateRange starts");
 		logger.debug("params : [ from : {}, to : {} ]", from, to);
 		
@@ -58,7 +59,7 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public Collection<Tax> update(Collection<Tax> taxesToUpdate) {
+	public Collection<Tax> update(Session session, Collection<Tax> taxesToUpdate) {
 		logger.debug("TaxServiceImpl.update starts");
 		logger.debug("params : [ numberOfElements : {} ] ", taxesToUpdate.size());
 		
@@ -67,14 +68,14 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public void delete(Collection<Tax> taxesToDelete) {
+	public void remove(Session session, Collection<Tax> taxesToDelete) {
 		logger.debug("TaxServiceImpl.delete starts");
 		logger.debug("params : [ numberOfElements : {} ] ", taxesToDelete.size());
 		
 	}
 
 	@Override
-	public Tax update(Tax tax) {
+	public Tax update(Session session, Tax tax) {
 		logger.debug("TaxServiceImpl.update starts");
 		logger.debug("params : [ tax : {} ] ", tax);
 				
@@ -83,7 +84,7 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public void delete(Tax taxToDelete) {
+	public void remove(Session session, Tax taxToDelete) {
 		logger.debug("TaxServiceImpl.delete starts");
 		logger.debug("params : [ tax : {} ]", taxToDelete);
 		
@@ -91,7 +92,7 @@ implements TaxService {
 	}
 
 	@Override
-	public Collection<Tax> findByIds(Collection<Long> ids) {
+	public Collection<Tax> findByIds(Session session, Collection<Long> ids) {
 		logger.debug("TaxServiceImpl.findByIds starts");
 		logger.debug("params : [ ids : {} ]", ids);
 

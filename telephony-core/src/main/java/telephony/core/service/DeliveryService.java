@@ -4,6 +4,8 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
+import telephony.core.query.filter.DeliveryFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -12,11 +14,9 @@ import telephony.core.service.exception.SessionServiceException;
  */
 public interface DeliveryService extends BasicService<Delivery> {
 
-
     /**
      * asd.
-     * @param username asd.
-     * @param sessionId  asd.
+     * @param session TODO
      * @param newDelivery asd.
      * @param products asd.
      * @param storeId asd.
@@ -24,53 +24,49 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @throws SessionServiceException 
      * @throws DeliveryServiceException 
      */
-    void addNewDelivery(
-        String username, String sessionId,
-        Delivery newDelivery, List<Product> products, Long storeId, Long contactId
-    ) throws SessionServiceException, DeliveryServiceException;
+    void add(Session session, Delivery newDelivery,
+        List<Product> products, Long storeId, Long contactId)
+    		throws SessionServiceException, DeliveryServiceException;
 
     /**
      * as.
-     * @param username ads.
-     * @param sessionId asd.
+     * @param session TODO
+     * @param filters TODO
      * @return asd.
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    List<Delivery> fetchAllDeliveries(String username, String sessionId)
+    List<Delivery> find(Session session, DeliveryFilterCriteria filters)
     		throws SessionServiceException, DeliveryServiceException;
     
     /**
      * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * @param session TODO
      * @param delvieryToUpdate asd.
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    void updateDelivery(String username, String sessionId, Delivery delvieryToUpdate)
+    void update(Session session, Delivery delvieryToUpdate)
     	throws SessionServiceException, DeliveryServiceException;
 
     /**
      * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * @param session TODO
      * @param deliveryToDelete asd.
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    void delete(String username, String sessionId, Delivery deliveryToDelete)
+    void delete(Session session, Delivery deliveryToDelete)
     	throws SessionServiceException, DeliveryServiceException;
 
     /**
      * asd.
-     * @param username asd.
-     * @param sessionId asd.
+     * @param session TODO
      * @param deliveryId ads.
      * @return asd.
      * @throws DeliveryServiceException 
      * @throws SessionServiceException 
      */
-	Delivery findById(String username, String sessionId, Long deliveryId) 
+	Delivery findById(Session session, Long deliveryId) 
 			throws SessionServiceException, DeliveryServiceException;
 }

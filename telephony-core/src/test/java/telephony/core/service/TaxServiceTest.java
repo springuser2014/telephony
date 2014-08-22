@@ -1,6 +1,7 @@
 package telephony.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -9,15 +10,15 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Tax;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -51,7 +52,7 @@ public class TaxServiceTest extends BaseCoreTest {
 		long taxesBefore = taxService.count();
 		
 		// when
-		taxService.addTax(tax);
+		taxService.add(null, tax);
 		long taxesAfter = taxService.count();
 		
 		// then
@@ -78,8 +79,11 @@ public class TaxServiceTest extends BaseCoreTest {
 						.withMinuteOfHour(0)
 						.withSecondOfMinute(0)
 						.withMillisOfSecond(0).toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		
 		// when
-		Tax tax = taxService.findById(id);
+		Tax tax = taxService.findById(session, id);
 		
 		// then
 		assertNotNull(tax);
@@ -106,9 +110,11 @@ public class TaxServiceTest extends BaseCoreTest {
 					.withMinuteOfHour(0)
 					.withSecondOfMinute(0)
 					.withMillisOfSecond(0).toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
-		Collection<Tax> taxes = taxService.findInDateRange(from, to);
+		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
 		
 		// then
 		assertEquals(taxes.size(), 5);		
@@ -127,9 +133,10 @@ public class TaxServiceTest extends BaseCoreTest {
 					.withMillisOfSecond(0).toDate();
 
 		Date to = null;
-
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		
 		// when
-		Collection<Tax> taxes = taxService.findInDateRange(from, to);
+		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
 		
 		// then
 		assertEquals(taxes.size(), 4);		
@@ -148,9 +155,11 @@ public class TaxServiceTest extends BaseCoreTest {
 					.withMinuteOfHour(0)
 					.withSecondOfMinute(0)
 					.withMillisOfSecond(0).toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
-		Collection<Tax> taxes = taxService.findInDateRange(from, to);
+		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
 		
 		// then
 		assertEquals(taxes.size(), 2);		
@@ -163,9 +172,11 @@ public class TaxServiceTest extends BaseCoreTest {
 		// given
 		Date from = null;
 		Date to = null;
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
-		Collection<Tax> taxes = taxService.findInDateRange(from, to);
+		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
 		
 		// then
 		assertEquals(taxes.size(), 7);		
@@ -178,14 +189,15 @@ public class TaxServiceTest extends BaseCoreTest {
 	public void update_tax() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 2;
-		Tax taxBefore = taxService.findById(id);
+		Tax taxBefore = taxService.findById(session, id);
 		double rateBefore = taxBefore.getRate();
 		double rateAfter = rateBefore * 1.5;
 
 		// when
 		taxBefore.setRate(rateAfter);
-		Tax taxAfter = taxService.update(taxBefore);
+		Tax taxAfter = taxService.update(session, taxBefore);
 		
 		// then
 		assertTrue(taxAfter.getRate() == rateAfter);
@@ -197,12 +209,13 @@ public class TaxServiceTest extends BaseCoreTest {
 	public void delete_tax() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 2;
-		Tax taxToDelete = taxService.findById(id);
+		Tax taxToDelete = taxService.findById(session, id);
 		long before = taxService.count();
 		
 		// when
-		taxService.delete(taxToDelete);
+		taxService.remove(session, taxToDelete);
 		long after = taxService.count();
 		
 		// then

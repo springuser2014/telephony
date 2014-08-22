@@ -3,6 +3,7 @@ package telephony.core.service;
 import java.util.List;
 
 import telephony.core.entity.jpa.Role;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -13,48 +14,41 @@ public interface RoleService extends BasicService<Role> {
 
 	/**
 	 * asd.
-	 * @param username asd.
-	 * @param sessionId asd.
+	 * @param session TODO
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	List<Role> fetchAll(String username, String sessionId) 
+	List<Role> find(Session session) 
 			throws SessionServiceException;
-	
 	
 	/**
 	 * asd.
-	 * @param username asd.
-	 * @param sessionId asd. 
+	 * @param session TODO
 	 * @param newrole asd.
 	 * @throws SessionServiceException asd.
 	 * @throws RoleServiceException asd.
 	 */
-	void add(String username, String sessionId, Role newrole)
+	void add(Session session, Role newrole)
 		throws SessionServiceException, RoleServiceException;
 	
 	/**
 	 * asd.
-	 * @param username asd.
-	 * @param sessionId asd.
+	 * @param session TODO
 	 * @param roleToDelete asd.
 	 * @throws SessionServiceException asd.
 	 * @throws RoleServiceException asd.
 	 */
-	void delete(String username, String sessionId, Role roleToDelete) 
+	void delete(Session session, Role roleToDelete) 
 		throws SessionServiceException, RoleServiceException;
 
 
 	/**
 	 * asd.
-	 * @param username TODO
-	 * @param sessionId TODO
+	 * @param session TODO
 	 * @param string asd.
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	Role fetchByLabel(String username, String sessionId, String string) 
+	Role findByLabel(Session session, String string) 
 			throws SessionServiceException;
-	
-	
 }

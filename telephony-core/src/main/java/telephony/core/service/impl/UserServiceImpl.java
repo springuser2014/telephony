@@ -38,13 +38,12 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      */
     @Override
     @Transactional
-    public final List<User> findAllUsers(String username, String sessionId) 
+    public final List<User> find(Session session) 
     		throws SessionServiceException {
        
     	logger.debug("UserServiceImpl.findAllUsers starts");
         
-        Session sessionToValidate = Session.create(username, sessionId);
-        sessionService.validate(sessionToValidate);
+        sessionService.validate(session);
 
         List<User> res = usersDao.find();
 
@@ -58,13 +57,12 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      */
 	@Override
 	@Transactional
-	public List<User> findUsersByStoreId(String username, String sessionId,
-			Long storeId) throws SessionServiceException {
+	public List<User> findUsersByStoreId(Session session, Long storeId) 
+			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.findUsersByStoreId starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		List<User> res = usersDao.findByStoreId(storeId);
 		
@@ -78,13 +76,12 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      */
 	@Override
 	@Transactional
-	public void deleteUserById(String username, String sessionId, User user)
+	public void deleteUserById(Session session, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.deleteUserById starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 			
 		usersDao.remove(user);
 		
@@ -95,36 +92,28 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
      */
 	@Override
 	@Transactional
-	public void addUser(String username, String sessionId, User user)
+	public void addUser(Session session, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.addUser starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		usersDao.saveOrUpdate(user);
 	}
 
-	/**
-     * {@inheritDoc}
-     */
 	@Override
 	@Transactional
-	public void updateUser(String username, String sessionId, User user)
+	public void updateUser(Session session, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.updateUser starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		usersDao.saveOrUpdate(user);
 	}
 
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Override
 	@Transactional
 	public long count() {
@@ -132,12 +121,10 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		return usersDao.count();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
 	@Transactional
-	public User findByName(String username) {
+	public User findByName(Session session, String username) {
 		logger.debug("UserServiceImpl.findByName starts");		
 		logger.debug("params : [ username : {} ]", username);
 
@@ -145,19 +132,15 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		return usersDao.findByName(username);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public void addRoles(String username, String sessionId, User user,
-			List<Role> rolesToAdd) throws SessionServiceException {
+	public void addRoles(Session session, User user, List<Role> rolesToAdd) 
+			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
 		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {username, sessionId, user, rolesToAdd});
+				new Object[] {session, user, rolesToAdd});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		for (Role r : rolesToAdd) {
@@ -169,38 +152,30 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		usersDao.saveOrUpdate(user);
 	}
 
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Override
 	@Transactional
-	public void deleteRoles(String username, String sessionId, User user,
-			Set<Role> rolesToDelete) throws SessionServiceException {
+	public void deleteRoles(Session session, User user, Set<Role> rolesToDelete) 
+			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {username, sessionId, user, rolesToDelete});
+		logger.debug("params : [ session : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {session, user, rolesToDelete});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		user.getRoles().removeAll(rolesToDelete);
 		usersDao.saveOrUpdate(user);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public void addStores(String username, String sessionId, User user,
-			List<Store> storesToAdd) throws SessionServiceException {
+	public void addStores(Session session, User user, List<Store> storesToAdd) 
+			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {username, sessionId, user, storesToAdd});
+		logger.debug("params : [ session : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {session, user, storesToAdd});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		for (Store s : storesToAdd) {
@@ -212,19 +187,15 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		usersDao.saveOrUpdate(user);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */	
 	@Override
 	@Transactional
-	public void deleteStores(String username, String sessionId, User user,
-			Set<Store> storeToDelete) throws SessionServiceException {
+	public void deleteStores(Session session, User user, Set<Store> storeToDelete) 
+			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {username, sessionId, user, storeToDelete});
+		logger.debug("params : [ session : {}, user : {}, rolesToAdd : {}]", 
+				new Object[] {session, user, storeToDelete});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		user.getAllowedShops().removeAll(storeToDelete);

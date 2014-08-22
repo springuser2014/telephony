@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.core.query.filter;
 
 import java.util.Date;
 
@@ -7,9 +7,10 @@ import telephony.core.entity.jpa.ProductStatus;
 /**
  * asd.
  */
-public class ProductQueryCriteria {
-	private String imei;
+public class ProductFilterCriteria 
+extends AbstractFilterCriteria<ProductFilterCriteria> {
 	
+	private String imei;	
 	private String producer;
 	private String model;
 	private String color;
@@ -20,8 +21,16 @@ public class ProductQueryCriteria {
 	
 	/**
 	 * asd.
+	 * @return asd.
 	 */
-	public ProductQueryCriteria() {
+	public static ProductFilterCriteria create() {
+		return new ProductFilterCriteria();
+	}
+	
+	/**
+	 * asd.
+	 */
+	private ProductFilterCriteria() {
 		
 	}
 
@@ -36,7 +45,7 @@ public class ProductQueryCriteria {
 	 * @param deliveryDateEnd asd.
 	 * @param status as.
 	 */
-	public ProductQueryCriteria(String imei, String producer, String model,
+	public ProductFilterCriteria(String imei, String producer, String model,
 			String color, Long storeId, Date deliveryDateStart,
 			Date deliveryDateEnd, ProductStatus status) {
 		this.imei = imei;

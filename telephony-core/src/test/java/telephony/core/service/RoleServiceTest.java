@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,11 +17,11 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
-import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
@@ -44,11 +43,10 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void fetchAllRoles() throws SessionServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<Role> roles = roleService.fetchAll(username, sessionId);
+		List<Role> roles = roleService.find(session);
 		
 		// then
 		assertTrue("should return 3 roles", roles.size() == 3);
@@ -59,8 +57,7 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void addingNewRole() throws SessionServiceException, RoleServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		Role newRole = new Role();
 		newRole.setName("nowa rola");
@@ -68,11 +65,11 @@ public class RoleServiceTest extends BaseCoreTest {
 		newRole.setUsers(new HashSet<User>());
 		
 		// when
-		List<Role> lstBefore = roleService.fetchAll(username, sessionId);
-		roleService.add(username, sessionId, newRole);
+		List<Role> lstBefore = roleService.find(session);
+		roleService.add(session, newRole);
 		
 		// then
-		List<Role> lstAfter = roleService.fetchAll(username, sessionId);
+		List<Role> lstAfter = roleService.find(session);
 		assertTrue("should return new role", lstAfter.size() - lstBefore.size() == 1);
 	}
 	
@@ -82,13 +79,12 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void deletingExisitingRole() throws SessionServiceException, RoleServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Role roleToDelete = roleService.fetchByLabel(username, sessionId, "salesman");
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Role roleToDelete = roleService.findByLabel(session, "salesman");
 		long countBefore = roleService.count();
 		
 		// when
-		roleService.delete(username, sessionId, roleToDelete);
+		roleService.delete(session, roleToDelete);
 		long countAfter = roleService.count();
 		
 		// then

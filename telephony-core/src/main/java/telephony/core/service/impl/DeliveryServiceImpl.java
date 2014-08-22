@@ -1,6 +1,5 @@
 package telephony.core.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
@@ -55,15 +55,13 @@ public class DeliveryServiceImpl
      */
     @Transactional
     @Override
-    public void addNewDelivery(String username, String sessionId, 
-    		Delivery newDelivery, List<Product> products, Long storeId, Long contactId)
+    public void add(Session session, Delivery newDelivery, 
+    		List<Product> products, Long storeId, Long contactId)
     		throws SessionServiceException, DeliveryServiceException {
     	
         logger.debug("DeliveryServiceImpl.addNewDelivery starts");        
-		logger.debug("params : [username : {}, sessionId : {}, newDelivery : {}]", 
-				new Object[] {username, sessionId, newDelivery});
+		logger.debug("params : [session : {}, newDelivery : {}]",session, newDelivery);
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		Contact contact = contactsDao.findById(contactId);
@@ -94,14 +92,12 @@ public class DeliveryServiceImpl
      */
     @Override
     @Transactional
-    public List<Delivery> fetchAllDeliveries(String username, String sessionId)
+    public List<Delivery> find(Session session, DeliveryFilterCriteria filters)
     		throws SessionServiceException, DeliveryServiceException{
         
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");        
-		logger.debug("params : [username : {}, sessionId : {}]", 
-				new Object[] {username, sessionId});
+		logger.debug("params : [session : {}, filters : {}]");
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
         List<Delivery> res = deliveriesDao.find();
@@ -125,18 +121,16 @@ public class DeliveryServiceImpl
      */
 	@Transactional
 	@Override
-	public void updateDelivery(String username, String sessionId, Delivery delvieryToUpdate) 
+	public void update(Session session, Delivery deliveryToUpdate) 
 			throws SessionServiceException,
 			DeliveryServiceException {
 		
 		logger.debug("DeliveryServiceImpl.updateDelivery starts");        
-		logger.debug("params : [username : {}, sessionId : {}]", 
-				new Object[] {username, sessionId});
+		logger.debug("params : [session : {}, delivery: {} ]", session, deliveryToUpdate);
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
-		deliveriesDao.saveOrUpdate(delvieryToUpdate);
+		deliveriesDao.saveOrUpdate(deliveryToUpdate);
 	}
 
     /**
@@ -144,14 +138,12 @@ public class DeliveryServiceImpl
      */
 	@Transactional
 	@Override
-	public void delete(String username, String sessionId, Delivery delvieryToDelete) 
+	public void delete(Session session, Delivery delvieryToDelete) 
 		throws SessionServiceException, DeliveryServiceException {
 		
 		logger.debug("DeliveryServiceImpl.delete starts");        
-		logger.debug("params : [username : {}, sessionId : {}]", 
-				new Object[] {username, sessionId});
+		logger.debug("params : [ session : {}, delivery : {} ]", session, delvieryToDelete);
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		deliveriesDao.remove(delvieryToDelete);			
@@ -162,14 +154,12 @@ public class DeliveryServiceImpl
 	 */
 	@Transactional
 	@Override
-	public Delivery findById(String username, String sessionId, Long deliveryId) 
+	public Delivery findById(Session session, Long deliveryId) 
 			throws SessionServiceException, DeliveryServiceException {
 		
 		logger.debug("DeliveryServiceImpl.findById starts");        
-		logger.debug("params : [username : {}, sessionId : {}, deliveryId : {} ]", 
-				new Object[] {username, sessionId});
+		logger.debug("params : [ session : {}, deliveryId : {} ]", session, deliveryId);
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		Delivery delviery = deliveriesDao.findById(deliveryId);

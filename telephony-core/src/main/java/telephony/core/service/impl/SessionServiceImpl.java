@@ -19,7 +19,8 @@ import com.google.inject.persist.Transactional;
  * Implementation of basic SessionService functionalities.
  */
 public class SessionServiceImpl
-    extends AbstractBasicService implements SessionService {   
+extends AbstractBasicService 
+implements SessionService {   
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	

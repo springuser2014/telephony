@@ -3,15 +3,10 @@ package telephony.core.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.constraints.AssertTrue;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,13 +19,13 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.StoreFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
-import telephony.core.util.StringGenerator;
 import telephony.core.util.StringGeneratorImpl;
 
 import com.google.inject.Inject;
-import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
@@ -57,9 +52,8 @@ public class UserServiceTest extends BaseCoreTest {
 	public void testUpdate() throws SessionServiceException, UserServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		User userToEdit = userService.findByName(TestData.USER2_NAME);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		User userToEdit = userService.findByName(session, TestData.USER2_NAME);
 		String newSessionId = new StringGeneratorImpl().nextSessionId();	
 		
 		assertTrue("the old sessionId and the new one should be different", 
@@ -67,10 +61,10 @@ public class UserServiceTest extends BaseCoreTest {
 		
 		// when
 		userToEdit.setSessionId(newSessionId);
-		userService.updateUser(username, sessionId, userToEdit);
+		userService.updateUser(session, userToEdit);
 		
 		// then
-		User userAfterEdit = userService.findByName(TestData.USER2_NAME);
+		User userAfterEdit = userService.findByName(session, TestData.USER2_NAME);
 		
 		assertTrue("after edit sessionId should be changed",
 				userAfterEdit.getSessionId().equals(newSessionId));
@@ -81,8 +75,7 @@ public class UserServiceTest extends BaseCoreTest {
 	public void testAddingNewUser() throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		User user = new User();
 		user.setEmail("any@mail.com");
@@ -92,9 +85,9 @@ public class UserServiceTest extends BaseCoreTest {
 		user.setIsActive(true);
 		
 		// when
-		userService.addUser(username, sessionId, user);
+		userService.addUser(session, user);
 		
-		User addedUser = userService.findByName("any@mail.com");
+		User addedUser = userService.findByName(session, "any@mail.com");
 		
 		// then
 		assertTrue("Should create and return a new user", addedUser != null);
@@ -106,13 +99,12 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		User user = userService.findByName(TestData.USER4_NAME);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		User user = userService.findByName(session, TestData.USER4_NAME);
 		long countAfter = -1, countBefore = userService.count();
 		
 		// when
-		userService.deleteUserById(username, sessionId, user);		
+		userService.deleteUserById(session, user);
 		countAfter = userService.count();
 		
 		// then
@@ -125,12 +117,10 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<User> lst = userService.findAllUsers(username, sessionId);
+		List<User> lst = userService.find(session);
 		
 		// then
 		assertTrue("Should find all 4 users", lst.size() == 4);
@@ -142,12 +132,11 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long storeId = 2L; // TODO : change 'byStore' not 'byStoreId'
 		
 		// when
-		List<User> lst = userService.findUsersByStoreId(username, sessionId, storeId);
+		List<User> lst = userService.findUsersByStoreId(session, storeId);
 		
 		// then
 		assertTrue("asd", lst.size() == 2);
@@ -159,17 +148,16 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 	
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 				
-		User user = userService.findByName(username2);
-		List<Role> rolesToAdd = roleService.fetchAll(username, sessionId);
+		User user = userService.findByName(session, username2);
+		List<Role> rolesToAdd = roleService.find(session);
 		userService.getEntityManager().refresh(user);
 		
 		assertEquals(1, user.getRoles().size());
 		// when
-		userService.addRoles(username, sessionId, user, rolesToAdd);
+		userService.addRoles(session, user, rolesToAdd);
 		
 
 		// then
@@ -182,18 +170,17 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 				
-		User user = userService.findByName(username2);
+		User user = userService.findByName(session, username2);
 		user.setRoles(new HashSet<Role>());
 		
 		// when
-		userService.updateUser(username, sessionId, user);
+		userService.updateUser(session, user);
 		
 		// then
-		User user2 = userService.findByName(username2);
+		User user2 = userService.findByName(session, username2);
 		assertEquals(user2.getRoles().size(), 0);
 	}
 	
@@ -203,18 +190,16 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
-		
-		User user = userService.findByName(username2);
+		User user = userService.findByName(session, username2);
 		Set<Role> rolesToDelete = user.getRoles();
 		
 		// when
-		userService.deleteRoles(username, sessionId, user, rolesToDelete);
+		userService.deleteRoles(session, user, rolesToDelete);
 		
 		// then
-		User user2 = userService.findByName(username2);
+		User user2 = userService.findByName(session, username2);
 		assertEquals(user2.getRoles().size(), 0);
 	}
 	
@@ -225,41 +210,39 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
+		StoreFilterCriteria sfc = StoreFilterCriteria.create();
 		
-		User user = userService.findByName(username2);
-		List<Store> storesToAdd = storeService.fetchAllStores(username, sessionId);
+		User user = userService.findByName(session, username2);
+		List<Store> storesToAdd = storeService.find(session, sfc);
 		userService.getEntityManager().refresh(user);
 		
 		assertEquals(2, user.getAllowedShops().size());
 		// when
-		userService.addStores(username, sessionId, user, storesToAdd);
+		userService.addStores(session, user, storesToAdd);
 		
 		// then
 		assertEquals(storesToAdd.size(), user.getAllowedShops().size());
 	}
 	
-
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testRemovingUserFromStore() 
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		
-		User user = userService.findByName(username2);
+		User user = userService.findByName(session, username2);
 		user.setAllowedShops(new HashSet<Store>());
 		
 		// when
-		userService.updateUser(username, sessionId, user);
+		userService.updateUser(session, user);
 		
 		// then
-		User user2 = userService.findByName(username2);
+		User user2 = userService.findByName(null, username2);
 		assertEquals(0, user2.getAllowedShops().size());	
 	}
 	
@@ -269,21 +252,18 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		
-		User user = userService.findByName(username2);
+		User user = userService.findByName(session, username2);
 		Set<Store> storesToDelete = user.getAllowedShops();
 		
 		// when
-		userService.deleteStores(username, sessionId, user, storesToDelete);
+		userService.deleteStores(session, user, storesToDelete);
 		
 		// then
-		User user2 = userService.findByName(username2);
+		User user2 = userService.findByName(session, username2);
 		assertEquals(0, user2.getAllowedShops().size());	
 	}
 
 }
-
-

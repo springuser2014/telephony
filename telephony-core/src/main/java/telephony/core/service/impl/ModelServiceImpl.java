@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.ModelDao;
 import telephony.core.entity.jpa.Model;
 import telephony.core.service.ModelService;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -27,7 +28,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public Collection<Model> update(Collection<Model> coll) {
+	public Collection<Model> update(Session session, Collection<Model> coll) {
 
 		logger.debug("ModelServiceImpl.update starts");        
 		logger.debug("params : [ models: {} ]", coll.size());
@@ -37,7 +38,7 @@ implements ModelService {
 
 	@Override
 	@Transactional
-	public void removeById(Long id) {
+	public void removeById(Session session, Long id) {
 
 		logger.debug("ModelServiceImpl.remove starts");        
 		logger.debug("params : [ id: {} ]", id);
@@ -47,7 +48,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public void removeById(Collection<Long> ids) {
+	public void removeById(Session session, Collection<Long> ids) {
 
 		logger.debug("ModelServiceImpl.remove starts");        
 		logger.debug("params : [ ids: {} ]", ids.size());
@@ -57,7 +58,7 @@ implements ModelService {
 
 	@Transactional
 	@Override
-	public Model update(Model model) {
+	public Model update(Session session, Model model) {
 	
 		logger.debug("ModelServiceImpl.update starts");        
 		logger.debug("params : [ model: {} ]", model);
@@ -67,7 +68,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public Model findByLabel(String label) {
+	public Model findByLabel(Session session, String label) {
 
 		logger.debug("ModelServiceImpl.findByLabel starts");        
 		logger.debug("params : [ label: {} ]", label);
@@ -83,7 +84,7 @@ implements ModelService {
 
 	@Override
 	@Transactional
-	public Model findById(long id) {
+	public Model findById(Session session, long id) {
 		logger.debug("ModelServiceImpl.findById starts");        
 		logger.debug("params : [ id: {} ]", id);
 
@@ -92,7 +93,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public Collection<Model> findByIds(List<Long> ids) {
+	public Collection<Model> findByIds(Session session, List<Long> ids) {
 		logger.debug("ModelServiceImpl.findByIds starts");        
 		logger.debug("params : [ ids: {} ]", ids.size());
 
@@ -101,7 +102,7 @@ implements ModelService {
 
 	@Transactional
 	@Override
-	public void remove(Model model) {
+	public void remove(Session session, Model model) {
 		logger.debug("ModelServiceImpl.remove starts");        
 		logger.debug("params : [ model: {} ]", model);
 

@@ -20,7 +20,8 @@ import telephony.core.service.exception.SessionServiceException;
  * Roles management service.
  */
 public class RoleServiceImpl
-    extends AbstractBasicService<Role> implements RoleService {
+extends AbstractBasicService<Role>
+implements RoleService {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -37,73 +38,53 @@ public class RoleServiceImpl
 		return rolesDao.count();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Transactional
 	@Override
-	public List<Role> fetchAll(String username, String sessionId) 
+	public List<Role> find(Session session) 
 			throws SessionServiceException {
 		
 		logger.debug("RoleServiceImpl.fetchAll starts");
-		logger.debug("params : [ username : {}, sessionId : {} ]", username, sessionId);
+		logger.debug("params : [ session : {} ]", session);
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		return rolesDao.find();		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Transactional
 	@Override
-	public void add(String username, String sessionId, Role newrole)
+	public void add(Session session, Role newrole)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.add starts");
-		logger.debug("params : [ username : {}, sessionId : {}, newrole : {} ]",
-				username, sessionId, newrole);
+		logger.debug("params : [ session : {}, newrole : {} ]", session, newrole);
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
-		rolesDao.save(newrole);
-		
+		rolesDao.save(newrole);		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Transactional
 	@Override
-	public void delete(String username, String sessionId, Role roleToDelete)
+	public void delete(Session session, Role roleToDelete)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.delete starts");
-		logger.debug("params : [ username : {}, sessionId : {}, roleToDelete : {}]", 
-				username, sessionId, roleToDelete);
+		logger.debug("params : [ session : {}, roleToDelete : {}]", session, roleToDelete);
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		rolesDao.remove(roleToDelete);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public Role fetchByLabel(String username, String sessionId, String label) 
+	public Role findByLabel(Session session, String label) 
 			throws SessionServiceException {
 		logger.debug("RoleServiceImpl.findByLabel starts");
-		logger.debug("params : [ username : {}, sessionId : {}, label : {}]", 
-				username, sessionId, label);
+		logger.debug("params : [ session : {}, label : {}]", session, label);
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		return rolesDao.findByLabel(label);
 	}

@@ -2,17 +2,13 @@ package telephony.core.service;
 
 import java.util.Collection;
 
-import com.google.inject.persist.Transactional;
-
 import telephony.core.dao.ProductComplaintDao;
-import telephony.core.dao.SaleComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.bean.Session;
-import telephony.core.service.impl.AbstractBasicService;
-import telephony.core.service.impl.AbstractComplaintService;
 import telephony.core.service.impl.AbstractGenericService;
+
+import com.google.inject.persist.Transactional;
 
 /**
  * asd.

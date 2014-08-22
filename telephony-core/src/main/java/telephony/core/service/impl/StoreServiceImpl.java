@@ -19,6 +19,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.core.service.bean.Session;
@@ -36,7 +37,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	implements StoreService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    
     
     @Inject
     private ProductsDao productsDao;
@@ -60,19 +60,17 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
     @Inject
     private RolesDao rolesDao;
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Transactional
-    public List<Store> fetchAllStores(String username, String sessionId) 
+    public List<Store> find(Session session, StoreFilterCriteria filters) 
     		throws SessionServiceException {
 
-        logger.debug("StoreServiceImpl.fetchAllStores starts");
+        logger.info("StoreServiceImpl.fetchAllStores starts");
+		logger.info("params : [session : {} , filters : {} ]", session, filters);
         
-        Session sessionToValidate = Session.create(username, sessionId);
-        sessionService.validate(sessionToValidate);
+        sessionService.validate(session);
 
+        // TODO : use fitlers
         List<Store> stores = storesDao.find();
 
         logger.debug("found {} elements ", stores.size());
@@ -80,91 +78,63 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
         return stores;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-	@Override
+    @Override
 	@Transactional
 	public long count() {
 		
 		return storesDao.count();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public void add(String username, String sessionId, Store store) 
+	public void add(Session session, Store store) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.add starts");
-		logger.debug("params : [username : {}, sessionId : {}, store : {}]", 
-				username, sessionId, store);
+		logger.debug("params : [ session : {}, store : {}]", session, store);
 
-        Session sessionToValidate = Session.create(username, sessionId);
-        sessionService.validate(sessionToValidate);
+        sessionService.validate(session);
 
 		storesDao.save(store);
-		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public Store findByLabel(String username, String sessionId, String storelabel) 
+	public Store findByLabel(Session session, String storelabel) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.findByLabel starts");
-		logger.debug("params : [username : {}, sessionId : {}, storelabel : {}]", 
-				username, sessionId, storelabel);
+		logger.debug("params : [ session : {} , store : {} ]", session, storelabel);
 
-		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		Store store = storesDao.findByLabel(storelabel);
 		
 		return store;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Transactional
 	@Override
-	public void edit(String username, String sessionId, Store storeToEdit) 
+	public void update(Session session, Store storeToEdit) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.edit starts");
-		logger.debug("params : [username : {}, sessionId : {}, storeToEdit : {}]", 
-				username, sessionId, storeToEdit);
+		logger.debug("params : [ session : {}, storeToEdit : {}]", session, storeToEdit);
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		storesDao.saveOrUpdate(storeToEdit);
 	}
 
-	// TODO : refactor
-	/**
-	 * {@inheritDoc}
-	 */
 	@Transactional
 	@Override
-	public void delete(String username, String sessionId, Store storeToDelete) 
+	public void remove(Session session, Store storeToDelete) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.delete starts");
-		logger.debug("params : [username : {}, sessionId : {}, storeToDelete : {}]", 
-				username, sessionId, storeToDelete);
+		logger.debug("params : [ session : {}, storeToDelete : {}]", session, storeToDelete);
 		
-//		getEntityManager().getTransaction().begin();
-		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		List<Sale> sales = salesDao.findByStore(storeToDelete);
 		
@@ -186,7 +156,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		storeToDelete = storesDao.saveOrUpdate(storeToDelete);
 		storesDao.remove(storeToDelete);
 		
-//		getEntityManager().getTransaction().commit();
 	}
 
 	/**
@@ -194,15 +163,14 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	 */
 	@Override
 	@Transactional
-	public void setRequiredRoles(String username, String sessionId, Store store, List<Role> roles)
+	public void setRequiredRoles(Session session, Store store, List<Role> roles)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug(
-		"setRequiredRoles - params : [ username : {}, sessionId : {}, store : {}, roles : {}]", 
-				new Object[] {username, sessionId, store, roles});
+		"setRequiredRoles - params : [ session : {}, store : {}, roles : {}]", 
+				new Object[] {session, store, roles});
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 				
 		Set<Role> rolesSet = new HashSet<Role>();
 		rolesSet.addAll(roles);
@@ -217,32 +185,29 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 	 */
 	@Override
 	@Transactional
-	public List<Role> getRequestRoles(String username, String sessionId, Store store) 
+	public List<Role> getRequestRoles(Session session, Store store) 
 			throws SessionServiceException {
-		logger.debug("getRequestRoles - params : [username : {} , sessionId : {}, store : {}", 
-				new Object[] {username, sessionId, store});
+		logger.debug("getRequestRoles - params : [session: {} , store : {}", 
+				new Object[] {session, store});
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		return rolesDao.findStoreRequiredRoles(store);
 	}
+
 	/**
 	 * {@inheritDoc} 
 	 */
 	@Transactional
 	@Override
-	public Store findById(String username, String sessionId, long moveToStoreId) 
+	public Store findById(Session session, long moveToStoreId) 
 			throws SessionServiceException {
 
-		logger.debug("findById - params : [username : {} , sessionId : {}, storeId : {}", 
-				new Object[] {username, sessionId, moveToStoreId});
+		logger.debug("findById - params : [ session : {}, storeId : {}", 
+				new Object[] {session, moveToStoreId});
 	
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		return storesDao.findById(moveToStoreId);
 	}
-
-	
 }

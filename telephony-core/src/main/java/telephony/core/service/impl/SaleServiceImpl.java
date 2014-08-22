@@ -25,8 +25,9 @@ import com.google.inject.persist.Transactional;
 /**
  * Sales management services.
  */
-public class SaleServiceImpl extends AbstractBasicService<Sale> implements
-		SaleService {
+public class SaleServiceImpl 
+extends AbstractBasicService<Sale> 
+implements SaleService {
 
 	@Inject
 	private SalesDao salesDao;
@@ -45,20 +46,15 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * {@inheritDoc}  
-	 */
 	@Override
 	@Transactional
-	public List<Sale> findAllSales(String username, String sessionId) 
+	public List<Sale> find(Session session) 
 			throws SessionServiceException {
 		 
 		logger.debug("SaleServiceImpl.findAllSales starts");        
-		logger.debug("params : [username : {}, sessionId : {}]", 
-				new Object[] {username, sessionId});
+		logger.debug("params : [ session : {}]", session);
 
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		List<Sale> res = salesDao.find();
 
@@ -67,65 +63,50 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 		return res;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public long count() {
 		return salesDao.count();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public void delete(String username, String sessionId, Sale saleToCancel)
+	public void delete(Session session, Sale saleToCancel)
 			throws SessionServiceException, SaleServiceException {
 		
 
 		logger.debug("SaleServiceImpl.delete starts");        
-		logger.debug("params : [username : {}, sessionId : {}, saleToCancel : {}]", 
-				new Object[] {username, sessionId, saleToCancel});
+		logger.debug("params : [session : {}, saleToCancel : {}]", 
+				new Object[] {session, saleToCancel});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		salesDao.remove(saleToCancel);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public void updateSale(String username, String sessionId, Sale saleToUpdate)
+	public void update(Session session, Sale saleToUpdate)
 			throws SessionServiceException, SaleServiceException {
 		
 		logger.debug("SaleServiceImpl.updateSale starts");        
-		logger.debug("params : [username : {}, sessionId : {}, saleToUpdate: {}]", 
-				new Object[] {username, sessionId, saleToUpdate});
+		logger.debug("params : [ session : {}, saleToUpdate: {}]", 
+				new Object[] {session, saleToUpdate});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		salesDao.saveOrUpdate(saleToUpdate);		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public Sale findById(String username, String sessionId, Long saleId)
+	public Sale findById(Session session, Long saleId)
 			throws SessionServiceException, SaleServiceException {
 	
 		logger.debug("SaleServiceImpl.findById starts");        
-		logger.debug("params : [username : {}, sessionId : {}, saleId : {} ]", 
-				new Object[] {username, sessionId, saleId});
+		logger.debug("params : [ session : {}, saleId : {} ]", 
+				new Object[] { session , saleId});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		Sale sale = salesDao.findById(saleId);
@@ -133,20 +114,16 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
 		return sale;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public void addNewSale(String username, String sessionId, Sale sale,
-			List<Product> products, Long storeId, Long contactId)
+	public void add(Session session, Sale sale, List<Product> products,
+			Long storeId, Long contactId)
 			throws SessionServiceException, SaleServiceException {
 		
 		logger.debug("SaleServiceImpl.addNewSale starts");        
-		logger.debug("params : [username : {}, sessionId : {}, newSale: {}, products : {}, storeId : {}, contactId : {}]", 
-				new Object[] {username, sessionId, sale, products, storeId, contactId});
+		logger.debug("params : [session : {}, newSale: {}, products : {}, storeId : {}, contactId : {}]", 
+				new Object[] {session, sale, products, storeId, contactId});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		Contact contact = contactsDao.findById(contactId);
@@ -170,24 +147,17 @@ public class SaleServiceImpl extends AbstractBasicService<Sale> implements
         logger.debug("SaleServiceImpl.addNewSale ends");	
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
-	public Sale findByLabel(String username, String sessionId, String label) 
+	public Sale findByLabel(Session session, String label) 
 			throws SessionServiceException {
 		
 		logger.debug("SaleServiceImpl.addNewSale starts");        
-		logger.debug("params : [username : {}, sessionId : {}, label: {}]", 
-				new Object[] {username, sessionId, label});
+		logger.debug("params : [ session : {}, label: {}]", 
+				new Object[] {session, label});
 
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		return salesDao.findByLabel(label);
 	}
-	
-	
-
 }

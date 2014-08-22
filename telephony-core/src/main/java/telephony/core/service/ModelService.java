@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.Model;
+import telephony.core.service.bean.Session;
 
 /**
  * asd.
@@ -12,56 +13,64 @@ public interface ModelService extends BasicService<Model> {
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param label a.
 	 * @return a.
 	 */
-	Model findByLabel(String label);
+	Model findByLabel(Session session, String label);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param id a.
 	 * @return d.
 	 */
-	Model findById(long id);
+	Model findById(Session session, long id);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param ids a.
 	 * @return a.
 	 */
-	Collection<Model> findByIds(List<Long> ids);
+	Collection<Model> findByIds(Session session, List<Long> ids);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param model a.
 	 * @return asd.
 	 */
-	Model update(Model model);
+	Model update(Session session, Model model);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param coll a.
 	 * @return ad.
 	 */
-	Collection<Model> update(Collection<Model> coll);
+	Collection<Model> update(Session session, Collection<Model> coll);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param model a.
 	 */
-	void removeById(Long model);
+	void removeById(Session session, Long model);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param model a.
 	 */
-	void removeById(Collection<Long> model);
+	void removeById(Session session, Collection<Long> model);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param model a.
 	 * 
 	 */
-	void remove(Model model);
+	void remove(Session session, Model model);
 
 }

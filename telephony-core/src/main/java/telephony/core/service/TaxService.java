@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import telephony.core.entity.jpa.Tax;
+import telephony.core.service.bean.Session;
 
 /**
  * asd.
@@ -12,57 +13,64 @@ public interface TaxService extends BasicService<Tax> {
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param tax a.
 	 */
-	void addTax(Tax tax);
+	void add(Session session, Tax tax);
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param id a.
 	 * @return a.
 	 */
-	Tax findById(Long id);
+	Tax findById(Session session, Long id);
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param ids a.
 	 * @return a.
 	 */
-	Collection<Tax> findByIds(Collection<Long> ids);
+	Collection<Tax> findByIds(Session session, Collection<Long> ids);
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param from a.
 	 * @param to a. 
 	 * @return asd.
 	 */
-	Collection<Tax> findInDateRange(Date from, Date to);
+	Collection<Tax> findInDateRange(Session session, Date from, Date to);
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param taxesToUpdate a.
 	 * @return a.
 	 */
-	Collection<Tax> update(Collection<Tax> taxesToUpdate);
+	Collection<Tax> update(Session session, Collection<Tax> taxesToUpdate);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param taxesToDelete sad.
 	 */
-	void delete(Collection<Tax> taxesToDelete);
+	void remove(Session session, Collection<Tax> taxesToDelete);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param tax a.
 	 * @return asd.
 	 */
-	Tax update(Tax tax);
+	Tax update(Session session, Tax tax);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param taxToDelete a.
 	 */
-	void delete(Tax taxToDelete);
-	
+	void remove(Session session, Tax taxToDelete);
 	
 }

@@ -24,6 +24,8 @@ import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.Tax;
+import telephony.core.query.filter.DeliveryFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -40,7 +42,6 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 })
 @FlywayTest
 public class DeliveryServiceTest extends BaseCoreTest {
-	
 	
 	@Inject
 	private DeliveryService deliveryService;
@@ -79,7 +80,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	// TODO : move to TestDataBuilder
 	private Model getNokia3310() {
 		
-		Model model = modelService.findByLabel("3310");
+		Model model = modelService.findByLabel(null, "3310");
 		
 		return model;
 	}
@@ -87,7 +88,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	// TODO : move to TestDataBuilder
 	private Model getIphone4S() {
 		
-		Model model = modelService.findByLabel("iphone 4s");
+		Model model = modelService.findByLabel(null, "iphone 4s");
 		
 		return model;
 	}
@@ -111,10 +112,9 @@ public class DeliveryServiceTest extends BaseCoreTest {
 			throws SessionServiceException, DeliveryServiceException, ContactServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Contact contact = contactService.findByLabel(username, sessionId, "leszek");
-		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Contact contact = contactService.findByLabel(session, "leszek");
+		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 
 		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count();
 		long productsAfter = -1, productsBefore = productService.count();		
@@ -128,10 +128,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		products.add(getProductA());
 		products.add(getProductB());
 		
-		deliveryService.addNewDelivery(
-				username, sessionId, 
-				newDelivery, products, 
-				store.getId(), contact.getId()
+		deliveryService.add(
+				session, newDelivery, 
+				products, store.getId(), 
+				contact.getId()
 		);
 		deliveriesAfter = deliveryService.count();
 		productsAfter = productService.count();
@@ -148,16 +148,15 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editingExistingDelivery() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Long deliveryId = 1L;
-		Delivery deliveryToUpdate = deliveryService.findById(username, sessionId, deliveryId);
+		Delivery deliveryToUpdate = deliveryService.findById(session, deliveryId);
 		
 		// when
 		deliveryToUpdate.setLabel("asd asd asd");
-		deliveryService.updateDelivery(username, sessionId, deliveryToUpdate);
+		deliveryService.update(session, deliveryToUpdate);
 		
-		Delivery updated = deliveryService.findById(username, sessionId, deliveryId);
+		Delivery updated = deliveryService.findById(session, deliveryId);
 		
 		// then
 		assertTrue("Should create and return a new user", 
@@ -170,13 +169,12 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void deletingDelivery() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Delivery deliveryToDelete = deliveryService.findById(username, sessionId, 1L);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Delivery deliveryToDelete = deliveryService.findById(session, 1L);
 		long countAfter = -1, countBefore = deliveryService.count();
 		
 		// when
-		deliveryService.delete(username, sessionId, deliveryToDelete);		
+		deliveryService.delete(session, deliveryToDelete);		
 		countAfter = deliveryService.count();
 		
 		// then
@@ -188,13 +186,12 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void fetchingAllDeliveries() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long count = deliveryService.count();
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create();
 		
 		// when
-		List<Delivery> lst = deliveryService.fetchAllDeliveries(username, sessionId);	
-		
+		List<Delivery> lst = deliveryService.find(session, filters);		
 		
 		// then
 		assertTrue("Should return exact number of deliveries ", 

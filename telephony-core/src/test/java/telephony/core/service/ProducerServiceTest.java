@@ -15,7 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Producer;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -55,9 +57,10 @@ public class ProducerServiceTest extends BaseCoreTest {
 		
 		// given
 		String label = "nokia";
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Producer producer = producerService.findByLabel(label);
+		Producer producer = producerService.findByLabel(session, label);
 		
 		// then
 		assertNotNull(producer);
@@ -70,9 +73,10 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		String expected = "nokia";
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Producer producer = producerService.findById(id);
+		Producer producer = producerService.findById(session, id);
 		
 		// then
 		assertNotNull(producer);
@@ -86,9 +90,10 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Collection<Producer> producers = producerService.findById(ids);
+		Collection<Producer> producers = producerService.findById(session, ids);
 		
 		// then
 		assertEquals(producers.size(), 2);		
@@ -102,12 +107,13 @@ public class ProducerServiceTest extends BaseCoreTest {
 		long id = 1;
 		String newLabel = "newlabel";
 		Producer changedProducer = null;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Producer producer = producerService.findById(id);
+		Producer producer = producerService.findById(session, id);
 		producer.setLabel(newLabel);
-		producerService.update(producer);
-		changedProducer = producerService.findByLabel(newLabel);
+		producerService.update(session, producer);
+		changedProducer = producerService.findByLabel(session, newLabel);
 		
 		// then
 		assertNotNull(changedProducer);
@@ -124,18 +130,19 @@ public class ProducerServiceTest extends BaseCoreTest {
 		String newLabel2 = "newlabel2";
 		Producer changedProducer1 = null;
 		Producer changedProducer2 = null;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Producer producer1 = producerService.findById(id1);
-		Producer producer2 = producerService.findById(id2);
+		Producer producer1 = producerService.findById(session, id1);
+		Producer producer2 = producerService.findById(session, id2);
 		
 		producer1.setLabel(newLabel1);
 		producer2.setLabel(newLabel2);
 		Collection<Producer> coll = Arrays.asList(producer1, producer2);
-		producerService.update(coll);
+		producerService.update(session, coll);
 		
-		changedProducer1 = producerService.findByLabel(newLabel1);
-		changedProducer2 = producerService.findByLabel(newLabel2);
+		changedProducer1 = producerService.findByLabel(session, newLabel1);
+		changedProducer2 = producerService.findByLabel(session, newLabel2);
 		
 		// then
 		assertNotNull(changedProducer1);
@@ -153,7 +160,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		long id = 1;
 		
 		// when
-		producerService.removeById(id);
+		producerService.removeById(null, id);
 		
 		// then
 		// exception should arise
@@ -164,12 +171,13 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id3 = 3, id4 = 4;
 		long countBefore = producerService.count();
 		Collection<Long> ids = Arrays.asList(id3, id4);
 		
 		// when
-		producerService.removeById(ids);
+		producerService.removeById(session, ids);
 		long countAfter = producerService.count(); 
 		
 		// then
@@ -181,11 +189,12 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void removeById() {
 	
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 3;
 		long countBefore = producerService.count();
 		
 		// when
-		producerService.removeById(id);
+		producerService.removeById(session, id);
 		long countAfter = producerService.count(); 
 		
 		// then
@@ -195,16 +204,17 @@ public class ProducerServiceTest extends BaseCoreTest {
 	@Test(expected = PersistenceException.class)
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void removeCollectionById_expectConstraint() {
+
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		
 		// when
-		producerService.removeById(ids);
+		producerService.removeById(session, ids);
 		
 		// then
 		// exception should arise	
 	}
 
-		
 }

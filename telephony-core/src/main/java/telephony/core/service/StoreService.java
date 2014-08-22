@@ -2,10 +2,11 @@ package telephony.core.service;
 
 
 import java.util.List;
-import java.util.Set;
 
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.StoreFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -16,89 +17,80 @@ public interface StoreService extends BasicService<Store> {
 
     /**
      * asd.
-     * @param username ad.
-     * @param sessionId asd.
+     * @param session TODO
+     * @param filters TODO
      * @return asd.
      * @throws SessionServiceException  asd.
      */
-    List<Store> fetchAllStores(String username, String sessionId) 
+    List<Store> find(Session session, StoreFilterCriteria filters) 
     		throws SessionServiceException;
 
     /**
      * asd.
-     * @param username asd. 
-     * @param sessionId asd.
-     * @param store aasd. 
+     * @param session TODO
+     * @param store aasd.
      * @throws SessionServiceException 
      */
-	void add(String username, String sessionId, Store store) 
+	void add(Session session, Store store) 
 			throws SessionServiceException;
 
 	/**
 	 * Looks for the store with given label.
-	 * @param username TODO
-	 * @param sessionId TODO
+	 * @param session TODO
 	 * @param storelabel asd.
 	 * @throws SessionServiceException asd.
 	 * @return asd.
 	 */
-	Store findByLabel(String username, String sessionId, String storelabel) 
+	Store findByLabel(Session session, String storelabel) 
 			throws SessionServiceException;
 
 	/**
 	 * asd.
-	 * @param username asd.
-	 * @param sessionId asd.
+	 * @param session TODO
 	 * @param storeToEdit asd.
 	 * @throws SessionServiceException asd.
 	 */
-	void edit(String username, String sessionId, Store storeToEdit) 
+	void update(Session session, Store storeToEdit) 
 			throws SessionServiceException;
 
 	/**
 	 * asd.
-	 * @param username asd.
-	 * @param sessionId asd.
+	 * @param session TODO
 	 * @param storeToDelete asd.
 	 * @throws SessionServiceException 
 	 */
-	void delete(String username, String sessionId, Store storeToDelete) 
+	void remove(Session session, Store storeToDelete) 
 			throws SessionServiceException;
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param store asd.
-	 * @param username asd.
-	 * @param sessionId asd.
 	 * @return asd.
 	 * @throws SessionServiceException  asd.
 	 */
-	List<Role> getRequestRoles(String username, String sessionId, Store store) 
+	List<Role> getRequestRoles(Session session, Store store) 
 			throws SessionServiceException;
 
 
 	/**
 	 * asd.
-	 * @param username asd.
-	 * @param sessionId asd.
+	 * @param session TODO
 	 * @param store asd.
 	 * @param roles as.
 	 * @throws SessionServiceException asd.
 	 * @throws RoleServiceException asd.
 	 */
-	void setRequiredRoles(String username, String sessionId, Store store,
-			List<Role> roles) throws SessionServiceException,
-			RoleServiceException;
+	void setRequiredRoles(Session session, Store store, List<Role> roles) 
+			throws SessionServiceException, RoleServiceException;
 
 	/**
 	 * asd.
-	 * @param username TODO
-	 * @param sessionId TODO
+	 * @param session TODO
 	 * @param moveToStoreId asd.
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	Store findById(String username, String sessionId, long moveToStoreId) 
+	Store findById(Session session, long moveToStoreId) 
 			throws SessionServiceException;
-
 }

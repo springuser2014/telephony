@@ -10,6 +10,7 @@ import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.ContactsDao;
 import telephony.core.entity.jpa.Contact;
+import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
@@ -38,15 +39,13 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 
 	@Override
 	@Transactional
-	public List<Contact> fetchAll(String username, String sessionId)
+	public List<Contact> find(Session session, ContactFilterCriteria filters)
 			throws SessionServiceException, ContactServiceException {
 
 		logger.debug("ContactServiceImpl.fetchAll starts");
-		logger.debug("params : [username : {}, sessionId : {}]", new Object[] {
-				username, sessionId });
+		logger.debug("params : [filters: {}, session : {}]", filters, session);
 
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
 		List<Contact> lst = contactsDao.find();
 		
@@ -57,60 +56,52 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 
 	@Override
 	@Transactional
-	public void addNewContact(String username, String sessionId,
-			Contact newContact) throws SessionServiceException,
-			ContactServiceException {
+	public void add(Session session, Contact newContact) 
+			throws SessionServiceException, ContactServiceException {
 		
 		logger.debug("ContactServiceImpl.addNewContact starts");
-		logger.debug("params : [username : {}, sessionId : {}]", new Object[] {
-				username, sessionId });
+		logger.debug("params : [ session: {}, newContact : {}]", session, newContact);
 
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
 		contactsDao.save(newContact);		
 	}
 
 	@Override
 	@Transactional
-	public void updateContact(String username, String sessionId,
-			Contact contactToUpdate) throws SessionServiceException,
-			ContactServiceException {
+	public void updateContact(Session session, Contact contactToUpdate) 
+			throws SessionServiceException, ContactServiceException {
+		
 		logger.debug("ContactServiceImpl.updateContact starts");
-		logger.debug("params : [username : {}, sessionId : {}]", new Object[] {
-				username, sessionId });
+		logger.debug("params : [ session : {}, contact: {}]", session, contactToUpdate);
 
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
 		contactsDao.saveOrUpdate(contactToUpdate);
 	}
 
 	@Override
 	@Transactional
-	public void deleteContact(String username, String sessionId,
-			Contact contactToDelete) throws SessionServiceException,
-			ContactServiceException {
+	public void deleteContact(Session session, Contact contactToDelete)
+			throws SessionServiceException, ContactServiceException {
+		
 		logger.debug("ContactServiceImpl.deleteContact starts");
-		logger.debug("params : [username : {}, sessionId : {}]", new Object[] {
-				username, sessionId });
+		logger.debug("params : [ session: {}, contact : {}]", session, contactToDelete);
 
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		contactsDao.removeById(contactToDelete.getId());
 	}
 
 	@Override
 	@Transactional
-	public Contact findByLabel(String username, String sessionId, String label)
+	public Contact findByLabel(Session session, String label)
 			throws SessionServiceException, ContactServiceException {
+		
 		logger.debug("ContactServiceImpl.findByLabel starts");
-		logger.debug("params : [username : {}, sessionId : {}]", new Object[] {
-				username, sessionId });
+		logger.debug("params : [username : {}, sessionId : {}]", session, label);
 
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
 		Contact contact = contactsDao.findByLabel(label);
 		return contact;
@@ -118,15 +109,13 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 
 	@Override
 	@Transactional
-	public Contact findById(String username, String sessionId,
-			Long contactToDeleteId) throws SessionServiceException {
+	public Contact findById(Session session, Long contactToDeleteId) 
+			throws SessionServiceException {
 		
 		logger.debug("ContactServiceImpl.findById starts");
-		logger.debug("params : [username : {} , sessionId : {}, contactToDeleteId : {}]",
-			new Object[] { username, sessionId, contactToDeleteId});
+		logger.debug("params : [ sessionId : {}, contact  : {}]", session, contactToDeleteId );
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
 		Contact contact = contactsDao.findById(contactToDeleteId);
 		return contact;

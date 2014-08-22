@@ -1,7 +1,7 @@
 package telephony.core.service;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -9,8 +9,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,6 +21,8 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.ProductFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -49,12 +49,11 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findingProductsByStore() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 		
 		// when
-		List<Product> products = productService.findByStore(username, sessionId, store);
+		List<Product> products = productService.findByStore(session, store);
 		
 		// then
 		assertTrue("should found 24 items", products.size() == 24);
@@ -65,14 +64,12 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllProducts() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 		
 		// when
-		List<Product> lst = 
-				productService.fetchAllProducts(
-						username, sessionId, store.getId(), ProductStatus.IN_STORE
+		List<Product> lst =  productService.fetchAllProducts(
+			session, store.getId(), ProductStatus.IN_STORE
 		);
 		
 		// then
@@ -88,7 +85,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		// when
-		List<String> lst = productService.fetchAllProducersInUse(username, sessionId);
+		List<String> lst = productService.fetchAllProducersInUse(null);
 		
 		List<String> expected = new ArrayList<String>();
 		expected.add("apple");
@@ -106,11 +103,10 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllModels() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<String> lst = productService.fetchAllModels(username, sessionId);
+		List<String> lst = productService.fetchAllModels(session);
 		
 		List<String> expected = new ArrayList<String>();
 		expected.add("iphone 4s");
@@ -130,11 +126,10 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllColors() {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<String> lst = productService.fetchAllColors(username, sessionId);
+		List<String> lst = productService.fetchAllColors(session);
 		List<String> expected = new ArrayList<String>();
 		expected.add("black");
 		expected.add("white");
@@ -151,11 +146,10 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllIMEIsInUse() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<String> lst = productService.fetchAllImeiInUse(username, sessionId);
+		List<String> lst = productService.fetchAllImeiInUse(session);
 
 		// then
 		assertTrue("should return 40 different IMEIs", lst.size() == 40);
@@ -167,14 +161,13 @@ public class ProductServiceTest extends BaseCoreTest {
 			throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String imei = "123456789000001";
 		long storeId = 1L;
 		
 		// when
 		Product prod = productService
-				.fetchProductByImeiAndStoreId(username, sessionId, imei, storeId);
+				.fetchProductByImeiAndStoreId(session, imei, storeId);
 		
 		// then
 		assertTrue("should return appropriate product", 
@@ -187,30 +180,29 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void movingProductsToAnotherStore() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		long movedFromStoreId = 1L;
 		long moveToStoreId = 2L;
 		
-		Store store = storeService.findById(username, sessionId, moveToStoreId);
+		Store store = storeService.findById(session, moveToStoreId);
 		
 		ProductStatus productStatus = ProductStatus.IN_STORE;
 		List<Product> productsToMove = productService
-				.fetchAllProducts(username, sessionId, movedFromStoreId, productStatus);
+				.fetchAllProducts(session, movedFromStoreId, productStatus);
 		
 		List<Product> produtsBeforeMove = productService
-				.fetchAllProducts(username, sessionId, moveToStoreId, productStatus);
+				.fetchAllProducts(null, moveToStoreId, productStatus);
 		
 		long toMoveCount = productsToMove.size();
 		long beforeMoved = produtsBeforeMove.size();
 		
 		// when
-		productService.moveProducts(username, sessionId, store, productsToMove);	
+		productService.moveProducts(null, store, productsToMove);	
 
 		// then
 		List<Product> productsAfterMove = productService
-				.fetchAllProducts(username, sessionId, moveToStoreId, productStatus);
+				.fetchAllProducts(null, moveToStoreId, productStatus);
 		
 		long afterMoved = productsAfterMove.size();
 		
@@ -224,12 +216,12 @@ public class ProductServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
-		ProductQueryCriteria criteria = new ProductQueryCriteria(); 		
+		ProductFilterCriteria criteria = ProductFilterCriteria.create(); 		
 		criteria.setImei("123456789000001");
 		
 		// when
 		List<Product> products = productService
-				.fetchAllProductsByCriteria(username, sessionId, criteria);
+				.fetchAllProductsByCriteria(null, criteria);
 		
 		// then
 		assertTrue("should return one product", products.size() == 1);
@@ -246,7 +238,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		long id = 1;
 		
 		// when
-		Product product = productService.findById(id);
+		Product product = productService.findById(null, id);
 				
 		// then
 		assertNotNull(product);
@@ -262,7 +254,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		Collection<Long> coll = Arrays.asList(id1, id2);
 		
 		// when
-		Collection<Product> products = productService.findById(coll);
+		Collection<Product> products = productService.findById(null, coll);
 				
 		// then
 		assertNotNull(products);
@@ -279,7 +271,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		String imei = "123456789000047";
 		
 		// when
-		Product product = productService.findByIMEI(imei);
+		Product product = productService.findByIMEI(null, imei);
 		
 		// then
 		assertNotNull(product);
@@ -296,13 +288,13 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		String imei = "123456789000444";
 		long id = 1;
-		Product product = productService.findById(id);
+		Product product = productService.findById(null, id);
 		
 		// when
 		product.setImei(imei);
-		productService.update(product);
+		productService.update(null, product);
 		
-		Product prod = productService.findByIMEI(imei);
+		Product prod = productService.findByIMEI(null, imei);
 		
 		// then
 		assertNotNull(prod);
@@ -315,8 +307,8 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// given
 		long id1 = 1, id2 = 2;
-		Product p1 = productService.findById(id1);
-		Product p2 = productService.findById(id2);
+		Product p1 = productService.findById(null, id1);
+		Product p2 = productService.findById(null, id2);
 		String imei1 = "123456789000888";
 		String imei2 = "123456789000777";
 		Product changed1 = null;
@@ -326,11 +318,11 @@ public class ProductServiceTest extends BaseCoreTest {
 		p1.setImei(imei1);
 		p2.setImei(imei2);
 		Collection<Product> coll = Arrays.asList(p1, p2);
-		productService.updateCollection(coll);
+		productService.updateCollection(null, coll);
 		
 		// then
-		changed1 = productService.findByIMEI(imei1);
-		changed2 = productService.findByIMEI(imei2);
+		changed1 = productService.findByIMEI(null, imei1);
+		changed2 = productService.findByIMEI(null, imei2);
 		
 		assertNotNull(changed1);
 		assertNotNull(changed2);
@@ -344,11 +336,11 @@ public class ProductServiceTest extends BaseCoreTest {
 
 		// given
 		long id = 1;
-		Product p = productService.findById(id);
+		Product p = productService.findById(null, id);
 		long countBefore = productService.count();
 		
 		// when
-		productService.remove(p);
+		productService.remove(null, p);
 		
 		// then
 		long countAfter = productService.count();
@@ -361,13 +353,13 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 		// given
 		long id1 = 1, id2 = 2;
-		Product p1 = productService.findById(id1);
-		Product p2 = productService.findById(id2);
+		Product p1 = productService.findById(null, id1);
+		Product p2 = productService.findById(null, id2);
 		long countBefore = productService.count();
 		Collection<Product> coll = Arrays.asList(p1, p2);
 		
 		// when
-		productService.removeCollection(coll);
+		productService.removeCollection(null, coll);
 		
 		// then
 		long countAfter = productService.count();
@@ -383,7 +375,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		long countBefore = productService.count();
 		
 		// when
-		productService.removeById(id);
+		productService.removeById(null, id);
 		
 		// then
 		long countAfter = productService.count();
@@ -400,7 +392,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		Collection<Long> coll = Arrays.asList(id1, id2);
 		
 		// when
-		productService.removeCollectionByIds(coll);
+		productService.removeCollectionByIds(null, coll);
 		
 		// then
 		long countAfter = productService.count();

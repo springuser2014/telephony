@@ -20,6 +20,8 @@ import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.ContactFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -50,14 +52,14 @@ public class ContactServiceTest extends BaseCoreTest {
 			throws SessionServiceException, ContactServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "adam";
-		Contact contactToDelete = contactService.findByLabel(username, sessionId, label);
+		
+		Contact contactToDelete = contactService.findByLabel(session, label);
 		long countAfter = -1, countBefore = contactService.count();
 
 		// when
-		contactService.deleteContact(username, sessionId, contactToDelete);
+		contactService.deleteContact(session, contactToDelete);
 		// then
 		countAfter = contactService.count();
 		assertTrue("should decreased number of given elements", (countBefore - countAfter) == 1);
@@ -68,8 +70,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void addingNewContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "pawelhenek";
 		
 		Contact newContact = new Contact();
@@ -80,10 +81,10 @@ public class ContactServiceTest extends BaseCoreTest {
 		newContact.setSales(new HashSet<Sale>());
 		
 		// when
-		contactService.addNewContact(username, sessionId, newContact);
+		contactService.add(session, newContact);
 				
 		// then
-		Contact addedContact = contactService.findByLabel(username, sessionId, label);
+		Contact addedContact = contactService.findByLabel(session, label);
 		assertTrue("should found new item", addedContact != null);
 	}
 	
@@ -92,33 +93,30 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void updatingContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "leszek";
 		String newDetails = "AFK AFK";
-		Contact contactToUpdate = contactService.findByLabel(username, sessionId, label);
+		Contact contactToUpdate = contactService.findByLabel(session, label);
 		contactToUpdate.setDetails(newDetails);
 		
 		// when
-		contactService.updateContact(username, sessionId, contactToUpdate);
+		contactService.updateContact(session, contactToUpdate);
 				
 		// then
-		Contact updatedContact = contactService.findByLabel(username, sessionId, label);
+		Contact updatedContact = contactService.findByLabel(session, label);
 		assertTrue("should found updated item", updatedContact.getDetails().contains(newDetails));
 	}
-	
-	
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchingAllContacts() throws SessionServiceException, ContactServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ContactFilterCriteria filters = ContactFilterCriteria.create();
 		
 		// when
-		List<Contact> lst = contactService.fetchAll(username, sessionId);
+		List<Contact> lst = contactService.find(session, filters);
 				
 		// then		
 		assertTrue("should found all items", lst.size() == 3);

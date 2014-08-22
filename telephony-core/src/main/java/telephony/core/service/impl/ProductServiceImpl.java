@@ -8,12 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ProductsDao;
-import telephony.core.entity.jpa.Money;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
-import telephony.core.service.ProductQueryCriteria;
+import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
@@ -38,13 +36,11 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public List<String> fetchAllImeiInUse(String username, String sessionId) 
+	public List<String> fetchAllImeiInUse(Session session) 
 			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
-
+		sessionService.validate(session);
 
 		List<String> res = productsDao.fetchImeisList();
 
@@ -58,7 +54,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 	 */
 	@Override
 	@Transactional
-	public List<String> fetchAllProducersInUse(String username, String sessionId) {
+	public List<String> fetchAllProducersInUse(Session session) {
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
@@ -77,12 +73,11 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public List<String> fetchAllModels(String username, String sessionId) 
+	public List<String> fetchAllModels(Session session) 
 			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
 		List<String> res = new ArrayList<String>();
 		List<Product> products = productsDao.find();
@@ -100,7 +95,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public List<String> fetchAllColors(String username, String sessionId) {
+	public List<String> fetchAllColors(Session session) {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
@@ -120,17 +115,15 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public List<Product> fetchAllProducts(String username,
-			String sessionId, final Long storeId, final ProductStatus productStatus) 
-					throws SessionServiceException {
+	public List<Product> fetchAllProducts(
+			Session session, Long storeId, ProductStatus productStatus) 
+			throws SessionServiceException {
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
-
+		sessionService.validate(session);
 
 		logger.debug("ProductServiceImpl.fetchAllProducts starts ");
-		logger.debug("params : [ storeId : {} , productStatus : {} ] ",
-				storeId, productStatus);
+		logger.debug("params : [ session : {}, storeId : {} , productStatus : {} ] ",
+				new Object[] {session, storeId, productStatus});
 
 		List<Product> lst = productsDao.findByStoreAndStatus(storeId, productStatus);
 		
@@ -141,13 +134,12 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public void moveProducts(String username, String sessionId, 
-			Store store, List<Product> products) {
+	public void moveProducts(Session session, Store store, 
+			List<Product> products) {
 		
 		logger.debug("ProductServiceImpl.moveProducts starts ");
-		logger.debug(
-				"params : [username : {}, sessionId : {}, storeId : {} , products : {}] ",
-				new Object[] { username, sessionId, store, products});
+		logger.debug("params : [ session : {}, {}, storeId : {} , products : {}] ",
+				new Object[] {session, store, products});
 
 		for (Product p : products) {
 			p.setStore(store);
@@ -159,25 +151,23 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public Product fetchProductByImeiAndStoreId(String username,
-			String sessionId, final String imei, final Long storeId) 
-					throws SessionServiceException {
+	public Product fetchProductByImeiAndStoreId(
+			Session session, String imei, Long storeId) 
+			throws SessionServiceException {
 		
 		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 
+		Product product = productsDao.findByImeiAndStoreId(imei, storeId);
 
-		Product p = productsDao.findByImeiAndStoreId(imei, storeId);
-
-		return p;
+		return product;
 	}
 
 	@Override
 	@Transactional
-	public List<Product> fetchAllProductsByCriteria(String username, String sessionId, 
-			ProductQueryCriteria parameterObject) 
+	public List<Product> fetchAllProductsByCriteria(
+			Session session, ProductFilterCriteria parameterObject) 
 			throws SessionServiceException {
 		
 		logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
@@ -186,8 +176,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 				parameterObject.getStoreId(), parameterObject.getDeliveryDateStart(),
 				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
 		
-		Session sessionToValidate = Session.create(username, sessionId);
-		sessionService.validate(sessionToValidate);
+		sessionService.validate(session);
 		
 		// TODO : log parameterObject instaed of each part
 		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
@@ -213,44 +202,35 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return productsDao.count();
 	}
 
-
 	@Override
 	@Transactional
-	public List<Product> findByStore(String username, String sessionId, Store store) 
+	public List<Product> findByStore(Session session, Store store) 
 			throws SessionServiceException {
 		
 		logger.info("findByStore starts");
-		logger.info("params : [ username  : {} , sessionId : {}, store : {} ]",
-				username, sessionId, store);
+		logger.info("params : [ session : {}, store : {} ]", session, store);
 		
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		return productsDao.findByStore(store);		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Transactional
 	@Override
-	public List<Product> findByIMEIs(String username, String sessionId, List<String> imeis) 
+	public List<Product> findByIMEIs(Session session, List<String> imeis) 
 			throws SessionServiceException {
 
 		logger.info("findByStore starts");
-		logger.info("params : [ username  : {} , sessionId : {}, store : {} ]",
-				username, sessionId, imeis);
+		logger.info("params : [ session : {}, store : {} ]", session, imeis);
 		
-		Session session = Session.create(username, sessionId);
 		sessionService.validate(session);
 		
 		return productsDao.findByIMEIs(imeis);
 	}
 
-
 	@Transactional
 	@Override
-	public Product findById(long id) {
+	public Product findById(Session session, long id) {
 		
 		logger.info("findById starts");
 		logger.info("params : [ id : {} ]", id);
@@ -260,7 +240,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public Collection<Product> findById(Collection<Long> coll) {
+	public Collection<Product> findById(Session session, Collection<Long> coll) {
 		logger.info("findById starts");
 		logger.info("params : [ numberOfIds : {} ]", coll.size());
 		
@@ -270,15 +250,16 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public Product update(Product product) {
+	public Product update(Session session, Product product) {
 		logger.info("update starts");
 		logger.info("params : [ product : {} ]", product);
 		
 		return productsDao.saveOrUpdate(product);		
 	}
+	
 	@Transactional
 	@Override
-	public Product findByIMEI(String imei) {
+	public Product findByIMEI(Session session, String imei) {
 		logger.info("update starts");
 		logger.info("params : [ imei: {} ]", imei);
 		
@@ -287,7 +268,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public Collection<Product> updateCollection(Collection<Product> coll) {
+	public Collection<Product> updateCollection(Session session, Collection<Product> coll) {
 		logger.info("updateCollection starts");
 		logger.info("params : [ numberOfProducts: {} ]", coll.size());
 		
@@ -296,7 +277,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public void remove(Product product) {
+	public void remove(Session session, Product product) {
 		logger.info("remove starts");
 		logger.info("params : [ product: {} ]", product);
 		
@@ -305,7 +286,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public void removeCollection(Collection<Product> coll) {
+	public void removeCollection(Session session, Collection<Product> coll) {
 		logger.info("removeCollection starts");
 		logger.info("params : [ numberOfproduct: {} ]", coll.size());
 		
@@ -314,7 +295,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public void removeCollectionByIds(Collection<Long> coll) {
+	public void removeCollectionByIds(Session session, Collection<Long> coll) {
 		logger.info("removeCollection starts");
 		logger.info("params : [ numberOfproduct: {} ]", coll.size());
 		
@@ -323,14 +304,10 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Transactional
 	@Override
-	public void removeById(long id) {
+	public void removeById(Session session, long id) {
 		logger.info("remove starts");
 		logger.info("params : [ id: {} ]", id);
 		
 		productsDao.removeById(id);		
-	}
-
-	
-	
-	
+	}	
 }

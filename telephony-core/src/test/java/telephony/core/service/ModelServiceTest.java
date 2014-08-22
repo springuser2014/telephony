@@ -18,7 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Model;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -46,9 +48,10 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		String label = "iphone 4s";
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Model model = modelService.findByLabel(label);		
+		Model model = modelService.findByLabel(session, label);		
 		
 		// then
 		assertNotNull(model);
@@ -61,9 +64,10 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		String expected = "6610s";
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Model model = modelService.findById(id);
+		Model model = modelService.findById(session, id);
 		
 		// then
 		assertNotNull(model);
@@ -76,9 +80,10 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		List<Long> ids = Arrays.asList(1L, 2L, 3L);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Collection<Model> models = modelService.findByIds(ids);
+		Collection<Model> models = modelService.findByIds(session, ids);
 		
 		// then
 		assertNotNull(models);		
@@ -105,13 +110,14 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		String newLabel = "newlabel";
-		Model model = modelService.findById(id);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Model model = modelService.findById(session, id);
 		Model changedModel = null;
 		
 		// when
 		model.setLabel(newLabel);
-		modelService.update(model);
-		changedModel = modelService.findByLabel(newLabel);
+		modelService.update(session, model);
+		changedModel = modelService.findByLabel(session, newLabel);
 		
 		// then
 		assertNotNull(changedModel);
@@ -126,8 +132,9 @@ public class ModelServiceTest extends BaseCoreTest {
 		long id1 = 1, id2 = 2;
 		String newLabel1 = "newlabel1";
 		String newLabel2 = "newlabel2";
-		Model model1 = modelService.findById(id1);
-		Model model2 = modelService.findById(id2);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Model model1 = modelService.findById(session, id1);
+		Model model2 = modelService.findById(session, id2);
 		
 		List<Model> coll = Arrays.asList(model1, model2);
 		
@@ -137,9 +144,9 @@ public class ModelServiceTest extends BaseCoreTest {
 		// when
 		model1.setLabel(newLabel1);
 		model2.setLabel(newLabel2);
-		modelService.update(coll);
-		changedModel1 = modelService.findByLabel(newLabel1);
-		changedModel2 = modelService.findByLabel(newLabel2);
+		modelService.update(session, coll);
+		changedModel1 = modelService.findByLabel(session, newLabel1);
+		changedModel2 = modelService.findByLabel(session, newLabel2);
 		
 		// then
 		assertNotNull(changedModel1);
@@ -155,9 +162,10 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		long id1 = 1;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		modelService.removeById(id1);
+		modelService.removeById(session, id1);
 		
 		// then
 		// exception should arise
@@ -168,11 +176,12 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void remove() {
 		
 		// given
-		Model model = modelService.findByLabel("iphone 6g");
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Model model = modelService.findByLabel(session, "iphone 6g");
 		long countBefore = modelService.count();
 		
 		// when
-		modelService.remove(model);
+		modelService.remove(session, model);
 		long countAfter = modelService.count();
 		
 		// then
@@ -185,12 +194,13 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void removeById() {
 		
 		// given
-		Model model = modelService.findByLabel("iphone 6g");
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Model model = modelService.findByLabel(session, "iphone 6g");
 		long id = model.getId();
 		long countBefore = modelService.count();
 		
 		// when
-		modelService.removeById(id);
+		modelService.removeById(session, id);
 		long countAfter = modelService.count();
 		
 		// then
@@ -202,12 +212,13 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id7 = 7, id8 = 8;
 		long countBefore = modelService.count();
 		List<Long> ids = Arrays.asList(id7, id8);
 		
 		// when
-		modelService.removeById(ids);
+		modelService.removeById(session, ids);
 		long countAfter = modelService.count();
 		
 		// then
@@ -220,11 +231,12 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void removeCollectionById_expectConstraint() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		List<Long> ids = Arrays.asList(id1, id2);
 		
 		// when
-		modelService.removeById(ids);
+		modelService.removeById(session, ids);
 		
 		// then
 		// exception should arise

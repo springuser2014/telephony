@@ -11,6 +11,7 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.service.ProducerService;
+import telephony.core.service.bean.Session;
 
 /**
  * asd.
@@ -26,7 +27,7 @@ implements ProducerService {
 
 	@Transactional
 	@Override
-	public Producer findByLabel(String label) {
+	public Producer findByLabel(Session session, String label) {
 
 		logger.debug("ProducerServiceImpl.findByLabel starts");        
 		logger.debug("params : [ label : {} ]", label);
@@ -43,7 +44,7 @@ implements ProducerService {
 
 	@Override
 	@Transactional
-	public Producer findById(long id) {		
+	public Producer findById(Session session, long id) {		
 
 		logger.debug("ProducerServiceImpl.findById starts");        
 		logger.debug("params : [ id: {} ]", id);
@@ -53,7 +54,7 @@ implements ProducerService {
 
 	@Transactional
 	@Override
-	public Collection<Producer> findById(Collection<Long> ids) {
+	public Collection<Producer> findById(Session session, Collection<Long> ids) {
 
 		logger.debug("ProducerServiceImpl.findById starts");        
 		logger.debug("params : [ size: {} ]", ids.size());
@@ -63,7 +64,7 @@ implements ProducerService {
 
 	@Override
 	@Transactional
-	public Producer update(Producer producer) {
+	public Producer update(Session session, Producer producer) {
 		logger.debug("ProducerServiceImpl.update starts");        
 		logger.debug("params : [ producer : {} ]", producer);
 
@@ -73,7 +74,7 @@ implements ProducerService {
 	
 	@Override
 	@Transactional
-	public Collection<Producer> update(Collection<Producer> coll) {
+	public Collection<Producer> update(Session session, Collection<Producer> coll) {
 		logger.debug("ProducerServiceImpl.update starts");        
 		logger.debug("params : [ size : {} ]", coll.size());
 
@@ -83,7 +84,7 @@ implements ProducerService {
 	
 	@Override
 	@Transactional
-	public void removeById(Long id) {
+	public void removeById(Session session, Long id) {
 		logger.debug("ProducerServiceImpl.update starts");        
 		logger.debug("params : [ id : {} ]", id);
 
@@ -93,7 +94,7 @@ implements ProducerService {
 	
 	@Override
 	@Transactional
-	public void removeById(Collection<Long> ids) {
+	public void removeById(Session session, Collection<Long> ids) {
 		logger.debug("ProducerServiceImpl.removeById starts");        
 		logger.debug("params : [ size : {} ]", ids.size());
 

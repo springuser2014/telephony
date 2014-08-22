@@ -20,7 +20,9 @@ import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Pricing;
+import telephony.core.service.bean.Session;
 
 /**
  * asd.
@@ -64,9 +66,11 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withDate(2008, 01, 01)
 					.withTime(0, 0, 0, 0)
 					.toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 8);
@@ -83,9 +87,11 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withDate(2008, 01, 01)
 					.withTime(0, 0, 0, 0)
 					.toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when	
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 8);
@@ -102,9 +108,11 @@ public class PricingServiceTest extends BaseCoreTest {
 					.toDate();
 		
 		Date to = null;
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when	
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 112);
@@ -117,9 +125,10 @@ public class PricingServiceTest extends BaseCoreTest {
 		// given
 		Date from = null;		
 		Date to = null;
-			
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		
 		// when		
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 112);
@@ -139,9 +148,11 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withDate(2007, 01, 01)
 					.withTime(0, 0, 0, 0)
 					.toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 0);
@@ -161,9 +172,11 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withDate(2012, 01, 01)
 					.withTime(0, 0, 0, 0)
 					.toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 24);
@@ -184,8 +197,10 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 			
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		
 		// when		
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 48);
@@ -205,9 +220,11 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withDate(2014, 01, 01)
 					.withTime(0, 0, 0, 0)
 					.toDate();
+		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
-		Collection<Pricing> coll = pricingService.findByDateRange(from, to);
+		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
 		assertEquals(coll.size(), 32);
@@ -229,8 +246,10 @@ public class PricingServiceTest extends BaseCoreTest {
 							.withTime(0, 0, 0, 0)
 							.toDate();
 		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		
 		// when
-		Pricing p = pricingService.findById(id);
+		Pricing p = pricingService.findById(session, id);
 		
 		// then
 		assertNotNull(p);
@@ -245,9 +264,10 @@ public class PricingServiceTest extends BaseCoreTest {
 		// given
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		Collection<Pricing> coll = pricingService.findByIds(ids);
+		Collection<Pricing> coll = pricingService.findByIds(session, ids);
 		
 		// then
 		assertNotNull(coll);
@@ -259,14 +279,15 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void update() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		Pricing pricing1 = pricingService.findById(id);
+		Pricing pricing1 = pricingService.findById(session, id);
 		double rateBefore = pricing1.getRate(); 
 				
 		// when
 		pricing1.setRate(200.0);
-		pricingService.update(pricing1);
-		Pricing pricing2 = pricingService.findById(id);
+		pricingService.update(session, pricing1);
+		Pricing pricing2 = pricingService.findById(session, id);
 		double rateAfter = pricing2.getRate();
 
 		// then
@@ -280,20 +301,21 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void updateCollection() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		double expectedPrice = 200.0d;
 		Collection<Long> ids = Arrays.asList(id1, id2);
-		Collection<Pricing> coll1 = pricingService.findByIds(ids);
+		Collection<Pricing> coll1 = pricingService.findByIds(session, ids);
 		
 		// when
 		for (Pricing p : coll1) {
 			p.setRate(expectedPrice);
 		}
 		
-		pricingService.update(coll1);
+		pricingService.update(session, coll1);
 		
 		// then
-		Collection<Pricing> coll2 = pricingService.findByIds(ids);
+		Collection<Pricing> coll2 = pricingService.findByIds(session, ids);
 		for (Pricing p : coll2) {
 			assertTrue(p.getRate() == expectedPrice);
 		}
@@ -305,12 +327,13 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void remove() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = pricingService.count();
-		Pricing p = pricingService.findById(id);
+		Pricing p = pricingService.findById(session, id);
 		
 		// when
-		pricingService.remove(p);
+		pricingService.remove(session, p);
 		
 		// then
 		long countAfter = pricingService.count();		
@@ -322,13 +345,14 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void removeCollection() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		long countBefore = pricingService.count();
-		Collection<Pricing> pricings = pricingService.findByIds(ids);
+		Collection<Pricing> pricings = pricingService.findByIds(session, ids);
 		
 		// when
-		pricingService.remove(pricings);
+		pricingService.remove(session, pricings);
 		
 		// then
 		long countAfter = pricingService.count();		
@@ -340,11 +364,12 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void removeById() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = pricingService.count();
 		
 		// when
-		pricingService.removeById(id);
+		pricingService.removeById(session, id);
 		
 		// then
 		long countAfter = pricingService.count();		
@@ -356,17 +381,17 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		long countBefore = pricingService.count();
 		
 		// when
-		pricingService.removeByIds(ids);
+		pricingService.removeByIds(session, ids);
 		
 		// then
 		long countAfter = pricingService.count();		
 		assertTrue(countBefore - countAfter == 2);	
-	
 	}
 	
 }

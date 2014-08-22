@@ -19,14 +19,14 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 /**
  * asd.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/META-INF/context.xml" })
-@TestExecutionListeners({
-	DependencyInjectionTestExecutionListener.class,
-    FlywayDBUnitTestExecutionListener.class 
-})
-@FlywayTest
-public class ComplaintServiceTest extends BaseCoreTest {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = { "/META-INF/context.xml" })
+//@TestExecutionListeners({
+//	DependencyInjectionTestExecutionListener.class,
+//    FlywayDBUnitTestExecutionListener.class 
+//})
+//@FlywayTest
+public class ComplaintServicest extends BaseCoreTest {
 	
 	@Inject
 	private ComplaintService<ProductComplaint> complaintService;

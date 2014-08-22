@@ -19,6 +19,8 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.StoreFilterCriteria;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -53,11 +55,11 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testFetchAllStores() throws SessionServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		StoreFilterCriteria sfc = StoreFilterCriteria.create();
 		
 		// when
-		List<Store> stores = storeService.fetchAllStores(username, sessionId);
+		List<Store> stores = storeService.find(session, sfc);
 		
 		// then
 		assertTrue("should return 2 stores", stores.size() == 2);
@@ -69,11 +71,11 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingAddingNewStore() throws SessionServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		List<Store> storesBeforeAdd = storeService.fetchAllStores(username, sessionId);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		StoreFilterCriteria sfc = StoreFilterCriteria.create();
+		List<Store> storesBeforeAdd = storeService.find(session, sfc);
 		Store store = new Store();
-		User creator = userService.findByName(TestData.USER2_NAME);
+		User creator = userService.findByName(session, TestData.USER2_NAME);
 		store.setLabel("Rybnik");
 		long nbBefore = storeService.count();
 		
@@ -81,9 +83,9 @@ public class StoreServiceTest extends BaseCoreTest {
 		//store.setRoles(roles);
 		
 		// when
-		storeService.add(username, sessionId, store);
-		Store addedStore = storeService.findByLabel(username, sessionId, "Rybnik");
-		List<Store> storesAfterAdd = storeService.fetchAllStores(username, sessionId);
+		storeService.add(session, store);
+		Store addedStore = storeService.findByLabel(session, "Rybnik");
+		List<Store> storesAfterAdd = storeService.find(session, sfc);
 		long nbAfter = storeService.count();
 		
 		// then
@@ -98,15 +100,14 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingEditingExisitingStore() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Store storeToEdit = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Store storeToEdit = storeService.findByLabel(session, TestData.STORE1_LABEL);
 		long countBefore = storeService.count();
 		
 		// when
 		storeToEdit.setLabel(STORE_NEW_LOCATION);
-		storeService.edit(username, sessionId, storeToEdit);
-		Store searchEditedStore = storeService.findByLabel(username, sessionId, STORE_NEW_LOCATION);
+		storeService.update(session, storeToEdit);
+		Store searchEditedStore = storeService.findByLabel(session, STORE_NEW_LOCATION);
 		long countAfter = storeService.count();
 		
 		// then
@@ -121,16 +122,15 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingSettingRequiredRoles() throws SessionServiceException, RoleServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
-		List<Role> roles = roleService.fetchAll(username, sessionId);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
+		List<Role> roles = roleService.find(session);
 		
 		// when
-		storeService.setRequiredRoles(username, sessionId, store, roles);
+		storeService.setRequiredRoles(session, store, roles);
 		
 		// then
-		List<Role> reqRoles = storeService.getRequestRoles(username, sessionId, store);
+		List<Role> reqRoles = storeService.getRequestRoles(session, store);
 		
 		assertEquals("number of submitted and fetched roles should be the same",
 				roles.size(), reqRoles.size());
@@ -146,14 +146,13 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingDeletingStore() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Store storeToDelete = storeService.findByLabel(username, sessionId, TestData.STORE2_LABEL);
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Store storeToDelete = storeService.findByLabel(session, TestData.STORE2_LABEL);
 		long countBefore = storeService.count();
 		long countAfter = 0;
 		
 		// when
-		storeService.delete(username, sessionId, storeToDelete);
+		storeService.remove(session, storeToDelete);
 		countAfter = storeService.count();
 				
 		assertTrue("there should be one store less", (countAfter - countBefore) == -1);

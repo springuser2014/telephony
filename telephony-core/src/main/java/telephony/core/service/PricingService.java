@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import telephony.core.entity.jpa.Pricing;
+import telephony.core.service.bean.Session;
 
 /**
  * ads.
@@ -12,62 +13,71 @@ public interface PricingService extends BasicService<Pricing> {
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param from a.
 	 * @param to a.
 	 * @return a.
 	 */
-	Collection<Pricing> findByDateRange(Date from, Date to);
+	Collection<Pricing> findByDateRange(Session session, Date from, Date to);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param id a. 
 	 * @return a.
 	 */
-	Pricing findById(long id);
+	Pricing findById(Session session, long id);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param ids a.
 	 * @return a.
 	 */
-	Collection<Pricing> findByIds(Collection<Long> ids);
+	Collection<Pricing> findByIds(Session session, Collection<Long> ids);
 
 	/**
 	 * ads.
+	 * @param session TODO
 	 * @param pricing asd.
 	 * @return asd.
 	 */
-	Pricing update(Pricing pricing);
+	Pricing update(Session session, Pricing pricing);
 
 	/**
 	 * ads.
+	 * @param session TODO
 	 * @param pricings asd.
 	 * @return asd.
 	 */
-	Collection<Pricing> update(Collection<Pricing> pricings);
+	Collection<Pricing> update(Session session, Collection<Pricing> pricings);
 
 	/**
 	 * asd.
-	 * @param p as.
+	 * @param session TODO
+	 * @param pricing as.
 	 */
-	void remove(Pricing p);
+	void remove(Session session, Pricing pricing);
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param pricings as.
 	 */
-	void remove(Collection<Pricing> pricings);
+	void remove(Session session, Collection<Pricing> pricings);
 	
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param id asd.
 	 */
-	void removeById(long id);
+	void removeById(Session session, long id);
 
 	/**
 	 * asd.
+	 * @param session TODO
 	 * @param ids a.
 	 */
-	void removeByIds(Collection<Long> ids);
+	void removeByIds(Session session, Collection<Long> ids);
 
 }

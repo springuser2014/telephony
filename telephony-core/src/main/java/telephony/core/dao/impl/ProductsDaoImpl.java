@@ -16,7 +16,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
-import telephony.core.service.ProductQueryCriteria;
+import telephony.core.query.filter.ProductFilterCriteria;
 
 /**
  * Products management DAO.
@@ -78,7 +78,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> findByCriteria(
-        ProductQueryCriteria query) {
+        ProductFilterCriteria query) {
 
         StringBuilder sb = new StringBuilder();
         sb.append(" select p from Product p ");

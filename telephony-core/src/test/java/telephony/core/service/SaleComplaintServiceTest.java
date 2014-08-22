@@ -57,7 +57,7 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
-		Contact contact = contactService.findById(username, sessionId, 1L); 
+		Contact contact = contactService.findById(null, 1L); 
 		SaleComplaint complaint = new SaleComplaint();
 		complaint.setDescription("aaa");
 		complaint.setItemId("123456789000000");

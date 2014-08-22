@@ -68,7 +68,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		long count = saleService.count();
 		
 		// when
-		List<Sale> lst = saleService.findAllSales(username, sessionId);
+		List<Sale> lst = saleService.find(null);
 		
 		// then
 		assertTrue("Should return exact number of sales", 
@@ -84,10 +84,10 @@ public class SaleServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		long countBefore = saleService.count();
 		long saleId = 1L;
-		Sale saleToCancel = saleService.findById(username, sessionId, saleId);
+		Sale saleToCancel = saleService.findById(null, saleId);
 		
 		// when
-		saleService.delete(username, sessionId, saleToCancel);
+		saleService.delete(null, saleToCancel);
 		
 		// then
 		long countAfter = saleService.count();
@@ -103,23 +103,23 @@ public class SaleServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Store store = storeService.findByLabel(username, sessionId, TestData.STORE1_LABEL);
-		Contact contact = contactService.findByLabel(username, sessionId, TestData.CONTACT1_LABEL);
+		Store store = storeService.findByLabel(null, TestData.STORE1_LABEL);
+		Contact contact = contactService.findByLabel(null, TestData.CONTACT1_LABEL);
 		List<String> imeis = new ArrayList<String>();
 		imeis.add("123456789000002");
 		imeis.add("123456789000005");
 		imeis.add("123456789000006");
 		
-		List<Product> products =  productService.findByIMEIs(username, sessionId, imeis);
+		List<Product> products =  productService.findByIMEIs(null, imeis);
 		
 		Sale sale = new Sale();
 		sale.setLabel("nowa dostawa");
 		sale.setDateOut(new Date());
 		
 		// when
-		saleService.addNewSale(username, sessionId, sale, products, store.getId(), contact.getId());
+		saleService.add(null, sale, products, store.getId(), contact.getId());
 		
-		Sale addedSale = saleService.findByLabel(username, sessionId, "nowa dostawa");
+		Sale addedSale = saleService.findByLabel(null, "nowa dostawa");
 		
 		// then
 		assertTrue("should return new sale", addedSale != null);
@@ -133,11 +133,11 @@ public class SaleServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
-		Sale saleToUpdate = saleService.findByLabel(username, sessionId, TestData.SALE1_LABEL);
+		Sale saleToUpdate = saleService.findByLabel(null, TestData.SALE1_LABEL);
 		saleToUpdate.setDateOut(new Date(10000));
 		// when
-		saleService.updateSale(username, sessionId, saleToUpdate);
-		Sale sale = saleService.findByLabel(username, sessionId, TestData.SALE1_LABEL);
+		saleService.update(null, saleToUpdate);
+		Sale sale = saleService.findByLabel(null, TestData.SALE1_LABEL);
 		
 		// then
 		assertTrue("should return changed ", sale.getDateOut().getTime() == 10000);
@@ -153,7 +153,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		Long saleId = 1L;
 		
 		// when
-		Sale sale = saleService.findById(username, sessionId, saleId);
+		Sale sale = saleService.findById(null, saleId);
 		
 		// then
 		assertTrue("should not be null ", sale != null);
