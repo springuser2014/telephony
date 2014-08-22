@@ -1,12 +1,12 @@
-package telephony.core.service;
+package telephony.core.service.impl;
 
 import java.util.Collection;
 
 import telephony.core.dao.ProductComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ProductComplaint;
+import telephony.core.service.ProductComplaintService;
 import telephony.core.service.bean.Session;
-import telephony.core.service.impl.AbstractGenericService;
 
 import com.google.inject.persist.Transactional;
 
@@ -54,11 +54,11 @@ implements ProductComplaintService {
 
 	@Transactional
 	@Override
-	public Collection<ProductComplaint> update(Session session, Collection<ProductComplaint> complaints) {
+	public Collection<ProductComplaint> update(Session session, Collection<ProductComplaint> cs) {
 		
 		// TODO session's validation
 		
-		return dao().saveOrUpdate(complaints);
+		return dao().saveOrUpdate(cs);
 	}
 
 	@Transactional

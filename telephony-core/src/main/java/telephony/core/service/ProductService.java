@@ -67,10 +67,7 @@ public interface ProductService extends BasicService<Product> {
      * @param store asd.
      * @param products asd.
      */
-    void moveProducts(
-    		Session session, Store store, List<Product> products
-    );
-
+    void moveProducts(Session session, Store store, List<Product> products);
     
     /**
      * asd.

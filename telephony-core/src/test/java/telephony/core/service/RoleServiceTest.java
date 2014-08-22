@@ -84,7 +84,7 @@ public class RoleServiceTest extends BaseCoreTest {
 		long countBefore = roleService.count();
 		
 		// when
-		roleService.delete(session, roleToDelete);
+		roleService.remove(session, roleToDelete);
 		long countAfter = roleService.count();
 		
 		// then

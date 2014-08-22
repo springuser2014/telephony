@@ -40,7 +40,7 @@ public interface RoleService extends BasicService<Role> {
 	 * @throws SessionServiceException asd.
 	 * @throws RoleServiceException asd.
 	 */
-	void delete(Session session, Role roleToDelete) 
+	void remove(Session session, Role roleToDelete) 
 		throws SessionServiceException, RoleServiceException;
 
 

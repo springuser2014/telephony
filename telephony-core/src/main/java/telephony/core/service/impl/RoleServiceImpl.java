@@ -67,7 +67,7 @@ implements RoleService {
 
 	@Transactional
 	@Override
-	public void delete(Session session, Role roleToDelete)
+	public void remove(Session session, Role roleToDelete)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.delete starts");
