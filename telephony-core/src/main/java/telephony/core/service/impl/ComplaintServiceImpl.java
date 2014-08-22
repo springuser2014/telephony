@@ -34,7 +34,7 @@ implements ComplaintService<Complaint> {
 
 	@Transactional
 	@Override
-	public long count() {
+	public long count(Session session) {
 
 		return dao().count();
 	}

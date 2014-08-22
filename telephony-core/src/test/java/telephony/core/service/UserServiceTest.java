@@ -101,11 +101,11 @@ public class UserServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		User user = userService.findByName(session, TestData.USER4_NAME);
-		long countAfter = -1, countBefore = userService.count();
+		long countAfter = -1, countBefore = userService.count(session);
 		
 		// when
 		userService.deleteUserById(session, user);
-		countAfter = userService.count();
+		countAfter = userService.count(session);
 		
 		// then
 		assertTrue("Should decreased number of users ", countBefore - countAfter == 1);

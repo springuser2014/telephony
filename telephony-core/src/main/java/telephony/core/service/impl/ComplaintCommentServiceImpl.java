@@ -75,7 +75,7 @@ implements ComplaintCommentService {
 
 	@Transactional
 	@Override
-	public long count() {
+	public long count(Session session) {
 
 		return complaintCommentDao.count();
 	}

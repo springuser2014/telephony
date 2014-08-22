@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.BasicService;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -35,5 +36,5 @@ public abstract class AbstractBasicService<T extends BaseEntity> implements Basi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public abstract long count();
+	public abstract long count(Session session);
 }

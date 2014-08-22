@@ -66,11 +66,11 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		complaint.setTitle("bbb");
 		complaint.setUniqueHash("qwertyuio12357890");
 		complaint.setContact(contact);
-		long countBefore = complaintService.count();
+		long countBefore = complaintService.count(session);
 
 		// when
 		complaintService.report(session, complaint);
-		long countAfter = complaintService.count();
+		long countAfter = complaintService.count(session);
 		
 		// then
 		assertEquals(countAfter - countBefore, 1L);
@@ -248,12 +248,12 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
-		long countBefore = complaintService.count();
+		long countBefore = complaintService.count(session);
 		long complaintId = 7L;
 		
 		// when
 		complaintService.removeById(session, complaintId);
-		long countAfter = complaintService.count();
+		long countAfter = complaintService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 1);
@@ -271,13 +271,13 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
-		long countBefore = complaintService.count();
+		long countBefore = complaintService.count(session);
 		long complaintId1 = 7L, complaintId2 = 8L;
 		Collection<Long> ids = Arrays.asList(complaintId1, complaintId2);
 		
 		// when
 		complaintService.removeByIds(session, ids);
-		long countAfter = complaintService.count();
+		long countAfter = complaintService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 2);

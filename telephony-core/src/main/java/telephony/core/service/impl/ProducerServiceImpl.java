@@ -37,7 +37,7 @@ implements ProducerService {
 
 	@Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 		
 		return producerDao.count();
 	}

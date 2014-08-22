@@ -43,9 +43,10 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void counting() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		long count = producerService.count();
+		long count = producerService.count(session);
 		
 		// then
 		assertEquals(count, 4);
@@ -173,12 +174,12 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id3 = 3, id4 = 4;
-		long countBefore = producerService.count();
+		long countBefore = producerService.count(session);
 		Collection<Long> ids = Arrays.asList(id3, id4);
 		
 		// when
 		producerService.removeById(session, ids);
-		long countAfter = producerService.count(); 
+		long countAfter = producerService.count(session); 
 		
 		// then
 		assertEquals(countBefore - countAfter, 2);
@@ -191,11 +192,11 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 3;
-		long countBefore = producerService.count();
+		long countBefore = producerService.count(session);
 		
 		// when
 		producerService.removeById(session, id);
-		long countAfter = producerService.count(); 
+		long countAfter = producerService.count(session); 
 		
 		// then
 		assertEquals(countBefore - countAfter, 1);

@@ -44,9 +44,10 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void counting() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when 
-		long pricingsOfNumber = pricingService.count();
+		long pricingsOfNumber = pricingService.count(session);
 		
 		// then
 		assertEquals(pricingsOfNumber, 112);		
@@ -329,14 +330,14 @@ public class PricingServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		long countBefore = pricingService.count();
+		long countBefore = pricingService.count(session);
 		Pricing p = pricingService.findById(session, id);
 		
 		// when
 		pricingService.remove(session, p);
 		
 		// then
-		long countAfter = pricingService.count();		
+		long countAfter = pricingService.count(session);		
 		assertTrue(countBefore - countAfter == 1);		
 	}
 
@@ -348,14 +349,14 @@ public class PricingServiceTest extends BaseCoreTest {
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
-		long countBefore = pricingService.count();
+		long countBefore = pricingService.count(session);
 		Collection<Pricing> pricings = pricingService.findByIds(session, ids);
 		
 		// when
 		pricingService.remove(session, pricings);
 		
 		// then
-		long countAfter = pricingService.count();		
+		long countAfter = pricingService.count(session);		
 		assertTrue(countBefore - countAfter == 2);		
 	}
 
@@ -366,13 +367,13 @@ public class PricingServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		long countBefore = pricingService.count();
+		long countBefore = pricingService.count(session);
 		
 		// when
 		pricingService.removeById(session, id);
 		
 		// then
-		long countAfter = pricingService.count();		
+		long countAfter = pricingService.count(session);		
 		assertTrue(countBefore - countAfter == 1);		
 	}
 		
@@ -384,13 +385,13 @@ public class PricingServiceTest extends BaseCoreTest {
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
-		long countBefore = pricingService.count();
+		long countBefore = pricingService.count(session);
 		
 		// when
 		pricingService.removeByIds(session, ids);
 		
 		// then
-		long countAfter = pricingService.count();		
+		long countAfter = pricingService.count(session);		
 		assertTrue(countBefore - countAfter == 2);	
 	}
 	

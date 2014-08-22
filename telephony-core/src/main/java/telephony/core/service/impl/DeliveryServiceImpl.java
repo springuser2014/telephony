@@ -28,7 +28,8 @@ import com.google.inject.persist.Transactional;
  * Deliveries management service.
  */
 public class DeliveryServiceImpl
-    extends AbstractBasicService<Delivery> implements DeliveryService {
+extends AbstractBasicService<Delivery> 
+implements DeliveryService {
 
     @Inject
     private DeliveriesDao deliveriesDao;
@@ -60,7 +61,7 @@ public class DeliveryServiceImpl
     		throws SessionServiceException, DeliveryServiceException {
     	
         logger.debug("DeliveryServiceImpl.addNewDelivery starts");        
-		logger.debug("params : [session : {}, newDelivery : {}]",session, newDelivery);
+		logger.debug("params : [session : {}, newDelivery : {}]", session, newDelivery);
 
 		sessionService.validate(session);
 		
@@ -112,7 +113,7 @@ public class DeliveryServiceImpl
      */
 	@Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 		return deliveriesDao.count();
 	}
     

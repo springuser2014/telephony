@@ -77,7 +77,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		Store store = new Store();
 		User creator = userService.findByName(session, TestData.USER2_NAME);
 		store.setLabel("Rybnik");
-		long nbBefore = storeService.count();
+		long nbBefore = storeService.count(session);
 		
 		//store.setUsers(users);
 		//store.setRoles(roles);
@@ -86,7 +86,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		storeService.add(session, store);
 		Store addedStore = storeService.findByLabel(session, "Rybnik");
 		List<Store> storesAfterAdd = storeService.find(session, sfc);
-		long nbAfter = storeService.count();
+		long nbAfter = storeService.count(session);
 		
 		// then
 		assertEquals("should return one more store ", 
@@ -102,13 +102,13 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store storeToEdit = storeService.findByLabel(session, TestData.STORE1_LABEL);
-		long countBefore = storeService.count();
+		long countBefore = storeService.count(session);
 		
 		// when
 		storeToEdit.setLabel(STORE_NEW_LOCATION);
 		storeService.update(session, storeToEdit);
 		Store searchEditedStore = storeService.findByLabel(session, STORE_NEW_LOCATION);
-		long countAfter = storeService.count();
+		long countAfter = storeService.count(session);
 		
 		// then
 		assertTrue("number of stores shouldn't be changed", countAfter - countBefore == 0);
@@ -148,12 +148,12 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store storeToDelete = storeService.findByLabel(session, TestData.STORE2_LABEL);
-		long countBefore = storeService.count();
+		long countBefore = storeService.count(session);
 		long countAfter = 0;
 		
 		// when
 		storeService.remove(session, storeToDelete);
-		countAfter = storeService.count();
+		countAfter = storeService.count(session);
 				
 		assertTrue("there should be one store less", (countAfter - countBefore) == -1);
 		

@@ -9,7 +9,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.data.TestData;
 import telephony.core.entity.jpa.ProductComplaint;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -35,7 +37,8 @@ public class ComplaintServicest extends BaseCoreTest {
 //	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testCount() {
 		
-		long count = complaintService.count();
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		long count = complaintService.count(session);
 		
 		assertTrue(count == 8);		
 	}

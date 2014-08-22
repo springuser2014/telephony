@@ -56,12 +56,12 @@ public class ContactServiceTest extends BaseCoreTest {
 		String label = "adam";
 		
 		Contact contactToDelete = contactService.findByLabel(session, label);
-		long countAfter = -1, countBefore = contactService.count();
+		long countAfter = -1, countBefore = contactService.count(session);
 
 		// when
 		contactService.deleteContact(session, contactToDelete);
 		// then
-		countAfter = contactService.count();
+		countAfter = contactService.count(session);
 		assertTrue("should decreased number of given elements", (countBefore - countAfter) == 1);
 	}
 	

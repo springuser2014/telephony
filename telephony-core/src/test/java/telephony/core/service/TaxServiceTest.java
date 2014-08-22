@@ -45,15 +45,16 @@ public class TaxServiceTest extends BaseCoreTest {
 	public void add_tax() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Tax tax = new Tax();
 		tax.setFrom(new DateTime().withDate(2010, 01, 01).toDate());
 		tax.setTo(new DateTime().withDate(2014, 12, 31).toDate());
 		tax.setRate(123.45);		
-		long taxesBefore = taxService.count();
+		long taxesBefore = taxService.count(session);
 		
 		// when
 		taxService.add(null, tax);
-		long taxesAfter = taxService.count();
+		long taxesAfter = taxService.count(session);
 		
 		// then
 		assertEquals(taxesAfter - taxesBefore, 1);
@@ -212,11 +213,11 @@ public class TaxServiceTest extends BaseCoreTest {
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 2;
 		Tax taxToDelete = taxService.findById(session, id);
-		long before = taxService.count();
+		long before = taxService.count(session);
 		
 		// when
 		taxService.remove(session, taxToDelete);
-		long after = taxService.count();
+		long after = taxService.count(session);
 		
 		// then
 		assertEquals(before - after, 1);		

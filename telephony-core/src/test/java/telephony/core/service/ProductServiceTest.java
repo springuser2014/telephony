@@ -335,15 +335,16 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void remove() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		Product p = productService.findById(null, id);
-		long countBefore = productService.count();
+		long countBefore = productService.count(session);
 		
 		// when
 		productService.remove(null, p);
 		
 		// then
-		long countAfter = productService.count();
+		long countAfter = productService.count(session);
 		assertEquals(countBefore - countAfter, 1);
 	}
 
@@ -352,17 +353,18 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void removeCollection() {
 	
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Product p1 = productService.findById(null, id1);
 		Product p2 = productService.findById(null, id2);
-		long countBefore = productService.count();
+		long countBefore = productService.count(session);
 		Collection<Product> coll = Arrays.asList(p1, p2);
 		
 		// when
 		productService.removeCollection(null, coll);
 		
 		// then
-		long countAfter = productService.count();
+		long countAfter = productService.count(session);
 		assertEquals(countBefore - countAfter, 2);
 	}
 	
@@ -371,14 +373,15 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void removeById() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		long countBefore = productService.count();
+		long countBefore = productService.count(session);
 		
 		// when
 		productService.removeById(null, id);
 		
 		// then
-		long countAfter = productService.count();
+		long countAfter = productService.count(session);
 		assertEquals(countBefore - countAfter, 1);
 	}
 
@@ -387,15 +390,16 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
-		long countBefore = productService.count();
+		long countBefore = productService.count(session);
 		Collection<Long> coll = Arrays.asList(id1, id2);
 		
 		// when
 		productService.removeCollectionByIds(null, coll);
 		
 		// then
-		long countAfter = productService.count();
+		long countAfter = productService.count(session);
 		assertEquals(countBefore - countAfter, 2);
 	}
 

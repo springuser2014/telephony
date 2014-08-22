@@ -28,7 +28,7 @@ implements TaxService {
 
 	@Transactional
 	@Override
-	public long count() {
+	public long count(Session session) {
 		return taxDao.count();
 	}
 

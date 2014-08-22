@@ -57,12 +57,12 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 		cc.setAuthor("pawel");
 		cc.setContent("aaaa");
 		cc.setReportedDate(new Date());
-		long countBefore = complaintCommentService.count();
+		long countBefore = complaintCommentService.count(session);
 		
 		// when
 		complaintCommentService.comment(session, cc, complaintId);
 		ProductComplaint complaintAfter = productComplaintService.findById(complaintId);
-		long countAfter = complaintCommentService.count();
+		long countAfter = complaintCommentService.count(session);
 		
 		// then
 		assertEquals(complaintAfter.getComments().size(), 3);
@@ -75,16 +75,17 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 	public void commentComplaintAsAnonymousClient() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String hash = "ABC123456789000002";
 		ComplaintComment cc = new ComplaintComment();
 		cc.setAuthor("pawel");
 		cc.setContent("aaaa");
 		cc.setReportedDate(new Date());
-		long countBefore = complaintCommentService.count();
+		long countBefore = complaintCommentService.count(session);
 		
 		// when
 		complaintCommentService.comment(hash, cc);
-		long countAfter = complaintCommentService.count();
+		long countAfter = complaintCommentService.count(session);
 		
 		// then
 		assertEquals(countAfter - 1, countBefore);

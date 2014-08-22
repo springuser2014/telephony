@@ -33,7 +33,7 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 
 	@Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 		return contactsDao.count();
 	}
 

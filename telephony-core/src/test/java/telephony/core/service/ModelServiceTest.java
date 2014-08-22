@@ -95,9 +95,10 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void counting() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		long count = modelService.count();		
+		long count = modelService.count(session);		
 		
 		// then
 		assertEquals(count, 8);
@@ -178,11 +179,11 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Model model = modelService.findByLabel(session, "iphone 6g");
-		long countBefore = modelService.count();
+		long countBefore = modelService.count(session);
 		
 		// when
 		modelService.remove(session, model);
-		long countAfter = modelService.count();
+		long countAfter = modelService.count(session);
 		
 		// then
 		assertEquals(countBefore  - countAfter, 1);
@@ -197,11 +198,11 @@ public class ModelServiceTest extends BaseCoreTest {
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Model model = modelService.findByLabel(session, "iphone 6g");
 		long id = model.getId();
-		long countBefore = modelService.count();
+		long countBefore = modelService.count(session);
 		
 		// when
 		modelService.removeById(session, id);
-		long countAfter = modelService.count();
+		long countAfter = modelService.count(session);
 		
 		// then
 		assertEquals(countBefore  - countAfter, 1);
@@ -214,12 +215,12 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id7 = 7, id8 = 8;
-		long countBefore = modelService.count();
+		long countBefore = modelService.count(session);
 		List<Long> ids = Arrays.asList(id7, id8);
 		
 		// when
 		modelService.removeById(session, ids);
-		long countAfter = modelService.count();
+		long countAfter = modelService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 2);

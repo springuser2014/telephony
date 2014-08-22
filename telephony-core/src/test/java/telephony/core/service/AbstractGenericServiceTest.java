@@ -19,8 +19,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import telephony.BaseCoreTest;
+import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.entity.jpa.TestEntity;
+import telephony.core.service.bean.Session;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -48,14 +50,15 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testSave() {
 		
 		// given		
-		long nbOfEntitiesBefore = genericService.count();
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		long nbOfEntitiesBefore = genericService.count(session);
 		TestEntity entity = new TestEntity();
 		entity.setLabel("aaa");
 		entity.setReportedDate(new Date());
 		
 		// when		
 		genericService.save(entity);
-		long nbOfEntitiesAfter = genericService.count();
+		long nbOfEntitiesAfter = genericService.count(session);
 		
 		// then
 		assertEquals(nbOfEntitiesAfter - nbOfEntitiesBefore, 1);		
@@ -109,9 +112,10 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testCount() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when		
-		long taxesNumber = genericService.count();
+		long taxesNumber = genericService.count(session);
 		
 		// then
 		assertEquals(taxesNumber, 3);		
@@ -169,13 +173,14 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testRemove() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		long countBefore = genericService.count();
+		long countBefore = genericService.count(session);
 		TestEntity entity = genericService.findById(id);
 		
 		// when	
 		genericService.remove(entity);
-		long countAfter = genericService.count();
+		long countAfter = genericService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 1);	
@@ -186,14 +191,15 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testBatchRemove() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
-		long countBefore = genericService.count();
+		long countBefore = genericService.count(session);
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		Collection<TestEntity> coll = genericService.findByIds(ids);
 		
 		// when	
 		genericService.batchRemove(coll);
-		long countAfter = genericService.count();
+		long countAfter = genericService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 2);
@@ -204,12 +210,13 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testRemovById() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		long countBefore = genericService.count();
+		long countBefore = genericService.count(session);
 		
 		// when	
 		genericService.removeById(id);
-		long countAfter = genericService.count();
+		long countAfter = genericService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 1);	
@@ -220,13 +227,14 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testBatchRemoveByIds() {
 
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
-		long countBefore = genericService.count();
+		long countBefore = genericService.count(session);
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		
 		// when	
 		genericService.batchRemoveByIds(ids);
-		long countAfter = genericService.count();
+		long countAfter = genericService.count(session);
 		
 		// then
 		assertEquals(countBefore - countAfter, 2);

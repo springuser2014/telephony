@@ -116,8 +116,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		Contact contact = contactService.findByLabel(session, "leszek");
 		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 
-		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count();
-		long productsAfter = -1, productsBefore = productService.count();		
+		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count(session);
+		long productsAfter = -1, productsBefore = productService.count(session);		
 		
 		Delivery newDelivery = new Delivery();
 		
@@ -133,8 +133,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				products, store.getId(), 
 				contact.getId()
 		);
-		deliveriesAfter = deliveryService.count();
-		productsAfter = productService.count();
+		deliveriesAfter = deliveryService.count(session);
+		productsAfter = productService.count(session);
 	
 		// then
 		assertTrue("Should increased number of deliveries ", 
@@ -171,11 +171,11 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Delivery deliveryToDelete = deliveryService.findById(session, 1L);
-		long countAfter = -1, countBefore = deliveryService.count();
+		long countAfter = -1, countBefore = deliveryService.count(session);
 		
 		// when
 		deliveryService.delete(session, deliveryToDelete);		
-		countAfter = deliveryService.count();
+		countAfter = deliveryService.count(session);
 		
 		// then
 		assertTrue("Should decreased number of users ", countBefore - countAfter == 1);
@@ -187,7 +187,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long count = deliveryService.count();
+		long count = deliveryService.count(session);
 		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create();
 		
 		// when

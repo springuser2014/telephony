@@ -65,7 +65,7 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 		return salesDao.count();
 	}
 

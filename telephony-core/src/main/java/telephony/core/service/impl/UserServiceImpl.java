@@ -116,7 +116,7 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 
 	@Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 		
 		return usersDao.count();
 	}

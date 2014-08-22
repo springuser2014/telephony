@@ -34,7 +34,7 @@ implements RoleService {
 	
 	@Transactional
 	@Override
-	public long count() {
+	public long count(Session session) {
 		
 		return rolesDao.count();
 	}

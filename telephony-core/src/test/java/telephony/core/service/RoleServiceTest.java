@@ -17,6 +17,7 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.service.bean.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -39,25 +40,27 @@ public class RoleServiceTest extends BaseCoreTest {
 	private RoleService roleService;
 
 	@Test
-	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchAllRoles() throws SessionServiceException {
 
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		RoleFilterCriteria filters = RoleFilterCriteria.create();
 		
 		// when
-		List<Role> roles = roleService.find(session, null);
+		List<Role> roles = roleService.find(session, filters);
 		
 		// then
 		assertTrue("should return 3 roles", roles.size() == 3);
 	}
 	
 	@Test
-	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void addingNewRole() throws SessionServiceException, RoleServiceException {
 
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		RoleFilterCriteria filters = RoleFilterCriteria.create();
 		
 		Role newRole = new Role();
 		newRole.setName("nowa rola");
@@ -65,27 +68,27 @@ public class RoleServiceTest extends BaseCoreTest {
 		newRole.setUsers(new HashSet<User>());
 		
 		// when
-		List<Role> lstBefore = roleService.find(session, null);
+		List<Role> lstBefore = roleService.find(session, filters);
 		roleService.add(session, newRole);
 		
 		// then
-		List<Role> lstAfter = roleService.find(session, null);
+		List<Role> lstAfter = roleService.find(session, filters);
 		assertTrue("should return new role", lstAfter.size() - lstBefore.size() == 1);
 	}
 	
 
 	@Test
-	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void deletingExisitingRole() throws SessionServiceException, RoleServiceException {
 
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Role roleToDelete = roleService.findByLabel(session, "salesman");
-		long countBefore = roleService.count();
+		long countBefore = roleService.count(session);
 		
 		// when
 		roleService.remove(session, roleToDelete);
-		long countAfter = roleService.count();
+		long countAfter = roleService.count(session);
 		
 		// then
 		assertTrue("should delete given role", countBefore - countAfter == 1);

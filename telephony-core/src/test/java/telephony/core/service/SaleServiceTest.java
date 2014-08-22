@@ -22,6 +22,7 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.service.bean.Session;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -63,12 +64,11 @@ public class SaleServiceTest extends BaseCoreTest {
 	public void fetchingAllSale() throws SessionServiceException, SaleServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		long count = saleService.count();
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		long count = saleService.count(session);
 		
 		// when
-		List<Sale> lst = saleService.find(null);
+		List<Sale> lst = saleService.find(session);
 		
 		// then
 		assertTrue("Should return exact number of sales", 
@@ -80,17 +80,16 @@ public class SaleServiceTest extends BaseCoreTest {
 	public void deletingSale() throws SessionServiceException, SaleServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		long countBefore = saleService.count();
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		long countBefore = saleService.count(session);
 		long saleId = 1L;
-		Sale saleToCancel = saleService.findById(null, saleId);
+		Sale saleToCancel = saleService.findById(session, saleId);
 		
 		// when
 		saleService.delete(null, saleToCancel);
 		
 		// then
-		long countAfter = saleService.count();
+		long countAfter = saleService.count(session);
 		assertTrue("should decreased number of sales", countBefore - countAfter == 1);
 	}
 	

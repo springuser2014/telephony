@@ -23,7 +23,7 @@ implements PricingService {
 
 	@Transactional
 	@Override
-	public long count() {
+	public long count(Session session) {
 		
 		logger.debug("PricingServiceImpl.count starts");
 

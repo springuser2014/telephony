@@ -80,7 +80,7 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 
     @Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 		
 		return storesDao.count();
 	}

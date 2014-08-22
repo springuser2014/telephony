@@ -197,7 +197,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public long count() {
+	public long count(Session session) {
 
 		return productsDao.count();
 	}
