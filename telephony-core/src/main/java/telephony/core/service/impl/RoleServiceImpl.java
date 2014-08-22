@@ -10,6 +10,7 @@ import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
+import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.service.RoleService;
 import telephony.core.service.SessionService;
 import telephony.core.service.bean.Session;
@@ -40,7 +41,7 @@ implements RoleService {
 
 	@Transactional
 	@Override
-	public List<Role> find(Session session) 
+	public List<Role> find(Session session, RoleFilterCriteria filters) 
 			throws SessionServiceException {
 		
 		logger.debug("RoleServiceImpl.fetchAll starts");

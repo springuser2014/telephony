@@ -46,7 +46,7 @@ public class RoleServiceTest extends BaseCoreTest {
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<Role> roles = roleService.find(session);
+		List<Role> roles = roleService.find(session, null);
 		
 		// then
 		assertTrue("should return 3 roles", roles.size() == 3);
@@ -65,11 +65,11 @@ public class RoleServiceTest extends BaseCoreTest {
 		newRole.setUsers(new HashSet<User>());
 		
 		// when
-		List<Role> lstBefore = roleService.find(session);
+		List<Role> lstBefore = roleService.find(session, null);
 		roleService.add(session, newRole);
 		
 		// then
-		List<Role> lstAfter = roleService.find(session);
+		List<Role> lstAfter = roleService.find(session, null);
 		assertTrue("should return new role", lstAfter.size() - lstBefore.size() == 1);
 	}
 	

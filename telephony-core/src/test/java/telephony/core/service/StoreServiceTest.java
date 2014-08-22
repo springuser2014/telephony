@@ -124,7 +124,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
-		List<Role> roles = roleService.find(session);
+		List<Role> roles = roleService.find(session, null);
 		
 		// when
 		storeService.setRequiredRoles(session, store, roles);

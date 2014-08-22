@@ -152,7 +152,7 @@ public class UserServiceTest extends BaseCoreTest {
 		String username2 = TestData.USER2_NAME;
 				
 		User user = userService.findByName(session, username2);
-		List<Role> rolesToAdd = roleService.find(session);
+		List<Role> rolesToAdd = roleService.find(session, null);
 		userService.getEntityManager().refresh(user);
 		
 		assertEquals(1, user.getRoles().size());

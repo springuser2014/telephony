@@ -8,7 +8,7 @@ public abstract class AbstractFilterCriteria<C extends AbstractFilterCriteria<C>
 	
 	private Integer page;
 	private Integer perPage;
-
+	
 	/**
 	 * asd.
 	 * @return a.
