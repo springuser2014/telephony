@@ -115,8 +115,8 @@ implements SessionService {
         try {
 
 	        u = usersDao.findByNameAndSessionId(
-	        		sessionToRefresh.getUsername(), 
-	        		sessionToRefresh.getSessionId()
+	        		sessionToRefresh.username(), 
+	        		sessionToRefresh.sessionId()
 	        );
 	       
 	        Date today = new Date();
@@ -151,8 +151,8 @@ implements SessionService {
         try {
 
             u = usersDao.findByNameAndSessionId(
-				sessionToDelete.getUsername(),
-				sessionToDelete.getSessionId()
+				sessionToDelete.username(),
+				sessionToDelete.sessionId()
             );
 
             Date expiredDate = new Date(new Date().getTime() - getSessionValidity());
@@ -179,8 +179,8 @@ implements SessionService {
 		
 		try {
 			u = usersDao.findByNameAndSessionId(
-					sessionToValidate.getUsername(), 
-					sessionToValidate.getSessionId()
+					sessionToValidate.username(), 
+					sessionToValidate.sessionId()
 			);
 			
 			Date now = new Date();

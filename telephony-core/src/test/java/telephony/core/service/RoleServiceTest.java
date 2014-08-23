@@ -2,7 +2,6 @@ package telephony.core.service;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Test;
@@ -15,8 +14,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
-import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.service.bean.Session;
 import telephony.core.service.exception.RoleServiceException;
@@ -44,7 +41,10 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void fetchAllRoles() throws SessionServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		Session session = Session.create()
+							.username(TestData.USER1_NAME)
+							.sessionId(TestData.USER1_SESSIONID);
+		
 		RoleFilterCriteria filters = RoleFilterCriteria.create();
 		
 		// when
@@ -56,24 +56,24 @@ public class RoleServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void addingNewRole() throws SessionServiceException, RoleServiceException {
+	public void addingRole() throws SessionServiceException, RoleServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		RoleFilterCriteria filters = RoleFilterCriteria.create();
+		Session session = Session.create()
+				.username(TestData.USER1_NAME)
+				.sessionId(TestData.USER1_SESSIONID);
+		
+		long countBefore = roleService.count(session);
 		
 		Role newRole = new Role();
 		newRole.setName("nowa rola");
-		newRole.setStore(new HashSet<Store>());
-		newRole.setUsers(new HashSet<User>());
 		
 		// when
-		List<Role> lstBefore = roleService.find(session, filters);
 		roleService.add(session, newRole);
+		long countAfter = roleService.count(session);
 		
 		// then
-		List<Role> lstAfter = roleService.find(session, filters);
-		assertTrue("should return new role", lstAfter.size() - lstBefore.size() == 1);
+		assertTrue("should return new role", countAfter - countBefore == 1);
 	}
 	
 

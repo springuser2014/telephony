@@ -7,19 +7,10 @@ import java.util.Date;
  */
 public class Session {
 
-    /**
-     * asd.
-     */
     private String username;
 
-    /**
-     * asd.
-     */
     private String sessionId;
-    
-    /**
-     * foo.
-     */
+
     private Date validity;
 
     /**
@@ -30,6 +21,14 @@ public class Session {
     }
     
     /**
+     * asd.
+     * @return a.
+     */
+    public static Session create() {
+    	return new Session();
+    }
+    
+    /**
      * a.
      * @param username d.
      * @param sessionId d.
@@ -37,9 +36,9 @@ public class Session {
      */
     public static Session create(String username, String sessionId) {
     	Session sess = new Session();
-    	sess.setSessionId(sessionId);
-    	sess.setUsername(username);
-    	sess.setValidity(null);
+    	sess.sessionId(sessionId);
+    	sess.username(username);
+    	sess.validity(null);
     	
     	return sess;
     }
@@ -61,32 +60,36 @@ public class Session {
      * asd.
      * @return asd.
      */
-    public final String getUsername() {
+    public final String username() {
         return username;
     }
 
     /**
      * asd.
      * @param username asd.
+     * @return asd.
      */
-    public final void setUsername(final String username) {
+    public final Session username(final String username) {
         this.username = username;
+        return this;
     }
 
     /**
      * asd.
      * @return asd.
      */
-    public final String getSessionId() {
+    public final String sessionId() {
         return sessionId;
     }
 
     /**
      * asd.
      * @param sessionId asd.
+     * @return asd.
      */
-    public final void setSessionId(final String sessionId) {
+    public final Session sessionId(final String sessionId) {
         this.sessionId = sessionId;
+        return this;
     }
 
     /**
@@ -112,13 +115,12 @@ public class Session {
             return false;
         }
         
-        if (!validity.equals(session.getValidity())) {
+        if (!validity.equals(session.validity())) {
         	return false;
         }
 
         return true;
     }
-
 
     /**
      * asd.
@@ -132,20 +134,21 @@ public class Session {
         return result;
     }
 
-
     /**
      * asd.
      * @return asd.
      */
-	public Date getValidity() {
+	public Date validity() {
 		return validity;
 	}
 
 	/**
 	 * asd.
 	 * @param validity asd.
+	 * @return asd.
 	 */
-	public void setValidity(Date validity) {
+	public Session validity(Date validity) {
 		this.validity = validity;
+		return this;
 	}
 }

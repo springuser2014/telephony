@@ -53,7 +53,7 @@ public class ContactsFetchResourceImpl extends TelephonyServerResource
 		logger.info(" username = {} ", name);
         logger.info(" sessionId = {} ", sessionId);
         
-        List<Contact> contacts = contactService.fetchAll(name, sessionId);       
+        List<Contact> contacts = contactService.find(null, null);       
         List<ContactBean> contactsToJsonize = convertToBeans(contacts);
         
         ContactListResponse response = new ContactListResponse();

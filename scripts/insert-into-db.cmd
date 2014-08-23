@@ -1,1 +1,0 @@
-call python insert-into-db.py

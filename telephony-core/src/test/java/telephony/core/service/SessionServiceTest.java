@@ -81,8 +81,8 @@ public class SessionServiceTest extends BaseCoreTest {
 		// then
 		boolean isValidAfterRefresh = 
 				sessionToRefresh
-				.getValidity()
-				.before(refreshedSession.getValidity());
+				.validity()
+				.before(refreshedSession.validity());
 		assertTrue("Refreshed session should have longer lifetime", isValidAfterRefresh);		
 	}
 	

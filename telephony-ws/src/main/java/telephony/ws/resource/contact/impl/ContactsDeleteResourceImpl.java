@@ -27,17 +27,12 @@ import telephony.ws.resource.contact.ContactsDeleteResource;
  */
 public class ContactsDeleteResourceImpl extends TelephonyServerResource
 	implements ContactsDeleteResource {
-	
-	
+		
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
 	private ContactService contactService;
 
-
-	/**
-	 * {@inheritDoc}  
-	 */
 	@Post("json")
 	public JsonRepresentation delete(JsonRepresentation entity) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException {
@@ -57,10 +52,10 @@ public class ContactsDeleteResourceImpl extends TelephonyServerResource
 		BasicResponse resp = new BasicResponse(true, "Usunieto obiekt");
 		try {
 			Contact contactToDelete = contactService.findById(
-					username, sessionId, contactToDeleteId
+					null, contactToDeleteId
 			);
 			
-			contactService.deleteContact(username, sessionId, contactToDelete);
+			contactService.deleteContact(null, contactToDelete);
 			
 		} catch (Exception e) {
 			

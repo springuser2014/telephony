@@ -4,6 +4,7 @@
 	<persistence-unit name="telephony" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
+
         <class>telephony.core.entity.jpa.User</class>
         <class>telephony.core.entity.jpa.Store</class>
         <class>telephony.core.entity.jpa.Delivery</class>
@@ -11,15 +12,18 @@
         <class>telephony.core.entity.jpa.Sale</class>
         <class>telephony.core.entity.jpa.Role</class>
         <class>telephony.core.entity.jpa.Contact</class>
-        <!-- 
-        <class>telephony.core.entity.jpa.Invoice</class>
-         -->
-        <class>telephony.core.entity.jpa.File</class>
-        <class>telephony.core.entity.jpa.Complaint</class>
         <class>telephony.core.entity.jpa.SaleComplaint</class>
         <class>telephony.core.entity.jpa.ProductComplaint</class>
+        <class>telephony.core.entity.jpa.Complaint</class>
+        <class>telephony.core.entity.jpa.ComplaintComment</class>
+        <class>telephony.core.entity.jpa.Email</class>
+        <class>telephony.core.entity.jpa.PhoneNumber</class>
+        <class>telephony.core.entity.jpa.Tax</class>
+        <class>telephony.core.entity.jpa.Pricing</class>
         <class>telephony.core.entity.jpa.Model</class>
         <class>telephony.core.entity.jpa.Producer</class>
+        <class>telephony.core.entity.jpa.TestEntity</class>
+          
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

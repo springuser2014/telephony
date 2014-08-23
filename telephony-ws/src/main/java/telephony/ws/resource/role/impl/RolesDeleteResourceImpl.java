@@ -31,9 +31,6 @@ public class RolesDeleteResourceImpl extends TelephonyServerResource
 	@Inject
 	private RoleService roleService;
 
-	/**
-	 * {@inheritDoc}
-	 */	
 	@Delete("json")
 	public JsonRepresentation delete(JsonRepresentation entity) 
 			throws JSONException, IOException {
@@ -48,8 +45,8 @@ public class RolesDeleteResourceImpl extends TelephonyServerResource
     	BasicResponse response = new BasicResponse(true, "Usunięto obiekt");
     	try {
     		// TODO: add to one @transactional method
-    		Role roleToDelete = roleService.fetchByLabel(username, sessionId, label);
-    		roleService.delete(username, sessionId, roleToDelete);
+    		Role roleToDelete = roleService.findByLabel(null, label);
+    		roleService.remove(null, roleToDelete);
     		
     	} catch (Exception ex) {
     		logger.error(ex.getMessage());

@@ -77,7 +77,7 @@ public class ContactsAddResourceImpl extends TelephonyServerResource implements
 		BasicResponse response = new BasicResponse(true, "Dodano sukcesywnie");
 		
 		try {
-			contactService.addNewContact(username, sessionId, newContact);
+			contactService.add(null, newContact);
 			
 		} catch (Exception ex) { // TODO : dodac rozróżnienie na różne typy wyjątków
 			response.setMessage("Wystapił błąd podczas dodawania");

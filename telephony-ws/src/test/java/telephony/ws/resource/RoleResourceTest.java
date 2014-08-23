@@ -40,7 +40,7 @@ public class RoleResourceTest extends BaseWSTest {
 	
 	private SessionInitializationResource session;
 	
-	private RolesAddResource rolesAdd ;
+	private RolesAddResource rolesAdd;
 	
 	private RolesDeleteResource rolesDelete;
 	
@@ -143,7 +143,4 @@ public class RoleResourceTest extends BaseWSTest {
     	
     	assertTrue("should return true", isSuccess);
 	}
-	
-	
-
 }

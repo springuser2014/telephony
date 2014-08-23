@@ -53,12 +53,11 @@ public class TaxServiceTest extends BaseCoreTest {
 		long taxesBefore = taxService.count(session);
 		
 		// when
-		taxService.add(null, tax);
+		taxService.add(session, tax);
 		long taxesAfter = taxService.count(session);
 		
 		// then
-		assertEquals(taxesAfter - taxesBefore, 1);
-		
+		assertEquals(taxesAfter - taxesBefore, 1);		
 	}
 
 	@Test
@@ -182,8 +181,6 @@ public class TaxServiceTest extends BaseCoreTest {
 		// then
 		assertEquals(taxes.size(), 7);		
 	}
-	
-
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -203,7 +200,6 @@ public class TaxServiceTest extends BaseCoreTest {
 		// then
 		assertTrue(taxAfter.getRate() == rateAfter);
 	}
-	
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -222,6 +218,4 @@ public class TaxServiceTest extends BaseCoreTest {
 		// then
 		assertEquals(before - after, 1);		
 	}
-
-
 }

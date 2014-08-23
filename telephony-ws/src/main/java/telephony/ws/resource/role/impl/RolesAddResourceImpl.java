@@ -33,10 +33,6 @@ public class RolesAddResourceImpl extends TelephonyServerResource
 	@Inject
 	private RoleService roleService;
 
-
-	/**
-	 * {@inheritDoc}
-	 */
     @Post("json")
     public JsonRepresentation add(JsonRepresentation entity) 
     		throws JSONException, IOException {
@@ -55,7 +51,7 @@ public class RolesAddResourceImpl extends TelephonyServerResource
     	
     	BasicResponse response = new BasicResponse(true, "Dodano sukcesywnie");
     	try {
-    		roleService.add(username, sessionId, newrole);
+    		roleService.add(null, newrole);
     	} catch (Exception ex) {
     		logger.error(ex.getMessage());
     		logger.error(ex.toString());

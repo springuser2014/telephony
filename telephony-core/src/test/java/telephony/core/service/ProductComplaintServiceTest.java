@@ -56,8 +56,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
 		
 		Contact contact = contactService.findById(null, 1L); 
 		ProductComplaint complaint = new ProductComplaint();
@@ -91,8 +91,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
  
 		ProductComplaint complaint1 = complaintService.findById(complaintId);
 		complaint1.setReportedDate(reportedDate);
@@ -123,8 +123,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
  
 		ProductComplaint complaint1 = complaintService.findById(complaintId1);
 		complaint1.setReportedDate(reportedDate);
@@ -156,8 +156,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
  
 		long complaintId = 1L;
 		
@@ -179,8 +179,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
  
 		long complaintId = 1L;
 		
@@ -202,8 +202,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
  
 		long complaintId = 1L;
 		
@@ -225,8 +225,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
  
 		long complaintId = 1L;
 		
@@ -248,8 +248,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
 		
 		long countBefore = complaintService.count(session);
 		long complaintId = 1L;
@@ -271,8 +271,8 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
+		session.sessionId(sessionId);
+		session.username(username);
 		
 		long countBefore = complaintService.count(session);
 		long complaintId1 = 1L, complaintId2 = 2L;
