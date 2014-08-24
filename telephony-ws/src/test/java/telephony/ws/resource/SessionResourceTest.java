@@ -1,8 +1,11 @@
 package telephony.ws.resource;
 
-import static junit.framework.Assert.assertTrue;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.path.json.JsonPath.from;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -16,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.restlet.Client;
 import org.restlet.Request;
@@ -28,9 +32,14 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jayway.restassured.http.ContentType;
+
 import telephony.core.service.bean.Session;
 import telephony.ws.bean.UserBean;
 import telephony.ws.resource.bean.SessionBean;
+import telephony.ws.resource.bean.SignInBean;
 import telephony.ws.resource.session.SessionDestroyResource;
 import telephony.ws.resource.session.SessionRefreshResource;
 import telephony.ws.resource.session.SessionInitializationResource;
@@ -40,7 +49,7 @@ import telephony.ws.resource.session.impl.SessionInitializationResourceImpl;
 /**
  * foo bar.
  */
-@RunWith(Arquillian.class)
+@RunWith(JUnit4ClassRunner.class)
 public class SessionResourceTest extends BaseWSTest {
 
     private static final String SESSION_INITIALIZATION_RESOURCE_URL = 
@@ -103,6 +112,32 @@ public class SessionResourceTest extends BaseWSTest {
         this.sessionDestroy = 
         		this.clientSessionDestroy.wrap(SessionDestroyResource.class);
     }
+    
+
+	@Test
+	public void testSessionInitialization() throws Exception {
+		
+		SignInBean auth = SignInBean.create()
+				.password("rfaysdhaiufsiuf")
+				.username("user1@gmail.com");		
+		
+		Gson gson = new GsonBuilder().create();
+		
+		String json = gson.toJson(auth);
+			
+		com.jayway.restassured.response.Response res = 
+					given()
+						.contentType(ContentType.JSON)
+						.body(json)
+					.when()
+						.post(TESTING_APP + SessionInitializationResource.URL);
+		
+		String jsonResp = res.asString();
+		
+//		assertTrue( res.header("Content-type").equals("application/json") );
+					
+		assertTrue( from(jsonResp).get("username").equals("user1@gmail.com") );		
+	}
 
 	/**
      * foo bar.
@@ -172,11 +207,7 @@ public class SessionResourceTest extends BaseWSTest {
         		.getStatus().equals(Status.CLIENT_ERROR_BAD_REQUEST));
 	}
     
-    /**
-     * asd .
-     * @throws JSONException asd.
-     * @throws IOException asd.
-     */
+
     @SuppressWarnings("deprecation")
 	@Test
     public void checksValidSessionVerification() throws JSONException, IOException {
@@ -214,14 +245,10 @@ public class SessionResourceTest extends BaseWSTest {
     }
     
 
-    /**
-     * asd .
-     * @throws JSONException asd.
-     * @throws IOException asd.
-     */
     @SuppressWarnings("deprecation")
-	//@Test
+	@Test
     public void checksInvalidSessionVerification() throws JSONException, IOException {
+    	
     	// TODO : refactor to constatnts
     	final String username = "user1@gmail.com";
     	final String password = "rfaysdhaiufsiuf";
@@ -245,21 +272,16 @@ public class SessionResourceTest extends BaseWSTest {
                
         JsonRepresentation validatingResponseRep = sessionValidation.validate(validatingParams);
         
-	    
-        assertTrue("response should contains true", 
+        assertTrue("response should contains false", 
         		validatingResponseRep.getText().contains("false"));
         assertTrue("should return 200", this.clientSessionValidation.getStatus().isSuccess());      
     }
     
 
-    /**
-     * asd .
-     * @throws JSONException asd.
-     * @throws IOException asd.
-     */
     @SuppressWarnings("deprecation")
-	//@Test
+	@Test
     public void checksSessionRefreshingVerification() throws JSONException, IOException {
+    	
     	// TODO : refactor to constatnts
     	final String username = "user1@gmail.com";
     	final String password = "rfaysdhaiufsiuf";
@@ -285,7 +307,7 @@ public class SessionResourceTest extends BaseWSTest {
         JsonRepresentation validatingResponse = sessionValidation.validate(validatingParams);
         
         assertTrue("response should contains true", 
-        		validatingResponse.getText().contains("false"));
+        		validatingResponse.getText().contains("true"));
         assertTrue("should return 200", clientSessionValidation.getStatus().isSuccess());   	
     }
 }

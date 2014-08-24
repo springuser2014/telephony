@@ -32,9 +32,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         super(Product.class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
 	@Override
     @SuppressWarnings("unchecked")
     public List<Product> findCreatedByUserId(Long userId, ProductStatus productStatus) {
@@ -53,9 +50,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
 	@Override
     @SuppressWarnings("unchecked")
     public List<Product> findByStore(Store store) {
@@ -72,9 +66,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> findByCriteria(
@@ -163,17 +154,11 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Product findByImei(String imei) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<String> fetchImeisList() {
         logger.debug("ProductServiceImpl.fetchImeisList starts");
@@ -190,9 +175,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<String> fetchProducersList() {
         logger.debug("ProductServiceImpl.fetchProducersList starts");
@@ -211,9 +193,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<String> fetchModelsList() {
         logger.debug("ProductServiceImpl.fetchModelsList starts");
@@ -252,9 +231,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Transactional
 	@Override
     @SuppressWarnings("unchecked")
@@ -309,9 +285,6 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
          return lst;
     }
 
-	/**
-     * {@inheritDoc}
-     */
     @Transactional
 	@SuppressWarnings("unchecked")
 	@Override
@@ -370,8 +343,4 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         
         return lst;
 	}
-    
-    
-    
-    
 }

@@ -1,4 +1,4 @@
-package telephony.ws;
+package telephony.ws.pre;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;

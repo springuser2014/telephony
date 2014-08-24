@@ -40,18 +40,6 @@ public class Role extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     
-    @ManyToMany(fetch = FetchType.LAZY, 
-    			cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-    @JoinTable(name = "store_roles",
-    		joinColumns = @JoinColumn(
-				name = "role_id", 
-				referencedColumnName = "id"),
-    		inverseJoinColumns = @JoinColumn(
-				name = "store_id", 
-				referencedColumnName = "id")
-    )
-    private Set<Store> store = new HashSet<Store>();
-    
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, 
     			mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
@@ -72,37 +60,7 @@ public class Role extends BaseEntity {
 		this.users = users;
 	}
 
-	/**
-     * asd.
-     * @return asd.
-     */
-	public Set<Store> getStore() {
-		return store;
-	}
 
-	/**
-	 * asd.
-	 * @param store asd.
-	 */
-	public void setStore(Set<Store> store) {
-		this.store = store;
-	}
-    
-    /**
-     * asd.
-     * @param store asd.
-     */
-    public void addStore(Store store) {
-    	
-    }
-
-    /**
-     * asd.
-     * @param store asd.
-     */
-	public void removeStore(Store store) {
-		
-	}
 	
     /**
      * asd.

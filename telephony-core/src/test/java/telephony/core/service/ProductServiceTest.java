@@ -80,12 +80,11 @@ public class ProductServiceTest extends BaseCoreTest {
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchingAllProducersInUse() {
 		
-		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
+		// given		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		// when
-		List<String> lst = productService.fetchAllProducersInUse(null);
+		List<String> lst = productService.fetchAllProducersInUse(session);
 		
 		List<String> expected = new ArrayList<String>();
 		expected.add("apple");
@@ -192,17 +191,17 @@ public class ProductServiceTest extends BaseCoreTest {
 				.fetchAllProducts(session, movedFromStoreId, productStatus);
 		
 		List<Product> produtsBeforeMove = productService
-				.fetchAllProducts(null, moveToStoreId, productStatus);
+				.fetchAllProducts(session, moveToStoreId, productStatus);
 		
 		long toMoveCount = productsToMove.size();
 		long beforeMoved = produtsBeforeMove.size();
 		
 		// when
-		productService.moveProducts(null, store, productsToMove);	
+		productService.moveProducts(session, store, productsToMove);	
 
 		// then
 		List<Product> productsAfterMove = productService
-				.fetchAllProducts(null, moveToStoreId, productStatus);
+				.fetchAllProducts(session, moveToStoreId, productStatus);
 		
 		long afterMoved = productsAfterMove.size();
 		
@@ -211,17 +210,17 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchAllProductsByCriteria() throws SessionServiceException {
+	public void fetchAllProductsByCriteria1() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		ProductFilterCriteria criteria = ProductFilterCriteria.create(); 		
 		criteria.setImei("123456789000001");
 		
 		// when
 		List<Product> products = productService
-				.fetchAllProductsByCriteria(null, criteria);
+				.findByCriteria(session, criteria);
 		
 		// then
 		assertTrue("should return one product", products.size() == 1);
@@ -250,11 +249,12 @@ public class ProductServiceTest extends BaseCoreTest {
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void findingByIds() {
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> coll = Arrays.asList(id1, id2);
 		
 		// when
-		Collection<Product> products = productService.findById(null, coll);
+		Collection<Product> products = productService.findById(session, coll);
 				
 		// then
 		assertNotNull(products);
@@ -266,12 +266,11 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findByIMEI() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String imei = "123456789000047";
 		
 		// when
-		Product product = productService.findByIMEI(null, imei);
+		Product product = productService.findByIMEI(session, imei);
 		
 		// then
 		assertNotNull(product);
@@ -283,18 +282,16 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void update() throws SessionServiceException {
 		
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String imei = "123456789000444";
 		long id = 1;
-		Product product = productService.findById(null, id);
+		Product product = productService.findById(session, id);
 		
 		// when
 		product.setImei(imei);
-		productService.update(null, product);
+		productService.update(session, product);
 		
-		Product prod = productService.findByIMEI(null, imei);
+		Product prod = productService.findByIMEI(session, imei);
 		
 		// then
 		assertNotNull(prod);
@@ -306,9 +303,11 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void updateCollection() {
 		
 		// given
+		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		long id1 = 1, id2 = 2;
-		Product p1 = productService.findById(null, id1);
-		Product p2 = productService.findById(null, id2);
+		Product p1 = productService.findById(session, id1);
+		Product p2 = productService.findById(session, id2);
 		String imei1 = "123456789000888";
 		String imei2 = "123456789000777";
 		Product changed1 = null;
@@ -318,11 +317,11 @@ public class ProductServiceTest extends BaseCoreTest {
 		p1.setImei(imei1);
 		p2.setImei(imei2);
 		Collection<Product> coll = Arrays.asList(p1, p2);
-		productService.updateCollection(null, coll);
+		productService.updateCollection(session, coll);
 		
 		// then
-		changed1 = productService.findByIMEI(null, imei1);
-		changed2 = productService.findByIMEI(null, imei2);
+		changed1 = productService.findByIMEI(session, imei1);
+		changed2 = productService.findByIMEI(session, imei2);
 		
 		assertNotNull(changed1);
 		assertNotNull(changed2);
@@ -337,11 +336,11 @@ public class ProductServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
-		Product p = productService.findById(null, id);
+		Product p = productService.findById(session, id);
 		long countBefore = productService.count(session);
 		
 		// when
-		productService.remove(null, p);
+		productService.remove(session, p);
 		
 		// then
 		long countAfter = productService.count(session);
@@ -355,13 +354,13 @@ public class ProductServiceTest extends BaseCoreTest {
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
-		Product p1 = productService.findById(null, id1);
-		Product p2 = productService.findById(null, id2);
+		Product p1 = productService.findById(session, id1);
+		Product p2 = productService.findById(session, id2);
 		long countBefore = productService.count(session);
 		Collection<Product> coll = Arrays.asList(p1, p2);
 		
 		// when
-		productService.removeCollection(null, coll);
+		productService.removeCollection(session, coll);
 		
 		// then
 		long countAfter = productService.count(session);
@@ -378,7 +377,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		long countBefore = productService.count(session);
 		
 		// when
-		productService.removeById(null, id);
+		productService.removeById(session, id);
 		
 		// then
 		long countAfter = productService.count(session);
@@ -396,7 +395,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		Collection<Long> coll = Arrays.asList(id1, id2);
 		
 		// when
-		productService.removeCollectionByIds(null, coll);
+		productService.removeCollectionByIds(session, coll);
 		
 		// then
 		long countAfter = productService.count(session);

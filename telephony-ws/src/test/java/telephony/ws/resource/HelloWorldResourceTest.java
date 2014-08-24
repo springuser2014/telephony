@@ -10,18 +10,19 @@ import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
+import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
-import telephony.ws.ArchivesBuilder;
-import telephony.ws.pre.TestsConfig;
+import telephony.ws.pre.ArchivesBuilder;
+import telephony.ws.test.TestsConfig;
 
 /**
  * asd.
  */
-@RunWith(Arquillian.class)
+@RunWith(JUnit4ClassRunner.class)
 public class HelloWorldResourceTest extends BaseWSTest {
 
 	private static final String TESTING_APP = TestsConfig.TESTING_HOST

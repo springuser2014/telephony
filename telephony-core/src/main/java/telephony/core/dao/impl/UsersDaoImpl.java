@@ -23,39 +23,45 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		super(User.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User findByName(String name) {
 
 		logger.info("findByName starts ");
 		logger.info("params : [ name = {} ]", name);
 				
-		User u = (User) getEntityManager()
+		List<User> lst = (List<User>) getEntityManager()
 				.createQuery(
 						"select e from User e LEFT JOIN FETCH e.roles " +
 						"LEFT JOIN FETCH e.allowedShops where e.email = ?1")
 				.setParameter(1, name)
-				.getSingleResult();
-
-		logger.info("found {} element", u);
-
-		return u;
+				.getResultList();
+		
+		if (lst.size() > 0) {
+			return lst.get(0);
+		} else {
+			return null;
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User findByNameAndPassword(String name, String password) {
 		logger.info("findByNameAndPassword starts");
 		logger.info("params : [ name = {} , password = {} ]", name, password);
 
 		// TODO : use encrypted password
-		User u = (User) getEntityManager()
+		List<User> lst = (List<User>) getEntityManager()
 				.createQuery(
 						"select e from User e where e.email = ?1 and e.password = ?2")
 				.setParameter(1, name).setParameter(2, password)
-				.getSingleResult();
+				.getResultList();
 
-		logger.info("found {} element", u);
-
-		return u;
+		if (lst.size() > 0) {
+			return lst.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -78,6 +84,7 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		return i > 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User findByNameAndSessionId(String username, String sessionId) {
 
@@ -86,15 +93,18 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 				"params : [ username = {} , sessionId = {}]",
 				username, sessionId);
 		
-		User u = (User) getEntityManager()
+		List<User> lst = (List<User>) getEntityManager()
 				.createQuery(
 						"select e from User e where e.email = ?1 and e.sessionId = ?2")
 				.setParameter(1, username)
 				.setParameter(2, sessionId)
-				.getSingleResult();
+				.getResultList();
 
-		return u;
-
+		if (lst.size() > 0) {
+			return lst.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

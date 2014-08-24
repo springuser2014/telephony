@@ -3,6 +3,10 @@ package telephony.ws.resource.session.impl;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
@@ -28,6 +32,8 @@ import telephony.ws.guice.env.TelephonyWebServicesProductionModule;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionInitializationResource;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -45,19 +51,19 @@ public class SessionInitializationResourceImpl extends TelephonyServerResource
 	@Inject
 	private SessionService sessionService;
 
-	/**
-	 * {@inheritDoc}
-	 */
+
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
     @Post("json")
     public JsonRepresentation initialize(JsonRepresentation entity) 
     		throws JSONException, IOException {
 
         logger.info("SessionInitializationResource.initialize");
-
+        
         JSONObject req = new JsonRepresentation(entity).getJsonObject();
         String name = req.getString("username");
         String password = req.getString("password");
-
+        
         logger.info(" username = {} ", name);
         logger.info(" password = {} ", password);
         Session session = null;
@@ -72,7 +78,8 @@ public class SessionInitializationResourceImpl extends TelephonyServerResource
             return new JsonRepresentation("Error occured");
         } else {
     		getResponse().setStatus(Status.SUCCESS_OK);
-            return new JsonRepresentation(session);
+    		Gson gson = new GsonBuilder().create();    		
+            return new JsonRepresentation(gson.toJson(session));
         }
     }
 }

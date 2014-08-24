@@ -11,6 +11,8 @@ import org.restlet.resource.Put;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.SessionService;
@@ -30,9 +32,6 @@ public class SessionRefreshResourceImpl extends TelephonyServerResource
 	@Inject
 	private SessionService sessionService;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Put("json")
 	public JsonRepresentation refresh(JsonRepresentation entity)
@@ -58,7 +57,8 @@ public class SessionRefreshResourceImpl extends TelephonyServerResource
 		if (session == null) {
 			return new JsonRepresentation("Error occured");
 		} else {
-			return new JsonRepresentation(session);
+			Gson gson = new GsonBuilder().create();
+			return new JsonRepresentation(gson.toJson(session));
 		}
 	}
 

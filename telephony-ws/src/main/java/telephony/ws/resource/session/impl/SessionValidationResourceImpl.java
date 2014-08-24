@@ -30,9 +30,6 @@ public class SessionValidationResourceImpl extends TelephonyServerResource
 	@Inject
 	private SessionService sessionService;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Post("json")
 	public JsonRepresentation validate(JsonRepresentation entity) 

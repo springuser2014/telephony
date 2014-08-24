@@ -1,6 +1,8 @@
 package telephony.ws;
 
 
+import java.util.List;
+
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.resource.Directory;
@@ -9,9 +11,14 @@ import org.restlet.routing.Router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.googlecode.flyway.core.Flyway;
 
+import telephony.core.guice.env.EnvironmentNameResolver;
+import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 import telephony.ws.resource.HelloWorldResource;
 import telephony.ws.resource.HelloWorldResourceImpl;
 import telephony.ws.resource.contact.ContactsAddResource;
@@ -110,7 +117,7 @@ public class TelephonyApplication extends Application {
     @Override
     public Restlet createInboundRoot() {
         Router router = new Router(getContext());
-        
+                
         router.attach(HelloWorldResource.URL, HelloWorldResourceImpl.class);
         
         router.attach(SessionInitializationResource.URL, SessionInitializationResourceImpl.class);
@@ -153,7 +160,11 @@ public class TelephonyApplication extends Application {
         router.attach(ContactsDeleteResource.URL, ContactsDeleteResourceImpl.class);
         router.attach(ContactsAddResource.URL, ContactsAddResourceImpl.class);
         
+        // TODO : create and add complaints-related resources
+        
         router.attach("/", new Directory(getContext(), "war:///"));
+        
+        
 
         return router;
 

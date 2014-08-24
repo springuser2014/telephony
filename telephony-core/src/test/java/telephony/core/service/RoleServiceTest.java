@@ -32,7 +32,6 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 @FlywayTest
 public class RoleServiceTest extends BaseCoreTest {
 	
-	
 	@Inject
 	private RoleService roleService;
 

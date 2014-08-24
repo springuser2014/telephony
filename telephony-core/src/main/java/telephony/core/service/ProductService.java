@@ -15,6 +15,7 @@ import telephony.core.service.exception.SessionServiceException;
  * asd.
  */
 public interface ProductService extends BasicService<Product> {
+	
 
     /**
      * asd.
@@ -87,7 +88,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-    List<Product> fetchAllProductsByCriteria(Session session, ProductFilterCriteria filters) 
+    List<Product> findByCriteria(Session session, ProductFilterCriteria filters) 
     		throws SessionServiceException;
 
     /**

@@ -30,53 +30,35 @@ implements SessionService {
 	
 	private Integer sessionValidity; 	
     
-	/**
-	 * {@inheritDoc}
-	 * TODO : remove?
-	 */
+	//	TODO : remove?    
 	@Inject
     @Override
 	public void setUsersDao(UsersDao usersDao) {
 		this.usersDao = usersDao;
 	}
     
-	/**
-	 * {@inheritDoc}
-	 * TODO : remove?
-	 */
+	//	TODO : remove?    
 	@Inject
     @Override
     public void setStringGenerator(StringGenerator stringGenerator) {
     	this.generator = stringGenerator;
     }
 	
-    /**
-     * {@inheritDoc}
-     * TODO : remove?
-     */
+	//	TODO : remove?
     public Integer getSessionValidity() {
 		
     	return sessionValidity;
 	}
     
-    /**
-     * {@inheritDoc}
-     * TODO : remove?
-     */
+    //	TODO : remove?
     @Inject 
     public void setSessionValidity(@Named("sessionValidity") Integer sessionValidity) {
     	
     	this.sessionValidity = sessionValidity;
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
 	@Transactional
-    public Session init(
-    		final String username, 
-    		final String password) {
+    public Session init(final String username, final String password) {
     	
     	logger.info("SessionServiceImpl.init starts");
 
@@ -102,9 +84,6 @@ implements SessionService {
         return session;
     }
 
-	/**
-     * {@inheritDoc}
-     */
 	@Transactional
     public Session refresh(Session sessionToRefresh) {
     	
@@ -139,9 +118,6 @@ implements SessionService {
         return session;
     }
 
-    /**
-     * {@inheritDoc}
-     */
 	@Transactional
     public boolean destroy(Session sessionToDelete) {
     	
@@ -167,9 +143,6 @@ implements SessionService {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Transactional
 	public boolean validate(Session sessionToValidate) {
 		
@@ -197,9 +170,6 @@ implements SessionService {
 		return true;
 	}
 
-    /**
-     * {@inheritDoc}
-     */
 	@Override
 	public long count(Session session) {
 		

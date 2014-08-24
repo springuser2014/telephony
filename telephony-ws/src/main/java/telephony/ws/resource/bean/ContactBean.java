@@ -1,6 +1,10 @@
 package telephony.ws.resource.bean;
 
+import java.util.List;
+
 import telephony.core.entity.jpa.Contact;
+import telephony.core.entity.jpa.Email;
+import telephony.core.entity.jpa.PhoneNumber;
 
 /**
  * asd.
@@ -12,6 +16,80 @@ public class ContactBean {
 	private String label;
 	
 	private String details;
+	
+	private List<String> emails;
+	
+	private List<String> phonenumbers;
+
+	/**
+	 * asd.
+	 * @param email a.
+	 */
+	public void addEmail(String email) {
+		this.emails.add(email);
+	}
+	
+	/**
+	 * asd.
+	 * @param email asd.
+	 */
+	public void removeEmail(String email) {
+		
+		if (this.emails.contains(email)) {
+			this.emails.remove(email);
+		}
+	}
+	
+	/**
+	 * asd.
+	 * @param phone a.
+	 */
+	public void addPhoneNumber(String phone) {
+		this.phonenumbers.add(phone);
+	}
+	
+	/**
+	 * asd.
+	 * @param phone a.
+	 */
+	public void removePhoneNumber(String phone) {
+		
+		if (this.phonenumbers.contains(phone)) {
+			this.phonenumbers.remove(phone);
+		}
+	}
+	
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public List<String> getEmails() {
+		return emails;
+	}
+
+	/**
+	 * asd.
+	 * @param emails a.
+	 */
+	public void setEmails(List<String> emails) {
+		this.emails = emails;
+	}
+
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public List<String> getPhonenumbers() {
+		return phonenumbers;
+	}
+
+	/**
+	 * asd.
+	 * @param phonenumbers a.
+	 */
+	public void setPhonenumbers(List<String> phonenumbers) {
+		this.phonenumbers = phonenumbers;
+	}
 
 	/**
 	 * asd.
@@ -23,6 +101,14 @@ public class ContactBean {
 		c.setDetails(contact.getDetails());
 		c.setLabel(contact.getLabel());
 		c.setId(contact.getId());
+		
+		for (Email s : contact.getEmails()) {
+			c.addEmail(s.getContent());
+		}
+		
+		for (PhoneNumber s : contact.getPhonenumbers()) {
+			c.addPhoneNumber(s.getContent());
+		}
 		
 		return c;
 	}

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
@@ -26,7 +27,7 @@ import telephony.ws.resource.role.RolesAddResource;
 import telephony.ws.resource.role.RolesDeleteResource;
 import telephony.ws.resource.session.SessionInitializationResource;
 
-@RunWith(Arquillian.class)
+@RunWith(JUnit4ClassRunner.class)
 public class RoleResourceTest extends BaseWSTest {
 	
 	static final String SESSION_INITIALIZATION_RESOURCE_URL = 
@@ -129,7 +130,7 @@ public class RoleResourceTest extends BaseWSTest {
     	String sessionId = reponseObj.getString("sessionId");
     	
     	JsonRepresentation roleDeletingParam = new JsonRepresentation(
-    		new DeleteRoleRequest(username, sessionId, label)
+    		new DeleteRoleRequest(username, sessionId)
     	);
     	
     	JsonRepresentation deleteResponse = rolesDelete.delete(roleDeletingParam);

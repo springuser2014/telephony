@@ -16,6 +16,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
+import telephony.core.service.bean.Session;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.bean.BasicResponse;
 import telephony.ws.resource.role.RolesAddResource;
@@ -46,16 +47,19 @@ public class RolesAddResourceImpl extends TelephonyServerResource
     	
     	Role newrole = new Role();
     	newrole.setName(label);
-    	newrole.setStore(new HashSet<Store>());
     	newrole.setUsers(new HashSet<User>());
     	
-    	BasicResponse response = new BasicResponse(true, "Dodano sukcesywnie");
+    	Session session = Session.create()
+    						.username(username)
+    						.sessionId(sessionId);
+    	
+    	BasicResponse response = new BasicResponse(true, "Added successfully");
     	try {
-    		roleService.add(null, newrole);
+    		roleService.add(session, newrole);
     	} catch (Exception ex) {
     		logger.error(ex.getMessage());
     		logger.error(ex.toString());
-    		response.setMessage("Wystąpił błąd podczas dodawania");
+    		response.setMessage("An error occured during");
     		response.setSuccess(false);
     		return new JsonRepresentation(response);
     	}

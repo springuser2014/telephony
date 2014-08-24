@@ -53,7 +53,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
     @Inject
 	private SalesDao salesDao;
  
-
     @Inject 
     private UsersDao usersDao;
     
@@ -151,16 +150,12 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		List<Delivery> deliveries = deliveriesDao.findByStore(storeToDelete);
 		deliveriesDao.remove(deliveries);
 		
-		storeToDelete.setRequiredRoles(new HashSet<Role>());
 		storeToDelete.setUsers(new HashSet<User>());
 		storeToDelete = storesDao.saveOrUpdate(storeToDelete);
 		storesDao.remove(storeToDelete);
 		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public void setRequiredRoles(Session session, Store store, List<Role> roles)
@@ -174,15 +169,11 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 				
 		Set<Role> rolesSet = new HashSet<Role>();
 		rolesSet.addAll(roles);
-		store.setRequiredRoles(rolesSet);
 		storesDao.saveOrUpdate(store);
 		storesDao.getEntityManager().flush();
 		
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public List<Role> getRequestRoles(Session session, Store store) 
@@ -195,9 +186,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		return rolesDao.findStoreRequiredRoles(store);
 	}
 
-	/**
-	 * {@inheritDoc} 
-	 */
 	@Transactional
 	@Override
 	public Store findById(Session session, long moveToStoreId) 

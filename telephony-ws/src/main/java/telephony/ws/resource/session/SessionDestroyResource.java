@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
+import org.restlet.resource.Post;
 
 /**
  * asd.
@@ -20,7 +21,7 @@ public interface SessionDestroyResource {
 	 * @throws JSONException 
 	 * @throws IOException 
 	 */
-	@Delete("json")
+	@Post("json")
 	JsonRepresentation destroy(JsonRepresentation entity) throws IOException,
 			JSONException;
 

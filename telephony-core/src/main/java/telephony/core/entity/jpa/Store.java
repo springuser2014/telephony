@@ -41,10 +41,7 @@ public class Store extends BaseEntity {
     
     @ManyToMany(mappedBy = "allowedShops")
     private Set<User> users = new HashSet<User>();
-   
-    @ManyToMany(mappedBy = "store")
-    private Set<Role> requiredRoles = new HashSet<Role>();
-    
+      
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
     private Set<Product> products = new HashSet<Product>();
     
@@ -140,28 +137,10 @@ public class Store extends BaseEntity {
 		this.products = products;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public Set<Role> getRequiredRoles() {
-		return requiredRoles;
-	}
-
-	/**
-	 * asd.
-	 * @param requiredRoles asd 
-	 */
-	public void setRequiredRoles(Set<Role> requiredRoles) {
-		this.requiredRoles = requiredRoles;
-	}
-	
-	
-
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", label=" + label + ", users=" + users
-				+ ", requiredRoles=" + requiredRoles + ", products=" + products
+				+ ", products=" + products
 				+ ", deliveries=" + deliveries + "]";
 	}
 

@@ -5,7 +5,6 @@ package telephony.ws.resource.bean;
  */
 public class DeleteRoleRequest {
 	
-	private String label = null;
 	private String username = null;
 	private String sessionId = null;
 			
@@ -15,10 +14,9 @@ public class DeleteRoleRequest {
 	 * @param sessionId sad.
 	 * @param label ads.
 	 */
-	public DeleteRoleRequest(String username, String sessionId, String label) {
+	public DeleteRoleRequest(String username, String sessionId) {
 		this.username = username;
 		this.sessionId = sessionId;
-		this.label = label;
 	}
 	
 	/**
@@ -29,24 +27,8 @@ public class DeleteRoleRequest {
 	public DeleteRoleRequest(SessionBean sessionBean, String label) {
 		this.username = sessionBean.getUsername();
 		this.sessionId = sessionBean.getSessionId();
-		this.label = label;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * asd.
-	 * @param label asd.
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
 
 	/**
 	 * asd.

@@ -41,7 +41,6 @@ public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 		.getResultList();
 		
 		List<Role> l = new ArrayList<Role>();
-		l.addAll(store.getRequiredRoles());
 		return l;	
 	}
 

@@ -2,8 +2,8 @@ package telephony.ws.resource;
 
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
-import telephony.ws.ArchivesBuilder;
-import telephony.ws.pre.TestsConfig;
+import telephony.ws.pre.ArchivesBuilder;
+import telephony.ws.test.TestsConfig;
 
 /**
  * asd.

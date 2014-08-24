@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
@@ -32,7 +33,7 @@ import telephony.ws.resource.session.SessionInitializationResource;
 /**
  * asd.
  */
-@RunWith(Arquillian.class)
+@RunWith(JUnit4ClassRunner.class)
 public class ContactResourceTest extends BaseWSTest {
 	
 	// session resources

@@ -49,9 +49,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		return res;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Transactional
 	public List<String> fetchAllProducersInUse(Session session) {
@@ -166,7 +163,7 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 
 	@Override
 	@Transactional
-	public List<Product> fetchAllProductsByCriteria(
+	public List<Product> findByCriteria(
 			Session session, ProductFilterCriteria parameterObject) 
 			throws SessionServiceException {
 		
@@ -309,5 +306,6 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		logger.info("params : [ id: {} ]", id);
 		
 		productsDao.removeById(id);		
-	}	
+	}
+
 }

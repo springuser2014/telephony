@@ -102,6 +102,38 @@ public class Contact extends BaseEntity {
     
     /**
      * asd.
+     * @return a.
+     */
+    public Collection<Email> getEmails() {
+		return emails;
+	}
+
+    /**
+     * asd.
+     * @param emails a.
+     */
+	public void setEmails(Collection<Email> emails) {
+		this.emails = emails;
+	}
+
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public Collection<PhoneNumber> getPhonenumbers() {
+		return phonenumbers;
+	}
+
+	/**
+	 * asd.
+	 * @param phonenumbers a.
+	 */
+	public void setPhonenumbers(Collection<PhoneNumber> phonenumbers) {
+		this.phonenumbers = phonenumbers;
+	}
+
+	/**
+     * asd.
      * @param delivery asd.
      */
     public void removeDelivery(Delivery delivery) {
