@@ -3,7 +3,7 @@ package telephony.core.service;
 import java.util.Collection;
 
 import telephony.core.entity.jpa.Producer;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * asd.

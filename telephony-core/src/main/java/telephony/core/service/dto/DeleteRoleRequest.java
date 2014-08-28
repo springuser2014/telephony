@@ -1,24 +1,22 @@
-package telephony.ws.resource.bean;
+package telephony.core.service.dto;
 
 /**
  * asd.
  */
-public class AddRoleRequest {
+public class DeleteRoleRequest {
 	
-	private String username;
-	private String sessionId;
-	private String label;
-	
+	private String username = null;
+	private String sessionId = null;
+			
 	/**
 	 * asd.
 	 * @param username asd.
 	 * @param sessionId sad.
 	 * @param label ads.
 	 */
-	public AddRoleRequest(String username, String sessionId, String label) {
+	public DeleteRoleRequest(String username, String sessionId) {
 		this.username = username;
 		this.sessionId = sessionId;
-		this.label = label;
 	}
 	
 	/**
@@ -26,27 +24,11 @@ public class AddRoleRequest {
 	 * @param sessionBean ads.
 	 * @param label asd.
 	 */
-	public AddRoleRequest(SessionBean sessionBean, String label) {
+	public DeleteRoleRequest(SessionBean sessionBean, String label) {
 		this.username = sessionBean.getUsername();
 		this.sessionId = sessionBean.getSessionId();
-		this.label = label;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * asd.
-	 * @param label asd.
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
 
 	/**
 	 * asd.
@@ -79,5 +61,4 @@ public class AddRoleRequest {
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-
 }

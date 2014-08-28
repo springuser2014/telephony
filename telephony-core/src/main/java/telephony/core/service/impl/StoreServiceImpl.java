@@ -22,7 +22,7 @@ import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -33,8 +33,9 @@ import com.google.inject.persist.Transactional;
 /**
  * Stores management service.
  */
-public class StoreServiceImpl extends AbstractBasicService<Store> 
-	implements StoreService {
+public class StoreServiceImpl 
+extends AbstractBasicService<Store> 
+implements StoreService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -153,37 +154,6 @@ public class StoreServiceImpl extends AbstractBasicService<Store>
 		storeToDelete.setUsers(new HashSet<User>());
 		storeToDelete = storesDao.saveOrUpdate(storeToDelete);
 		storesDao.remove(storeToDelete);
-		
-	}
-
-	@Override
-	@Transactional
-	public void setRequiredRoles(Session session, Store store, List<Role> roles)
-			throws SessionServiceException, RoleServiceException {
-		
-		logger.debug(
-		"setRequiredRoles - params : [ session : {}, store : {}, roles : {}]", 
-				new Object[] {session, store, roles});
-		
-		sessionService.validate(session);
-				
-		Set<Role> rolesSet = new HashSet<Role>();
-		rolesSet.addAll(roles);
-		storesDao.saveOrUpdate(store);
-		storesDao.getEntityManager().flush();
-		
-	}
-
-	@Override
-	@Transactional
-	public List<Role> getRequestRoles(Session session, Store store) 
-			throws SessionServiceException {
-		logger.debug("getRequestRoles - params : [session: {} , store : {}", 
-				new Object[] {session, store});
-		
-		sessionService.validate(session);
-		
-		return rolesDao.findStoreRequiredRoles(store);
 	}
 
 	@Transactional

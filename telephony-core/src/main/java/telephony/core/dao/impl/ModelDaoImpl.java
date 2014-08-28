@@ -1,5 +1,7 @@
 package telephony.core.dao.impl;
 
+import java.util.List;
+
 import javax.persistence.Query;
 
 import org.slf4j.Logger;
@@ -24,12 +26,13 @@ implements ModelDao {
 		super(Model.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Model findByLabel(String label) {
 		
         logger.debug("ModelDaoImpl.findByLabel starts");
         
-		String queryStr = " select m from Model m  where m.label like ?1 ";
+		String queryStr = " select m from Model m where m.label like ?1 ";
         
 		logger.debug("queryStr " + queryStr);
 		
@@ -37,10 +40,12 @@ implements ModelDao {
 		
 		q.setParameter(1, "%" + label + "%");
 		
-		Model result = (Model) q.getSingleResult();
+		List<Model> lst = (List<Model>) q.getResultList();
 		
-        logger.info(" found {} element", result);
-
-		return result;
+		if (lst.size() > 0) {
+			return lst.get(0);
+		} else {
+			return null;
+		}
 	}
 }

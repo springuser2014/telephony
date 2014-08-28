@@ -12,7 +12,7 @@ import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 

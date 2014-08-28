@@ -18,7 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;

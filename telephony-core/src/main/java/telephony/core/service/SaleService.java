@@ -5,7 +5,7 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 

@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.service.RoleService;
 import telephony.core.service.SessionService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 

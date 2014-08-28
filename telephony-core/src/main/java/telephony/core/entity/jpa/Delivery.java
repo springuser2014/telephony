@@ -1,5 +1,6 @@
 package telephony.core.entity.jpa;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +54,7 @@ public class Delivery extends BaseEntity {
     private Contact contact;
    
     @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
-    private Set<Product> products = new HashSet<Product>();
+    private Collection<Product> products = new HashSet<Product>();
 
     /**
      * Gets delivery's label.
@@ -103,7 +104,7 @@ public class Delivery extends BaseEntity {
      * Gets delivery's products.
      * @return collection of the products.
      */
-    public final Set<Product> getProducts() {
+    public final Collection<Product> getProducts() {
         return products;
     }
 
@@ -111,7 +112,7 @@ public class Delivery extends BaseEntity {
      * Set delivery's products.
      * @param products of delivery.
      */
-    public final void setProducts(Set<Product> products) {
+    public final void setProducts(Collection<Product> products) {
         this.products = products;
     }
 
@@ -148,23 +149,23 @@ public class Delivery extends BaseEntity {
 
     /**
      * Set delivery's arrival store.
-     * @param pmStore of delivery.
+     * @param store of delivery.
      */
-    public final void setStore(Store pmStore) {
+    public final void setStore(Store store) {
     	
-    	if (sameAsFormer(pmStore)) {
+    	if (sameAsFormer(store)) {
 			return;
 		}
     	
         Store oldStore = this.store;
-        this.store = pmStore;
+        this.store = store;
         
         if (oldStore != null) {
         	oldStore.removeDelivery(this);
         }
         	
-        if (pmStore != null) {
-        	pmStore.addDelivery(this);
+        if (store != null) {
+        	store.addDelivery(this);
         }
     }
     

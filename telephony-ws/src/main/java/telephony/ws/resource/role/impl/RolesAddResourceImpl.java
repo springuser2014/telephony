@@ -16,9 +16,9 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.BasicResponse;
+import telephony.core.service.dto.Session;
 import telephony.ws.resource.TelephonyServerResource;
-import telephony.ws.resource.bean.BasicResponse;
 import telephony.ws.resource.role.RolesAddResource;
 
 import com.google.inject.Inject;

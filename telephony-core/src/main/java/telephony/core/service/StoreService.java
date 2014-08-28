@@ -6,7 +6,7 @@ import java.util.List;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.StoreFilterCriteria;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -61,28 +61,6 @@ public interface StoreService extends BasicService<Store> {
 	 */
 	void remove(Session session, Store storeToDelete) 
 			throws SessionServiceException;
-
-	/**
-	 * asd.
-	 * @param session TODO
-	 * @param store asd.
-	 * @return asd.
-	 * @throws SessionServiceException  asd.
-	 */
-	List<Role> getRequestRoles(Session session, Store store) 
-			throws SessionServiceException;
-
-
-	/**
-	 * asd.
-	 * @param session TODO
-	 * @param store asd.
-	 * @param roles as.
-	 * @throws SessionServiceException asd.
-	 * @throws RoleServiceException asd.
-	 */
-	void setRequiredRoles(Session session, Store store, List<Role> roles) 
-			throws SessionServiceException, RoleServiceException;
 
 	/**
 	 * asd.

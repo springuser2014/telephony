@@ -92,6 +92,11 @@
 			<version>${restlet.version}</version>
 		</dependency>
 		<dependency>
+		  <groupId>org.restlet.jee</groupId>
+		  <artifactId>org.restlet.ext.jackson</artifactId>
+		  <version>2.2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.servlet</artifactId>
 			<version>${restlet.version}</version>
@@ -270,7 +275,7 @@
 					<warFile>./target/telephony-ws.war</warFile>
 				</configuration>
 			</plugin>
-
+            <!-- 
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>
 				<artifactId>jrebel-maven-plugin</artifactId>
@@ -284,7 +289,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+            -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -304,27 +309,7 @@
 				</configuration>
 
 			</plugin>
-			<!-- TODO : remove ?? -->
-			<plugin>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>obsoletes-org.hibernate:ejb3-persistence</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<bannedDependencies>
-									<excludes>
-										<exclude>com.google.gwt:gwt-dev</exclude>
-									</excludes>
-								</bannedDependencies>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -347,7 +332,7 @@
 
 		</plugins>
 	</build>
-
+<!-- 
 	<reporting>
 		<plugins>
 
@@ -389,5 +374,5 @@
 
 		</plugins>
 	</reporting>
-
+ -->
 </project>

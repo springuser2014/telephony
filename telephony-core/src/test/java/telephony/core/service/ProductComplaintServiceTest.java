@@ -21,7 +21,7 @@ import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.entity.jpa.SaleComplaint;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;

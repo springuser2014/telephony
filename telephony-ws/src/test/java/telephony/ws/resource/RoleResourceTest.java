@@ -18,11 +18,11 @@ import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
+import telephony.core.service.dto.AddRoleRequest;
+import telephony.core.service.dto.DeleteRoleRequest;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.bean.UserBean;
-import telephony.ws.resource.bean.AddRoleRequest;
-import telephony.ws.resource.bean.DeleteRoleRequest;
 import telephony.ws.resource.role.RolesAddResource;
 import telephony.ws.resource.role.RolesDeleteResource;
 import telephony.ws.resource.session.SessionInitializationResource;

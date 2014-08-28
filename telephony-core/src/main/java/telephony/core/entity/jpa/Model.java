@@ -85,4 +85,14 @@ public class Model extends BaseEntity {
 	public void setProducer(Producer producer) {
 		this.producer = producer;
 	}
+	
+	// TODO impl
+	public void addProduct(Product product) {
+		
+	}
+	
+	// TODO impl
+	public void removeProduct(Product product) {
+		
+	}
 }

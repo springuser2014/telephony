@@ -13,16 +13,16 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
+import telephony.core.service.dto.ContactBean;
+import telephony.core.service.dto.ContactListResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
-import telephony.ws.resource.bean.ContactBean;
-import telephony.ws.resource.bean.ContactListResponse;
 import telephony.ws.resource.contact.ContactsFetchResource;
 
 import com.google.inject.Inject;
 
-import static telephony.ws.resource.bean.ContactBean.create;
+import static telephony.core.service.dto.ContactBean.create;
 
 /**
  * asd.

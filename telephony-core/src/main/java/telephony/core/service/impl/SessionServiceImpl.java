@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.SessionService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.util.StringGenerator;
 
 import com.google.inject.Inject;

@@ -12,7 +12,7 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.TaxDao;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.service.TaxService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * asd.

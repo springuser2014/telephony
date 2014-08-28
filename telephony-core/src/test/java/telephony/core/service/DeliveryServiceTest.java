@@ -1,5 +1,6 @@
 package telephony.core.service;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,10 +24,14 @@ import telephony.core.entity.jpa.Model;
 import telephony.core.entity.jpa.Pricing;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
+import telephony.core.entity.jpa.ProductTax;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.query.filter.DeliveryFilterCriteria;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.AddDeliveryRequest;
+import telephony.core.service.dto.AddDeliveryResponse;
+import telephony.core.service.dto.ProductBean;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -71,7 +77,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p.setImei("123451234512345");
 		p.setModel(getNokia3310());
 		p.setPricings(new ArrayList<Pricing>());
-		p.setTaxes(new ArrayList<Tax>());
+		p.setProductTaxes(new ArrayList<ProductTax>());
 		p.setPriceIn(100.0);
 		
 		return p;
@@ -100,7 +106,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p.setImei("098760987609876");
 		p.setModel(getIphone4S());
 		p.setPricings(new ArrayList<Pricing>());
-		p.setTaxes(new ArrayList<Tax>());
+		p.setProductTaxes(new ArrayList<ProductTax>());
 		p.setPriceIn(110.0);
 		
 		return p;
@@ -196,5 +202,61 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		// then
 		assertTrue("Should return exact number of deliveries ", 
 				count == 5 && lst.size() == count);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void addNewDelivery() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		Session session = Session.create()
+				.sessionId(TestData.USER1_SESSIONID)
+				.username(TestData.USER1_NAME);
+				
+		long deliveriesBefore = deliveryService.count(session);
+		long productsBefore = productService.count(session);
+		
+		AddDeliveryRequest dto = new AddDeliveryRequest();
+		dto.setSessionId(TestData.USER1_SESSIONID);
+		dto.setUsername(TestData.USER1_NAME);
+		
+		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
+		
+		List<ProductBean> products = new ArrayList<ProductBean>();
+		ProductBean p1 = new ProductBean();
+		p1.setProducer("Nokia");
+		p1.setModel("SX99");
+		p1.setColor("black");
+		p1.setImei("123456789000050");
+		p1.setPriceFrom(new Date());
+		p1.setPriceTo(priceTo);
+		p1.setPriceIn(200.0d);
+		p1.setTaxFrom(new Date());
+		p1.setTaxTo(priceTo);
+		p1.setTaxId(7L);
+		
+		products.add(p1);
+		dto.setDateIn(new Date());
+		dto.setStoreId(1L);
+		dto.setContactId(1L);
+		dto.setLabel("rrrr");
+		dto.setProducts(products);
+		
+		// when
+		try {
+		AddDeliveryResponse resp = deliveryService.add(dto);
+		
+		long deliveriesAfter = deliveryService.count(session);
+		long productsAfter = productService.count(session);
+
+		// then
+		assertTrue( resp.isSuccess() );
+		assertEquals( deliveriesAfter - deliveriesBefore, 1);
+		assertEquals( productsAfter - productsBefore, 1);
+		
+		} catch (Exception e) {
+			long id = 1;
+			long id2 = id + 1;
+		}
 	}
 }

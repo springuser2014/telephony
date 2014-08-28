@@ -6,7 +6,7 @@ import java.util.Date;
 import telephony.core.dao.PricingsDao;
 import telephony.core.entity.jpa.Pricing;
 import telephony.core.service.PricingService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;

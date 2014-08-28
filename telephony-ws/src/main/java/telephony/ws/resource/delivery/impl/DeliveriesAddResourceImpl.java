@@ -1,30 +1,75 @@
 package telephony.ws.resource.delivery.impl;
 
+import java.text.ParseException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.inject.Inject;
+
+import telephony.core.entity.jpa.Delivery;
+import telephony.core.service.DeliveryService;
+import telephony.core.service.StoreService;
+import telephony.core.service.dto.AddDeliveryRequest;
+import telephony.core.service.dto.AddDeliveryResponse;
+import telephony.core.service.dto.BasicResponse;
+import telephony.core.service.exception.DeliveryServiceException;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.delivery.DeliveriesAddResource;
 
 /**
  * asd.
  */
-public class DeliveriesAddResourceImpl extends TelephonyServerResource
-		implements DeliveriesAddResource {
+public class DeliveriesAddResourceImpl 
+extends TelephonyServerResource
+implements DeliveriesAddResource {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    
+    @Inject
+    private DeliveryService deliveryService;
+    
+    @Inject
+    private StoreService storeService;
 
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Post("json")
-	public JsonRepresentation add(JsonRepresentation entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public JsonRepresentation add(AddDeliveryRequest request) {
+		
+		logger.info("entry point");
+		AddDeliveryResponse resp;
+		
+		Gson gson = new GsonBuilder().create();
 
+		try {
+			resp = deliveryService.add(request);
+		
+		} catch (SessionServiceException e) {
+			
+			logger.error("session problem", e);
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+		} catch (DeliveryServiceException e) {
+			
+			logger.error("internal problem", e);
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+		} catch (ParseException e) {
+			
+			logger.error("invalid date format", e);
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "invalid date format")));
+		}
+		
+		logger.info("entry point");
+		return new JsonRepresentation(gson.toJson(resp));
+	}
 }

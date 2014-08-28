@@ -22,7 +22,7 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Pricing;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * asd.

@@ -20,7 +20,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.StoreFilterCriteria;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -66,6 +66,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		
 	}
 	
+	// TODO : refactor it
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testingAddingNewStore() throws SessionServiceException {
@@ -115,31 +116,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		assertTrue("a new store is successfuly saved", searchEditedStore != null);
 		
 	}
-	
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testingSettingRequiredRoles() throws SessionServiceException, RoleServiceException {
-		
-		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
-		List<Role> roles = roleService.find(session, null);
-		
-		// when
-		storeService.setRequiredRoles(session, store, roles);
-		
-		// then
-		List<Role> reqRoles = storeService.getRequestRoles(session, store);
-		
-		assertEquals("number of submitted and fetched roles should be the same",
-				roles.size(), reqRoles.size());
-		
-		assertTrue("all fetched elements should be the same as the submitted ones ",
-				reqRoles.containsAll(roles));
-	
-	}
-	
 	// TODO : add editing store users
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })

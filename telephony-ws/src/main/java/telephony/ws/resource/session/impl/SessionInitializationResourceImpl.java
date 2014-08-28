@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.guice.TelephonyCoreServicesModule;
 import telephony.core.service.SessionService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.Config;
 import telephony.ws.guice.env.TelephonyWebServicesProductionModule;

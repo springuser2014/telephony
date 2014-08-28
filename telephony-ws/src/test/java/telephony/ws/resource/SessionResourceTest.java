@@ -2,49 +2,34 @@ package telephony.ws.resource;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.path.json.JsonPath.from;
-
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.OverProtocol;
-import org.jboss.arquillian.junit.Arquillian;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
-import org.restlet.Client;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.data.MediaType;
-import org.restlet.data.Method;
-import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
+
+import telephony.core.service.dto.SessionBean;
+import telephony.core.service.dto.SignInBean;
+import telephony.ws.bean.UserBean;
+import telephony.ws.resource.session.SessionDestroyResource;
+import telephony.ws.resource.session.SessionInitializationResource;
+import telephony.ws.resource.session.SessionRefreshResource;
+import telephony.ws.resource.session.SessionValidationResource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.http.ContentType;
-
-import telephony.core.service.bean.Session;
-import telephony.ws.bean.UserBean;
-import telephony.ws.resource.bean.SessionBean;
-import telephony.ws.resource.bean.SignInBean;
-import telephony.ws.resource.session.SessionDestroyResource;
-import telephony.ws.resource.session.SessionRefreshResource;
-import telephony.ws.resource.session.SessionInitializationResource;
-import telephony.ws.resource.session.SessionValidationResource;
-import telephony.ws.resource.session.impl.SessionInitializationResourceImpl;
 
 /**
  * foo bar.
@@ -136,7 +121,8 @@ public class SessionResourceTest extends BaseWSTest {
 		
 //		assertTrue( res.header("Content-type").equals("application/json") );
 					
-		assertTrue( from(jsonResp).get("username").equals("user1@gmail.com") );		
+		assertTrue( from(jsonResp).get("username").equals("user1@gmail.com") );
+		assertNotNull( from(jsonResp).get("sessionId") );
 	}
 
 	/**

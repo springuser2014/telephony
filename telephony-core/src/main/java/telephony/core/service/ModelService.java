@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.Model;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * asd.

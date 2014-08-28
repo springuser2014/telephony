@@ -18,13 +18,13 @@ import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
+import telephony.core.service.dto.AddContactRequest;
+import telephony.core.service.dto.ContactBean;
+import telephony.core.service.dto.DeleteContactRequest;
+import telephony.core.service.dto.SessionBean;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.bean.UserBean;
-import telephony.ws.resource.bean.AddContactRequest;
-import telephony.ws.resource.bean.ContactBean;
-import telephony.ws.resource.bean.DeleteContactRequest;
-import telephony.ws.resource.bean.SessionBean;
 import telephony.ws.resource.contact.ContactsAddResource;
 import telephony.ws.resource.contact.ContactsDeleteResource;
 import telephony.ws.resource.contact.ContactsFetchResource;

@@ -7,7 +7,7 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.ComplaintService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 
 /**

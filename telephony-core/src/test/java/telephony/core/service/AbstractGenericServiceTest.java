@@ -22,7 +22,7 @@ import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.entity.jpa.TestEntity;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;

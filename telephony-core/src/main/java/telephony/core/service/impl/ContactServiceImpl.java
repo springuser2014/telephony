@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 

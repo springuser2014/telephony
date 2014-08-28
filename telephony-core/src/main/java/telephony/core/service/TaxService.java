@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import telephony.core.entity.jpa.Tax;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * asd.

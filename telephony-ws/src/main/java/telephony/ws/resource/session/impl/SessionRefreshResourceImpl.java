@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.SessionService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionRefreshResource;

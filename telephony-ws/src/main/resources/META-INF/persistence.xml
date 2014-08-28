@@ -23,7 +23,7 @@
         <class>telephony.core.entity.jpa.Model</class>
         <class>telephony.core.entity.jpa.Producer</class>
         <class>telephony.core.entity.jpa.TestEntity</class>
-          
+        <class>telephony.core.entity.jpa.ProductTax</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

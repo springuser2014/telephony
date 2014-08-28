@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.BasicService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

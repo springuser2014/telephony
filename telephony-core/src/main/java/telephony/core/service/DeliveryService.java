@@ -1,11 +1,14 @@
 package telephony.core.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.query.filter.DeliveryFilterCriteria;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.AddDeliveryRequest;
+import telephony.core.service.dto.AddDeliveryResponse;
+import telephony.core.service.dto.Session;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -69,4 +72,14 @@ public interface DeliveryService extends BasicService<Delivery> {
      */
 	Delivery findById(Session session, Long deliveryId) 
 		throws SessionServiceException, DeliveryServiceException;
+
+	/**
+	 * asd.
+	 * @param request asd.
+	 * @return asd.
+	 * @throws SessionServiceException 
+	 * @throws DeliveryServiceException 
+	 * @throws ParseException 
+	 */
+	AddDeliveryResponse add(AddDeliveryRequest request) throws SessionServiceException, DeliveryServiceException, ParseException;
 }

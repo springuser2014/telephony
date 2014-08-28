@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -48,8 +49,8 @@ public class Tax extends BaseEntity {
     @Column(name = "rate")
     private Double rate;
     
-    @ManyToMany(mappedBy = "taxes", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
-    private Collection<Product> products;
+    @OneToMany(mappedBy = "tax", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
+    private Collection<ProductTax> productTaxes;
 
     /**
      * as.
@@ -116,4 +117,28 @@ public class Tax extends BaseEntity {
 	public void setRate(Double rate) {
 		this.rate = rate;
 	}
+	
+	public void addProductTax(ProductTax productTax) {
+		
+		if (!this.productTaxes.contains(productTax)) {
+			this.productTaxes.add(productTax);
+		}
+	}
+	
+	public void removeProductTax(ProductTax productTax) {
+		
+		if (this.productTaxes.contains(productTax)) {
+			this.productTaxes.remove(productTax);
+		}
+	}
+
+	public Collection<ProductTax> getProductTaxes() {
+		return productTaxes;
+	}
+
+	public void setProductTaxes(Collection<ProductTax> productTaxes) {
+		this.productTaxes = productTaxes;
+	}
+	
+	
 }

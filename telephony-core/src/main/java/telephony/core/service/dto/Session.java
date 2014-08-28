@@ -1,4 +1,4 @@
-package telephony.core.service.bean;
+package telephony.core.service.dto;
 
 import java.util.Date;
 

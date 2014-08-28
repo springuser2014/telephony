@@ -1,7 +1,7 @@
-package telephony.ws.resource.bean;
+package telephony.core.service.dto;
 
-import telephony.ws.resource.bean.SessionBean;
-import telephony.ws.resource.bean.ContactBean;
+import telephony.core.service.dto.ContactBean;
+import telephony.core.service.dto.SessionBean;
 
 /**
  * asd.

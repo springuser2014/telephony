@@ -8,7 +8,7 @@ import telephony.core.dao.SaleComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * asd.

@@ -2,18 +2,14 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -62,33 +58,11 @@ public class Product extends BaseEntity {
     @Column(name = "color", length = 20, nullable = false)
     private String color;
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_taxes",
-		joinColumns = { 
-			@JoinColumn(name = "product_id", referencedColumnName = "id") 
-		},
-		inverseJoinColumns = { 
-			@JoinColumn(name = "tax_id", referencedColumnName = "id")
-		}
-    )		
-    private Collection<Tax> taxes;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
+    private Collection<ProductTax> productTaxes;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")    
     private Collection<Pricing> pricings;
-    
-    /* TODO : implement later
-    @ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "product_files",
-		joinColumns = @JoinColumn(
-			name = "product_id",
-			referencedColumnName = "id"
-		),
-		inverseJoinColumns = @JoinColumn(
-			name = "file_id",
-			referencedColumnName = "id"))
-    private Collection<File> files;
-    */
     
     /**
      * asd.
@@ -312,21 +286,35 @@ public class Product extends BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public void addProductTax(ProductTax productTax) {
+		
+		if (!this.productTaxes.contains(productTax)) {
+			this.productTaxes.add(productTax);
+		}
+	}
+	
+	public void removeProductTax(ProductTax productTax) {
+		
+		if (this.productTaxes.contains(productTax)) {
+			this.productTaxes.remove(productTax);
+		}
+	}
 
     /**
      * asd.
      * @return asd.
      */
-	public Collection<Tax> getTaxes() {
-		return taxes;
+	public Collection<ProductTax> getProductTaxes() {
+		return productTaxes;
 	}
 
 	/**
 	 * asd.
 	 * @param taxes a.
 	 */
-	public void setTaxes(Collection<Tax> taxes) {
-		this.taxes = taxes;
+	public void setProductTaxes(Collection<ProductTax> taxes) {
+		this.productTaxes = taxes;
 	}
 
 	/**
@@ -344,6 +332,20 @@ public class Product extends BaseEntity {
 	public void setPricings(Collection<Pricing> pricings) {
 		this.pricings = pricings;
 	}
+	
+	public void addPricing(Pricing pricing) {
+		
+		if (!this.pricings.contains(pricing)) {
+			this.pricings.add(pricing);
+		}
+	}
+	
+	public void removePricing(Pricing pricing) {
+		
+		if (this.pricings.contains(pricing)) {
+			this.pricings.remove(pricing);
+		}
+	}
 
 	/**
 	 * asd.
@@ -360,4 +362,6 @@ public class Product extends BaseEntity {
 	public void setPriceIn(Double priceIn) {
 		this.priceIn = priceIn;
 	}
+	
+	
 }

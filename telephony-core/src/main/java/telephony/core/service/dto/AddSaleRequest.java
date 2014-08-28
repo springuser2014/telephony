@@ -1,4 +1,4 @@
-package telephony.ws.resource.bean;
+package telephony.core.service.dto;
 
 import java.util.Date;
 import java.util.List;

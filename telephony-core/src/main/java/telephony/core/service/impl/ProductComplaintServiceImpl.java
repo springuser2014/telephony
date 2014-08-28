@@ -6,7 +6,7 @@ import telephony.core.dao.ProductComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.ProductComplaintService;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 import com.google.inject.persist.Transactional;
 

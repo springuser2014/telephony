@@ -3,7 +3,7 @@ package telephony.core.service;
 import javax.persistence.EntityManager;
 
 import telephony.core.entity.jpa.BaseEntity;
-import telephony.core.service.bean.Session;
+import telephony.core.service.dto.Session;
 
 /**
  * Basic business services API.

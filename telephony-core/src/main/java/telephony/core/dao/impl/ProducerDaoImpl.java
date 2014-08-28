@@ -1,5 +1,7 @@
 package telephony.core.dao.impl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,13 +29,16 @@ public class ProducerDaoImpl extends  GenericDaoImpl<Producer> implements Produc
 		logger.debug("findByLabel starts");
         logger.debug("params : [ label : {} ]", label);
 
-        Producer res = (Producer)
-        getEntityManager()
-        .createQuery("select p from Producer p where p.label LIKE ?1")
+        List<Producer> res = (List<Producer>)        
+        	getEntityManager()
+        		.createQuery("select p from Producer p where p.label LIKE ?1")
                 .setParameter(1, "%" + label + "%")                
-                .getSingleResult();
+                .getResultList();
 
-        return res; 
+        if (res.size() > 0) {
+        	return res.get(0);
+        } else {
+        	return null;
+        }
 	}
-
 }

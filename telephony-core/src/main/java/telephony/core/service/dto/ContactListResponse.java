@@ -1,7 +1,8 @@
-package telephony.ws.resource.bean;
+package telephony.core.service.dto;
 
 import java.util.List;
-import telephony.ws.resource.bean.ContactBean;
+
+import telephony.core.service.dto.ContactBean;
 /**
  * asd.
  */

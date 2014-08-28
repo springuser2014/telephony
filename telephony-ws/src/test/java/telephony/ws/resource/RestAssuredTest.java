@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
-import telephony.ws.resource.bean.SignInBean;
+import telephony.core.service.dto.SignInBean;
 import telephony.ws.resource.session.SessionInitializationResource;
 import telephony.ws.test.TestsConfig;
 

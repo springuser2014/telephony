@@ -8,6 +8,7 @@ import telephony.core.dao.ModelDao;
 import telephony.core.dao.PricingsDao;
 import telephony.core.dao.ProducerDao;
 import telephony.core.dao.ProductComplaintDao;
+import telephony.core.dao.ProductTaxDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.dao.RolesDao;
 import telephony.core.dao.SaleComplaintDao;
@@ -23,6 +24,7 @@ import telephony.core.dao.impl.ModelDaoImpl;
 import telephony.core.dao.impl.PricingsDaoImpl;
 import telephony.core.dao.impl.ProducerDaoImpl;
 import telephony.core.dao.impl.ProductComplaintDaoImpl;
+import telephony.core.dao.impl.ProductTaxDaoImpl;
 import telephony.core.dao.impl.ProductsDaoImpl;
 import telephony.core.dao.impl.RolesDaoImpl;
 import telephony.core.dao.impl.SaleComplaintDaoImpl;
@@ -95,7 +97,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(ProductComplaintDao.class).to(ProductComplaintDaoImpl.class);
         bind(PricingsDao.class).to(PricingsDaoImpl.class);
         bind(ComplaintCommentDao.class).to(ComplaintCommentDaoImpl.class);
-        
+        bind(ProductTaxDao.class).to(ProductTaxDaoImpl.class);
 
         // binding service layer objects
 

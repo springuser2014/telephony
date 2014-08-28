@@ -10,12 +10,6 @@ import telephony.core.entity.jpa.Store;
  */
 public interface RolesDao extends GenericDao<Role> {
 
-	/**
-	 * asd.
-	 * @param store asd.
-	 * @return asd.
-	 */
-	List<Role> findStoreRequiredRoles(Store store);
 
 	/**
 	 * asd.

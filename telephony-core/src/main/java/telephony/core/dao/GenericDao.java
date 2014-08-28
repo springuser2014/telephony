@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.BaseEntity;
  *
  * @param <E> Entities superclass interface.
  */
-public interface GenericDao<E extends BaseEntity> {
+public interface GenericDao<E> {
 	
 	/**
 	 * asd.
