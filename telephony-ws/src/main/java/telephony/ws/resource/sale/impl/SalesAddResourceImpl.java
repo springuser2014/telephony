@@ -1,5 +1,9 @@
 package telephony.ws.resource.sale.impl;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
@@ -22,11 +26,10 @@ public class SalesAddResourceImpl extends TelephonyServerResource
 	@Inject
 	private SaleService saleService;
 
-	/**
-    * {@inheritDoc}
-    */
 	@Override
     @Post("json")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
     public JsonRepresentation post(JsonRepresentation entity) {
     	return new JsonRepresentation("asd");
     }

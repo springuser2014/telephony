@@ -18,7 +18,7 @@ import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
-import telephony.core.service.dto.AddRoleRequest;
+import telephony.core.service.dto.RoleAddRequest;
 import telephony.core.service.dto.DeleteRoleRequest;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -96,7 +96,7 @@ public class RoleResourceTest extends BaseWSTest {
     	String sessionId = reponseObj.getString("sessionId");
     	
     	JsonRepresentation roleAddingParam = new JsonRepresentation(
-    			new AddRoleRequest(username, sessionId, label)
+    			new RoleAddRequest(username, sessionId, label)
     	);
     	
     	JsonRepresentation addresponse = rolesAdd.add(roleAddingParam);

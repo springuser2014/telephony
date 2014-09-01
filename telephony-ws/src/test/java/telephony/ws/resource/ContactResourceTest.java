@@ -18,7 +18,7 @@ import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
-import telephony.core.service.dto.AddContactRequest;
+import telephony.core.service.dto.ContactAddRequest;
 import telephony.core.service.dto.ContactBean;
 import telephony.core.service.dto.DeleteContactRequest;
 import telephony.core.service.dto.SessionBean;
@@ -167,7 +167,7 @@ public class ContactResourceTest extends BaseWSTest {
     	newContact.setLabel("someLabel");
     	
     	JsonRepresentation contactAddParam = new JsonRepresentation(
-    			new AddContactRequest(username, sessionId, newContact)
+    			new ContactAddRequest(username, sessionId, newContact)
     	);
     	
     	JsonRepresentation addResponse = contactsAddResource.add(contactAddParam);

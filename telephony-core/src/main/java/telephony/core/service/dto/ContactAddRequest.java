@@ -6,7 +6,7 @@ import telephony.core.service.dto.SessionBean;
 /**
  * asd.
  */
-public class AddContactRequest {
+public class ContactAddRequest {
 	
 	private ContactBean newContact = null;
 	private String username = null;
@@ -17,7 +17,7 @@ public class AddContactRequest {
 	 * @param sessionBean asd.
 	 * @param contactBean asd.
 	 */
-	public AddContactRequest(SessionBean sessionBean, ContactBean contactBean) {
+	public ContactAddRequest(SessionBean sessionBean, ContactBean contactBean) {
 		this.username = sessionBean.getUsername();
 		this.sessionId = sessionBean.getSessionId();			
 		this.newContact = contactBean;
@@ -28,7 +28,7 @@ public class AddContactRequest {
 	 * @param username asd.
 	 * @param sessionId asd.
 	 */
-	public AddContactRequest(String username, String sessionId) {
+	public ContactAddRequest(String username, String sessionId) {
 		this.username = username;
 		this.sessionId = sessionId;
 		this.newContact = null;
@@ -40,7 +40,7 @@ public class AddContactRequest {
 	 * @param sessionId asd.
 	 * @param newContact asda.
 	 */
-	public AddContactRequest(String username, String sessionId, ContactBean newContact) {
+	public ContactAddRequest(String username, String sessionId, ContactBean newContact) {
 		this.username = username;
 		this.sessionId = sessionId;
 		this.newContact = newContact;

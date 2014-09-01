@@ -15,8 +15,9 @@ import telephony.ws.resource.store.StoresEditResource;
 /**
  * asd.
  */
-public class StoresEditResourceImpl extends TelephonyServerResource
-		implements StoresEditResource {
+public class StoresEditResourceImpl 
+extends TelephonyServerResource
+implements StoresEditResource {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	

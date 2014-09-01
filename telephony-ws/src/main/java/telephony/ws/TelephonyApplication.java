@@ -1,98 +1,40 @@
 package telephony.ws;
 
 
-import java.util.List;
-
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.resource.Directory;
-import org.restlet.resource.Post;
 import org.restlet.routing.Router;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.googlecode.flyway.core.Flyway;
-
-import telephony.core.guice.env.EnvironmentNameResolver;
-import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 import telephony.ws.resource.HelloWorldResource;
 import telephony.ws.resource.HelloWorldResourceImpl;
-import telephony.ws.resource.contact.ContactsAddResource;
-import telephony.ws.resource.contact.ContactsDeleteResource;
-import telephony.ws.resource.contact.ContactsFetchResource;
-import telephony.ws.resource.contact.impl.ContactsAddResourceImpl;
-import telephony.ws.resource.contact.impl.ContactsDeleteResourceImpl;
-import telephony.ws.resource.contact.impl.ContactsFetchResourceImpl;
-import telephony.ws.resource.delivery.DeliveriesAddResource;
-import telephony.ws.resource.delivery.DeliveriesDeleteResource;
-import telephony.ws.resource.delivery.DeliveriesEditResource;
-import telephony.ws.resource.delivery.DeliveriesFetchResource;
-import telephony.ws.resource.delivery.impl.DeliveriesAddResourceImpl;
-import telephony.ws.resource.delivery.impl.DeliveriesDeleteResourceImpl;
-import telephony.ws.resource.delivery.impl.DeliveriesEditResourceImpl;
-import telephony.ws.resource.delivery.impl.DeliveriesFetchResourceImpl;
-import telephony.ws.resource.role.RolesDeleteResource;
+import telephony.ws.resource.complaint.*;
+import telephony.ws.resource.complaint.impl.*;
+import telephony.ws.resource.contact.*;
+import telephony.ws.resource.contact.impl.*;
+import telephony.ws.resource.delivery.*;
+import telephony.ws.resource.delivery.impl.*;
+import telephony.ws.resource.products.ProductsDetailsResource;
+import telephony.ws.resource.products.ProductsFetchResource;
+import telephony.ws.resource.products.impl.ProductsDetailsResourceImpl;
+import telephony.ws.resource.products.impl.ProductsFetchResourceImpl;
 import telephony.ws.resource.role.RolesAddResource;
+import telephony.ws.resource.role.RolesDeleteResource;
 import telephony.ws.resource.role.impl.RolesAddResourceImpl;
 import telephony.ws.resource.role.impl.RolesDeleteResourceImpl;
-import telephony.ws.resource.sale.SalesAddResource;
-import telephony.ws.resource.sale.SalesEditResource;
-import telephony.ws.resource.sale.SalesFetchResource;
-import telephony.ws.resource.sale.impl.SalesAddResourceImpl;
-import telephony.ws.resource.sale.impl.SalesDeleteResource;
-import telephony.ws.resource.sale.impl.SalesDeleteResourceImpl;
-import telephony.ws.resource.sale.impl.SalesEditResourceImpl;
-import telephony.ws.resource.sale.impl.SalesFetchResourceImpl;
-import telephony.ws.resource.session.SessionDestroyResource;
-import telephony.ws.resource.session.SessionRefreshResource;
-import telephony.ws.resource.session.SessionInitializationResource;
-import telephony.ws.resource.session.SessionValidationResource;
-import telephony.ws.resource.session.impl.SessionDestoryResourceImpl;
-import telephony.ws.resource.session.impl.SessionInitializationResourceImpl;
-import telephony.ws.resource.session.impl.SessionRefreshResourceImpl;
-import telephony.ws.resource.session.impl.SessionValidationResourceImpl;
-import telephony.ws.resource.store.StoreFetchProductsResource;
-import telephony.ws.resource.store.StoreSetRolesResource;
-import telephony.ws.resource.store.StoreFetchUsersResource;
-import telephony.ws.resource.store.StoresAddResource;
-import telephony.ws.resource.store.StoresDeleteResource;
-import telephony.ws.resource.store.StoresEditResource;
-import telephony.ws.resource.store.StoresFetchResource;
-import telephony.ws.resource.store.impl.StoreFetchProductsResourceImpl;
-import telephony.ws.resource.store.impl.StoreFetchUsersResourceImpl;
-import telephony.ws.resource.store.impl.StoreSetRolesResourceImpl;
-import telephony.ws.resource.store.impl.StoresAddResourceImpl;
-import telephony.ws.resource.store.impl.StoresDeleteResourceImpl;
-import telephony.ws.resource.store.impl.StoresEditResourceImpl;
-import telephony.ws.resource.store.impl.StoresFetchResourceImpl;
-import telephony.ws.resource.user.UserAddRolesResource;
-import telephony.ws.resource.user.UserAddStoresResource;
-import telephony.ws.resource.user.UserDeleteRolesResource;
-import telephony.ws.resource.user.UserDeleteStoresResource;
-import telephony.ws.resource.user.UsersDeleteResource;
-import telephony.ws.resource.user.UsersEditResource;
-import telephony.ws.resource.user.UsersFetchResource;
-import telephony.ws.resource.user.impl.UserAddRolesResourceImpl;
-import telephony.ws.resource.user.impl.UserAddStoresResourceImpl;
-import telephony.ws.resource.user.impl.UserDeleteRolesResourceImpl;
-import telephony.ws.resource.user.impl.UserDeleteStoresResourceImpl;
-import telephony.ws.resource.user.impl.UsersAddResource;
-import telephony.ws.resource.user.impl.UsersAddResourceImpl;
-import telephony.ws.resource.user.impl.UsersDeleteResourceImpl;
-import telephony.ws.resource.user.impl.UsersEditResourceImpl;
-import telephony.ws.resource.user.impl.UsersFetchResourceImpl;
+import telephony.ws.resource.sale.*;
+import telephony.ws.resource.sale.impl.*;
+import telephony.ws.resource.session.*;
+import telephony.ws.resource.session.impl.*;
+import telephony.ws.resource.store.*;
+import telephony.ws.resource.store.impl.*;
+import telephony.ws.resource.user.*;
+import telephony.ws.resource.user.impl.*;
 
 /**
  * Heart of telephony application.
  */
-public class TelephonyApplication extends Application {
-	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-	
+public class TelephonyApplication extends Application {	
 	
 	public TelephonyApplication() {
 		
@@ -120,16 +62,53 @@ public class TelephonyApplication extends Application {
                 
         router.attach(HelloWorldResource.URL, HelloWorldResourceImpl.class);
         
+        // sessions resources - complete
         router.attach(SessionInitializationResource.URL, SessionInitializationResourceImpl.class);
         router.attach(SessionValidationResource.URL, SessionValidationResourceImpl.class);
         router.attach(SessionRefreshResource.URL, SessionRefreshResourceImpl.class);
         router.attach(SessionDestroyResource.URL, SessionDestoryResourceImpl.class);
         
+        // users resources - complete
         router.attach(UsersAddResource.URL, UsersAddResourceImpl.class);
         router.attach(UsersFetchResource.URL, UsersFetchResourceImpl.class);
         router.attach(UsersEditResource.URL, UsersEditResourceImpl.class);
         router.attach(UsersDeleteResource.URL, UsersDeleteResourceImpl.class);
+        router.attach(UsersDetailsResource.URL, UsersDetailsResourceImpl.class);
         
+        // deliveries resources - complete
+        router.attach(DeliveriesAddResource.URL, DeliveriesAddResourceImpl.class);
+        router.attach(DeliveriesFetchResource.URL, DeliveriesFetchResourceImpl.class);
+        router.attach(DeliveriesEditResource.URL, DeliveriesEditResourceImpl.class);
+        router.attach(DeliveriesDeleteResource.URL, DeliveriesDeleteResourceImpl.class);
+        router.attach(DeliveriesDetailsResource.URL, DeliveriesDetailsResourceImpl.class);
+
+        // deliveries resources - complete
+        router.attach(SalesAddResource.URL, SalesAddResourceImpl.class);
+        router.attach(SalesFetchResource.URL, SalesFetchResourceImpl.class);
+        router.attach(SalesEditResource.URL, SalesEditResourceImpl.class);
+        router.attach(SalesDeleteResource.URL, SalesDeleteResourceImpl.class);
+        router.attach(SalesDetailsResource.URL, SalesDetailsResourceImpl.class);
+        
+        // products resources - complete
+        router.attach(ProductsFetchResource.URL, ProductsFetchResourceImpl.class);
+        router.attach(ProductsDetailsResource.URL, ProductsDetailsResourceImpl.class);
+        
+        // contacts resources - complete 
+        router.attach(ContactsFetchResource.URL, ContactsFetchResourceImpl.class);
+        router.attach(ContactsDeleteResource.URL, ContactsDeleteResourceImpl.class);
+        router.attach(ContactsAddResource.URL, ContactsAddResourceImpl.class);
+        router.attach(ContactsEditResource.URL, ContactsEditResourceImpl.class);
+        router.attach(ContactsDetailsResource.URL, ContactsDetailsResourceImpl.class);
+        
+        // complaints resources complete
+        router.attach(ComplaintAddResource.URL, ComplaintAddResourceImpl.class);
+        router.attach(ComplaintEditResource.URL, ComplaintEditResourceImpl.class);
+        router.attach(ComplaintFetchResource.URL, ComplaintFetchResourceImpl.class);
+        router.attach(ComplaintDetailsResource.URL, ComplaintDetailsResourceImpl.class);
+        router.attach(ComplaintDeleteResource.URL, ComplaintDeleteResourceImpl.class);
+        router.attach(ComplaintAddCommentResource.URL, ComplaintAddCommentResourceImpl.class);
+        
+        // TODO verify the stuff below
         router.attach(StoreFetchUsersResource.URL, StoreFetchUsersResourceImpl.class);
         router.attach(StoreFetchProductsResource.URL, StoreFetchProductsResourceImpl.class);
         router.attach(StoresAddResource.URL, StoresAddResourceImpl.class);
@@ -145,28 +124,11 @@ public class TelephonyApplication extends Application {
         router.attach(UserAddStoresResource.URL, UserAddStoresResourceImpl.class);
         router.attach(UserDeleteRolesResource.URL, UserDeleteRolesResourceImpl.class);
         router.attach(UserDeleteStoresResource.URL, UserDeleteStoresResourceImpl.class);
+        // TODO verify the stuff above
         
-        router.attach(DeliveriesAddResource.URL, DeliveriesAddResourceImpl.class);
-        router.attach(DeliveriesFetchResource.URL, DeliveriesFetchResourceImpl.class);
-        router.attach(DeliveriesEditResource.URL, DeliveriesEditResourceImpl.class);
-        router.attach(DeliveriesDeleteResource.URL, DeliveriesDeleteResourceImpl.class);
-        
-        router.attach(SalesAddResource.URL, SalesAddResourceImpl.class);
-        router.attach(SalesFetchResource.URL, SalesFetchResourceImpl.class);
-        router.attach(SalesEditResource.URL, SalesEditResourceImpl.class);
-        router.attach(SalesDeleteResource.URL, SalesDeleteResourceImpl.class);
-        
-        router.attach(ContactsFetchResource.URL, ContactsFetchResourceImpl.class);
-        router.attach(ContactsDeleteResource.URL, ContactsDeleteResourceImpl.class);
-        router.attach(ContactsAddResource.URL, ContactsAddResourceImpl.class);
-        
-        // TODO : create and add complaints-related resources
-        
+                
         router.attach("/", new Directory(getContext(), "war:///"));
-        
-        
 
         return router;
-
     }
 }

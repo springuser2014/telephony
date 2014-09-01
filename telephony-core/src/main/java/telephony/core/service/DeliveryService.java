@@ -6,8 +6,8 @@ import java.util.List;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.query.filter.DeliveryFilterCriteria;
-import telephony.core.service.dto.AddDeliveryRequest;
-import telephony.core.service.dto.AddDeliveryResponse;
+import telephony.core.service.dto.DeliveryAddRequest;
+import telephony.core.service.dto.DeliveryAddResponse;
 import telephony.core.service.dto.Session;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -81,5 +81,5 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws DeliveryServiceException 
 	 * @throws ParseException 
 	 */
-	AddDeliveryResponse add(AddDeliveryRequest request) throws SessionServiceException, DeliveryServiceException, ParseException;
+	DeliveryAddResponse add(DeliveryAddRequest request) throws SessionServiceException, DeliveryServiceException, ParseException;
 }

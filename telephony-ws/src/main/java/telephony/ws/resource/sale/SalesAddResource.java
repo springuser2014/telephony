@@ -10,9 +10,6 @@ public interface SalesAddResource {
 	
 	String URL = "/sales/add";
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Post("json")
 	JsonRepresentation post(JsonRepresentation entity);
 

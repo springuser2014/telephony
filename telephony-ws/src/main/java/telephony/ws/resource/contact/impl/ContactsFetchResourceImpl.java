@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
@@ -27,8 +31,9 @@ import static telephony.core.service.dto.ContactBean.create;
 /**
  * asd.
  */
-public class ContactsFetchResourceImpl extends TelephonyServerResource
-	implements ContactsFetchResource {
+public class ContactsFetchResourceImpl 
+extends TelephonyServerResource
+implements ContactsFetchResource {
 	
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -36,11 +41,9 @@ public class ContactsFetchResourceImpl extends TelephonyServerResource
 	@Inject
 	private ContactService contactService;
 
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Post("json")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public JsonRepresentation fetch(JsonRepresentation entity) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException {
         

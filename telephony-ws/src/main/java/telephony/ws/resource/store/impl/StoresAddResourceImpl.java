@@ -15,17 +15,15 @@ import telephony.ws.resource.store.StoresAddResource;
 /**
  * asd.
  */
-public class StoresAddResourceImpl extends TelephonyServerResource implements
-		StoresAddResource {
+public class StoresAddResourceImpl 
+extends TelephonyServerResource 
+implements StoresAddResource {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
 	private StoreService storeService;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Post("json")
 	public JsonRepresentation add(JsonRepresentation entity) {

@@ -12,16 +12,13 @@ import telephony.ws.resource.store.StoreSetRolesResource;
 /**
  * asd.
  */
-public class StoreSetRolesResourceImpl extends TelephonyServerResource
-	implements StoreSetRolesResource {
+public class StoreSetRolesResourceImpl 
+extends TelephonyServerResource
+implements StoreSetRolesResource {
 	
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
 	@Put("json")
     public JsonRepresentation set(JsonRepresentation entity) {

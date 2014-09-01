@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
-import telephony.core.service.dto.AddDeliveryRequest;
+import telephony.core.service.dto.DeliveryAddRequest;
 import telephony.core.service.dto.ProductBean;
 import telephony.core.service.dto.SignInBean;
 import telephony.ws.resource.delivery.DeliveriesAddResource;
@@ -81,7 +81,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		products.add(p1);
 		products.add(p2);
 		
-		AddDeliveryRequest req = new AddDeliveryRequest();
+		DeliveryAddRequest req = new DeliveryAddRequest();
 		req.setContactId(1l);
 		req.setLabel("aaa");
 		req.setDateIn(new Date());

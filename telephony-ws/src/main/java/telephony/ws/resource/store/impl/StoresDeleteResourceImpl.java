@@ -14,18 +14,15 @@ import telephony.ws.resource.store.StoresDeleteResource;
 /**
  * asd.
  */
-public class StoresDeleteResourceImpl extends TelephonyServerResource implements
-		StoresDeleteResource {
+public class StoresDeleteResourceImpl 
+extends TelephonyServerResource 
+implements StoresDeleteResource {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
 	private StoreService storeService;
 
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	@Delete("json")
 	public JsonRepresentation delete(JsonRepresentation entity) {

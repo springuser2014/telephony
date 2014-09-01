@@ -3,7 +3,7 @@ package telephony.core.service.dto;
 /**
  * asd.
  */
-public class AddRoleRequest {
+public class RoleAddRequest {
 	
 	private String username;
 	private String sessionId;
@@ -15,7 +15,7 @@ public class AddRoleRequest {
 	 * @param sessionId sad.
 	 * @param label ads.
 	 */
-	public AddRoleRequest(String username, String sessionId, String label) {
+	public RoleAddRequest(String username, String sessionId, String label) {
 		this.username = username;
 		this.sessionId = sessionId;
 		this.label = label;
@@ -26,7 +26,7 @@ public class AddRoleRequest {
 	 * @param sessionBean ads.
 	 * @param label asd.
 	 */
-	public AddRoleRequest(SessionBean sessionBean, String label) {
+	public RoleAddRequest(SessionBean sessionBean, String label) {
 		this.username = sessionBean.getUsername();
 		this.sessionId = sessionBean.getSessionId();
 		this.label = label;

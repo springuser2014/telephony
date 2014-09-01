@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.guice.env.EnvironmentNameResolver;
-import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
 import telephony.ws.guice.env.TelephonyWebServicesEnvironmentResolver;
 
 import com.google.inject.AbstractModule;

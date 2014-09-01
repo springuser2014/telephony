@@ -1,7 +1,6 @@
 package telephony.core.service;
 
-
-import telephony.core.entity.jpa.Store;
+import telephony.core.service.dto.*;
 
 /**
  * asd.
@@ -9,16 +8,24 @@ import telephony.core.entity.jpa.Store;
 public interface InformationService {
 
     /**
-     * asd.
-     * @param store asd.
-     * @return asd.
+     * 
+     * @param request
+     * @return
      */
-    long getNumberOfDeliveries(Store store);
-
+    DashboardDetailsResponse dashboardDetails(DashboardDetailsRequest request);
+    
     /**
-     * asd.
-     * @param store asd.
-     * @return asd.
+     * 
+     * @param request
+     * @return
      */
-    long getNumberOfSales(Store store);
+    ProducersResponse fetchProducers(ProducersRequest request);
+    
+    /**
+     * 
+     * @param request
+     * @return
+     */
+    ModelsResponse fetchModels(ModelsRequest request);
+    
 }

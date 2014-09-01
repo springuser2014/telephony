@@ -2,7 +2,7 @@ package telephony.core.service.dto;
 
 import java.util.HashMap;
 
-public class AddDeliveryResponse {
+public class DeliveryAddResponse {
 	
 	private boolean success;
 	

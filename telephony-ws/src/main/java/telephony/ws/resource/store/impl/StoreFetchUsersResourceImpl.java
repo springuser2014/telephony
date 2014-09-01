@@ -14,15 +14,12 @@ import telephony.ws.resource.store.StoreFetchUsersResource;
 /**
  * asd.
  */
-public class StoreFetchUsersResourceImpl extends TelephonyServerResource 
-	implements StoreFetchUsersResource {
+public class StoreFetchUsersResourceImpl 
+extends TelephonyServerResource 
+implements StoreFetchUsersResource {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Post("json")
     public JsonRepresentation list(JsonRepresentation entity) {

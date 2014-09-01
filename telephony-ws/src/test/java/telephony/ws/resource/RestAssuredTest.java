@@ -2,13 +2,10 @@ package telephony.ws.resource;
 
 import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.expect;
-import static org.junit.Assert.*;
-import static com.jayway.restassured.RestAssured.*;
-import groovy.time.BaseDuration.From;
+import static com.jayway.restassured.path.json.JsonPath.from;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-
-import org.hibernate.jdbc.Expectation;
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
@@ -20,11 +17,6 @@ import telephony.ws.test.TestsConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.path.json.JsonPath;
-
-import static com.jayway.restassured.path.json.JsonPath.*;
-import org.hamcrest.*;
-import static org.hamcrest.Matchers.*;
 
 @RunWith(JUnit4ClassRunner.class)
 public class RestAssuredTest {

@@ -4,6 +4,10 @@ package telephony.ws.resource.role.impl;
 import java.io.IOException;
 import java.util.HashSet;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
@@ -35,6 +39,8 @@ public class RolesAddResourceImpl extends TelephonyServerResource
 	private RoleService roleService;
 
     @Post("json")
+    @Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
     public JsonRepresentation add(JsonRepresentation entity) 
     		throws JSONException, IOException {
     	

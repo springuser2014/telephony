@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * sad.
  */
-public class AddSaleRequest {	
+public class SaleAddRequest {	
 
 	private String username;
 	private String sessionId;

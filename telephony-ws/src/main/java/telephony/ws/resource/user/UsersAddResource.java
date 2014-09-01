@@ -1,4 +1,4 @@
-package telephony.ws.resource.user.impl;
+package telephony.ws.resource.user;
 
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;

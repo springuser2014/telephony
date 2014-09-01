@@ -28,8 +28,8 @@ import telephony.core.entity.jpa.ProductTax;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.query.filter.DeliveryFilterCriteria;
-import telephony.core.service.dto.AddDeliveryRequest;
-import telephony.core.service.dto.AddDeliveryResponse;
+import telephony.core.service.dto.DeliveryAddRequest;
+import telephony.core.service.dto.DeliveryAddResponse;
 import telephony.core.service.dto.ProductBean;
 import telephony.core.service.dto.Session;
 import telephony.core.service.exception.ContactServiceException;
@@ -216,7 +216,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
 		
-		AddDeliveryRequest dto = new AddDeliveryRequest();
+		DeliveryAddRequest dto = new DeliveryAddRequest();
 		dto.setSessionId(TestData.USER1_SESSIONID);
 		dto.setUsername(TestData.USER1_NAME);
 		
@@ -244,7 +244,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// when
 		try {
-		AddDeliveryResponse resp = deliveryService.add(dto);
+		DeliveryAddResponse resp = deliveryService.add(dto);
 		
 		long deliveriesAfter = deliveryService.count(session);
 		long productsAfter = productService.count(session);

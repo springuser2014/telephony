@@ -29,8 +29,8 @@ import telephony.core.entity.jpa.Tax;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.AddDeliveryRequest;
-import telephony.core.service.dto.AddDeliveryResponse;
+import telephony.core.service.dto.DeliveryAddRequest;
+import telephony.core.service.dto.DeliveryAddResponse;
 import telephony.core.service.dto.ProductBean;
 import telephony.core.service.dto.ProductTaxBean;
 import telephony.core.service.dto.Session;
@@ -179,7 +179,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public AddDeliveryResponse add(AddDeliveryRequest request) 
+	public DeliveryAddResponse add(DeliveryAddRequest request) 
 			throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// TODO : add validation
@@ -262,7 +262,7 @@ implements DeliveryService {
 			}
 		}
 		
-		AddDeliveryResponse resp = new AddDeliveryResponse();
+		DeliveryAddResponse resp = new DeliveryAddResponse();
 		resp.setSuccess(true);
 		
 		return resp;

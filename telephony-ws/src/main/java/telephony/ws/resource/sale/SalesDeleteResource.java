@@ -8,9 +8,8 @@ import org.restlet.resource.Delete;
  */
 public interface SalesDeleteResource {
 
-	/**
-	 * {@inheritDoc}
-	 */
+	String URL = "/sales/delete/{id}";
+
 	@Delete("json")
 	JsonRepresentation delete(JsonRepresentation entity);
 

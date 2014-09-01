@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class AddDeliveryRequest {
+public class DeliveryAddRequest {
 	
 	private String username;
 	private String sessionId;

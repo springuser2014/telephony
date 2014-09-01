@@ -33,6 +33,7 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	private ProductFilterCriteria() {
 		
 	}
+	
 
 	/**
 	 * asd.

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Post;
 
 import telephony.core.service.exception.ContactServiceException;
@@ -23,7 +22,6 @@ import telephony.core.service.exception.SessionServiceException;
  */
 public interface ContactsDeleteResource {
 
-//	String URL = "/contacts/delete/{id}";
 	String URL = "/contacts/delete";
 
 	/**
