@@ -1,5 +1,7 @@
 package telephony.core.query.filter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import telephony.core.entity.jpa.Contact;
@@ -11,14 +13,14 @@ import telephony.core.entity.jpa.User;
 public class DeliveryFilterCriteria 
 extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 
-	private Date deliveryDateStart;
-	private Date deliveryDateEnd;
+	private String deliveryDateStart;
+	private String deliveryDateEnd;
 	
 	private Double sumFrom;
 	private Double sumTo;
 	
-	private Contact deliveredBy;
-	private User registeredBy;
+	private Long deliveredBy;
+	private Long registeredBy;
 	
 	private String label;
 	private Integer minNumberOfProducts;
@@ -37,7 +39,16 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * @return a.
 	 */
 	public Date deliveryDateStart() {
-		return deliveryDateStart;
+		if (this.deliveryDateStart != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+			try {
+				return sdf.parse(deliveryDateStart);
+			} catch (ParseException e) {
+				return null;
+			}
+		} else {
+			return null;
+		}	
 	}
 
 	/**
@@ -46,7 +57,8 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * @return asd.
 	 */
 	public DeliveryFilterCriteria deliveryDateStart(Date deliveryDateStart) {
-		this.deliveryDateStart = deliveryDateStart;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+		this.deliveryDateStart = sdf.format(deliveryDateStart);
 		return this;
 	}
 
@@ -55,7 +67,16 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * @return a.
 	 */
 	public Date deliveryDateEnd() {
-		return deliveryDateEnd;
+		if (this.deliveryDateEnd != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+			try {
+				return sdf.parse(deliveryDateEnd);
+			} catch (ParseException e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -64,7 +85,8 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * @return a.
 	 */
 	public DeliveryFilterCriteria deliveryDateEnd(Date deliveryDateEnd) {
-		this.deliveryDateEnd = deliveryDateEnd;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+		this.deliveryDateEnd = sdf.format(deliveryDateEnd);
 		return this;
 	}
 
@@ -109,7 +131,7 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * asd.
 	 * @return ads.
 	 */
-	public Contact deliveredBy() {
+	public Long deliveredBy() {
 		return deliveredBy;
 	}
 
@@ -118,8 +140,8 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * @param deliveredBy asd.
 	 * @return asd.
 	 */
-	public DeliveryFilterCriteria deliveredBy(Contact deliveredBy) {
-		deliveredBy = deliveredBy;
+	public DeliveryFilterCriteria deliveredBy(Long deliveredBy) {
+		this.deliveredBy = deliveredBy;
 		return this;
 	}
 
@@ -127,7 +149,7 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * asd.
 	 * @return asd.
 	 */
-	public User registeredBy() {
+	public Long registeredBy() {
 		return registeredBy;
 	}
 
@@ -136,7 +158,7 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 	 * @param registeredBy asd.
 	 * @return asd.
 	 */
-	public DeliveryFilterCriteria registeredBy(User registeredBy) {
+	public DeliveryFilterCriteria registeredBy(Long registeredBy) {
 		this.registeredBy = registeredBy;
 		return this;
 	}
@@ -194,4 +216,78 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 		this.maxNumberOfProducts = maxNumberOfProducts;
 		return this;
 	}
+
+	public String getDeliveryDateStart() {
+		return deliveryDateStart;
+	}
+
+	public void setDeliveryDateStart(String deliveryDateStart) {
+		this.deliveryDateStart = deliveryDateStart;
+	}
+
+	public String getDeliveryDateEnd() {
+		return deliveryDateEnd;
+	}
+
+	public void setDeliveryDateEnd(String deliveryDateEnd) {
+		this.deliveryDateEnd = deliveryDateEnd;
+	}
+
+	public Double getSumFrom() {
+		return sumFrom;
+	}
+
+	public void setSumFrom(Double sumFrom) {
+		this.sumFrom = sumFrom;
+	}
+
+	public Double getSumTo() {
+		return sumTo;
+	}
+
+	public void setSumTo(Double sumTo) {
+		this.sumTo = sumTo;
+	}
+
+	public Long getDeliveredBy() {
+		return deliveredBy;
+	}
+
+	public void setDeliveredBy(Long deliveredBy) {
+		this.deliveredBy = deliveredBy;
+	}
+
+	public Long getRegisteredBy() {
+		return registeredBy;
+	}
+
+	public void setRegisteredBy(Long registeredBy) {
+		this.registeredBy = registeredBy;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public Integer getMinNumberOfProducts() {
+		return minNumberOfProducts;
+	}
+
+	public void setMinNumberOfProducts(Integer minNumberOfProducts) {
+		this.minNumberOfProducts = minNumberOfProducts;
+	}
+
+	public Integer getMaxNumberOfProducts() {
+		return maxNumberOfProducts;
+	}
+
+	public void setMaxNumberOfProducts(Integer maxNumberOfProducts) {
+		this.maxNumberOfProducts = maxNumberOfProducts;
+	}
+	
+	
 }

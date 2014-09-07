@@ -108,4 +108,13 @@ public class Pricing extends BaseEntity {
 	public void setRate(Double rate) {
 		this.rate = rate;
 	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
 }

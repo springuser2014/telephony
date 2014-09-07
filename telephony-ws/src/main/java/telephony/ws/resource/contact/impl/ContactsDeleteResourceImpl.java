@@ -25,8 +25,9 @@ import telephony.ws.resource.contact.ContactsDeleteResource;
 /**
  * asd.
  */
-public class ContactsDeleteResourceImpl extends TelephonyServerResource
-	implements ContactsDeleteResource {
+public class ContactsDeleteResourceImpl 
+extends TelephonyServerResource
+implements ContactsDeleteResource {
 		
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	

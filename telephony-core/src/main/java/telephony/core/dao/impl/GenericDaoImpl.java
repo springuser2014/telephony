@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
+import telephony.core.query.filter.DeliveryFilterCriteria;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -54,23 +55,6 @@ public abstract class GenericDaoImpl<E> implements GenericDao<E> {
      */
     public EntityManager getEntityManager() {
         return entityManagerProvider.get();
-    }
-
-	@Override
-    @SuppressWarnings("unchecked")
-	public List<E> find() {
-
-        logger.debug("findAll starts ");
-        logger.debug("entity type : {} ", entityClass.getName());
-
-        List<E> lst =
-        getEntityManager()
-        	.createQuery("select e from " + entityClass.getName() + " e")
-            .getResultList();
-
-        logger.debug("found {} elements", lst.size());
-
-        return lst;
     }
 
     @Override

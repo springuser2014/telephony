@@ -199,9 +199,12 @@ insert into products(id, imei, store_id, delivery_id, sale_id, producer, model, 
   (37, '123456789000044', 2, 5, 1, 'apple', 'iphone 3g', 'black', 10000, NULL, now(), 1),
   (38, '123456789000045', 2, 5, NULL, 'apple', 'iphone 3g', 'black', 10000, NULL, now(), 1),
   (39, '123456789000046', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1),
-  (40, '123456789000047', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1);
+  (40, '123456789000047', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1),
+  (41, '123456789000048', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1),
+  (42, '123456789000049', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1);
+ 
   
-  SELECT pg_catalog.setval('products_seq', 41, false);
+  SELECT pg_catalog.setval('products_seq', 43, false);
 
 
 

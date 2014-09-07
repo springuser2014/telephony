@@ -16,6 +16,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteria;
 
 /**
@@ -114,7 +115,8 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
         List<Product> res = null;
 
-        Query jpaQuery = getEntityManager().createQuery(sb.toString());
+        Query jpaQuery = getEntityManager()
+        					.createQuery(sb.toString());
 
         if (query.getImei() != null && query.getImei().length() > 0) {
             jpaQuery.setParameter("imei", query.getImei());
@@ -163,7 +165,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     public List<String> fetchImeisList() {
         logger.debug("ProductServiceImpl.fetchImeisList starts");
 
-        List<Product> list = this.find();
+        List<Product> list = this.find(null);
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
@@ -179,7 +181,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     public List<String> fetchProducersList() {
         logger.debug("ProductServiceImpl.fetchProducersList starts");
 
-        List<Product> list = this.find();
+        List<Product> list = this.find(null);
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
@@ -197,7 +199,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     public List<String> fetchModelsList() {
         logger.debug("ProductServiceImpl.fetchModelsList starts");
 
-        List<Product> list = this.find();
+        List<Product> list = this.find(null);
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
@@ -232,9 +234,8 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
     }
 
     @Transactional
-	@Override
     @SuppressWarnings("unchecked")
-    public List<Product> find() {
+    public List<Product> find(DeliveryFilterCriteria filters) {
 
         logger.debug("ProductsDaoImpl.findAll starts ");
         logger.debug("entity type : {} ", getEntityClass().getName());

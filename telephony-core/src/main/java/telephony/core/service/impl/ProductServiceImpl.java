@@ -23,8 +23,9 @@ import com.google.inject.persist.Transactional;
 /**
  * Products management service.
  */
-public class ProductServiceImpl extends AbstractBasicService<Product> implements
-		ProductService {
+public class ProductServiceImpl 
+extends AbstractBasicService<Product> 
+implements ProductService {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -55,7 +56,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
-		List<Product> products = productsDao.find();
+		ProductFilterCriteria filters = ProductFilterCriteria.create();
+		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
 			if (!res.contains(p.getModel().getProducer().getLabel())) {
@@ -77,7 +79,9 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		sessionService.validate(session);
 
 		List<String> res = new ArrayList<String>();
-		List<Product> products = productsDao.find();
+		
+		ProductFilterCriteria filters = ProductFilterCriteria.create();
+		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
 			if (!res.contains(p.getModel().getLabel())) {
@@ -96,7 +100,8 @@ public class ProductServiceImpl extends AbstractBasicService<Product> implements
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
-		List<Product> products = productsDao.find();
+		ProductFilterCriteria filters = ProductFilterCriteria.create();
+		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
 			if (!res.contains(p.getColor())) {

@@ -97,6 +97,7 @@ public class UserServiceTest extends BaseCoreTest {
 	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
 	public void testDeletingUser() 
 			throws SessionServiceException, UserServiceException {
+
 		// given
 		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		User user = userService.findByName(session, TestData.USER4_NAME);

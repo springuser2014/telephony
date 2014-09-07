@@ -46,4 +46,22 @@ public abstract class AbstractFilterCriteria<C extends AbstractFilterCriteria<C>
 		this.perPage = perPage;
 		return (C) this;
 	}
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getPerPage() {
+		return perPage;
+	}
+
+	public void setPerPage(Integer perPage) {
+		this.perPage = perPage;
+	}
+	
+	
 }

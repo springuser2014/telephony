@@ -1,6 +1,7 @@
 package telephony.core.entity.jpa;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +41,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id", nullable = false)
     private Delivery delivery;
     
@@ -61,7 +62,7 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
     private Collection<ProductTax> productTaxes;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)    
     private Collection<Pricing> pricings;
     
     /**
@@ -363,5 +364,41 @@ public class Product extends BaseEntity {
 		this.priceIn = priceIn;
 	}
 	
-	
+	public ProductTax getCurrentTax() {
+		
+		long now = new Date().getTime();
+		
+		for(ProductTax ptax : this.productTaxes) {
+			
+			if (ptax.getFrom() != null && ptax.getTo() != null && (ptax.getFrom().getTime() <= now && ptax.getTo().getTime() >= now)) {				
+				return ptax;
+			}
+			
+			if (ptax.getFrom() != null && ptax.getFrom().getTime() <= now && ptax.getTo() == null) {
+				return ptax;
+			}
+		}
+		
+		return null;
+	}
+
+	public Pricing getCurrentPricing() {
+
+		long now = new Date().getTime();
+
+		for (Pricing price : this.pricings) {
+			
+			if (price.getFrom() != null && price.getTo() != null && (price.getFrom().getTime() <= now && price.getTo().getTime() >= now) ) {
+				
+				return price;
+			}
+			
+			if (price.getFrom() != null && (price.getFrom().getTime() <= now && price.getTo() == null)) {
+				
+				return price;
+			}
+		}
+		
+		return null;
+	}
 }

@@ -2,28 +2,16 @@ package telephony.core.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.DeliveriesDao;
-import telephony.core.dao.ProductsDao;
-import telephony.core.dao.RolesDao;
-import telephony.core.dao.SalesDao;
-import telephony.core.dao.StoresDao;
-import telephony.core.dao.UsersDao;
-import telephony.core.entity.jpa.Delivery;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.Role;
-import telephony.core.entity.jpa.Sale;
-import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
+import telephony.core.dao.*;
+import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.core.service.dto.Session;
-import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -71,7 +59,7 @@ implements StoreService {
         sessionService.validate(session);
 
         // TODO : use fitlers
-        List<Store> stores = storesDao.find();
+        List<Store> stores = storesDao.find(filters);
 
         logger.debug("found {} elements ", stores.size());
 

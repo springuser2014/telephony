@@ -49,7 +49,7 @@ implements RoleService {
 		
 		sessionService.validate(session);
 		
-		return rolesDao.find();		
+		return rolesDao.find(filters);		
 	}
 
 	@Transactional

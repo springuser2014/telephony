@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ModelDao;
 import telephony.core.entity.jpa.Model;
+import telephony.core.query.filter.DeliveryFilterCriteria;
 
 /**
  * asd.

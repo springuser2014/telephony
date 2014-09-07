@@ -45,15 +45,15 @@ public class Delivery extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIn;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id", nullable = false)
     private Contact contact;
    
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER)
     private Collection<Product> products = new HashSet<Product>();
 
     /**

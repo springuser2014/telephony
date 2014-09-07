@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.RoleFilterCriteria;
 
 /**
  * Roles management DAO.
@@ -38,6 +39,13 @@ public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 		
 		return role;
 		
+	}
+
+
+	@Override
+	public List<Role> find(RoleFilterCriteria filters) {
+		// TODO Auto-generated method stub
+		return null;
 	}    
 	
 	

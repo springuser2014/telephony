@@ -99,4 +99,5 @@ public interface ProductsDao extends GenericDao<Product> {
 	 * @return ad.
 	 */
 	Product findByIMEI(String imei);
+
 }

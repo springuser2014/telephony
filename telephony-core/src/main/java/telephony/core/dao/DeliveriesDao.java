@@ -6,6 +6,7 @@ import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.DeliveryFilterCriteria;
 
 /**
  * asd.
@@ -32,4 +33,8 @@ public interface DeliveriesDao extends GenericDao<Delivery> {
      * @return asd.
      */
 	List<Delivery> findByStore(Store stores);
+
+	Delivery findDetailsById(Long deliveryId);
+
+	List<Delivery> find(DeliveryFilterCriteria filters);
 }

@@ -34,11 +34,11 @@ public class ProductTax extends BaseEntity {
 		allocationSize = 1)
     private Long id;
     
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tax_id", nullable = false)
 	private Tax tax;
 	

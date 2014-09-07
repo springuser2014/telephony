@@ -47,7 +47,7 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 
 		sessionService.validate(session);
 
-		List<Contact> lst = contactsDao.find();
+		List<Contact> lst = contactsDao.find(filters);
 		
 		logger.debug("found {} elements", lst.size());
 		

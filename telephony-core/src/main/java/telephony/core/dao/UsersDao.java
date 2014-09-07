@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.UserFilterCriteria;
 
 /**
  * Defines basic operations on User entity.
@@ -53,6 +54,8 @@ public interface UsersDao extends GenericDao<User> {
      * @return a list of User.
      */
 	List<User> findByStoreId(Long storeId);
+
+	List<User> find(UserFilterCriteria filters);
 
 
 }

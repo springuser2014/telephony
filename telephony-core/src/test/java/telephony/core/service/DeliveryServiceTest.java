@@ -1,10 +1,10 @@
 package telephony.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -18,20 +18,9 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
-import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.Delivery;
-import telephony.core.entity.jpa.Model;
-import telephony.core.entity.jpa.Pricing;
-import telephony.core.entity.jpa.Producer;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.ProductTax;
-import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.Tax;
+import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
-import telephony.core.service.dto.DeliveryAddRequest;
-import telephony.core.service.dto.DeliveryAddResponse;
-import telephony.core.service.dto.ProductBean;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.*;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -206,7 +195,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void addNewDelivery() throws SessionServiceException, DeliveryServiceException {
+	public void addNewDelivery() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
 		Session session = Session.create()
@@ -243,7 +232,6 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		dto.setProducts(products);
 		
 		// when
-		try {
 		DeliveryAddResponse resp = deliveryService.add(dto);
 		
 		long deliveriesAfter = deliveryService.count(session);
@@ -254,9 +242,218 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		assertEquals( deliveriesAfter - deliveriesBefore, 1);
 		assertEquals( productsAfter - productsBefore, 1);
 		
-		} catch (Exception e) {
-			long id = 1;
-			long id2 = id + 1;
-		}
 	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDetailsById() throws SessionServiceException, DeliveryServiceException, ParseException {
+		
+		// given
+		long deliveryId = 1;
+		
+		// when 
+		DeliveryDetailsRequest req = new DeliveryDetailsRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setDeliveryId(deliveryId);
+		
+		DeliveryDetailsResponse resp = deliveryService.findDetails(req);
+		
+		// then
+		assertEquals(resp.getDelivery().getLabel(), "nowy rok cieszyn 1");
+		assertEquals(resp.getDelivery().getProducts().size(), 8);		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDeliveries1() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
+				.minNumberOfProducts(1)
+				.maxNumberOfProducts(10);
+		
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setFilters(filters);		
+		
+		// when
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		
+		// then
+		assertEquals(lst.getDeliveries().size(), 5);		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDeliveries2() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		Date deliveryDateStart = new DateTime()
+			.withDate(2010, 1, 1)
+			.withTime(0, 0, 0, 0).toDate();
+
+		Date deliveryDateEnd = new DateTime()
+			.withDate(2013, 12, 31)
+			.withTime(0, 0, 0, 0).toDate();
+		
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
+				.deliveryDateStart(deliveryDateStart)
+				.deliveryDateEnd(deliveryDateEnd);
+		
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setFilters(filters);		
+		
+		// when
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		
+		// then
+		assertEquals(lst.getDeliveries().size(), 3);		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDeliveries3() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		String label = "nowy rok cieszyn 1";
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
+				.label(label);
+		
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setFilters(filters);		
+		
+		// when
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		
+		// then
+		assertEquals(lst.getDeliveries().size(), 1);		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDeliveries4() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
+				.minNumberOfProducts(7)
+				.maxNumberOfProducts(9);
+		
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setFilters(filters);		
+		
+		// when
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		
+		// then
+		assertEquals(lst.getDeliveries().size(), 4);		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDeliveries5() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
+				.sumFrom(500.0d)
+				.sumTo(900.0d);
+		
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setFilters(filters);		
+		
+		// when
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		
+		// then
+		assertEquals(lst.getDeliveries().size(), 4);		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void findDeliveries6() throws SessionServiceException, DeliveryServiceException {
+		
+		// given
+		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
+				.sumFrom(500.0d)
+				.sumTo(900.0d)
+				.minNumberOfProducts(7)
+				.maxNumberOfProducts(9);
+		
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setFilters(filters);
+		
+		// when
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		
+		// then
+		assertEquals(lst.getDeliveries().size(), 4);		
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void editDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
+		
+		// given
+		DeliveryEditRequest req = new DeliveryEditRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		
+		req.setId(1L);
+		req.setContactId(2L);
+		req.setStoreId(2L);
+		
+		req.setLabel("nowy label");
+		
+		Date d = new Date();
+		
+		ProductBean productAdd = new ProductBean();
+		productAdd.setColor("green");
+		productAdd.setImei("123456789000099");
+		productAdd.setModel("3310");
+		productAdd.setProducer("nokia");
+		productAdd.setPriceIn(200.0d);
+		productAdd.setPriceFrom(d);
+		productAdd.setPriceTo(null);
+		productAdd.setTaxId(6L);
+		productAdd.setTaxFrom(d);
+		productAdd.setTaxTo(null);
+		
+		req.addProductToAdd(productAdd);
+		
+		req.addProductToDelete(3L);
+		
+		ProductEditBean productToEdit = new ProductEditBean();
+		productToEdit.setId(2L);
+		productToEdit.setModel("3310");
+		productToEdit.setProducer("nokia");
+		productToEdit.setPrice(300.0d);
+		productToEdit.setPriceIn(110.0d);
+		
+		productToEdit.setTaxId(6L);
+		
+		req.addProductToEdit(productToEdit);
+				
+		// when
+//		try {
+		DeliveryEditResponse response = deliveryService.edit(req);
+//		} catch(Exception e) {
+//			long a = 1;
+//			long b = a+1;			
+//		}
+		
+		// then
+//		assertTrue(response.isSuccess());		
+	}
+	
 }

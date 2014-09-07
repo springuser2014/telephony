@@ -28,6 +28,8 @@ import telephony.ws.resource.session.*;
 import telephony.ws.resource.session.impl.*;
 import telephony.ws.resource.store.*;
 import telephony.ws.resource.store.impl.*;
+import telephony.ws.resource.taxes.TaxesFetchResource;
+import telephony.ws.resource.taxes.impl.TaxesFetchResourceImpl;
 import telephony.ws.resource.user.*;
 import telephony.ws.resource.user.impl.*;
 
@@ -92,6 +94,9 @@ public class TelephonyApplication extends Application {
         // products resources - complete
         router.attach(ProductsFetchResource.URL, ProductsFetchResourceImpl.class);
         router.attach(ProductsDetailsResource.URL, ProductsDetailsResourceImpl.class);
+        
+        // taxes resource - complete
+        router.attach(TaxesFetchResource.URL, TaxesFetchResourceImpl.class);
         
         // contacts resources - complete 
         router.attach(ContactsFetchResource.URL, ContactsFetchResourceImpl.class);

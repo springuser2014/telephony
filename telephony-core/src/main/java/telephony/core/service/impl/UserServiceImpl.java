@@ -10,6 +10,7 @@ import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.UserFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
 import telephony.core.service.dto.Session;
@@ -33,9 +34,6 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
     @Inject
     private SessionService sessionService;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Transactional
     public final List<User> find(Session session) 
@@ -44,17 +42,14 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
     	logger.debug("UserServiceImpl.findAllUsers starts");
         
         sessionService.validate(session);
-
-        List<User> res = usersDao.find();
+        UserFilterCriteria filters = UserFilterCriteria.create();
+        List<User> res = usersDao.find(filters);
 
         logger.debug("found {} elements ", res.size());
 
         return res;
     } 
     
-    /**
-     * {@inheritDoc}
-     */
 	@Override
 	@Transactional
 	public List<User> findUsersByStoreId(Session session, Long storeId) 
@@ -71,9 +66,6 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		return res;
 	}
 
-	/**
-     * {@inheritDoc}
-     */
 	@Override
 	@Transactional
 	public void deleteUserById(Session session, User user)
@@ -87,9 +79,6 @@ public class UserServiceImpl extends AbstractBasicService<User> implements UserS
 		
 	}
 
-	/**
-     * {@inheritDoc}
-     */
 	@Override
 	@Transactional
 	public void addUser(Session session, User user)

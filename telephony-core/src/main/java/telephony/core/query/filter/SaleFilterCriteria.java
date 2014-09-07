@@ -2,9 +2,6 @@ package telephony.core.query.filter;
 
 import java.util.Date;
 
-import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.User;
-
 /**
  * asd.
  */
@@ -17,8 +14,8 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	private Double sumFrom;
 	private Double sumTo;
 	
-	private Contact deliveredBy;
-	private User registeredBy;
+	private Long deliveredBy;
+	private Long registeredBy;
 	
 	private String label;
 	private Integer minNumberOfProducts;
@@ -108,7 +105,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * ads.
 	 * @return a.
 	 */
-	public Contact deliveredBy() {
+	public Long deliveredBy() {
 		return deliveredBy;
 	}
 
@@ -117,7 +114,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param deliveredBy a.
 	 * @return ad.
 	 */
-	public SaleFilterCriteria deliveredBy(Contact deliveredBy) {
+	public SaleFilterCriteria deliveredBy(Long deliveredBy) {
 		this.deliveredBy = deliveredBy;
 		return this;
 	}
@@ -126,7 +123,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public User registeredBy() {
+	public Long registeredBy() {
 		return registeredBy;
 	}
 
@@ -135,7 +132,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param registeredBy a.
 	 * @return ad.
 	 */
-	public SaleFilterCriteria registeredBy(User registeredBy) {
+	public SaleFilterCriteria registeredBy(Long registeredBy) {
 		this.registeredBy = registeredBy;
 		return this;
 	}

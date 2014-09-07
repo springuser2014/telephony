@@ -7,6 +7,7 @@ import java.util.List;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.SaleFilterCriteria;
 
 /**
  * asd.
@@ -40,4 +41,6 @@ public interface SalesDao extends GenericDao<Sale> {
      * @return asd.
      */
 	Sale findByLabel(String label);
+
+	List<Sale> find(SaleFilterCriteria filters);
 }

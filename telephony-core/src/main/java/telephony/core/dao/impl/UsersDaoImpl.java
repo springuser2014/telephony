@@ -1,3 +1,4 @@
+
 package telephony.core.dao.impl;
 
 import java.util.Date;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.UserFilterCriteria;
 
 /**
  * Users management DAO.
@@ -159,5 +161,11 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 		.executeUpdate();
 		
 		return;
+	}
+
+	@Override
+	public List<User> find(UserFilterCriteria filters) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

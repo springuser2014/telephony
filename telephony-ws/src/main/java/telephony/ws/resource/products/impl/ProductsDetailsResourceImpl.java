@@ -4,14 +4,13 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.GsonBuilder;
-
-import telephony.core.query.filter.ProductFilterCriteria;
+import telephony.core.service.dto.DeliveryDetailsRequest;
 import telephony.core.service.dto.ProductDetailsRequest;
 import telephony.core.service.dto.ProductDetailsResponse;
-import telephony.core.service.dto.ProductFetchRequest;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.products.ProductsDetailsResource;
+
+import com.google.gson.GsonBuilder;
 
 public class ProductsDetailsResourceImpl
 extends TelephonyServerResource 
@@ -20,14 +19,12 @@ implements ProductsDetailsResource {
 	public static void main(String args[]) {
 		com.google.gson.Gson gson = new GsonBuilder().serializeNulls().create();
 		
-		ProductFetchRequest req = new ProductFetchRequest();
+		DeliveryDetailsRequest req = new DeliveryDetailsRequest();
 		req.setSessionId("asd");
-		req.setUsername("asd");
+		req.setUsername("foo");
+		req.setDeliveryId(1l);
 		
-		ProductFilterCriteria c = ProductFilterCriteria.create().page(1);
-		req.setFiltersCriteria(c);
-		
-		System.out.println(gson.toJson(req));		
+		System.out.println(gson.toJson(req));	
 	}	
 
 	@Override

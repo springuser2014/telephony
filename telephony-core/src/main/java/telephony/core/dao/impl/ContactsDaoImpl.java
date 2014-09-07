@@ -1,11 +1,13 @@
 package telephony.core.dao.impl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ContactsDao;
 import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.User;
+import telephony.core.query.filter.ContactFilterCriteria;
 
 /**
  * Contacts management DAO.
@@ -21,9 +23,6 @@ public class ContactsDaoImpl extends GenericDaoImpl<Contact> implements Contacts
         super(Contact.class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
 	@Override
 	public Contact findByLabel(String label) {
 		logger.info("findByLabel starts ");
@@ -36,5 +35,11 @@ public class ContactsDaoImpl extends GenericDaoImpl<Contact> implements Contacts
 
 		logger.info("found {} element", contact);
 		return contact;
+	}
+
+	@Override
+	public List<Contact> find(ContactFilterCriteria filters) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

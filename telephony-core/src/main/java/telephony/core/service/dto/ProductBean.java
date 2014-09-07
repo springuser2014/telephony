@@ -11,6 +11,8 @@ public class ProductBean {
 	private String color;
 	
 	private Double priceIn;
+	
+	private Double currentPrice;
 	private String priceFrom;
 	private String priceTo;
 	
@@ -18,6 +20,14 @@ public class ProductBean {
 	private String taxFrom;
 	private String taxTo;
 		
+	public Double getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(Double currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
 	public String getModel() {
 		return model;
 	}
@@ -81,7 +91,11 @@ public class ProductBean {
 	
 	public void setTaxTo(Date taxTo) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		this.taxTo = sdf.format(taxTo);
+		if (taxTo != null) {
+			this.taxTo = sdf.format(taxTo);
+		} else {
+			this.taxTo = null;
+		}
 	}
 	
 	public String getPriceFrom() {
@@ -99,6 +113,10 @@ public class ProductBean {
 	
 	public void setPriceTo(Date priceTo) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		this.priceTo = sdf.format(priceTo);
+		if (priceTo != null) {
+			this.priceTo = sdf.format(priceTo);
+		} else {
+			this.priceTo = null;
+		}
 	}
 }

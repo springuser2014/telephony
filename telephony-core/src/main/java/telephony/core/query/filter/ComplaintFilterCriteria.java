@@ -19,7 +19,7 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 	private String phoneNumber;
 	private String email;
 	
-	private Contact contact;
+	private Long contactId;
 	
 	/**
 	 * asd.
@@ -118,7 +118,7 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 	 * @param phoneNumber asd.
 	 * @return asd.
 	 */
-	public ComplaintFilterCriteria  phoneNumber(String phoneNumber) {
+	public ComplaintFilterCriteria phoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		
 		return this;
@@ -137,7 +137,7 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 	 * @param email asd.
 	 * @return asd.
 	 */
-	public ComplaintFilterCriteria  email(String email) {
+	public ComplaintFilterCriteria email(String email) {
 		this.email = email;
 		return this;
 	}
@@ -146,17 +146,17 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 	 * asd.
 	 * @return asd.
 	 */
-	public Contact contact() {
-		return contact;
+	public Long contact() {
+		return contactId;
 	}
 
 	/**
 	 * asd.
-	 * @param contact asd.
+	 * @param contactId asd.
 	 * @return asd.
 	 */
-	public ComplaintFilterCriteria contact(Contact contact) {
-		this.contact = contact;
+	public ComplaintFilterCriteria contact(Long contactId) {
+		this.contactId = contactId;
 		
 		return this;
 	}	

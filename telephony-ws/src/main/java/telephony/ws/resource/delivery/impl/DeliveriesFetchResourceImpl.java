@@ -9,6 +9,17 @@ import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.inject.Inject;
+
+import telephony.core.service.DeliveryService;
+import telephony.core.service.SessionService;
+import telephony.core.service.dto.BasicResponse;
+import telephony.core.service.dto.DeliveriesFetchRequest;
+import telephony.core.service.dto.DeliveriesFetchResponse;
+import telephony.core.service.exception.DeliveryServiceException;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.delivery.DeliveriesFetchResource;
 
@@ -20,15 +31,36 @@ extends TelephonyServerResource
 implements DeliveriesFetchResource {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Inject
+	private DeliveryService deliveryService;
+	
+	@Inject
+	private SessionService sessionService;
 
 	@Override
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation fetch(JsonRepresentation entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public JsonRepresentation fetch(DeliveriesFetchRequest request) {
+		
+		Gson gson = new GsonBuilder().create();
+
+		DeliveriesFetchResponse resp;
+		
+		try {
+			resp = deliveryService.findDeliveries(request);
+			
+		} catch (SessionServiceException e) {
+			
+			logger.error("session problem", e);
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+		} catch (DeliveryServiceException e) {
+			
+			logger.error("internal problem", e);
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+		}
+		
+		return new JsonRepresentation(gson.toJson(resp));
 	}
-
-
 }

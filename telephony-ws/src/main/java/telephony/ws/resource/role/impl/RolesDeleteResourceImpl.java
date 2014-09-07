@@ -27,8 +27,9 @@ import telephony.ws.resource.role.RolesDeleteResource;
 /**
  * asd.
  */
-public class RolesDeleteResourceImpl extends TelephonyServerResource 
-	implements RolesDeleteResource {
+public class RolesDeleteResourceImpl 
+extends TelephonyServerResource 
+implements RolesDeleteResource {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	

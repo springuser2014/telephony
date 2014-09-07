@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import telephony.core.entity.jpa.BaseEntity;
+import telephony.core.query.filter.DeliveryFilterCriteria;
 
 
 /**
@@ -21,11 +22,6 @@ public interface GenericDao<E> {
 	 */
 	EntityManager getEntityManager();
 
-    /**
-     * Looks for all entities.
-     * @return List consisting all elements.
-     */
-     List<E> find();
     
 
     /**

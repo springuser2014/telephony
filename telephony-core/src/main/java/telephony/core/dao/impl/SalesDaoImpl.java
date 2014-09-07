@@ -12,6 +12,7 @@ import telephony.core.dao.SalesDao;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
+import telephony.core.query.filter.SaleFilterCriteria;
 
 /**
  * Sales management DAO.
@@ -103,8 +104,12 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
                 .getSingleResult();
 
         return result;
-
 	}
-    
+
+	@Override
+	public List<Sale> find(SaleFilterCriteria filters) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }

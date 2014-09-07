@@ -4,18 +4,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class DeliveryAddRequest {
-	
-	private String username;
-	private String sessionId;
+public class DeliveryBean {
 
+	private Long id;
 	private String label;
 	private String dateIn;
-	
 	private Long storeId;
 	private Long contactId;
-	
+
 	private List<ProductBean> products;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getLabel() {
 		return label;
@@ -57,34 +62,16 @@ public class DeliveryAddRequest {
 	public void setProducts(List<ProductBean> products) {
 		this.products = products;
 	}
-	
+
 	public void addProduct(ProductBean product) {
-		
-		if (!this.products.contains(product)) {
-			this.products.add(product);
+		if (!products.contains(product)) {
+			products.add(product);
 		}
 	}
-	
+
 	public void removeProduct(ProductBean product) {
-		
-		if (this.products.contains(product)) {
-			this.products.remove(product);
+		if (products.contains(product)) {
+			products.remove(product);
 		}
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getSessionId() {
-		return sessionId;
-	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
 	}
 }
