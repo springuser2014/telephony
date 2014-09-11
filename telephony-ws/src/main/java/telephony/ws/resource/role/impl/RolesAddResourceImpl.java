@@ -56,8 +56,8 @@ public class RolesAddResourceImpl extends TelephonyServerResource
     	newrole.setUsers(new HashSet<User>());
     	
     	Session session = Session.create()
-    						.username(username)
-    						.sessionId(sessionId);
+    						.setUsername(username)
+    						.setSessionId(sessionId);
     	
     	BasicResponse response = new BasicResponse(true, "Added successfully");
     	try {

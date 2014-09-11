@@ -199,8 +199,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// given
 		Session session = Session.create()
-				.sessionId(TestData.USER1_SESSIONID)
-				.username(TestData.USER1_NAME);
+				.setSessionId(TestData.USER1_SESSIONID)
+				.setUsername(TestData.USER1_NAME);
 				
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
@@ -457,8 +457,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// given
 		Session session = Session.create()
-				.username(TestData.USER1_NAME)
-				.sessionId(TestData.USER1_SESSIONID);
+				.setUsername(TestData.USER1_NAME)
+				.setSessionId(TestData.USER1_SESSIONID);
 		
 		long countBefore = deliveryService.count(session);
 		

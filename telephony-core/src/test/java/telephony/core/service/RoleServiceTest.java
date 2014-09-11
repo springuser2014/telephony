@@ -15,6 +15,7 @@ import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
+import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 import telephony.core.service.dto.Session;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -41,10 +42,12 @@ public class RoleServiceTest extends BaseCoreTest {
 
 		// given
 		Session session = Session.create()
-							.username(TestData.USER1_NAME)
-							.sessionId(TestData.USER1_SESSIONID);
+							.setUsername(TestData.USER1_NAME)
+							.setSessionId(TestData.USER1_SESSIONID);
 		
-		RoleFilterCriteria filters = RoleFilterCriteria.create();
+		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
+										.roleFilterCriteria()
+										.build();
 		
 		// when
 		List<Role> roles = roleService.find(session, filters);
@@ -59,8 +62,8 @@ public class RoleServiceTest extends BaseCoreTest {
 
 		// given
 		Session session = Session.create()
-				.username(TestData.USER1_NAME)
-				.sessionId(TestData.USER1_SESSIONID);
+				.setUsername(TestData.USER1_NAME)
+				.setSessionId(TestData.USER1_SESSIONID);
 		
 		long countBefore = roleService.count(session);
 		

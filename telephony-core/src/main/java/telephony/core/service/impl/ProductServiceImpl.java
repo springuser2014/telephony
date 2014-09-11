@@ -12,6 +12,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
+import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.*;
@@ -324,8 +325,8 @@ implements ProductService {
 		logger.debug("ProductServiceImpl.find starts ");
 		
 		Session session = Session.create()
-				.username(req.getUsername())
-				.sessionId(req.getSessionId());
+				.setUsername(req.getUsername())
+				.setSessionId(req.getSessionId());
 		
 		ProductFilterCriteria parameterObject = req.getFiltersCriteria();
 		
@@ -376,6 +377,5 @@ implements ProductService {
 		
 		return resp;
 	}
-
 
 }

@@ -50,8 +50,8 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Session session = new Session();
-		session.sessionId(sessionId);
-		session.username(username);
+		session.setSessionId(sessionId);
+		session.setUsername(username);
 		
 		ComplaintComment cc = new ComplaintComment();
 		cc.setAuthor("pawel");

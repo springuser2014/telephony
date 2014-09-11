@@ -36,9 +36,9 @@ public class Session {
      */
     public static Session create(String username, String sessionId) {
     	Session sess = new Session();
-    	sess.sessionId(sessionId);
-    	sess.username(username);
-    	sess.validity(null);
+    	sess.setSessionId(sessionId);
+    	sess.setUsername(username);
+    	sess.setValidity(null);
     	
     	return sess;
     }
@@ -60,7 +60,7 @@ public class Session {
      * asd.
      * @return asd.
      */
-    public final String username() {
+    public final String getUsername() {
         return username;
     }
 
@@ -69,7 +69,7 @@ public class Session {
      * @param username asd.
      * @return asd.
      */
-    public final Session username(final String username) {
+    public final Session setUsername(final String username) {
         this.username = username;
         return this;
     }
@@ -78,7 +78,7 @@ public class Session {
      * asd.
      * @return asd.
      */
-    public final String sessionId() {
+    public final String getSessionId() {
         return sessionId;
     }
 
@@ -87,7 +87,7 @@ public class Session {
      * @param sessionId asd.
      * @return asd.
      */
-    public final Session sessionId(final String sessionId) {
+    public final Session setSessionId(final String sessionId) {
         this.sessionId = sessionId;
         return this;
     }
@@ -115,7 +115,7 @@ public class Session {
             return false;
         }
         
-        if (!validity.equals(session.validity())) {
+        if (!validity.equals(session.getValidity())) {
         	return false;
         }
 
@@ -138,7 +138,7 @@ public class Session {
      * asd.
      * @return asd.
      */
-	public Date validity() {
+	public Date getValidity() {
 		return validity;
 	}
 
@@ -147,7 +147,7 @@ public class Session {
 	 * @param validity asd.
 	 * @return asd.
 	 */
-	public Session validity(Date validity) {
+	public Session setValidity(Date validity) {
 		this.validity = validity;
 		return this;
 	}

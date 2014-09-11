@@ -12,15 +12,7 @@ extends AbstractFilterCriteria<RoleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public static RoleFilterCriteria create() {
-		return new RoleFilterCriteria();
-	}
-
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public String label() {
+	public String getLabel() {
 		return label;
 	}
 
@@ -29,7 +21,7 @@ extends AbstractFilterCriteria<RoleFilterCriteria> {
 	 * @param label asd.
 	 * @return asd. 
 	 */
-	public RoleFilterCriteria label(String label) {
+	public RoleFilterCriteria setLabel(String label) {
 		this.label = label;
 		return this;
 	}

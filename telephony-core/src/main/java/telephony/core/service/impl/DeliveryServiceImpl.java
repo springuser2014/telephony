@@ -120,8 +120,8 @@ implements DeliveryService {
 		logger.debug("params : [request : {}]", request);
 
 		Session session = Session.create()
-				.sessionId(request.getSessionId())
-				.username(request.getUsername());
+				.setSessionId(request.getSessionId())
+				.setUsername(request.getUsername());
 			
 		sessionService.validate(session);
 		
@@ -200,8 +200,8 @@ implements DeliveryService {
 		// TODO : add entity to bean converter
 		
 		Session session = Session.create()
-				.sessionId(request.getSessionId())
-				.username(request.getUsername());
+				.setSessionId(request.getSessionId())
+				.setUsername(request.getUsername());
 		
 		sessionService.validate(session);		
 
@@ -299,8 +299,8 @@ implements DeliveryService {
 			throws SessionServiceException {
 		
 		Session session = Session.create()
-				.sessionId(request.getSessionId())
-				.username(request.getUsername());
+				.setSessionId(request.getSessionId())
+				.setUsername(request.getUsername());
 		
 		sessionService.validate(session);		
 
@@ -374,8 +374,8 @@ implements DeliveryService {
 		
 
 		Session session = Session.create()
-				.sessionId(req.getSessionId())
-				.username(req.getUsername());
+				.setSessionId(req.getSessionId())
+				.setUsername(req.getUsername());
 		
 		sessionService.validate(session);		
 		
@@ -596,8 +596,8 @@ implements DeliveryService {
 	public DeliveryDeleteResponse delete(DeliveryDeleteRequest req) throws SessionServiceException, DeliveryServiceException {
 
 		Session session = Session.create()
-				.username(req.getUsername())
-				.sessionId(req.getSessionId());
+				.setUsername(req.getUsername())
+				.setSessionId(req.getSessionId());
 		
 		sessionService.validate(session);
 		
