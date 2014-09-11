@@ -32,6 +32,7 @@ public class SessionDestoryResourceImpl extends TelephonyServerResource
 	@Inject
 	private SessionService sessionService;
 
+	// TODO : use Dto
 	@Override	
     @Delete("json")
     public JsonRepresentation destroy(JsonRepresentation entity)

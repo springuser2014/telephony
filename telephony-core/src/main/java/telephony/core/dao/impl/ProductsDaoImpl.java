@@ -12,17 +12,16 @@ import org.slf4j.LoggerFactory;
 import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.ProductsDao;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.ProductStatus;
-import telephony.core.entity.jpa.Sale;
-import telephony.core.entity.jpa.Store;
+import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteria;
 
 /**
  * Products management DAO.
  */
-public class ProductsDaoImpl extends GenericDaoImpl<Product> implements ProductsDao {
+public class ProductsDaoImpl 
+extends GenericDaoImpl<Product> 
+implements ProductsDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -69,14 +68,15 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Product> findByCriteria(
-        ProductFilterCriteria query) {
+    public List<Product> findByCriteria(ProductFilterCriteria query) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(" select p from Product p ");
-        sb.append(" join fetch p.delivery d ");
-        sb.append(" join fetch p.store st ");
-        sb.append(" left join fetch p.sale sa ");
+        sb.append(" select distinct p from Product p ");
+        sb.append(" join p.delivery d ");
+        sb.append(" join p.store st ");
+        sb.append(" join p.model m ");
+        sb.append(" join m.producer pr ");
+        sb.append(" left join p.sale sa ");
         sb.append(" where 1=1 ");
 
         if (query.getImei() != null && query.getImei().length() > 0) {
@@ -84,11 +84,11 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         }
 
         if (query.getProducer() != null && query.getProducer().length() > 0) {
-            sb.append("and p.producer = :producer ");
+            sb.append("and pr.label = :producer ");
         }
 
         if (query.getModel() != null && query.getModel().length() > 0) {
-            sb.append("and p.model = :model ");
+            sb.append("and m.label = :model ");
         }
 
         if (query.getColor() != null && query.getColor().length() > 0) {
@@ -185,9 +185,7 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         List<String> res = new ArrayList<String>();
 
         for (Product p : list) {
-//            if (!res.contains(p.getProducer())) {
-//                res.add(p.getProducer());
-//            }
+
         }
 
         logger.debug("found {} elements", res.size());
@@ -343,5 +341,20 @@ public class ProductsDaoImpl extends GenericDaoImpl<Product> implements Products
         
         
         return lst;
+	}
+
+	@Override
+	public void removeByDeliveryId(Delivery delvieryToDelete) {
+
+	    logger.debug("ProductsDaoImpl.removeByDeliveryId starts");
+	    
+		getEntityManager()
+			.createQuery(
+			"delete from Product e " +
+			"where e.delivery = :delivery")
+			.setParameter("delivery", delvieryToDelete)
+			.executeUpdate();
+    
+	    logger.debug("ProductsDaoImpl.removeByDeliveryId ends");
 	}
 }

@@ -445,15 +445,37 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		req.addProductToEdit(productToEdit);
 				
 		// when
-//		try {
+
 		DeliveryEditResponse response = deliveryService.edit(req);
-//		} catch(Exception e) {
-//			long a = 1;
-//			long b = a+1;			
-//		}
+		// then
+		assertTrue(response.isSuccess());		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void deleteDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
+		
+		// given
+		Session session = Session.create()
+				.username(TestData.USER1_NAME)
+				.sessionId(TestData.USER1_SESSIONID);
+		
+		long countBefore = deliveryService.count(session);
+		
+		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		req.setDeliveryId(1L);
+
+		// when
+		DeliveryDeleteResponse response = deliveryService.delete(req);
+		long countAfter = deliveryService.count(session);
 		
 		// then
-//		assertTrue(response.isSuccess());		
+		assertTrue(response.isSuccess());
+		assertEquals( countBefore - countAfter, 1);
 	}
+	
+	
 	
 }

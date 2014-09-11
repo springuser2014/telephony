@@ -12,7 +12,9 @@ import telephony.core.query.filter.ContactFilterCriteria;
 /**
  * Contacts management DAO.
  */
-public class ContactsDaoImpl extends GenericDaoImpl<Contact> implements ContactsDao {
+public class ContactsDaoImpl 
+extends GenericDaoImpl<Contact> 
+implements ContactsDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -37,9 +39,15 @@ public class ContactsDaoImpl extends GenericDaoImpl<Contact> implements Contacts
 		return contact;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contact> find(ContactFilterCriteria filters) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Contact> contact = (List<Contact>) getEntityManager()
+				.createQuery("select e from Contact e")
+				.getResultList();
+		
+		return contact;
+		
 	}
 }

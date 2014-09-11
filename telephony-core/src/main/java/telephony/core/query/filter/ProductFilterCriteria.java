@@ -1,5 +1,7 @@
 package telephony.core.query.filter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import telephony.core.entity.jpa.ProductStatus;
@@ -9,14 +11,14 @@ import telephony.core.entity.jpa.ProductStatus;
  */
 public class ProductFilterCriteria 
 extends AbstractFilterCriteria<ProductFilterCriteria> {
-	
+
 	private String imei;	
 	private String producer;
 	private String model;
 	private String color;
 	private Long storeId;
-	private Date deliveryDateStart;
-	private Date deliveryDateEnd;
+	private String deliveryDateStart;
+	private String deliveryDateEnd;
 	private ProductStatus status;
 	
 	/**
@@ -30,7 +32,7 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	/**
 	 * asd.
 	 */
-	private ProductFilterCriteria() {
+	public ProductFilterCriteria() {
 		
 	}
 	
@@ -49,13 +51,15 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	public ProductFilterCriteria(String imei, String producer, String model,
 			String color, Long storeId, Date deliveryDateStart,
 			Date deliveryDateEnd, ProductStatus status) {
+		SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+
 		this.imei = imei;
 		this.producer = producer;
 		this.model = model;
 		this.color = color;
 		this.storeId = storeId;
-		this.deliveryDateStart = deliveryDateStart;
-		this.deliveryDateEnd = deliveryDateEnd;
+		this.deliveryDateStart = SDF.format(deliveryDateStart);
+		this.deliveryDateEnd = SDF.format(deliveryDateEnd);
 		this.status = status;
 	}
 
@@ -71,8 +75,9 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * asd.
 	 * @param imei asd.
 	 */
-	public void setImei(String imei) {
+	public ProductFilterCriteria setImei(String imei) {
 		this.imei = imei;
+		return this;
 	}
 
 	/**
@@ -87,8 +92,9 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * asd.
 	 * @param producer asd.
 	 */
-	public void setProducer(String producer) {
+	public ProductFilterCriteria setProducer(String producer) {
 		this.producer = producer;
+		return this;
 	}
 
 	/**
@@ -103,8 +109,9 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * asd.
 	 * @param model asd.
 	 */
-	public void setModel(String model) {
+	public ProductFilterCriteria setModel(String model) {
 		this.model = model;
+		return this;
 	}
 
 	/**
@@ -119,8 +126,9 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * asd.
 	 * @param color a.
 	 */
-	public void setColor(String color) {
+	public ProductFilterCriteria setColor(String color) {
 		this.color = color;
+		return this;
 	}
 
 	/**
@@ -135,8 +143,9 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * asd.
 	 * @param storeId as.
 	 */
-	public void setStoreId(Long storeId) {
+	public ProductFilterCriteria setStoreId(Long storeId) {
 		this.storeId = storeId;
+		return this;
 	}
 
 	/**
@@ -144,15 +153,31 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * @return asd.
 	 */
 	public Date getDeliveryDateStart() {
-		return deliveryDateStart;
+		SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+		if (this.deliveryDateStart != null) {
+			try {
+				return SDF.parse(deliveryDateStart);
+			} catch (ParseException e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	/**
 	 * asd.
 	 * @param deliveryDateStart asd.
 	 */
-	public void setDeliveryDateStart(Date deliveryDateStart) {
-		this.deliveryDateStart = deliveryDateStart;
+	public ProductFilterCriteria setDeliveryDateStart(Date deliveryDateStart) {
+		SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+		if (deliveryDateStart != null) {
+			this.deliveryDateStart = SDF.format(deliveryDateStart);
+		} else {
+			this.deliveryDateStart = null;	
+		}
+		
+		return this;
 	}
 
 	/**
@@ -160,15 +185,33 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * @return asd.
 	 */
 	public Date getDeliveryDateEnd() {
-		return deliveryDateEnd;
+		SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+
+		if (this.deliveryDateEnd != null) {
+			try {
+				return SDF.parse(deliveryDateEnd);
+			} catch (ParseException e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	/**
 	 * qwdas.
 	 * @param deliveryDateEnd asd.
 	 */
-	public void setDeliveryDateEnd(Date deliveryDateEnd) {
-		this.deliveryDateEnd = deliveryDateEnd;
+	public ProductFilterCriteria setDeliveryDateEnd(Date deliveryDateEnd) {
+		SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
+
+		if (deliveryDateEnd != null) {
+			this.deliveryDateStart = SDF.format(deliveryDateEnd);
+		} else {
+			this.deliveryDateStart = null;	
+		}
+		
+		return this;
 	}
 
 	/**
@@ -183,7 +226,8 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 	 * qwe.
 	 * @param status asd.
 	 */
-	public void setStatus(ProductStatus status) {
+	public ProductFilterCriteria setStatus(ProductStatus status) {
 		this.status = status;
+		return this;
 	}
 }

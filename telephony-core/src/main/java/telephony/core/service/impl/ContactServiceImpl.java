@@ -20,8 +20,9 @@ import telephony.core.service.exception.SessionServiceException;
 /**
  * Contacts management service.
  */
-public class ContactServiceImpl extends AbstractBasicService<Contact> implements
-		ContactService {
+public class ContactServiceImpl 
+extends AbstractBasicService<Contact> 
+implements ContactService {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -120,6 +121,4 @@ public class ContactServiceImpl extends AbstractBasicService<Contact> implements
 		Contact contact = contactsDao.findById(contactToDeleteId);
 		return contact;
 	}
-	
-	
 }

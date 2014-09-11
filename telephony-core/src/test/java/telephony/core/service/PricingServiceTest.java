@@ -50,7 +50,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		long pricingsOfNumber = pricingService.count(session);
 		
 		// then
-		assertEquals(pricingsOfNumber, 112);		
+		assertEquals(pricingsOfNumber, 118);		
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
-		assertEquals(coll.size(), 112);
+		assertEquals(coll.size(), 118);
 	}
 	
 	@Test
@@ -132,7 +132,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
 		
 		// then
-		assertEquals(coll.size(), 112);
+		assertEquals(coll.size(), 118);
 	}
 	
 	@Test

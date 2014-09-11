@@ -32,6 +32,8 @@ public class SessionRefreshResourceImpl extends TelephonyServerResource
 	@Inject
 	private SessionService sessionService;
 
+	// TODO : use Dto
+	
 	@Override
 	@Put("json")
 	public JsonRepresentation refresh(JsonRepresentation entity)

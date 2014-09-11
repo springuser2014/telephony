@@ -170,7 +170,8 @@ implements DeliveryService {
 
 		sessionService.validate(session);
 		
-		deliveriesDao.remove(delvieryToDelete);			
+		productsDao.removeByDeliveryId(delvieryToDelete);
+		deliveriesDao.remove(delvieryToDelete);	
 	}
 
 	@Transactional
@@ -584,6 +585,32 @@ implements DeliveryService {
 		}
 		
 		deliveriesDao.saveOrUpdate(delivery);
+		
+		resp.setSuccess(true);
+		
+		return resp;
+	}
+
+	@Transactional
+	@Override
+	public DeliveryDeleteResponse delete(DeliveryDeleteRequest req) throws SessionServiceException, DeliveryServiceException {
+
+		Session session = Session.create()
+				.username(req.getUsername())
+				.sessionId(req.getSessionId());
+		
+		sessionService.validate(session);
+		
+		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
+		
+		Delivery deliveryToDelete = deliveriesDao.findById(req.getDeliveryId());
+		
+		if (deliveryToDelete == null) {
+			throw new DeliveryServiceException();
+		}
+		
+		productsDao.removeByDeliveryId(deliveryToDelete);
+		deliveriesDao.removeById(deliveryToDelete.getId());
 		
 		resp.setSuccess(true);
 		

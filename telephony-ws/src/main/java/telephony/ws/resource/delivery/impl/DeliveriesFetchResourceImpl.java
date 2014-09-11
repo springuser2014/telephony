@@ -44,7 +44,7 @@ implements DeliveriesFetchResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public JsonRepresentation fetch(DeliveriesFetchRequest request) {
 		
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new GsonBuilder().serializeNulls().create();
 
 		DeliveriesFetchResponse resp;
 		

@@ -13,11 +13,6 @@
 	<repositories>
 
 		<repository>
-			<id>maven-morphia</id>
-			<name>Public online Morphia repository</name>
-			<url>http://morphia.googlecode.com/svn/mavenrepo/</url>
-		</repository>
-		<repository>
 			<id>springsource-repo</id>
 			<name>SpringSource Repository</name>
 			<url>http://repo.springsource.org/release</url>
@@ -171,11 +166,6 @@
 			<groupId>org.jukito</groupId>
 			<artifactId>jukito</artifactId>
 			<version>${jukito.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.morphia</groupId>
-			<artifactId>morphia</artifactId>
-			<version>${morphia.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>

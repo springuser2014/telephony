@@ -4,11 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,6 +20,8 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
+import telephony.core.service.dto.ProductFetchRequest;
+import telephony.core.service.dto.ProductFetchResponse;
 import telephony.core.service.dto.Session;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -151,7 +151,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		List<String> lst = productService.fetchAllImeiInUse(session);
 
 		// then
-		assertTrue("should return 40 different IMEIs", lst.size() == 40);
+		assertEquals(lst.size(), 42);
 	}
 	
 	@Test
@@ -400,6 +400,115 @@ public class ProductServiceTest extends BaseCoreTest {
 		// then
 		long countAfter = productService.count(session);
 		assertEquals(countBefore - countAfter, 2);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findProducts1() throws SessionServiceException {
+
+		// given
+		ProductFilterCriteria filters = ProductFilterCriteria.create()
+				.setColor("white")
+				.setProducer("nokia");
+				
+		
+		ProductFetchRequest request = new ProductFetchRequest();
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setUsername(TestData.USER1_NAME);
+		request.setFiltersCriteria(filters);
+		
+		// when
+		ProductFetchResponse resp = productService.find(request);
+		
+		// then
+		assertEquals(resp.getProducts().size(), 4);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findProducts2() throws SessionServiceException {
+
+		// given
+		Date deliveryDateStart = new DateTime().withDate(2012, 1, 1).withTime(0, 0, 0, 0).toDate();
+		Date deliveryDateEnd = new DateTime().withDate(2012, 12, 31).withTime(0, 0, 0, 0).toDate();
+		
+		ProductFilterCriteria filters = ProductFilterCriteria.create()
+				.setDeliveryDateStart(deliveryDateStart)
+				.setDeliveryDateEnd(deliveryDateEnd);
+				
+		ProductFetchRequest request = new ProductFetchRequest();
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setUsername(TestData.USER1_NAME);
+		request.setFiltersCriteria(filters);
+		
+		// when
+		ProductFetchResponse resp = productService.find(request);
+		
+		// then
+		assertEquals(resp.getProducts().size(), 18);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findProducts3() throws SessionServiceException {
+
+		// given
+		ProductFilterCriteria filters = ProductFilterCriteria.create()
+				.setColor("black")
+				.setProducer("nokia");
+				
+		
+		ProductFetchRequest request = new ProductFetchRequest();
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setUsername(TestData.USER1_NAME);
+		request.setFiltersCriteria(filters);
+		
+		// when
+		ProductFetchResponse resp = productService.find(request);
+		
+		// then
+		assertEquals(resp.getProducts().size(), 12);
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findProducts4() throws SessionServiceException {
+
+		// given
+		ProductFilterCriteria filters = ProductFilterCriteria.create()
+				.setImei("123456789000004");
+				
+		
+		ProductFetchRequest request = new ProductFetchRequest();
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setUsername(TestData.USER1_NAME);
+		request.setFiltersCriteria(filters);
+		
+		// when
+		ProductFetchResponse resp = productService.find(request);
+		
+		// then
+		assertEquals(resp.getProducts().size(), 1);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void findProducts5() throws SessionServiceException {
+
+		// given
+		ProductFilterCriteria filters = ProductFilterCriteria.create()
+				.setStatus(ProductStatus.SOLD);
+				
+		ProductFetchRequest request = new ProductFetchRequest();
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setUsername(TestData.USER1_NAME);
+		request.setFiltersCriteria(filters);
+		
+		// when
+		ProductFetchResponse resp = productService.find(request);
+		
+		// then
+		assertEquals(resp.getProducts().size(), 10);
 	}
 
 }

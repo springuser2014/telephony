@@ -10,7 +10,7 @@ import telephony.core.service.dto.DeliveryDeleteRequest;
  */
 public interface DeliveriesDeleteResource {
 	
-	String URL = "/deliveries/delete/{id}";
+	String URL = "/deliveries/delete";
 
 	/**
 	 * asd. 

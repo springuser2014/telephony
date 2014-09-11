@@ -3,10 +3,7 @@ package telephony.core.dao;
 
 import java.util.List;
 
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.ProductStatus;
-import telephony.core.entity.jpa.Sale;
-import telephony.core.entity.jpa.Store;
+import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.ProductFilterCriteria;
 
 
@@ -99,5 +96,7 @@ public interface ProductsDao extends GenericDao<Product> {
 	 * @return ad.
 	 */
 	Product findByIMEI(String imei);
+
+	void removeByDeliveryId(Delivery delvieryToDelete);
 
 }

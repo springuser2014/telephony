@@ -103,4 +103,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 
 	DeliveryEditResponse edit(DeliveryEditRequest req) 
 			throws ParseException, DeliveryServiceException, SessionServiceException;
+	
+	DeliveryDeleteResponse delete(DeliveryDeleteRequest req) 
+			throws SessionServiceException, DeliveryServiceException;
 }

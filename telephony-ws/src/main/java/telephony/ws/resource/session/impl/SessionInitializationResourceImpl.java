@@ -35,6 +35,8 @@ implements SessionInitializationResource {
 	@Inject
 	private SessionService sessionService;
 
+	//TODO : use Dto
+	
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

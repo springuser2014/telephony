@@ -1,8 +1,12 @@
 package telephony.core.service.dto;
 
-public class ProductEditBean {
+public class ProductSearchBean {
 
 	private Long id;
+
+	private Long deliveryId;
+
+	private Long saleId;
 
 	private String model;
 	private String producer;
@@ -12,9 +16,9 @@ public class ProductEditBean {
 	private Double priceIn;
 
 	private Double price;
-	
-	private Long taxId;
-	
+
+	private Double tax;
+
 	public Double getPrice() {
 		return price;
 	}
@@ -71,12 +75,28 @@ public class ProductEditBean {
 		this.priceIn = priceIn;
 	}
 
-	public Long getTaxId() {
-		return taxId;
+	public Double getTax() {
+		return tax;
 	}
 
-	public void setTaxId(Long taxId) {
-		this.taxId = taxId;
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+
+	public Long getSaleId() {
+		return saleId;
+	}
+
+	public void setSaleId(Long saleId) {
+		this.saleId = saleId;
+	}
+
+	public Long getDeliveryId() {
+		return deliveryId;
+	}
+
+	public void setDeliveryId(Long deliveryId) {
+		this.deliveryId = deliveryId;
 	}
 
 }

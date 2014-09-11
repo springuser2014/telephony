@@ -162,7 +162,7 @@ public abstract class GenericDaoImpl<E> implements GenericDao<E> {
         logger.debug("remove starts ");
         logger.debug("entity type : {} ", entityClass.getName());
 
-        getEntityManager().refresh(entity);        
+//        getEntityManager().refresh(entity);        
         getEntityManager().remove(entity);
 
         logger.debug("remove ends");

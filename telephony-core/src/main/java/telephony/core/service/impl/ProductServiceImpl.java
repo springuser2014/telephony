@@ -14,7 +14,7 @@ import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.*;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -196,6 +196,8 @@ implements ProductService {
 
 		return result;
 	}
+	
+	
 
 	@Override
 	@Transactional
@@ -312,5 +314,68 @@ implements ProductService {
 		
 		productsDao.removeById(id);		
 	}
+
+	@Transactional
+	@Override
+	public ProductFetchResponse find(ProductFetchRequest req)
+		throws SessionServiceException 
+	{
+
+		logger.debug("ProductServiceImpl.find starts ");
+		
+		Session session = Session.create()
+				.username(req.getUsername())
+				.sessionId(req.getSessionId());
+		
+		ProductFilterCriteria parameterObject = req.getFiltersCriteria();
+		
+		
+		Object[] params = new Object[] { parameterObject.getImei(), parameterObject.getProducer(), 
+				parameterObject.getModel(), parameterObject.getColor(), 
+				parameterObject.getStoreId(), parameterObject.getDeliveryDateStart(),
+				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
+		
+		sessionService.validate(session);
+		
+		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
+				+ "color : {} , storeId : {} , deliveryDateStart : {} , "
+				+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
+
+		List<Product> result = productsDao.findByCriteria(parameterObject);
+		
+		List<ProductSearchBean> lst = new ArrayList<ProductSearchBean>();
+		
+		for(Product p : result) {
+					
+			ProductSearchBean b = new ProductSearchBean();
+			
+			b.setColor(p.getColor());
+			b.setDeliveryId(p.getDelivery().getId());
+			b.setImei(p.getImei());
+			b.setPriceIn(p.getPriceIn());
+			b.setPrice(p.getCurrentPricing().getRate());
+			b.setTax(p.getCurrentTax().getTax().getRate());
+			b.setModel(p.getModel().getLabel());
+			b.setProducer(p.getModel().getProducer().getLabel());
+			
+			if (p.getSale() != null) {
+				b.setSaleId(p.getSale().getId());
+			} else {
+				b.setSaleId(null);
+			}
+			
+			b.setId(p.getId());
+			
+			lst.add(b);
+		}
+
+		logger.info("ProductServiceImpl.find ends");
+
+		ProductFetchResponse resp = new ProductFetchResponse();
+		resp.setProducts(lst);
+		
+		return resp;
+	}
+
 
 }

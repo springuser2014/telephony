@@ -8,7 +8,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.*;
 import telephony.core.service.exception.SessionServiceException;
 
 /**
@@ -178,4 +178,8 @@ public interface ProductService extends BasicService<Product> {
 	 * @param id ads.
 	 */
 	void removeById(Session session, long id);
+
+
+	ProductFetchResponse find(ProductFetchRequest req)
+			throws SessionServiceException;
 }

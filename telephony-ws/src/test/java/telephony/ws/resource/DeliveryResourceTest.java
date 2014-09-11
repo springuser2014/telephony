@@ -28,6 +28,37 @@ import com.jayway.restassured.http.ContentType;
 public class DeliveryResourceTest extends BaseWSTest {
 	
 	@Test
+	public void deleteDelivery() {
+
+		// given
+		String sessionId = authAndGetSessionId();
+		
+		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
+		req.setSessionId(sessionId);
+		req.setUsername("user1@gmail.com");
+		req.setDeliveryId(1L);
+		
+		// when
+		Gson gson = new GsonBuilder()
+		.serializeNulls()
+		.create();
+	
+		String json = gson.toJson(req);
+		
+		com.jayway.restassured.response.Response res1 = 
+			given()
+				.contentType(ContentType.JSON)
+				.body(json)
+			.when()
+			.delete(TESTING_APP + DeliveriesDeleteResource.URL);
+		
+		// then
+		DeliveryDeleteResponse resp = gson.fromJson(res1.asString(), DeliveryDeleteResponse.class);
+		
+		assertTrue( resp.isSuccess() );	
+	}
+	
+	@Test
 	public void updateDelivery() {
 
 		// given
