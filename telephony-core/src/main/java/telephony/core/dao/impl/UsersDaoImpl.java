@@ -1,6 +1,7 @@
 
 package telephony.core.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import telephony.core.query.filter.UserFilterCriteria;
 /**
  * Users management DAO.
  */
-public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
+public class UsersDaoImpl 
+extends GenericDaoImpl<User> 
+implements UsersDao {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -142,9 +145,9 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	private void removeUserRoles(User user) {
 		
 		getEntityManager()
-		.createQuery("delete from UserRole ur where ur.user = ?1")
-		.setParameter(1, user)
-		.executeUpdate();
+			.createQuery("delete from UserRole ur where ur.user = ?1")
+			.setParameter(1, user)
+			.executeUpdate();
 		
 		return;
 	}
@@ -156,16 +159,16 @@ public class UsersDaoImpl extends GenericDaoImpl<User> implements UsersDao {
 	private void removeUserStores(User user) {
 		
 		getEntityManager()
-		.createQuery("delete from UserStore us where us.user = ?1")
-		.setParameter(1, user)
-		.executeUpdate();
+			.createQuery("delete from UserStore us where us.user = ?1")
+			.setParameter(1, user)
+			.executeUpdate();
 		
 		return;
 	}
 
 	@Override
 	public List<User> find(UserFilterCriteria filters) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new ArrayList<User>();
 	}
 }

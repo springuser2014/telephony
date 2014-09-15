@@ -11,7 +11,9 @@ import telephony.core.entity.jpa.Producer;
 /**
  * asd.
  */
-public class ProducerDaoImpl extends  GenericDaoImpl<Producer> implements ProducerDao {
+public class ProducerDaoImpl 
+extends GenericDaoImpl<Producer> 
+implements ProducerDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

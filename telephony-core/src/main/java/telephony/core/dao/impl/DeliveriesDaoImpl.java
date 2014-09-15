@@ -19,7 +19,9 @@ import telephony.core.query.filter.DeliveryFilterCriteria;
 /**
  * Deliveries management DAO.
  */
-public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements DeliveriesDao {
+public class DeliveriesDaoImpl 
+extends GenericDaoImpl<Delivery> 
+implements DeliveriesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -119,7 +121,7 @@ public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements Deliv
 		sb.append("inner join e.contact c ");
 		sb.append("inner join p.model m ");
 		sb.append("inner join m.producer pr ");
-        sb.append(" where 1=1 ");
+        sb.append("where 1=1 ");
         
         if (filters.deliveredBy() != null) {
         	sb.append(" and c.id = :deliveredBy ");
@@ -147,7 +149,7 @@ public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements Deliv
     		filters.sumTo() != null) 
         {
         	sb.append(" group by e.id ");
-        	sb.append(" having 1 = 1 ");
+        	sb.append(" having 1=1 ");
         	
 	        if (filters.minNumberOfProducts() != null) {
 	        	sb.append(" and count(e.id) <= :max ");
@@ -197,12 +199,12 @@ public class DeliveriesDaoImpl extends GenericDaoImpl<Delivery> implements Deliv
         	query.setParameter("max", new Long(filters.maxNumberOfProducts()));
         }
         
-        if (filters.perPage() != null) {
-            query.setMaxResults(filters.perPage());
+        if (filters.getPerPage() != null) {
+            query.setMaxResults(filters.getPerPage());
         }
         
-        if (filters.page() != null) {
-        	query.setFirstResult(filters.page());
+        if (filters.getPage() != null) {
+        	query.setFirstResult(filters.getPage());
         }
 
         if (filters.sumFrom() != null) {

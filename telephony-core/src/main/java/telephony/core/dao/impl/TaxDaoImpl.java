@@ -14,7 +14,9 @@ import telephony.core.entity.jpa.Tax;
 /**
  * asd.
  */
-public class TaxDaoImpl extends GenericDaoImpl<Tax> implements TaxDao {
+public class TaxDaoImpl 
+extends GenericDaoImpl<Tax> 
+implements TaxDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

@@ -10,7 +10,8 @@ import telephony.core.entity.jpa.ProductComplaint;
  * asd.
  */
 public class ProductComplaintDaoImpl 
-extends GenericDaoImpl<ProductComplaint> implements ProductComplaintDao {
+extends GenericDaoImpl<ProductComplaint> 
+implements ProductComplaintDao {
 
 	/**
 	 * ads.

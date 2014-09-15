@@ -13,7 +13,8 @@ import com.google.inject.Provider;
 /**
  * Information management DAO.
  */
-public class InformationDaoImpl implements InformationDao {
+public class InformationDaoImpl 
+implements InformationDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

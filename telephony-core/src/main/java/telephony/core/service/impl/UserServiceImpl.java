@@ -24,7 +24,9 @@ import com.google.inject.persist.Transactional;
 /**
  * Users management service.
  */
-public class UserServiceImpl extends AbstractBasicService<User> implements UserService {
+public class UserServiceImpl 
+extends AbstractBasicService<User> 
+implements UserService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     

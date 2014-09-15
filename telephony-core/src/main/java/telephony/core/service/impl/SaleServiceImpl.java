@@ -14,6 +14,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.SaleFilterCriteria;
+import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.Session;
@@ -56,7 +57,11 @@ implements SaleService {
 		logger.debug("params : [ session : {}]", session);
 
 		sessionService.validate(session);
-		SaleFilterCriteria filters = SaleFilterCriteria.create();
+		
+		SaleFilterCriteria filters = SaleFilterCriteriaBuilder
+										.saleFilterCriteria()
+										.build();
+		
 		List<Sale> res = salesDao.find(filters);
 
 		logger.debug("SaleServiceImpl.findAllSales starts");

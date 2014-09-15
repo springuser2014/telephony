@@ -8,8 +8,8 @@ import java.util.Date;
 public class SaleFilterCriteria
 extends AbstractFilterCriteria<SaleFilterCriteria> {
 
-	private Date deliveryDateStart;
-	private Date deliveryDateEnd;
+	private Date saleDateStart;
+	private Date saleDateEnd;
 	
 	private Double sumFrom;
 	private Double sumTo;
@@ -25,25 +25,17 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public static SaleFilterCriteria create() {
-		return new SaleFilterCriteria();
+	public Date getSaleDateStart() {
+		return saleDateStart;
 	}
 
 	/**
 	 * asd.
+	 * @param saleDateStart a.
 	 * @return a.
 	 */
-	public Date deliveryDateStart() {
-		return deliveryDateStart;
-	}
-
-	/**
-	 * asd.
-	 * @param deliveryDateStart a.
-	 * @return a.
-	 */
-	public SaleFilterCriteria deliveryDateStart(Date deliveryDateStart) {
-		this.deliveryDateStart = deliveryDateStart;
+	public SaleFilterCriteria setSaleDateStart(Date saleDateStart) {
+		this.saleDateStart = saleDateStart;
 		return this;
 	}
 
@@ -51,17 +43,17 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public Date deliveryDateEnd() {
-		return deliveryDateEnd;
+	public Date getSaleDateEnd() {
+		return saleDateEnd;
 	}
 
 	/**
 	 * asd.
-	 * @param deliveryDateEnd a.
+	 * @param saleDateEnd a.
 	 * @return ad.
 	 */
-	public SaleFilterCriteria deliveryDateEnd(Date deliveryDateEnd) {
-		this.deliveryDateEnd = deliveryDateEnd;
+	public SaleFilterCriteria setSaleDateEnd(Date saleDateEnd) {
+		this.saleDateEnd = saleDateEnd;
 		return this;
 	}
 
@@ -69,7 +61,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public Double sumFrom() {
+	public Double getSumFrom() {
 		return sumFrom;
 	}
 
@@ -78,7 +70,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param sumFrom a.
 	 * @return a.
 	 */
-	public SaleFilterCriteria sumFrom(Double sumFrom) {
+	public SaleFilterCriteria setSumFrom(Double sumFrom) {
 		this.sumFrom = sumFrom;
 		return this;
 	}
@@ -87,7 +79,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public Double sumTo() {
+	public Double getSumTo() {
 		return sumTo;
 	}
 
@@ -96,7 +88,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param sumTo a.
 	 * @return asd.
 	 */
-	public SaleFilterCriteria sumTo(Double sumTo) {
+	public SaleFilterCriteria setSumTo(Double sumTo) {
 		this.sumTo = sumTo;
 		return this;
 	}
@@ -105,17 +97,17 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * ads.
 	 * @return a.
 	 */
-	public Long deliveredBy() {
+	public Long getSoldBy() {
 		return deliveredBy;
 	}
 
 	/**
 	 * asd.
-	 * @param deliveredBy a.
+	 * @param soldBy a.
 	 * @return ad.
 	 */
-	public SaleFilterCriteria deliveredBy(Long deliveredBy) {
-		this.deliveredBy = deliveredBy;
+	public SaleFilterCriteria setSoldBy(Long soldBy) {
+		this.deliveredBy = soldBy;
 		return this;
 	}
 
@@ -123,7 +115,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public Long registeredBy() {
+	public Long getRegisteredBy() {
 		return registeredBy;
 	}
 
@@ -132,7 +124,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param registeredBy a.
 	 * @return ad.
 	 */
-	public SaleFilterCriteria registeredBy(Long registeredBy) {
+	public SaleFilterCriteria setRegisteredBy(Long registeredBy) {
 		this.registeredBy = registeredBy;
 		return this;
 	}
@@ -141,7 +133,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public String label() {
+	public String getLabel() {
 		return label;
 	}
 
@@ -149,15 +141,16 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @param label a.
 	 */
-	public void label(String label) {
+	public SaleFilterCriteria setLabel(String label) {
 		this.label = label;
+		return this;
 	}
 
 	/**
 	 * sd.
 	 * @return ad.
 	 */
-	public Integer minNumberOfProducts() {
+	public Integer getMinNumberOfProducts() {
 		return minNumberOfProducts;
 	}
 
@@ -166,7 +159,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param minNumberOfProducts a. 
 	 * @return a.
 	 */
-	public SaleFilterCriteria minNumberOfProducts(Integer minNumberOfProducts) {
+	public SaleFilterCriteria setMinNumberOfProducts(Integer minNumberOfProducts) {
 		this.minNumberOfProducts = minNumberOfProducts;
 		return this;
 	}
@@ -175,7 +168,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * asd.
 	 * @return a.
 	 */
-	public Integer maxNumberOfProducts() {
+	public Integer getMaxNumberOfProducts() {
 		return maxNumberOfProducts;
 	}
 
@@ -184,7 +177,7 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 	 * @param maxNumberOfProducts a.
 	 * @return a.
 	 */
-	public SaleFilterCriteria maxNumberOfProducts(Integer maxNumberOfProducts) {
+	public SaleFilterCriteria setMaxNumberOfProducts(Integer maxNumberOfProducts) {
 		this.maxNumberOfProducts = maxNumberOfProducts;
 		return this;
 	}	

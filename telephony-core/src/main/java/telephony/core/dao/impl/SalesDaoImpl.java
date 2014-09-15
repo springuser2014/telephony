@@ -17,7 +17,9 @@ import telephony.core.query.filter.SaleFilterCriteria;
 /**
  * Sales management DAO.
  */
-public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
+public class SalesDaoImpl 
+extends GenericDaoImpl<Sale> 
+implements SalesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -38,10 +40,7 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
         logger.debug("SalesDaoImpl.findByStore starts");
 
         List<Sale> result = getEntityManager()
-//        		.createQuery(
-//        				"select s from Sale s join fetch s.products p where s.store = ?1 ")
-        		.createQuery(
-        				"select s from Sale s where s.store = ?1 ")
+        		.createQuery("select s from Sale s where s.store = ?1 ")
                 .setParameter(1, store)
                 .getResultList();
 
@@ -69,6 +68,7 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
         return res2;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<Product> findProductsBySalesIds(ArrayList<Long> ids) {
         logger.debug("SalesDaoImpl.findProductsBySalesIds starts");
@@ -106,10 +106,95 @@ public class SalesDaoImpl extends GenericDaoImpl<Sale> implements SalesDao {
         return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Sale> find(SaleFilterCriteria filters) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("select DISTINCT s from Sale s ");
+		sb.append("inner join s.products p ");
+		sb.append("inner join p.model m ");
+		sb.append("inner join s.contact c ");
+		sb.append("inner join p.pricings pr ");
+		sb.append("inner join p.productTaxes pt ");
+		sb.append("inner join pt.tax t ");
+		sb.append("where 1=1 " );
+		
+		if (filters.getSoldBy() != null) {
+			sb.append(" and c.id = :soldBy ");
+		}
+		
+		if (filters.getLabel() != null) {
+			sb.append(" and s.label LIKE :label ");
+		}
+		
+		if (filters.getSaleDateStart() != null) {
+			sb.append(" and s.dateOut >= :saleDateStart ");
+		}
+		
+		if (filters.getSaleDateEnd() != null) {
+			sb.append(" and s.dateOut <= :saleDateEnd ");
+		}
+	
+		if (filters.getMinNumberOfProducts() != null || 
+			filters.getMaxNumberOfProducts() != null ||
+			filters.getSumFrom() != null || 
+			filters.getSumTo() != null) 
+		{
+			if (filters.getSumFrom() != null || filters.getSumTo() != null) {
+				
+			}
+			
+			sb.append(" group by s.id ");
+			sb.append(" having 1=1 ");
+			
+			if (filters.getMaxNumberOfProducts() != null) {
+				sb.append(" and count(s.id) <= :max ");
+			}
+			
+			if (filters.getMinNumberOfProducts() != null) {
+				sb.append(" and count(s.id) >= :min ");
+			}
+			
+			if (filters.getSumFrom() != null) {
+				sb.append(" and count(s.id) <= :sumFrom ");
+			}
+			
+			if (filters.getSumTo() != null) {
+				sb.append(" and sum(s.priceOut) <= :sumTo ");
+			}
+		}
+				
+		Query query = getEntityManager()
+	        		.createQuery(sb.toString());
+		
+		if (filters.getPage() != null) {
+			query.setFirstResult(filters.getPage());
+		}
+		
+		if (filters.getPerPage() != null) {
+			query.setMaxResults(filters.getPerPage());
+		}
+		
+		if (filters.getSaleDateEnd() != null) {
+			query.setParameter("saleDateEnd", filters.getSaleDateEnd());
+		}
+		
+		if (filters.getSaleDateStart() != null) {
+			query.setParameter("saleDateStart", filters.getSaleDateStart());
+		}
+		
+		if (filters.getSoldBy() != null) {
+			query.setParameter("soldBy", filters.getSoldBy());
+		}
+	    
+		if (filters.getLabel() != null) {
+			query.setParameter("label", filters.getLabel());
+		}
+		
+		List<Sale> res = (List<Sale>) query.getResultList();
+		
+		return res;
 	}
     
 }

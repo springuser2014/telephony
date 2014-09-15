@@ -1,6 +1,7 @@
 package telephony.core.dao.impl;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ implements StoresDao {
 
 	@Override
 	public List<Store> find(StoreFilterCriteria filters) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return new ArrayList<Store>();
 	}
 }

@@ -13,7 +13,7 @@ public abstract class AbstractFilterCriteria<C extends AbstractFilterCriteria<C>
 	 * asd.
 	 * @return a.
 	 */
-	public Integer page() {
+	public Integer getPage() {
 		return page;
 	}
 	
@@ -23,7 +23,7 @@ public abstract class AbstractFilterCriteria<C extends AbstractFilterCriteria<C>
 	 * @return a.
 	 */
 	@SuppressWarnings("unchecked")
-	public C page(Integer page) {
+	public C setPage(Integer page) {
 		this.page = page;
 		return (C) this;
 	}
@@ -32,7 +32,7 @@ public abstract class AbstractFilterCriteria<C extends AbstractFilterCriteria<C>
 	 * asd.
 	 * @return a.
 	 */
-	public Integer perPage() {
+	public Integer getPerPage() {
 		return perPage;
 	}
 	
@@ -42,26 +42,8 @@ public abstract class AbstractFilterCriteria<C extends AbstractFilterCriteria<C>
 	 * @return d.
 	 */
 	@SuppressWarnings("unchecked")
-	public C perPage(Integer perPage) {
+	public C setPerPage(Integer perPage) {
 		this.perPage = perPage;
 		return (C) this;
-	}
-
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public Integer getPerPage() {
-		return perPage;
-	}
-
-	public void setPerPage(Integer perPage) {
-		this.perPage = perPage;
-	}
-	
-	
+	}	
 }

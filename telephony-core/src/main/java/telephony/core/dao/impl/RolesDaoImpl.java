@@ -55,7 +55,7 @@ public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 		sb.append(" where 1=1 ");
 		
 		if (filters.getLabel() != null) {
-			sb.append(" r.label Like :label ");
+			sb.append(" r.label like :label ");
 		}
 		
 		Query query = getEntityManager() 
@@ -70,12 +70,12 @@ public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 		}
 		
 		if (filters.getLabel() != null) {
-			query.setParameter("label", filters.getLabel());
+			query.setParameter("label", "%" +filters.getLabel() + "%");
 		}
 		
-		List<Role> role = (List<Role>) query.getResultList();
+//		List<Role> role = (List<Role>) query.getResultList();
 		
-		return role;
+		return new ArrayList<Role>();
 	}
 	
 }

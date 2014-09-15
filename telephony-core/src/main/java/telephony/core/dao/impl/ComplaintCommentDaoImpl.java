@@ -7,7 +7,8 @@ import telephony.core.entity.jpa.ComplaintComment;
  * asd.
  */
 public class ComplaintCommentDaoImpl 
-extends GenericDaoImpl<ComplaintComment> implements ComplaintCommentDao {
+extends GenericDaoImpl<ComplaintComment> 
+implements ComplaintCommentDao {
 
 	/**
 	 * asd.
