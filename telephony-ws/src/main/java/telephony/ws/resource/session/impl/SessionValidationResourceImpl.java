@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.google.inject.Inject;
 
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionValidationResource;
@@ -40,7 +40,7 @@ public class SessionValidationResourceImpl extends TelephonyServerResource
 		JSONObject req = entity.getJsonObject();
 		String name = req.getString("username");
 		String sessionId = req.getString("sessionId");
-		Session sessionToValidate = Session.create(name, sessionId);
+		SessionDto sessionToValidate = SessionDto.create(name, sessionId);
 
 		logger.debug(" username = {} ", name);
 		logger.debug(" sessionId = {} ", sessionId);

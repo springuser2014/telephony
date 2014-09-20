@@ -1,8 +1,6 @@
 package telephony.core.dao.impl;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;

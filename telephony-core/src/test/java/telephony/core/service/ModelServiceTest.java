@@ -20,7 +20,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Model;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -48,7 +48,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		String label = "iphone 4s";
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Model model = modelService.findByLabel(session, label);		
@@ -64,7 +64,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		String expected = "6610s";
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Model model = modelService.findById(session, id);
@@ -80,7 +80,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		List<Long> ids = Arrays.asList(1L, 2L, 3L);
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Collection<Model> models = modelService.findByIds(session, ids);
@@ -95,7 +95,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void counting() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		long count = modelService.count(session);		
@@ -111,7 +111,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		String newLabel = "newlabel";
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Model model = modelService.findById(session, id);
 		Model changedModel = null;
 		
@@ -133,7 +133,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		long id1 = 1, id2 = 2;
 		String newLabel1 = "newlabel1";
 		String newLabel2 = "newlabel2";
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Model model1 = modelService.findById(session, id1);
 		Model model2 = modelService.findById(session, id2);
 		
@@ -163,7 +163,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		long id1 = 1;
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		modelService.removeById(session, id1);
@@ -177,7 +177,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void remove() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Model model = modelService.findByLabel(session, "iphone 6g");
 		long countBefore = modelService.count(session);
 		
@@ -195,7 +195,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void removeById() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Model model = modelService.findByLabel(session, "iphone 6g");
 		long id = model.getId();
 		long countBefore = modelService.count(session);
@@ -213,7 +213,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id7 = 7, id8 = 8;
 		long countBefore = modelService.count(session);
 		List<Long> ids = Arrays.asList(id7, id8);
@@ -232,7 +232,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void removeCollectionById_expectConstraint() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		List<Long> ids = Arrays.asList(id1, id2);
 		

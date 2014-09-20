@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.util.StringGenerator;
 
 import com.google.inject.Inject;
@@ -58,7 +58,7 @@ implements SessionService {
     }
 
 	@Transactional
-    public Session init(final String username, final String password) {
+    public SessionDto init(final String username, final String password) {
     	
     	logger.info("SessionServiceImpl.init starts");
 
@@ -80,12 +80,12 @@ implements SessionService {
             return null;
         } 
         
-        Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
+        SessionDto session = new SessionDto(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
     }
 
 	@Transactional
-    public Session refresh(Session sessionToRefresh) {
+    public SessionDto refresh(SessionDto sessionToRefresh) {
     	
     	logger.debug("SessionServiceImpl.refresh starts");
     	
@@ -114,12 +114,12 @@ implements SessionService {
             return null;
         } 
 
-        Session session = new Session(u.getEmail(), u.getSessionId(), u.getSessionValidity());
+        SessionDto session = new SessionDto(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
     }
 
 	@Transactional
-    public boolean destroy(Session sessionToDelete) {
+    public boolean destroy(SessionDto sessionToDelete) {
     	
     	logger.debug("SessionServiceImpl.destroy starts");
 
@@ -144,7 +144,7 @@ implements SessionService {
     }
 
     @Transactional
-	public boolean validate(Session sessionToValidate) {
+	public boolean validate(SessionDto sessionToValidate) {
 		
 		logger.debug("SessionServiceImpl.validate starts");
 		
@@ -171,7 +171,7 @@ implements SessionService {
 	}
 
 	@Override
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		
 		return usersDao.count();
 	}	

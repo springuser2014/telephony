@@ -17,9 +17,9 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
-import telephony.core.service.dto.BasicResponse;
-import telephony.core.service.dto.DeliveryEditRequest;
-import telephony.core.service.dto.DeliveryEditResponse;
+import telephony.core.service.dto.BasicResponseDto;
+import telephony.core.service.dto.DeliveryEditRequestDto;
+import telephony.core.service.dto.DeliveryEditResponseDto;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -41,24 +41,24 @@ implements DeliveriesEditResource {
 	@Put("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation edit(DeliveryEditRequest entity) {
+	public JsonRepresentation edit(DeliveryEditRequestDto entity) {
 		
 		Gson gson = new GsonBuilder().serializeNulls().create();
-		DeliveryEditResponse resp = null;
+		DeliveryEditResponseDto resp = null;
 		try {
 			resp = deliveryService.edit(entity);
 		} catch (SessionServiceException e) {
 			
 			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "session error")));
 		} catch (DeliveryServiceException e) {
 			
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "internal error")));
 		
 		} catch(ParseException e) {
 			logger.error("parsing problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "parsing error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "parsing error")));
 		}
 		
 		return new JsonRepresentation(gson.toJson(resp));

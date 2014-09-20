@@ -86,26 +86,31 @@
 			<artifactId>org.restlet.ext.json</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.xml</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
+		
 		<dependency>
 		  <groupId>org.restlet.jee</groupId>
 		  <artifactId>org.restlet.ext.jackson</artifactId>
 		  <version>2.2.2</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.servlet</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.crypto</artifactId>
 			<version>${restlet.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet</artifactId>
@@ -121,12 +126,14 @@
 			<type>pom</type>
 			<!--<scope>provided</scope> -->
 		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-bom</artifactId>
@@ -134,68 +141,80 @@
 			<scope>import</scope>
 			<type>pom</type>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.arquillian.container</groupId>
 			<artifactId>arquillian-tomcat-remote-6</artifactId>
 			<version>1.0.0.CR4</version>
 			<!--<scope>test</scope> -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
 			<version>1.0.2.Final</version>
 			<!--<scope>test</scope> -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.descriptors</groupId>
 			<artifactId>shrinkwrap-descriptors-spi</artifactId>
 			<version>1.1.0-beta-1</version>
 			<!--<scope>test</scope> -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-api</artifactId>
 			<version>1.0.0-cr-1</version>
 			<!--<scope>test</scope> -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-extension-tomcat-6</artifactId>
 			<version>1.0.0-alpha-13</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.arquillian.protocol</groupId>
 			<artifactId>arquillian-protocol-servlet</artifactId>
 			<version>1.0.2.Final</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-spi</artifactId>
 			<version>1.0.0-cr-1</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.descriptors</groupId>
 			<artifactId>shrinkwrap-descriptors-api</artifactId>
 			<version>1.1.0-beta-1</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.descriptors</groupId>
 			<artifactId>shrinkwrap-descriptors-impl</artifactId>
 			<version>1.1.0-beta-1</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
 			<artifactId>shrinkwrap-resolver-api-maven</artifactId>
 			<version>1.1.0-alpha-3</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
 			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
 			<version>1.1.0-alpha-3</version>
+		
 		</dependency>
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.jboss.arquillian.extension</groupId> -->
@@ -210,23 +229,27 @@
 <!-- 			<version>1.0.0.Alpha2</version> -->
 <!-- 			<scope>test</scope> -->
 <!-- 		</dependency> -->
+		
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.5</version>
 			<scope>test</scope>
 		</dependency>
+	
 		<!-- Guice servlet extension -->
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
 			<artifactId>guice-servlet</artifactId>
 			<version>${guice.version}</version>
 		</dependency>
+	
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
 			<artifactId>guice-assistedinject</artifactId>
 			<version>${guice.version}</version>
 		</dependency>
+	
 		<!-- SLF4J dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -245,23 +268,34 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
+		
 		<!-- Shiro Dependencies -->
+		<dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-root</artifactId>
+            <version>${shiro-version}</version>
+        </dependency>
+        
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 			<version>${shiro-version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-web</artifactId>
 			<version>${shiro-version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-ehcache</artifactId>
 			<version>${shiro-version}</version>
+		
 		</dependency>
 	</dependencies>
+	
 	<build>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>

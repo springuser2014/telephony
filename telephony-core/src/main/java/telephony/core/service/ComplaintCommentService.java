@@ -1,7 +1,7 @@
 package telephony.core.service;
 
 import telephony.core.entity.jpa.ComplaintComment;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -14,7 +14,7 @@ public interface ComplaintCommentService extends BasicService<ComplaintComment> 
 	 * @param comment a. 
 	 * @param complaintId a.
 	 */
-	void comment(Session session, ComplaintComment comment, long complaintId);
+	void comment(SessionDto session, ComplaintComment comment, long complaintId);
 	
 	/**
 	 * asd.

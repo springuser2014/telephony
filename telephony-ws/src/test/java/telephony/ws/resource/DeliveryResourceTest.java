@@ -22,6 +22,7 @@ import telephony.ws.resource.session.SessionInitializationResource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 
 
 @RunWith(JUnit4ClassRunner.class)
@@ -33,7 +34,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		// given
 		String sessionId = authAndGetSessionId();
 		
-		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
+		DeliveryDeleteRequestDto req = new DeliveryDeleteRequestDto();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setDeliveryId(1L);
@@ -45,7 +46,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 	
 		String json = gson.toJson(req);
 		
-		com.jayway.restassured.response.Response res1 = 
+		Response res1 = 
 			given()
 				.contentType(ContentType.JSON)
 				.body(json)
@@ -53,7 +54,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 			.delete(TESTING_APP + DeliveriesDeleteResource.URL);
 		
 		// then
-		DeliveryDeleteResponse resp = gson.fromJson(res1.asString(), DeliveryDeleteResponse.class);
+		DeliveryDeleteResponseDto resp = gson.fromJson(res1.asString(), DeliveryDeleteResponseDto.class);
 		
 		assertTrue( resp.isSuccess() );	
 	}
@@ -64,7 +65,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		// given
 		String sessionId = authAndGetSessionId();
 
-		DeliveryEditRequest req = new DeliveryEditRequest();
+		DeliveryEditRequestDto req = new DeliveryEditRequestDto();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		
@@ -76,7 +77,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		Date d = new Date();
 		
-		ProductBean productAdd = new ProductBean();
+		ProductDto productAdd = new ProductDto();
 		productAdd.setColor("green");
 		productAdd.setImei("123456789000099");
 		productAdd.setModel("3310");
@@ -92,7 +93,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		req.addProductToDelete(3L);
 		
-		ProductEditBean productToEdit = new ProductEditBean();
+		ProductEditDto productToEdit = new ProductEditDto();
 		productToEdit.setId(2L);
 		productToEdit.setModel("3310");
 		productToEdit.setProducer("nokia");
@@ -110,7 +111,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 	
 		String json = gson.toJson(req);
 		
-		com.jayway.restassured.response.Response res1 = 
+		Response res1 = 
 			given()
 				.contentType(ContentType.JSON)
 				.body(json)
@@ -118,7 +119,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 			.put(TESTING_APP + DeliveriesEditResource.URL);
 		
 		// then
-		DeliveryEditResponse resp = gson.fromJson(res1.asString(), DeliveryEditResponse.class);
+		DeliveryEditResponseDto resp = gson.fromJson(res1.asString(), DeliveryEditResponseDto.class);
 		
 		assertTrue( resp.isSuccess() );		
 	}
@@ -134,7 +135,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 			.minNumberOfProducts(7)
 			.maxNumberOfProducts(9);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setFilters(filters);
@@ -145,14 +146,14 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		String json = gson.toJson(req);
 		
-		com.jayway.restassured.response.Response res1 = 
+		Response res1 = 
 				given()
 					.contentType(ContentType.JSON)
 					.body(json)
 				.when()
 				.post(TESTING_APP + DeliveriesFetchResource.URL);
 		
-		DeliveriesFetchResponse resp = gson.fromJson(res1.asString(), DeliveriesFetchResponse.class);
+		DeliveriesFetchResponseDto resp = gson.fromJson(res1.asString(), DeliveriesFetchResponseDto.class);
 		
 		assertEquals( resp.getDeliveries().size(), 5);		
 	}
@@ -171,7 +172,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		String json = gson.toJson(req);
 		
-		com.jayway.restassured.response.Response res1 = 
+		Response res1 = 
 				given()
 					.contentType(ContentType.JSON)
 					.body(json)
@@ -185,7 +186,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 	}
 
 	private String authAndGetSessionId() {
-		SignInBean auth = SignInBean.create()
+		SignInDto auth = SignInDto.create()
 				.password("rfaysdhaiufsiuf")
 				.username("user1@gmail.com");		
 		
@@ -193,7 +194,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		String json = gson.toJson(auth);
 			
-		com.jayway.restassured.response.Response res1 = 
+		Response res1 = 
 					given()
 						.contentType(ContentType.JSON)
 						.body(json)
@@ -209,7 +210,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 	@Test
 	public void addDelivery() {
 		
-		SignInBean auth = SignInBean.create()
+		SignInDto auth = SignInDto.create()
 				.password("rfaysdhaiufsiuf")
 				.username("user1@gmail.com");		
 		
@@ -217,7 +218,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		String json = gson.toJson(auth);
 			
-		com.jayway.restassured.response.Response res1 = 
+		Response res1 = 
 					given()
 						.contentType(ContentType.JSON)
 						.body(json)
@@ -228,11 +229,11 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		String sessionId = from(jsonResp).get("sessionId");
 		
-		List<ProductBean> products = new ArrayList<ProductBean>();
+		List<ProductDto> products = new ArrayList<ProductDto>();
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
 		
 		// TODO : refactor to TestDataBuilder
-		ProductBean p1 = new ProductBean();
+		ProductDto p1 = new ProductDto();
 		p1.setProducer("Nokia");
 		p1.setModel("SX99");
 		p1.setColor("black");
@@ -244,7 +245,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		p1.setTaxTo(priceTo);
 		p1.setTaxId(7L);
 		
-		ProductBean p2 = new ProductBean();
+		ProductDto p2 = new ProductDto();
 		p2.setProducer("Audi");
 		p2.setModel("X50");
 		p2.setColor("white");
@@ -259,7 +260,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		products.add(p1);
 		products.add(p2);
 		
-		DeliveryAddRequest req = new DeliveryAddRequest();
+		DeliveryAddRequestDto req = new DeliveryAddRequestDto();
 		req.setContactId(1l);
 		req.setLabel("aaa");
 		req.setDateIn(new Date());
@@ -268,7 +269,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		req.setStoreId(1l);
 		req.setProducts(products);
 		
-		com.jayway.restassured.response.Response res2 = 
+		Response res2 = 
 				given()
 					.contentType(ContentType.JSON)
 					.body(gson.toJson(req))

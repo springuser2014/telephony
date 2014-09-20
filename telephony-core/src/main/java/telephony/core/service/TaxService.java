@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import telephony.core.entity.jpa.Tax;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -16,7 +16,7 @@ public interface TaxService extends BasicService<Tax> {
 	 * @param session TODO
 	 * @param tax a.
 	 */
-	void add(Session session, Tax tax);
+	void add(SessionDto session, Tax tax);
 	
 	/**
 	 * asd.
@@ -24,7 +24,7 @@ public interface TaxService extends BasicService<Tax> {
 	 * @param id a.
 	 * @return a.
 	 */
-	Tax findById(Session session, Long id);
+	Tax findById(SessionDto session, Long id);
 	
 	/**
 	 * asd.
@@ -32,7 +32,7 @@ public interface TaxService extends BasicService<Tax> {
 	 * @param ids a.
 	 * @return a.
 	 */
-	Collection<Tax> findByIds(Session session, Collection<Long> ids);
+	Collection<Tax> findByIds(SessionDto session, Collection<Long> ids);
 	
 	/**
 	 * asd.
@@ -41,7 +41,7 @@ public interface TaxService extends BasicService<Tax> {
 	 * @param to a. 
 	 * @return asd.
 	 */
-	Collection<Tax> findInDateRange(Session session, Date from, Date to);
+	Collection<Tax> findInDateRange(SessionDto session, Date from, Date to);
 	
 	/**
 	 * asd.
@@ -49,14 +49,14 @@ public interface TaxService extends BasicService<Tax> {
 	 * @param taxesToUpdate a.
 	 * @return a.
 	 */
-	Collection<Tax> update(Session session, Collection<Tax> taxesToUpdate);
+	Collection<Tax> update(SessionDto session, Collection<Tax> taxesToUpdate);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param taxesToDelete sad.
 	 */
-	void remove(Session session, Collection<Tax> taxesToDelete);
+	void remove(SessionDto session, Collection<Tax> taxesToDelete);
 
 	/**
 	 * asd.
@@ -64,13 +64,13 @@ public interface TaxService extends BasicService<Tax> {
 	 * @param tax a.
 	 * @return asd.
 	 */
-	Tax update(Session session, Tax tax);
+	Tax update(SessionDto session, Tax tax);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param taxToDelete a.
 	 */
-	void remove(Session session, Tax taxToDelete);
+	void remove(SessionDto session, Tax taxToDelete);
 	
 }

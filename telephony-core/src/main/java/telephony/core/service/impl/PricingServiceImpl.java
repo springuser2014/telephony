@@ -6,7 +6,7 @@ import java.util.Date;
 import telephony.core.dao.PricingsDao;
 import telephony.core.entity.jpa.Pricing;
 import telephony.core.service.PricingService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -23,7 +23,7 @@ implements PricingService {
 
 	@Transactional
 	@Override
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		
 		logger.debug("PricingServiceImpl.count starts");
 
@@ -32,7 +32,7 @@ implements PricingService {
 
 	@Transactional
 	@Override
-	public Collection<Pricing> findByDateRange(Session session, Date from, Date to) {
+	public Collection<Pricing> findByDateRange(SessionDto session, Date from, Date to) {
 
 		logger.debug("PricingServiceImpl.findByDateRange starts");        
 		logger.debug("params : [ from: {}, to : {} ]", from, to);
@@ -42,7 +42,7 @@ implements PricingService {
 
 	@Transactional
 	@Override
-	public Pricing findById(Session session, long id) {
+	public Pricing findById(SessionDto session, long id) {
 
 		logger.debug("PricingServiceImpl.findById starts");        
 		logger.debug("params : [ id: {} ]", id);
@@ -52,7 +52,7 @@ implements PricingService {
 
 	@Transactional
 	@Override
-	public Collection<Pricing> findByIds(Session session, Collection<Long> ids) {
+	public Collection<Pricing> findByIds(SessionDto session, Collection<Long> ids) {
 
 		logger.debug("PricingServiceImpl.findByIds starts");        
 		logger.debug("params : [ ids: {} ]", ids.size());
@@ -62,42 +62,42 @@ implements PricingService {
 
 	@Transactional
 	@Override
-	public Pricing update(Session session, Pricing pricing) {
+	public Pricing update(SessionDto session, Pricing pricing) {
 		
 		return pricingsDao.saveOrUpdate(pricing);
 	}
 	
 	@Transactional
 	@Override
-	public Collection<Pricing> update(Session session, Collection<Pricing> coll) {
+	public Collection<Pricing> update(SessionDto session, Collection<Pricing> coll) {
 		
 		return pricingsDao.saveOrUpdate(coll);
 	}
 
 	@Transactional
 	@Override
-	public void remove(Session session, Pricing pricing) {
+	public void remove(SessionDto session, Pricing pricing) {
 		
 		pricingsDao.remove(pricing);
 	}
 
 	@Transactional
 	@Override
-	public void remove(Session session, Collection<Pricing> pricings) {
+	public void remove(SessionDto session, Collection<Pricing> pricings) {
 		
 		pricingsDao.remove(pricings);
 	}
 	
 	@Transactional
 	@Override
-	public void removeById(Session session, long id) {
+	public void removeById(SessionDto session, long id) {
 		
 		pricingsDao.removeById(id);
 	}
 
 	@Transactional
 	@Override
-	public void removeByIds(Session session, Collection<Long> ids) {
+	public void removeByIds(SessionDto session, Collection<Long> ids) {
 		
 		pricingsDao.removeByIds(ids);
 	}

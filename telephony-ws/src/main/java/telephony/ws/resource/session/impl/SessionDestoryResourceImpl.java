@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.system.SystemRole;
 import telephony.ws.resource.TelephonyServerResource;
@@ -47,7 +47,7 @@ public class SessionDestoryResourceImpl extends TelephonyServerResource
         logger.info(" username = {} ", username);
         logger.info(" sessionId = {} ", sessionId);
         
-        Session session = Session.create(username, sessionId);
+        SessionDto session = SessionDto.create(username, sessionId);
         
         boolean success = false;
         try {

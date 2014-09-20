@@ -5,8 +5,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import telephony.core.service.dto.DeliveryDetailsRequest;
-import telephony.core.service.dto.ProductDetailsRequest;
-import telephony.core.service.dto.ProductDetailsResponse;
+import telephony.core.service.dto.ProductDetailsRequestDto;
+import telephony.core.service.dto.ProductDetailsResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.products.ProductsDetailsResource;
 
@@ -30,7 +30,7 @@ implements ProductsDetailsResource {
 	@Override
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ProductDetailsResponse details(ProductDetailsRequest request) {
+	public ProductDetailsResponseDto details(ProductDetailsRequestDto request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

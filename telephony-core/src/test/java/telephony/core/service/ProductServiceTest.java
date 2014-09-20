@@ -20,9 +20,9 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
-import telephony.core.service.dto.ProductFetchRequest;
-import telephony.core.service.dto.ProductFetchResponse;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.ProductFetchRequestDto;
+import telephony.core.service.dto.ProductFetchResponseDto;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -49,7 +49,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findingProductsByStore() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 		
 		// when
@@ -64,7 +64,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllProducts() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 		
 		// when
@@ -81,7 +81,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllProducersInUse() {
 		
 		// given		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
 		List<String> lst = productService.fetchAllProducersInUse(session);
@@ -102,7 +102,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllModels() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		List<String> lst = productService.fetchAllModels(session);
@@ -125,7 +125,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllColors() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		List<String> lst = productService.fetchAllColors(session);
@@ -145,7 +145,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchingAllIMEIsInUse() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		List<String> lst = productService.fetchAllImeiInUse(session);
@@ -160,7 +160,7 @@ public class ProductServiceTest extends BaseCoreTest {
 			throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String imei = "123456789000001";
 		long storeId = 1L;
 		
@@ -179,7 +179,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void movingProductsToAnotherStore() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		long movedFromStoreId = 1L;
 		long moveToStoreId = 2L;
@@ -213,7 +213,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void fetchAllProductsByCriteria1() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		ProductFilterCriteria criteria = ProductFilterCriteria.create(); 		
 		criteria.setImei("123456789000001");
@@ -249,7 +249,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void findingByIds() {
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> coll = Arrays.asList(id1, id2);
 		
@@ -266,7 +266,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findByIMEI() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String imei = "123456789000047";
 		
 		// when
@@ -282,7 +282,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void update() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String imei = "123456789000444";
 		long id = 1;
 		Product product = productService.findById(session, id);
@@ -303,7 +303,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void updateCollection() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		long id1 = 1, id2 = 2;
 		Product p1 = productService.findById(session, id1);
@@ -334,7 +334,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void remove() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		Product p = productService.findById(session, id);
 		long countBefore = productService.count(session);
@@ -352,7 +352,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void removeCollection() {
 	
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Product p1 = productService.findById(session, id1);
 		Product p2 = productService.findById(session, id2);
@@ -372,7 +372,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void removeById() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = productService.count(session);
 		
@@ -389,7 +389,7 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		long countBefore = productService.count(session);
 		Collection<Long> coll = Arrays.asList(id1, id2);
@@ -412,13 +412,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.setProducer("nokia");
 				
 		
-		ProductFetchRequest request = new ProductFetchRequest();
+		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponse resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.find(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 4);
@@ -436,13 +436,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.setDeliveryDateStart(deliveryDateStart)
 				.setDeliveryDateEnd(deliveryDateEnd);
 				
-		ProductFetchRequest request = new ProductFetchRequest();
+		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponse resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.find(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 18);
@@ -458,13 +458,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.setProducer("nokia");
 				
 		
-		ProductFetchRequest request = new ProductFetchRequest();
+		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponse resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.find(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 12);
@@ -479,13 +479,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.setImei("123456789000004");
 				
 		
-		ProductFetchRequest request = new ProductFetchRequest();
+		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponse resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.find(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 1);
@@ -499,13 +499,13 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteria.create()
 				.setStatus(ProductStatus.SOLD);
 				
-		ProductFetchRequest request = new ProductFetchRequest();
+		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponse resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.find(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 10);

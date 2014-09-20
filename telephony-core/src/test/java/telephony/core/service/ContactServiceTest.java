@@ -21,7 +21,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ContactFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -52,7 +52,7 @@ public class ContactServiceTest extends BaseCoreTest {
 			throws SessionServiceException, ContactServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "adam";
 		
 		Contact contactToDelete = contactService.findByLabel(session, label);
@@ -70,7 +70,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void addingNewContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "pawelhenek";
 		
 		Contact newContact = new Contact();
@@ -93,7 +93,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void updatingContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "leszek";
 		String newDetails = "AFK AFK";
 		Contact contactToUpdate = contactService.findByLabel(session, label);
@@ -112,7 +112,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void fetchingAllContacts() throws SessionServiceException, ContactServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ContactFilterCriteria filters = ContactFilterCriteria.create();
 		
 		// when

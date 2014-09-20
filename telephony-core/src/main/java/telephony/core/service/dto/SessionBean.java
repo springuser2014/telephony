@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * asd.
  */
+// TODO : replace using SessionDto
 public class SessionBean {
 
 	protected String username;

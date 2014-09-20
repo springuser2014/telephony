@@ -17,7 +17,7 @@ import telephony.core.query.filter.SaleFilterCriteria;
 import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -50,7 +50,7 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public List<Sale> find(Session session) 
+	public List<Sale> find(SessionDto session) 
 			throws SessionServiceException {
 		 
 		logger.debug("SaleServiceImpl.findAllSales starts");        
@@ -71,13 +71,13 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		return salesDao.count();
 	}
 
 	@Override
 	@Transactional
-	public void delete(Session session, Sale saleToCancel)
+	public void delete(SessionDto session, Sale saleToCancel)
 			throws SessionServiceException, SaleServiceException {
 		
 
@@ -92,7 +92,7 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public void update(Session session, Sale saleToUpdate)
+	public void update(SessionDto session, Sale saleToUpdate)
 			throws SessionServiceException, SaleServiceException {
 		
 		logger.debug("SaleServiceImpl.updateSale starts");        
@@ -106,7 +106,7 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public Sale findById(Session session, Long saleId)
+	public Sale findById(SessionDto session, Long saleId)
 			throws SessionServiceException, SaleServiceException {
 	
 		logger.debug("SaleServiceImpl.findById starts");        
@@ -122,7 +122,7 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public void add(Session session, Sale sale, List<Product> products,
+	public void add(SessionDto session, Sale sale, List<Product> products,
 			Long storeId, Long contactId)
 			throws SessionServiceException, SaleServiceException {
 		
@@ -155,7 +155,7 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public Sale findByLabel(Session session, String label) 
+	public Sale findByLabel(SessionDto session, String label) 
 			throws SessionServiceException {
 		
 		logger.debug("SaleServiceImpl.addNewSale starts");        

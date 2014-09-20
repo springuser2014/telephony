@@ -4,7 +4,7 @@ import java.util.List;
 
 import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.ContactFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -21,7 +21,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws SessionServiceException asd. 
 	 * @throws ContactServiceException asd.
 	 */
-	List<Contact> find(Session session, ContactFilterCriteria filters)
+	List<Contact> find(SessionDto session, ContactFilterCriteria filters)
 		throws SessionServiceException, ContactServiceException;
 	
 	/**
@@ -32,7 +32,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws ContactServiceException asd.
 	 * 
 	 */
-	void add(Session session, Contact newContact)
+	void add(SessionDto session, Contact newContact)
 			throws SessionServiceException, ContactServiceException;
 	
 	/**
@@ -42,7 +42,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
-	void updateContact(Session session, Contact contactToUpdate)
+	void updateContact(SessionDto session, Contact contactToUpdate)
 			throws SessionServiceException, ContactServiceException;
 	
 
@@ -53,7 +53,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
-	void deleteContact(Session session, Contact contactToDelete)
+	void deleteContact(SessionDto session, Contact contactToDelete)
 			throws SessionServiceException, ContactServiceException;
 	
 	/**
@@ -64,7 +64,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
-	Contact findByLabel(Session session, String label)
+	Contact findByLabel(SessionDto session, String label)
 		throws SessionServiceException, ContactServiceException;
 
 	/**
@@ -74,6 +74,6 @@ public interface ContactService extends BasicService<Contact> {
 	 * @return  as.
 	 * @throws SessionServiceException 
 	 */
-	Contact findById(Session session, Long contactId)
+	Contact findById(SessionDto session, Long contactId)
 			throws SessionServiceException;
 }

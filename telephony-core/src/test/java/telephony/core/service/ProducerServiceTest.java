@@ -17,7 +17,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Producer;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -43,7 +43,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void counting() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		long count = producerService.count(session);
@@ -58,7 +58,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		
 		// given
 		String label = "nokia";
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Producer producer = producerService.findByLabel(session, label);
@@ -74,7 +74,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		String expected = "nokia";
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Producer producer = producerService.findById(session, id);
@@ -91,7 +91,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Collection<Producer> producers = producerService.findById(session, ids);
@@ -108,7 +108,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		long id = 1;
 		String newLabel = "newlabel";
 		Producer changedProducer = null;
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Producer producer = producerService.findById(session, id);
@@ -131,7 +131,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		String newLabel2 = "newlabel2";
 		Producer changedProducer1 = null;
 		Producer changedProducer2 = null;
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Producer producer1 = producerService.findById(session, id1);
@@ -172,7 +172,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id3 = 3, id4 = 4;
 		long countBefore = producerService.count(session);
 		Collection<Long> ids = Arrays.asList(id3, id4);
@@ -190,7 +190,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void removeById() {
 	
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 3;
 		long countBefore = producerService.count(session);
 		
@@ -207,7 +207,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void removeCollectionById_expectConstraint() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		

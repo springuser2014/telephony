@@ -22,7 +22,7 @@ import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.entity.jpa.TestEntity;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -50,7 +50,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testSave() {
 		
 		// given		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long nbOfEntitiesBefore = genericService.count(session);
 		TestEntity entity = new TestEntity();
 		entity.setLabel("aaa");
@@ -112,7 +112,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testCount() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when		
 		long taxesNumber = genericService.count(session);
@@ -173,7 +173,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testRemove() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = genericService.count(session);
 		TestEntity entity = genericService.findById(id);
@@ -191,7 +191,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testBatchRemove() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		long countBefore = genericService.count(session);
 		Collection<Long> ids = Arrays.asList(id1, id2);
@@ -210,7 +210,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testRemovById() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = genericService.count(session);
 		
@@ -227,7 +227,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	public void testBatchRemoveByIds() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		long countBefore = genericService.count(session);
 		Collection<Long> ids = Arrays.asList(id1, id2);

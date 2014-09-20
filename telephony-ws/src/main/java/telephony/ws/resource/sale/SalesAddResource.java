@@ -11,6 +11,6 @@ public interface SalesAddResource {
 	String URL = "/sales/add";
 
 	@Post("json")
-	JsonRepresentation post(JsonRepresentation entity);
+	JsonRepresentation add(JsonRepresentation entity);
 
 }

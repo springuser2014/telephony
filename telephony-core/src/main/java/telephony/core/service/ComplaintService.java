@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.SaleComplaint;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -24,7 +24,7 @@ public interface ComplaintService<T extends Complaint>  extends GenericService<T
 	 * @param session asd.
 	 * @param complaint a.
 	 */
-	void report(Session session, T complaint);
+	void report(SessionDto session, T complaint);
 	
 	/**
 	 * asd.
@@ -32,7 +32,7 @@ public interface ComplaintService<T extends Complaint>  extends GenericService<T
 	 * @param complaint a.
 	 * @return a.
 	 */
-	Complaint update(Session session, T complaint);
+	Complaint update(SessionDto session, T complaint);
 	
 	/**
 	 * asd.
@@ -40,48 +40,48 @@ public interface ComplaintService<T extends Complaint>  extends GenericService<T
 	 * @param complaints a.
 	 * @return a.
 	 */
-	Collection<T> update(Session session, Collection<T> complaints);
+	Collection<T> update(SessionDto session, Collection<T> complaints);
 	
 	/**
 	 * asd.
 	 * @param session a.
 	 * @param complaintId a.
 	 */
-	void markAsInProgress(Session session, long complaintId);
+	void markAsInProgress(SessionDto session, long complaintId);
 	
 	/**
 	 * ads.
 	 * @param session a.
 	 * @param complaintId a.
 	 */
-	void markAsAccepted(Session session, long complaintId);
+	void markAsAccepted(SessionDto session, long complaintId);
 	
 	/**
 	 * ad.
 	 * @param session a.
 	 * @param complaintId a.
 	 */
-	void markAsRejected(Session session, long complaintId);
+	void markAsRejected(SessionDto session, long complaintId);
 	
 	/**
 	 * ad.
 	 * @param session a.
 	 * @param complaintId a.
 	 */
-	void markAsResolved(Session session, long complaintId);
+	void markAsResolved(SessionDto session, long complaintId);
 	
 	/**
 	 * asd.
 	 * @param session asd.
 	 * @param complaintId a.
 	 */
-	void removeById(Session session, long complaintId);
+	void removeById(SessionDto session, long complaintId);
 	
 	/**
 	 * asd.
 	 * @param complaintIds a.
 	 * @param session asd.
 	 */
-	void removeByIds(Session session, Collection<Long> complaintIds);
+	void removeByIds(SessionDto session, Collection<Long> complaintIds);
 
 }

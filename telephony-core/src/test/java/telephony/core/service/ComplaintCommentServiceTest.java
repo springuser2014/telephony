@@ -15,7 +15,7 @@ import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.ComplaintComment;
 import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -49,7 +49,7 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
@@ -75,7 +75,7 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 	public void commentComplaintAsAnonymousClient() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String hash = "ABC123456789000002";
 		ComplaintComment cc = new ComplaintComment();
 		cc.setAuthor("pawel");

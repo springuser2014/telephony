@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 
+import telephony.core.service.dto.ContactDeleteRequestDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -34,7 +35,7 @@ public interface ContactsDeleteResource {
 	 * @throws SessionServiceException 
 	 */
 	@Post("json")
-	JsonRepresentation delete(JsonRepresentation entity) 
+	JsonRepresentation delete(ContactDeleteRequestDto entity) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException;
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -20,7 +20,7 @@ public interface RoleService extends BasicService<Role> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	List<Role> find(Session session, RoleFilterCriteria filters) 
+	List<Role> find(SessionDto session, RoleFilterCriteria filters) 
 		throws SessionServiceException;
 	
 	/**
@@ -30,7 +30,7 @@ public interface RoleService extends BasicService<Role> {
 	 * @throws SessionServiceException asd.
 	 * @throws RoleServiceException asd.
 	 */
-	void add(Session session, Role newrole)
+	void add(SessionDto session, Role newrole)
 		throws SessionServiceException, RoleServiceException;
 	
 	/**
@@ -40,7 +40,7 @@ public interface RoleService extends BasicService<Role> {
 	 * @throws SessionServiceException asd.
 	 * @throws RoleServiceException asd.
 	 */
-	void remove(Session session, Role roleToDelete) 
+	void remove(SessionDto session, Role roleToDelete) 
 		throws SessionServiceException, RoleServiceException;
 
 
@@ -51,6 +51,6 @@ public interface RoleService extends BasicService<Role> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	Role findByLabel(Session session, String string) 
+	Role findByLabel(SessionDto session, String string) 
 		throws SessionServiceException;
 }

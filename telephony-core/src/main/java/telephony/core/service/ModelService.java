@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.Model;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -17,7 +17,7 @@ public interface ModelService extends BasicService<Model> {
 	 * @param label a.
 	 * @return a.
 	 */
-	Model findByLabel(Session session, String label);
+	Model findByLabel(SessionDto session, String label);
 
 	/**
 	 * asd.
@@ -25,7 +25,7 @@ public interface ModelService extends BasicService<Model> {
 	 * @param id a.
 	 * @return d.
 	 */
-	Model findById(Session session, long id);
+	Model findById(SessionDto session, long id);
 
 	/**
 	 * asd.
@@ -33,7 +33,7 @@ public interface ModelService extends BasicService<Model> {
 	 * @param ids a.
 	 * @return a.
 	 */
-	Collection<Model> findByIds(Session session, List<Long> ids);
+	Collection<Model> findByIds(SessionDto session, List<Long> ids);
 
 	/**
 	 * asd.
@@ -41,7 +41,7 @@ public interface ModelService extends BasicService<Model> {
 	 * @param model a.
 	 * @return asd.
 	 */
-	Model update(Session session, Model model);
+	Model update(SessionDto session, Model model);
 
 	/**
 	 * asd.
@@ -49,21 +49,21 @@ public interface ModelService extends BasicService<Model> {
 	 * @param coll a.
 	 * @return ad.
 	 */
-	Collection<Model> update(Session session, Collection<Model> coll);
+	Collection<Model> update(SessionDto session, Collection<Model> coll);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param model a.
 	 */
-	void removeById(Session session, Long model);
+	void removeById(SessionDto session, Long model);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param model a.
 	 */
-	void removeById(Session session, Collection<Long> model);
+	void removeById(SessionDto session, Collection<Long> model);
 
 	/**
 	 * asd.
@@ -71,6 +71,6 @@ public interface ModelService extends BasicService<Model> {
 	 * @param model a.
 	 * 
 	 */
-	void remove(Session session, Model model);
+	void remove(SessionDto session, Model model);
 
 }

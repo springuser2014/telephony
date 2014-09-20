@@ -1,7 +1,7 @@
 package telephony.ws.resource.taxes.impl;
 
-import telephony.core.service.dto.TaxesFetchRequest;
-import telephony.core.service.dto.TaxesFetchResponse;
+import telephony.core.service.dto.TaxesFetchRequestDto;
+import telephony.core.service.dto.TaxesFetchResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.taxes.TaxesFetchResource;
 
@@ -11,7 +11,7 @@ extends TelephonyServerResource
 implements TaxesFetchResource {
 
 	@Override
-	public TaxesFetchResponse fetch(TaxesFetchRequest req) {
+	public TaxesFetchResponseDto fetch(TaxesFetchRequestDto req) {
 		// TODO Auto-generated method stub
 		return null;
 	}

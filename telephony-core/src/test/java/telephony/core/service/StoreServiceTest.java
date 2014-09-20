@@ -20,7 +20,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.StoreFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -55,7 +55,7 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testFetchAllStores() throws SessionServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		StoreFilterCriteria sfc = StoreFilterCriteria.create();
 		
 		// when
@@ -73,7 +73,7 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingAddingNewStore() throws SessionServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		StoreFilterCriteria sfc = StoreFilterCriteria.create();
 		List<Store> storesBeforeAdd = storeService.find(session, sfc);
 		Store store = new Store();
@@ -101,7 +101,7 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingEditingExisitingStore() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store storeToEdit = storeService.findByLabel(session, TestData.STORE1_LABEL);
 		long countBefore = storeService.count(session);
 		
@@ -123,7 +123,7 @@ public class StoreServiceTest extends BaseCoreTest {
 	public void testingDeletingStore() throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Store storeToDelete = storeService.findByLabel(session, TestData.STORE2_LABEL);
 		long countBefore = storeService.count(session);
 		long countAfter = 0;

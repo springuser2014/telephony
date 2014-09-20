@@ -31,7 +31,7 @@ implements DeliveriesDetailsResource {
 			.minNumberOfProducts(7)
 			.maxNumberOfProducts(9);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId("aaa");
 		req.setUsername("user1@gmail.com");
 		req.setFilters(filters);
@@ -55,7 +55,7 @@ implements DeliveriesDetailsResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public DeliveryDetailsResponse details(DeliveryDetailsRequest request) throws SessionServiceException {
 		
-		Session session = Session.create(request.getUsername(),request.getSessionId());
+		SessionDto session = SessionDto.create(request.getUsername(),request.getSessionId());
 		
 		sessionService.validate(session);
 		

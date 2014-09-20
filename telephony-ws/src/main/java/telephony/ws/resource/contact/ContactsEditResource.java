@@ -1,11 +1,11 @@
 package telephony.ws.resource.contact;
 
-import telephony.core.service.dto.ContactsEditRequest;
-import telephony.core.service.dto.ContactsEditResponse;
+import telephony.core.service.dto.ContactsEditRequestDto;
+import telephony.core.service.dto.ContactsEditResponseDto;
 
 public interface ContactsEditResource {
 
 	String URL = "/contacts/edit";
 	
-	ContactsEditResponse edit(ContactsEditRequest request);
+	ContactsEditResponseDto edit(ContactsEditRequestDto request);
 }

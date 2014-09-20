@@ -1,6 +1,6 @@
 package telephony.core.service.dto;
 
-public class DeliveryDetailsRequest extends AuthBean {
+public class DeliveryDetailsRequest extends AuthDto {
 	
 	private Long deliveryId;
 

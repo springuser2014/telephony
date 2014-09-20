@@ -14,9 +14,9 @@
 	<packaging>war</packaging>
 	<name>telephony-web</name>
 	<description>telephony-web</description>
-	
+
 	<properties>
-	   <spring.version>3.2.0.RELEASE</spring.version>
+		<spring.version>3.2.0.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -82,25 +82,25 @@
 	<build>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
-			
-            <plugin>
-			  <groupId>org.zeroturnaround</groupId>
-			  <artifactId>jrebel-maven-plugin</artifactId>
-			  <version>1.1.5</version>
-			  <configuration>
-				 <addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
-				 <alwaysGenerate>true</alwaysGenerate>
-			     <showGenerated>true</showGenerated>
-			  </configuration>
-			  <executions>
-			    <execution>
-			      <id>generate-rebel-xml</id>
-			      <phase>process-resources</phase>
-			      <goals>
-			        <goal>generate</goal>
-			      </goals>
-			    </execution>
-			  </executions>
+
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<version>1.1.5</version>
+				<configuration>
+					<addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
+					<alwaysGenerate>true</alwaysGenerate>
+					<showGenerated>true</showGenerated>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -145,7 +145,8 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

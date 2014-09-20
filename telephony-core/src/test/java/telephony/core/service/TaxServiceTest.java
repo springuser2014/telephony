@@ -18,7 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Tax;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -45,7 +45,7 @@ public class TaxServiceTest extends BaseCoreTest {
 	public void add_tax() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Tax tax = new Tax();
 		tax.setFrom(new DateTime().withDate(2010, 01, 01).toDate());
 		tax.setTo(new DateTime().withDate(2014, 12, 31).toDate());
@@ -80,7 +80,7 @@ public class TaxServiceTest extends BaseCoreTest {
 						.withSecondOfMinute(0)
 						.withMillisOfSecond(0).toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Tax tax = taxService.findById(session, id);
@@ -111,7 +111,7 @@ public class TaxServiceTest extends BaseCoreTest {
 					.withSecondOfMinute(0)
 					.withMillisOfSecond(0).toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
 		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
@@ -133,7 +133,7 @@ public class TaxServiceTest extends BaseCoreTest {
 					.withMillisOfSecond(0).toDate();
 
 		Date to = null;
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
@@ -156,7 +156,7 @@ public class TaxServiceTest extends BaseCoreTest {
 					.withSecondOfMinute(0)
 					.withMillisOfSecond(0).toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
 		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
@@ -173,7 +173,7 @@ public class TaxServiceTest extends BaseCoreTest {
 		Date from = null;
 		Date to = null;
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
 		Collection<Tax> taxes = taxService.findInDateRange(session, from, to);
@@ -187,7 +187,7 @@ public class TaxServiceTest extends BaseCoreTest {
 	public void update_tax() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 2;
 		Tax taxBefore = taxService.findById(session, id);
 		double rateBefore = taxBefore.getRate();
@@ -206,7 +206,7 @@ public class TaxServiceTest extends BaseCoreTest {
 	public void delete_tax() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 2;
 		Tax taxToDelete = taxService.findById(session, id);
 		long before = taxService.count(session);

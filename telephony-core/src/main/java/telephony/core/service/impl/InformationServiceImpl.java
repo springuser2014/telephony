@@ -27,21 +27,21 @@ public class InformationServiceImpl implements InformationService {
     
 	@Override
 	@Transactional
-	public DashboardDetailsResponse dashboardDetails(DashboardDetailsRequest request) {
+	public DashboardDetailsResponseDto dashboardDetails(DashboardDetailsRequestDto request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Transactional
-	public ProducersResponse fetchProducers(ProducersRequest request) {
+	public ProducersResponseDto fetchProducers(ProducersRequestDto request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Transactional
-	public ModelsResponse fetchModels(ModelsRequest request) {
+	public ModelsResponseDto fetchModels(ModelsRequestDto request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

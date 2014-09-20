@@ -20,8 +20,8 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
-import telephony.core.service.dto.BasicResponse;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.BasicResponseDto;
+import telephony.core.service.dto.SessionDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.role.RolesAddResource;
 
@@ -55,11 +55,11 @@ public class RolesAddResourceImpl extends TelephonyServerResource
     	newrole.setName(label);
     	newrole.setUsers(new HashSet<User>());
     	
-    	Session session = Session.create()
+    	SessionDto session = SessionDto.create()
     						.setUsername(username)
     						.setSessionId(sessionId);
     	
-    	BasicResponse response = new BasicResponse(true, "Added successfully");
+    	BasicResponseDto response = new BasicResponseDto(true, "Added successfully");
     	try {
     		roleService.add(session, newrole);
     	} catch (Exception ex) {

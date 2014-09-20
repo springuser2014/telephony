@@ -16,7 +16,7 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.query.filter.RoleFilterCriteriaBuilder;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -41,7 +41,7 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void fetchAllRoles() throws SessionServiceException {
 
 		// given
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 							.setUsername(TestData.USER1_NAME)
 							.setSessionId(TestData.USER1_SESSIONID);
 		
@@ -62,7 +62,7 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void addingRole() throws SessionServiceException, RoleServiceException {
 
 		// given
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setUsername(TestData.USER1_NAME)
 				.setSessionId(TestData.USER1_SESSIONID);
 		
@@ -85,7 +85,7 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void deletingExisitingRole() throws SessionServiceException, RoleServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Role roleToDelete = roleService.findByLabel(session, "salesman");
 		long countBefore = roleService.count(session);
 		

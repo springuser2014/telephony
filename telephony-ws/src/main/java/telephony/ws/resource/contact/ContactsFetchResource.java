@@ -7,6 +7,7 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
+import telephony.core.service.dto.ContactFetchRequestDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -27,7 +28,7 @@ public interface ContactsFetchResource {
 	 * @throws SessionServiceException 
 	 */
 	@Post("json")
-	JsonRepresentation fetch(JsonRepresentation entity) 
+	JsonRepresentation fetch(ContactFetchRequestDto entity) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException;
 
 }

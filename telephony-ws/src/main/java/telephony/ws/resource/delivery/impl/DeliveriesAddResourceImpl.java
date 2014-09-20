@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.service.DeliveryService;
 import telephony.core.service.StoreService;
-import telephony.core.service.dto.BasicResponse;
-import telephony.core.service.dto.DeliveryAddRequest;
-import telephony.core.service.dto.DeliveryAddResponse;
+import telephony.core.service.dto.BasicResponseDto;
+import telephony.core.service.dto.DeliveryAddRequestDto;
+import telephony.core.service.dto.DeliveryAddResponseDto;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -44,10 +44,10 @@ implements DeliveriesAddResource {
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation add(DeliveryAddRequest request) {
+	public JsonRepresentation add(DeliveryAddRequestDto request) {
 		
 		logger.info("entry point");
-		DeliveryAddResponse resp;
+		DeliveryAddResponseDto resp;
 		
 		Gson gson = new GsonBuilder().create();
 
@@ -57,15 +57,15 @@ implements DeliveriesAddResource {
 		} catch (SessionServiceException e) {
 			
 			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "session error")));
 		} catch (DeliveryServiceException e) {
 			
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "internal error")));
 		} catch (ParseException e) {
 			
 			logger.error("invalid date format", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "invalid date format")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "invalid date format")));
 		}
 		
 		logger.info("entry point");

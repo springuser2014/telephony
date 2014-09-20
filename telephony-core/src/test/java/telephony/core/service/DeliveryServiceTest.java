@@ -107,7 +107,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 			throws SessionServiceException, DeliveryServiceException, ContactServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Contact contact = contactService.findByLabel(session, "leszek");
 		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 
@@ -143,7 +143,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editingExistingDelivery() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Long deliveryId = 1L;
 		Delivery deliveryToUpdate = deliveryService.findById(session, deliveryId);
 		
@@ -164,7 +164,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void deletingDelivery() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		Delivery deliveryToDelete = deliveryService.findById(session, 1L);
 		long countAfter = -1, countBefore = deliveryService.count(session);
 		
@@ -181,7 +181,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void fetchingAllDeliveries() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long count = deliveryService.count(session);
 		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create();
 		
@@ -195,25 +195,91 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void addNewDelivery() throws SessionServiceException, DeliveryServiceException, ParseException {
+	public void addNewDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setSessionId(TestData.USER1_SESSIONID)
 				.setUsername(TestData.USER1_NAME);
 				
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
 		
-		DeliveryAddRequest dto = new DeliveryAddRequest();
+		DeliveryAddRequestDto dto = new DeliveryAddRequestDto();
 		dto.setSessionId(TestData.USER1_SESSIONID);
 		dto.setUsername(TestData.USER1_NAME);
 		
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
 		
-		List<ProductBean> products = new ArrayList<ProductBean>();
-		ProductBean p1 = new ProductBean();
-		p1.setProducer("Nokia");
+		List<ProductDto> products = new ArrayList<ProductDto>();
+		ProductDto p1 = new ProductDto();
+		p1.setProducer("nokia");
+		p1.setModel("3310");
+		p1.setColor("black");
+		p1.setImei("123456789000050");
+		p1.setPriceFrom(new Date());
+		p1.setPriceTo(priceTo);
+		p1.setPriceIn(200.0d);
+		p1.setTaxFrom(new Date());
+		p1.setTaxTo(priceTo);
+		p1.setTaxId(7L);
+		
+		products.add(p1);
+		
+		ProductDto p2 = new ProductDto();
+		p2.setProducer("nokia");
+		p2.setModel("3310");
+		p2.setColor("black");
+		p2.setImei("123456789000051");
+		p2.setPriceFrom(new Date());
+		p2.setPriceTo(priceTo);
+		p2.setPriceIn(200.0d);
+		p2.setTaxFrom(new Date());
+		p2.setTaxTo(priceTo);
+		p2.setTaxId(7L);
+		
+		products.add(p2);
+		
+		dto.setDateIn(new Date());
+		dto.setStoreId(1L);
+		dto.setContactId(1L);
+		dto.setLabel("rrrr");
+		dto.setProducts(products);
+		
+		// when
+		DeliveryAddResponseDto resp = deliveryService.add(dto);
+		
+		long deliveriesAfter = deliveryService.count(session);
+		long productsAfter = productService.count(session);
+
+		// then
+		assertTrue( resp.isSuccess() );
+		assertEquals( deliveriesAfter - deliveriesBefore, 1);
+		assertEquals( productsAfter - productsBefore, 2);		
+	}
+
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void addNewDelivery2() throws SessionServiceException, DeliveryServiceException, ParseException {
+		
+		// given
+		SessionDto session = SessionDto.create()
+				.setSessionId(TestData.USER1_SESSIONID)
+				.setUsername(TestData.USER1_NAME);
+				
+		long deliveriesBefore = deliveryService.count(session);
+		long productsBefore = productService.count(session);
+		
+		DeliveryAddRequestDto dto = new DeliveryAddRequestDto();
+		dto.setSessionId(TestData.USER1_SESSIONID);
+		dto.setUsername(TestData.USER1_NAME);
+		
+		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
+		
+		List<ProductDto> products = new ArrayList<ProductDto>();
+		ProductDto p1 = new ProductDto();
+		p1.setProducer("nokia");
 		p1.setModel("SX99");
 		p1.setColor("black");
 		p1.setImei("123456789000050");
@@ -225,6 +291,21 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		p1.setTaxId(7L);
 		
 		products.add(p1);
+		
+		ProductDto p2 = new ProductDto();
+		p2.setProducer("sony");
+		p2.setModel("firee");
+		p2.setColor("black");
+		p2.setImei("123456789000051");
+		p2.setPriceFrom(new Date());
+		p2.setPriceTo(priceTo);
+		p2.setPriceIn(200.0d);
+		p2.setTaxFrom(new Date());
+		p2.setTaxTo(priceTo);
+		p2.setTaxId(7L);
+		
+		products.add(p2);
+		 
 		dto.setDateIn(new Date());
 		dto.setStoreId(1L);
 		dto.setContactId(1L);
@@ -232,7 +313,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		dto.setProducts(products);
 		
 		// when
-		DeliveryAddResponse resp = deliveryService.add(dto);
+		DeliveryAddResponseDto resp = deliveryService.add(dto);
 		
 		long deliveriesAfter = deliveryService.count(session);
 		long productsAfter = productService.count(session);
@@ -240,10 +321,11 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		// then
 		assertTrue( resp.isSuccess() );
 		assertEquals( deliveriesAfter - deliveriesBefore, 1);
-		assertEquals( productsAfter - productsBefore, 1);
+		assertEquals( productsAfter - productsBefore, 2);
 		
 	}
 
+	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
 	public void findDetailsById() throws SessionServiceException, DeliveryServiceException, ParseException {
@@ -273,13 +355,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.minNumberOfProducts(1)
 				.maxNumberOfProducts(10);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 5);		
@@ -302,13 +384,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.deliveryDateStart(deliveryDateStart)
 				.deliveryDateEnd(deliveryDateEnd);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 3);		
@@ -323,13 +405,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
 				.label(label);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 1);		
@@ -344,13 +426,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.minNumberOfProducts(7)
 				.maxNumberOfProducts(9);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 4);		
@@ -365,13 +447,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.sumFrom(500.0d)
 				.sumTo(900.0d);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 4);		
@@ -388,13 +470,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.minNumberOfProducts(7)
 				.maxNumberOfProducts(9);
 		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
+		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);
 		
 		// when
-		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 4);		
@@ -405,7 +487,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		DeliveryEditRequest req = new DeliveryEditRequest();
+		DeliveryEditRequestDto req = new DeliveryEditRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		
@@ -417,7 +499,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		Date d = new Date();
 		
-		ProductBean productAdd = new ProductBean();
+		ProductDto productAdd = new ProductDto();
 		productAdd.setColor("green");
 		productAdd.setImei("123456789000099");
 		productAdd.setModel("3310");
@@ -433,7 +515,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		req.addProductToDelete(3L);
 		
-		ProductEditBean productToEdit = new ProductEditBean();
+		ProductEditDto productToEdit = new ProductEditDto();
 		productToEdit.setId(2L);
 		productToEdit.setModel("3310");
 		productToEdit.setProducer("nokia");
@@ -446,7 +528,82 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				
 		// when
 
-		DeliveryEditResponse response = deliveryService.edit(req);
+		DeliveryEditResponseDto response = deliveryService.edit(req);
+		// then
+		assertTrue(response.isSuccess());		
+	}
+	
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void editDelivery2() throws SessionServiceException, DeliveryServiceException, ParseException {
+		
+		// given
+		DeliveryEditRequestDto req = new DeliveryEditRequestDto();
+		req.setSessionId(TestData.USER1_SESSIONID);
+		req.setUsername(TestData.USER1_NAME);
+		
+		req.setId(1L);
+		req.setContactId(2L);
+		req.setStoreId(2L);
+		
+		req.setLabel("nowy label");
+		
+		Date d = new Date();
+		
+		ProductDto productAdd1 = new ProductDto();
+		productAdd1.setColor("green");
+		productAdd1.setImei("123456789000099");
+		productAdd1.setModel("2000");
+		productAdd1.setProducer("nokia");
+		productAdd1.setPriceIn(200.0d);
+		productAdd1.setPriceFrom(d);
+		productAdd1.setPriceTo(null);
+		productAdd1.setTaxId(6L);
+		productAdd1.setTaxFrom(d);
+		productAdd1.setTaxTo(null);
+		
+		req.addProductToAdd(productAdd1);
+		
+		ProductDto productAdd2 = new ProductDto();
+		productAdd2.setColor("green");
+		productAdd2.setImei("123456789000100");
+		productAdd2.setModel("xyz");
+		productAdd2.setProducer("sony");
+		productAdd2.setPriceIn(200.0d);
+		productAdd2.setPriceFrom(d);
+		productAdd2.setPriceTo(null);
+		productAdd2.setTaxId(6L);
+		productAdd2.setTaxFrom(d);
+		productAdd2.setTaxTo(null);
+		
+		req.addProductToAdd(productAdd2);
+		
+		req.addProductToDelete(3L);
+		
+		ProductEditDto productToEdit1 = new ProductEditDto();
+		productToEdit1.setId(2L);
+		productToEdit1.setModel("desire y");
+		productToEdit1.setProducer("htc");
+		productToEdit1.setPrice(300.0d);
+		productToEdit1.setPriceIn(110.0d);
+		productToEdit1.setTaxId(6L);
+		
+		req.addProductToEdit(productToEdit1);
+		
+		ProductEditDto productToEdit2 = new ProductEditDto();
+		productToEdit2.setId(4L);
+		productToEdit2.setModel("q10");
+		productToEdit2.setProducer("blackberry");
+		productToEdit2.setPrice(400.0d);
+		productToEdit2.setPriceIn(160.0d);
+		
+		productToEdit2.setTaxId(6L);
+		
+		req.addProductToEdit(productToEdit2);
+		
+		// when
+		DeliveryEditResponseDto response = deliveryService.edit(req);
+		
 		// then
 		assertTrue(response.isSuccess());		
 	}
@@ -456,19 +613,19 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void deleteDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setUsername(TestData.USER1_NAME)
 				.setSessionId(TestData.USER1_SESSIONID);
 		
 		long countBefore = deliveryService.count(session);
 		
-		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
+		DeliveryDeleteRequestDto req = new DeliveryDeleteRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setDeliveryId(1L);
 
 		// when
-		DeliveryDeleteResponse response = deliveryService.delete(req);
+		DeliveryDeleteResponseDto response = deliveryService.delete(req);
 		long countAfter = deliveryService.count(session);
 		
 		// then

@@ -22,7 +22,7 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Pricing;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -44,7 +44,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void counting() {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when 
 		long pricingsOfNumber = pricingService.count(session);
@@ -68,7 +68,7 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -89,7 +89,7 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when	
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -110,7 +110,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		
 		Date to = null;
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when	
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -126,7 +126,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		// given
 		Date from = null;		
 		Date to = null;
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when		
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -150,7 +150,7 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -174,7 +174,7 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -198,7 +198,7 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 			
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when		
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -222,7 +222,7 @@ public class PricingServiceTest extends BaseCoreTest {
 					.withTime(0, 0, 0, 0)
 					.toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 			
 		// when		
 		Collection<Pricing> coll = pricingService.findByDateRange(session, from, to);
@@ -247,7 +247,7 @@ public class PricingServiceTest extends BaseCoreTest {
 							.withTime(0, 0, 0, 0)
 							.toDate();
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Pricing p = pricingService.findById(session, id);
@@ -265,7 +265,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		// given
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		Collection<Pricing> coll = pricingService.findByIds(session, ids);
@@ -280,7 +280,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void update() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		Pricing pricing1 = pricingService.findById(session, id);
 		double rateBefore = pricing1.getRate(); 
@@ -302,7 +302,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void updateCollection() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		double expectedPrice = 200.0d;
 		Collection<Long> ids = Arrays.asList(id1, id2);
@@ -328,7 +328,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void remove() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = pricingService.count(session);
 		Pricing p = pricingService.findById(session, id);
@@ -346,7 +346,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void removeCollection() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		long countBefore = pricingService.count(session);
@@ -365,7 +365,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void removeById() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		long countBefore = pricingService.count(session);
 		
@@ -382,7 +382,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	public void removeCollectionById() {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		long countBefore = pricingService.count(session);

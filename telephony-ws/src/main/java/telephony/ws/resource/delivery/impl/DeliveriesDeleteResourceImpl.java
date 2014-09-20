@@ -14,9 +14,9 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
-import telephony.core.service.dto.BasicResponse;
-import telephony.core.service.dto.DeliveryDeleteRequest;
-import telephony.core.service.dto.DeliveryDeleteResponse;
+import telephony.core.service.dto.BasicResponseDto;
+import telephony.core.service.dto.DeliveryDeleteRequestDto;
+import telephony.core.service.dto.DeliveryDeleteResponseDto;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -38,25 +38,25 @@ implements DeliveriesDeleteResource {
 	@Delete("json")	
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation delete(DeliveryDeleteRequest request) {
+	public JsonRepresentation delete(DeliveryDeleteRequestDto request) {
 		
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		
-		DeliveryDeleteResponse resp = null;
+		DeliveryDeleteResponseDto resp = null;
 		
 		try {
 			resp = deliveryService.delete(request);
 		} catch (SessionServiceException e) {
 			
 			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "session error")));
 		} catch (DeliveryServiceException e) {
 			
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "internal error")));
 		} catch(Exception e) {
 			logger.error("unrecognized problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "unrecognized problem")));
+			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "unrecognized problem")));
 		}
 		
 		return new JsonRepresentation(gson.toJson(resp));

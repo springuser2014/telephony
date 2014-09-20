@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
 import telephony.core.service.StoreService;
-import telephony.core.service.dto.BasicResponse;
+import telephony.core.service.dto.BasicResponseDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -35,7 +35,7 @@ implements ContactsDeleteResource {
 	private ContactService contactService;
 
 	@Post("json")
-	public JsonRepresentation delete(JsonRepresentation entity) 
+	public JsonRepresentation delete(ContactDeleteRequestDto entity) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException {
     	
 		logger.info("ContactsDeleteResource.delete starts");
@@ -50,7 +50,7 @@ implements ContactsDeleteResource {
 		
 		Long contactToDeleteId = req.getLong("contactToDeleteId");
 
-		BasicResponse resp = new BasicResponse(true, "Usunieto obiekt");
+		BasicResponseDto resp = new BasicResponseDto(true, "Usunieto obiekt");
 		try {
 			Contact contactToDelete = contactService.findById(
 					null, contactToDeleteId

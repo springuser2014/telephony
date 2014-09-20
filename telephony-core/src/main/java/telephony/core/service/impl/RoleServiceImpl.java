@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.service.RoleService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -34,14 +34,14 @@ implements RoleService {
 	
 	@Transactional
 	@Override
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		
 		return rolesDao.count();
 	}
 
 	@Transactional
 	@Override
-	public List<Role> find(Session session, RoleFilterCriteria filters) 
+	public List<Role> find(SessionDto session, RoleFilterCriteria filters) 
 			throws SessionServiceException {
 		
 		logger.debug("RoleServiceImpl.fetchAll starts");
@@ -54,7 +54,7 @@ implements RoleService {
 
 	@Transactional
 	@Override
-	public void add(Session session, Role newrole)
+	public void add(SessionDto session, Role newrole)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.add starts");
@@ -67,7 +67,7 @@ implements RoleService {
 
 	@Transactional
 	@Override
-	public void remove(Session session, Role roleToDelete)
+	public void remove(SessionDto session, Role roleToDelete)
 			throws SessionServiceException, RoleServiceException {
 		
 		logger.debug("RoleServiceImpl.delete starts");
@@ -80,7 +80,7 @@ implements RoleService {
 
 	@Override
 	@Transactional
-	public Role findByLabel(Session session, String label) 
+	public Role findByLabel(SessionDto session, String label) 
 			throws SessionServiceException {
 		logger.debug("RoleServiceImpl.findByLabel starts");
 		logger.debug("params : [ session : {}, label : {}]", session, label);

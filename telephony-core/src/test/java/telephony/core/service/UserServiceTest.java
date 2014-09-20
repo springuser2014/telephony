@@ -22,7 +22,7 @@ import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 import telephony.core.query.filter.StoreFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 import telephony.core.util.StringGeneratorImpl;
@@ -54,7 +54,7 @@ public class UserServiceTest extends BaseCoreTest {
 	public void testUpdate() throws SessionServiceException, UserServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		User userToEdit = userService.findByName(session, TestData.USER2_NAME);
 		String newSessionId = new StringGeneratorImpl().nextSessionId();	
 		
@@ -77,7 +77,7 @@ public class UserServiceTest extends BaseCoreTest {
 	public void testAddingNewUser() throws SessionServiceException, UserServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		User user = new User();
 		user.setEmail("any@mail.com");
@@ -101,7 +101,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		User user = userService.findByName(session, TestData.USER4_NAME);
 		long countAfter = -1, countBefore = userService.count(session);
 		
@@ -119,7 +119,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException {
 
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
 		List<User> lst = userService.find(session);
@@ -135,7 +135,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long storeId = 2L; // TODO : change 'byStore' not 'byStoreId'
 		
 		// when
@@ -151,7 +151,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 	
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
 				.roleFilterCriteria()
@@ -177,7 +177,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 				
 		User user = userService.findByName(session, username2);
@@ -197,7 +197,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		User user = userService.findByName(session, username2);
 		Set<Role> rolesToDelete = user.getRoles();
@@ -217,7 +217,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		StoreFilterCriteria sfc = StoreFilterCriteria.create();
 		
@@ -240,7 +240,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		
 		User user = userService.findByName(session, username2);
@@ -260,7 +260,7 @@ public class UserServiceTest extends BaseCoreTest {
 			throws SessionServiceException, UserServiceException {
 		
 		// given
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
 		
 		User user = userService.findByName(session, username2);

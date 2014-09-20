@@ -18,8 +18,9 @@ import telephony.ws.resource.sale.SalesAddResource;
 /**
  * asd.
  */
-public class SalesAddResourceImpl extends TelephonyServerResource 
-	implements SalesAddResource {
+public class SalesAddResourceImpl 
+extends TelephonyServerResource 
+implements SalesAddResource {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -30,7 +31,7 @@ public class SalesAddResourceImpl extends TelephonyServerResource
     @Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-    public JsonRepresentation post(JsonRepresentation entity) {
+    public JsonRepresentation add(JsonRepresentation entity) {
     	return new JsonRepresentation("asd");
     }
 

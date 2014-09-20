@@ -10,7 +10,7 @@ import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.ComplaintCommentService;
 import telephony.core.service.ProductComplaintService;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -30,7 +30,7 @@ implements ComplaintCommentService {
 	
 	@Transactional
 	@Override
-	public void comment(Session session, ComplaintComment comment,	long complaintId) {
+	public void comment(SessionDto session, ComplaintComment comment,	long complaintId) {
 		
 		// TODO : session's validation
 		
@@ -75,7 +75,7 @@ implements ComplaintCommentService {
 
 	@Transactional
 	@Override
-	public long count(Session session) {
+	public long count(SessionDto session) {
 
 		return complaintCommentDao.count();
 	}

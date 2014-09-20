@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionInitializationResource;
 
@@ -51,7 +51,7 @@ implements SessionInitializationResource {
         
         logger.info(" username = {} ", name);
         logger.info(" password = {} ", password);
-        Session session = null;
+        SessionDto session = null;
         try {
         	session = sessionService.init(name, password);	
         } catch (Exception e) {

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.ModelDao;
 import telephony.core.entity.jpa.Model;
 import telephony.core.service.ModelService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -28,7 +28,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public Collection<Model> update(Session session, Collection<Model> coll) {
+	public Collection<Model> update(SessionDto session, Collection<Model> coll) {
 
 		logger.debug("ModelServiceImpl.update starts");        
 		logger.debug("params : [ models: {} ]", coll.size());
@@ -38,7 +38,7 @@ implements ModelService {
 
 	@Override
 	@Transactional
-	public void removeById(Session session, Long id) {
+	public void removeById(SessionDto session, Long id) {
 
 		logger.debug("ModelServiceImpl.remove starts");        
 		logger.debug("params : [ id: {} ]", id);
@@ -48,7 +48,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public void removeById(Session session, Collection<Long> ids) {
+	public void removeById(SessionDto session, Collection<Long> ids) {
 
 		logger.debug("ModelServiceImpl.remove starts");        
 		logger.debug("params : [ ids: {} ]", ids.size());
@@ -58,7 +58,7 @@ implements ModelService {
 
 	@Transactional
 	@Override
-	public Model update(Session session, Model model) {
+	public Model update(SessionDto session, Model model) {
 	
 		logger.debug("ModelServiceImpl.update starts");        
 		logger.debug("params : [ model: {} ]", model);
@@ -68,7 +68,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public Model findByLabel(Session session, String label) {
+	public Model findByLabel(SessionDto session, String label) {
 
 		logger.debug("ModelServiceImpl.findByLabel starts");        
 		logger.debug("params : [ label: {} ]", label);
@@ -78,13 +78,13 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		return modelsDao.count();
 	}
 
 	@Override
 	@Transactional
-	public Model findById(Session session, long id) {
+	public Model findById(SessionDto session, long id) {
 		logger.debug("ModelServiceImpl.findById starts");        
 		logger.debug("params : [ id: {} ]", id);
 
@@ -93,7 +93,7 @@ implements ModelService {
 	
 	@Override
 	@Transactional
-	public Collection<Model> findByIds(Session session, List<Long> ids) {
+	public Collection<Model> findByIds(SessionDto session, List<Long> ids) {
 		logger.debug("ModelServiceImpl.findByIds starts");        
 		logger.debug("params : [ ids: {} ]", ids.size());
 
@@ -102,7 +102,7 @@ implements ModelService {
 
 	@Transactional
 	@Override
-	public void remove(Session session, Model model) {
+	public void remove(SessionDto session, Model model) {
 		logger.debug("ModelServiceImpl.remove starts");        
 		logger.debug("params : [ model: {} ]", model);
 

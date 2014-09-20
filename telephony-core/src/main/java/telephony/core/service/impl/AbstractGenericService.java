@@ -5,7 +5,7 @@ import java.util.Collection;
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.GenericService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -49,7 +49,7 @@ implements GenericService<E> {
 
 	@Transactional
 	@Override
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		return dao.count();
 	}
 

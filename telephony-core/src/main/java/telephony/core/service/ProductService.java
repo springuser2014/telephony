@@ -1,6 +1,5 @@
 package telephony.core.service;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-    List<String> fetchAllImeiInUse(Session session) 
+    List<String> fetchAllImeiInUse(SessionDto session) 
     	throws SessionServiceException;
 
     /**
@@ -31,7 +30,7 @@ public interface ProductService extends BasicService<Product> {
      * @param session TODO
      * @return asd.
      */
-    List<String> fetchAllProducersInUse(Session session);
+    List<String> fetchAllProducersInUse(SessionDto session);
 
     /**
      * asd.
@@ -39,7 +38,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-    List<String> fetchAllModels(Session session) 
+    List<String> fetchAllModels(SessionDto session) 
     	throws SessionServiceException;
 
     /**
@@ -47,7 +46,7 @@ public interface ProductService extends BasicService<Product> {
      * @param session TODO
      * @return asd.
      */
-    List<String> fetchAllColors(Session session);
+    List<String> fetchAllColors(SessionDto session);
 
     
     /**
@@ -58,7 +57,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-    List<Product> fetchAllProducts(Session session, Long storeId, ProductStatus productStatus) 
+    List<Product> fetchAllProducts(SessionDto session, Long storeId, ProductStatus productStatus) 
     	throws SessionServiceException;
 
     // TODO: refactor method below
@@ -68,7 +67,7 @@ public interface ProductService extends BasicService<Product> {
      * @param store asd.
      * @param products asd.
      */
-    void moveProducts(Session session, Store store, List<Product> products);
+    void moveProducts(SessionDto session, Store store, List<Product> products);
     
     /**
      * asd.
@@ -78,7 +77,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-    Product fetchProductByImeiAndStoreId(Session session, String imei, Long storeId) 
+    Product fetchProductByImeiAndStoreId(SessionDto session, String imei, Long storeId) 
     		throws SessionServiceException;
 
     /**
@@ -88,7 +87,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-    List<Product> findByCriteria(Session session, ProductFilterCriteria filters) 
+    List<Product> findByCriteria(SessionDto session, ProductFilterCriteria filters) 
     		throws SessionServiceException;
 
     /**
@@ -98,7 +97,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
-	List<Product> findByStore(Session session, Store store) 
+	List<Product> findByStore(SessionDto session, Store store) 
 			throws SessionServiceException;
 
 	/**
@@ -108,7 +107,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	List<Product> findByIMEIs(Session session, List<String> imeis) 
+	List<Product> findByIMEIs(SessionDto session, List<String> imeis) 
 			throws SessionServiceException;
 
 	/**
@@ -117,7 +116,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param id as.
 	 * @return a.
 	 */
-	Product findById(Session session, long id);
+	Product findById(SessionDto session, long id);
 
 	/**
 	 * asd .
@@ -125,7 +124,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param coll as.
 	 * @return as.
 	 */
-	Collection<Product> findById(Session session, Collection<Long> coll);
+	Collection<Product> findById(SessionDto session, Collection<Long> coll);
 
 	/**
 	 * asd.
@@ -133,7 +132,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param product a.
 	 * @return asd.
 	 */
-	Product update(Session session, Product product);
+	Product update(SessionDto session, Product product);
 
 	/**
 	 * asd.
@@ -141,7 +140,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param imei as.
 	 * @return asd.
 	 */
-	Product findByIMEI(Session session, String imei);
+	Product findByIMEI(SessionDto session, String imei);
 
 	/**
 	 * asdsa.
@@ -149,37 +148,37 @@ public interface ProductService extends BasicService<Product> {
 	 * @param coll a.
 	 * @return ad.
 	 */
-	Collection<Product> updateCollection(Session session, Collection<Product> coll);
+	Collection<Product> updateCollection(SessionDto session, Collection<Product> coll);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param product a.
 	 */
-	void remove(Session session, Product product);
+	void remove(SessionDto session, Product product);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param coll a.
 	 */
-	void removeCollection(Session session, Collection<Product> coll);
+	void removeCollection(SessionDto session, Collection<Product> coll);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param coll ads.
 	 */
-	void removeCollectionByIds(Session session, Collection<Long> coll);
+	void removeCollectionByIds(SessionDto session, Collection<Long> coll);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param id ads.
 	 */
-	void removeById(Session session, long id);
+	void removeById(SessionDto session, long id);
 
 
-	ProductFetchResponse find(ProductFetchRequest req)
+	ProductFetchResponseDto find(ProductFetchRequestDto req)
 			throws SessionServiceException;
 }

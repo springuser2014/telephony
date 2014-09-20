@@ -8,7 +8,7 @@ import telephony.core.dao.SaleComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -35,7 +35,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void report(Session session, SaleComplaint complaint) {
+	public void report(SessionDto session, SaleComplaint complaint) {
 		
 		// TODO session's validation
 		
@@ -44,7 +44,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public Complaint update(Session session, SaleComplaint complaint) {
+	public Complaint update(SessionDto session, SaleComplaint complaint) {
 		
 		// TODO session's validation
 		
@@ -53,7 +53,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public Collection<SaleComplaint> update(Session session, Collection<SaleComplaint> complaints) {
+	public Collection<SaleComplaint> update(SessionDto session, Collection<SaleComplaint> complaints) {
 		
 		// TODO session's validation
 		
@@ -62,7 +62,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void markAsInProgress(Session session, long complaintId) {
+	public void markAsInProgress(SessionDto session, long complaintId) {
 
 		// TODO session's validation
 		
@@ -72,7 +72,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void markAsAccepted(Session session, long complaintId) {
+	public void markAsAccepted(SessionDto session, long complaintId) {
 	
 		// TODO session's validation
 
@@ -81,7 +81,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void markAsRejected(Session session, long complaintId) {
+	public void markAsRejected(SessionDto session, long complaintId) {
 
 		// TODO session's validation
 
@@ -90,7 +90,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void markAsResolved(Session session, long complaintId) {
+	public void markAsResolved(SessionDto session, long complaintId) {
 
 		// TODO session's validation
 
@@ -99,7 +99,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void removeById(Session session, long complaintId) {
+	public void removeById(SessionDto session, long complaintId) {
 		
 		// TODO session's validation
 		
@@ -108,7 +108,7 @@ implements SaleComplaintService {
 
 	@Transactional
 	@Override
-	public void removeByIds(Session session, Collection<Long> complaintIds) {
+	public void removeByIds(SessionDto session, Collection<Long> complaintIds) {
 
 		// TODO session's validation
 		

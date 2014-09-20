@@ -38,7 +38,7 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public List<String> fetchAllImeiInUse(Session session) 
+	public List<String> fetchAllImeiInUse(SessionDto session) 
 			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
 		
@@ -53,7 +53,7 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public List<String> fetchAllProducersInUse(Session session) {
+	public List<String> fetchAllProducersInUse(SessionDto session) {
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
@@ -73,7 +73,7 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public List<String> fetchAllModels(Session session) 
+	public List<String> fetchAllModels(SessionDto session) 
 			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 		
@@ -97,7 +97,7 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public List<String> fetchAllColors(Session session) {
+	public List<String> fetchAllColors(SessionDto session) {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
@@ -119,7 +119,7 @@ implements ProductService {
 	@Transactional
 	@Override
 	public List<Product> fetchAllProducts(
-			Session session, Long storeId, ProductStatus productStatus) 
+			SessionDto session, Long storeId, ProductStatus productStatus) 
 			throws SessionServiceException {
 		
 		sessionService.validate(session);
@@ -137,7 +137,7 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public void moveProducts(Session session, Store store, 
+	public void moveProducts(SessionDto session, Store store, 
 			List<Product> products) {
 		
 		logger.debug("ProductServiceImpl.moveProducts starts ");
@@ -155,7 +155,7 @@ implements ProductService {
 	@Override
 	@Transactional
 	public Product fetchProductByImeiAndStoreId(
-			Session session, String imei, Long storeId) 
+			SessionDto session, String imei, Long storeId) 
 			throws SessionServiceException {
 		
 		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
@@ -170,7 +170,7 @@ implements ProductService {
 	@Override
 	@Transactional
 	public List<Product> findByCriteria(
-			Session session, ProductFilterCriteria parameterObject) 
+			SessionDto session, ProductFilterCriteria parameterObject) 
 			throws SessionServiceException {
 		
 		logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
@@ -202,14 +202,14 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 
 		return productsDao.count();
 	}
 
 	@Override
 	@Transactional
-	public List<Product> findByStore(Session session, Store store) 
+	public List<Product> findByStore(SessionDto session, Store store) 
 			throws SessionServiceException {
 		
 		logger.info("findByStore starts");
@@ -222,7 +222,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public List<Product> findByIMEIs(Session session, List<String> imeis) 
+	public List<Product> findByIMEIs(SessionDto session, List<String> imeis) 
 			throws SessionServiceException {
 
 		logger.info("findByStore starts");
@@ -235,7 +235,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public Product findById(Session session, long id) {
+	public Product findById(SessionDto session, long id) {
 		
 		logger.info("findById starts");
 		logger.info("params : [ id : {} ]", id);
@@ -245,7 +245,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public Collection<Product> findById(Session session, Collection<Long> coll) {
+	public Collection<Product> findById(SessionDto session, Collection<Long> coll) {
 		logger.info("findById starts");
 		logger.info("params : [ numberOfIds : {} ]", coll.size());
 		
@@ -255,7 +255,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public Product update(Session session, Product product) {
+	public Product update(SessionDto session, Product product) {
 		logger.info("update starts");
 		logger.info("params : [ product : {} ]", product);
 		
@@ -264,7 +264,7 @@ implements ProductService {
 	
 	@Transactional
 	@Override
-	public Product findByIMEI(Session session, String imei) {
+	public Product findByIMEI(SessionDto session, String imei) {
 		logger.info("update starts");
 		logger.info("params : [ imei: {} ]", imei);
 		
@@ -273,7 +273,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public Collection<Product> updateCollection(Session session, Collection<Product> coll) {
+	public Collection<Product> updateCollection(SessionDto session, Collection<Product> coll) {
 		logger.info("updateCollection starts");
 		logger.info("params : [ numberOfProducts: {} ]", coll.size());
 		
@@ -282,7 +282,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public void remove(Session session, Product product) {
+	public void remove(SessionDto session, Product product) {
 		logger.info("remove starts");
 		logger.info("params : [ product: {} ]", product);
 		
@@ -291,7 +291,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public void removeCollection(Session session, Collection<Product> coll) {
+	public void removeCollection(SessionDto session, Collection<Product> coll) {
 		logger.info("removeCollection starts");
 		logger.info("params : [ numberOfproduct: {} ]", coll.size());
 		
@@ -300,7 +300,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public void removeCollectionByIds(Session session, Collection<Long> coll) {
+	public void removeCollectionByIds(SessionDto session, Collection<Long> coll) {
 		logger.info("removeCollection starts");
 		logger.info("params : [ numberOfproduct: {} ]", coll.size());
 		
@@ -309,7 +309,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public void removeById(Session session, long id) {
+	public void removeById(SessionDto session, long id) {
 		logger.info("remove starts");
 		logger.info("params : [ id: {} ]", id);
 		
@@ -318,13 +318,13 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public ProductFetchResponse find(ProductFetchRequest req)
+	public ProductFetchResponseDto find(ProductFetchRequestDto req)
 		throws SessionServiceException 
 	{
 
 		logger.debug("ProductServiceImpl.find starts ");
 		
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setUsername(req.getUsername())
 				.setSessionId(req.getSessionId());
 		
@@ -344,11 +344,11 @@ implements ProductService {
 
 		List<Product> result = productsDao.findByCriteria(parameterObject);
 		
-		List<ProductSearchBean> lst = new ArrayList<ProductSearchBean>();
+		List<ProductSearchDto> lst = new ArrayList<ProductSearchDto>();
 		
 		for(Product p : result) {
 					
-			ProductSearchBean b = new ProductSearchBean();
+			ProductSearchDto b = new ProductSearchDto();
 			
 			b.setColor(p.getColor());
 			b.setDeliveryId(p.getDelivery().getId());
@@ -372,7 +372,7 @@ implements ProductService {
 
 		logger.info("ProductServiceImpl.find ends");
 
-		ProductFetchResponse resp = new ProductFetchResponse();
+		ProductFetchResponseDto resp = new ProductFetchResponseDto();
 		resp.setProducts(lst);
 		
 		return resp;

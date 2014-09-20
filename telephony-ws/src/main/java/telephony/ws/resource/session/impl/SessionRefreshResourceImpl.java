@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionRefreshResource;
@@ -44,11 +44,11 @@ public class SessionRefreshResourceImpl extends TelephonyServerResource
 		JSONObject req = new JsonRepresentation(entity).getJsonObject();
 		String name = req.getString("username");
 		String sessionId = req.getString("sessionId");
-		Session sessionToRefresh = Session.create(name, sessionId);
+		SessionDto sessionToRefresh = SessionDto.create(name, sessionId);
 
 		logger.info(" username = {} ", name);
 		logger.info(" sessionId = {} ", sessionId);
-		Session session = null;
+		SessionDto session = null;
 
 		try {
 			session = sessionService.refresh(sessionToRefresh);

@@ -12,20 +12,20 @@ public interface InformationService {
      * @param request
      * @return
      */
-    DashboardDetailsResponse dashboardDetails(DashboardDetailsRequest request);
+    DashboardDetailsResponseDto dashboardDetails(DashboardDetailsRequestDto request);
     
     /**
      * 
      * @param request
      * @return
      */
-    ProducersResponse fetchProducers(ProducersRequest request);
+    ProducersResponseDto fetchProducers(ProducersRequestDto request);
     
     /**
      * 
      * @param request
      * @return
      */
-    ModelsResponse fetchModels(ModelsRequest request);
+    ModelsResponseDto fetchModels(ModelsRequestDto request);
     
 }

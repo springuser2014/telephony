@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
-import telephony.core.service.dto.ContactBean;
+import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.ContactListResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -26,7 +26,7 @@ import telephony.ws.resource.contact.ContactsFetchResource;
 
 import com.google.inject.Inject;
 
-import static telephony.core.service.dto.ContactBean.create;
+import static telephony.core.service.dto.ContactDto.create;
 
 /**
  * asd.
@@ -44,7 +44,7 @@ implements ContactsFetchResource {
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation fetch(JsonRepresentation entity) 
+	public JsonRepresentation fetch(ContactFetchRequestDto entity) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException {
         
 		logger.info("ContactsFetchResource.fetch starts");
@@ -57,7 +57,7 @@ implements ContactsFetchResource {
         logger.info(" sessionId = {} ", sessionId);
         
         List<Contact> contacts = contactService.find(null, null);       
-        List<ContactBean> contactsToJsonize = convertToBeans(contacts);
+        List<ContactDto> contactsToJsonize = convertToBeans(contacts);
         
         ContactListResponse response = new ContactListResponse();
         response.setContacts(contactsToJsonize);
@@ -66,9 +66,9 @@ implements ContactsFetchResource {
     }
 
 
-	private List<ContactBean> convertToBeans(List<Contact> contacts) {
+	private List<ContactDto> convertToBeans(List<Contact> contacts) {
 		
-		List<ContactBean> contactsToJsonize =  new ArrayList<ContactBean>();
+		List<ContactDto> contactsToJsonize =  new ArrayList<ContactDto>();
         
         for (Contact c : contacts) {
         	contactsToJsonize.add(create(c));

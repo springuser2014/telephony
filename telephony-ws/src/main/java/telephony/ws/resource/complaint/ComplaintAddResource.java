@@ -1,12 +1,12 @@
 package telephony.ws.resource.complaint;
 
-import telephony.core.service.dto.ComplaintAddRequest;
-import telephony.core.service.dto.ComplaintAddResponse;
+import telephony.core.service.dto.ComplaintAddRequestDto;
+import telephony.core.service.dto.ComplaintAddResponseDto;
 
 public interface ComplaintAddResource {
 	
 	String URL = "/complaint/add";
 
-	ComplaintAddResponse add(ComplaintAddRequest request);
+	ComplaintAddResponseDto add(ComplaintAddRequestDto request);
 
 }

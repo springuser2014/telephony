@@ -5,7 +5,7 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -21,7 +21,7 @@ public interface SaleService extends BasicService<Sale> {
      * @throws SessionServiceException as.
      * @throws SaleServiceException asd.
      */
-    List<Sale> find(Session session)
+    List<Sale> find(SessionDto session)
     	throws SessionServiceException, SaleServiceException;
     	
     /**
@@ -34,7 +34,7 @@ public interface SaleService extends BasicService<Sale> {
      * @throws SessionServiceException asd.
      * @throws SaleServiceException asd.
      */
-    void add(Session session, Sale sale, List<Product> products, Long storeId, Long contactId)
+    void add(SessionDto session, Sale sale, List<Product> products, Long storeId, Long contactId)
     	throws SessionServiceException, SaleServiceException;
     
     /**
@@ -44,7 +44,7 @@ public interface SaleService extends BasicService<Sale> {
      * @throws SessionServiceException asd.
      * @throws SaleServiceException asd.
      */
-    void delete(Session session, Sale saleToCancel) 
+    void delete(SessionDto session, Sale saleToCancel) 
     	throws SessionServiceException, SaleServiceException;
     
     /**
@@ -54,7 +54,7 @@ public interface SaleService extends BasicService<Sale> {
      * @throws SessionServiceException asd.
      * @throws SaleServiceException asd.
      */
-    void update(Session session, Sale saleToUpdate)
+    void update(SessionDto session, Sale saleToUpdate)
     		throws SessionServiceException, SaleServiceException;
     
     /**
@@ -65,7 +65,7 @@ public interface SaleService extends BasicService<Sale> {
      * @throws SessionServiceException asd.
      * @throws SaleServiceException asd.
      */
-    Sale findById(Session session, Long saleId)
+    Sale findById(SessionDto session, Long saleId)
     		throws SessionServiceException, SaleServiceException;
 
     /**
@@ -75,7 +75,7 @@ public interface SaleService extends BasicService<Sale> {
      * @return TODO
      * @throws SessionServiceException 
      */
-	Sale findByLabel(Session session, String label) 
+	Sale findByLabel(SessionDto session, String label) 
 			throws SessionServiceException;
 
 }

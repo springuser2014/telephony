@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import telephony.core.entity.jpa.Pricing;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * ads.
@@ -18,7 +18,7 @@ public interface PricingService extends BasicService<Pricing> {
 	 * @param to a.
 	 * @return a.
 	 */
-	Collection<Pricing> findByDateRange(Session session, Date from, Date to);
+	Collection<Pricing> findByDateRange(SessionDto session, Date from, Date to);
 
 	/**
 	 * asd.
@@ -26,7 +26,7 @@ public interface PricingService extends BasicService<Pricing> {
 	 * @param id a. 
 	 * @return a.
 	 */
-	Pricing findById(Session session, long id);
+	Pricing findById(SessionDto session, long id);
 
 	/**
 	 * asd.
@@ -34,7 +34,7 @@ public interface PricingService extends BasicService<Pricing> {
 	 * @param ids a.
 	 * @return a.
 	 */
-	Collection<Pricing> findByIds(Session session, Collection<Long> ids);
+	Collection<Pricing> findByIds(SessionDto session, Collection<Long> ids);
 
 	/**
 	 * ads.
@@ -42,7 +42,7 @@ public interface PricingService extends BasicService<Pricing> {
 	 * @param pricing asd.
 	 * @return asd.
 	 */
-	Pricing update(Session session, Pricing pricing);
+	Pricing update(SessionDto session, Pricing pricing);
 
 	/**
 	 * ads.
@@ -50,34 +50,34 @@ public interface PricingService extends BasicService<Pricing> {
 	 * @param pricings asd.
 	 * @return asd.
 	 */
-	Collection<Pricing> update(Session session, Collection<Pricing> pricings);
+	Collection<Pricing> update(SessionDto session, Collection<Pricing> pricings);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param pricing as.
 	 */
-	void remove(Session session, Pricing pricing);
+	void remove(SessionDto session, Pricing pricing);
 	
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param pricings as.
 	 */
-	void remove(Session session, Collection<Pricing> pricings);
+	void remove(SessionDto session, Collection<Pricing> pricings);
 	
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param id asd.
 	 */
-	void removeById(Session session, long id);
+	void removeById(SessionDto session, long id);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param ids a.
 	 */
-	void removeByIds(Session session, Collection<Long> ids);
+	void removeByIds(SessionDto session, Collection<Long> ids);
 
 }

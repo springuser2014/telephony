@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
-import telephony.core.service.dto.SignInBean;
+import telephony.core.service.dto.SignInDto;
 import telephony.ws.resource.session.SessionInitializationResource;
 import telephony.ws.test.TestsConfig;
 
@@ -37,7 +37,7 @@ public class RestAssuredTest {
 	@Test
 	public void testSessionInitialization() throws Exception {
 		
-		SignInBean auth = SignInBean.create()
+		SignInDto auth = SignInDto.create()
 				.password("rfaysdhaiufsiuf")
 				.username("user1@gmail.com");		
 		

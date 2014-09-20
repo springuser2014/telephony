@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.UserFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 
@@ -38,7 +38,7 @@ implements UserService {
 
     @Override
     @Transactional
-    public final List<User> find(Session session) 
+    public final List<User> find(SessionDto session) 
     		throws SessionServiceException {
        
     	logger.debug("UserServiceImpl.findAllUsers starts");
@@ -54,7 +54,7 @@ implements UserService {
     
 	@Override
 	@Transactional
-	public List<User> findUsersByStoreId(Session session, Long storeId) 
+	public List<User> findUsersByStoreId(SessionDto session, Long storeId) 
 			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.findUsersByStoreId starts");
@@ -70,7 +70,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void deleteUserById(Session session, User user)
+	public void deleteUserById(SessionDto session, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.deleteUserById starts");
@@ -83,7 +83,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void addUser(Session session, User user)
+	public void addUser(SessionDto session, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.addUser starts");
@@ -95,7 +95,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void updateUser(Session session, User user)
+	public void updateUser(SessionDto session, User user)
 			throws SessionServiceException, UserServiceException {
 		
 		logger.debug("UserServiceImpl.updateUser starts");
@@ -107,7 +107,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		
 		return usersDao.count();
 	}
@@ -115,7 +115,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public User findByName(Session session, String username) {
+	public User findByName(SessionDto session, String username) {
 		logger.debug("UserServiceImpl.findByName starts");		
 		logger.debug("params : [ username : {} ]", username);
 
@@ -125,7 +125,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void addRoles(Session session, User user, List<Role> rolesToAdd) 
+	public void addRoles(SessionDto session, User user, List<Role> rolesToAdd) 
 			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
@@ -145,7 +145,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void deleteRoles(Session session, User user, Set<Role> rolesToDelete) 
+	public void deleteRoles(SessionDto session, User user, Set<Role> rolesToDelete) 
 			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
@@ -160,7 +160,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void addStores(Session session, User user, List<Store> storesToAdd) 
+	public void addStores(SessionDto session, User user, List<Store> storesToAdd) 
 			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");
@@ -180,7 +180,7 @@ implements UserService {
 
 	@Override
 	@Transactional
-	public void deleteStores(Session session, User user, Set<Store> storeToDelete) 
+	public void deleteStores(SessionDto session, User user, Set<Store> storeToDelete) 
 			throws SessionServiceException {
 		
 		logger.debug("UserServiceImpl.addRoles starts");

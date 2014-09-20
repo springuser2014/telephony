@@ -2,13 +2,13 @@ package telephony.core.service.dto;
 
 public class DeliveryDetailsResponse {
 	
-	private DeliveryBean delivery;
+	private DeliveryDto delivery;
 
-	public DeliveryBean getDelivery() {
+	public DeliveryDto getDelivery() {
 		return delivery;
 	}
 
-	public void setDelivery(DeliveryBean delivery) {
+	public void setDelivery(DeliveryDto delivery) {
 		this.delivery = delivery;
 	}
 	

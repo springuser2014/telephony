@@ -11,7 +11,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -37,7 +37,7 @@ public class ComplaintServicest extends BaseCoreTest {
 //	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void testCount() {
 		
-		Session session = Session.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long count = complaintService.count(session);
 		
 		assertTrue(count == 8);		

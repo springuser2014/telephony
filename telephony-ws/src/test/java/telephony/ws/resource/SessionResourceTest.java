@@ -20,7 +20,7 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
 import telephony.core.service.dto.SessionBean;
-import telephony.core.service.dto.SignInBean;
+import telephony.core.service.dto.SignInDto;
 import telephony.ws.bean.UserBean;
 import telephony.ws.resource.session.SessionDestroyResource;
 import telephony.ws.resource.session.SessionInitializationResource;
@@ -102,7 +102,7 @@ public class SessionResourceTest extends BaseWSTest {
 	@Test
 	public void testSessionInitialization() throws Exception {
 		
-		SignInBean auth = SignInBean.create()
+		SignInDto auth = SignInDto.create()
 				.password("rfaysdhaiufsiuf")
 				.username("user1@gmail.com");		
 		

@@ -21,7 +21,7 @@ import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.entity.jpa.SaleComplaint;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -55,7 +55,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
@@ -90,7 +90,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
@@ -122,7 +122,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
@@ -155,7 +155,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
@@ -178,7 +178,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
@@ -201,7 +201,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
@@ -224,7 +224,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
@@ -247,7 +247,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
@@ -270,7 +270,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Session session = new Session();
+		SessionDto session = new SessionDto();
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		

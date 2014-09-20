@@ -6,7 +6,7 @@ import java.util.List;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.StoreFilterCriteria;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -22,7 +22,7 @@ public interface StoreService extends BasicService<Store> {
      * @return asd.
      * @throws SessionServiceException  asd.
      */
-    List<Store> find(Session session, StoreFilterCriteria filters) 
+    List<Store> find(SessionDto session, StoreFilterCriteria filters) 
     		throws SessionServiceException;
 
     /**
@@ -31,7 +31,7 @@ public interface StoreService extends BasicService<Store> {
      * @param store aasd.
      * @throws SessionServiceException 
      */
-	void add(Session session, Store store) 
+	void add(SessionDto session, Store store) 
 			throws SessionServiceException;
 
 	/**
@@ -41,7 +41,7 @@ public interface StoreService extends BasicService<Store> {
 	 * @throws SessionServiceException asd.
 	 * @return asd.
 	 */
-	Store findByLabel(Session session, String storelabel) 
+	Store findByLabel(SessionDto session, String storelabel) 
 			throws SessionServiceException;
 
 	/**
@@ -50,7 +50,7 @@ public interface StoreService extends BasicService<Store> {
 	 * @param storeToEdit asd.
 	 * @throws SessionServiceException asd.
 	 */
-	void update(Session session, Store storeToEdit) 
+	void update(SessionDto session, Store storeToEdit) 
 			throws SessionServiceException;
 
 	/**
@@ -59,7 +59,7 @@ public interface StoreService extends BasicService<Store> {
 	 * @param storeToDelete asd.
 	 * @throws SessionServiceException 
 	 */
-	void remove(Session session, Store storeToDelete) 
+	void remove(SessionDto session, Store storeToDelete) 
 			throws SessionServiceException;
 
 	/**
@@ -69,6 +69,6 @@ public interface StoreService extends BasicService<Store> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
-	Store findById(Session session, long moveToStoreId) 
+	Store findById(SessionDto session, long moveToStoreId) 
 			throws SessionServiceException;
 }

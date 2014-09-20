@@ -1,11 +1,11 @@
 package telephony.ws.resource.complaint;
 
-import telephony.core.service.dto.ComplaintEditRequest;
-import telephony.core.service.dto.ComplaintEditResponse;
+import telephony.core.service.dto.ComplaintEditRequestDto;
+import telephony.core.service.dto.ComplaintEditResponseDto;
 
 public interface ComplaintEditResource {
 
 	String URL = "/complaint/edit";
 	
-	ComplaintEditResponse edit(ComplaintEditRequest request);
+	ComplaintEditResponseDto edit(ComplaintEditRequestDto request);
 }

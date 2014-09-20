@@ -1,11 +1,11 @@
 package telephony.ws.resource.complaint;
 
-import telephony.core.service.dto.ComplaintDeleteRequest;
-import telephony.core.service.dto.ComplaintDeleteResponse;
+import telephony.core.service.dto.ComplaintDeleteRequestDto;
+import telephony.core.service.dto.ComplaintDeleteResponseDto;
 
 public interface ComplaintDeleteResource {
 
 	String URL = "/complaint/delete";
 	
-	ComplaintDeleteResponse delete(ComplaintDeleteRequest request);
+	ComplaintDeleteResponseDto delete(ComplaintDeleteRequestDto request);
 }

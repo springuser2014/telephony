@@ -3,7 +3,7 @@ package telephony.core.service;
 import java.util.Collection;
 
 import telephony.core.entity.jpa.Producer;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -16,7 +16,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param label a.
 	 * @return a.
 	 */
-	Producer findByLabel(Session session, String label);
+	Producer findByLabel(SessionDto session, String label);
 
 	/**
 	 * asd.
@@ -24,7 +24,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param id a.
 	 * @return a.
 	 */
-	Producer findById(Session session, long id);
+	Producer findById(SessionDto session, long id);
 
 	/**
 	 * asd.
@@ -32,7 +32,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param ids a.
 	 * @return d.
 	 */
-	Collection<Producer> findById(Session session, Collection<Long> ids);
+	Collection<Producer> findById(SessionDto session, Collection<Long> ids);
 
 	/**
 	 * ads.
@@ -40,7 +40,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param producer a.
 	 * @return asd.
 	 */
-	Producer update(Session session, Producer producer);
+	Producer update(SessionDto session, Producer producer);
 
 	/**
 	 * asd.
@@ -48,19 +48,19 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param producers a.
 	 * @return a.
 	 */
-	Collection<Producer> update(Session session, Collection<Producer> producers);
+	Collection<Producer> update(SessionDto session, Collection<Producer> producers);
 
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param id a.
 	 */
-	void removeById(Session session, Long id);
+	void removeById(SessionDto session, Long id);
 	
 	/**
 	 * asd.
 	 * @param session TODO
 	 * @param ids asd.
 	 */
-	void removeById(Session session, Collection<Long> ids);
+	void removeById(SessionDto session, Collection<Long> ids);
 }

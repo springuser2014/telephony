@@ -1,11 +1,11 @@
 package telephony.ws.resource.sale;
 
-import telephony.core.service.dto.SalesDetailsRequest;
-import telephony.core.service.dto.SalesDetailsResponse;
+import telephony.core.service.dto.SalesDetailsRequestDto;
+import telephony.core.service.dto.SalesDetailsResponseDto;
 
 public interface SalesDetailsResource {
 
 	String URL = "/sales/details";
 	
-	SalesDetailsResponse details(SalesDetailsRequest request);
+	SalesDetailsResponseDto details(SalesDetailsRequestDto request);
 }

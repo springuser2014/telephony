@@ -9,7 +9,7 @@ import org.restlet.resource.Post;
  */
 public interface StoreFetchUsersResource {
 	
-	String URL = "/store/fetchUsers/{id}";
+	String URL = "/store/users/{id}";
 
 	/**
 	 * asd.

@@ -18,7 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -55,7 +55,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		
 		// when
 		sessionService.setSessionValidity(30 * 60 * 1000);
-		Session session = sessionService.init(username, password);
+		SessionDto session = sessionService.init(username, password);
 		
 		// then
 		assertNotNull("For exisiting user should return session object", session);
@@ -73,10 +73,10 @@ public class SessionServiceTest extends BaseCoreTest {
 		String username = TestData.USER4_NAME;
 		String password = TestData.USER4_PASSWORD;
 		sessionService.setSessionValidity(30 * 60 * 1000);
-		Session sessionToRefresh = sessionService.init(username, password);		
+		SessionDto sessionToRefresh = sessionService.init(username, password);		
 		
 		// when 
-		Session refreshedSession = sessionService.refresh(sessionToRefresh);
+		SessionDto refreshedSession = sessionService.refresh(sessionToRefresh);
 		
 		// then
 		boolean isValidAfterRefresh = 
@@ -103,10 +103,10 @@ public class SessionServiceTest extends BaseCoreTest {
 		// TODO: move mock definition to *Module
 		this.sessionServiceMock = mock(SessionService.class);		
 		when(this.sessionServiceMock.init(username , password))
-			.thenReturn(new Session(username, sessionId, validity));
+			.thenReturn(new SessionDto(username, sessionId, validity));
 		
 		// when
-		Session session = this.sessionServiceMock.init(username, password);
+		SessionDto session = this.sessionServiceMock.init(username, password);
 				
 		// then
 		assertNotNull("Should return initialized session's object", session);
@@ -125,7 +125,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		String password = TestData.USER1_PASSWORD;
 		
 		// when 
-		Session sessionToValidate = sessionService.init(username, password);	
+		SessionDto sessionToValidate = sessionService.init(username, password);	
 		boolean validated = sessionService.validate(sessionToValidate);
 		
 		// then
@@ -145,7 +145,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		String password = TestData.USER2_PASSWORD;
 		
 		sessionService.setSessionValidity(new Integer(-60 * 60 * 24));
-		Session sessionToValidate = sessionService.init(username, password);		
+		SessionDto sessionToValidate = sessionService.init(username, password);		
 				
 		// when 
 		boolean validated = sessionService.validate(sessionToValidate);
@@ -166,7 +166,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String password = TestData.USER1_PASSWORD;
 		sessionService.setSessionValidity(new Integer(30 * 60 * 1000));
-		Session sessionToDelete = sessionService.init(username, password);
+		SessionDto sessionToDelete = sessionService.init(username, password);
 		
 		// when
 		boolean destroyed = sessionService.destroy(sessionToDelete);

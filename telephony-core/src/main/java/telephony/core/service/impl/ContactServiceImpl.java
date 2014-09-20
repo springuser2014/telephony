@@ -13,7 +13,7 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -34,13 +34,13 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		return contactsDao.count();
 	}
 
 	@Override
 	@Transactional
-	public List<Contact> find(Session session, ContactFilterCriteria filters)
+	public List<Contact> find(SessionDto session, ContactFilterCriteria filters)
 			throws SessionServiceException, ContactServiceException {
 
 		logger.debug("ContactServiceImpl.fetchAll starts");
@@ -57,7 +57,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public void add(Session session, Contact newContact) 
+	public void add(SessionDto session, Contact newContact) 
 			throws SessionServiceException, ContactServiceException {
 		
 		logger.debug("ContactServiceImpl.addNewContact starts");
@@ -70,7 +70,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public void updateContact(Session session, Contact contactToUpdate) 
+	public void updateContact(SessionDto session, Contact contactToUpdate) 
 			throws SessionServiceException, ContactServiceException {
 		
 		logger.debug("ContactServiceImpl.updateContact starts");
@@ -83,7 +83,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public void deleteContact(Session session, Contact contactToDelete)
+	public void deleteContact(SessionDto session, Contact contactToDelete)
 			throws SessionServiceException, ContactServiceException {
 		
 		logger.debug("ContactServiceImpl.deleteContact starts");
@@ -96,7 +96,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public Contact findByLabel(Session session, String label)
+	public Contact findByLabel(SessionDto session, String label)
 			throws SessionServiceException, ContactServiceException {
 		
 		logger.debug("ContactServiceImpl.findByLabel starts");
@@ -110,7 +110,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public Contact findById(Session session, Long contactToDeleteId) 
+	public Contact findById(SessionDto session, Long contactToDeleteId) 
 			throws SessionServiceException {
 		
 		logger.debug("ContactServiceImpl.findById starts");

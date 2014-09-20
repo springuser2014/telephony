@@ -63,7 +63,7 @@ implements DeliveryService {
 
     @Transactional
     @Override
-    public void add(Session session, Delivery newDelivery, 
+    public void add(SessionDto session, Delivery newDelivery, 
     		List<Product> products, Long storeId, Long contactId)
     		throws SessionServiceException, DeliveryServiceException {
     	
@@ -96,7 +96,7 @@ implements DeliveryService {
 
     @Override
     @Transactional
-    public List<Delivery> find(Session session, DeliveryFilterCriteria filters)
+    public List<Delivery> find(SessionDto session, DeliveryFilterCriteria filters)
     		throws SessionServiceException, DeliveryServiceException{
         
         logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");        
@@ -113,13 +113,13 @@ implements DeliveryService {
     
     @Override
     @Transactional
-    public DeliveriesFetchResponse findDeliveries(DeliveriesFetchRequest request)
+    public DeliveriesFetchResponseDto findDeliveries(DeliveriesFetchRequestDto request)
     		throws SessionServiceException, DeliveryServiceException{
         
         logger.debug("DeliveryServiceImpl.findDeliveries starts");        
 		logger.debug("params : [request : {}]", request);
 
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setSessionId(request.getSessionId())
 				.setUsername(request.getUsername());
 			
@@ -127,9 +127,9 @@ implements DeliveryService {
 		
         List<Delivery> res = deliveriesDao.find(request.getFilters());
         
-        DeliveriesFetchResponse resp = new DeliveriesFetchResponse();
+        DeliveriesFetchResponseDto resp = new DeliveriesFetchResponseDto();
         
-        List<DeliveryBean> coll = new ArrayList<DeliveryBean>();
+        List<DeliveryDto> coll = new ArrayList<DeliveryDto>();
         
         for(Delivery d : res) {
         	coll.add(toDelivery(d));
@@ -142,13 +142,13 @@ implements DeliveryService {
     
     @Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		return deliveriesDao.count();
 	}
     
 	@Transactional
 	@Override
-	public void update(Session session, Delivery deliveryToUpdate) 
+	public void update(SessionDto session, Delivery deliveryToUpdate) 
 			throws SessionServiceException,
 			DeliveryServiceException {
 		
@@ -162,7 +162,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public void delete(Session session, Delivery delvieryToDelete) 
+	public void delete(SessionDto session, Delivery delvieryToDelete) 
 		throws SessionServiceException, DeliveryServiceException {
 		
 		logger.debug("DeliveryServiceImpl.delete starts");        
@@ -176,7 +176,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public Delivery findById(Session session, Long deliveryId) 
+	public Delivery findById(SessionDto session, Long deliveryId) 
 			throws SessionServiceException, DeliveryServiceException {
 		
 		logger.debug("DeliveryServiceImpl.findById starts");        
@@ -191,7 +191,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryAddResponse add(DeliveryAddRequest request) 
+	public DeliveryAddResponseDto add(DeliveryAddRequestDto request) 
 			throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// TODO : add validation
@@ -199,7 +199,7 @@ implements DeliveryService {
 		// TODO : add bean to entity converter
 		// TODO : add entity to bean converter
 		
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setSessionId(request.getSessionId())
 				.setUsername(request.getUsername());
 		
@@ -218,7 +218,7 @@ implements DeliveryService {
 		
 		Collection<Product> products = new ArrayList<Product>();
 		
-		for (ProductBean productBean : request.getProducts()) {
+		for (ProductDto productBean : request.getProducts()) {
 			
 			Model model = null;
 			Producer producer = null;
@@ -272,14 +272,14 @@ implements DeliveryService {
 			}
 		}
 		
-		DeliveryAddResponse resp = new DeliveryAddResponse();
+		DeliveryAddResponseDto resp = new DeliveryAddResponseDto();
 		resp.setSuccess(true);
 		
 		return resp;
 	}
 
 	// TODO : extract to converter
-	private Product toProduct(ProductBean bean, Delivery delivery, Store store, Model model) 
+	private Product toProduct(ProductDto bean, Delivery delivery, Store store, Model model) 
 			throws ParseException {
 
 		Product p = new Product();
@@ -298,14 +298,14 @@ implements DeliveryService {
 	public DeliveryDetailsResponse findDetails(DeliveryDetailsRequest request) 
 			throws SessionServiceException {
 		
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setSessionId(request.getSessionId())
 				.setUsername(request.getUsername());
 		
 		sessionService.validate(session);		
 
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
-		DeliveryBean bean = toDelivery(delivery);
+		DeliveryDto bean = toDelivery(delivery);
 		DeliveryDetailsResponse resp = new DeliveryDetailsResponse();
 		resp.setDelivery(bean);
 		
@@ -314,23 +314,23 @@ implements DeliveryService {
 
 	
 	// TODO extract to converter
-	private DeliveryBean toDelivery(Delivery delivery) {
+	private DeliveryDto toDelivery(Delivery delivery) {
 		
-		DeliveryBean bean = new DeliveryBean();
+		DeliveryDto bean = new DeliveryDto();
 		bean.setContactId(delivery.getContact().getId());
 		bean.setDateIn(delivery.getDateIn());
 		bean.setStoreId(delivery.getStore().getId());
 		bean.setId(delivery.getId());
 		bean.setLabel(delivery.getLabel());
 		
-		List<ProductBean> products = new ArrayList<ProductBean>();
+		List<ProductDto> products = new ArrayList<ProductDto>();
 		
 		if (delivery.getProducts() == null) {
 			delivery.setProducts(new ArrayList<Product>());
 		}
 		
 		for (Product prod : delivery.getProducts()) {
-			ProductBean p = toProduct(prod);
+			ProductDto p = toProduct(prod);
 			products.add(p);
 		}
 		
@@ -340,9 +340,9 @@ implements DeliveryService {
 	}
 
 	// TODO extract to converter
-	private ProductBean toProduct(Product product) {
+	private ProductDto toProduct(Product product) {
 		
-		ProductBean p = new ProductBean();
+		ProductDto p = new ProductDto();
 		p.setColor(product.getColor());
 		p.setImei(product.getImei());
 		p.setModel(product.getModel().getLabel());
@@ -366,14 +366,14 @@ implements DeliveryService {
 	
 	@Override
 	@Transactional
-	public DeliveryEditResponse edit(DeliveryEditRequest req) 
+	public DeliveryEditResponseDto edit(DeliveryEditRequestDto req) 
 			throws ParseException, DeliveryServiceException, SessionServiceException {
 	
-		DeliveryEditResponse resp =
-				new DeliveryEditResponse();
+		DeliveryEditResponseDto resp =
+				new DeliveryEditResponseDto();
 		
 
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setSessionId(req.getSessionId())
 				.setUsername(req.getUsername());
 		
@@ -405,7 +405,7 @@ implements DeliveryService {
 		
 		Collection<Product> products = new ArrayList<Product>();
 		
-		for (ProductBean bean:  req.getProductsToAdd()) {
+		for (ProductDto bean:  req.getProductsToAdd()) {
 			
 			Model model = null;
 			Producer producer = null;
@@ -485,7 +485,7 @@ implements DeliveryService {
 			}
 		}
 		
-		for (ProductEditBean bean : req.getProductsToEdit()) {
+		for (ProductEditDto bean : req.getProductsToEdit()) {
 			
 			Product product = productsDao.findById(bean.getId());
 			
@@ -522,7 +522,7 @@ implements DeliveryService {
 			
 			if (model != null && producer != null && model.getProducer().equals(producer)) {
 				product.setModel(model);
-			} else if (model != null && producer != null && !model.getProducer().equals(producer)) {
+			} else if (model != null && producer != null && !producer.equals(model.getProducer())) {
 				throw new DeliveryServiceException();
 			} else if (model == null && producer != null) {
 				model = new Model();
@@ -593,15 +593,15 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryDeleteResponse delete(DeliveryDeleteRequest req) throws SessionServiceException, DeliveryServiceException {
+	public DeliveryDeleteResponseDto delete(DeliveryDeleteRequestDto req) throws SessionServiceException, DeliveryServiceException {
 
-		Session session = Session.create()
+		SessionDto session = SessionDto.create()
 				.setUsername(req.getUsername())
 				.setSessionId(req.getSessionId());
 		
 		sessionService.validate(session);
 		
-		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
+		DeliveryDeleteResponseDto resp = new DeliveryDeleteResponseDto();
 		
 		Delivery deliveryToDelete = deliveriesDao.findById(req.getDeliveryId());
 		

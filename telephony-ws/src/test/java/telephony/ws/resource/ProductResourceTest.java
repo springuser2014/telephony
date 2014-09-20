@@ -24,7 +24,7 @@ import com.jayway.restassured.http.ContentType;
 public class ProductResourceTest extends BaseWSTest {
 	
 	private String authAndGetSessionId() {
-		SignInBean auth = SignInBean.create()
+		SignInDto auth = SignInDto.create()
 				.password("rfaysdhaiufsiuf")
 				.username("user1@gmail.com");		
 		
@@ -53,7 +53,7 @@ public class ProductResourceTest extends BaseWSTest {
 		ProductFilterCriteria filters = ProductFilterCriteria.create()
 				.setStatus(ProductStatus.SOLD);
 		
-		ProductFetchRequest req = new ProductFetchRequest();
+		ProductFetchRequestDto req = new ProductFetchRequestDto();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setFiltersCriteria(filters);
@@ -69,7 +69,7 @@ public class ProductResourceTest extends BaseWSTest {
 				.when()
 				.post(TESTING_APP + ProductsFetchResource.URL);
 		
-		ProductFetchResponse resp = gson.fromJson(res1.asString(), ProductFetchResponse.class);
+		ProductFetchResponseDto resp = gson.fromJson(res1.asString(), ProductFetchResponseDto.class);
 		
 		assertEquals(resp.getProducts().size(), 10);		
 	}

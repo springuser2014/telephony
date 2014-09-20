@@ -11,7 +11,7 @@ import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -50,7 +50,7 @@ implements StoreService {
     
     @Override
     @Transactional
-    public List<Store> find(Session session, StoreFilterCriteria filters) 
+    public List<Store> find(SessionDto session, StoreFilterCriteria filters) 
     		throws SessionServiceException {
 
         logger.info("StoreServiceImpl.fetchAllStores starts");
@@ -68,14 +68,14 @@ implements StoreService {
 
     @Override
 	@Transactional
-	public long count(Session session) {
+	public long count(SessionDto session) {
 		
 		return storesDao.count();
 	}
 
 	@Override
 	@Transactional
-	public void add(Session session, Store store) 
+	public void add(SessionDto session, Store store) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.add starts");
@@ -88,7 +88,7 @@ implements StoreService {
 
 	@Override
 	@Transactional
-	public Store findByLabel(Session session, String storelabel) 
+	public Store findByLabel(SessionDto session, String storelabel) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.findByLabel starts");
@@ -103,7 +103,7 @@ implements StoreService {
 
 	@Transactional
 	@Override
-	public void update(Session session, Store storeToEdit) 
+	public void update(SessionDto session, Store storeToEdit) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.edit starts");
@@ -116,7 +116,7 @@ implements StoreService {
 
 	@Transactional
 	@Override
-	public void remove(Session session, Store storeToDelete) 
+	public void remove(SessionDto session, Store storeToDelete) 
 			throws SessionServiceException {
 		
 		logger.debug("StoreServiceImpl.delete starts");
@@ -146,7 +146,7 @@ implements StoreService {
 
 	@Transactional
 	@Override
-	public Store findById(Session session, long moveToStoreId) 
+	public Store findById(SessionDto session, long moveToStoreId) 
 			throws SessionServiceException {
 
 		logger.debug("findById - params : [ session : {}, storeId : {}", 

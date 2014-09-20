@@ -25,7 +25,7 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @throws SessionServiceException 
      * @throws DeliveryServiceException 
      */
-    void add(Session session, Delivery newDelivery,
+    void add(SessionDto session, Delivery newDelivery,
         List<Product> products, Long storeId, Long contactId)
     		throws SessionServiceException, DeliveryServiceException;
 
@@ -37,7 +37,7 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    List<Delivery> find(Session session, DeliveryFilterCriteria filters)
+    List<Delivery> find(SessionDto session, DeliveryFilterCriteria filters)
     		throws SessionServiceException, DeliveryServiceException;
     
     /**
@@ -47,7 +47,7 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    void update(Session session, Delivery delvieryToUpdate)
+    void update(SessionDto session, Delivery delvieryToUpdate)
     	throws SessionServiceException, DeliveryServiceException;
 
     /**
@@ -57,7 +57,7 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @throws SessionServiceException asd.
      * @throws DeliveryServiceException asd.
      */
-    void delete(Session session, Delivery deliveryToDelete)
+    void delete(SessionDto session, Delivery deliveryToDelete)
     	throws SessionServiceException, DeliveryServiceException;
 
     /**
@@ -68,7 +68,7 @@ public interface DeliveryService extends BasicService<Delivery> {
      * @throws DeliveryServiceException 
      * @throws SessionServiceException 
      */
-	Delivery findById(Session session, Long deliveryId) 
+	Delivery findById(SessionDto session, Long deliveryId) 
 		throws SessionServiceException, DeliveryServiceException;
 
 	/**
@@ -79,7 +79,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws DeliveryServiceException 
 	 * @throws ParseException 
 	 */
-	DeliveryAddResponse add(DeliveryAddRequest request) 
+	DeliveryAddResponseDto add(DeliveryAddRequestDto request) 
 			throws SessionServiceException, DeliveryServiceException, ParseException;
 
 	/**
@@ -98,12 +98,12 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws SessionServiceException a. 
 	 * @throws DeliveryServiceException a.
 	 */
-	DeliveriesFetchResponse findDeliveries(DeliveriesFetchRequest request)
+	DeliveriesFetchResponseDto findDeliveries(DeliveriesFetchRequestDto request)
 			throws SessionServiceException, DeliveryServiceException;
 
-	DeliveryEditResponse edit(DeliveryEditRequest req) 
+	DeliveryEditResponseDto edit(DeliveryEditRequestDto req) 
 			throws ParseException, DeliveryServiceException, SessionServiceException;
 	
-	DeliveryDeleteResponse delete(DeliveryDeleteRequest req) 
+	DeliveryDeleteResponseDto delete(DeliveryDeleteRequestDto req) 
 			throws SessionServiceException, DeliveryServiceException;
 }

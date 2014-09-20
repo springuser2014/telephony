@@ -3,8 +3,8 @@ package telephony.ws.resource.delivery;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Put;
 
-import telephony.core.service.dto.DeliveryEditRequest;
-import telephony.core.service.dto.DeliveryEditResponse;
+import telephony.core.service.dto.DeliveryEditRequestDto;
+import telephony.core.service.dto.DeliveryEditResponseDto;
 
 /**
  * asd.
@@ -19,6 +19,6 @@ public interface DeliveriesEditResource  {
  	 * @return asd.
 	 */
 	@Put("json")
-	JsonRepresentation edit(DeliveryEditRequest entity);
+	JsonRepresentation edit(DeliveryEditRequestDto entity);
 	
 }

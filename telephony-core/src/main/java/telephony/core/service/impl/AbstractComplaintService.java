@@ -7,7 +7,7 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.ComplaintService;
-import telephony.core.service.dto.Session;
+import telephony.core.service.dto.SessionDto;
 
 
 /**
@@ -36,63 +36,63 @@ implements ComplaintService<T> {
 
 	@Transactional
 	@Override
-	public void report(Session session, T complaint) {
+	public void report(SessionDto session, T complaint) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Transactional
 	@Override
-	public Complaint update(Session session, T complaint) {
+	public Complaint update(SessionDto session, T complaint) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Transactional
 	@Override
-	public Collection<T> update(Session session, Collection<T> complaints) {
+	public Collection<T> update(SessionDto session, Collection<T> complaints) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Transactional
 	@Override
-	public void markAsInProgress(Session session, long complaintId) {
+	public void markAsInProgress(SessionDto session, long complaintId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Transactional
 	@Override
-	public void markAsAccepted(Session session, long complaintId) {
+	public void markAsAccepted(SessionDto session, long complaintId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Transactional
 	@Override
-	public void markAsRejected(Session session, long complaintId) {
+	public void markAsRejected(SessionDto session, long complaintId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Transactional
 	@Override
-	public void markAsResolved(Session session, long complaintId) {
+	public void markAsResolved(SessionDto session, long complaintId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Transactional
 	@Override
-	public void removeById(Session session, long complaintId) {
+	public void removeById(SessionDto session, long complaintId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Transactional
 	@Override
-	public void removeByIds(Session session, Collection<Long> complaintIds) {
+	public void removeByIds(SessionDto session, Collection<Long> complaintIds) {
 		// TODO Auto-generated method stub
 		
 	}

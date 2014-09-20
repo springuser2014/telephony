@@ -1,11 +1,11 @@
 package telephony.ws.resource.user;
 
-import telephony.core.service.dto.UserDetailsRequest;
-import telephony.core.service.dto.UserDetailsResponse;
+import telephony.core.service.dto.UserDetailsRequestDto;
+import telephony.core.service.dto.UserDetailsResponseDto;
 
 public interface UsersDetailsResource {
 
 	String URL = "/users/details";
 	
-	UserDetailsResponse details(UserDetailsRequest request);
+	UserDetailsResponseDto details(UserDetailsRequestDto request);
 }
