@@ -3,72 +3,35 @@ package telephony.core.query.filter;
 /**
  * ad.
  */
-public class StoreFilterCriteria 
-extends AbstractFilterCriteria<StoreFilterCriteria> {
+public class StoreFilterCriteria extends
+		AbstractFilterCriteria<StoreFilterCriteria> {
 
 	private String label;
 	private Integer minNumberOfProducts;
 	private Integer maxNumberOfProducts;
-	
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public static StoreFilterCriteria create() {
-		return new StoreFilterCriteria();
-	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public String label() {
+	public String getLabel() {
 		return label;
 	}
 
-	/**
-	 * asd.
-	 * @param label a.
-	 * @return a.
-	 */
-	public StoreFilterCriteria label(String label) {
+	public void setLabel(String label) {
 		this.label = label;
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public Integer minNumberOfProducts() {
+	public Integer getMinNumberOfProducts() {
 		return minNumberOfProducts;
 	}
 
-	/**
-	 * asd.
-	 * @param minNumberOfProducts a.
-	 * @return a.
-	 */
-	public StoreFilterCriteria minNumberOfProducts(Integer minNumberOfProducts) {
+	public void setMinNumberOfProducts(Integer minNumberOfProducts) {
 		this.minNumberOfProducts = minNumberOfProducts;
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public Integer maxNumberOfProducts() {
+	public Integer getMaxNumberOfProducts() {
 		return maxNumberOfProducts;
 	}
 
-	/**
-	 * asd.
-	 * @param maxNumberOfProducts asd.
-	 * @return a.
-	 */
-	public StoreFilterCriteria maxNumberOfProducts(Integer maxNumberOfProducts) {
+	public void setMaxNumberOfProducts(Integer maxNumberOfProducts) {
 		this.maxNumberOfProducts = maxNumberOfProducts;
-		return this;
 	}
+
 }

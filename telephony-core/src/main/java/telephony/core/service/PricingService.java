@@ -9,8 +9,9 @@ import telephony.core.service.dto.SessionDto;
 /**
  * ads.
  */
+// TODO : think if this service is necessary, maybe should be merged with ProductService
 public interface PricingService extends BasicService<Pricing> {
-
+	
 	/**
 	 * asd.
 	 * @param session TODO

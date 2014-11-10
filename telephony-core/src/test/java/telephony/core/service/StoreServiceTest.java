@@ -20,6 +20,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.StoreFilterCriteria;
+import telephony.core.query.filter.StoreFilterCriteriaBuilder;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -56,7 +57,7 @@ public class StoreServiceTest extends BaseCoreTest {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		StoreFilterCriteria sfc = StoreFilterCriteria.create();
+		StoreFilterCriteria sfc = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
 		
 		// when
 		List<Store> stores = storeService.find(session, sfc);
@@ -74,7 +75,7 @@ public class StoreServiceTest extends BaseCoreTest {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		StoreFilterCriteria sfc = StoreFilterCriteria.create();
+		StoreFilterCriteria sfc = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
 		List<Store> storesBeforeAdd = storeService.find(session, sfc);
 		Store store = new Store();
 		User creator = userService.findByName(session, TestData.USER2_NAME);

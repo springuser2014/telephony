@@ -14,9 +14,9 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
-import telephony.core.service.dto.BasicResponseDto;
-import telephony.core.service.dto.DeliveryDeleteRequestDto;
-import telephony.core.service.dto.DeliveryDeleteResponseDto;
+import telephony.core.service.dto.request.DeliveryDeleteRequestDto;
+import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.response.DeliveryDeleteResponseDto;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;

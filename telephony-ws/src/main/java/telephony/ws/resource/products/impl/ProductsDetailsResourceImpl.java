@@ -4,9 +4,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import telephony.core.service.dto.DeliveryDetailsRequest;
-import telephony.core.service.dto.ProductDetailsRequestDto;
-import telephony.core.service.dto.ProductDetailsResponseDto;
+import telephony.core.service.dto.request.DeliveryDetailsRequest;
+import telephony.core.service.dto.request.ProductDetailsRequestDto;
+import telephony.core.service.dto.response.ProductDetailsResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.products.ProductsDetailsResource;
 

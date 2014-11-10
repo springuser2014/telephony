@@ -22,8 +22,6 @@ public interface GenericDao<E> {
 	 */
 	EntityManager getEntityManager();
 
-    
-
     /**
      * Looks for entity indentified by pk.
      * @param id Primary key.

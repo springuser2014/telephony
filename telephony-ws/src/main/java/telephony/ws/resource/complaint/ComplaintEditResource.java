@@ -1,7 +1,7 @@
 package telephony.ws.resource.complaint;
 
-import telephony.core.service.dto.ComplaintEditRequestDto;
-import telephony.core.service.dto.ComplaintEditResponseDto;
+import telephony.core.service.dto.request.ComplaintEditRequestDto;
+import telephony.core.service.dto.response.ComplaintEditResponseDto;
 
 public interface ComplaintEditResource {
 

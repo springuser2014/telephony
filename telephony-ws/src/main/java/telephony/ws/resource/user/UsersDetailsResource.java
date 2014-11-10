@@ -1,7 +1,7 @@
 package telephony.ws.resource.user;
 
-import telephony.core.service.dto.UserDetailsRequestDto;
-import telephony.core.service.dto.UserDetailsResponseDto;
+import telephony.core.service.dto.request.UserDetailsRequestDto;
+import telephony.core.service.dto.response.UserDetailsResponseDto;
 
 public interface UsersDetailsResource {
 

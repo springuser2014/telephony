@@ -15,9 +15,9 @@ import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.BasicResponseDto;
-import telephony.core.service.dto.DeliveriesFetchRequestDto;
-import telephony.core.service.dto.DeliveriesFetchResponseDto;
+import telephony.core.service.dto.request.DeliveriesFetchRequestDto;
+import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.response.DeliveriesFetchResponseDto;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;

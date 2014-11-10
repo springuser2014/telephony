@@ -12,10 +12,13 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
+import telephony.core.query.filter.ProductFilterCriteriaBuilder;
 import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.*;
+import telephony.core.service.dto.request.ProductFetchRequestDto;
+import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -57,7 +60,7 @@ implements ProductService {
 		logger.debug("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
-		ProductFilterCriteria filters = ProductFilterCriteria.create();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
@@ -81,7 +84,7 @@ implements ProductService {
 
 		List<String> res = new ArrayList<String>();
 		
-		ProductFilterCriteria filters = ProductFilterCriteria.create();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
@@ -101,7 +104,7 @@ implements ProductService {
 		logger.debug("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
-		ProductFilterCriteria filters = ProductFilterCriteria.create();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
@@ -318,7 +321,7 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public ProductFetchResponseDto find(ProductFetchRequestDto req)
+	public ProductFetchResponseDto fetch(ProductFetchRequestDto req)
 		throws SessionServiceException 
 	{
 

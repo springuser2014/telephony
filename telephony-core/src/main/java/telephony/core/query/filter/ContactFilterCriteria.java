@@ -3,92 +3,43 @@ package telephony.core.query.filter;
 /**
  * asd.
  */
-public class ContactFilterCriteria 
-extends AbstractFilterCriteria<ContactFilterCriteria>{
-	
+public class ContactFilterCriteria extends
+		AbstractFilterCriteria<ContactFilterCriteria> {
+
 	private String label;
 	private String description;
 	private String phonenumber;
 	private String email;
-	
-	/**
-	 * asd.
-	 * @return as.
-	 */
-	public static ContactFilterCriteria create() {
-		return new ContactFilterCriteria();
-	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String label() {
+	public String getLabel() {
 		return label;
 	}
 
-	/**
-	 * asd.
-	 * @param label asd.
-	 * @return ads.
-	 */
-	public ContactFilterCriteria label(String label) {
+	public void setLabel(String label) {
 		this.label = label;
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String description() {
+	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * asd.
-	 * @param description asd.
-	 * @return asd.
-	 */
-	public ContactFilterCriteria description(String description) {
+	public void setDescription(String description) {
 		this.description = description;
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String phonenumber() {
+	public String getPhonenumber() {
 		return phonenumber;
 	}
 
-	/**
-	 * asd.
-	 * @param phonenumber asd.
-	 * @return asd.
-	 */
-	public ContactFilterCriteria phonenumber(String phonenumber) {
+	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String email() {
+	public String getEmail() {
 		return email;
 	}
 
-	/**
-	 * asd.
-	 * @param email asd.
-	 * @return asd.
-	 */
-	public ContactFilterCriteria email(String email) {
+	public void setEmail(String email) {
 		this.email = email;
-		return this;
 	}
-	
 }

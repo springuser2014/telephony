@@ -1,7 +1,7 @@
 package telephony.ws.resource.contact;
 
-import telephony.core.service.dto.ContactsEditRequestDto;
-import telephony.core.service.dto.ContactsEditResponseDto;
+import telephony.core.service.dto.request.ContactsEditRequestDto;
+import telephony.core.service.dto.response.ContactsEditResponseDto;
 
 public interface ContactsEditResource {
 

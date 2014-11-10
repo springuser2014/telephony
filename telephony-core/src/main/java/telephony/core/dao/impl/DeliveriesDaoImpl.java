@@ -121,47 +121,47 @@ implements DeliveriesDao {
 		sb.append("inner join m.producer pr ");
         sb.append("where 1=1 ");
         
-        if (filters.deliveredBy() != null) {
+        if (filters.getDeliveredBy() != null) {
         	sb.append(" and c.id = :deliveredBy ");
         }
         
-        if (filters.registeredBy() != null) {
+        if (filters.getRegisteredBy() != null) {
         	
         }
         
-        if (filters.label() != null) {
+        if (filters.getLabel() != null) {
         	sb.append(" and e.label LIKE :label ");
         }
         
-        if (filters.deliveryDateStart() != null) {
+        if (filters.getDeliveryDateStart() != null) {
         	sb.append(" and e.dateIn >= :deliveryDateStart ");        	
         }
 
-        if (filters.deliveryDateEnd() != null) {
+        if (filters.getDeliveryDateEnd() != null) {
         	sb.append(" and e.dateIn <= :deliveryDateEnd ");
         }
         
-        if (filters.minNumberOfProducts() != null ||  
-    		filters.maxNumberOfProducts() != null ||  
-    		filters.sumFrom() != null || 
-    		filters.sumTo() != null) 
+        if (filters.getMinNumberOfProducts() != null ||  
+    		filters.getMaxNumberOfProducts() != null ||  
+    		filters.getSumFrom() != null || 
+    		filters.getSumTo() != null) 
         {
         	sb.append(" group by e.id ");
         	sb.append(" having 1=1 ");
         	
-	        if (filters.minNumberOfProducts() != null) {
+	        if (filters.getMinNumberOfProducts() != null) {
 	        	sb.append(" and count(e.id) <= :max ");
 	        } 
 
-	        if (filters.maxNumberOfProducts() != null) {
+	        if (filters.getMaxNumberOfProducts() != null) {
 	        	sb.append(" and count(e.id) >= :min ");
 	        }
 	        
-	        if (filters.sumTo() != null) {
+	        if (filters.getSumTo() != null) {
 	        	sb.append(" and sum(p.priceIn) <= :sumTo ");
 	        } 
 	        
-	        if (filters.sumFrom() != null) {
+	        if (filters.getSumFrom() != null) {
 	        	sb.append(" and sum(p.priceIn) >= :sumFrom ");	        	
 	        }    
         }
@@ -171,30 +171,30 @@ implements DeliveriesDao {
         Query query = getEntityManager()
             			.createQuery(queryStr);
         
-        if (filters.deliveryDateStart() != null) {
-        	Timestamp deliveryDateStart = new Timestamp(filters.deliveryDateStart().getTime());
+        if (filters.getDeliveryDateStart() != null) {
+        	Timestamp deliveryDateStart = new Timestamp(filters.getDeliveryDateStart().getTime());
         	query.setParameter("deliveryDateStart", deliveryDateStart);
         }
 
-        if (filters.deliveryDateEnd() != null) {
-        	Timestamp deliveryDateEnd= new Timestamp(filters.deliveryDateEnd().getTime());
+        if (filters.getDeliveryDateEnd() != null) {
+        	Timestamp deliveryDateEnd= new Timestamp(filters.getDeliveryDateEnd().getTime());
         	query.setParameter("deliveryDateEnd", deliveryDateEnd);
         }        
         
-        if (filters.label() != null) {
-        	query.setParameter("label", "%" +  filters.label() + "%");
+        if (filters.getLabel() != null) {
+        	query.setParameter("label", "%" +  filters.getLabel() + "%");
         }
         
-        if (filters.deliveredBy() != null) {
-        	query.setParameter("deliveredBy", filters.deliveredBy());
+        if (filters.getDeliveredBy() != null) {
+        	query.setParameter("deliveredBy", filters.getDeliveredBy());
         }
 
-        if (filters.minNumberOfProducts() != null) {
-        	query.setParameter("min", new Long(filters.minNumberOfProducts()));
+        if (filters.getMinNumberOfProducts() != null) {
+        	query.setParameter("min", new Long(filters.getMinNumberOfProducts()));
         }
         
-        if (filters.maxNumberOfProducts() != null) {
-        	query.setParameter("max", new Long(filters.maxNumberOfProducts()));
+        if (filters.getMaxNumberOfProducts() != null) {
+        	query.setParameter("max", new Long(filters.getMaxNumberOfProducts()));
         }
         
         if (filters.getPerPage() != null) {
@@ -205,12 +205,12 @@ implements DeliveriesDao {
         	query.setFirstResult(filters.getPage());
         }
 
-        if (filters.sumFrom() != null) {
-        	query.setParameter("sumFrom", filters.sumFrom());
+        if (filters.getSumFrom() != null) {
+        	query.setParameter("sumFrom", filters.getSumFrom());
         }
         
-        if (filters.sumFrom() != null) {
-        	query.setParameter("sumTo", filters.sumTo());
+        if (filters.getSumFrom() != null) {
+        	query.setParameter("sumTo", filters.getSumTo());
         }
         
         List<Delivery> lst = query.getResultList();

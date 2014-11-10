@@ -20,9 +20,10 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
-import telephony.core.service.dto.ProductFetchRequestDto;
-import telephony.core.service.dto.ProductFetchResponseDto;
+import telephony.core.query.filter.ProductFilterCriteriaBuilder;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ProductFetchRequestDto;
+import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
@@ -215,8 +216,9 @@ public class ProductServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
-		ProductFilterCriteria criteria = ProductFilterCriteria.create(); 		
-		criteria.setImei("123456789000001");
+		ProductFilterCriteria criteria = ProductFilterCriteriaBuilder.productFilterCriteria() 		
+		.withImei("123456789000001")
+		.build();
 		
 		// when
 		List<Product> products = productService
@@ -404,13 +406,13 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findProducts1() throws SessionServiceException {
+	public void fetchProducts1() throws SessionServiceException {
 
 		// given
-		ProductFilterCriteria filters = ProductFilterCriteria.create()
-				.setColor("white")
-				.setProducer("nokia");
-				
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withColor("white")
+				.withProducer("nokia")
+				.build();
 		
 		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
@@ -418,7 +420,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 4);
@@ -426,15 +428,16 @@ public class ProductServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findProducts2() throws SessionServiceException {
+	public void fetchProducts2() throws SessionServiceException {
 
 		// given
 		Date deliveryDateStart = new DateTime().withDate(2012, 1, 1).withTime(0, 0, 0, 0).toDate();
 		Date deliveryDateEnd = new DateTime().withDate(2012, 12, 31).withTime(0, 0, 0, 0).toDate();
 		
-		ProductFilterCriteria filters = ProductFilterCriteria.create()
-				.setDeliveryDateStart(deliveryDateStart)
-				.setDeliveryDateEnd(deliveryDateEnd);
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withDeliveryDateStart(deliveryDateStart)
+				.withDeliveryDateEnd(deliveryDateEnd)
+				.build();
 				
 		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
@@ -442,10 +445,10 @@ public class ProductServiceTest extends BaseCoreTest {
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.fetch(request);
 		
 		// then
-		assertEquals(resp.getProducts().size(), 18);
+		assertEquals(resp.getProducts().size(), 8);
 	}
 	
 	@Test
@@ -453,10 +456,10 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findProducts3() throws SessionServiceException {
 
 		// given
-		ProductFilterCriteria filters = ProductFilterCriteria.create()
-				.setColor("black")
-				.setProducer("nokia");
-				
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withColor("black")
+				.withProducer("nokia")
+				.build();				
 		
 		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
@@ -464,7 +467,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 12);
@@ -475,8 +478,9 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findProducts4() throws SessionServiceException {
 
 		// given
-		ProductFilterCriteria filters = ProductFilterCriteria.create()
-				.setImei("123456789000004");
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withImei("123456789000004")
+				.build();
 				
 		
 		ProductFetchRequestDto request = new ProductFetchRequestDto();
@@ -485,7 +489,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 1);
@@ -496,8 +500,9 @@ public class ProductServiceTest extends BaseCoreTest {
 	public void findProducts5() throws SessionServiceException {
 
 		// given
-		ProductFilterCriteria filters = ProductFilterCriteria.create()
-				.setStatus(ProductStatus.SOLD);
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withStatus(ProductStatus.SOLD)
+				.build();
 				
 		ProductFetchRequestDto request = new ProductFetchRequestDto();
 		request.setSessionId(TestData.USER1_SESSIONID);
@@ -505,7 +510,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.find(request);
+		ProductFetchResponseDto resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 10);

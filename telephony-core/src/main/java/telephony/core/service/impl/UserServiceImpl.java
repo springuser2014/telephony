@@ -14,6 +14,10 @@ import telephony.core.query.filter.UserFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.UserAddResponse;
+import telephony.core.service.dto.response.UserEditResponse;
+import telephony.core.service.dto.response.UsersFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 
@@ -191,6 +195,33 @@ implements UserService {
 		
 		user.getAllowedShops().removeAll(storeToDelete);
 		usersDao.saveOrUpdate(user);
+	}
+
+	@Override
+	public UsersFetchResponse fetch(UsersFetchRequest req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserEditResponse updateUser(UserEditRequest req)
+			throws SessionServiceException, UserServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserAddResponse addUser(UserAddRequest req)
+			throws SessionServiceException, UserServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUserById(UserDeleteRequest req)
+			throws SessionServiceException, UserServiceException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

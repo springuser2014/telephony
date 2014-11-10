@@ -4,8 +4,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import telephony.core.service.dto.ComplaintDetailsRequestDto;
-import telephony.core.service.dto.ComplaintDetailsResponseDto;
+import telephony.core.service.dto.request.ComplaintDetailsRequestDto;
+import telephony.core.service.dto.response.ComplaintDetailsResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.complaint.ComplaintDetailsResource;
 

@@ -2,21 +2,7 @@ package telephony.core.entity.jpa;
 
 import java.util.Collection;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * asd.
@@ -261,5 +247,61 @@ public class Contact extends BaseEntity {
         this.sales = sales;
     }
 
+	public void addEmail(String newEmail) {
+		
+		for(Email email : this.emails) {
+			
+			if (email.getContent().equals(newEmail)) {
+				return ;
+			}
+		}
+		
+		Email e = new Email();
+		e.setContent(newEmail);
+		this.emails.add(e);
+	}
+
+	public void addPhonenumber(String newPhonenumber) {
+		
+		for(PhoneNumber phonenumber : this.phonenumbers) {
+			
+			if (phonenumber.getContent().equals(newPhonenumber)) {
+				return ;
+			}
+		}
+		
+		PhoneNumber p = new PhoneNumber();
+		p.setContent(newPhonenumber);
+		this.phonenumbers.add(p);		
+	}
 	
+	public void removeEmail(String mail) {
+		
+		Email toRemove = null;
+		for(Email email : this.emails) {
+			
+			if (email.getContent().equals(mail)) {
+				toRemove = email;
+			}
+		}
+		
+		if (toRemove != null) {
+			this.emails.remove(toRemove);
+		}
+	}
+	
+	public void removePhonenumber(String phonenumber) {
+		
+		PhoneNumber toRemove = null;
+		for(PhoneNumber number : this.phonenumbers) {
+			
+			if (number.getContent().equals(phonenumber)) {
+				toRemove = number;
+			}
+		}
+		
+		if (toRemove != null) {
+			this.phonenumbers.remove(toRemove);
+		}
+	}	
 }

@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.service.dto.*;
+import telephony.core.service.dto.request.ProductFetchRequestDto;
+import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.ws.resource.delivery.DeliveriesDetailsResource;
 import telephony.ws.resource.products.ProductsFetchResource;
 import telephony.ws.resource.session.SessionInitializationResource;

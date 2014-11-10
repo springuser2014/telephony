@@ -5,11 +5,9 @@
 
 <web-app>
 
-
 	<listener>
 		<listener-class>telephony.ws.servlet.TelephonyServletProductionContextListener</listener-class>
 	</listener>
-
 
 	<filter>
 		<filter-name>guiceFilter</filter-name>
@@ -20,7 +18,5 @@
 		<filter-name>guiceFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-
 
 </web-app>

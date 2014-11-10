@@ -203,11 +203,4 @@ insert into products(id, imei, store_id, delivery_id, sale_id, producer, model, 
   (41, '123456789000048', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1),
   (42, '123456789000049', 2, 5, NULL, 'apple', 'iphone 3g', 'white', 10000, NULL, now(), 1);
  
-  
-  SELECT pg_catalog.setval('products_seq', 43, false);
-
-
-
-
-
-
+SELECT pg_catalog.setval('products_seq', 43, false);

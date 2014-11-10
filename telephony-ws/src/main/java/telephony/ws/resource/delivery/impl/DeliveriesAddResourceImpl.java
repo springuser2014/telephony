@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.service.DeliveryService;
 import telephony.core.service.StoreService;
-import telephony.core.service.dto.BasicResponseDto;
-import telephony.core.service.dto.DeliveryAddRequestDto;
-import telephony.core.service.dto.DeliveryAddResponseDto;
+import telephony.core.service.dto.request.DeliveryAddRequestDto;
+import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.response.DeliveryAddResponseDto;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;

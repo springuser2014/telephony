@@ -117,7 +117,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// when
 		model.setLabel(newLabel);
-		modelService.update(session, model);
+		modelService.edit(session, model);
 		changedModel = modelService.findByLabel(session, newLabel);
 		
 		// then

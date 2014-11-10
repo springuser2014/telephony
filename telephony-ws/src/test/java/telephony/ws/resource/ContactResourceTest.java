@@ -18,10 +18,10 @@ import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
-import telephony.core.service.dto.ContactAddRequestDto;
 import telephony.core.service.dto.ContactDto;
-import telephony.core.service.dto.DeleteContactRequestDto;
 import telephony.core.service.dto.SessionBean;
+import telephony.core.service.dto.request.ContactAddRequestDto;
+import telephony.core.service.dto.request.DeleteContactRequestDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.bean.UserBean;
@@ -33,6 +33,7 @@ import telephony.ws.resource.session.SessionInitializationResource;
 /**
  * asd.
  */
+// TODO : refactor using rest-assured
 @RunWith(JUnit4ClassRunner.class)
 public class ContactResourceTest extends BaseWSTest {
 	

@@ -18,7 +18,8 @@ import org.slf4j.LoggerFactory;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
 import telephony.core.service.dto.ContactDto;
-import telephony.core.service.dto.ContactListResponse;
+import telephony.core.service.dto.request.ContactFetchRequestDto;
+import telephony.core.service.dto.response.ContactListResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -44,19 +45,12 @@ implements ContactsFetchResource {
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation fetch(ContactFetchRequestDto entity) 
+	public JsonRepresentation fetch(ContactFetchRequestDto dto) 
 			throws JSONException, IOException, SessionServiceException, ContactServiceException {
         
 		logger.info("ContactsFetchResource.fetch starts");
-		JSONObject req = new JsonRepresentation(entity).getJsonObject();
 		
-		String name = req.getString("username");
-		String sessionId = req.getString("sessionId");
-		
-		logger.info(" username = {} ", name);
-        logger.info(" sessionId = {} ", sessionId);
-        
-        List<Contact> contacts = contactService.find(null, null);       
+		List<Contact> contacts = contactService.find(dto);       
         List<ContactDto> contactsToJsonize = convertToBeans(contacts);
         
         ContactListResponse response = new ContactListResponse();

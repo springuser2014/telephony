@@ -3,7 +3,7 @@ package telephony.ws.resource.delivery;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 
-import telephony.core.service.dto.DeliveryAddRequestDto;
+import telephony.core.service.dto.request.DeliveryAddRequestDto;
 
 /**
  * asd.

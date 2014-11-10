@@ -3,7 +3,7 @@ package telephony.core.data;
 import telephony.core.util.StringGeneratorImpl;
 
 /**
- * Class helps to handle references to data from .sql files.
+ * Helpers which handles references to data from .sql files.
  */
 public final class TestData {
 

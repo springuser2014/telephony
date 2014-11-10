@@ -2,7 +2,7 @@ package telephony.ws.resource.tax.impl;
 
 import org.restlet.ext.json.JsonRepresentation;
 
-import telephony.core.service.dto.TaxAddRequestDto;
+import telephony.core.service.dto.request.TaxAddRequestDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.tax.TaxAddResource;
 

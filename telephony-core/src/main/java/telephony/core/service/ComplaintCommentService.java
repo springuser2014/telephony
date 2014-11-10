@@ -14,6 +14,7 @@ public interface ComplaintCommentService extends BasicService<ComplaintComment> 
 	 * @param comment a. 
 	 * @param complaintId a.
 	 */
+	@Deprecated
 	void comment(SessionDto session, ComplaintComment comment, long complaintId);
 	
 	/**
@@ -21,6 +22,7 @@ public interface ComplaintCommentService extends BasicService<ComplaintComment> 
 	 * @param hashUnique a.
 	 * @param comment a.
 	 */
+	@Deprecated
 	void comment(String hashUnique, ComplaintComment comment);
 
 }

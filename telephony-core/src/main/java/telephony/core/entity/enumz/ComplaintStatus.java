@@ -5,6 +5,6 @@ package telephony.core.entity.enumz;
  */
 public enum ComplaintStatus {
 	
-	JUST_REPORTED, IN_PROGRESS, ACCEPTED, REJECTED, RESOLVED;
+	JUST_REPORTED, IN_PROGRESS, ACCEPTED, REJECTED, RESOLVED
 
 }

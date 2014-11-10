@@ -4,8 +4,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import telephony.core.service.dto.ContactsEditRequestDto;
-import telephony.core.service.dto.ContactsEditResponseDto;
+import telephony.core.service.dto.request.ContactsEditRequestDto;
+import telephony.core.service.dto.response.ContactsEditResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.contact.ContactsEditResource;
 

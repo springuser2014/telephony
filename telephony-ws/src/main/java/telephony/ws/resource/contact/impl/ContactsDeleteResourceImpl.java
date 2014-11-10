@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
 import telephony.core.service.StoreService;
-import telephony.core.service.dto.BasicResponseDto;
+import telephony.core.service.dto.response.BasicResponseDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -56,7 +56,7 @@ implements ContactsDeleteResource {
 					null, contactToDeleteId
 			);
 			
-			contactService.deleteContact(null, contactToDelete);
+			contactService.delete(null);
 			
 		} catch (Exception e) {
 			

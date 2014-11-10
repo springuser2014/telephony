@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.service.ProductService;
-import telephony.core.service.dto.BasicResponseDto;
-import telephony.core.service.dto.ProductFetchRequestDto;
-import telephony.core.service.dto.ProductFetchResponseDto;
+import telephony.core.service.dto.request.ProductFetchRequestDto;
+import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.products.ProductsFetchResource;

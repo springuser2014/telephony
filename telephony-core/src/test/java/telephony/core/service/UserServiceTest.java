@@ -19,9 +19,7 @@ import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
-import telephony.core.query.filter.RoleFilterCriteria;
-import telephony.core.query.filter.RoleFilterCriteriaBuilder;
-import telephony.core.query.filter.StoreFilterCriteria;
+import telephony.core.query.filter.*;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
@@ -219,7 +217,7 @@ public class UserServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String username2 = TestData.USER2_NAME;
-		StoreFilterCriteria sfc = StoreFilterCriteria.create();
+		StoreFilterCriteria sfc = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
 		
 		User user = userService.findByName(session, username2);
 		List<Store> storesToAdd = storeService.find(session, sfc);

@@ -1,7 +1,7 @@
 package telephony.ws.resource.complaint;
 
-import telephony.core.service.dto.ComplaintFetchRequestDto;
-import telephony.core.service.dto.ComplaintFetchResponseDto;
+import telephony.core.service.dto.request.ComplaintFetchRequestDto;
+import telephony.core.service.dto.response.ComplaintFetchResponseDto;
 
 public interface ComplaintFetchResource {
 

@@ -7,6 +7,8 @@ import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.ProductComplaintService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 
 import com.google.inject.persist.Transactional;
 
@@ -121,6 +123,58 @@ implements ProductComplaintService {
 	public ProductComplaint findByHash(String hashUnique) {
 
 		return dao().findByHash(hashUnique);
+	}
+
+	@Override
+	public ReportComplaintResponseDto report(ReportComplaintRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintFetchResponseDto fetch(ComplaintFetchRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintEditResponseDto editComplaint(ComplaintEditRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsRejected(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsInProgress(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsAccepted(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsResolved(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteComplaint(DeleteComplaintRequestDto req) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

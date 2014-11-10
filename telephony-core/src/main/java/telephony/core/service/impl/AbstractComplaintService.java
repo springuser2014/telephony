@@ -8,6 +8,8 @@ import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.ComplaintService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 
 
 /**
@@ -101,6 +103,58 @@ implements ComplaintService<T> {
 	public T findByHash(String hashUnique) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ReportComplaintResponseDto report(ReportComplaintRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintFetchResponseDto fetch(ComplaintFetchRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintEditResponseDto editComplaint(ComplaintEditRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsRejected(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsInProgress(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsAccepted(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComplaintChangeStatusResponseDto markAsResolved(
+			ComplaintChangeStatusRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteComplaint(DeleteComplaintRequestDto req) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

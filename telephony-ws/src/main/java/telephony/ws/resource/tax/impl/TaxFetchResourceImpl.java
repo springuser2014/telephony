@@ -1,7 +1,7 @@
 package telephony.ws.resource.tax.impl;
 
-import telephony.core.service.dto.TaxesFetchRequestDto;
-import telephony.core.service.dto.TaxesFetchResponseDto;
+import telephony.core.service.dto.request.TaxesFetchRequestDto;
+import telephony.core.service.dto.response.TaxesFetchResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.taxes.TaxesFetchResource;
 

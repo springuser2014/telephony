@@ -8,6 +8,8 @@ import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.service.dto.*;
+import telephony.core.service.dto.request.ProductFetchRequestDto;
+import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.core.service.exception.SessionServiceException;
 
 /**
@@ -15,13 +17,22 @@ import telephony.core.service.exception.SessionServiceException;
  */
 public interface ProductService extends BasicService<Product> {
 	
-
+	/**
+	 * asd.
+	 * @param req a.
+	 * @return ad.
+	 * @throws SessionServiceException d.
+	 */
+	ProductFetchResponseDto fetch(ProductFetchRequestDto req)
+			throws SessionServiceException;
+	
     /**
      * asd.
      * @param session TODO
      * @return asd.
      * @throws SessionServiceException 
      */
+	@Deprecated
     List<String> fetchAllImeiInUse(SessionDto session) 
     	throws SessionServiceException;
 
@@ -30,6 +41,7 @@ public interface ProductService extends BasicService<Product> {
      * @param session TODO
      * @return asd.
      */
+	@Deprecated
     List<String> fetchAllProducersInUse(SessionDto session);
 
     /**
@@ -38,6 +50,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
+	@Deprecated
     List<String> fetchAllModels(SessionDto session) 
     	throws SessionServiceException;
 
@@ -46,6 +59,7 @@ public interface ProductService extends BasicService<Product> {
      * @param session TODO
      * @return asd.
      */
+	@Deprecated
     List<String> fetchAllColors(SessionDto session);
 
     
@@ -57,6 +71,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
+    @Deprecated
     List<Product> fetchAllProducts(SessionDto session, Long storeId, ProductStatus productStatus) 
     	throws SessionServiceException;
 
@@ -67,6 +82,7 @@ public interface ProductService extends BasicService<Product> {
      * @param store asd.
      * @param products asd.
      */
+    @Deprecated
     void moveProducts(SessionDto session, Store store, List<Product> products);
     
     /**
@@ -77,6 +93,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
+    @Deprecated
     Product fetchProductByImeiAndStoreId(SessionDto session, String imei, Long storeId) 
     		throws SessionServiceException;
 
@@ -87,6 +104,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
+    @Deprecated
     List<Product> findByCriteria(SessionDto session, ProductFilterCriteria filters) 
     		throws SessionServiceException;
 
@@ -97,6 +115,7 @@ public interface ProductService extends BasicService<Product> {
      * @return asd.
      * @throws SessionServiceException 
      */
+    @Deprecated
 	List<Product> findByStore(SessionDto session, Store store) 
 			throws SessionServiceException;
 
@@ -107,6 +126,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @return asd.
 	 * @throws SessionServiceException 
 	 */
+	@Deprecated
 	List<Product> findByIMEIs(SessionDto session, List<String> imeis) 
 			throws SessionServiceException;
 
@@ -116,6 +136,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param id as.
 	 * @return a.
 	 */
+	@Deprecated
 	Product findById(SessionDto session, long id);
 
 	/**
@@ -124,6 +145,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param coll as.
 	 * @return as.
 	 */
+	@Deprecated
 	Collection<Product> findById(SessionDto session, Collection<Long> coll);
 
 	/**
@@ -132,6 +154,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param product a.
 	 * @return asd.
 	 */
+	@Deprecated
 	Product update(SessionDto session, Product product);
 
 	/**
@@ -140,6 +163,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param imei as.
 	 * @return asd.
 	 */
+	@Deprecated
 	Product findByIMEI(SessionDto session, String imei);
 
 	/**
@@ -148,6 +172,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param coll a.
 	 * @return ad.
 	 */
+	@Deprecated
 	Collection<Product> updateCollection(SessionDto session, Collection<Product> coll);
 
 	/**
@@ -155,6 +180,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param session TODO
 	 * @param product a.
 	 */
+	@Deprecated
 	void remove(SessionDto session, Product product);
 
 	/**
@@ -162,6 +188,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param session TODO
 	 * @param coll a.
 	 */
+	@Deprecated
 	void removeCollection(SessionDto session, Collection<Product> coll);
 
 	/**
@@ -169,6 +196,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param session TODO
 	 * @param coll ads.
 	 */
+	@Deprecated
 	void removeCollectionByIds(SessionDto session, Collection<Long> coll);
 
 	/**
@@ -176,9 +204,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @param session TODO
 	 * @param id ads.
 	 */
+	@Deprecated
 	void removeById(SessionDto session, long id);
 
-
-	ProductFetchResponseDto find(ProductFetchRequestDto req)
-			throws SessionServiceException;
 }

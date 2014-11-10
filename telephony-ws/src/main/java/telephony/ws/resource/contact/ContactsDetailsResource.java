@@ -2,7 +2,7 @@ package telephony.ws.resource.contact;
 
 import org.restlet.ext.json.JsonRepresentation;
 
-import telephony.core.service.dto.ContactDetailsRequestDto;
+import telephony.core.service.dto.request.ContactDetailsRequestDto;
 
 public interface ContactsDetailsResource {
 

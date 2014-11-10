@@ -2,7 +2,7 @@ package telephony.ws.resource.tax;
 
 import org.restlet.ext.json.JsonRepresentation;
 
-import telephony.core.service.dto.TaxDeleteRequestDto;
+import telephony.core.service.dto.request.TaxDeleteRequestDto;
 
 public interface TaxDeleteResource {
 

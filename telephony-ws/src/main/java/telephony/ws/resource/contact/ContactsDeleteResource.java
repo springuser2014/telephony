@@ -6,7 +6,7 @@ import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 
-import telephony.core.service.dto.ContactDeleteRequestDto;
+import telephony.core.service.dto.request.ContactDeleteRequestDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 

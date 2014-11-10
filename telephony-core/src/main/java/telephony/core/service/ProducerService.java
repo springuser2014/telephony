@@ -16,6 +16,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param label a.
 	 * @return a.
 	 */
+	@Deprecated
 	Producer findByLabel(SessionDto session, String label);
 
 	/**
@@ -24,6 +25,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param id a.
 	 * @return a.
 	 */
+	@Deprecated
 	Producer findById(SessionDto session, long id);
 
 	/**
@@ -32,6 +34,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param ids a.
 	 * @return d.
 	 */
+	@Deprecated
 	Collection<Producer> findById(SessionDto session, Collection<Long> ids);
 
 	/**
@@ -40,6 +43,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param producer a.
 	 * @return asd.
 	 */
+	@Deprecated
 	Producer update(SessionDto session, Producer producer);
 
 	/**
@@ -48,6 +52,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param producers a.
 	 * @return a.
 	 */
+	@Deprecated
 	Collection<Producer> update(SessionDto session, Collection<Producer> producers);
 
 	/**
@@ -55,6 +60,7 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param session TODO
 	 * @param id a.
 	 */
+	@Deprecated
 	void removeById(SessionDto session, Long id);
 	
 	/**
@@ -62,5 +68,6 @@ public interface ProducerService extends BasicService<Producer> {
 	 * @param session TODO
 	 * @param ids asd.
 	 */
+	@Deprecated
 	void removeById(SessionDto session, Collection<Long> ids);
 }

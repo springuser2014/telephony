@@ -1,7 +1,7 @@
 package telephony.ws.resource.products;
 
-import telephony.core.service.dto.ProductDetailsRequestDto;
-import telephony.core.service.dto.ProductDetailsResponseDto;
+import telephony.core.service.dto.request.ProductDetailsRequestDto;
+import telephony.core.service.dto.response.ProductDetailsResponseDto;
 
 public interface ProductsDetailsResource {
 

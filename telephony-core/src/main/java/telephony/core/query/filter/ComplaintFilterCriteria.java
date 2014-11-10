@@ -4,7 +4,9 @@ import java.util.Date;
 
 import telephony.core.entity.jpa.Contact;
 
+// TODO : refactor and create builder
 /**
+ * 
  * asd.
  */
 public class ComplaintFilterCriteria 
@@ -20,144 +22,60 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 	private String email;
 	
 	private Long contactId;
-	
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public static ComplaintFilterCriteria create() {
-		return new ComplaintFilterCriteria();
+
+	public String getLabel() {
+		return label;
 	}
-	
-	/**
-	 * asd.
-	 * @param label asd.
-	 * @return asd.
-	 */
-	public ComplaintFilterCriteria label(String label) {
+
+	public void setLabel(String label) {
 		this.label = label;
-		
-		return this;
 	}
-	
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String label() {
-		return this.label;
-	}
-	
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public String description() {
+
+	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * asd.
-	 * @param description a.
-	 * @return a.
-	 */
-	public ComplaintFilterCriteria description(String description) {
+	public void setDescription(String description) {
 		this.description = description;
-		
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public Date reportedDateFrom() {
+	public Date getReportedDateFrom() {
 		return reportedDateFrom;
 	}
 
-	/**
-	 * asd.
-	 * @param reportedDateFrom a.
-	 * @return a.
-	 */
-	public ComplaintFilterCriteria reportedDateFrom(Date reportedDateFrom) {
+	public void setReportedDateFrom(Date reportedDateFrom) {
 		this.reportedDateFrom = reportedDateFrom;
-		
-		return this; 
 	}
 
-	/**
-	 * asd .
-	 * @return asd.
-	 */
-	public Date reportedDateTo() {
+	public Date getReportedDateTo() {
 		return reportedDateTo;
 	}
 
-	/**
-	 * asd.
-	 * @param reportedDateTo asd.
-	 * @return asd.
-	 */
-	public ComplaintFilterCriteria reportedDateTo(Date reportedDateTo) {
+	public void setReportedDateTo(Date reportedDateTo) {
 		this.reportedDateTo = reportedDateTo;
-		
-		return this;
 	}
 
-	/**
-	 * a.
-	 * @return asd.
-	 */
-	public String phoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	/**
-	 * asd.
-	 * @param phoneNumber asd.
-	 * @return asd.
-	 */
-	public ComplaintFilterCriteria phoneNumber(String phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-		
-		return this;
 	}
 
-	/**
-	 * ad.
-	 * @return asd.
-	 */
-	public String email() {
+	public String getEmail() {
 		return email;
 	}
 
-	/**
-	 * asd.
-	 * @param email asd.
-	 * @return asd.
-	 */
-	public ComplaintFilterCriteria email(String email) {
+	public void setEmail(String email) {
 		this.email = email;
-		return this;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public Long contact() {
+	public Long getContactId() {
 		return contactId;
 	}
 
-	/**
-	 * asd.
-	 * @param contactId asd.
-	 * @return asd.
-	 */
-	public ComplaintFilterCriteria contact(Long contactId) {
+	public void setContactId(Long contactId) {
 		this.contactId = contactId;
-		
-		return this;
-	}	
+	}
 }

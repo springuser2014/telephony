@@ -20,7 +20,7 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
-import telephony.core.service.dto.BasicResponseDto;
+import telephony.core.service.dto.response.BasicResponseDto;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.role.RolesDeleteResource;
 

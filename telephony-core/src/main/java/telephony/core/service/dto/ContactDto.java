@@ -1,5 +1,6 @@
 package telephony.core.service.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import telephony.core.entity.jpa.Contact;
@@ -17,9 +18,9 @@ public class ContactDto {
 	
 	private String details;
 	
-	private List<String> emails;
+	private List<String> emails = new ArrayList<String>();
 	
-	private List<String> phonenumbers;
+	private List<String> phonenumbers = new ArrayList<String>();
 
 	/**
 	 * asd.

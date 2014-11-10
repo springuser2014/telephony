@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.dto.*;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 import telephony.ws.resource.delivery.*;
 import telephony.ws.resource.session.SessionInitializationResource;
 

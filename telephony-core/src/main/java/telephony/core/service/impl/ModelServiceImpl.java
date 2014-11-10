@@ -10,6 +10,8 @@ import telephony.core.dao.ModelDao;
 import telephony.core.entity.jpa.Model;
 import telephony.core.service.ModelService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ModelFetchRequestDto;
+import telephony.core.service.dto.response.ModelFetchResponseDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -58,7 +60,7 @@ implements ModelService {
 
 	@Transactional
 	@Override
-	public Model update(SessionDto session, Model model) {
+	public Model edit(SessionDto session, Model model) {
 	
 		logger.debug("ModelServiceImpl.update starts");        
 		logger.debug("params : [ model: {} ]", model);
@@ -107,6 +109,12 @@ implements ModelService {
 		logger.debug("params : [ model: {} ]", model);
 
 		modelsDao.remove(model);
+	}
+
+	@Override
+	public ModelFetchResponseDto find(ModelFetchRequestDto req) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

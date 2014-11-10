@@ -20,7 +20,10 @@ import telephony.BaseCoreTest;
 import telephony.core.data.TestData;
 import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
+import telephony.core.query.filter.DeliveryFilterCriteriaBuilder;
 import telephony.core.service.dto.*;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -183,7 +186,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long count = deliveryService.count(session);
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create();
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria().build();
 		
 		// when
 		List<Delivery> lst = deliveryService.find(session, filters);		
@@ -351,9 +354,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void findDeliveries1() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-				.minNumberOfProducts(1)
-				.maxNumberOfProducts(10);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+				.withMinNumberOfProducts(1)
+				.withMaxNumberOfProducts(10)
+				.build();
 		
 		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
@@ -380,9 +384,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 			.withDate(2013, 12, 31)
 			.withTime(0, 0, 0, 0).toDate();
 		
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-				.deliveryDateStart(deliveryDateStart)
-				.deliveryDateEnd(deliveryDateEnd);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+				.withDeliveryDateStart(deliveryDateStart)
+				.withDeliveryDateEnd(deliveryDateEnd)
+				.build();
 		
 		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
@@ -402,8 +407,9 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// given
 		String label = "nowy rok cieszyn 1";
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-				.label(label);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+				.withLabel(label)
+				.build();
 		
 		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
@@ -422,9 +428,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void findDeliveries4() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-				.minNumberOfProducts(7)
-				.maxNumberOfProducts(9);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+				.withMinNumberOfProducts(7)
+				.withMaxNumberOfProducts(9)
+				.build();
 		
 		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
@@ -443,9 +450,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void findDeliveries5() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-				.sumFrom(500.0d)
-				.sumTo(900.0d);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+				.withSumFrom(500.0d)
+				.withSumTo(900.0d)
+				.build();
 		
 		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);
@@ -464,11 +472,12 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void findDeliveries6() throws SessionServiceException, DeliveryServiceException {
 		
 		// given
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-				.sumFrom(500.0d)
-				.sumTo(900.0d)
-				.minNumberOfProducts(7)
-				.maxNumberOfProducts(9);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+				.withSumFrom(500.0d)
+				.withSumTo(900.0d)
+				.withMinNumberOfProducts(7)
+				.withMaxNumberOfProducts(9)
+				.build();
 		
 		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
 		req.setSessionId(TestData.USER1_SESSIONID);

@@ -34,6 +34,7 @@ import com.jayway.restassured.http.ContentType;
 /**
  * foo bar.
  */
+//TODO : refactor using rest-assured
 @RunWith(JUnit4ClassRunner.class)
 public class SessionResourceTest extends BaseWSTest {
 

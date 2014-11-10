@@ -2,9 +2,9 @@ package telephony.core.service;
 
 import java.util.List;
 
-import telephony.core.entity.jpa.*;
-import telephony.core.query.filter.ContactFilterCriteria;
+import telephony.core.entity.jpa.Contact;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.*;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -21,7 +21,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws SessionServiceException asd. 
 	 * @throws ContactServiceException asd.
 	 */
-	List<Contact> find(SessionDto session, ContactFilterCriteria filters)
+	List<Contact> fetch(ContactFetchRequest req)
 		throws SessionServiceException, ContactServiceException;
 	
 	/**
@@ -32,28 +32,25 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws ContactServiceException asd.
 	 * 
 	 */
-	void add(SessionDto session, Contact newContact)
+	void add(ContactAddRequestDto req)
 			throws SessionServiceException, ContactServiceException;
 	
 	/**
 	 * asd.
-	 * @param session TODO
-	 * @param contactToUpdate asd.
+	 * @param contact TODO
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
-	void updateContact(SessionDto session, Contact contactToUpdate)
+	void edit(ContactEditRequest contact)
 			throws SessionServiceException, ContactServiceException;
 	
-
 	/**
 	 * asd.
-	 * @param session TODO
-	 * @param contactToDelete asd.
+	 * @param req TODO
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
-	void deleteContact(SessionDto session, Contact contactToDelete)
+	void delete(ContactDeleteRequest req)
 			throws SessionServiceException, ContactServiceException;
 	
 	/**
@@ -64,6 +61,8 @@ public interface ContactService extends BasicService<Contact> {
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
+	// TODO : replace by the fetch() method and remove
+	@Deprecated
 	Contact findByLabel(SessionDto session, String label)
 		throws SessionServiceException, ContactServiceException;
 
@@ -74,6 +73,10 @@ public interface ContactService extends BasicService<Contact> {
 	 * @return  as.
 	 * @throws SessionServiceException 
 	 */
+	// TODO : replace by the fetch() method and remove
+	@Deprecated
 	Contact findById(SessionDto session, Long contactId)
 			throws SessionServiceException;
+
+	List<Contact> find(ContactFetchRequestDto dto);
 }

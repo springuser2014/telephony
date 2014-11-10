@@ -7,6 +7,8 @@
 
 package telephony.core.query.filter;
 
+import java.util.Date;
+
 public class SaleFilterCriteriaBuilder extends
 		SaleFilterCriteriaBuilderBase<SaleFilterCriteriaBuilder> {
 	public static SaleFilterCriteriaBuilder saleFilterCriteria() {
@@ -31,5 +33,68 @@ class SaleFilterCriteriaBuilderBase<GeneratorT extends SaleFilterCriteriaBuilder
 
 	protected SaleFilterCriteria getInstance() {
 		return instance;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSaleDateStart(Date aValue) {
+		instance.setSaleDateStart(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSaleDateEnd(Date aValue) {
+		instance.setSaleDateEnd(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSumFrom(Double aValue) {
+		instance.setSumFrom(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSumTo(Double aValue) {
+		instance.setSumTo(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSoldBy(Long aValue) {
+		instance.setSoldBy(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withRegisteredBy(Long aValue) {
+		instance.setRegisteredBy(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withLabel(String aValue) {
+		instance.setLabel(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withMinNumberOfProducts(Integer aValue) {
+		instance.setMinNumberOfProducts(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withMaxNumberOfProducts(Integer aValue) {
+		instance.setMaxNumberOfProducts(aValue);
+
+		return (GeneratorT) this;
 	}
 }
