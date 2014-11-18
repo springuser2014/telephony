@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.jboss.arquillian.junit.Arquillian;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

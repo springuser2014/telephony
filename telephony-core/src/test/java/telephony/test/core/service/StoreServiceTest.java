@@ -1,12 +1,10 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,19 +12,19 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
-import telephony.core.entity.jpa.Role;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.RoleService;
+import telephony.core.service.StoreService;
+import telephony.core.service.UserService;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.query.filter.StoreFilterCriteriaBuilder;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
-import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 

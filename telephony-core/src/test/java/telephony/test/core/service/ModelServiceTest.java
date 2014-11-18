@@ -1,30 +1,26 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.PersistenceException;
-
+import com.google.inject.Inject;
+import com.googlecode.flyway.test.annotation.FlywayTest;
+import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
 import telephony.core.entity.jpa.Model;
+import telephony.core.service.ModelService;
 import telephony.core.service.dto.SessionDto;
+import telephony.test.BaseCoreTest;
+import telephony.test.core.data.TestData;
 
-import com.google.inject.Inject;
-import com.googlecode.flyway.test.annotation.FlywayTest;
-import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+import javax.persistence.PersistenceException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 
 /**

@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ModelDao;
 import telephony.core.entity.jpa.Model;
+import telephony.core.service.dto.request.ModelFetchRequestDto;
 import telephony.core.service.ModelService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.ModelFetchRequestDto;
 import telephony.core.service.dto.response.ModelFetchResponseDto;
 
 import com.google.inject.Inject;

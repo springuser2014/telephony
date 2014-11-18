@@ -7,10 +7,10 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
-import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.ProductFetchRequestDto;
 import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -21,7 +21,7 @@ public interface ProductService extends BasicService<Product> {
 	 * asd.
 	 * @param req a.
 	 * @return ad.
-	 * @throws SessionServiceException d.
+	 * @throws telephony.core.service.exception.SessionServiceException d.
 	 */
 	ProductFetchResponseDto fetch(ProductFetchRequestDto req)
 			throws SessionServiceException;
@@ -33,7 +33,7 @@ public interface ProductService extends BasicService<Product> {
      * @throws SessionServiceException 
      */
 	@Deprecated
-    List<String> fetchAllImeiInUse(SessionDto session) 
+    List<String> fetchAllImeiInUse(SessionDto session)
     	throws SessionServiceException;
 
     /**

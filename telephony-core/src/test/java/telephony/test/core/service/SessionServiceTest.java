@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,15 +15,14 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
-import telephony.core.service.dto.SessionDto;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.SessionService;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.test.core.data.TestData;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
-import com.google.inject.persist.PersistService;
 import com.googlecode.flyway.test.annotation.FlywayTest;
-import com.googlecode.flyway.test.dbunit.DBUnitSupport;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,7 +41,7 @@ public class SessionServiceTest extends BaseCoreTest {
 			
 	/**
 	 * asd.
-	 * @throws SessionServiceException 
+	 * @throws telephony.core.service.exception.SessionServiceException
 	 */
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })

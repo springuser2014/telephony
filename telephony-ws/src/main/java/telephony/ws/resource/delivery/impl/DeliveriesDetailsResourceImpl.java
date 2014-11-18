@@ -1,7 +1,6 @@
 package telephony.ws.resource.delivery.impl;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -14,7 +13,7 @@ import com.google.inject.Inject;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.*;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.DeliveriesFetchRequestDto;
 import telephony.core.service.dto.request.DeliveryDetailsRequest;
 import telephony.core.service.dto.response.DeliveryDetailsResponse;

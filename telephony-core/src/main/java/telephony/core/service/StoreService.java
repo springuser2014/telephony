@@ -3,12 +3,10 @@ package telephony.core.service;
 
 import java.util.List;
 
-import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.StoreFilterCriteria;
-import telephony.core.service.dto.SessionDto;
-import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -20,7 +18,7 @@ public interface StoreService extends BasicService<Store> {
      * @param session TODO
      * @param filters TODO
      * @return asd.
-     * @throws SessionServiceException  asd.
+     * @throws telephony.core.service.exception.SessionServiceException  asd.
      */
     List<Store> find(SessionDto session, StoreFilterCriteria filters) 
     		throws SessionServiceException;

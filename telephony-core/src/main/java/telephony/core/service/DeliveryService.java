@@ -6,11 +6,11 @@ import java.util.List;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Product;
 import telephony.core.query.filter.DeliveryFilterCriteria;
-import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
-import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
+import telephony.core.service.exception.DeliveryServiceException;
 
 /**
  * asd.
@@ -22,11 +22,11 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * asd.
 	 * @param request asd.
 	 * @return asd.
-	 * @throws SessionServiceException 
+	 * @throws telephony.core.service.exception.SessionServiceException
 	 * @throws DeliveryServiceException 
 	 * @throws ParseException 
 	 */
-	DeliveryAddResponseDto add(DeliveryAddRequestDto request) 
+	DeliveryAddResponseDto add(DeliveryAddRequestDto request)
 			throws SessionServiceException, DeliveryServiceException, ParseException;
 
 	/**
@@ -56,7 +56,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws DeliveryServiceException a.
 	 * @throws SessionServiceException a.
 	 */
-	DeliveryEditResponseDto edit(DeliveryEditRequestDto req) 
+	DeliveryEditResponseDto edit(DeliveryEditRequestDto req)
 			throws ParseException, DeliveryServiceException, SessionServiceException;
 	
 	/**
@@ -66,7 +66,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws SessionServiceException a.
 	 * @throws DeliveryServiceException a.
 	 */
-	DeliveryDeleteResponseDto delete(DeliveryDeleteRequestDto req) 
+	DeliveryDeleteResponseDto delete(DeliveryDeleteRequestDto req)
 			throws SessionServiceException, DeliveryServiceException;
 
 	// TODO : delete the stuff below 

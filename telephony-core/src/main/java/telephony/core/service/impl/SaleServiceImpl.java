@@ -17,9 +17,9 @@ import telephony.core.query.filter.SaleFilterCriteria;
 import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;

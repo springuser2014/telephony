@@ -32,7 +32,7 @@
     <bean 
 	    id="connectionFactory" 
 	    name="connectionFactory"
-	    class="telephony.TestDatabaseConnectionFactory"
+	    class="telephony.test.TestDatabaseConnectionFactory"
 	/> 
 
 </beans>

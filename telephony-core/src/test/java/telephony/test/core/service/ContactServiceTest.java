@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -13,19 +13,24 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.ContactService;
+import telephony.core.service.SessionService;
+import telephony.core.service.dto.ContactDto;
+import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ContactAddRequestDto;
+import telephony.core.service.dto.request.ContactEditRequest;
+import telephony.core.service.dto.request.ContactFetchRequestDto;
+import telephony.core.service.exception.ContactServiceException;
+import telephony.core.service.exception.SessionServiceException;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.query.filter.ContactFilterCriteriaBuilder;
-import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.ContactEditDto;
-import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.*;
-import telephony.core.service.exception.ContactServiceException;
-import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.request.ContactDeleteRequest;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -87,7 +92,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		newContact.setLabel(label);
 		newContact.setSales(new HashSet<Sale>());
 		
-		ContactDto contactBean = new ContactDto(); 
+		ContactDto contactBean = new ContactDto();
 		contactBean.setDetails("contact details");
 		contactBean.setLabel(label);
 		

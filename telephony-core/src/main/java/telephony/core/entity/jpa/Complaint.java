@@ -1,4 +1,3 @@
-
 package telephony.core.entity.jpa;
 
 import java.util.Date;
@@ -65,8 +64,7 @@ public abstract class Complaint extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "contact_id", nullable = false)
 	private Contact contact;
-	
-	
+
 	/**
 	 * asd.
 	 * @return a.

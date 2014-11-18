@@ -13,13 +13,13 @@ import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteriaBuilder;
-import telephony.core.query.filter.RoleFilterCriteriaBuilder;
-import telephony.core.service.ProductService;
-import telephony.core.service.SessionService;
-import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.ProductFetchRequestDto;
 import telephony.core.service.dto.response.ProductFetchResponseDto;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.ProductService;
+import telephony.core.service.SessionService;
+import telephony.core.service.dto.ProductSearchDto;
+import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -41,7 +41,7 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public List<String> fetchAllImeiInUse(SessionDto session) 
+	public List<String> fetchAllImeiInUse(SessionDto session)
 			throws SessionServiceException {
 		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
 		

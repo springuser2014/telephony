@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.DeliveriesDao;
 import telephony.core.dao.SalesDao;
 import telephony.core.service.InformationService;
-import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.DashboardDetailsRequestDto;
 import telephony.core.service.dto.request.ModelsRequestDto;
 import telephony.core.service.dto.request.ProducersRequestDto;

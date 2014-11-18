@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -14,15 +14,15 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.ContactService;
+import telephony.core.service.SaleComplaintService;
+import telephony.core.service.exception.SessionServiceException;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.enumz.ComplaintStatus;
-import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
@@ -39,13 +39,13 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
     FlywayDBUnitTestExecutionListener.class 
 })
 @FlywayTest
-public class ProductComplaintServiceTest extends BaseCoreTest {
-
+public class SaleComplaintServiceTest extends BaseCoreTest {
+	
 	@Inject
 	private ContactService contactService;
 	
 	@Inject
-	private ProductComplaintService complaintService;
+	private SaleComplaintService complaintService;
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -60,7 +60,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setUsername(username);
 		
 		Contact contact = contactService.findById(null, 1L); 
-		ProductComplaint complaint = new ProductComplaint();
+		SaleComplaint complaint = new SaleComplaint();
 		complaint.setDescription("aaa");
 		complaint.setItemId("123456789000000");
 		complaint.setReportedDate(new Date());
@@ -85,7 +85,6 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		// given
 		Date reportedDate = new Date();
 		String uniqueHash = "qwertyuio12357890";
-		long complaintId = 1L;
 		
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
@@ -94,14 +93,14 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
-		ProductComplaint complaint1 = complaintService.findById(complaintId);
+		SaleComplaint complaint1 = complaintService.findById(7L);
 		complaint1.setReportedDate(reportedDate);
 		complaint1.setUniqueHash(uniqueHash);
 		
 		// when
 		complaintService.update(session, complaint1);
 		
-		ProductComplaint complaint2 = complaintService.findById(complaintId);
+		SaleComplaint complaint2 = complaintService.findById(7L);
 		
 		// then
 		assertEquals(complaint2.getUniqueHash(), uniqueHash);
@@ -117,7 +116,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		Date reportedDate = new Date();
 		String uniqueHash1 = "qwertyuio12357890";
 		String uniqueHash2 = "asdfghjk234567890";
-		long complaintId1 = 1L, complaintId2 = 2L;
+		long complaintId1 = 7L, complaintId2 = 8L;
 		
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
@@ -126,21 +125,21 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
-		ProductComplaint complaint1 = complaintService.findById(complaintId1);
+		SaleComplaint complaint1 = complaintService.findById(complaintId1);
 		complaint1.setReportedDate(reportedDate);
 		complaint1.setUniqueHash(uniqueHash1);
 		
-		ProductComplaint complaint2 = complaintService.findById(complaintId2);
+		SaleComplaint complaint2 = complaintService.findById(complaintId2);
 		complaint2.setReportedDate(reportedDate);
 		complaint2.setUniqueHash(uniqueHash2);
 		
-		Collection<ProductComplaint> complaints = Arrays.asList(complaint1, complaint2); 
+		Collection<SaleComplaint> complaints = Arrays.asList(complaint1, complaint2); 
 		
 		// when
 		complaintService.update(session, complaints);
 		
-		ProductComplaint complaint3 = complaintService.findById(complaintId1);
-		ProductComplaint complaint4 = complaintService.findById(complaintId2);
+		SaleComplaint complaint3 = complaintService.findById(complaintId1);
+		SaleComplaint complaint4 = complaintService.findById(complaintId2);
 		
 		// then
 		assertEquals(complaint3.getUniqueHash(), uniqueHash1);
@@ -159,11 +158,11 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
-		long complaintId = 1L;
+		long complaintId = 7L;
 		
 		// when
 		complaintService.markAsInProgress(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
+		SaleComplaint complaint = complaintService.findById(complaintId);
 		
 		// then
 		assertTrue(complaint.getStatus() == ComplaintStatus.IN_PROGRESS);
@@ -182,11 +181,11 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
-		long complaintId = 1L;
+		long complaintId = 7L;
 		
 		// when
 		complaintService.markAsAccepted(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
+		SaleComplaint complaint = complaintService.findById(complaintId);
 		
 		// then
 		assertTrue(complaint.getStatus() == ComplaintStatus.ACCEPTED);
@@ -205,11 +204,11 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
-		long complaintId = 1L;
+		long complaintId = 7L;
 		
 		// when
 		complaintService.markAsRejected(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
+		SaleComplaint complaint = complaintService.findById(complaintId);
 		
 		// then
 		assertTrue(complaint.getStatus() == ComplaintStatus.REJECTED);
@@ -228,11 +227,11 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
  
-		long complaintId = 1L;
+		long complaintId = 7L;
 		
 		// when
 		complaintService.markAsResolved(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
+		SaleComplaint complaint = complaintService.findById(complaintId);
 		
 		// then
 		assertTrue(complaint.getStatus() == ComplaintStatus.RESOLVED);
@@ -252,7 +251,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setUsername(username);
 		
 		long countBefore = complaintService.count(session);
-		long complaintId = 1L;
+		long complaintId = 7L;
 		
 		// when
 		complaintService.removeById(session, complaintId);
@@ -275,7 +274,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		session.setUsername(username);
 		
 		long countBefore = complaintService.count(session);
-		long complaintId1 = 1L, complaintId2 = 2L;
+		long complaintId1 = 7L, complaintId2 = 8L;
 		Collection<Long> ids = Arrays.asList(complaintId1, complaintId2);
 		
 		// when

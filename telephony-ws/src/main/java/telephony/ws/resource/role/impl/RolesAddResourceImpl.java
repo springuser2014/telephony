@@ -11,13 +11,11 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.entity.jpa.Role;
-import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
 import telephony.core.service.dto.SessionDto;

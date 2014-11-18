@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertTrue;
 
@@ -11,14 +11,15 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
-import telephony.core.entity.jpa.Role;
-import telephony.core.query.filter.RoleFilterCriteria;
-import telephony.core.query.filter.RoleFilterCriteriaBuilder;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.RoleService;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.test.core.data.TestData;
+import telephony.core.entity.jpa.Role;
+import telephony.core.query.filter.RoleFilterCriteria;
+import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;

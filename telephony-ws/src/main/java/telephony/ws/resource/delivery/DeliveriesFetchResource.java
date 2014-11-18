@@ -4,7 +4,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 
 import telephony.core.service.dto.request.DeliveriesFetchRequestDto;
-import telephony.core.service.dto.response.DeliveriesFetchResponseDto;
 
 /**
  * asd.

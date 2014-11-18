@@ -1,14 +1,13 @@
-package telephony;
-
-import javax.persistence.EntityManager;
-
-import org.junit.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package telephony.test;
 
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.persist.PersistService;
+import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.EntityManager;
 
 
 /**

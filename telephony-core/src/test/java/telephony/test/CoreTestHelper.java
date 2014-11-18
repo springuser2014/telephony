@@ -1,14 +1,13 @@
-package telephony;
-
-import javax.sql.DataSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+package telephony.test;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.googlecode.flyway.core.Flyway;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+
+import javax.sql.DataSource;
 
 /**
  * asd.

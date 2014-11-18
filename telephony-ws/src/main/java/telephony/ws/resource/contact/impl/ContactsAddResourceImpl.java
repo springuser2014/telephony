@@ -3,8 +3,6 @@ package telephony.ws.resource.contact.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.persistence.PersistenceException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;

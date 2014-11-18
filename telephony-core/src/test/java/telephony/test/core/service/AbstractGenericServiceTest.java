@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -11,16 +11,14 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
-import telephony.core.entity.jpa.Tax;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.TestEntityService;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.TestEntity;
 import telephony.core.service.dto.SessionDto;
 

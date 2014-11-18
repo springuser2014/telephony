@@ -6,12 +6,15 @@ import java.util.Set;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
-import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.request.UserAddRequest;
+import telephony.core.service.dto.request.UserEditRequest;
+import telephony.core.service.dto.request.UsersFetchRequest;
 import telephony.core.service.dto.response.UserAddResponse;
 import telephony.core.service.dto.response.UserEditResponse;
-import telephony.core.service.dto.response.UsersFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.UserDeleteRequest;
+import telephony.core.service.dto.response.UsersFetchResponse;
 import telephony.core.service.exception.UserServiceException;
 
 /**
@@ -30,7 +33,7 @@ public interface UserService extends BasicService<User> {
      * asd.
      * @param req a.
      * @return a.
-     * @throws SessionServiceException a.
+     * @throws telephony.core.service.exception.SessionServiceException a.
      * @throws UserServiceException a.
      */
     UserEditResponse updateUser(UserEditRequest req)

@@ -2,7 +2,6 @@ package telephony.ws.resource.session.impl;
 
 import java.io.IOException;
 
-import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
@@ -17,7 +16,6 @@ import com.google.inject.Inject;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
-import telephony.core.system.SystemRole;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionDestroyResource;
 

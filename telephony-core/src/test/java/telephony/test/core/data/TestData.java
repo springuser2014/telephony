@@ -1,4 +1,4 @@
-package telephony.core.data;
+package telephony.test.core.data;
 
 import telephony.core.util.StringGeneratorImpl;
 

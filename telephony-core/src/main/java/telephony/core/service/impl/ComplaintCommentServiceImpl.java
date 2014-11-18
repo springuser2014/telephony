@@ -30,7 +30,7 @@ implements ComplaintCommentService {
 	
 	@Transactional
 	@Override
-	public void comment(SessionDto session, ComplaintComment comment,	long complaintId) {
+	public void comment(SessionDto session, ComplaintComment comment, long complaintId) {
 		
 		// TODO : session's validation
 		

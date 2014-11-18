@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 
-import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.store.StoresAddResource;

@@ -1,7 +1,6 @@
 package telephony.ws.resource.role.impl;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -17,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import com.google.inject.Inject;
 
 import telephony.core.entity.jpa.Role;
-import telephony.core.entity.jpa.Store;
-import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
 import telephony.core.service.dto.response.BasicResponseDto;
 import telephony.ws.resource.TelephonyServerResource;

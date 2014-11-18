@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,8 +15,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.TaxService;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.service.dto.SessionDto;
 

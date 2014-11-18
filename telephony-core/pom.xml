@@ -251,7 +251,7 @@
 					<properties>
 						<property>
 							<name>listener</name>
-							<value>telephony.TelephonyCoreTestListener</value>
+							<value>telephony.test.TelephonyCoreTestListener</value>
 						</property>
 					</properties>
 				</configuration>

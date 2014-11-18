@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import telephony.core.dao.UsersDao;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.util.StringGenerator;
 
 /**
@@ -46,7 +46,7 @@ public interface SessionService {
      * by {@link #setSessionValidity(Integer)}.
      * @param username asd.
      * @param password asd.
-     * @throws SessionServiceException asd.
+     * @throws telephony.core.service.exception.SessionServiceException asd.
      * @return session object if initialized successfully otherwise null.
      */
     SessionDto init(String username, String password) throws SessionServiceException;

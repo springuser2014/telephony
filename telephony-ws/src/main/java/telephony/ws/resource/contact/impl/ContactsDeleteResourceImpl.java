@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import com.google.inject.Inject;
 
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
-import telephony.core.service.StoreService;
 import telephony.core.service.dto.response.BasicResponseDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;

@@ -1,17 +1,15 @@
-package telephony;
-
-import java.util.List;
-
-import org.junit.runner.Description;
-import org.junit.runner.Result;
-import org.junit.runner.notification.RunListener;
-
-import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
-import telephony.core.guice.env.TelephonyCoreEnvironmentResolver;
+package telephony.test;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.persist.PersistService;
+import org.junit.runner.Description;
+import org.junit.runner.Result;
+import org.junit.runner.notification.RunListener;
+import telephony.core.guice.env.SystemPropertyEnvironmentNameResolver;
+import telephony.core.guice.env.TelephonyCoreEnvironmentResolver;
+
+import java.util.List;
 
 /**
  * Tests listener, which helps to handle with Guice-managed injections in tests.

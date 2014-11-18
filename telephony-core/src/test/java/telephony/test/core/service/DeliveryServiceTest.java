@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -16,17 +16,20 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.*;
+import telephony.core.service.dto.ProductEditDto;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.exception.SessionServiceException;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.DeliveryFilterCriteriaBuilder;
-import telephony.core.service.dto.*;
-import telephony.core.service.dto.request.*;
-import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.ProductDto;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
-import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;

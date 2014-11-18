@@ -12,11 +12,11 @@ import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.ContactDto;
-import telephony.core.service.dto.ContactEditDto;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.ContactEditDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -64,7 +64,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public void add(ContactAddRequestDto req) 
+	public void add(ContactAddRequestDto req)
 			throws SessionServiceException, ContactServiceException {
 		
 		// TODO add dtos validation
@@ -94,7 +94,7 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public void edit(ContactEditRequest req) 
+	public void edit(ContactEditRequest req)
 			throws SessionServiceException, ContactServiceException {
 		
 		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());

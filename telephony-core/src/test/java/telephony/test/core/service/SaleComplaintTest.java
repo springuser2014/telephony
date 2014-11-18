@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import telephony.BaseCoreTest;
+import telephony.test.BaseCoreTest;
 
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
@@ -23,12 +23,12 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
     FlywayDBUnitTestExecutionListener.class 
 })
 @FlywayTest
-public class ProductComplaintTest extends BaseCoreTest {
-	
+public class SaleComplaintTest extends BaseCoreTest {
+
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void as() {
 		
 	}
-
 }

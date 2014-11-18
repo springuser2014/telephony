@@ -14,12 +14,15 @@ import telephony.core.query.filter.UserFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.request.UserAddRequest;
+import telephony.core.service.dto.request.UserEditRequest;
+import telephony.core.service.dto.request.UsersFetchRequest;
 import telephony.core.service.dto.response.UserAddResponse;
 import telephony.core.service.dto.response.UserEditResponse;
 import telephony.core.service.dto.response.UsersFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
+import telephony.core.service.dto.request.UserDeleteRequest;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -42,7 +45,7 @@ implements UserService {
 
     @Override
     @Transactional
-    public final List<User> find(SessionDto session) 
+    public final List<User> find(SessionDto session)
     		throws SessionServiceException {
        
     	logger.debug("UserServiceImpl.findAllUsers starts");

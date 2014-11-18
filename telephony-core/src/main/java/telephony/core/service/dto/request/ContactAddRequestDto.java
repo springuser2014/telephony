@@ -1,7 +1,6 @@
 package telephony.core.service.dto.request;
 
 import telephony.core.service.dto.ContactDto;
-import telephony.core.service.dto.SessionBean;
 import telephony.core.service.dto.SessionDto;
 
 /**

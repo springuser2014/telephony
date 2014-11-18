@@ -1,7 +1,6 @@
 package telephony.ws.resource.store.impl;
 
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Delete;
 import org.restlet.resource.Put;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

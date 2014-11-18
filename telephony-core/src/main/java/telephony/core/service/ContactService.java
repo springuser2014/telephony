@@ -3,10 +3,10 @@ package telephony.core.service;
 import java.util.List;
 
 import telephony.core.entity.jpa.Contact;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.*;
-import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
+import telephony.core.service.exception.ContactServiceException;
 
 /**
  * asd.
@@ -18,7 +18,7 @@ public interface ContactService extends BasicService<Contact> {
 	 * @param session TODO
 	 * @param filters TODO
 	 * @return asd.
-	 * @throws SessionServiceException asd. 
+	 * @throws telephony.core.service.exception.SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 */
 	List<Contact> fetch(ContactFetchRequest req)

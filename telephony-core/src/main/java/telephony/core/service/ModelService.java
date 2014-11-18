@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.Model;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.ModelFetchRequestDto;
 import telephony.core.service.dto.response.ModelFetchResponseDto;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.

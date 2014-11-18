@@ -4,9 +4,9 @@ import java.util.List;
 
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
@@ -18,7 +18,7 @@ public interface RoleService extends BasicService<Role> {
 	 * @param session TODO
 	 * @param filters TODO
 	 * @return asd.
-	 * @throws SessionServiceException 
+	 * @throws telephony.core.service.exception.SessionServiceException
 	 */
 	List<Role> find(SessionDto session, RoleFilterCriteria filters) 
 		throws SessionServiceException;
@@ -28,7 +28,7 @@ public interface RoleService extends BasicService<Role> {
 	 * @param session TODO
 	 * @param newrole asd.
 	 * @throws SessionServiceException asd.
-	 * @throws RoleServiceException asd.
+	 * @throws telephony.core.service.exception.RoleServiceException asd.
 	 */
 	void add(SessionDto session, Role newrole)
 		throws SessionServiceException, RoleServiceException;

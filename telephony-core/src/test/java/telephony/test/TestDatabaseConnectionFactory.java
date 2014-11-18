@@ -16,19 +16,18 @@
 /**
  *
  */
-package telephony;
+package telephony.test;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-
+import com.googlecode.flyway.test.dbunit.DefaultDatabaseConnectionFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 
-import com.googlecode.flyway.test.dbunit.DefaultDatabaseConnectionFactory;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 
 /**
  * Helper class to show how a connection factory can be changed or extend.

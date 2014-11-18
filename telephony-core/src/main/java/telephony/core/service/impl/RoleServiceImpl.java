@@ -11,11 +11,11 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
+import telephony.core.service.exception.RoleServiceException;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.RoleService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.exception.RoleServiceException;
-import telephony.core.service.exception.SessionServiceException;
 
 /**
  * Roles management service.

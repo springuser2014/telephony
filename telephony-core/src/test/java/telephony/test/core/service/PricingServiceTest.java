@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.test.core.service;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -19,8 +19,9 @@ import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-import telephony.BaseCoreTest;
-import telephony.core.data.TestData;
+import telephony.test.BaseCoreTest;
+import telephony.core.service.PricingService;
+import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.Pricing;
 import telephony.core.service.dto.SessionDto;
 

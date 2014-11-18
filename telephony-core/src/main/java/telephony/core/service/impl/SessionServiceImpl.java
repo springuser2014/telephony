@@ -20,7 +20,7 @@ import com.google.inject.persist.Transactional;
  */
 public class SessionServiceImpl
 extends AbstractBasicService 
-implements SessionService {   
+implements SessionService {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
