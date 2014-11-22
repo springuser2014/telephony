@@ -13,12 +13,20 @@ import telephony.core.dao.TaxDao;
 import telephony.core.entity.jpa.Tax;
 import telephony.core.service.TaxService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.TaxAddRequest;
+import telephony.core.service.dto.request.TaxDeleteRequest;
+import telephony.core.service.dto.request.TaxEditRequest;
+import telephony.core.service.dto.request.TaxesFetchRequest;
+import telephony.core.service.dto.response.TaxAddResponse;
+import telephony.core.service.dto.response.TaxDeleteResponse;
+import telephony.core.service.dto.response.TaxEditResponse;
+import telephony.core.service.dto.response.TaxFetchResponse;
 
 /**
  * asd.
  */
-public class TaxServiceImpl 
-extends AbstractBasicService<Tax> 
+public class TaxServiceImpl
+extends AbstractBasicService<Tax>
 implements TaxService {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -30,6 +38,26 @@ implements TaxService {
 	@Override
 	public long count(SessionDto session) {
 		return taxDao.count();
+	}
+
+	@Override
+	public TaxFetchResponse fetch(TaxesFetchRequest request) {
+		return null;
+	}
+
+	@Override
+	public TaxAddResponse add(TaxAddRequest request) {
+		return null;
+	}
+
+	@Override
+	public TaxEditResponse edit(TaxEditRequest request) {
+		return null;
+	}
+
+	@Override
+	public TaxDeleteResponse delete(TaxDeleteRequest request) {
+		return null;
 	}
 
 	@Transactional

@@ -18,8 +18,8 @@ import telephony.test.BaseCoreTest;
 import telephony.core.service.ProductService;
 import telephony.core.service.StoreService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.ProductFetchRequestDto;
-import telephony.core.service.dto.response.ProductFetchResponseDto;
+import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
 import telephony.core.entity.jpa.Product;
@@ -416,13 +416,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.withProducer("nokia")
 				.build();
 		
-		ProductFetchRequestDto request = new ProductFetchRequestDto();
+		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.fetch(request);
+		ProductFetchResponse resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 4);
@@ -441,13 +441,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.withDeliveryDateEnd(deliveryDateEnd)
 				.build();
 				
-		ProductFetchRequestDto request = new ProductFetchRequestDto();
+		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.fetch(request);
+		ProductFetchResponse resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 8);
@@ -463,13 +463,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.withProducer("nokia")
 				.build();				
 		
-		ProductFetchRequestDto request = new ProductFetchRequestDto();
+		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.fetch(request);
+		ProductFetchResponse resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 12);
@@ -485,13 +485,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.build();
 				
 		
-		ProductFetchRequestDto request = new ProductFetchRequestDto();
+		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.fetch(request);
+		ProductFetchResponse resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 1);
@@ -506,13 +506,13 @@ public class ProductServiceTest extends BaseCoreTest {
 				.withStatus(ProductStatus.SOLD)
 				.build();
 				
-		ProductFetchRequestDto request = new ProductFetchRequestDto();
+		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFiltersCriteria(filters);
 		
 		// when
-		ProductFetchResponseDto resp = productService.fetch(request);
+		ProductFetchResponse resp = productService.fetch(request);
 		
 		// then
 		assertEquals(resp.getProducts().size(), 10);

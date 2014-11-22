@@ -19,8 +19,8 @@ import org.restlet.resource.ClientResource;
 
 import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.SessionBean;
-import telephony.core.service.dto.request.ContactAddRequestDto;
-import telephony.core.service.dto.request.DeleteContactRequestDto;
+import telephony.core.service.dto.request.ContactAddRequest;
+import telephony.core.service.dto.request.DeleteContactRequest;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.bean.UserBean;
@@ -167,7 +167,7 @@ public class ContactResourceTest extends BaseWSTest {
     	newContact.setLabel("someLabel");
     	
     	JsonRepresentation contactAddParam = new JsonRepresentation(
-    			new ContactAddRequestDto(username, sessionId, newContact)
+    			new ContactAddRequest(username, sessionId, newContact)
     	);
     	
     	JsonRepresentation addResponse = contactsAddResource.add(contactAddParam);
@@ -222,7 +222,7 @@ public class ContactResourceTest extends BaseWSTest {
     	Long contactToDeleteId = contactToDelete.getLong("id");
     	
     	JsonRepresentation contactDeleteParam = new JsonRepresentation(
-    			new DeleteContactRequestDto(username, sessionId, contactToDeleteId)
+    			new DeleteContactRequest(username, sessionId, contactToDeleteId)
     	);
     	
     	JsonRepresentation deleteResponse = contactsDeleteResource.delete(contactDeleteParam);

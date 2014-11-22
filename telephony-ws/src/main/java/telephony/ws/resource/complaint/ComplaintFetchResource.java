@@ -1,11 +1,11 @@
 package telephony.ws.resource.complaint;
 
-import telephony.core.service.dto.request.ComplaintFetchRequestDto;
-import telephony.core.service.dto.response.ComplaintFetchResponseDto;
+import telephony.core.service.dto.request.ComplaintFetchRequest;
+import telephony.core.service.dto.response.ComplaintFetchResponse;
 
 public interface ComplaintFetchResource {
 
 	String URL = "/complaint/fetch";
 	
-	ComplaintFetchResponseDto fetch(ComplaintFetchRequestDto request);
+	ComplaintFetchResponse fetch(ComplaintFetchRequest request);
 }

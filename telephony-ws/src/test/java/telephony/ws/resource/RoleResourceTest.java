@@ -16,8 +16,8 @@ import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.ClientResource;
 
-import telephony.core.service.dto.request.DeleteRoleRequestDto;
-import telephony.core.service.dto.request.RoleAddRequestDto;
+import telephony.core.service.dto.request.DeleteRoleRequest;
+import telephony.core.service.dto.request.RoleAddRequest;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.bean.UserBean;
@@ -94,7 +94,7 @@ public class RoleResourceTest extends BaseWSTest {
     	String sessionId = reponseObj.getString("sessionId");
     	
     	JsonRepresentation roleAddingParam = new JsonRepresentation(
-    			new RoleAddRequestDto(username, sessionId, label)
+    			new RoleAddRequest(username, sessionId, label)
     	);
     	
     	JsonRepresentation addresponse = rolesAdd.add(roleAddingParam);
@@ -128,7 +128,7 @@ public class RoleResourceTest extends BaseWSTest {
     	String sessionId = reponseObj.getString("sessionId");
     	
     	JsonRepresentation roleDeletingParam = new JsonRepresentation(
-    		new DeleteRoleRequestDto(username, sessionId)
+    		new DeleteRoleRequest(username, sessionId)
     	);
     	
     	JsonRepresentation deleteResponse = rolesDelete.delete(roleDeletingParam);

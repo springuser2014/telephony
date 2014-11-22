@@ -2,11 +2,11 @@ package telephony.ws.resource.tax;
 
 import org.restlet.ext.json.JsonRepresentation;
 
-import telephony.core.service.dto.request.TaxAddRequestDto;
+import telephony.core.service.dto.request.TaxAddRequest;
 
 public interface TaxAddResource {
 
 	String URL = "/taxes/add";
 	
-	JsonRepresentation add(TaxAddRequestDto req);
+	JsonRepresentation add(TaxAddRequest req);
 }

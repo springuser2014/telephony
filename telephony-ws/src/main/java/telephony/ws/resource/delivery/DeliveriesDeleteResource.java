@@ -3,7 +3,7 @@ package telephony.ws.resource.delivery;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
 
-import telephony.core.service.dto.request.DeliveryDeleteRequestDto;
+import telephony.core.service.dto.request.DeliveryDeleteRequest;
 
 /**
  * asd.
@@ -18,6 +18,6 @@ public interface DeliveriesDeleteResource {
 	 * @return asd.
 	 */
 	@Delete("json")
-	JsonRepresentation delete(DeliveryDeleteRequestDto entity);
+	JsonRepresentation delete(DeliveryDeleteRequest entity);
 
 }

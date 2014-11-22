@@ -2,7 +2,7 @@ package telephony.core.service.dto.response;
 
 import telephony.core.service.dto.DeliveryDto;
 
-public class DeliveryDetailsResponse {
+public class DeliveryDetailsResponse extends BasicResponse {
 	
 	private DeliveryDto delivery;
 

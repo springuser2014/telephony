@@ -6,7 +6,7 @@ import telephony.core.service.dto.ContactDto;
 /**
  * asd.
  */
-public class ContactListResponse {
+public class ContactListResponse extends BasicResponse {
 	
 	private List<ContactDto> contacts;
 	

@@ -16,9 +16,9 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
-import telephony.core.service.dto.request.DeliveryEditRequestDto;
-import telephony.core.service.dto.response.BasicResponseDto;
-import telephony.core.service.dto.response.DeliveryEditResponseDto;
+import telephony.core.service.dto.request.DeliveryEditRequest;
+import telephony.core.service.dto.response.BasicResponse;
+import telephony.core.service.dto.response.DeliveryEditResponse;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -40,24 +40,24 @@ implements DeliveriesEditResource {
 	@Put("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation edit(DeliveryEditRequestDto entity) {
+	public JsonRepresentation edit(DeliveryEditRequest entity) {
 		
 		Gson gson = new GsonBuilder().serializeNulls().create();
-		DeliveryEditResponseDto resp = null;
+		DeliveryEditResponse resp = null;
 		try {
 			resp = deliveryService.edit(entity);
 		} catch (SessionServiceException e) {
 			
 			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "session error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
 		} catch (DeliveryServiceException e) {
 			
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "internal error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
 		
 		} catch(ParseException e) {
 			logger.error("parsing problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "parsing error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "parsing error")));
 		}
 		
 		return new JsonRepresentation(gson.toJson(resp));

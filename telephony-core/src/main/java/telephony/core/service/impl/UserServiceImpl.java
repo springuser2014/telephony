@@ -18,6 +18,7 @@ import telephony.core.service.dto.request.UserAddRequest;
 import telephony.core.service.dto.request.UserEditRequest;
 import telephony.core.service.dto.request.UsersFetchRequest;
 import telephony.core.service.dto.response.UserAddResponse;
+import telephony.core.service.dto.response.UserDeleteResponse;
 import telephony.core.service.dto.response.UserEditResponse;
 import telephony.core.service.dto.response.UsersFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -221,10 +222,10 @@ implements UserService {
 	}
 
 	@Override
-	public void deleteUserById(UserDeleteRequest req)
+	public UserDeleteResponse deleteUserById(UserDeleteRequest req)
 			throws SessionServiceException, UserServiceException {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 	
 }

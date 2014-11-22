@@ -1,13 +1,13 @@
 package telephony.ws.resource.taxes;
 
-import telephony.core.service.dto.request.TaxesFetchRequestDto;
-import telephony.core.service.dto.response.TaxesFetchResponseDto;
+import telephony.core.service.dto.request.TaxesFetchRequest;
+import telephony.core.service.dto.response.TaxesFetchResponse;
 
 
 public interface TaxesFetchResource {
 
 	String URL = "/taxes/fetch";
 	
-	TaxesFetchResponseDto fetch(TaxesFetchRequestDto req);
+	TaxesFetchResponse fetch(TaxesFetchRequest req);
 
 }

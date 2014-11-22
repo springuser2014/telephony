@@ -211,7 +211,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
 		
-		DeliveryAddRequestDto dto = new DeliveryAddRequestDto();
+		DeliveryAddRequest dto = new DeliveryAddRequest();
 		dto.setSessionId(TestData.USER1_SESSIONID);
 		dto.setUsername(TestData.USER1_NAME);
 		
@@ -277,7 +277,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
 		
-		DeliveryAddRequestDto dto = new DeliveryAddRequestDto();
+		DeliveryAddRequest dto = new DeliveryAddRequest();
 		dto.setSessionId(TestData.USER1_SESSIONID);
 		dto.setUsername(TestData.USER1_NAME);
 		
@@ -345,7 +345,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		req.setUsername(TestData.USER1_NAME);
 		req.setDeliveryId(deliveryId);
 		
-		DeliveryDetailsResponse resp = deliveryService.findDetails(req);
+		DeliveryDetailsResponse resp = deliveryService.fetchDetails(req);
 		
 		// then
 		assertEquals(resp.getDelivery().getLabel(), "nowy rok cieszyn 1");
@@ -362,13 +362,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withMaxNumberOfProducts(10)
 				.build();
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 5);		
@@ -392,13 +392,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withDeliveryDateEnd(deliveryDateEnd)
 				.build();
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 3);		
@@ -414,13 +414,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withLabel(label)
 				.build();
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 1);		
@@ -436,13 +436,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withMaxNumberOfProducts(9)
 				.build();
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 4);		
@@ -458,13 +458,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withSumTo(900.0d)
 				.build();
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);		
 		
 		// when
-		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 4);		
@@ -482,13 +482,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withMaxNumberOfProducts(9)
 				.build();
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setFilters(filters);
 		
 		// when
-		DeliveriesFetchResponseDto lst = deliveryService.findDeliveries(req);
+		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
 		assertEquals(lst.getDeliveries().size(), 4);		
@@ -499,7 +499,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		DeliveryEditRequestDto req = new DeliveryEditRequestDto();
+		DeliveryEditRequest req = new DeliveryEditRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		
@@ -540,7 +540,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				
 		// when
 
-		DeliveryEditResponseDto response = deliveryService.edit(req);
+		DeliveryEditResponse response = deliveryService.edit(req);
 		// then
 		assertTrue(response.isSuccess());		
 	}
@@ -550,7 +550,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editDelivery2() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		DeliveryEditRequestDto req = new DeliveryEditRequestDto();
+		DeliveryEditRequest req = new DeliveryEditRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		
@@ -614,7 +614,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		req.addProductToEdit(productToEdit2);
 		
 		// when
-		DeliveryEditResponseDto response = deliveryService.edit(req);
+		DeliveryEditResponse response = deliveryService.edit(req);
 		
 		// then
 		assertTrue(response.isSuccess());		
@@ -631,13 +631,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		long countBefore = deliveryService.count(session);
 		
-		DeliveryDeleteRequestDto req = new DeliveryDeleteRequestDto();
+		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setDeliveryId(1L);
 
 		// when
-		DeliveryDeleteResponseDto response = deliveryService.delete(req);
+		DeliveryDeleteResponse response = deliveryService.delete(req);
 		long countAfter = deliveryService.count(session);
 		
 		// then

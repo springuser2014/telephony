@@ -1,11 +1,11 @@
 package telephony.core.service;
 
-import telephony.core.service.dto.request.DashboardDetailsRequestDto;
-import telephony.core.service.dto.request.ModelsRequestDto;
-import telephony.core.service.dto.response.DashboardDetailsResponseDto;
-import telephony.core.service.dto.response.ModelsResponseDto;
-import telephony.core.service.dto.request.ProducersRequestDto;
-import telephony.core.service.dto.response.ProducersResponseDto;
+import telephony.core.service.dto.request.DashboardDetailsRequest;
+import telephony.core.service.dto.request.ModelsRequest;
+import telephony.core.service.dto.response.DashboardDetailsResponse;
+import telephony.core.service.dto.response.ModelsResponse;
+import telephony.core.service.dto.request.ProducersRequest;
+import telephony.core.service.dto.response.ProducersResponse;
 
 /**
  * asd.
@@ -17,20 +17,20 @@ public interface InformationService {
      * @param request
      * @return
      */
-    DashboardDetailsResponseDto dashboardDetails(DashboardDetailsRequestDto request);
+    DashboardDetailsResponse dashboardDetails(DashboardDetailsRequest request);
     
     /**
      * 
      * @param request
      * @return
      */
-    ProducersResponseDto fetchProducers(ProducersRequestDto request);
+    ProducersResponse fetchProducers(ProducersRequest request);
     
     /**
      * 
      * @param request
      * @return
      */
-    ModelsResponseDto fetchModels(ModelsRequestDto request);
+    ModelsResponse fetchModels(ModelsRequest request);
     
 }

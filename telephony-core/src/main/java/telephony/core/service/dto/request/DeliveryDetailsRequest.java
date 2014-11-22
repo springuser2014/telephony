@@ -1,6 +1,6 @@
 package telephony.core.service.dto.request;
 
-public class DeliveryDetailsRequest extends AuthRequestDto {
+public class DeliveryDetailsRequest extends AuthRequest {
 	
 	private Long deliveryId;
 

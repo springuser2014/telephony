@@ -12,16 +12,20 @@ import telephony.core.service.dto.SessionDto;
 public interface BasicService<T extends BaseEntity> {
 
     /**
+     * TODO to remove, EM should be hidden
      * Returns entityManager object.
      * @return entities manager.
      */
+    @Deprecated
     EntityManager getEntityManager();
     
     /**
+     * TODO probably deprecated
 	 * Counts number of entities in persistence layer.
      * @param session TODO
 	 * @return number of stored entities.
 	 */
+    @Deprecated
 	long count(SessionDto session);
 	
 	// TODO : add basic methods, for example findById

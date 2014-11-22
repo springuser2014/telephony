@@ -126,7 +126,7 @@ public class UserServiceTest extends BaseCoreTest {
 		List<User> lst = userService.find(session);
 		
 		// then
-//		assertTrue("Should find all 4 users", lst.size() == 4);
+//		assertTrue("Should fetch all 4 users", lst.size() == 4);
 		assertTrue(true);
 	}
 

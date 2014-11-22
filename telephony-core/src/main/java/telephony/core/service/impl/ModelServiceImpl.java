@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ModelDao;
 import telephony.core.entity.jpa.Model;
-import telephony.core.service.dto.request.ModelFetchRequestDto;
+import telephony.core.service.dto.request.ModelEditRequest;
+import telephony.core.service.dto.request.ModelFetchRequest;
 import telephony.core.service.ModelService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.response.ModelFetchResponseDto;
+import telephony.core.service.dto.response.ModelEditResponse;
+import telephony.core.service.dto.response.ModelFetchResponse;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -112,10 +114,15 @@ implements ModelService {
 	}
 
 	@Override
-	public ModelFetchResponseDto find(ModelFetchRequestDto req) {
+	public ModelFetchResponse fetch(ModelFetchRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
+	@Override
+	public ModelEditResponse edit(ModelEditRequest request) {
+		return null;
+	}
+
+
 }

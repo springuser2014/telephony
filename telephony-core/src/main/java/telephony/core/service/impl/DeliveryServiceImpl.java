@@ -118,7 +118,7 @@ implements DeliveryService {
     
     @Override
     @Transactional
-    public DeliveriesFetchResponseDto findDeliveries(DeliveriesFetchRequestDto request)
+    public DeliveriesFetchResponse findDeliveries(DeliveriesFetchRequest request)
     		throws SessionServiceException, DeliveryServiceException{
         
         logger.debug("DeliveryServiceImpl.findDeliveries starts");        
@@ -132,7 +132,7 @@ implements DeliveryService {
 		
         List<Delivery> res = deliveriesDao.find(request.getFilters());
         
-        DeliveriesFetchResponseDto resp = new DeliveriesFetchResponseDto();
+        DeliveriesFetchResponse resp = new DeliveriesFetchResponse();
         
         List<DeliveryDto> coll = new ArrayList<DeliveryDto>();
         
@@ -196,7 +196,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryAddResponseDto add(DeliveryAddRequestDto request)
+	public DeliveryAddResponseDto add(DeliveryAddRequest request)
 			throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// TODO : add validation
@@ -300,7 +300,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryDetailsResponse findDetails(DeliveryDetailsRequest request)
+	public DeliveryDetailsResponse fetchDetails(DeliveryDetailsRequest request)
 			throws SessionServiceException {
 		
 		SessionDto session = SessionDto.create()
@@ -371,11 +371,11 @@ implements DeliveryService {
 	
 	@Override
 	@Transactional
-	public DeliveryEditResponseDto edit(DeliveryEditRequestDto req)
+	public DeliveryEditResponse edit(DeliveryEditRequest req)
 			throws ParseException, DeliveryServiceException, SessionServiceException {
 	
-		DeliveryEditResponseDto resp =
-				new DeliveryEditResponseDto();
+		DeliveryEditResponse resp =
+				new DeliveryEditResponse();
 		
 
 		SessionDto session = SessionDto.create()
@@ -598,7 +598,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryDeleteResponseDto delete(DeliveryDeleteRequestDto req) throws SessionServiceException, DeliveryServiceException {
+	public DeliveryDeleteResponse delete(DeliveryDeleteRequest req) throws SessionServiceException, DeliveryServiceException {
 
 		SessionDto session = SessionDto.create()
 				.setUsername(req.getUsername())
@@ -606,7 +606,7 @@ implements DeliveryService {
 		
 		sessionService.validate(session);
 		
-		DeliveryDeleteResponseDto resp = new DeliveryDeleteResponseDto();
+		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
 		
 		Delivery deliveryToDelete = deliveriesDao.findById(req.getDeliveryId());
 		

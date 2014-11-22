@@ -2,11 +2,11 @@ package telephony.ws.resource.tax;
 
 import org.restlet.ext.json.JsonRepresentation;
 
-import telephony.core.service.dto.request.TaxDeleteRequestDto;
+import telephony.core.service.dto.request.TaxDeleteRequest;
 
 public interface TaxDeleteResource {
 
 	String URL = "/taxes/delete";
 	
-	JsonRepresentation delete(TaxDeleteRequestDto req);
+	JsonRepresentation delete(TaxDeleteRequest req);
 }

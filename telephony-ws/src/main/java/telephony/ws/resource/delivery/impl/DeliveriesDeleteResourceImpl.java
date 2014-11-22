@@ -14,9 +14,9 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
-import telephony.core.service.dto.request.DeliveryDeleteRequestDto;
-import telephony.core.service.dto.response.BasicResponseDto;
-import telephony.core.service.dto.response.DeliveryDeleteResponseDto;
+import telephony.core.service.dto.request.DeliveryDeleteRequest;
+import telephony.core.service.dto.response.BasicResponse;
+import telephony.core.service.dto.response.DeliveryDeleteResponse;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -38,25 +38,25 @@ implements DeliveriesDeleteResource {
 	@Delete("json")	
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation delete(DeliveryDeleteRequestDto request) {
+	public JsonRepresentation delete(DeliveryDeleteRequest request) {
 		
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		
-		DeliveryDeleteResponseDto resp = null;
+		DeliveryDeleteResponse resp = null;
 		
 		try {
 			resp = deliveryService.delete(request);
 		} catch (SessionServiceException e) {
 			
 			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "session error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
 		} catch (DeliveryServiceException e) {
 			
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "internal error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
 		} catch(Exception e) {
 			logger.error("unrecognized problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "unrecognized problem")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "unrecognized problem")));
 		}
 		
 		return new JsonRepresentation(gson.toJson(resp));

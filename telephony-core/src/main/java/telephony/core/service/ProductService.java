@@ -7,8 +7,8 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
-import telephony.core.service.dto.request.ProductFetchRequestDto;
-import telephony.core.service.dto.response.ProductFetchResponseDto;
+import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
 
@@ -23,14 +23,19 @@ public interface ProductService extends BasicService<Product> {
 	 * @return ad.
 	 * @throws telephony.core.service.exception.SessionServiceException d.
 	 */
-	ProductFetchResponseDto fetch(ProductFetchRequestDto req)
+	ProductFetchResponse fetch(ProductFetchRequest req)
 			throws SessionServiceException;
-	
-    /**
+
+
+	////////////////////////////////
+	// TODO remove the stuff below
+	////////////////////////////////
+
+	/**
      * asd.
      * @param session TODO
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException
      */
 	@Deprecated
     List<String> fetchAllImeiInUse(SessionDto session)
@@ -75,8 +80,7 @@ public interface ProductService extends BasicService<Product> {
     List<Product> fetchAllProducts(SessionDto session, Long storeId, ProductStatus productStatus) 
     	throws SessionServiceException;
 
-    // TODO: refactor method below
-    /**
+	/**
      * asd.
      * @param session TODO
      * @param store asd.

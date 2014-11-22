@@ -12,10 +12,19 @@ import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.StoreAddRequest;
+import telephony.core.service.dto.request.StoreDeleteRequest;
+import telephony.core.service.dto.request.StoreEditRequest;
+import telephony.core.service.dto.request.StoreFetchRequest;
+import telephony.core.service.dto.response.StoreAddResponse;
+import telephony.core.service.dto.response.StoreDeleteResponse;
+import telephony.core.service.dto.response.StoreEditResponse;
+import telephony.core.service.dto.response.StoreFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import telephony.core.service.exception.StoreServiceException;
 
 
 /**
@@ -47,8 +56,28 @@ implements StoreService {
     
     @Inject
     private RolesDao rolesDao;
-    
-    @Override
+
+	@Override
+	public StoreFetchResponse fetch(StoreFetchRequest request) throws SessionServiceException, StoreServiceException {
+		return null;
+	}
+
+	@Override
+	public StoreAddResponse add(StoreAddRequest request) throws SessionServiceException, StoreServiceException {
+		return null;
+	}
+
+	@Override
+	public StoreDeleteResponse delete(StoreDeleteRequest request) throws SessionServiceException, StoreServiceException {
+		return null;
+	}
+
+	@Override
+	public StoreEditResponse edit(StoreEditRequest request) throws SessionServiceException, StoreServiceException {
+		return null;
+	}
+
+	@Override
     @Transactional
     public List<Store> find(SessionDto session, StoreFilterCriteria filters) 
     		throws SessionServiceException {

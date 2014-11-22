@@ -5,11 +5,50 @@ import java.util.Date;
 
 import telephony.core.entity.jpa.Tax;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.TaxAddRequest;
+import telephony.core.service.dto.request.TaxDeleteRequest;
+import telephony.core.service.dto.request.TaxEditRequest;
+import telephony.core.service.dto.request.TaxesFetchRequest;
+import telephony.core.service.dto.response.TaxAddResponse;
+import telephony.core.service.dto.response.TaxDeleteResponse;
+import telephony.core.service.dto.response.TaxEditResponse;
+import telephony.core.service.dto.response.TaxFetchResponse;
 
 /**
  * asd.
  */
 public interface TaxService extends BasicService<Tax> {
+
+	/**
+	 * asd.
+	 * @param request a.
+	 * @return d.
+	 */
+	TaxFetchResponse fetch(TaxesFetchRequest request);
+
+	/**
+	 * asd.
+	 * @param request a.
+	 * @return a.
+	 */
+	TaxAddResponse add(TaxAddRequest request);
+
+
+	/**
+	 * asd.
+	 * @param request a.
+	 * @return d.
+	 */
+	TaxEditResponse edit(TaxEditRequest request);
+
+	/**
+	 * asd.
+	 * @param request a.
+	 * @return a.
+	 */
+	TaxDeleteResponse delete(TaxDeleteRequest request);
+
+	// TODO delete the stuff below
 
 	/**
 	 * asd.

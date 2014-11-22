@@ -2,7 +2,7 @@ package telephony.ws.resource.tax.impl;
 
 import org.restlet.ext.json.JsonRepresentation;
 
-import telephony.core.service.dto.request.TaxEditRequestDto;
+import telephony.core.service.dto.request.TaxEditRequest;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.tax.TaxEditResource;
 
@@ -11,7 +11,7 @@ extends TelephonyServerResource
 implements TaxEditResource {
 
 	@Override
-	public JsonRepresentation edit(TaxEditRequestDto req) {
+	public JsonRepresentation edit(TaxEditRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,5 @@
 package telephony.core.service.dto.response;
 
-public class UsersFetchResponse {
+public class UsersFetchResponse extends BasicResponse {
 
 }

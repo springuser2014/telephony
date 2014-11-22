@@ -4,8 +4,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import telephony.core.service.dto.request.ComplaintEditRequestDto;
-import telephony.core.service.dto.response.ComplaintEditResponseDto;
+import telephony.core.service.dto.request.ComplaintEditRequest;
+import telephony.core.service.dto.response.ComplaintEditResponse;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.complaint.ComplaintEditResource;
 
@@ -16,7 +16,7 @@ implements ComplaintEditResource {
 	@Override
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ComplaintEditResponseDto edit(ComplaintEditRequestDto request) {
+	public ComplaintEditResponse edit(ComplaintEditRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,5 @@
 package telephony.core.service.dto.response;
 
-public class UserEditResponse {
+public class UserEditResponse extends BasicResponse {
 
 }

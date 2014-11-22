@@ -9,7 +9,11 @@ import telephony.core.entity.jpa.BaseEntity;
  * @param <T> asd.
  * @param <D> foo.
  */
-// TODO : check if it is needed , if not remove
+
+////////////////////////////////
+// TODO remove the stuff below
+////////////////////////////////
+
 @Deprecated
 public interface GenericService<T extends BaseEntity> 
 extends BasicService<T> {

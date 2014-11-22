@@ -7,12 +7,9 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.dto.request.*;
-import telephony.core.service.dto.response.ComplaintChangeStatusResponseDto;
-import telephony.core.service.dto.response.ComplaintEditResponseDto;
+import telephony.core.service.dto.response.*;
 import telephony.core.service.ComplaintService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.response.ComplaintFetchResponseDto;
-import telephony.core.service.dto.response.ReportComplaintResponseDto;
 
 
 /**
@@ -109,55 +106,56 @@ implements ComplaintService<T> {
 	}
 
 	@Override
-	public ReportComplaintResponseDto report(ReportComplaintRequestDto req) {
+	public ReportComplaintResponse report(ReportComplaintRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ComplaintFetchResponseDto fetch(ComplaintFetchRequestDto req) {
+	public ComplaintFetchResponse fetch(ComplaintFetchRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ComplaintEditResponseDto editComplaint(ComplaintEditRequestDto req) {
+	public ComplaintEditResponse editComplaint(ComplaintEditRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ComplaintChangeStatusResponseDto markAsRejected(
-			ComplaintChangeStatusRequestDto req) {
+	public ComplaintChangeStatusResponse markAsRejected(
+			ComplaintChangeStatusRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ComplaintChangeStatusResponseDto markAsInProgress(
-			ComplaintChangeStatusRequestDto req) {
+	public ComplaintChangeStatusResponse markAsInProgress(
+			ComplaintChangeStatusRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ComplaintChangeStatusResponseDto markAsAccepted(
-			ComplaintChangeStatusRequestDto req) {
+	public ComplaintChangeStatusResponse markAsAccepted(
+			ComplaintChangeStatusRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ComplaintChangeStatusResponseDto markAsResolved(
-			ComplaintChangeStatusRequestDto req) {
+	public ComplaintChangeStatusResponse markAsResolved(
+			ComplaintChangeStatusRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteComplaint(DeleteComplaintRequestDto req) {
+	public DeleteComplaintResponse deleteComplaint(DeleteComplaintRequest req) {
 		// TODO Auto-generated method stub
-		
+
+		return null;
 	}
 }
 

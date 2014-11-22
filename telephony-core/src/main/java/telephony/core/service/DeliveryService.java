@@ -17,7 +17,6 @@ import telephony.core.service.exception.DeliveryServiceException;
  */
 public interface DeliveryService extends BasicService<Delivery> {
 
-
 	/**
 	 * asd.
 	 * @param request asd.
@@ -26,7 +25,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws DeliveryServiceException 
 	 * @throws ParseException 
 	 */
-	DeliveryAddResponseDto add(DeliveryAddRequestDto request)
+	DeliveryAddResponseDto add(DeliveryAddRequest request)
 			throws SessionServiceException, DeliveryServiceException, ParseException;
 
 	/**
@@ -35,7 +34,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @return d.
 	 * @throws SessionServiceException a.
 	 */
-	DeliveryDetailsResponse findDetails(DeliveryDetailsRequest request)
+	DeliveryDetailsResponse fetchDetails(DeliveryDetailsRequest request)
 			throws SessionServiceException;
 
 	/**
@@ -45,7 +44,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws SessionServiceException a. 
 	 * @throws DeliveryServiceException a.
 	 */
-	DeliveriesFetchResponseDto findDeliveries(DeliveriesFetchRequestDto request)
+	DeliveriesFetchResponse findDeliveries(DeliveriesFetchRequest request)
 			throws SessionServiceException, DeliveryServiceException;
 
 	/**
@@ -56,7 +55,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws DeliveryServiceException a.
 	 * @throws SessionServiceException a.
 	 */
-	DeliveryEditResponseDto edit(DeliveryEditRequestDto req)
+	DeliveryEditResponse edit(DeliveryEditRequest req)
 			throws ParseException, DeliveryServiceException, SessionServiceException;
 	
 	/**
@@ -66,11 +65,13 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws SessionServiceException a.
 	 * @throws DeliveryServiceException a.
 	 */
-	DeliveryDeleteResponseDto delete(DeliveryDeleteRequestDto req)
+	DeliveryDeleteResponse delete(DeliveryDeleteRequest req)
 			throws SessionServiceException, DeliveryServiceException;
 
-	// TODO : delete the stuff below 
-	
+	////////////////////////////////
+	// TODO remove the stuff below
+	////////////////////////////////
+
     /**
      * asd.
      * @param session TODO

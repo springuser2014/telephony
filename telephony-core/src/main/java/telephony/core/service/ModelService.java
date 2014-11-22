@@ -4,8 +4,10 @@ import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.Model;
-import telephony.core.service.dto.request.ModelFetchRequestDto;
-import telephony.core.service.dto.response.ModelFetchResponseDto;
+import telephony.core.service.dto.request.ModelEditRequest;
+import telephony.core.service.dto.request.ModelFetchRequest;
+import telephony.core.service.dto.response.ModelEditResponse;
+import telephony.core.service.dto.response.ModelFetchResponse;
 import telephony.core.service.dto.SessionDto;
 
 /**
@@ -16,12 +18,22 @@ public interface ModelService extends BasicService<Model> {
 
 	/**
 	 * asd.
-	 * @param req a.
+	 * @param request a.
 	 * @return a.
 	 */
-	ModelFetchResponseDto find(ModelFetchRequestDto req);
-	
-	// TODO delete the stuff below
+	ModelFetchResponse fetch(ModelFetchRequest request);
+
+	/**
+	 * asd.
+	 * @param request a.
+	 * @return a.
+	 */
+	ModelEditResponse edit(ModelEditRequest request);
+
+
+	////////////////////////////////
+	// TODO remove the stuff below
+	////////////////////////////////
 	
 	/**
 	 * asd.

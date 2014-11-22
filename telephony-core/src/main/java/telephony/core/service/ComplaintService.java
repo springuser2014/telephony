@@ -4,11 +4,8 @@ import java.util.Collection;
 
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.service.dto.request.*;
-import telephony.core.service.dto.response.ComplaintChangeStatusResponseDto;
-import telephony.core.service.dto.response.ComplaintEditResponseDto;
+import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.response.ComplaintFetchResponseDto;
-import telephony.core.service.dto.response.ReportComplaintResponseDto;
 
 /**
  * asd.
@@ -28,43 +25,35 @@ public interface ComplaintService<T extends Complaint>  extends GenericService<T
 	 * @param req a. 
 	 * @return a.
 	 */
-	ReportComplaintResponseDto report(ReportComplaintRequestDto req);
+	ReportComplaintResponse report(ReportComplaintRequest req);
 	
 	/**
 	 * asd.
 	 * @param req a.
 	 * @return a.
 	 */
-	ComplaintFetchResponseDto fetch(ComplaintFetchRequestDto req);
+	ComplaintFetchResponse fetch(ComplaintFetchRequest req);
 	
 	/**
 	 * asd.
 	 * @param req a. 
 	 * @return a.
 	 */
-	ComplaintEditResponseDto editComplaint(ComplaintEditRequestDto req);
+	ComplaintEditResponse editComplaint(ComplaintEditRequest req);
 	
 	/**
 	 * asd.
 	 * @param req ad.
 	 * @return d.
 	 */
-	ComplaintChangeStatusResponseDto markAsRejected(ComplaintChangeStatusRequestDto req);
+	ComplaintChangeStatusResponse markAsRejected(ComplaintChangeStatusRequest req);
 	
 	/**
 	 * asd.
 	 * @param req ad.
 	 * @return d.
 	 */
-	ComplaintChangeStatusResponseDto markAsInProgress(ComplaintChangeStatusRequestDto req);
-	
-
-	/**
-	 * asd.
-	 * @param req ad.
-	 * @return d.
-	 */
-	ComplaintChangeStatusResponseDto markAsAccepted(ComplaintChangeStatusRequestDto req);
+	ComplaintChangeStatusResponse markAsInProgress(ComplaintChangeStatusRequest req);
 	
 
 	/**
@@ -72,16 +61,27 @@ public interface ComplaintService<T extends Complaint>  extends GenericService<T
 	 * @param req ad.
 	 * @return d.
 	 */
-	ComplaintChangeStatusResponseDto markAsResolved(ComplaintChangeStatusRequestDto req);
+	ComplaintChangeStatusResponse markAsAccepted(ComplaintChangeStatusRequest req);
+	
+
+	/**
+	 * asd.
+	 * @param req ad.
+	 * @return d.
+	 */
+	ComplaintChangeStatusResponse markAsResolved(ComplaintChangeStatusRequest req);
 	
 	/**
 	 * asd.
 	 * @param req a.
 	 */
-	void deleteComplaint(DeleteComplaintRequestDto req);
-	
-	// TODO delete the stuff below
-	
+	DeleteComplaintResponse deleteComplaint(DeleteComplaintRequest req);
+
+
+	////////////////////////////////
+	// TODO remove the stuff below
+	////////////////////////////////
+
 	/**
 	 * asd.
 	 * @param session asd.

@@ -3,7 +3,7 @@ package telephony.ws.resource.delivery;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 
-import telephony.core.service.dto.request.DeliveriesFetchRequestDto;
+import telephony.core.service.dto.request.DeliveriesFetchRequest;
 
 /**
  * asd.
@@ -18,5 +18,5 @@ public interface DeliveriesFetchResource {
  	 * @return asd.
 	 */
 	@Post("json")
-	JsonRepresentation fetch(DeliveriesFetchRequestDto entity);
+	JsonRepresentation fetch(DeliveriesFetchRequest entity);
 }

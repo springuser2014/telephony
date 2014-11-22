@@ -17,6 +17,14 @@ import telephony.core.query.filter.SaleFilterCriteria;
 import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
+import telephony.core.service.dto.request.SaleAddRequest;
+import telephony.core.service.dto.request.SaleDeleteRequest;
+import telephony.core.service.dto.request.SaleEditRequest;
+import telephony.core.service.dto.request.SaleFetchRequest;
+import telephony.core.service.dto.response.SaleAddResponse;
+import telephony.core.service.dto.response.SaleDeleteResponse;
+import telephony.core.service.dto.response.SaleEditResponse;
+import telephony.core.service.dto.response.SaleFetchResponse;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
@@ -47,6 +55,26 @@ implements SaleService {
 	private SessionService sessionService;
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
+
+	@Override
+	public SaleFetchResponse fetch(SaleFetchRequest request) throws SessionServiceException, SaleServiceException {
+		return null;
+	}
+
+	@Override
+	public SaleAddResponse add(SaleAddRequest request) throws SessionServiceException, SaleServiceException {
+		return null;
+	}
+
+	@Override
+	public SaleEditResponse edit(SaleEditRequest request) throws SessionServiceException, SaleServiceException {
+		return null;
+	}
+
+	@Override
+	public SaleDeleteResponse delete(SaleDeleteRequest request) throws SessionServiceException, SaleServiceException {
+		return null;
+	}
 
 	@Override
 	@Transactional

@@ -14,6 +14,10 @@ import telephony.core.service.SessionService;
 import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.ContactAddResponse;
+import telephony.core.service.dto.response.ContactDeleteResponse;
+import telephony.core.service.dto.response.ContactEditResponse;
+import telephony.core.service.dto.response.ContactFetchResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.ContactEditDto;
@@ -44,11 +48,11 @@ implements ContactService {
 
 	@Override
 	@Transactional
-	public List<Contact> fetch(ContactFetchRequest req)
+	public ContactFetchResponse fetch(ContactFetchRequest request)
 			throws SessionServiceException, ContactServiceException {
 
-		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());
-		ContactFilterCriteria filters = req.getFilters();
+		SessionDto session = SessionDto.create(request.getUsername(), request.getSessionId());
+		ContactFilterCriteria filters = request.getFilters();
 		
 		logger.debug("ContactServiceImpl.fetchAll starts");
 		logger.debug("params : [filters: {}, session : {}]", filters, session);
@@ -58,19 +62,19 @@ implements ContactService {
 		List<Contact> lst = contactsDao.find(filters);
 		
 		logger.debug("found {} elements", lst.size());
-		
-		return lst;
+		return new ContactFetchResponse();
+//		return lst;
 	}
 
 	@Override
 	@Transactional
-	public void add(ContactAddRequestDto req)
+	public ContactAddResponse add(ContactAddRequest request)
 			throws SessionServiceException, ContactServiceException {
 		
 		// TODO add dtos validation
 		
-		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());
-		ContactDto dto = req.getNewContact();
+		SessionDto session = SessionDto.create(request.getUsername(), request.getSessionId());
+		ContactDto dto = request.getNewContact();
 		
 		logger.debug("ContactServiceImpl.addNewContact starts");
 		logger.debug("params : [ session: {}, newContact : {}]", session, dto);
@@ -89,12 +93,14 @@ implements ContactService {
 			newContact.addPhonenumber(email);
 		}
 
-		contactsDao.save(newContact);		
+		contactsDao.save(newContact);
+
+		return new ContactAddResponse();
 	}
 
 	@Override
 	@Transactional
-	public void edit(ContactEditRequest req)
+	public ContactEditResponse edit(ContactEditRequest req)
 			throws SessionServiceException, ContactServiceException {
 		
 		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());
@@ -127,11 +133,13 @@ implements ContactService {
 		}
 
 		contactsDao.saveOrUpdate(contactToUpdate);
+
+		return new ContactEditResponse();
 	}
 
 	@Override
 	@Transactional
-	public void delete(ContactDeleteRequest req)
+	public ContactDeleteResponse delete(ContactDeleteRequest req)
 			throws SessionServiceException, ContactServiceException {
 		
 		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());
@@ -143,6 +151,8 @@ implements ContactService {
 		sessionService.validate(session);
 		
 		contactsDao.removeById(contactId);
+
+		return new ContactDeleteResponse();
 	}
 
 	@Override
@@ -173,10 +183,4 @@ implements ContactService {
 		return contact;
 	}
 
-	// TODO : implement
-	@Override
-	@Transactional
-	public List<Contact> find(ContactFetchRequestDto dto) {
-		return new ArrayList<Contact>();
-	}
 }

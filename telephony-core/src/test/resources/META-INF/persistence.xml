@@ -28,7 +28,7 @@
 		<properties>
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<!--<property name="hibernate.dialect" value="telephony.postgresql.TelephonyPostgreSQLDialect" /> -->
+			<!--<property name="hibernate.dialect" value="telephony.core.postgresql.TelephonyPostgreSQLDialect" /> -->
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
 			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/telephony-test" />
 			<property name="hibernate.connection.username" value="postgres" />

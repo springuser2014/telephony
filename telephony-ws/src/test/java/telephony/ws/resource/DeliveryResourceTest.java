@@ -19,10 +19,10 @@ import telephony.core.service.dto.ProductDto;
 import telephony.core.service.dto.ProductEditDto;
 import telephony.core.service.dto.SignInDto;
 import telephony.core.service.dto.request.*;
-import telephony.core.service.dto.response.DeliveriesFetchResponseDto;
-import telephony.core.service.dto.response.DeliveryDeleteResponseDto;
+import telephony.core.service.dto.response.DeliveriesFetchResponse;
+import telephony.core.service.dto.response.DeliveryDeleteResponse;
 import telephony.core.service.dto.response.DeliveryDetailsResponse;
-import telephony.core.service.dto.response.DeliveryEditResponseDto;
+import telephony.core.service.dto.response.DeliveryEditResponse;
 import telephony.ws.resource.delivery.*;
 import telephony.ws.resource.session.SessionInitializationResource;
 
@@ -41,7 +41,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		// given
 		String sessionId = authAndGetSessionId();
 		
-		DeliveryDeleteRequestDto req = new DeliveryDeleteRequestDto();
+		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setDeliveryId(1L);
@@ -61,7 +61,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 			.delete(TESTING_APP + DeliveriesDeleteResource.URL);
 		
 		// then
-		DeliveryDeleteResponseDto resp = gson.fromJson(res1.asString(), DeliveryDeleteResponseDto.class);
+		DeliveryDeleteResponse resp = gson.fromJson(res1.asString(), DeliveryDeleteResponse.class);
 		
 		assertTrue( resp.isSuccess() );	
 	}
@@ -72,7 +72,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		// given
 		String sessionId = authAndGetSessionId();
 
-		DeliveryEditRequestDto req = new DeliveryEditRequestDto();
+		DeliveryEditRequest req = new DeliveryEditRequest();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		
@@ -126,7 +126,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 			.put(TESTING_APP + DeliveriesEditResource.URL);
 		
 		// then
-		DeliveryEditResponseDto resp = gson.fromJson(res1.asString(), DeliveryEditResponseDto.class);
+		DeliveryEditResponse resp = gson.fromJson(res1.asString(), DeliveryEditResponse.class);
 		
 		assertTrue( resp.isSuccess() );		
 	}
@@ -142,7 +142,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 			.minNumberOfProducts(7)
 			.maxNumberOfProducts(9);
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setFilters(filters);
@@ -160,7 +160,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 				.when()
 				.post(TESTING_APP + DeliveriesFetchResource.URL);
 		
-		DeliveriesFetchResponseDto resp = gson.fromJson(res1.asString(), DeliveriesFetchResponseDto.class);
+		DeliveriesFetchResponse resp = gson.fromJson(res1.asString(), DeliveriesFetchResponse.class);
 		
 		assertEquals( resp.getDeliveries().size(), 5);		
 	}
@@ -267,7 +267,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		products.add(p1);
 		products.add(p2);
 		
-		DeliveryAddRequestDto req = new DeliveryAddRequestDto();
+		DeliveryAddRequest req = new DeliveryAddRequest();
 		req.setContactId(1l);
 		req.setLabel("aaa");
 		req.setDateIn(new Date());

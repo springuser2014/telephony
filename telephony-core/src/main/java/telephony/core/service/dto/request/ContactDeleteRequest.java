@@ -1,6 +1,6 @@
 package telephony.core.service.dto.request;
 
-public class ContactDeleteRequest extends AuthRequestDto {
+public class ContactDeleteRequest extends AuthRequest {
 	
 	private Long contactToDelete;
 

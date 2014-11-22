@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.service.dto.SignInDto;
-import telephony.core.service.dto.request.ProductFetchRequestDto;
-import telephony.core.service.dto.response.ProductFetchResponseDto;
+import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.ws.resource.products.ProductsFetchResource;
 import telephony.ws.resource.session.SessionInitializationResource;
 
@@ -54,7 +54,7 @@ public class ProductResourceTest extends BaseWSTest {
 		ProductFilterCriteria filters = ProductFilterCriteria.create()
 				.setStatus(ProductStatus.SOLD);
 		
-		ProductFetchRequestDto req = new ProductFetchRequestDto();
+		ProductFetchRequest req = new ProductFetchRequest();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setFiltersCriteria(filters);
@@ -70,7 +70,7 @@ public class ProductResourceTest extends BaseWSTest {
 				.when()
 				.post(TESTING_APP + ProductsFetchResource.URL);
 		
-		ProductFetchResponseDto resp = gson.fromJson(res1.asString(), ProductFetchResponseDto.class);
+		ProductFetchResponse resp = gson.fromJson(res1.asString(), ProductFetchResponse.class);
 		
 		assertEquals(resp.getProducts().size(), 10);		
 	}

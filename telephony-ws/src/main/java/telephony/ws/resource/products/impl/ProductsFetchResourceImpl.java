@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.service.ProductService;
-import telephony.core.service.dto.request.ProductFetchRequestDto;
-import telephony.core.service.dto.response.BasicResponseDto;
-import telephony.core.service.dto.response.ProductFetchResponseDto;
+import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.response.BasicResponse;
+import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.products.ProductsFetchResource;
@@ -34,18 +34,18 @@ implements ProductsFetchResource {
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation fetch(ProductFetchRequestDto request) {
+	public JsonRepresentation fetch(ProductFetchRequest request) {
 		
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		
-		ProductFetchResponseDto resp = new ProductFetchResponseDto();
+		ProductFetchResponse resp = new ProductFetchResponse();
 		
 		try {
 			resp = productsService.find(request);
 		} catch (SessionServiceException e) {
 			
 			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponseDto(false, "session error")));
+			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
 		}
 		
 		return new JsonRepresentation(gson.toJson(resp)); 

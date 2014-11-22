@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.DeliveriesDao;
 import telephony.core.dao.SalesDao;
 import telephony.core.service.InformationService;
-import telephony.core.service.dto.request.DashboardDetailsRequestDto;
-import telephony.core.service.dto.request.ModelsRequestDto;
-import telephony.core.service.dto.request.ProducersRequestDto;
-import telephony.core.service.dto.response.DashboardDetailsResponseDto;
-import telephony.core.service.dto.response.ModelsResponseDto;
-import telephony.core.service.dto.response.ProducersResponseDto;
+import telephony.core.service.dto.request.DashboardDetailsRequest;
+import telephony.core.service.dto.request.ModelsRequest;
+import telephony.core.service.dto.request.ProducersRequest;
+import telephony.core.service.dto.response.DashboardDetailsResponse;
+import telephony.core.service.dto.response.ModelsResponse;
+import telephony.core.service.dto.response.ProducersResponse;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -32,21 +32,21 @@ public class InformationServiceImpl implements InformationService {
     
 	@Override
 	@Transactional
-	public DashboardDetailsResponseDto dashboardDetails(DashboardDetailsRequestDto request) {
+	public DashboardDetailsResponse dashboardDetails(DashboardDetailsRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Transactional
-	public ProducersResponseDto fetchProducers(ProducersRequestDto request) {
+	public ProducersResponse fetchProducers(ProducersRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Transactional
-	public ModelsResponseDto fetchModels(ModelsRequestDto request) {
+	public ModelsResponse fetchModels(ModelsRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

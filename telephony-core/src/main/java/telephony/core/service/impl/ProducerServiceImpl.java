@@ -12,6 +12,14 @@ import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.service.ProducerService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ProducerDeleteRequest;
+import telephony.core.service.dto.request.ProducerEditRequest;
+import telephony.core.service.dto.request.ProducersFetchRequest;
+import telephony.core.service.dto.response.ProducerDeleteResponse;
+import telephony.core.service.dto.response.ProducerEditResponse;
+import telephony.core.service.dto.response.ProducersFetchResponse;
+import telephony.core.service.exception.ProducerServiceException;
+import telephony.core.service.exception.SessionServiceException;
 
 /**
  * asd.
@@ -24,6 +32,24 @@ implements ProducerService {
 	
 	@Inject
 	private ProducerDao producerDao;
+
+	@Override
+	public ProducersFetchResponse fetch(ProducersFetchRequest request)
+			throws SessionServiceException, ProducerServiceException {
+		return null;
+	}
+
+	@Override
+	public ProducerEditResponse edit(ProducerEditRequest request)
+			throws SessionServiceException, ProducerServiceException {
+		return null;
+	}
+
+	@Override
+	public ProducerDeleteResponse delete(ProducerDeleteRequest request)
+			throws SessionServiceException, ProducerServiceException {
+		return null;
+	}
 
 	@Transactional
 	@Override

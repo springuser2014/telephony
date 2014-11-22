@@ -14,7 +14,7 @@ import com.google.inject.Inject;
 
 import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
-import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.response.BasicResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -48,7 +48,7 @@ implements ContactsDeleteResource {
 		
 		Long contactToDeleteId = req.getLong("contactToDeleteId");
 
-		BasicResponseDto resp = new BasicResponseDto(true, "Usunieto obiekt");
+		BasicResponse resp = new BasicResponse(true, "Usunieto obiekt");
 		try {
 			Contact contactToDelete = contactService.findById(
 					null, contactToDeleteId

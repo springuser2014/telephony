@@ -14,7 +14,7 @@ import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.DeliveriesFetchRequestDto;
+import telephony.core.service.dto.request.DeliveriesFetchRequest;
 import telephony.core.service.dto.request.DeliveryDetailsRequest;
 import telephony.core.service.dto.response.DeliveryDetailsResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -33,7 +33,7 @@ implements DeliveriesDetailsResource {
 			.minNumberOfProducts(7)
 			.maxNumberOfProducts(9);
 		
-		DeliveriesFetchRequestDto req = new DeliveriesFetchRequestDto();
+		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId("aaa");
 		req.setUsername("user1@gmail.com");
 		req.setFilters(filters);
@@ -61,7 +61,7 @@ implements DeliveriesDetailsResource {
 		
 		sessionService.validate(session);
 		
-		DeliveryDetailsResponse resp = deliveryService.findDetails(request);
+		DeliveryDetailsResponse resp = deliveryService.fetchDetails(request);
 		
 		return resp;
 	}

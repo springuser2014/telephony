@@ -10,6 +10,7 @@ import telephony.core.service.dto.request.UserAddRequest;
 import telephony.core.service.dto.request.UserEditRequest;
 import telephony.core.service.dto.request.UsersFetchRequest;
 import telephony.core.service.dto.response.UserAddResponse;
+import telephony.core.service.dto.response.UserDeleteResponse;
 import telephony.core.service.dto.response.UserEditResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
@@ -55,8 +56,10 @@ public interface UserService extends BasicService<User> {
      * @throws SessionServiceException a.
      * @throws UserServiceException a.
      */
-    void deleteUserById(UserDeleteRequest req)
+    UserDeleteResponse deleteUserById(UserDeleteRequest req)
     		throws SessionServiceException, UserServiceException;
+
+	// TODO : delete the stuff below
 
     /**
      * Looks for all current users.

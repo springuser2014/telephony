@@ -4,8 +4,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import telephony.core.service.dto.request.UserDetailsRequestDto;
-import telephony.core.service.dto.response.UserDetailsResponseDto;
+import telephony.core.service.dto.request.UserDetailsRequest;
+import telephony.core.service.dto.response.UserDetailsResponse;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.user.UsersDetailsResource;
 
@@ -16,7 +16,7 @@ implements UsersDetailsResource {
 	@Override
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public UserDetailsResponseDto details(UserDetailsRequestDto request) {
+	public UserDetailsResponse details(UserDetailsRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -2,7 +2,7 @@ package telephony.core.service.dto.request;
 
 import telephony.core.service.dto.ContactEditDto;
 
-public class ContactEditRequest extends AuthRequestDto {
+public class ContactEditRequest extends AuthRequest {
 	
 	private ContactEditDto contactToEdit;
 

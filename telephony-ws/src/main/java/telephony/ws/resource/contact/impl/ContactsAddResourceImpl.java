@@ -16,8 +16,8 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.service.ContactService;
-import telephony.core.service.dto.request.ContactAddRequestDto;
-import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.request.ContactAddRequest;
+import telephony.core.service.dto.response.BasicResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -52,7 +52,7 @@ public class ContactsAddResourceImpl extends TelephonyServerResource implements
 	 */
 	@Override
     @Post("json")
-	public JsonRepresentation add(ContactAddRequestDto entity) 
+	public JsonRepresentation add(ContactAddRequest entity)
 			throws JSONException, IOException, SessionServiceException, ContactServiceException {
     	
 		logger.info("ContactsAddResource.add starts");		
@@ -73,7 +73,7 @@ public class ContactsAddResourceImpl extends TelephonyServerResource implements
 		newContact.setSales(new ArrayList<Sale>());
 		
 		// TODO : dodac zaciaganie jezyków z properties
-		BasicResponseDto response = new BasicResponseDto(true, "Dodano sukcesywnie");
+		BasicResponse response = new BasicResponse(true, "Dodano sukcesywnie");
 		
 		try {
 			contactService.add(null, newContact);

@@ -17,7 +17,7 @@ import com.google.inject.Inject;
 
 import telephony.core.entity.jpa.Role;
 import telephony.core.service.RoleService;
-import telephony.core.service.dto.response.BasicResponseDto;
+import telephony.core.service.dto.response.BasicResponse;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.role.RolesDeleteResource;
 
@@ -46,7 +46,7 @@ implements RolesDeleteResource {
     	String sessionId = req.getString("sessionId");
     	String label = req.getString("label");
     	
-    	BasicResponseDto response = new BasicResponseDto(true, "Usunięto obiekt");
+    	BasicResponse response = new BasicResponse(true, "Usunięto obiekt");
     	try {
     		// TODO: add to one @transactional method
     		Role roleToDelete = roleService.findByLabel(null, label);

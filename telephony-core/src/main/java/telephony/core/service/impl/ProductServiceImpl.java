@@ -13,8 +13,8 @@ import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteriaBuilder;
-import telephony.core.service.dto.request.ProductFetchRequestDto;
-import telephony.core.service.dto.response.ProductFetchResponseDto;
+import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
@@ -321,11 +321,11 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public ProductFetchResponseDto fetch(ProductFetchRequestDto req)
+	public ProductFetchResponse fetch(ProductFetchRequest req)
 		throws SessionServiceException 
 	{
 
-		logger.debug("ProductServiceImpl.find starts ");
+		logger.debug("ProductServiceImpl.fetch starts ");
 		
 		SessionDto session = SessionDto.create()
 				.setUsername(req.getUsername())
@@ -373,9 +373,9 @@ implements ProductService {
 			lst.add(b);
 		}
 
-		logger.info("ProductServiceImpl.find ends");
+		logger.info("ProductServiceImpl.fetch ends");
 
-		ProductFetchResponseDto resp = new ProductFetchResponseDto();
+		ProductFetchResponse resp = new ProductFetchResponse();
 		resp.setProducts(lst);
 		
 		return resp;
