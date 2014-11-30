@@ -253,7 +253,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		dto.setProducts(products);
 		
 		// when
-		DeliveryAddResponseDto resp = deliveryService.add(dto);
+		DeliveryAddResponse resp = deliveryService.add(dto);
 		
 		long deliveriesAfter = deliveryService.count(session);
 		long productsAfter = productService.count(session);
@@ -319,7 +319,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		dto.setProducts(products);
 		
 		// when
-		DeliveryAddResponseDto resp = deliveryService.add(dto);
+		DeliveryAddResponse resp = deliveryService.add(dto);
 		
 		long deliveriesAfter = deliveryService.count(session);
 		long productsAfter = productService.count(session);

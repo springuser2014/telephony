@@ -15,7 +15,7 @@ import telephony.core.service.DeliveryService;
 import telephony.core.service.StoreService;
 import telephony.core.service.dto.request.DeliveryAddRequest;
 import telephony.core.service.dto.response.BasicResponse;
-import telephony.core.service.dto.response.DeliveryAddResponseDto;
+import telephony.core.service.dto.response.DeliveryAddResponse;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
@@ -47,7 +47,7 @@ implements DeliveriesAddResource {
 	public JsonRepresentation add(DeliveryAddRequest request) {
 		
 		logger.info("entry point");
-		DeliveryAddResponseDto resp;
+		DeliveryAddResponse resp;
 		
 		Gson gson = new GsonBuilder().create();
 

@@ -196,7 +196,7 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryAddResponseDto add(DeliveryAddRequest request)
+	public DeliveryAddResponse add(DeliveryAddRequest request)
 			throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// TODO : add validation
@@ -277,7 +277,7 @@ implements DeliveryService {
 			}
 		}
 		
-		DeliveryAddResponseDto resp = new DeliveryAddResponseDto();
+		DeliveryAddResponse resp = new DeliveryAddResponse();
 		resp.setSuccess(true);
 		
 		return resp;

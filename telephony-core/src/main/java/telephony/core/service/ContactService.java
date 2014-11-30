@@ -60,7 +60,6 @@ public interface ContactService extends BasicService<Contact> {
 	// TODO remove the stuff below
 	////////////////////////////////
 
-
 	/**
 	 * asd.
 	 * @param session TODO
