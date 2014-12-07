@@ -25,8 +25,7 @@ public interface BasicService<T extends BaseEntity> {
      * @param session TODO
 	 * @return number of stored entities.
 	 */
-    @Deprecated
-	long count(SessionDto session);
+    long count(SessionDto session);
 	
 	// TODO : add basic methods, for example findById
 }

@@ -43,13 +43,14 @@ implements ProductService {
 	@Transactional
 	public List<String> fetchAllImeiInUse(SessionDto session)
 			throws SessionServiceException {
-		logger.debug("ProductServiceImpl.fetchAllImeiInUse starts");
+
+		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
 		
 		sessionService.validate(session);
 
 		List<String> res = productsDao.fetchImeisList();
 
-		logger.debug("found {} elements", res.size());
+		logger.info("found {} elements", res.size());
 
 		return res;
 	}
@@ -57,7 +58,8 @@ implements ProductService {
 	@Override
 	@Transactional
 	public List<String> fetchAllProducersInUse(SessionDto session) {
-		logger.debug("ProductServiceImpl.fetchAllProducers starts");
+
+		logger.info("ProductServiceImpl.fetchAllProducers starts");
 
 		List<String> res = new ArrayList<String>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
@@ -69,7 +71,7 @@ implements ProductService {
 			}
 		}
 
-		logger.debug("found {} elements ", res.size());
+		logger.info("found {} elements ", res.size());
 
 		return res;
 	}
@@ -78,7 +80,8 @@ implements ProductService {
 	@Transactional
 	public List<String> fetchAllModels(SessionDto session) 
 			throws SessionServiceException {
-		logger.debug("ProductServiceImpl.fetchAllModels starts");
+
+		logger.info("ProductServiceImpl.fetchAllModels starts");
 		
 		sessionService.validate(session);
 
@@ -93,7 +96,7 @@ implements ProductService {
 			}
 		}
 
-		logger.debug("found {} elements ", res.size());
+		logger.info("found {} elements ", res.size());
 
 		return res;
 	}
@@ -101,7 +104,8 @@ implements ProductService {
 	@Override
 	@Transactional
 	public List<String> fetchAllColors(SessionDto session) {
-		logger.debug("ProductServiceImpl.fetchAllModels starts");
+
+		logger.info("ProductServiceImpl.fetchAllModels starts");
 
 		List<String> res = new ArrayList<String>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
@@ -113,7 +117,7 @@ implements ProductService {
 			}
 		}
 
-		logger.debug("found {} elements ", res.size());
+		logger.info("found {} elements ", res.size());
 
 		return res;
 	}
@@ -124,16 +128,19 @@ implements ProductService {
 	public List<Product> fetchAllProducts(
 			SessionDto session, Long storeId, ProductStatus productStatus) 
 			throws SessionServiceException {
-		
+
+		logger.info("ProductServiceImpl.fetchAllProducts starts ");
+
 		sessionService.validate(session);
 
-		logger.debug("ProductServiceImpl.fetchAllProducts starts ");
-		logger.debug("params : [ session : {}, storeId : {} , productStatus : {} ] ",
-				new Object[] {session, storeId, productStatus});
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ session : {}, storeId : {} , productStatus : {} ] ",
+					new Object[]{session, storeId, productStatus});
+		}
 
 		List<Product> lst = productsDao.findByStoreAndStatus(storeId, productStatus);
 		
-		logger.debug("ProductServiceImpl.fetchAllProducts ends");
+		logger.info("ProductServiceImpl.fetchAllProducts ends");
 
 		return lst;
 	}
@@ -143,16 +150,17 @@ implements ProductService {
 	public void moveProducts(SessionDto session, Store store, 
 			List<Product> products) {
 		
-		logger.debug("ProductServiceImpl.moveProducts starts ");
-		logger.debug("params : [ session : {}, {}, storeId : {} , products : {}] ",
-				new Object[] {session, store, products});
+		logger.info("ProductServiceImpl.moveProducts starts ");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ session : {}, {}, storeId : {} , products : {}] ",
+					new Object[]{session, store, products});
+		}
 
 		for (Product p : products) {
 			p.setStore(store);
 			productsDao.save(p);
 		}
-
-		logger.debug("ProductServiceImpl.fetchAllProducts ends");
 	}
 
 	@Override
@@ -161,7 +169,7 @@ implements ProductService {
 			SessionDto session, String imei, Long storeId) 
 			throws SessionServiceException {
 		
-		logger.debug("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
+		logger.info("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
 		
 		sessionService.validate(session);
 
@@ -185,13 +193,12 @@ implements ProductService {
 		sessionService.validate(session);
 		
 		// TODO : log parameterObject instaed of each part
-		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
-				+ "color : {} , storeId : {} , deliveryDateStart : {} , "
-				+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
-
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ imei : {} , producer : {} , model : {} , "
+					+ "color : {} , storeId : {} , deliveryDateStart : {} , "
+					+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
+		}
 		List<Product> result = productsDao.findByCriteria(parameterObject);
-
-		logger.info("ProductServiceImpl.fetchAllProductsByCriteria ends");
 
 		for (Product p : result) {
 //			logger.info(" model : {} , producer : {} ", p.getModel(),
@@ -229,8 +236,11 @@ implements ProductService {
 			throws SessionServiceException {
 
 		logger.info("findByStore starts");
-		logger.info("params : [ session : {}, store : {} ]", session, imeis);
-		
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ session : {}, store : {} ]", session, imeis);
+		}
+
 		sessionService.validate(session);
 		
 		return productsDao.findByIMEIs(imeis);
@@ -241,7 +251,10 @@ implements ProductService {
 	public Product findById(SessionDto session, long id) {
 		
 		logger.info("findById starts");
-		logger.info("params : [ id : {} ]", id);
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ id : {} ]", id);
+		}
 		
 		return productsDao.findById(id);		
 	}
@@ -250,7 +263,10 @@ implements ProductService {
 	@Override
 	public Collection<Product> findById(SessionDto session, Collection<Long> coll) {
 		logger.info("findById starts");
-		logger.info("params : [ numberOfIds : {} ]", coll.size());
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ numberOfIds : {} ]", coll.size());
+		}
 		
 		return productsDao.findByIds(coll);		
 	}
@@ -260,7 +276,10 @@ implements ProductService {
 	@Override
 	public Product update(SessionDto session, Product product) {
 		logger.info("update starts");
-		logger.info("params : [ product : {} ]", product);
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ product : {} ]", product);
+		}
 		
 		return productsDao.saveOrUpdate(product);		
 	}
@@ -269,7 +288,9 @@ implements ProductService {
 	@Override
 	public Product findByIMEI(SessionDto session, String imei) {
 		logger.info("update starts");
-		logger.info("params : [ imei: {} ]", imei);
+		if(logger.isDebugEnabled()) {
+			logger.info("params : [ imei: {} ]", imei);
+		}
 		
 		return productsDao.findByIMEI(imei);		
 	}
@@ -278,7 +299,10 @@ implements ProductService {
 	@Override
 	public Collection<Product> updateCollection(SessionDto session, Collection<Product> coll) {
 		logger.info("updateCollection starts");
-		logger.info("params : [ numberOfProducts: {} ]", coll.size());
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ numberOfProducts: {} ]", coll.size());
+		}
 		
 		return productsDao.saveOrUpdate(coll);		
 	}
@@ -287,7 +311,10 @@ implements ProductService {
 	@Override
 	public void remove(SessionDto session, Product product) {
 		logger.info("remove starts");
-		logger.info("params : [ product: {} ]", product);
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ product: {} ]", product);
+		}
 		
 		productsDao.remove(product);		
 	}
@@ -296,7 +323,10 @@ implements ProductService {
 	@Override
 	public void removeCollection(SessionDto session, Collection<Product> coll) {
 		logger.info("removeCollection starts");
-		logger.info("params : [ numberOfproduct: {} ]", coll.size());
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ numberOfproduct: {} ]", coll.size());
+		}
 		
 		productsDao.remove(coll);		
 	}
@@ -305,7 +335,10 @@ implements ProductService {
 	@Override
 	public void removeCollectionByIds(SessionDto session, Collection<Long> coll) {
 		logger.info("removeCollection starts");
-		logger.info("params : [ numberOfproduct: {} ]", coll.size());
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ numberOfproduct: {} ]", coll.size());
+		}
 		
 		productsDao.removeByIds(coll);		
 	}
@@ -314,7 +347,10 @@ implements ProductService {
 	@Override
 	public void removeById(SessionDto session, long id) {
 		logger.info("remove starts");
-		logger.info("params : [ id: {} ]", id);
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ id: {} ]", id);
+		}
 		
 		productsDao.removeById(id);		
 	}
@@ -324,12 +360,11 @@ implements ProductService {
 	public ProductFetchResponse fetch(ProductFetchRequest req)
 		throws SessionServiceException 
 	{
-
-		logger.debug("ProductServiceImpl.fetch starts ");
+		logger.info("ProductServiceImpl.fetch starts ");
 		
-		SessionDto session = SessionDto.create()
-				.setUsername(req.getUsername())
-				.setSessionId(req.getSessionId());
+		SessionDto session = SessionDto.create();
+		session.setUsername(req.getUsername());
+		session.setSessionId(req.getSessionId());
 		
 		ProductFilterCriteria parameterObject = req.getFiltersCriteria();
 		
@@ -340,15 +375,17 @@ implements ProductService {
 				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
 		
 		sessionService.validate(session);
-		
-		logger.debug("params : [ imei : {} , producer : {} , model : {} , "
-				+ "color : {} , storeId : {} , deliveryDateStart : {} , "
-				+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ imei : {} , producer : {} , model : {} , "
+					+ "color : {} , storeId : {} , deliveryDateStart : {} , "
+					+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
+		}
 
 		List<Product> result = productsDao.findByCriteria(parameterObject);
 		
 		List<ProductSearchDto> lst = new ArrayList<ProductSearchDto>();
-		
+		// TODO : move to converter
 		for(Product p : result) {
 					
 			ProductSearchDto b = new ProductSearchDto();

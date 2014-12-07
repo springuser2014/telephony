@@ -63,18 +63,6 @@ public interface ContactService extends BasicService<Contact> {
 	/**
 	 * asd.
 	 * @param session TODO
-	 * @param label asd.
-	 * @return asd.
-	 * @throws SessionServiceException asd.
-	 * @throws ContactServiceException asd.
-	 */
-	@Deprecated
-	Contact findByLabel(SessionDto session, String label)
-		throws SessionServiceException, ContactServiceException;
-
-	/**
-	 * asd.
-	 * @param session TODO
 	 * @param contactId asd.
 	 * @return  as.
 	 * @throws SessionServiceException 

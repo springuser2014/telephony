@@ -7,7 +7,9 @@ public class ContactEditDto extends ContactDto {
 	
 	private List<String> emailsToRemove = new ArrayList<String>();
 	
-	private List<String> phonenumbersToRemove = new ArrayList<String>();
+	private List<PhoneNumberDto> phoneNumbersToRemove = new ArrayList<PhoneNumberDto>();
+
+	private List<String> faxesToRemove = new ArrayList<String>();
 
 	public List<String> getEmailsToRemove() {
 		return emailsToRemove;
@@ -17,39 +19,62 @@ public class ContactEditDto extends ContactDto {
 		this.emailsToRemove = emailsToRemove;
 	}
 
-	public List<String> getPhonenumbersToRemove() {
-		return phonenumbersToRemove;
+	public List<PhoneNumberDto> getPhoneNumbersToRemove() {
+		return phoneNumbersToRemove;
 	}
 
-	public void setPhonenumbersToRemove(List<String> phonenumbersToRemove) {
-		this.phonenumbersToRemove = phonenumbersToRemove;
+	public void setPhoneNumbersToRemove(List<PhoneNumberDto> phoneNumbersToRemove) {
+		this.phoneNumbersToRemove = phoneNumbersToRemove;
 	}
-	
+
+	public List<String> getFaxesToRemove() {
+		return faxesToRemove;
+	}
+
+	public void setFaxesToRemove(List<String> faxesToRemove) {
+		this.faxesToRemove = faxesToRemove;
+	}
+
 	public void addEmailToRemove(String email) {
-		
+
 		if (!this.emailsToRemove.contains(email)) {
 			this.emailsToRemove.add(email);
 		}
 	}
-	
+
 	public void removeEmailToRemove(String email) {
-		
+
 		if (this.emailsToRemove.contains(email)) {
 			this.emailsToRemove.remove(email);
 		}
 	}
 	
-	public void addPhonenumberToRemove(String phonenumber) {
+	public void addPhoneNumberToRemove(PhoneNumberDto phonenumber) {
 		
-		if (!this.phonenumbersToRemove.contains(phonenumber)) {
-			this.phonenumbersToRemove.add(phonenumber);
+		if (!this.phoneNumbersToRemove.contains(phonenumber)) {
+			this.phoneNumbersToRemove.add(phonenumber);
 		}
 	}
 	
-	public void removePhonenumberToRemove(String phonenumber) {
+	public void removePhoneNumberToRemove(PhoneNumberDto phonenumber) {
 		
-		if (this.phonenumbersToRemove.contains(phonenumber)) {
-			this.phonenumbersToRemove.remove(phonenumber);
+		if (this.phoneNumbersToRemove.contains(phonenumber)) {
+			this.phoneNumbersToRemove.remove(phonenumber);
 		}
 	}
+
+	public void addFaxToRemove(String fax) {
+
+		if (!this.faxesToRemove.contains(fax)) {
+			this.faxesToRemove.add(fax);
+		}
+	}
+
+	public void removeFaxToRemove(String fax) {
+
+		if (this.faxesToRemove.contains(fax)) {
+			this.faxesToRemove.remove(fax);
+		}
+	}
+
 }

@@ -13,18 +13,24 @@ import telephony.core.entity.jpa.PhoneNumber;
 public class ContactDto {
 	
 	private Long id;
-	
 	private String label;
-	
 	private String details;
-	
+	private AddressDto address;
 	private List<String> emails = new ArrayList<String>();
-	
-	private List<String> phonenumbers = new ArrayList<String>();
+	private List<PhoneNumberDto> phoneNumbers = new ArrayList<PhoneNumberDto>();
+	private List<String> faxes = new ArrayList<String>();
+
+	/**
+	 * asd.
+	 */
+	public ContactDto() {
+
+	}
 
 	/**
 	 * asd.
 	 * @param email a.
+
 	 */
 	public void addEmail(String email) {
 		this.emails.add(email);
@@ -40,26 +46,7 @@ public class ContactDto {
 			this.emails.remove(email);
 		}
 	}
-	
-	/**
-	 * asd.
-	 * @param phone a.
-	 */
-	public void addPhoneNumber(String phone) {
-		this.phonenumbers.add(phone);
-	}
-	
-	/**
-	 * asd.
-	 * @param phone a.
-	 */
-	public void removePhoneNumber(String phone) {
-		
-		if (this.phonenumbers.contains(phone)) {
-			this.phonenumbers.remove(phone);
-		}
-	}
-	
+
 	/**
 	 * asd.
 	 * @return a.
@@ -76,51 +63,7 @@ public class ContactDto {
 		this.emails = emails;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public List<String> getPhonenumbers() {
-		return phonenumbers;
-	}
 
-	/**
-	 * asd.
-	 * @param phonenumbers a.
-	 */
-	public void setPhonenumbers(List<String> phonenumbers) {
-		this.phonenumbers = phonenumbers;
-	}
-
-	/**
-	 * asd.
-	 * @param contact ads.
-	 * @return asd.
-	 */
-	public static ContactDto create(Contact contact) {
-		ContactDto c = new ContactDto();
-		c.setDetails(contact.getDetails());
-		c.setLabel(contact.getLabel());
-		c.setId(contact.getId());
-		
-		for (Email s : contact.getEmails()) {
-			c.addEmail(s.getContent());
-		}
-		
-		for (PhoneNumber s : contact.getPhonenumbers()) {
-			c.addPhoneNumber(s.getContent());
-		}
-		
-		return c;
-	}
-	
-	/**
-	 * asd.
-	 */
-	public ContactDto() {
-		
-	}
-	
 	/**
 	 * asd.
 	 * @param id asd . 
@@ -228,7 +171,77 @@ public class ContactDto {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	
-	
 
+	public void setPhonenumbers(List<PhoneNumberDto> phonenumbers) {
+		this.phoneNumbers = phonenumbers;
+	}
+
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public List<String> getFaxes() {
+		return faxes;
+	}
+
+	public void addFax(String fax) {
+
+		if (!this.faxes.contains(fax)) {
+			this.faxes.add(fax);
+		}
+	}
+
+	public void removeFax(String fax) {
+
+		if (this.faxes.contains(fax)) {
+			this.faxes.remove(fax);
+		}
+	}
+
+	/**
+	 * asd.
+	 * @param faxes a.
+	 */
+	public void setFaxes(List<String> faxes) {
+		this.faxes = faxes;
+	}
+
+	/**
+	 * asd.
+	 * @param phoneNumberDto a.
+	 */
+	public void addPhoneNumber(PhoneNumberDto phoneNumberDto) {
+
+		if (!this.phoneNumbers.contains(phoneNumberDto)) {
+			this.phoneNumbers.add(phoneNumberDto);
+		}
+	}
+
+	/**
+	 * ads.
+	 * @param phoneNumberDto a.
+	 */
+	public void removePhoneNumber(PhoneNumberDto phoneNumberDto) {
+
+		if (this.phoneNumbers.add(phoneNumberDto)) {
+			this.phoneNumbers.remove(phoneNumberDto);
+		}
+	}
+
+	public List<PhoneNumberDto> getPhoneNumbers() {
+		return phoneNumbers;
+	}
+
+	public void setPhoneNumbers(List<PhoneNumberDto> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
+	}
+
+
+	public AddressDto getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressDto address) {
+		this.address = address;
+	}
 }

@@ -14,7 +14,9 @@ public class Contact extends BaseEntity {
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY,
-        cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
+        cascade = {
+                CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+        }
     )
     private Collection<Delivery> deliveries;
     
@@ -52,7 +54,9 @@ public class Contact extends BaseEntity {
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }
+        cascade = {
+                CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+        }
     )
     private Collection<Sale> sales;
    
@@ -70,7 +74,25 @@ public class Contact extends BaseEntity {
     )
     @ElementCollection
     private Collection<PhoneNumber> phonenumbers;
-    
+
+    @CollectionTable(
+            name = "faxes",
+            joinColumns = @JoinColumn(name = "contact_id")
+    )
+    @ElementCollection
+    private Collection<Fax> faxes;
+
+    @Embedded
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     /**
      * asd.
      * @param delivery asd.
@@ -247,61 +269,62 @@ public class Contact extends BaseEntity {
         this.sales = sales;
     }
 
-	public void addEmail(String newEmail) {
-		
-		for(Email email : this.emails) {
-			
-			if (email.getContent().equals(newEmail)) {
-				return ;
-			}
-		}
-		
-		Email e = new Email();
-		e.setContent(newEmail);
-		this.emails.add(e);
-	}
+    /**
+     * asd.
+     * @return a.
+     */
+    public Collection<Fax> getFaxes() {
+        return faxes;
+    }
 
-	public void addPhonenumber(String newPhonenumber) {
-		
-		for(PhoneNumber phonenumber : this.phonenumbers) {
-			
-			if (phonenumber.getContent().equals(newPhonenumber)) {
-				return ;
-			}
-		}
-		
-		PhoneNumber p = new PhoneNumber();
-		p.setContent(newPhonenumber);
-		this.phonenumbers.add(p);		
-	}
-	
-	public void removeEmail(String mail) {
-		
-		Email toRemove = null;
-		for(Email email : this.emails) {
-			
-			if (email.getContent().equals(mail)) {
-				toRemove = email;
-			}
-		}
-		
-		if (toRemove != null) {
-			this.emails.remove(toRemove);
-		}
-	}
-	
-	public void removePhonenumber(String phonenumber) {
-		
-		PhoneNumber toRemove = null;
-		for(PhoneNumber number : this.phonenumbers) {
-			
-			if (number.getContent().equals(phonenumber)) {
-				toRemove = number;
-			}
-		}
-		
-		if (toRemove != null) {
-			this.phonenumbers.remove(toRemove);
-		}
-	}	
+    /**
+     * ds.
+     * @param faxes a.
+     */
+    public void setFaxes(Collection<Fax> faxes) {
+        this.faxes = faxes;
+    }
+
+    public void addEmail(Email email) {
+
+        if (!this.emails.contains(email)) {
+            this.emails.add(email);
+        }
+    }
+
+    public void removeEmail(Email email) {
+
+        if (this.emails.contains(email)) {
+            this.emails.remove(email);
+        }
+    }
+
+    public void addPhoneNumber(PhoneNumber phonenumber) {
+
+        if (!this.phonenumbers.contains(phonenumber)) {
+            this.phonenumbers.add(phonenumber);
+        }
+    }
+
+    public void removePhoneNumber(PhoneNumber phonenumber) {
+
+        if (this.phonenumbers.contains(phonenumber)) {
+            this.phonenumbers.remove(phonenumber);
+        }
+    }
+
+    public void addFax(Fax fax) {
+
+        if (!this.faxes.contains(fax)) {
+            this.faxes.add(fax);
+        }
+    }
+
+    public void removeFax(Fax fax) {
+
+        if (this.faxes.contains(fax)) {
+            this.faxes.remove(fax);
+        }
+    }
+
 }

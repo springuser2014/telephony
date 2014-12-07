@@ -8,9 +8,7 @@ import java.util.Date;
 public class SessionDto {
 
     private String username;
-
     private String sessionId;
-
     private Date validity;
 
     /**
@@ -69,9 +67,8 @@ public class SessionDto {
      * @param username asd.
      * @return asd.
      */
-    public final SessionDto setUsername(final String username) {
+    public final void setUsername(final String username) {
         this.username = username;
-        return this;
     }
 
     /**
@@ -87,10 +84,27 @@ public class SessionDto {
      * @param sessionId asd.
      * @return asd.
      */
-    public final SessionDto setSessionId(final String sessionId) {
+    public final void setSessionId(final String sessionId) {
         this.sessionId = sessionId;
-        return this;
     }
+
+    /**
+     * asd.
+     * @return asd.
+     */
+	public Date getValidity() {
+		return validity;
+	}
+
+	/**
+	 * asd.
+	 * @param validity asd.
+	 * @return asd.
+	 */
+	public SessionDto setValidity(Date validity) {
+		this.validity = validity;
+		return this;
+	}
 
     /**
      * asd.
@@ -114,9 +128,9 @@ public class SessionDto {
         if (!username.equals(session.username)) {
             return false;
         }
-        
+
         if (!validity.equals(session.getValidity())) {
-        	return false;
+            return false;
         }
 
         return true;
@@ -134,21 +148,4 @@ public class SessionDto {
         return result;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
-	public Date getValidity() {
-		return validity;
-	}
-
-	/**
-	 * asd.
-	 * @param validity asd.
-	 * @return asd.
-	 */
-	public SessionDto setValidity(Date validity) {
-		this.validity = validity;
-		return this;
-	}
 }

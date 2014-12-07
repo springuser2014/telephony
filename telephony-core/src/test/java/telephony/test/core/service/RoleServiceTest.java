@@ -42,9 +42,9 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void fetchAllRoles() throws SessionServiceException {
 
 		// given
-		SessionDto session = SessionDto.create()
-							.setUsername(TestData.USER1_NAME)
-							.setSessionId(TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create();
+		session.setUsername(TestData.USER1_NAME);
+		session.setSessionId(TestData.USER1_SESSIONID);
 		
 		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
 										.roleFilterCriteria()
@@ -63,9 +63,9 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void addingRole() throws SessionServiceException, RoleServiceException {
 
 		// given
-		SessionDto session = SessionDto.create()
-				.setUsername(TestData.USER1_NAME)
-				.setSessionId(TestData.USER1_SESSIONID);
+		SessionDto session = SessionDto.create();
+		session.setUsername(TestData.USER1_NAME);
+		session.setSessionId(TestData.USER1_SESSIONID);
 		
 		long countBefore = roleService.count(session);
 		

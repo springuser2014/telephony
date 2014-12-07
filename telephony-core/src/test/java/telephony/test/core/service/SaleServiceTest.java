@@ -100,7 +100,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		String sessionId = TestData.USER1_SESSIONID;
 		
 		Store store = storeService.findByLabel(null, TestData.STORE1_LABEL);
-		Contact contact = contactService.findByLabel(null, TestData.CONTACT1_LABEL);
+//		Contact contact = contactService.findByLabel(null, TestData.CONTACT1_LABEL);
 		List<String> imeis = new ArrayList<String>();
 		imeis.add("123456789000002");
 		imeis.add("123456789000005");
@@ -113,7 +113,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		sale.setDateOut(new Date());
 		
 		// when
-		saleService.add(null, sale, products, store.getId(), contact.getId());
+//		saleService.add(null, sale, products, store.getId(), contact.getId());
 		
 		Sale addedSale = saleService.findByLabel(null, "nowa dostawa");
 		

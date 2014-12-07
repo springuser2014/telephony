@@ -9,9 +9,11 @@ CREATE TABLE phonenumbers (
 );
 
 ALTER TABLE ONLY  phonenumbers
-    ADD CONSTRAINT phonenumbers_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES contacts(id);
+ADD CONSTRAINT phonenumbers_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES contacts(id)
+ON DELETE CASCADE;
     
 ALTER TABLE ONLY  emails
-    ADD CONSTRAINT emails_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES contacts(id);
+ADD CONSTRAINT emails_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES contacts(id)
+ON DELETE CASCADE;
 
     

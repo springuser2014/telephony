@@ -7,9 +7,10 @@ public class ContactFilterCriteria extends
 		AbstractFilterCriteria<ContactFilterCriteria> {
 
 	private String label;
-	private String description;
+	private String details;
 	private String phonenumber;
 	private String email;
+	private String fax;
 
 	public String getLabel() {
 		return label;
@@ -19,12 +20,12 @@ public class ContactFilterCriteria extends
 		this.label = label;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDetails() {
+		return details;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 	public String getPhonenumber() {
@@ -41,5 +42,13 @@ public class ContactFilterCriteria extends
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 }

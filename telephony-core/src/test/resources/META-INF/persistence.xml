@@ -17,6 +17,7 @@
         <class>telephony.core.entity.jpa.ComplaintComment</class>
         <class>telephony.core.entity.jpa.Email</class>
         <class>telephony.core.entity.jpa.PhoneNumber</class>
+		<class>telephony.core.entity.jpa.Fax</class>
         <class>telephony.core.entity.jpa.Tax</class>
         <class>telephony.core.entity.jpa.Pricing</class>
         <class>telephony.core.entity.jpa.Model</class>

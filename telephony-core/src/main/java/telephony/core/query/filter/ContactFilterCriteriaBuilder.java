@@ -41,8 +41,8 @@ class ContactFilterCriteriaBuilderBase<GeneratorT extends ContactFilterCriteriaB
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withDescription(String aValue) {
-		instance.setDescription(aValue);
+	public GeneratorT withDetails(String aValue) {
+		instance.setDetails(aValue);
 
 		return (GeneratorT) this;
 	}
@@ -60,4 +60,20 @@ class ContactFilterCriteriaBuilderBase<GeneratorT extends ContactFilterCriteriaB
 
 		return (GeneratorT) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPage(Integer aValue) {
+		instance.setPage(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPerPage(Integer aValue) {
+		instance.setPerPage(aValue);
+
+		return (GeneratorT) this;
+	}
+
+
 }

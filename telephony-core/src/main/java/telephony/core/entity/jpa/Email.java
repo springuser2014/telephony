@@ -23,7 +23,11 @@ public class Email {
 	public Email() {
 	
 	}
-	
+
+	public Email(String content) {
+		this.content = content;
+	}
+
 	/**
 	 * ad.
 	 * @return a.
@@ -39,4 +43,22 @@ public class Email {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Email email = (Email) o;
+
+		if (content != null ? !content.equals(email.content) : email.content != null) return false;
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return content != null ? content.hashCode() : 0;
+	}
+
 }

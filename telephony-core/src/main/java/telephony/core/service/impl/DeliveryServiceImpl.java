@@ -12,6 +12,7 @@ import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
+import telephony.core.service.converter.DeliveryConverter;
 import telephony.core.service.dto.DeliveryDto;
 import telephony.core.service.dto.ProductDto;
 import telephony.core.service.dto.ProductEditDto;
@@ -66,26 +67,26 @@ implements DeliveryService {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Transactional
-    @Override
-    public void add(SessionDto session, Delivery newDelivery,
-    		List<Product> products, Long storeId, Long contactId)
-    		throws SessionServiceException, DeliveryServiceException {
-    	
-        logger.debug("DeliveryServiceImpl.addNewDelivery starts");        
-		logger.debug("params : [session : {}, newDelivery : {}]", session, newDelivery);
+		@Transactional
+		@Override
+		public void add(SessionDto session, Delivery newDelivery,
+				List<Product> products, Long storeId, Long contactId)
+		throws SessionServiceException, DeliveryServiceException {
 
-		sessionService.validate(session);
-		
-		Contact contact = contactsDao.findById(contactId);
-		
-		Store store = storesDao.findById(storeId);
-		
-		newDelivery.setContact(contact);
-		newDelivery.setStore(store);
-		
-		newDelivery = deliveriesDao.saveOrUpdate(newDelivery);		
-		deliveriesDao.getEntityManager().flush();
+			logger.debug("DeliveryServiceImpl.addNewDelivery starts");
+			logger.debug("params : [session : {}, newDelivery : {}]", session, newDelivery);
+
+			sessionService.validate(session);
+
+			Contact contact = contactsDao.findById(contactId);
+
+			Store store = storesDao.findById(storeId);
+
+			newDelivery.setContact(contact);
+			newDelivery.setStore(store);
+
+			newDelivery = deliveriesDao.saveOrUpdate(newDelivery);
+			deliveriesDao.getEntityManager().flush();
 		
 		for (Product product : products) {
 			
@@ -124,9 +125,9 @@ implements DeliveryService {
         logger.debug("DeliveryServiceImpl.findDeliveries starts");        
 		logger.debug("params : [request : {}]", request);
 
-		SessionDto session = SessionDto.create()
-				.setSessionId(request.getSessionId())
-				.setUsername(request.getUsername());
+		SessionDto session = SessionDto.create();
+		session.setSessionId(request.getSessionId());
+		session.setUsername(request.getUsername());
 			
 		sessionService.validate(session);
 		
@@ -137,7 +138,7 @@ implements DeliveryService {
         List<DeliveryDto> coll = new ArrayList<DeliveryDto>();
         
         for(Delivery d : res) {
-        	coll.add(toDelivery(d));
+        	coll.add(DeliveryConverter.toDeliveryDto(d));
         }
         
         resp.setDeliveries(coll);
@@ -204,9 +205,9 @@ implements DeliveryService {
 		// TODO : add bean to entity converter
 		// TODO : add entity to bean converter
 		
-		SessionDto session = SessionDto.create()
-				.setSessionId(request.getSessionId())
-				.setUsername(request.getUsername());
+		SessionDto session = SessionDto.create();
+		session.setSessionId(request.getSessionId());
+		session.setUsername(request.getUsername());
 		
 		sessionService.validate(session);		
 
@@ -303,72 +304,20 @@ implements DeliveryService {
 	public DeliveryDetailsResponse fetchDetails(DeliveryDetailsRequest request)
 			throws SessionServiceException {
 		
-		SessionDto session = SessionDto.create()
-				.setSessionId(request.getSessionId())
-				.setUsername(request.getUsername());
+		SessionDto session = SessionDto.create();
+		session.setSessionId(request.getSessionId());
+		session.setUsername(request.getUsername());
 		
 		sessionService.validate(session);		
 
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
-		DeliveryDto bean = toDelivery(delivery);
+		DeliveryDto bean = DeliveryConverter.toDeliveryDto(delivery);
 		DeliveryDetailsResponse resp = new DeliveryDetailsResponse();
 		resp.setDelivery(bean);
 		
 		return resp;
 	}
 
-	
-	// TODO extract to converter
-	private DeliveryDto toDelivery(Delivery delivery) {
-		
-		DeliveryDto bean = new DeliveryDto();
-		bean.setContactId(delivery.getContact().getId());
-		bean.setDateIn(delivery.getDateIn());
-		bean.setStoreId(delivery.getStore().getId());
-		bean.setId(delivery.getId());
-		bean.setLabel(delivery.getLabel());
-		
-		List<ProductDto> products = new ArrayList<ProductDto>();
-		
-		if (delivery.getProducts() == null) {
-			delivery.setProducts(new ArrayList<Product>());
-		}
-		
-		for (Product prod : delivery.getProducts()) {
-			ProductDto p = toProduct(prod);
-			products.add(p);
-		}
-		
-		bean.setProducts(products);
-		
-		return bean;
-	}
-
-	// TODO extract to converter
-	private ProductDto toProduct(Product product) {
-		
-		ProductDto p = new ProductDto();
-		p.setColor(product.getColor());
-		p.setImei(product.getImei());
-		p.setModel(product.getModel().getLabel());
-		p.setProducer(product.getModel().getProducer().getLabel());
-		if (product.getCurrentTax() != null) {
-			p.setTaxFrom(product.getCurrentTax().getFrom());
-			p.setTaxTo(product.getCurrentTax().getTo());
-			p.setTaxId(product.getCurrentTax().getTax().getId());
-		}
-		
-		p.setPriceIn(product.getPriceIn());
-		
-		if (product.getCurrentPricing() != null) {
-			p.setPriceFrom(product.getCurrentPricing().getFrom());
-			p.setPriceTo(product.getCurrentPricing().getTo());
-			p.setCurrentPrice(product.getCurrentPricing().getRate());
-		}
-		
-		return p;
-	}
-	
 	@Override
 	@Transactional
 	public DeliveryEditResponse edit(DeliveryEditRequest req)
@@ -378,9 +327,9 @@ implements DeliveryService {
 				new DeliveryEditResponse();
 		
 
-		SessionDto session = SessionDto.create()
-				.setSessionId(req.getSessionId())
-				.setUsername(req.getUsername());
+		SessionDto session = SessionDto.create();
+		session.setSessionId(req.getSessionId());
+		session.setUsername(req.getUsername());
 		
 		sessionService.validate(session);		
 		
@@ -600,9 +549,9 @@ implements DeliveryService {
 	@Override
 	public DeliveryDeleteResponse delete(DeliveryDeleteRequest req) throws SessionServiceException, DeliveryServiceException {
 
-		SessionDto session = SessionDto.create()
-				.setUsername(req.getUsername())
-				.setSessionId(req.getSessionId());
+		SessionDto session = SessionDto.create();
+		session.setUsername(req.getUsername());
+		session.setSessionId(req.getSessionId());
 		
 		sessionService.validate(session);
 		
