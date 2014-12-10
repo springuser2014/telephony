@@ -6,6 +6,8 @@ import java.util.Date;
 public class ProductDto {
 
 	private String model;
+	private Long modelId;
+
 	private String producer;
 	private String imei;
 	private String color;
@@ -79,7 +81,15 @@ public class ProductDto {
 	public String getTaxFrom() {
 		return taxFrom;
 	}
-	
+
+	public Long getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
+	}
+
 	public void setTaxFrom(Date taxFrom) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		this.taxFrom = sdf.format(taxFrom);

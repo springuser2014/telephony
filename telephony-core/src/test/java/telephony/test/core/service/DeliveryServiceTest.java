@@ -16,6 +16,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.query.filter.ModelFilterCriteria;
+import telephony.core.query.filter.ModelFilterCriteriaBuilder;
+import telephony.core.service.dto.ModelDto;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.*;
 import telephony.core.service.dto.ProductEditDto;
@@ -34,6 +37,7 @@ import telephony.core.service.exception.DeliveryServiceException;
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+import telephony.test.core.data.TestDataBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -64,48 +68,43 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private ModelService modelService;
-	
-	// TODO : move to TestDataBuilder
-	private Product getProductB() {
-		Product p = new Product();
-		p.setColor("niebieski");
-		p.setImei("123451234512345");
-		p.setModel(getNokia3310());
-		p.setPricings(new ArrayList<Pricing>());
-		p.setProductTaxes(new ArrayList<ProductTax>());
-		p.setPriceIn(100.0);
-		
-		return p;
-	}
-	
-	// TODO : move to TestDataBuilder
-	private Model getNokia3310() {
-		
-		Model model = modelService.findByLabel(null, "3310");
-		
-		return model;
-	}
-	
-	// TODO : move to TestDataBuilder
-	private Model getIphone4S() {
-		
-		Model model = modelService.findByLabel(null, "iphone 4s");
-		
+
+	public ModelDto getNokia3310() {
+
+		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+				.withLabel("3310")
+				.build();
+
+		ModelFetchRequest request = new ModelFetchRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setFilters(filters);
+
+		ModelFetchResponse resp = modelService.fetch(request);
+
+		ModelDto model = resp.getModels().get(0);
+
 		return model;
 	}
 
-	// TODO : move to TestDataBuilder
-	private Product getProductA() {
-		Product p = new Product();
-		p.setColor("zielony");
-		p.setImei("098760987609876");
-		p.setModel(getIphone4S());
-		p.setPricings(new ArrayList<Pricing>());
-		p.setProductTaxes(new ArrayList<ProductTax>());
-		p.setPriceIn(110.0);
-		
-		return p;
+	public ModelDto getIphone4S() {
+
+		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+				.withLabel("iphone 4s")
+				.build();
+
+		ModelFetchRequest request = new ModelFetchRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setFilters(filters);
+
+		ModelFetchResponse resp = modelService.fetch(request);
+
+		ModelDto model = resp.getModels().get(0);
+
+		return model;
 	}
+
 		
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -114,26 +113,29 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-//		Contact contact = contactService.findByLabel(session, "leszek");
+
 		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 
 		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count(session);
 		long productsAfter = -1, productsBefore = productService.count(session);		
+
+		Long contactId = 0l;
+		Long storeid = 0l;
 		
-		Delivery newDelivery = new Delivery();
-		
-		newDelivery.setDateIn(new Date());
-		newDelivery.setLabel("asd asd");
-		
-		List<Product> products = new ArrayList<Product>();
-		products.add(getProductA());
-		products.add(getProductB());
-		
-//		deliveryService.add(
-//				session, newDelivery,
-//				products, store.getId(),
-//				contact.getId()
-//		);
+		List<ProductDto> products = new ArrayList<ProductDto>();
+		products.add(TestDataBuilder.getProductA(getIphone4S()));
+		products.add(TestDataBuilder.getProductB(getNokia3310()));
+
+		DeliveryAddRequest request = new DeliveryAddRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setLabel("asd asd");
+		request.setDateIn(new Date());
+		request.setContactId(contactId);
+		request.setStoreId(storeid);
+
+//		DeliveryAddResponse responseDelivery = deliveryService.add(request);
+
 		deliveriesAfter = deliveryService.count(session);
 		productsAfter = productService.count(session);
 	

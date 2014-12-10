@@ -54,14 +54,10 @@ public class TelephonyCoreTestModule extends AbstractModule {
 		bind(new TypeLiteral<ComplaintService<ProductComplaint>>() { })
 		.toInstance(
 			new AbstractComplaintService<ProductComplaint, ProductComplaintDao>(ProductComplaintDao.class) { }
-		);	
-		
+		);
+
 		
 		install(new TelephonyCoreServicesModule());
 		install(new JpaPersistModule(PERSISTENCE_TEST));
 	}
-	
-
-	
-	
 }

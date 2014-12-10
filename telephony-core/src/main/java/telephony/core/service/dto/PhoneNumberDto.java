@@ -10,6 +10,11 @@ public class PhoneNumberDto {
 
     }
 
+    public PhoneNumberDto(String prefix, String number) {
+        this.prefix = prefix;
+        this.number = number;
+    }
+
     public String getPrefix() {
         return prefix;
     }

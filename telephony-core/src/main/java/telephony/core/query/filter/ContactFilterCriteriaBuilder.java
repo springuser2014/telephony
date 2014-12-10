@@ -34,6 +34,13 @@ class ContactFilterCriteriaBuilderBase<GeneratorT extends ContactFilterCriteriaB
 	}
 
 	@SuppressWarnings("unchecked")
+	public GeneratorT withId(Long aValue) {
+		instance.setId(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
 	public GeneratorT withLabel(String aValue) {
 		instance.setLabel(aValue);
 

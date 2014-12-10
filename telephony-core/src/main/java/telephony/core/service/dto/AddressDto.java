@@ -3,13 +3,9 @@ package telephony.core.service.dto;
 public class AddressDto {
 
     private String addressLine1;
-
     private String addressLine2;
-
     private String city;
-
     private String zipCode;
-
     private String country;
 
     public AddressDto() {

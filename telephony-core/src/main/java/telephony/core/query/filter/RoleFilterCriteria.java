@@ -4,7 +4,7 @@ package telephony.core.query.filter;
  * asd.
  */
 public class RoleFilterCriteria
-extends AbstractFilterCriteria<RoleFilterCriteria> {
+	extends AbstractFilterCriteria<RoleFilterCriteria> {
 	
 	private String label;
 	
@@ -21,8 +21,7 @@ extends AbstractFilterCriteria<RoleFilterCriteria> {
 	 * @param label asd.
 	 * @return asd. 
 	 */
-	public RoleFilterCriteria setLabel(String label) {
+	public void setLabel(String label) {
 		this.label = label;
-		return this;
 	}
 }

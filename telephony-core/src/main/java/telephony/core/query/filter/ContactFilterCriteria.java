@@ -3,9 +3,10 @@ package telephony.core.query.filter;
 /**
  * asd.
  */
-public class ContactFilterCriteria extends
-		AbstractFilterCriteria<ContactFilterCriteria> {
+public class ContactFilterCriteria
+		extends AbstractFilterCriteria<ContactFilterCriteria> {
 
+	private Long id;
 	private String label;
 	private String details;
 	private String phonenumber;
@@ -50,5 +51,13 @@ public class ContactFilterCriteria extends
 
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

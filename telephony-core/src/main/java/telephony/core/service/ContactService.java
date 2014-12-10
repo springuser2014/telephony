@@ -34,43 +34,28 @@ public interface ContactService extends BasicService<Contact> {
 	 * @return d.
 	 * @throws SessionServiceException a.
 	 * @throws ContactServiceException a.
+	 * @return a .
 	 */
 	ContactAddResponse add(ContactAddRequest request)
 			throws SessionServiceException, ContactServiceException;
 	
 	/**
 	 * asd.
-	 * @param contact TODO
+	 * @param contact asd.
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
+	 * @return b.
 	 */
 	ContactEditResponse edit(ContactEditRequest contact)
 			throws SessionServiceException, ContactServiceException;
 	
 	/**
 	 * asd.
-	 * @param req TODO
+	 * @param req asd.
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
+	 * @return asd.
 	 */
 	ContactDeleteResponse delete(ContactDeleteRequest req)
 			throws SessionServiceException, ContactServiceException;
-
-	////////////////////////////////
-	// TODO remove the stuff below
-	////////////////////////////////
-
-	/**
-	 * asd.
-	 * @param session TODO
-	 * @param contactId asd.
-	 * @return  as.
-	 * @throws SessionServiceException 
-	 */
-	// TODO : replace by the fetch() method and remove
-	@Deprecated
-	Contact findById(SessionDto session, Long contactId)
-			throws SessionServiceException;
-
-
 }

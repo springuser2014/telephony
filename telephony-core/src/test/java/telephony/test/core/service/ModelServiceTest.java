@@ -9,15 +9,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import telephony.core.entity.jpa.Model;
+import telephony.core.query.filter.ModelFilterCriteria;
+import telephony.core.query.filter.ModelFilterCriteriaBuilder;
 import telephony.core.service.ModelService;
+import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ModelDeleteRequest;
+import telephony.core.service.dto.request.ModelEditRequest;
+import telephony.core.service.dto.request.ModelFetchRequest;
+import telephony.core.service.dto.response.ModelEditResponse;
+import telephony.core.service.dto.response.ModelFetchResponse;
 import telephony.test.BaseCoreTest;
 import telephony.test.core.data.TestData;
 
 import javax.persistence.PersistenceException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -44,13 +50,23 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		String label = "iphone 4s";
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+			.withLabel(label)
+			.build();
+
+		ModelFetchRequest request = new ModelFetchRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setFilters(filters);
 		
 		// when
-		Model model = modelService.findByLabel(session, label);		
+		ModelFetchResponse responseFetch = modelService.fetch(request);
 		
 		// then
-		assertNotNull(model);
+		assertNotNull(responseFetch);
+		assertEquals(responseFetch.getModels().size(), 1);
+		assertEquals(responseFetch.getModels().get(0).getLabel(), label);
+		assertNotNull(responseFetch.getModels().get(0).getId());
 	}
 
 	@Test
@@ -59,15 +75,22 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		long id = 1;
-		String expected = "6610s";
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+			.withModelId(id)
+			.build();
+
+		ModelFetchRequest request = new ModelFetchRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setFilters(filters);
 		
 		// when
-		Model model = modelService.findById(session, id);
+		ModelFetchResponse responseFetch = modelService.fetch(request);
 		
 		// then
-		assertNotNull(model);
-		assertEquals(model.getLabel(), expected);
+		assertNotNull(responseFetch);
+		assertEquals(responseFetch.getModels().size(), 1);
+		assertEquals(responseFetch.getModels().get(0).getLabel(), "6610s");
 	}
 	
 	@Test
@@ -76,14 +99,21 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 		// given
 		List<Long> ids = Arrays.asList(1L, 2L, 3L);
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
+		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+			.withModelIds(ids)
+			.build();
+
+		ModelFetchRequest request = new ModelFetchRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setFilters(filters);
+
 		// when
-		Collection<Model> models = modelService.findByIds(session, ids);
+		ModelFetchResponse responseFetch = modelService.fetch(request);
 		
 		// then
-		assertNotNull(models);		
-		assertEquals(models.size(), 3);
+		assertNotNull(responseFetch);
+		assertEquals(responseFetch.getModels().size(), 3);
 	}
 	
 	@Test
@@ -102,140 +132,59 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void update() {
+	public void edit() {
 	
 		// given
 		long id = 1;
 		String newLabel = "newlabel";
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Model model = modelService.findById(session, id);
-		Model changedModel = null;
-		
+
+		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+			.withModelId(id)
+			.build();
+
+		ModelFetchRequest request = new ModelFetchRequest();
+		request.setUsername(TestData.USER1_NAME);
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setFilters(filters);
+
+		ModelFetchResponse responseFetch1 = modelService.fetch(request);
+		ModelDto dto = responseFetch1.getModels().get(0);
+		dto.setLabel(newLabel);
+
 		// when
-		model.setLabel(newLabel);
-		modelService.edit(session, model);
-		changedModel = modelService.findByLabel(session, newLabel);
+		ModelEditRequest editRequest = new ModelEditRequest();
+		editRequest.setSessionId(TestData.USER1_NAME);
+		editRequest.setUsername(TestData.USER1_SESSIONID);
+		editRequest.setModelDto(dto);
+
+		ModelEditResponse editResponse = modelService.edit(editRequest);
+		ModelFetchResponse responseFetch2 = modelService.fetch(request);
 		
 		// then
-		assertNotNull(changedModel);
-		assertTrue(changedModel.getId() == id);
+		assertNotNull(editResponse);
+		assertTrue(editResponse.isSuccess());
+
+		assertNotNull(responseFetch2);
+		assertEquals(responseFetch2.getModels().size(), 1);
+		assertEquals(responseFetch2.getModels().get(0).getLabel(), newLabel);
 	}
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void updateCollection() {
-		
-		// given
-		long id1 = 1, id2 = 2;
-		String newLabel1 = "newlabel1";
-		String newLabel2 = "newlabel2";
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Model model1 = modelService.findById(session, id1);
-		Model model2 = modelService.findById(session, id2);
-		
-		List<Model> coll = Arrays.asList(model1, model2);
-		
-		Model changedModel1 = null;
-		Model changedModel2 = null;
-		
-		// when
-		model1.setLabel(newLabel1);
-		model2.setLabel(newLabel2);
-		modelService.update(session, coll);
-		changedModel1 = modelService.findByLabel(session, newLabel1);
-		changedModel2 = modelService.findByLabel(session, newLabel2);
-		
-		// then
-		assertNotNull(changedModel1);
-		assertNotNull(changedModel2);
-		assertTrue(changedModel1.getId() == id1);
-		assertTrue(changedModel2.getId() == id2);
-		
-	}
-	
 	@Test(expected = PersistenceException.class)
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById_exceptConstraint() {
-		
-		// given
-		long id1 = 1;
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
-		// when
-		modelService.removeById(session, id1);
-		
-		// then
-		// exception should arise
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void remove() {
+	public void remove_expectException() {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Model model = modelService.findByLabel(session, "iphone 6g");
 		long countBefore = modelService.count(session);
+		ModelDeleteRequest request = new ModelDeleteRequest(session);
+		request.setModelId(1L);
 		
 		// when
-		modelService.remove(session, model);
+		modelService.delete(request);
 		long countAfter = modelService.count(session);
 		
 		// then
 		assertEquals(countBefore  - countAfter, 1);
 	}
 
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById() {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Model model = modelService.findByLabel(session, "iphone 6g");
-		long id = model.getId();
-		long countBefore = modelService.count(session);
-		
-		// when
-		modelService.removeById(session, id);
-		long countAfter = modelService.count(session);
-		
-		// then
-		assertEquals(countBefore  - countAfter, 1);
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollectionById() {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id7 = 7, id8 = 8;
-		long countBefore = modelService.count(session);
-		List<Long> ids = Arrays.asList(id7, id8);
-		
-		// when
-		modelService.removeById(session, ids);
-		long countAfter = modelService.count(session);
-		
-		// then
-		assertEquals(countBefore - countAfter, 2);
-		
-	}
-	
-	@Test(expected = PersistenceException.class)
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollectionById_expectConstraint() {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id1 = 1, id2 = 2;
-		List<Long> ids = Arrays.asList(id1, id2);
-		
-		// when
-		modelService.removeById(session, ids);
-		
-		// then
-		// exception should arise
-	}
 }

@@ -135,8 +135,10 @@ implements ContactService {
 		}
 
 		contactsDao.save(newContact);
-
-		return new ContactAddResponse();
+		ContactAddResponse resp = new ContactAddResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO : add localized msg
+		return resp;
 	}
 
 	@Override
@@ -235,7 +237,7 @@ implements ContactService {
 				contactToUpdate.addFax(toAdd);
 			}
 		}
-		
+
 		contactsDao.saveOrUpdate(contactToUpdate);
 
 		ContactEditResponse resp = new ContactEditResponse();
@@ -262,24 +264,9 @@ implements ContactService {
 		
 		contactsDao.removeById(contactId);
 
-		return new ContactDeleteResponse();
+		ContactDeleteResponse resp = new ContactDeleteResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+		return resp;
 	}
-
-	@Override
-	@Transactional
-	public Contact findById(SessionDto session, Long contactToDeleteId) 
-			throws SessionServiceException {
-		
-		logger.info("ContactServiceImpl.findById starts");
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ sessionId : {}, contact  : {}]", session, contactToDeleteId);
-		}
-
-		sessionService.validate(session);
-
-		Contact contact = contactsDao.findById(contactToDeleteId);
-		return contact;
-	}
-
 }

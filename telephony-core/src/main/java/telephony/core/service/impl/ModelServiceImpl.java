@@ -1,5 +1,6 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -7,16 +8,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ModelDao;
+import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Model;
+import telephony.core.entity.jpa.Producer;
+import telephony.core.service.converter.ModelConverter;
+import telephony.core.service.dto.ModelDto;
+import telephony.core.service.dto.request.ModelDeleteRequest;
 import telephony.core.service.dto.request.ModelEditRequest;
 import telephony.core.service.dto.request.ModelFetchRequest;
 import telephony.core.service.ModelService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.response.ModelDeleteResponse;
 import telephony.core.service.dto.response.ModelEditResponse;
 import telephony.core.service.dto.response.ModelFetchResponse;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
+import static telephony.core.assertion.CommonAssertions.isNull;
+import static telephony.core.assertion.CommonAssertions.isNotNull;
 
 /**
  * asd.
@@ -28,101 +39,101 @@ implements ModelService {
     @Inject
     private ModelDao modelsDao;
 
+	@Inject
+	private ProducerDao producerDao;
+
 	private Logger logger = LoggerFactory.getLogger(getClass());	
-	
-	@Override
-	@Transactional
-	public Collection<Model> update(SessionDto session, Collection<Model> coll) {
 
-		logger.debug("ModelServiceImpl.update starts");        
-		logger.debug("params : [ models: {} ]", coll.size());
-		
-		return modelsDao.saveOrUpdate(coll);	
-	}
-
-	@Override
-	@Transactional
-	public void removeById(SessionDto session, Long id) {
-
-		logger.debug("ModelServiceImpl.remove starts");        
-		logger.debug("params : [ id: {} ]", id);
-		
-		modelsDao.removeById(id);		
-	}
-	
-	@Override
-	@Transactional
-	public void removeById(SessionDto session, Collection<Long> ids) {
-
-		logger.debug("ModelServiceImpl.remove starts");        
-		logger.debug("params : [ ids: {} ]", ids.size());
-		
-		modelsDao.removeByIds(ids);		
-	}
-
-	@Transactional
-	@Override
-	public Model edit(SessionDto session, Model model) {
-	
-		logger.debug("ModelServiceImpl.update starts");        
-		logger.debug("params : [ model: {} ]", model);
-		
-		return modelsDao.saveOrUpdate(model);	
-	}	
-	
-	@Override
-	@Transactional
-	public Model findByLabel(SessionDto session, String label) {
-
-		logger.debug("ModelServiceImpl.findByLabel starts");        
-		logger.debug("params : [ label: {} ]", label);
-
-		return modelsDao.findByLabel(label);
-	}
-	
 	@Override
 	@Transactional
 	public long count(SessionDto session) {
 		return modelsDao.count();
 	}
 
+
 	@Override
 	@Transactional
-	public Model findById(SessionDto session, long id) {
-		logger.debug("ModelServiceImpl.findById starts");        
-		logger.debug("params : [ id: {} ]", id);
-
-		return modelsDao.findById(id);
-	}
-	
-	@Override
-	@Transactional
-	public Collection<Model> findByIds(SessionDto session, List<Long> ids) {
-		logger.debug("ModelServiceImpl.findByIds starts");        
-		logger.debug("params : [ ids: {} ]", ids.size());
-
-		return modelsDao.findByIds(ids);
-	}
-
-	@Transactional
-	@Override
-	public void remove(SessionDto session, Model model) {
-		logger.debug("ModelServiceImpl.remove starts");        
-		logger.debug("params : [ model: {} ]", model);
-
-		modelsDao.remove(model);
-	}
-
-	@Override
 	public ModelFetchResponse fetch(ModelFetchRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+
+		logger.info("ModelServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", request.getFilters());
+		}
+
+		List<ModelDto> modelz = new ArrayList<ModelDto>();
+		List<Model> models = modelsDao.find(request.getFilters());
+
+		for(Model model : models) {
+			modelz.add(ModelConverter.toModelDto(model));
+		}
+
+		ModelFetchResponse response = new ModelFetchResponse();
+		response.setSuccess(true);
+		response.setMessage(""); // TODO add localized msg
+		response.setModels(modelz);
+		return response;
 	}
 
 	@Override
+	@Transactional
 	public ModelEditResponse edit(ModelEditRequest request) {
-		return null;
+
+		logger.info("ModelServiceImpl.edit starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ model : {} ]", request.getModelDto());
+		}
+
+		// TODO add validation
+		ModelDto modelDto = request.getModelDto();
+
+		Model model = modelsDao.findById(modelDto.getId());
+		Producer producer = null;
+
+		if (isNotEmpty(modelDto.getProducer()) && isNotNull(modelDto.getProducer())) {
+			producer = producerDao.findByLabel(modelDto.getProducer());
+		}
+
+		if (isNull(producer) && isNotNull(modelDto.getProducerId())) {
+			producer = producerDao.findById(modelDto.getProducerId());
+		}
+
+		if (isNull(producer) && isNotNull(modelDto.getProducer())) {
+			producer = new Producer();
+			producer.setLabel(modelDto.getProducer());
+
+			producer = producerDao.saveOrUpdate(producer);
+		}
+
+		model.setLabel(modelDto.getLabel());
+		model.setProducer(producer);
+
+		modelsDao.saveOrUpdate(model);
+
+		ModelEditResponse response = new ModelEditResponse();
+		response.setSuccess(true);
+		response.setMessage(""); // TODO : add localized msg
+
+		return response;
 	}
 
+	@Override
+	@Transactional
+	public ModelDeleteResponse delete(ModelDeleteRequest request) {
 
+		logger.info("ModelServiceImpl.delete starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ modelId : {} ]", request.getModelId());
+		}
+
+		modelsDao.removeById(request.getModelId());
+
+		ModelDeleteResponse response = new ModelDeleteResponse();
+		response.setSuccess(true);
+		response.setMessage(""); // TODO add localized msg
+
+		return response;
+	}
 }

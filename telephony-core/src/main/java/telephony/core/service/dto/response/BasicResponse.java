@@ -1,18 +1,22 @@
 package telephony.core.service.dto.response;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * asd.
  */
 public class BasicResponse {
-	
+
+	private Set<Error> errors;
 	private boolean success;
-	private String  message;
+	private String message;
 	
 	/**
 	 * asd.
 	 */
 	public BasicResponse() {
-		
+		this.errors = new HashSet<Error>();
 	}
 	
 	/**
@@ -21,6 +25,7 @@ public class BasicResponse {
 	 * @param msg asd.
 	 */
 	public BasicResponse(boolean isSuccess, String msg) {
+		this();
 		this.success = isSuccess;
 		this.message = msg;
 	}
@@ -57,5 +62,50 @@ public class BasicResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
+	/**
+	 * asd.
+	 * @return ads.
+	 */
+	public Set<Error> getErrors() {
+		return errors;
+	}
+
+	/**
+	 * d.
+	 * @param errors d.
+	 */
+	public void setErrors(Set<Error> errors) {
+		this.errors = errors;
+	}
+
+	/**
+	 * asd.
+	 * @param error a.
+	 */
+	public void addError(Error error) {
+
+		this.errors.add(error);
+	}
+
+	/**
+	 * asd.
+	 * @param fieldId a.
+	 * @param errorMsg a.
+	 */
+	public void addError(String fieldId, String errorMsg) {
+
+		this.addError(new Error(fieldId, errorMsg));
+	}
+
+	/**
+	 * asd.
+	 * @param error d.
+	 */
+	public void removeError(Error error) {
+
+		this.errors.add(error);
+	}
+
+
 }

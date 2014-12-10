@@ -55,8 +55,22 @@ implements ContactsDao {
 		queryStr.append(" select distinct e from Contact e ");
 		queryStr.append(" left outer join e.emails em left outer join e.phonenumbers p left outer join e.faxes f ");
 
-		if(isNotNull(filters.getDetails())) {
+		if (isNotNull(filters.getId())) {
 			queryStr.append(" where ");
+
+			whereAdded = true;
+
+			queryStr.append(" e.id = :id ");
+		}
+
+		if(isNotNull(filters.getDetails())) {
+			if (!whereAdded) {
+				queryStr.append(" where ");
+				whereAdded = true;
+			} else {
+				queryStr.append(" and ");
+			}
+
 			whereAdded = true;
 			queryStr.append(" e.details = :details ");
 		}
@@ -135,6 +149,10 @@ implements ContactsDao {
 
 		if (isNotNull(filters.getEmail())) {
 			query.setParameter("email", filters.getEmail());
+		}
+
+		if (isNotNull(filters.getId())) {
+			query.setParameter("id", filters.getId());
 		}
 
 		List<Contact> contact = (List<Contact>) query.getResultList();

@@ -59,7 +59,7 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		session.setSessionId(sessionId);
 		session.setUsername(username);
 		
-		Contact contact = contactService.findById(null, 1L); 
+//		Contact contact = contactService.findById(null, 1L);
 		SaleComplaint complaint = new SaleComplaint();
 		complaint.setDescription("aaa");
 		complaint.setItemId("123456789000000");
@@ -67,7 +67,7 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		complaint.setStatus(ComplaintStatus.JUST_REPORTED);
 		complaint.setTitle("bbb");
 		complaint.setUniqueHash("qwertyuio12357890");
-		complaint.setContact(contact);
+//		complaint.setContact(contact);
 		long countBefore = complaintService.count(session);
 
 		// when

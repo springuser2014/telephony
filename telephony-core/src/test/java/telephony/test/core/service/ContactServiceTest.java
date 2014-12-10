@@ -13,10 +13,7 @@ import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.query.filter.ContactFilterCriteriaBuilder;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.AddressDto;
-import telephony.core.service.dto.ContactDto;
-import telephony.core.service.dto.ContactEditDto;
-import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.ContactAddRequest;
 import telephony.core.service.dto.request.ContactDeleteRequest;
 import telephony.core.service.dto.request.ContactEditRequest;
@@ -45,8 +42,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	
 	@Inject 
 	private SessionService sessionService;
-	
-		
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void deletingContact()
@@ -146,9 +142,15 @@ public class ContactServiceTest extends BaseCoreTest {
 		contactToEditDto.setId(responseFetch1.getContacts().get(0).getId());
 		contactToEditDto.setDetails(newDetails);
 		contactToEditDto.setLabel(label);
+		contactToEditDto.addEmail("leszek2@gmail.com");
+		contactToEditDto.addFax("1234567890");
+		contactToEditDto.addPhoneNumberToRemove(new PhoneNumberDto("+48", "500600700"));
+
+		contactToEditDto.addEmailToRemove("leszek@gmail.com");
+		contactToEditDto.addPhoneNumberToRemove(new PhoneNumberDto("+48", "600700800"));
+		contactToEditDto.addFaxToRemove("0161 999 8888");
 		
 		ContactEditRequest requestEdit = new ContactEditRequest();
-
 		requestEdit.setSessionId(TestData.USER1_SESSIONID);
 		requestEdit.setUsername(TestData.USER1_NAME);
 		requestEdit.setContactToEdit(contactToEditDto);
@@ -186,7 +188,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchingAllContacts() throws SessionServiceException, ContactServiceException {
-		
+
 		// given
 		ContactFilterCriteria filters = ContactFilterCriteriaBuilder
 				.contactFilterCriteria()
@@ -196,7 +198,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		dto.setFilters(filters);
 		dto.setSessionId(TestData.USER1_SESSIONID);
 		dto.setUsername(TestData.USER1_NAME);
-		
+
 		// when
 		ContactFetchResponse lst = contactService.fetch(dto);
 
@@ -204,5 +206,4 @@ public class ContactServiceTest extends BaseCoreTest {
 		assertTrue("should found all items", lst.isSuccess());
 		assertEquals("should contains all 3 contacts", lst.getContacts().size(), 3);
 	}
-	
 }
