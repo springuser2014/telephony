@@ -42,6 +42,21 @@ public class SessionDto {
     }
 
     /**
+     * a.
+     * @param username d.
+     * @param sessionId d.
+     * @return s.
+     */
+    public static SessionDto create(String username, String sessionId, Date validity) {
+        SessionDto sess = new SessionDto();
+        sess.setSessionId(sessionId);
+        sess.setUsername(username);
+        sess.setValidity(validity);
+
+        return sess;
+    }
+
+    /**
      * asd.
      * @param username asd.
      * @param sessionId asd.

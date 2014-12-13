@@ -116,7 +116,7 @@ implements ModelDao {
 		if (isNotNull(filters.getProducerId())) {
 			q.setParameter("producerId", filters.getProducerId());
 		}
-
+		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
 			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
 			q.setMaxResults(filters.getPerPage());

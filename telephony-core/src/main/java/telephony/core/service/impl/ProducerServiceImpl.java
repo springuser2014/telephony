@@ -1,6 +1,9 @@
 package telephony.core.service.impl;
 
+import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,9 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.service.ProducerService;
+import telephony.core.service.SessionService;
+import telephony.core.service.converter.ProducerConverter;
+import telephony.core.service.dto.ProducerDto;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.ProducerDeleteRequest;
 import telephony.core.service.dto.request.ProducerEditRequest;
@@ -33,98 +39,85 @@ implements ProducerService {
 	@Inject
 	private ProducerDao producerDao;
 
+	@Inject
+	private SessionService sessionService;
+
+	@Transactional
 	@Override
 	public ProducersFetchResponse fetch(ProducersFetchRequest request)
 			throws SessionServiceException, ProducerServiceException {
-		return null;
+
+		logger.info("ProducerServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ] ", request.getFilters());
+		}
+
+		List<Producer> producers = producerDao.fetch(request.getFilters());
+		List<ProducerDto> producerDtos = new ArrayList<ProducerDto>();
+
+		for (Producer producer : producers) {
+			ProducerDto dto = ProducerConverter.toProducerDto(producer);
+			producerDtos.add(dto);
+		}
+
+		ProducersFetchResponse resp = new ProducersFetchResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+		resp.setProducers(producerDtos);
+
+		return resp;
 	}
 
 	@Override
+	@Transactional()
 	public ProducerEditResponse edit(ProducerEditRequest request)
 			throws SessionServiceException, ProducerServiceException {
-		return null;
+
+		logger.info("ProducerServiceImpl.edit starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ editDto : {} ]", request.getProducerDto());
+		}
+
+		sessionService.validate(request.getSessionDto());
+		// TODO add validation
+
+		Producer producer = producerDao.findById(request.getProducerDto().getId());
+		producer.setLabel(request.getProducerDto().getLabel());
+		producerDao.saveOrUpdate(producer);
+		
+		ProducerEditResponse resp = new ProducerEditResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO : add localized msg
+		return resp;
 	}
 
 	@Override
 	public ProducerDeleteResponse delete(ProducerDeleteRequest request)
 			throws SessionServiceException, ProducerServiceException {
-		return null;
-	}
 
-	@Transactional
-	@Override
-	public Producer findByLabel(SessionDto session, String label) {
+		logger.info("ProducerServiceImpl.delete starts");
 
-		logger.debug("ProducerServiceImpl.findByLabel starts");        
-		logger.debug("params : [ label : {} ]", label);
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ producerId : {} ]", request.getProducerId());
+		}
 
-		return producerDao.findByLabel(label);
+		sessionService.validate(request.getSessionDto());
+
+		producerDao.removeById(request.getProducerId());
+
+		ProducerDeleteResponse resp = new ProducerDeleteResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO : add localized msg
+
+		return resp;
 	}
 
 	@Override
 	@Transactional
 	public long count(SessionDto session) {
-		
+
 		return producerDao.count();
 	}
-
-	@Override
-	@Transactional
-	public Producer findById(SessionDto session, long id) {		
-
-		logger.debug("ProducerServiceImpl.findById starts");        
-		logger.debug("params : [ id: {} ]", id);
-
-		return producerDao.findById(id);
-	}
-
-	@Transactional
-	@Override
-	public Collection<Producer> findById(SessionDto session, Collection<Long> ids) {
-
-		logger.debug("ProducerServiceImpl.findById starts");        
-		logger.debug("params : [ size: {} ]", ids.size());
-
-		return producerDao.findByIds(ids);
-	}
-
-	@Override
-	@Transactional
-	public Producer update(SessionDto session, Producer producer) {
-		logger.debug("ProducerServiceImpl.update starts");        
-		logger.debug("params : [ producer : {} ]", producer);
-
-		return producerDao.saveOrUpdate(producer);
-	}
-
-	
-	@Override
-	@Transactional
-	public Collection<Producer> update(SessionDto session, Collection<Producer> coll) {
-		logger.debug("ProducerServiceImpl.update starts");        
-		logger.debug("params : [ size : {} ]", coll.size());
-
-		return producerDao.saveOrUpdate(coll);
-	}
-
-	
-	@Override
-	@Transactional
-	public void removeById(SessionDto session, Long id) {
-		logger.debug("ProducerServiceImpl.update starts");        
-		logger.debug("params : [ id : {} ]", id);
-
-		producerDao.removeById(id);
-	}
-
-	
-	@Override
-	@Transactional
-	public void removeById(SessionDto session, Collection<Long> ids) {
-		logger.debug("ProducerServiceImpl.removeById starts");        
-		logger.debug("params : [ size : {} ]", ids.size());
-
-		producerDao.removeByIds(ids);
-	}
-
 }

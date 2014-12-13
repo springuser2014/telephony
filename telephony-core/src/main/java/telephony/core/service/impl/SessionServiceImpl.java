@@ -9,6 +9,7 @@ import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.core.util.StringGenerator;
 
 import com.google.inject.Inject;
@@ -144,7 +145,7 @@ implements SessionService {
     }
 
     @Transactional
-	public boolean validate(SessionDto sessionToValidate) {
+	public boolean validate(SessionDto sessionToValidate) throws SessionServiceException {
 		
 		logger.debug("SessionServiceImpl.validate starts");
 		
@@ -160,12 +161,12 @@ implements SessionService {
 			if (u.getSessionValidity().before(now) || 
 					u.getSessionValidity().getTime() == now.getTime()) {
 				return false;
-			}			
+			}
 			
 		} catch (Exception e)  {
 			logger.warn("Error occured during session validation", e);
-			return false;
-		} 
+			throw new SessionServiceException(e, "SessionExpired");
+		}
 		
 		return true;
 	}

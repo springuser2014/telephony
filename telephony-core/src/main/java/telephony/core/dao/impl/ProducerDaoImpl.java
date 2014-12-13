@@ -7,6 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Producer;
+import telephony.core.query.filter.ProducerFilterCriteria;
+
+import javax.persistence.Query;
+
+import static telephony.core.assertion.CommonAssertions.*;
 
 /**
  * asd.
@@ -42,5 +47,57 @@ implements ProducerDao {
         } else {
         	return null;
         }
+	}
+
+	@Override
+	public List<Producer> fetch(ProducerFilterCriteria filters) {
+
+		logger.info("ProducersDaoImpl.fetch starts");
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("select p from Producer p ");
+
+		boolean whereAdded = false;
+
+		if (isNotEmpty(filters.getProducerIds())) {
+			sb.append(" where p.id IN (:ids) ");
+			whereAdded = true;
+		}
+
+		if (isNotNull(filters.getLabel())) {
+			if (whereAdded) {
+				sb.append(" and p.label = :label ");
+			} else {
+				sb.append(" where p.label = :label ");
+				whereAdded = true;
+			}
+		}
+
+		Query q = getEntityManager().createQuery(sb.toString());
+
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getPerPage())) {
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotEmpty(filters.getProducerIds())) {
+			q.setParameter("ids", filters.getProducerIds());
+		}
+
+		if (isNotNull(filters.getLabel())) {
+			q.setParameter("label", filters.getLabel());
+		}
+
+		List<Producer> lst = (List<Producer>) q.getResultList();
+
+		if (lst.size() > 0) {
+			return lst;
+		} else {
+			return null;
+		}
 	}
 }

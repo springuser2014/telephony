@@ -5,6 +5,7 @@ import telephony.core.service.dto.ModelEditDto;
 
 public class ModelEditRequest extends AuthRequest {
 
+    // TODO : add collection for batch edition
     ModelDto modelDto;
 
     public ModelDto getModelDto() {

@@ -10,10 +10,20 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import telephony.core.entity.jpa.Producer;
+import telephony.core.query.filter.ProducerFilterCriteria;
+import telephony.core.query.filter.ProducerFilterCriteriaBuilder;
 import telephony.core.service.ProducerService;
+import telephony.core.service.dto.ProducerDto;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ProducerDeleteRequest;
+import telephony.core.service.dto.request.ProducerEditRequest;
+import telephony.core.service.dto.request.ProducersFetchRequest;
+import telephony.core.service.dto.response.ProducersFetchResponse;
+import telephony.core.service.exception.ProducerServiceException;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
 import telephony.test.core.data.TestData;
+import telephony.test.core.data.TestDataBuilder;
 
 import javax.persistence.PersistenceException;
 import java.util.Arrays;
@@ -54,168 +64,133 @@ public class ProducerServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingProducerByLabel() {
+	public void fetchingProducerByLabel() throws ProducerServiceException, SessionServiceException {
 		
 		// given
 		String label = "nokia";
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
+				.withLabel(label)
+				.build();
+
+		ProducersFetchRequest request = new ProducersFetchRequest(session);
+		request.setFilters(filters);
+
 		
 		// when
-		Producer producer = producerService.findByLabel(session, label);
+		ProducersFetchResponse fetchProducers = producerService.fetch(request);
 		
 		// then
-		assertNotNull(producer);
+		assertNotNull(fetchProducers);
+		assertEquals(fetchProducers.getProducers().size(), 1);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingAllProducers() throws ProducerServiceException, SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ProducersFetchRequest request = new ProducersFetchRequest(session);
+
+		// when
+		ProducersFetchResponse fetchProducers = producerService.fetch(request);
+
+		// then
+		assertNotNull(fetchProducers);
+		assertEquals(fetchProducers.getProducers().size(), 4);
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingById() {
+	public void fetchingById() throws ProducerServiceException, SessionServiceException {
 		
 		// given
 		long id = 1;
-		String expected = "nokia";
+		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
+				.withProducerId(id).build();
+
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ProducersFetchRequest request = new ProducersFetchRequest(session);
+		request.setFilters(filters);
 		
 		// when
-		Producer producer = producerService.findById(session, id);
+		ProducersFetchResponse resp = producerService.fetch(request);
 
 		// then
-		assertNotNull(producer);
-		assertEquals(producer.getLabel(), expected);
+		assertNotNull(resp);
+		assertEquals(resp.getProducers().size(), 1);
+		assertEquals(resp.getProducers().get(0).getLabel(), "nokia");
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingByIds() {
+	public void findingByIds() throws ProducerServiceException, SessionServiceException {
 		
 		// given
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
+		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
+				.withProducerIds(ids).build();
+
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ProducersFetchRequest request = new ProducersFetchRequest(session);
+		request.setFilters(filters);
 		
 		// when
-		Collection<Producer> producers = producerService.findById(session, ids);
+		ProducersFetchResponse resp = producerService.fetch(request);
 		
 		// then
-		assertEquals(producers.size(), 2);		
+		assertNotNull(resp);
+		assertEquals(resp.getProducers().size(), 2);
+		assertEquals(resp.getProducers().get(0).getLabel(), "nokia");
+		assertEquals(resp.getProducers().get(1).getLabel(), "apple");
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void update() {
+	public void edit() throws ProducerServiceException, SessionServiceException {
 	
 		// given
 		long id = 1;
 		String newLabel = "newlabel";
-		Producer changedProducer = null;
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
-		// when
-		Producer producer = producerService.findById(session, id);
-		producer.setLabel(newLabel);
-		producerService.update(session, producer);
-		changedProducer = producerService.findByLabel(session, newLabel);
-		
-		// then
-		assertThat(changedProducer).isNotNull();
-		assertThat(changedProducer.getId()).isEqualTo(id);
-	}
+		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
+				.withProducerId(id).build();
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void updateCollection() {
-	
-		// given
-		long id1 = 1, id2 = 2;
-		String newLabel1 = "newlabel1";
-		String newLabel2 = "newlabel2";
-		Producer changedProducer1 = null;
-		Producer changedProducer2 = null;
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID, TestDataBuilder.getFutureDate());
+		ProducersFetchRequest request = new ProducersFetchRequest(session);
+		request.setFilters(filters);
+		ProducersFetchResponse respFetch = producerService.fetch(request);
+
 		// when
-		Producer producer1 = producerService.findById(session, id1);
-		Producer producer2 = producerService.findById(session, id2);
-		
-		producer1.setLabel(newLabel1);
-		producer2.setLabel(newLabel2);
-		Collection<Producer> coll = Arrays.asList(producer1, producer2);
-		producerService.update(session, coll);
-		
-		changedProducer1 = producerService.findByLabel(session, newLabel1);
-		changedProducer2 = producerService.findByLabel(session, newLabel2);
-		
+		ProducerDto dto =  respFetch.getProducers().get(0);
+		dto.setLabel(newLabel);
+		ProducerEditRequest editRequest = new ProducerEditRequest(session);
+		editRequest.setProducerDto(dto);
+
+		producerService.edit(editRequest);
+		respFetch = producerService.fetch(request);
+
 		// then
-		assertNotNull(changedProducer1);
-		assertTrue(changedProducer1.getId() == id1);
-		assertNotNull(changedProducer2);
-		assertTrue(changedProducer2.getId() == id2);
-	
+		assertThat(respFetch).isNotNull();
+		assertThat(respFetch.getProducers().get(0).getLabel()).isEqualTo(newLabel);
 	}
 
 	@Test(expected = PersistenceException.class) 
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById_expectConstraint() {
+	public void delete_expectConstraint() throws ProducerServiceException, SessionServiceException {
 		
 		// given
 		long id = 1;
-		
+		SessionDto dto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID, TestDataBuilder.getFutureDate());
+		ProducerDeleteRequest request = new ProducerDeleteRequest(dto);
+		request.setProducerId(id);
+
 		// when
-		producerService.removeById(null, id);
+		producerService.delete(request);
 		
 		// then
 		// exception should arise
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollectionById() {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id3 = 3, id4 = 4;
-		long countBefore = producerService.count(session);
-		Collection<Long> ids = Arrays.asList(id3, id4);
-		
-		// when
-		producerService.removeById(session, ids);
-		long countAfter = producerService.count(session); 
-		
-		// then
-		assertEquals(countBefore - countAfter, 2);
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById() {
-	
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id = 3;
-		long countBefore = producerService.count(session);
-		
-		// when
-		producerService.removeById(session, id);
-		long countAfter = producerService.count(session); 
-		
-		// then
-		assertEquals(countBefore - countAfter, 1);
-	}
-	
-	@Test(expected = PersistenceException.class)
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollectionById_expectConstraint() {
-
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id1 = 1, id2 = 2;
-		Collection<Long> ids = Arrays.asList(id1, id2);
-		
-		// when
-		producerService.removeById(session, ids);
-		
-		// then
-		// exception should arise	
 	}
 
 }
