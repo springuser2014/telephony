@@ -50,4 +50,15 @@ public class TestDataBuilder {
         int year = c.get(Calendar.YEAR);
         return new DateTime().withDate(year - 1, 11, 11).withTime(0,0,0,0).toDate();
     }
+
+    public static Date getDate(int year, int month, int day, int hour, int minute, int second, int milisec) {
+        return new DateTime()
+            .withDate(year, month, day)
+            .withTime(hour, minute, second, milisec)
+            .toDate();
+    }
+
+    public static Date getDate(int year, int month, int day) {
+        return getDate(year, month, day, 0,0,0,0);
+    }
 }

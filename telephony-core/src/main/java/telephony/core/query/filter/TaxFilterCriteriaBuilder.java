@@ -7,6 +7,9 @@
 
 package telephony.core.query.filter;
 
+import java.util.Collection;
+import java.util.Date;
+
 public class TaxFilterCriteriaBuilder extends
 		TaxFilterCriteriaBuilderBase<TaxFilterCriteriaBuilder> {
 	public static TaxFilterCriteriaBuilder taxFilterCriteria() {
@@ -33,15 +36,30 @@ class TaxFilterCriteriaBuilderBase<GeneratorT extends TaxFilterCriteriaBuilderBa
 		return instance;
 	}
 
+
 	@SuppressWarnings("unchecked")
-	public GeneratorT withTaxDateStart(String aValue) {
+	public GeneratorT withTaxIds(Collection<Long> ids) {
+		instance.getTaxIds().addAll(ids);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withTaxId(Long taxId) {
+		instance.addTaxId(taxId);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withTaxDateStart(Date aValue) {
 		instance.setTaxDateStart(aValue);
 
 		return (GeneratorT) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withTaxDateEnd(String aValue) {
+	public GeneratorT withTaxDateEnd(Date aValue) {
 		instance.setTaxDateEnd(aValue);
 
 		return (GeneratorT) this;

@@ -1,7 +1,9 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +13,20 @@ import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.TaxDao;
 import telephony.core.entity.jpa.Tax;
+import telephony.core.service.SessionService;
 import telephony.core.service.TaxService;
+import telephony.core.service.converter.TaxConverter;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.TaxDto;
 import telephony.core.service.dto.request.TaxAddRequest;
 import telephony.core.service.dto.request.TaxDeleteRequest;
 import telephony.core.service.dto.request.TaxEditRequest;
-import telephony.core.service.dto.request.TaxesFetchRequest;
+import telephony.core.service.dto.request.TaxFetchRequest;
 import telephony.core.service.dto.response.TaxAddResponse;
 import telephony.core.service.dto.response.TaxDeleteResponse;
 import telephony.core.service.dto.response.TaxEditResponse;
 import telephony.core.service.dto.response.TaxFetchResponse;
+import telephony.core.service.exception.SessionServiceException;
 
 /**
  * asd.
@@ -34,6 +40,9 @@ implements TaxService {
 	@Inject
 	private TaxDao taxDao;
 
+	@Inject
+	private SessionService sessionService;
+
 	@Transactional
 	@Override
 	public long count(SessionDto session) {
@@ -41,90 +50,97 @@ implements TaxService {
 	}
 
 	@Override
-	public TaxFetchResponse fetch(TaxesFetchRequest request) {
-		return null;
-	}
-
-	@Override
-	public TaxAddResponse add(TaxAddRequest request) {
-		return null;
-	}
-
-	@Override
-	public TaxEditResponse edit(TaxEditRequest request) {
-		return null;
-	}
-
-	@Override
-	public TaxDeleteResponse delete(TaxDeleteRequest request) {
-		return null;
-	}
-
 	@Transactional
+	public TaxFetchResponse fetch(TaxFetchRequest request) throws SessionServiceException {
+		logger.info("TaxServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ request : {} ]", request);
+		}
+
+		sessionService.validate(request.getSessionDto());
+
+		List<TaxDto> taxez = new ArrayList<TaxDto>();
+		List<Tax> entities = taxDao.fetch(request.getFilters());
+
+		for (Tax entity : entities) {
+			taxez.add(TaxConverter.toDto(entity));
+		}
+
+		TaxFetchResponse resp = new TaxFetchResponse();
+		resp.setMessage(""); // TODO : add localized msg
+		resp.setSuccess(true);
+		resp.setTaxes(taxez);
+
+		return resp;
+	}
+
 	@Override
-	public void add(SessionDto session, Tax tax) {		
-		logger.debug("TaxServiceImpl.addTax starts");
-		
+	@Transactional
+	public TaxAddResponse add(TaxAddRequest request) throws SessionServiceException {
+		logger.info("TaxServiceImpl.add starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ taxDto : {} ]", request.getTaxDto());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		TaxDto dto = request.getTaxDto();
+		Tax entity = TaxConverter.toEntity(dto);
+
+		taxDao.save(entity);
+
+		TaxAddResponse resp = new TaxAddResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO : add localized msg
+
+		return resp;
+	}
+
+	@Override
+	@Transactional
+	public TaxEditResponse edit(TaxEditRequest request) throws SessionServiceException {
+		logger.info("TaxServiceImpl.edit starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ editTax : {} ]", request.getTaxDto());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add vlaidation
+
+		TaxDto dto = request.getTaxDto();
+		Tax tax = taxDao.findById(dto.getId());
+
+		TaxConverter.updateEntity(dto, tax);
+
 		taxDao.saveOrUpdate(tax);
+
+		TaxEditResponse resp = new TaxEditResponse();
+		resp.setMessage(""); // TODO : add localized msg
+		resp.setSuccess(true);
+
+		return resp;
+
 	}
 
+	@Override
 	@Transactional
-	@Override
-	public Tax findById(SessionDto session, Long id) {
-		logger.debug("TaxServiceImpl.findById starts");
-		
-		return taxDao.findById(id);
-	}
+	public TaxDeleteResponse delete(TaxDeleteRequest request) throws SessionServiceException {
+		logger.info("TaxServiceImpl.delete starts");
 
-	@Transactional
-	@Override
-	public Collection<Tax> findInDateRange(SessionDto session, Date from, Date to) {
-		logger.debug("TaxServiceImpl.findInDateRange starts");
-		logger.debug("params : [ from : {}, to : {} ]", from, to);
-		
-		return taxDao.findInDateRange(from, to);
-	}
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ taxId : {} ] ", request.getTaxId());
+		}
 
-	@Transactional
-	@Override
-	public Collection<Tax> update(SessionDto session, Collection<Tax> taxesToUpdate) {
-		logger.debug("TaxServiceImpl.update starts");
-		logger.debug("params : [ numberOfElements : {} ] ", taxesToUpdate.size());
-		
-		return null;
-	}
+		sessionService.validate(request.getSessionDto()); // TODO add validation
 
-	@Transactional
-	@Override
-	public void remove(SessionDto session, Collection<Tax> taxesToDelete) {
-		logger.debug("TaxServiceImpl.delete starts");
-		logger.debug("params : [ numberOfElements : {} ] ", taxesToDelete.size());
-		
-	}
+		taxDao.removeById(request.getTaxId());
 
-	@Override
-	public Tax update(SessionDto session, Tax tax) {
-		logger.debug("TaxServiceImpl.update starts");
-		logger.debug("params : [ tax : {} ] ", tax);
-				
-		return taxDao.saveOrUpdate(tax);
-	}
-
-	@Transactional
-	@Override
-	public void remove(SessionDto session, Tax taxToDelete) {
-		logger.debug("TaxServiceImpl.delete starts");
-		logger.debug("params : [ tax : {} ]", taxToDelete);
-		
-		taxDao.removeById(taxToDelete.getId());
-	}
-
-	@Override
-	public Collection<Tax> findByIds(SessionDto session, Collection<Long> ids) {
-		logger.debug("TaxServiceImpl.findByIds starts");
-		logger.debug("params : [ ids : {} ]", ids);
-
-		return taxDao.findByIds(ids);
+		TaxDeleteResponse resp = new TaxDeleteResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		return resp;
 	}
 
 }

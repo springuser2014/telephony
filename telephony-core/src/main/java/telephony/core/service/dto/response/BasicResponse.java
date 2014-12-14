@@ -3,6 +3,7 @@ package telephony.core.service.dto.response;
 import java.util.HashSet;
 import java.util.Set;
 
+import static telephony.core.assertion.CommonAssertions.*;
 /**
  * asd.
  */
@@ -68,6 +69,7 @@ public class BasicResponse {
 	 * @return ads.
 	 */
 	public Set<Error> getErrors() {
+
 		return errors;
 	}
 
@@ -76,7 +78,9 @@ public class BasicResponse {
 	 * @param errors d.
 	 */
 	public void setErrors(Set<Error> errors) {
-		this.errors = errors;
+		if (isNotNull(errors)) {
+			this.errors = errors;
+		}
 	}
 
 	/**
@@ -107,5 +111,12 @@ public class BasicResponse {
 		this.errors.add(error);
 	}
 
+	/**
+	 * asd.
+	 * @return a.
+	 */
+	public boolean hasErrors() {
 
+		return !errors.isEmpty();
+	}
 }
