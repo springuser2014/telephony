@@ -19,6 +19,7 @@ import telephony.core.service.dto.request.ModelEditRequest;
 import telephony.core.service.dto.request.ModelFetchRequest;
 import telephony.core.service.dto.response.ModelEditResponse;
 import telephony.core.service.dto.response.ModelFetchResponse;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
 import telephony.test.core.data.TestData;
 
@@ -118,7 +119,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void counting() {
+	public void counting() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -171,7 +172,7 @@ public class ModelServiceTest extends BaseCoreTest {
 
 	@Test(expected = PersistenceException.class)
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void remove_expectException() {
+	public void remove_expectException() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);

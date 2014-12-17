@@ -223,12 +223,12 @@ public class UserServiceTest extends BaseCoreTest {
 		StoreFilterCriteria sfc = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
 		
 		User user = userService.findByName(session, username2);
-		List<Store> storesToAdd = storeService.find(session, sfc);
+//		List<Store> storesToAdd = storeService.find(session, sfc);
 		userService.getEntityManager().refresh(user);
 		
 		assertEquals(2, user.getAllowedShops().size());
 		// when
-		userService.addStores(session, user, storesToAdd);
+//		userService.addStores(session, user, storesToAdd);
 		
 		// then
 //		assertEquals(storesToAdd.size(), user.getAllowedShops().size());

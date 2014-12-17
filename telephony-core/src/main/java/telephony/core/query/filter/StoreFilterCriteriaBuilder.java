@@ -7,6 +7,8 @@
 
 package telephony.core.query.filter;
 
+import java.util.Collection;
+
 public class StoreFilterCriteriaBuilder extends
 		StoreFilterCriteriaBuilderBase<StoreFilterCriteriaBuilder> {
 	public static StoreFilterCriteriaBuilder storeFilterCriteria() {
@@ -50,6 +52,20 @@ class StoreFilterCriteriaBuilderBase<GeneratorT extends StoreFilterCriteriaBuild
 	@SuppressWarnings("unchecked")
 	public GeneratorT withMaxNumberOfProducts(Integer aValue) {
 		instance.setMaxNumberOfProducts(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withStoreId(Long storeId) {
+		instance.addStoreId(storeId);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withStoreIds(Collection<Long> storeIds) {
+		instance.getStoreIds().addAll(storeIds);
 
 		return (GeneratorT) this;
 	}

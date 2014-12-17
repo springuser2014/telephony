@@ -19,6 +19,7 @@ import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
+import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.PricingService;
 import telephony.test.core.data.TestData;
@@ -42,7 +43,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void counting() {
+	public void counting() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -326,7 +327,7 @@ public class PricingServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void remove() {
+	public void remove() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -344,7 +345,7 @@ public class PricingServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollection() {
+	public void removeCollection() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -363,7 +364,7 @@ public class PricingServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById() {
+	public void removeById() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -380,7 +381,7 @@ public class PricingServiceTest extends BaseCoreTest {
 		
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollectionById() {
+	public void removeCollectionById() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);

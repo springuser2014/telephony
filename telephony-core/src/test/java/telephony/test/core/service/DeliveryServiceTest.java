@@ -114,7 +114,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
-		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
+//		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
 
 		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count(session);
 		long productsAfter = -1, productsBefore = productService.count(session);		

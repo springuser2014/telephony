@@ -99,7 +99,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;
 		
-		Store store = storeService.findByLabel(null, TestData.STORE1_LABEL);
+//		Store store = storeService.findByLabel(null, TestData.STORE1_LABEL);
 //		Contact contact = contactService.findByLabel(null, TestData.CONTACT1_LABEL);
 		List<String> imeis = new ArrayList<String>();
 		imeis.add("123456789000002");

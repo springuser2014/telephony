@@ -1,6 +1,6 @@
 package telephony.core.service.impl;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.*;
 import telephony.core.entity.jpa.*;
-import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
+import telephony.core.service.converter.StoreConverter;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.StoreDto;
 import telephony.core.service.dto.request.StoreAddRequest;
 import telephony.core.service.dto.request.StoreDeleteRequest;
 import telephony.core.service.dto.request.StoreEditRequest;
@@ -58,131 +59,100 @@ implements StoreService {
     private RolesDao rolesDao;
 
 	@Override
+	@Transactional
 	public StoreFetchResponse fetch(StoreFetchRequest request) throws SessionServiceException, StoreServiceException {
-		return null;
+		logger.info("StoreServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", request.getFilters());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		List<StoreDto> storez = new ArrayList<StoreDto>();
+		List<Store> stores = storesDao.find(request.getFilters());
+
+		for (Store store: stores) {
+			storez.add(StoreConverter.toDto(store));
+		}
+
+		StoreFetchResponse resp = new StoreFetchResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		resp.setStores(storez);
+		return resp;
 	}
 
+	@Transactional
 	@Override
 	public StoreAddResponse add(StoreAddRequest request) throws SessionServiceException, StoreServiceException {
-		return null;
+		logger.info("StoreServiceImpl.add starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ storeDto : {} ]", request.getStoreDto());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		Store entity = StoreConverter.toEntity(request.getStoreDto());
+
+		storesDao.save(entity);
+
+		StoreAddResponse resp = new StoreAddResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+
+		return resp;
 	}
 
+	@Transactional
 	@Override
 	public StoreDeleteResponse delete(StoreDeleteRequest request) throws SessionServiceException, StoreServiceException {
-		return null;
+		logger.info("StoreServiceImpl.delete starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ storeId : {} ]", request.getStoreId());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		storesDao.removeById(request.getStoreId());
+
+		StoreDeleteResponse resp = new StoreDeleteResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+
+		return resp;
 	}
 
+	@Transactional
 	@Override
 	public StoreEditResponse edit(StoreEditRequest request) throws SessionServiceException, StoreServiceException {
-		return null;
-	}
+		logger.info("StoreServiceImpl.edit starts");
 
-	@Override
-    @Transactional
-    public List<Store> find(SessionDto session, StoreFilterCriteria filters) 
-    		throws SessionServiceException {
-
-        logger.info("StoreServiceImpl.fetchAllStores starts");
-		logger.info("params : [session : {} , filters : {} ]", session, filters);
-        
-        sessionService.validate(session);
-
-        // TODO : use fitlers
-        List<Store> stores = storesDao.find(filters);
-
-        logger.debug("found {} elements ", stores.size());
-
-        return stores;
-    }
-
-    @Override
-	@Transactional
-	public long count(SessionDto session) {
-		
-		return storesDao.count();
-	}
-
-	@Override
-	@Transactional
-	public void add(SessionDto session, Store store) 
-			throws SessionServiceException {
-		
-		logger.debug("StoreServiceImpl.add starts");
-		logger.debug("params : [ session : {}, store : {}]", session, store);
-
-        sessionService.validate(session);
-
-		storesDao.save(store);
-	}
-
-	@Override
-	@Transactional
-	public Store findByLabel(SessionDto session, String storelabel) 
-			throws SessionServiceException {
-		
-		logger.debug("StoreServiceImpl.findByLabel starts");
-		logger.debug("params : [ session : {} , store : {} ]", session, storelabel);
-
-		sessionService.validate(session);
-		
-		Store store = storesDao.findByLabel(storelabel);
-		
-		return store;
-	}
-
-	@Transactional
-	@Override
-	public void update(SessionDto session, Store storeToEdit) 
-			throws SessionServiceException {
-		
-		logger.debug("StoreServiceImpl.edit starts");
-		logger.debug("params : [ session : {}, storeToEdit : {}]", session, storeToEdit);
-		
-		sessionService.validate(session);
-		
-		storesDao.saveOrUpdate(storeToEdit);
-	}
-
-	@Transactional
-	@Override
-	public void remove(SessionDto session, Store storeToDelete) 
-			throws SessionServiceException {
-		
-		logger.debug("StoreServiceImpl.delete starts");
-		logger.debug("params : [ session : {}, storeToDelete : {}]", session, storeToDelete);
-		
-		sessionService.validate(session);
-		
-		List<Sale> sales = salesDao.findByStore(storeToDelete);
-		
-		for (Sale sale : sales) { 
-			List<Product> prodSales = productsDao.findBySale(sale);
-			productsDao.remove(prodSales);
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ storeDto : {} ]", request.getStoreDto());
 		}
-				
-		salesDao.remove(sales);
-		
-		List<Product> products = productsDao.findByStore(storeToDelete);
-		productsDao.remove(products);
-		
-		List<Delivery> deliveries = deliveriesDao.findByStore(storeToDelete);
-		deliveriesDao.remove(deliveries);
-		
-		storeToDelete.setUsers(new HashSet<User>());
-		storeToDelete = storesDao.saveOrUpdate(storeToDelete);
-		storesDao.remove(storeToDelete);
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		Store entity = storesDao.findById(request.getStoreDto().getStoreId());
+		StoreConverter.updateEntity(request.getStoreDto(), entity);
+
+		storesDao.save(entity);
+
+		StoreEditResponse resp = new StoreEditResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+
+		return resp;
 	}
 
-	@Transactional
 	@Override
-	public Store findById(SessionDto session, long moveToStoreId) 
-			throws SessionServiceException {
+	@Transactional
+	public long count(SessionDto session) throws SessionServiceException {
+		sessionService.validate(session); // TODO add validation
 
-		logger.debug("findById - params : [ session : {}, storeId : {}", 
-				new Object[] {session, moveToStoreId});
-	
-		sessionService.validate(session);
-		
-		return storesDao.findById(moveToStoreId);
+		return storesDao.count();
 	}
 }

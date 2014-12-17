@@ -2,6 +2,7 @@ package telephony.test.core.service;
 
 import static org.junit.Assert.assertTrue;
 
+import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ComplaintService;
 import telephony.test.core.data.TestData;
@@ -21,14 +22,14 @@ import com.google.inject.Inject;
 //    FlywayDBUnitTestExecutionListener.class 
 //})
 //@FlywayTest
-public class ComplaintServicest extends BaseCoreTest {
+public class ComplaintServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private ComplaintService<ProductComplaint> complaintService;
 
 //	@Test
 //	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testCount() {
+	public void testCount() throws SessionServiceException {
 		
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long count = complaintService.count(session);

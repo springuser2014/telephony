@@ -16,6 +16,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.TestEntityService;
 import telephony.test.core.data.TestData;
@@ -45,7 +46,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testSave() {
+	public void testSave() throws SessionServiceException {
 		
 		// given		
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -107,7 +108,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testCount() {
+	public void testCount() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -168,7 +169,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testRemove() {
+	public void testRemove() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -186,7 +187,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testBatchRemove() {
+	public void testBatchRemove() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -205,7 +206,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testRemovById() {
+	public void testRemovById() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -222,7 +223,7 @@ public class AbstractGenericServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testBatchRemoveByIds() {
+	public void testBatchRemoveByIds() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);

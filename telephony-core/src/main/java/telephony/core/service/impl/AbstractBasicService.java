@@ -11,6 +11,7 @@ import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import telephony.core.service.exception.SessionServiceException;
 
 /**
  * General usage basic service implementation.
@@ -35,5 +36,5 @@ public abstract class AbstractBasicService<T extends BaseEntity> implements Basi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public abstract long count(SessionDto session);
+	public abstract long count(SessionDto session) throws SessionServiceException;
 }

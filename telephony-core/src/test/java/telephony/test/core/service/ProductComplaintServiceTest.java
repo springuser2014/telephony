@@ -241,7 +241,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById() {
+	public void removeById() throws SessionServiceException {
 
 		// when
 		String username = TestData.USER1_NAME;
@@ -265,7 +265,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeByIds() {
+	public void removeByIds() throws SessionServiceException {
 		// when
 		String username = TestData.USER1_NAME;
 		String sessionId = TestData.USER1_SESSIONID;

@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import telephony.core.entity.jpa.BaseEntity;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.exception.SessionServiceException;
 
 /**
  * Basic business services API.
@@ -25,7 +26,7 @@ public interface BasicService<T extends BaseEntity> {
      * @param session TODO
 	 * @return number of stored entities.
 	 */
-    long count(SessionDto session);
+    long count(SessionDto session) throws SessionServiceException;
 	
 	// TODO : add basic methods, for example findById
 }

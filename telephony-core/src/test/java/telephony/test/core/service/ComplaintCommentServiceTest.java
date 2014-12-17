@@ -11,6 +11,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ComplaintCommentService;
 import telephony.core.service.ProductComplaintService;
@@ -44,7 +45,7 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void commentComplaintAsLogged() {
+	public void commentComplaintAsLogged() throws SessionServiceException {
 		
 		// given
 		long complaintId = 1L;
@@ -74,7 +75,7 @@ public class ComplaintCommentServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void commentComplaintAsAnonymousClient() {
+	public void commentComplaintAsAnonymousClient() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);

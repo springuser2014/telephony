@@ -30,6 +30,9 @@ public final class TestData {
 	
 	public static final String STORE1_LABEL = "cieszyn";	
 	public static final String STORE2_LABEL = "raciborz";
+
+	public static final Long STORE1_ID = 1L;
+	public static final Long STORE2_ID = 2L;
 		
 	public static final String CONTACT1_LABEL = "adam";
 	public static final String CONTACT2_LABEL = "leszek";
