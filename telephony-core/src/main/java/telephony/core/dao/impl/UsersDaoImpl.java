@@ -1,16 +1,18 @@
 
 package telephony.core.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.UserFilterCriteria;
+
+import javax.persistence.Query;
+import java.util.Date;
+import java.util.List;
+
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
+import static telephony.core.assertion.CommonAssertions.isNotNull;
 
 /**
  * Users management DAO.
@@ -138,37 +140,109 @@ implements UsersDao {
 		super.remove(userId);			
 	}
 
-	// TODO : delete unused method.
-	/*
-	 * maybe there will be a need to make it public API.
- 	 */
-	private void removeUserRoles(User user) {
-		
-		getEntityManager()
-			.createQuery("delete from UserRole ur where ur.user = ?1")
-			.setParameter(1, user)
-			.executeUpdate();
-		
-		return;
-	}
-
-	// TODO : delete unused method.
-	/*
-	 * maybe there will be a need to make it public API..
-	 */
-	private void removeUserStores(User user) {
-		
-		getEntityManager()
-			.createQuery("delete from UserStore us where us.user = ?1")
-			.setParameter(1, user)
-			.executeUpdate();
-		
-		return;
-	}
-
 	@Override
 	public List<User> find(UserFilterCriteria filters) {
-		
-		return new ArrayList<User>();
+		logger.info("UsersDaoImpl.find starts");
+
+		if(logger.isDebugEnabled()) {
+			logger.debug(" params : [ filters : {} ]", filters);
+		}
+
+		boolean whereAdded = false;
+		StringBuilder sb = new StringBuilder();
+		sb.append(" select u from User u left outer join u.allowedShops s ");
+
+		if (isNotNull(filters.getEmail())) {
+			sb.append(" where u.email = :email ");
+			whereAdded = true;
+		}
+
+		if (isNotNull(filters.getIsActive())) {
+			if (whereAdded) {
+				sb.append(" and u.isActive = :isActive ");
+			} else {
+				sb.append(" where u.isActive = :isActive ");
+				whereAdded = true;
+			}
+		}
+
+		if (isNotNull(filters.getLastLoginFrom())) {
+			if (whereAdded) {
+				sb.append(" and u.sessionValidity >= :lastLoginFrom ");
+			} else {
+				sb.append(" where u.sessionValidity >= :lastLoginFrom ");
+				whereAdded = true;
+			}
+		}
+
+		if (isNotNull(filters.getLastLoginTo())) {
+			if (whereAdded) {
+				sb.append(" and u.sessionValidity <= :lastLoginTo ");
+			} else {
+				sb.append(" where u.sessionValidity <= :lastLoginTo ");
+				whereAdded = true;
+			}
+		}
+
+		if (isNotEmpty(filters.getUserIds())) {
+			if (whereAdded) {
+				sb.append(" and u.id IN (:ids) ");
+			} else {
+				sb.append(" where u.id IN (:ids) ");
+				whereAdded = true;
+			}
+		}
+
+		if (isNotEmpty(filters.getStoreIds())) {
+			if (whereAdded) {
+				sb.append(" and s.id IN (:storeIds) ");
+			} else {
+				sb.append(" where s.id IN (:storeIds) ");
+				whereAdded = true;
+			}
+		}
+
+		Query q = getEntityManager().createQuery(sb.toString());
+
+		if (isNotNull(filters.getEmail())) {
+			q.setParameter("email", filters.getEmail());
+		}
+
+		if (isNotNull(filters.getIsActive())) {
+			q.setParameter("isActive", filters.getIsActive());
+		}
+
+		if (isNotNull(filters.getLastLoginFrom())) {
+			q.setParameter("lastLoginFrom", filters.getLastLoginFrom());
+		}
+
+		if (isNotNull(filters.getLastLoginTo())) {
+			q.setParameter("lastLoginTo", filters.getLastLoginTo());
+		}
+
+		if (isNotEmpty(filters.getUserIds())) {
+			q.setParameter("ids", filters.getUserIds());
+		}
+
+		if (isNotEmpty(filters.getStoreIds())) {
+			q.setParameter("storeIds", filters.getStoreIds());
+		}
+		// TODO extract to common
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getPerPage())) {
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		List<User> users = (List<User>) q.getResultList();
+
+		return users;
 	}
 }
+
+
+
+

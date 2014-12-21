@@ -1,5 +1,6 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,13 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
+import telephony.core.service.converter.RoleConverter;
+import telephony.core.service.dto.RoleDto;
+import telephony.core.service.dto.request.RoleAddRequest;
+import telephony.core.service.dto.request.RoleDeleteRequest;
 import telephony.core.service.dto.request.RoleFetchRequest;
+import telephony.core.service.dto.response.RoleAddResponse;
+import telephony.core.service.dto.response.RoleDeleteResponse;
 import telephony.core.service.dto.response.RoleFetchResponse;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -41,60 +48,76 @@ implements RoleService {
 		return rolesDao.count();
 	}
 
-	@Override
-	public RoleFetchResponse fetch(RoleFetchRequest request) throws SessionServiceException, RoleServiceException {
-		return null;
-	}
-
 	@Transactional
 	@Override
-	public List<Role> find(SessionDto session, RoleFilterCriteria filters) 
-			throws SessionServiceException {
-		
-		logger.debug("RoleServiceImpl.fetchAll starts");
-		logger.debug("params : [ session : {} ]", session);
-		
-		sessionService.validate(session);
-		
-		return rolesDao.find(filters);		
-	}
-
-	@Transactional
-	@Override
-	public void add(SessionDto session, Role newrole)
+	public RoleFetchResponse fetch(RoleFetchRequest request)
 			throws SessionServiceException, RoleServiceException {
-		
-		logger.debug("RoleServiceImpl.add starts");
-		logger.debug("params : [ session : {}, newrole : {} ]", session, newrole);
-		
-		sessionService.validate(session);
-		
-		rolesDao.save(newrole);		
+
+		logger.info("RoleServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", request.getFilters());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		List<RoleDto> rolez = new ArrayList<RoleDto>();
+		List<Role> roles = rolesDao.find(request.getFilters());
+
+		for (Role r : roles) {
+			rolez.add(RoleConverter.toDto(r));
+		}
+
+		RoleFetchResponse resp = new RoleFetchResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		resp.setRoles(rolez);
+
+		return resp;
 	}
 
 	@Transactional
 	@Override
-	public void remove(SessionDto session, Role roleToDelete)
+	public RoleAddResponse add(RoleAddRequest request)
 			throws SessionServiceException, RoleServiceException {
-		
-		logger.debug("RoleServiceImpl.delete starts");
-		logger.debug("params : [ session : {}, roleToDelete : {}]", session, roleToDelete);
-		
-		sessionService.validate(session);
-		
-		rolesDao.remove(roleToDelete);
+
+		logger.info("RoleServiceImpl.add starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ roleDto : {}] ", request.getRoleDto());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		Role entity = RoleConverter.toEntity(request.getRoleDto());
+
+		rolesDao.save(entity);
+
+		RoleAddResponse resp = new RoleAddResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
 	}
 
-	@Override
 	@Transactional
-	public Role findByLabel(SessionDto session, String label) 
-			throws SessionServiceException {
-		logger.debug("RoleServiceImpl.findByLabel starts");
-		logger.debug("params : [ session : {}, label : {}]", session, label);
-		
-		sessionService.validate(session);
-		
-		return rolesDao.findByLabel(label);
+	@Override
+	public RoleDeleteResponse delete(RoleDeleteRequest request)
+			throws SessionServiceException, RoleServiceException {
+
+		logger.info("RoleServiceImpl.delete starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ roleId : {} ]", request.getRoleId());
+		}
+
+		rolesDao.removeById(request.getRoleId());
+
+		RoleDeleteResponse resp = new RoleDeleteResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
 	}
 
 }

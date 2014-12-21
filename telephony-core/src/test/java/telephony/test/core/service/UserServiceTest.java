@@ -1,6 +1,8 @@
 package telephony.test.core.service;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -14,6 +16,15 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.dto.UserDto;
+import telephony.core.service.dto.request.UserAddRequest;
+import telephony.core.service.dto.request.UserDeleteRequest;
+import telephony.core.service.dto.request.UserEditRequest;
+import telephony.core.service.dto.request.UsersFetchRequest;
+import telephony.core.service.dto.response.UserAddResponse;
+import telephony.core.service.dto.response.UserDeleteResponse;
+import telephony.core.service.dto.response.UserEditResponse;
+import telephony.core.service.dto.response.UsersFetchResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.RoleService;
 import telephony.core.service.StoreService;
@@ -26,11 +37,12 @@ import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.*;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.UserServiceException;
-import telephony.core.util.StringGeneratorImpl;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+
+import javax.persistence.PersistenceException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -52,227 +64,96 @@ public class UserServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testUpdate() throws SessionServiceException, UserServiceException {
+	public void update1() throws SessionServiceException, UserServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		User userToEdit = userService.findByName(session, TestData.USER2_NAME);
-		String newSessionId = new StringGeneratorImpl().nextSessionId();	
-		
-		assertTrue("the old sessionId and the new one should be different", 
-				!newSessionId.equals(userToEdit.getSessionId()));
-		
+		UsersFetchRequest fetchReq = new UsersFetchRequest(session);
+		UserFilterCriteria filters = UserFilterCriteriaBuilder.userFilterCriteria()
+				.withEmail(TestData.USER2_NAME).build();
+		fetchReq.setFilters(filters);
+		UsersFetchResponse fetchResp = userService.fetch(fetchReq);
+
 		// when
-		userToEdit.setSessionId(newSessionId);
-		userService.updateUser(session, userToEdit);
+		UserDto dto = fetchResp.getUsers().get(0);
+		dto.setIsActive(false);
+		UserEditRequest editReq = new UserEditRequest(session);
+		editReq.setUserDto(dto);
+		UserEditResponse editResp = userService.edit(editReq);
+		fetchResp = userService.fetch(fetchReq);
 		
 		// then
-		User userAfterEdit = userService.findByName(session, TestData.USER2_NAME);
-		
-		assertTrue("after edit sessionId should be changed",
-				userAfterEdit.getSessionId().equals(newSessionId));
+		assertNotNull(editResp);
+		assertTrue(editResp.isSuccess());
+		assertFalse(fetchResp.getUsers().get(0).getIsActive());
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
-	public void testAddingNewUser() throws SessionServiceException, UserServiceException {
+	public void addingNewUser() throws SessionServiceException, UserServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		UserDto dto = new UserDto();
+		dto.setEmail("any@mail.com");
+		dto.setPassword("somePa$$word");
+		dto.setSessionId(null);
+		dto.setSessionValidity(null);
+		dto.setIsActive(true);
+		UserAddRequest request = new UserAddRequest(session);
+		request.setUserDto(dto);
+		long countBefore = userService.count(session);
 
-		User user = new User();
-		user.setEmail("any@mail.com");
-		user.setPassword("somePa$$word");
-		user.setSessionId(null);
-		user.setSessionValidity(null);
-		user.setIsActive(true);
-		
 		// when
-		userService.addUser(session, user);
-		
-		User addedUser = userService.findByName(session, "any@mail.com");
+		UserAddResponse resp = userService.add(request);
+		long countAfter = userService.count(session);
 		
 		// then
-		assertTrue("Should create and return a new user", addedUser != null);
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
+		assertEquals(countAfter - countBefore, 1);
 	}
 
-	@Test
+	@Test(expected = PersistenceException.class)
 	@FlywayTest(locationsForMigrate = { "db/migration" , "db/data" })
-	public void testDeletingUser() 
+	public void deletingUser1()
 			throws SessionServiceException, UserServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		User user = userService.findByName(session, TestData.USER4_NAME);
-		long countAfter = -1, countBefore = userService.count(session);
+		UserDeleteRequest request = new UserDeleteRequest(session);
+		request.setUserId(TestData.USER1_ID);
 		
 		// when
-		userService.deleteUserById(session, user);
-		countAfter = userService.count(session);
-		
+		UserDeleteResponse deleteResponse = userService.delete(request);
+
 		// then
-		assertTrue("Should decreased number of users ", countBefore - countAfter == 1);
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testFindingAllUsers() 
+	public void findingAllUsers()
 			throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
+		UserFilterCriteria filters = UserFilterCriteriaBuilder.userFilterCriteria().build();
+		UsersFetchRequest fetchRequest = new UsersFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-		List<User> lst = userService.find(session);
+		UsersFetchResponse fetchResponse = userService.fetch(fetchRequest);
 		
 		// then
-//		assertTrue("Should fetch all 4 users", lst.size() == 4);
-		assertTrue(true);
+		assertNotNull(fetchResponse);
+		assertEquals("Should fetch all 4 users", fetchResponse.getUsers().size(), 4);
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testFindingUsersByStoreId() 
-			throws SessionServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long storeId = 2L; // TODO : change 'byStore' not 'byStoreId'
-		
-		// when
-		List<User> lst = userService.findUsersByStoreId(session, storeId);
-		
-		// then
-		assertTrue("asd", lst.size() == 2);
+	public void editingRoles() {
+		assertTrue(true); // TODO
 	}
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testAddingRolesToUser() 
-			throws SessionServiceException, UserServiceException {
-	
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String username2 = TestData.USER2_NAME;
-		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
-				.roleFilterCriteria()
-				.build();
-				
-		User user = userService.findByName(session, username2);
-		List<Role> rolesToAdd = roleService.find(session, filters);
-		userService.getEntityManager().refresh(user);
-		
-		assertEquals(1, user.getRoles().size());
-		// when
-		userService.addRoles(session, user, rolesToAdd);
-		
-
-		// then
-//		assertEquals(rolesToAdd.size(), user.getRoles().size());
-		assertTrue(true);
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testDeleteingRolesFromUser() 
-			throws SessionServiceException, UserServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String username2 = TestData.USER2_NAME;
-				
-		User user = userService.findByName(session, username2);
-		user.setRoles(new HashSet<Role>());
-		
-		// when
-		userService.updateUser(session, user);
-		
-		// then
-		User user2 = userService.findByName(session, username2);
-		assertEquals(user2.getRoles().size(), 0);
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testDeleteingRolesFromUserUsingDeleteRoles() 
-			throws SessionServiceException, UserServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String username2 = TestData.USER2_NAME;
-		User user = userService.findByName(session, username2);
-		Set<Role> rolesToDelete = user.getRoles();
-		
-		// when
-		userService.deleteRoles(session, user, rolesToDelete);
-		
-		// then
-		User user2 = userService.findByName(session, username2);
-		assertEquals(user2.getRoles().size(), 0);
-	}
-	
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testAssigningStoresToUser() 
-			throws SessionServiceException, UserServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String username2 = TestData.USER2_NAME;
-		StoreFilterCriteria sfc = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
-		
-		User user = userService.findByName(session, username2);
-//		List<Store> storesToAdd = storeService.find(session, sfc);
-		userService.getEntityManager().refresh(user);
-		
-		assertEquals(2, user.getAllowedShops().size());
-		// when
-//		userService.addStores(session, user, storesToAdd);
-		
-		// then
-//		assertEquals(storesToAdd.size(), user.getAllowedShops().size());
-		assertTrue(true);
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testRemovingUserFromStore() 
-			throws SessionServiceException, UserServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String username2 = TestData.USER2_NAME;
-		
-		User user = userService.findByName(session, username2);
-		user.setAllowedShops(new HashSet<Store>());
-		
-		// when
-		userService.updateUser(session, user);
-		
-		// then
-		User user2 = userService.findByName(null, username2);
-		assertEquals(0, user2.getAllowedShops().size());	
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void testRemovingUserFromStoreUsingDeleteStores() 
-			throws SessionServiceException, UserServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String username2 = TestData.USER2_NAME;
-		
-		User user = userService.findByName(session, username2);
-		Set<Store> storesToDelete = user.getAllowedShops();
-		
-		// when
-		userService.deleteStores(session, user, storesToDelete);
-		
-		// then
-		User user2 = userService.findByName(session, username2);
-		assertEquals(0, user2.getAllowedShops().size());	
-	}
 
 }

@@ -1,50 +1,28 @@
 package telephony.core.service.dto.request;
 
-import telephony.core.service.dto.SessionBean;
+import telephony.core.service.dto.RoleDto;
+import telephony.core.service.dto.SessionDto;
 
 /**
  * asd.
  */
 public class RoleAddRequest extends AuthRequest {
-	
-	private String label;
-	
-	/**
-	 * asd.
-	 * @param username asd.
-	 * @param sessionId sad.
-	 * @param label ads.
-	 */
-	public RoleAddRequest(String username, String sessionId, String label) {
-		this.setUsername(username);
-		this.setSessionId(sessionId);
-		this.label = label;
-	}
-	
-	/**
-	 * asd.
-	 * @param sessionBean ads.
-	 * @param label asd.
-	 */
-	public RoleAddRequest(SessionBean sessionBean, String label) {
-		this.setUsername(sessionBean.getUsername());
-		this.setSessionId(sessionBean.getSessionId());
-		this.label = label;
+
+	RoleDto roleDto;
+
+	public RoleAddRequest() {
+		super();
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
-	public String getLabel() {
-		return label;
+	public RoleAddRequest(SessionDto sessionDto) {
+		super(sessionDto);
 	}
 
-	/**
-	 * asd.
-	 * @param label asd.
-	 */
-	public void setLabel(String label) {
-		this.label = label;
+	public RoleDto getRoleDto() {
+		return roleDto;
+	}
+
+	public void setRoleDto(RoleDto roleDto) {
+		this.roleDto = roleDto;
 	}
 }

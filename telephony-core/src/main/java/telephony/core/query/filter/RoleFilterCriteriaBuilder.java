@@ -46,4 +46,19 @@ class RoleFilterCriteriaBuilderBase<GeneratorT extends RoleFilterCriteriaBuilder
 
 		return (GeneratorT) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withLabel(String label) {
+		instance.setLabel(label);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withLabelLike(String labelLike) {
+		instance.setLabelLike(labelLike);
+
+		return (GeneratorT) this;
+	}
+
 }

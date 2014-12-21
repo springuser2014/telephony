@@ -1,5 +1,7 @@
 package telephony.test.core.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -11,6 +13,13 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.dto.RoleDto;
+import telephony.core.service.dto.request.RoleAddRequest;
+import telephony.core.service.dto.request.RoleDeleteRequest;
+import telephony.core.service.dto.request.RoleFetchRequest;
+import telephony.core.service.dto.response.RoleAddResponse;
+import telephony.core.service.dto.response.RoleDeleteResponse;
+import telephony.core.service.dto.response.RoleFetchResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.RoleService;
 import telephony.core.service.dto.SessionDto;
@@ -24,6 +33,8 @@ import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+
+import javax.persistence.PersistenceException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -39,7 +50,7 @@ public class RoleServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void fetchAllRoles() throws SessionServiceException {
+	public void fetchingAllRoles() throws SessionServiceException, RoleServiceException {
 
 		// given
 		SessionDto session = SessionDto.create();
@@ -47,54 +58,58 @@ public class RoleServiceTest extends BaseCoreTest {
 		session.setSessionId(TestData.USER1_SESSIONID);
 		
 		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
-										.roleFilterCriteria()
-										.build();
-		
-		// when
-		List<Role> roles = roleService.find(session, filters);
-		
-		// then
-//		assertTrue("should return 3 roles", roles.size() == 3);
-		assertTrue(true);
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void addingRole() throws SessionServiceException, RoleServiceException {
+				.roleFilterCriteria()
+				.build();
+		RoleFetchRequest fetchRequest = new RoleFetchRequest(session);
+		fetchRequest.setFilters(filters);
 
-		// given
-		SessionDto session = SessionDto.create();
-		session.setUsername(TestData.USER1_NAME);
-		session.setSessionId(TestData.USER1_SESSIONID);
-		
-		long countBefore = roleService.count(session);
-		
-		Role newRole = new Role();
-		newRole.setName("nowa rola");
-		
 		// when
-		roleService.add(session, newRole);
-		long countAfter = roleService.count(session);
-		
+		RoleFetchResponse fetchResponse = roleService.fetch(fetchRequest);
+
 		// then
-		assertTrue("should return new role", countAfter - countBefore == 1);
+		assertNotNull(fetchResponse);
+		assertEquals("should return 3 roles", fetchResponse.getRoles().size(), 3);
 	}
-	
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void deletingExisitingRole() throws SessionServiceException, RoleServiceException {
+	public void addRole() throws SessionServiceException, RoleServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Role roleToDelete = roleService.findByLabel(session, "salesman");
+		RoleAddRequest request = new RoleAddRequest(session);
+		RoleDto dto = new RoleDto();
+		dto.setLabel("nowa rola");
+		request.setRoleDto(dto);
 		long countBefore = roleService.count(session);
-		
+
 		// when
-		roleService.remove(session, roleToDelete);
+		RoleAddResponse response = roleService.add(request);
+		long countAfter = roleService.count(session);
+
+		// then
+		assertNotNull(response);
+		assertTrue("should return new role", countAfter - countBefore == 1);
+	}
+
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void deletingExistingRole() throws SessionServiceException, RoleServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		RoleDeleteRequest request = new RoleDeleteRequest(session);
+		request.setRoleId(TestData.ROLE1_ID);
+		long countBefore = roleService.count(session);
+
+		// when
+		RoleDeleteResponse resp = roleService.delete(request);
 		long countAfter = roleService.count(session);
 		
 		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 		assertTrue("should delete given role", countBefore - countAfter == 1);
 	}
 }

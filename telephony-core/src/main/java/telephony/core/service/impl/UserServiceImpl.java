@@ -1,5 +1,6 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,19 +12,16 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.UserFilterCriteria;
+import telephony.core.query.filter.UserFilterCriteriaBuilder;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
+import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.UserAddRequest;
-import telephony.core.service.dto.request.UserEditRequest;
-import telephony.core.service.dto.request.UsersFetchRequest;
-import telephony.core.service.dto.response.UserAddResponse;
-import telephony.core.service.dto.response.UserDeleteResponse;
-import telephony.core.service.dto.response.UserEditResponse;
-import telephony.core.service.dto.response.UsersFetchResponse;
+import telephony.core.service.dto.UserDto;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
-import telephony.core.service.dto.request.UserDeleteRequest;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -44,188 +42,123 @@ implements UserService {
     @Inject
     private SessionService sessionService;
 
-    @Override
-    @Transactional
-    public final List<User> find(SessionDto session)
-    		throws SessionServiceException {
-       
-    	logger.debug("UserServiceImpl.findAllUsers starts");
-        
-        sessionService.validate(session);
-        UserFilterCriteria filters = UserFilterCriteria.create();
-        List<User> res = usersDao.find(filters);
-
-        logger.debug("found {} elements ", res.size());
-
-        return res;
-    } 
-    
 	@Override
 	@Transactional
-	public List<User> findUsersByStoreId(SessionDto session, Long storeId) 
-			throws SessionServiceException {
-		
-		logger.debug("UserServiceImpl.findUsersByStoreId starts");
-		
-		sessionService.validate(session);
-		
-		List<User> res = usersDao.findByStoreId(storeId);
-		
-		logger.debug("found {} elements ", res.size());
-		
-		return res;
+	public UsersFetchResponse fetch(UsersFetchRequest req) throws SessionServiceException {
+		logger.info("UserServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", req.getFilters());
+		}
+
+		sessionService.validate(req.getSessionDto()); // TODO ; add validation
+
+		List<UserDto> userz = new ArrayList<UserDto>();
+		List<User> users = usersDao.find(req.getFilters());
+
+		for (User u : users) {
+			userz.add(UserConverter.toDto(u));
+		}
+
+		UsersFetchResponse resp = new UsersFetchResponse();
+		resp.setMessage(""); // TODO add localized
+		resp.setSuccess(true);
+		resp.setUsers(userz);
+
+		return resp;
 	}
 
-	@Override
 	@Transactional
-	public void deleteUserById(SessionDto session, User user)
+	@Override
+	public UserEditResponse edit(UserEditRequest request)
 			throws SessionServiceException, UserServiceException {
-		
-		logger.debug("UserServiceImpl.deleteUserById starts");
-		
-		sessionService.validate(session);
-			
-		usersDao.remove(user);
-		
-	}
+		logger.info("UserServiceImpl.edit starts");
 
-	@Override
-	@Transactional
-	public void addUser(SessionDto session, User user)
-			throws SessionServiceException, UserServiceException {
-		
-		logger.debug("UserServiceImpl.addUser starts");
-		
-		sessionService.validate(session);
-		
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ userDto : {} ] ", request.getUserDto());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO : add validation
+
+		User user = usersDao.findById(request.getUserDto().getId());
+
+		UserConverter.updateEntity(user, request.getUserDto());
+
 		usersDao.saveOrUpdate(user);
+
+		UserEditResponse resp = new UserEditResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		return resp;
 	}
 
-	@Override
 	@Transactional
-	public void updateUser(SessionDto session, User user)
+	@Override
+	public UserAddResponse add(UserAddRequest request)
 			throws SessionServiceException, UserServiceException {
-		
-		logger.debug("UserServiceImpl.updateUser starts");
-		
-		sessionService.validate(session);
-		
-		usersDao.saveOrUpdate(user);
+
+		logger.info("UserServiceImpl.add starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug(" params : [ userDto : {} ] ", request.getUserDto());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		User user = UserConverter.toEntity(request.getUserDto());
+
+		usersDao.save(user);
+
+		UserAddResponse resp = new UserAddResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		return resp;
 	}
+
+	@Transactional
+	@Override
+	public UserDeleteResponse delete(UserDeleteRequest request)
+			throws SessionServiceException, UserServiceException {
+
+		logger.info("UserServiceImpl.delete starts");
+
+		if(logger.isDebugEnabled()) {
+			logger.debug(" params : [ userId : {} ] ", request.getUserId());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		usersDao.removeById(request.getUserId());
+
+		UserDeleteResponse  resp = new UserDeleteResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
+	}
+
 
 	@Override
 	@Transactional
 	public long count(SessionDto session) {
-		
+
 		return usersDao.count();
 	}
 
-
-	@Override
 	@Transactional
-	public User findByName(SessionDto session, String username) {
-		logger.debug("UserServiceImpl.findByName starts");		
-		logger.debug("params : [ username : {} ]", username);
-
-		
-		return usersDao.findByName(username);
-	}
-
 	@Override
-	@Transactional
-	public void addRoles(SessionDto session, User user, List<Role> rolesToAdd) 
-			throws SessionServiceException {
-		
-		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [username : {}, sessionId : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {session, user, rolesToAdd});
+	public UserEditRoleResponse editRoles(UserEditRoleRequest req) {
 
-		sessionService.validate(session);
-		
-		for (Role r : rolesToAdd) {
-			if (!user.getRoles().contains(r)) {
-				user.getRoles().add(r);
-			}
-		}
-		
-		usersDao.saveOrUpdate(user);
-	}
+		logger.info("UserServiceImpl.editRoles starts");
 
-	@Override
-	@Transactional
-	public void deleteRoles(SessionDto session, User user, Set<Role> rolesToDelete) 
-			throws SessionServiceException {
-		
-		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [ session : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {session, user, rolesToDelete});
+		// TODO Implement
 
-		sessionService.validate(session);
-		
-		user.getRoles().removeAll(rolesToDelete);
-		usersDao.saveOrUpdate(user);
-	}
-
-	@Override
-	@Transactional
-	public void addStores(SessionDto session, User user, List<Store> storesToAdd) 
-			throws SessionServiceException {
-		
-		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [ session : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {session, user, storesToAdd});
-
-		sessionService.validate(session);
-		
-		for (Store s : storesToAdd) {
-			if (!user.getAllowedShops().contains(s)) {
-				user.getAllowedShops().add(s);
-			}
-		}
-		
-		usersDao.saveOrUpdate(user);
-	}
-
-	@Override
-	@Transactional
-	public void deleteStores(SessionDto session, User user, Set<Store> storeToDelete) 
-			throws SessionServiceException {
-		
-		logger.debug("UserServiceImpl.addRoles starts");
-		logger.debug("params : [ session : {}, user : {}, rolesToAdd : {}]", 
-				new Object[] {session, user, storeToDelete});
-
-		sessionService.validate(session);
-		
-		user.getAllowedShops().removeAll(storeToDelete);
-		usersDao.saveOrUpdate(user);
-	}
-
-	@Override
-	public UsersFetchResponse fetch(UsersFetchRequest req) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UserEditResponse updateUser(UserEditRequest req)
-			throws SessionServiceException, UserServiceException {
-		// TODO Auto-generated method stub
+	public UserEditStoreResponse editStores(UserEditStoreRequest request) {
 		return null;
 	}
 
-	@Override
-	public UserAddResponse addUser(UserAddRequest req)
-			throws SessionServiceException, UserServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public UserDeleteResponse deleteUserById(UserDeleteRequest req)
-			throws SessionServiceException, UserServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

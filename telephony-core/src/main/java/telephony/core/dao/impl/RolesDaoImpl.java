@@ -1,17 +1,16 @@
 package telephony.core.dao.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import telephony.core.dao.RolesDao;
+import telephony.core.entity.jpa.Role;
+import telephony.core.query.filter.RoleFilterCriteria;
+
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import telephony.core.dao.RolesDao;
-import telephony.core.entity.jpa.Role;
-import telephony.core.entity.jpa.Store;
-import telephony.core.query.filter.RoleFilterCriteria;
+import static telephony.core.assertion.CommonAssertions.isNotNull;
 
 /**
  * Roles management DAO.
@@ -53,29 +52,37 @@ public class RolesDaoImpl extends GenericDaoImpl<Role> implements RolesDao {
 		StringBuilder sb = new StringBuilder();
 		sb.append("select r from Role r ");
 		sb.append(" where 1=1 ");
-		
-		if (filters.getLabel() != null) {
-			sb.append(" r.label like :label ");
+
+		if (isNotNull(filters.getLabel())) {
+			sb.append(" and r.label = :label ");
+		}
+
+		if (isNotNull(filters.getLabelLike())) {
+			sb.append(" and r.label like :labelLike ");
 		}
 		
 		Query query = getEntityManager() 
 			.createQuery(sb.toString());
 		
-		if (filters.getPage() != null) {
+		if (isNotNull(filters.getPage())) {
 			query.setFirstResult(filters.getPage());
 		}
 		
-		if (filters.getPerPage() != null) {
+		if (isNotNull(filters.getPerPage())) {
 			query.setMaxResults(filters.getPerPage());
 		}
 		
-		if (filters.getLabel() != null) {
-			query.setParameter("label", "%" +filters.getLabel() + "%");
+		if (isNotNull(filters.getLabel())) {
+			query.setParameter("label", filters.getLabel());
+		}
+
+		if (isNotNull(filters.getLabelLike())) {
+			query.setParameter("labelLike", filters.getLabelLike());
 		}
 		
-//		List<Role> role = (List<Role>) query.getResultList();
+		List<Role> roles = (List<Role>) query.getResultList();
 		
-		return new ArrayList<Role>();
+		return roles;
 	}
 	
 }

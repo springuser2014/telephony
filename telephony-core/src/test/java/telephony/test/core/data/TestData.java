@@ -12,10 +12,12 @@ public final class TestData {
 	/**
 	 * Some test data.
 	 */
+	public static final Long USER1_ID = 1L;
 	public static final String USER1_NAME = "user1@gmail.com";
 	public static final String USER1_PASSWORD = "rfaysdhaiufsiuf";	
 	public static final String USER1_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
-	
+
+	public static final Long USER2_ID = 2L;
 	public static final String USER2_NAME = "user2@gmail.com";
 	public static final String USER2_PASSWORD = "sdaysdhaiufsiua";	
 	public static final String USER2_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
@@ -40,7 +42,16 @@ public final class TestData {
 	
 	public static final String SALE1_LABEL = "nowy rok cieszyn";
 	public static final String SALE2_LABEL = "nowy rok raciborz";
-	
+
+	public static final String ROLE1_LABEL = "salesman";
+	public static final String ROLE2_LABEL = "boss";
+	public static final String ROLE3_LABEL = "shop_manager";
+
+	public static final Long ROLE1_ID = 1L;
+	public static final Long ROLE2_ID = 2L;
+	public static final Long ROLE3_ID = 3L;
+
+
 	/**
 	 * Generates random sessionId.
 	 * @return Random sessionId.
@@ -48,6 +59,6 @@ public final class TestData {
 	public static String randomSessionId() {
 		StringGeneratorImpl g = new StringGeneratorImpl();		
 		return g.nextSessionId();
-	}	
-	
+	}
+
 }

@@ -57,47 +57,26 @@ implements ModelDao {
 		logger.info("ModelDaoImpl.find starts");
 
 		StringBuilder query = new StringBuilder();
-		query.append(" select m from Model m inner join m.producer p ");
+		query.append(" select m from Model m inner join m.producer p where 1=1 ");
 
-		boolean whereAdded = false;
 
 		if (isNotNull(filters.getLabel())) {
-			query.append(" where m.label like :modelLabel ");
-			whereAdded = true;
+			query.append(" and  m.label like :modelLabel ");
 		}
 
 		if (isNotNull(filters.getModelIds())) {
-			if (!whereAdded) {
-				query.append(" where m.id in (:modelIds) ");
-				whereAdded = true;
-			} else {
-				query.append(" and m.id in (:modelIds) ");
-			}
+			query.append(" and m.id in (:modelIds) ");
 		}
 
 		if (isNotNull(filters.getProducer())) {
-			if (!whereAdded) {
-				query.append(" where p.label = :producerLabel ");
-				whereAdded = true;
-			} else {
-				query.append(" and p.label = :producerLabel ");
-			}
+			query.append(" and p.label = :producerLabel ");
 		}
 
 		if (isNotNull(filters.getProducerId())) {
-			if (!whereAdded) {
-				query.append(" where p.id = :producerId ");
-				whereAdded = true;
-			} else {
-				query.append(" and p.id = :producerId ");
-			}
+			query.append(" and p.id = :producerId ");
 		}
 
 		String queryStr =  query.toString();
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("queryStr " + queryStr);
-		}
 
 		Query q = getEntityManager().createQuery(queryStr);
 

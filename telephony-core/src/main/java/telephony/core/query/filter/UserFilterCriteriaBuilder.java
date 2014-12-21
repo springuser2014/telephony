@@ -7,6 +7,9 @@
 
 package telephony.core.query.filter;
 
+import java.util.Collection;
+import java.util.Date;
+
 public class UserFilterCriteriaBuilder extends
 		UserFilterCriteriaBuilderBase<UserFilterCriteriaBuilder> {
 	public static UserFilterCriteriaBuilder userFilterCriteria() {
@@ -32,4 +35,65 @@ class UserFilterCriteriaBuilderBase<GeneratorT extends UserFilterCriteriaBuilder
 	protected UserFilterCriteria getInstance() {
 		return instance;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withEmail(String aValue) {
+		instance.setEmail(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withUserId(Long aValue) {
+		instance.addUserId(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withUserIds(Collection<Long> ids) {
+		instance.getUserIds().addAll(ids);
+
+		return (GeneratorT) this;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withIsActive(Boolean isActive) {
+		instance.setIsActive(isActive);
+
+		return (GeneratorT) this;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPage(Integer page) {
+		instance.setPage(page);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPerPage(Integer perPage) {
+		instance.setPerPage(perPage);
+
+		return (GeneratorT) this;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withLastLoginFrom(Date from) {
+		instance.setLastLoginFrom(from);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withLastLoginTo(Date to) {
+		instance.setLastLoginTo(to);
+
+		return (GeneratorT) this;
+	}
+
+
 }
