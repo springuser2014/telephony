@@ -3,9 +3,9 @@ package telephony.core.service.converter;
 import telephony.core.entity.jpa.Product;
 import telephony.core.service.dto.ProductDto;
 
-public final class ProductConverter {
+public class ProductConverter {
 
-    public static ProductDto toProductDto(Product product) {
+    public ProductDto toProductDto(Product product) {
 
         ProductDto p = new ProductDto();
         p.setColor(product.getColor());

@@ -3,9 +3,9 @@ package telephony.core.service.converter;
 import telephony.core.entity.jpa.Model;
 import telephony.core.service.dto.ModelDto;
 
-public final class ModelConverter {
+public class ModelConverter {
 
-    public static ModelDto toModelDto(Model model) {
+    public ModelDto toModelDto(Model model) {
 
         ModelDto dto = new ModelDto();
         dto.setId(model.getId());

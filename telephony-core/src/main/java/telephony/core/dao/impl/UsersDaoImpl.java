@@ -150,7 +150,7 @@ implements UsersDao {
 
 		boolean whereAdded = false;
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select u from User u left outer join u.allowedShops s ");
+		sb.append(" select distinct u from User u left outer join u.allowedShops s ");
 
 		if (isNotNull(filters.getEmail())) {
 			sb.append(" where u.email = :email ");

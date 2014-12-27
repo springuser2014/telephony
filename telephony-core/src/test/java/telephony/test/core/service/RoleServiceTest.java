@@ -53,10 +53,7 @@ public class RoleServiceTest extends BaseCoreTest {
 	public void fetchingAllRoles() throws SessionServiceException, RoleServiceException {
 
 		// given
-		SessionDto session = SessionDto.create();
-		session.setUsername(TestData.USER1_NAME);
-		session.setSessionId(TestData.USER1_SESSIONID);
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
 				.roleFilterCriteria()
 				.build();
@@ -91,7 +88,6 @@ public class RoleServiceTest extends BaseCoreTest {
 		assertNotNull(response);
 		assertTrue("should return new role", countAfter - countBefore == 1);
 	}
-
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })

@@ -53,10 +53,10 @@ public interface ProductService extends BasicService<Product> {
      * asd.
      * @param session TODO
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException
      */
 	@Deprecated
-    List<String> fetchAllModels(SessionDto session) 
+    List<String> fetchAllModels(SessionDto session)
     	throws SessionServiceException;
 
     /**
@@ -67,17 +67,17 @@ public interface ProductService extends BasicService<Product> {
 	@Deprecated
     List<String> fetchAllColors(SessionDto session);
 
-    
+
     /**
      * asd.
      * @param session TODO
      * @param storeId asd.
      * @param productStatus asd.
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException
      */
     @Deprecated
-    List<Product> fetchAllProducts(SessionDto session, Long storeId, ProductStatus productStatus) 
+    List<Product> fetchAllProducts(SessionDto session, Long storeId, ProductStatus productStatus)
     	throws SessionServiceException;
 
 	/**
@@ -88,17 +88,17 @@ public interface ProductService extends BasicService<Product> {
      */
     @Deprecated
     void moveProducts(SessionDto session, Store store, List<Product> products);
-    
+
     /**
      * asd.
      * @param session TODO
      * @param imei asd.
      * @param storeId asd.
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException
      */
     @Deprecated
-    Product fetchProductByImeiAndStoreId(SessionDto session, String imei, Long storeId) 
+    Product fetchProductByImeiAndStoreId(SessionDto session, String imei, Long storeId)
     		throws SessionServiceException;
 
     /**
@@ -106,10 +106,10 @@ public interface ProductService extends BasicService<Product> {
      * @param session TODO
      * @param filters asd.
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException
      */
     @Deprecated
-    List<Product> findByCriteria(SessionDto session, ProductFilterCriteria filters) 
+    List<Product> findByCriteria(SessionDto session, ProductFilterCriteria filters)
     		throws SessionServiceException;
 
     /**
@@ -117,10 +117,10 @@ public interface ProductService extends BasicService<Product> {
      * @param session TODO
      * @param store asd.
      * @return asd.
-     * @throws SessionServiceException 
+     * @throws SessionServiceException
      */
     @Deprecated
-	List<Product> findByStore(SessionDto session, Store store) 
+	List<Product> findByStore(SessionDto session, Store store)
 			throws SessionServiceException;
 
 	/**
@@ -128,10 +128,10 @@ public interface ProductService extends BasicService<Product> {
 	 * @param session TODO
 	 * @param imeis asd.
 	 * @return asd.
-	 * @throws SessionServiceException 
+	 * @throws SessionServiceException
 	 */
 	@Deprecated
-	List<Product> findByIMEIs(SessionDto session, List<String> imeis) 
+	List<Product> findByIMEIs(SessionDto session, List<String> imeis)
 			throws SessionServiceException;
 
 	/**

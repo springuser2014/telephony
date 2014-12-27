@@ -1,5 +1,6 @@
 package telephony.core.entity.jpa;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -61,7 +62,7 @@ public class User extends BaseEntity {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+    private Collection<Role> roles;
 
     /**
      * asd.
@@ -171,7 +172,7 @@ public class User extends BaseEntity {
      * asd.
      * @return asd.
      */
-    public Set<Role> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
@@ -179,7 +180,7 @@ public class User extends BaseEntity {
      * asd.
      * @param roles asd.
      */
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
 

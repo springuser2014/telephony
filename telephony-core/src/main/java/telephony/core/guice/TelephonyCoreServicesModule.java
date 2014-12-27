@@ -48,6 +48,7 @@ import telephony.core.service.SessionService;
 import telephony.core.service.StoreService;
 import telephony.core.service.TaxService;
 import telephony.core.service.UserService;
+import telephony.core.service.converter.*;
 import telephony.core.service.impl.ComplaintCommentServiceImpl;
 import telephony.core.service.impl.ContactServiceImpl;
 import telephony.core.service.impl.DeliveryServiceImpl;
@@ -117,6 +118,16 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(ProductComplaintService.class).to(ProductComplaintServiceImpl.class);
         bind(PricingService.class).to(PricingServiceImpl.class);
         bind(ComplaintCommentService.class).to(ComplaintCommentServiceImpl.class);
+
+        bind(UserConverter.class);
+        bind(DeliveryConverter.class);
+        bind(ProductConverter.class);
+        bind(ModelConverter.class);
+        bind(ProducerConverter.class);
+        bind(TaxConverter.class);
+        bind(ContactConverter.class);
+        bind(RoleConverter.class);
+        bind(StoreConverter.class);
         
         // util classses
 

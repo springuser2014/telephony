@@ -13,6 +13,7 @@ import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.service.converter.RoleConverter;
+import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.RoleDto;
 import telephony.core.service.dto.request.RoleAddRequest;
 import telephony.core.service.dto.request.RoleDeleteRequest;
@@ -40,7 +41,10 @@ implements RoleService {
 	
 	@Inject
 	private SessionService sessionService;
-	
+
+	@Inject
+	private RoleConverter roleConverter;
+
 	@Transactional
 	@Override
 	public long count(SessionDto session) {
@@ -65,7 +69,7 @@ implements RoleService {
 		List<Role> roles = rolesDao.find(request.getFilters());
 
 		for (Role r : roles) {
-			rolez.add(RoleConverter.toDto(r));
+			rolez.add(roleConverter.toDto(r));
 		}
 
 		RoleFetchResponse resp = new RoleFetchResponse();
@@ -89,7 +93,7 @@ implements RoleService {
 
 		sessionService.validate(request.getSessionDto()); // TODO add validation
 
-		Role entity = RoleConverter.toEntity(request.getRoleDto());
+		Role entity = roleConverter.toEntity(request.getRoleDto());
 
 		rolesDao.save(entity);
 

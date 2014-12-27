@@ -34,13 +34,16 @@ public class ProducerServiceImpl
 extends AbstractBasicService<Producer> 
 implements ProducerService {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
-	private ProducerDao producerDao;
+	ProducerDao producerDao;
 
 	@Inject
-	private SessionService sessionService;
+	SessionService sessionService;
+
+	@Inject
+	ProducerConverter producerConverter;
 
 	@Transactional
 	@Override
@@ -57,7 +60,7 @@ implements ProducerService {
 		List<ProducerDto> producerDtos = new ArrayList<ProducerDto>();
 
 		for (Producer producer : producers) {
-			ProducerDto dto = ProducerConverter.toProducerDto(producer);
+			ProducerDto dto = producerConverter.toProducerDto(producer);
 			producerDtos.add(dto);
 		}
 

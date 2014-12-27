@@ -1,12 +1,12 @@
 package telephony.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.core.dao.RolesDao;
+import telephony.core.dao.StoresDao;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
@@ -38,9 +38,18 @@ implements UserService {
     
     @Inject
     private UsersDao usersDao;
+
+	@Inject
+	private RolesDao rolesDao;
+
+	@Inject
+	private StoresDao storesDao;
     
     @Inject
     private SessionService sessionService;
+
+	@Inject
+	private UserConverter userConverter;
 
 	@Override
 	@Transactional
@@ -57,7 +66,7 @@ implements UserService {
 		List<User> users = usersDao.find(req.getFilters());
 
 		for (User u : users) {
-			userz.add(UserConverter.toDto(u));
+			userz.add(userConverter.toDto(u));
 		}
 
 		UsersFetchResponse resp = new UsersFetchResponse();
@@ -82,7 +91,7 @@ implements UserService {
 
 		User user = usersDao.findById(request.getUserDto().getId());
 
-		UserConverter.updateEntity(user, request.getUserDto());
+		userConverter.updateEntity(user, request.getUserDto());
 
 		usersDao.saveOrUpdate(user);
 
@@ -105,7 +114,7 @@ implements UserService {
 
 		sessionService.validate(request.getSessionDto()); // TODO add validation
 
-		User user = UserConverter.toEntity(request.getUserDto());
+		User user = userConverter.toEntity(request.getUserDto());
 
 		usersDao.save(user);
 
@@ -147,18 +156,77 @@ implements UserService {
 
 	@Transactional
 	@Override
-	public UserEditRoleResponse editRoles(UserEditRoleRequest req) {
+	public UserEditRoleResponse editRoles(UserEditRoleRequest request) throws SessionServiceException {
 
 		logger.info("UserServiceImpl.editRoles starts");
 
-		// TODO Implement
+		if (logger.isDebugEnabled()) {
+			logger.debug(" params : [ userId: {} , rolesToAdd : {} , rolesToDelete : {} ] ",
+					new Object[] { request.getUserId(), request.getRolesToAdd(), request.getRolesToDelete() } );
+		}
 
-		return null;
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		User user = usersDao.findById(request.getUserId());
+
+		Collection<Long> rolesToAddIds = request.getRolesToAdd();
+		Collection<Role> rolesToAdd = rolesDao.findByIds(rolesToAddIds);
+
+		Iterator<Role> userRoles = user.getRoles().iterator();
+
+		while(userRoles.hasNext()) {
+			Role r = userRoles.next();
+			if (request.getRolesToDelete().contains(r.getId())) {
+				userRoles.remove();
+			}
+		}
+
+		user.getRoles().addAll(rolesToAdd);
+
+		usersDao.saveOrUpdate(user);
+
+		UserEditRoleResponse resp = new UserEditRoleResponse();
+		resp.setMessage(""); // TODO add validation
+		resp.setSuccess(true);
+		return resp;
 	}
 
+	@Transactional
 	@Override
-	public UserEditStoreResponse editStores(UserEditStoreRequest request) {
-		return null;
+	public UserEditStoreResponse editStores(UserEditStoreRequest request) throws SessionServiceException {
+
+		logger.info("UserServiceImpl.editStores starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug(" params : [ userId : {}, storesToAdd : {}, storesToRemove : {} ] ",
+					new Object[] { request.getUserId(), request.getStoresToAdd(), request.getStoresToDelete() } );
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		User user = usersDao.findById(request.getUserId());
+
+		Collection<Long> storesToAddIds = request.getStoresToAdd();
+		Collection<Store> storesToAdd = storesDao.findByIds(storesToAddIds);
+
+		Iterator<Store> userStores = user.getAllowedShops().iterator();
+
+		while(userStores.hasNext()) {
+			Store r = userStores.next();
+			if (request.getStoresToDelete().contains(r.getId())) {
+				userStores.remove();
+			}
+		}
+
+		user.getAllowedShops().addAll(storesToAdd);
+
+		usersDao.saveOrUpdate(user);
+
+		UserEditStoreResponse resp = new UserEditStoreResponse();
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+
+		return resp;
 	}
 
 }

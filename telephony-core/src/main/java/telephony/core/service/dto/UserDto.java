@@ -1,8 +1,10 @@
 package telephony.core.service.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class UserDto {
+public abstract class UserDto {
 
     Long id;
     String email;
@@ -10,6 +12,8 @@ public class UserDto {
     Boolean isActive;
     String sessionId;
     Date sessionValidity;
+
+    public UserDto() {}
 
     public String getEmail() {
         return email;
@@ -58,4 +62,5 @@ public class UserDto {
     public void setSessionValidity(Date sessionValidity) {
         this.sessionValidity = sessionValidity;
     }
+
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class UserEditRoleRequest extends AuthRequest {
 
+    Long userId;
     List<Long> rolesToAdd;
     List<Long> rolesToDelete;
 
@@ -55,5 +56,21 @@ public class UserEditRoleRequest extends AuthRequest {
 
     public List<Long> getRolesToDelete() {
         return rolesToDelete;
+    }
+
+    public void setRolesToAdd(List<Long> rolesToAdd) {
+        this.rolesToAdd = rolesToAdd;
+    }
+
+    public void setRolesToDelete(List<Long> rolesToDelete) {
+        this.rolesToDelete = rolesToDelete;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

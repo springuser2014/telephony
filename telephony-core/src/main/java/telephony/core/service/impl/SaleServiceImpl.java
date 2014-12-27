@@ -40,21 +40,21 @@ extends AbstractBasicService<Sale>
 implements SaleService {
 
 	@Inject
-	private SalesDao salesDao;
+	SalesDao salesDao;
 
 	@Inject
-	private ProductsDao productsDao;
+	ProductsDao productsDao;
 	
 	@Inject 
-	private ContactsDao contactsDao;
+	ContactsDao contactsDao;
 	
 	@Inject
-	private StoresDao storesDao;
+	StoresDao storesDao;
 	
 	@Inject
-	private SessionService sessionService;
+	SessionService sessionService;
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public SaleFetchResponse fetch(SaleFetchRequest request) throws SessionServiceException, SaleServiceException {

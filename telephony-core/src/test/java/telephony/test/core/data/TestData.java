@@ -21,11 +21,13 @@ public final class TestData {
 	public static final String USER2_NAME = "user2@gmail.com";
 	public static final String USER2_PASSWORD = "sdaysdhaiufsiua";	
 	public static final String USER2_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
-	
+
+	public static final Long USER3_ID = 3L;
 	public static final String USER3_NAME = "boss@gmail.com";
 	public static final String USER3_PASSWORD = "zwaysdhaiufsiko";	
 	public static final String USER3_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
-	
+
+	public static final Long USER4_ID = 4L;
 	public static final String USER4_NAME = "manager@gmail.com";
 	public static final String USER4_PASSWORD = "wertsdhnbgfsiko";
 	public static final String USER4_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
@@ -50,7 +52,6 @@ public final class TestData {
 	public static final Long ROLE1_ID = 1L;
 	public static final Long ROLE2_ID = 2L;
 	public static final Long ROLE3_ID = 3L;
-
 
 	/**
 	 * Generates random sessionId.

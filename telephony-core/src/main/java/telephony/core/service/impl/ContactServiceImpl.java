@@ -10,6 +10,7 @@ import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
+import telephony.core.service.converter.ContactConverter;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.ContactAddResponse;
@@ -24,7 +25,7 @@ import com.google.inject.persist.Transactional;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
-import static telephony.core.service.converter.ContactConverter.contactToDto;
+
 
 /**
  * Contacts management service.
@@ -33,13 +34,16 @@ public class ContactServiceImpl
 extends AbstractBasicService<Contact> 
 implements ContactService {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private ContactsDao contactsDao;
+	ContactsDao contactsDao;
 
 	@Inject
-	private SessionService sessionService;
+	SessionService sessionService;
+
+	@Inject
+	ContactConverter contactConverter;
 
 	@Override
 	@Transactional
@@ -70,7 +74,7 @@ implements ContactService {
 		ContactFetchResponse response = new ContactFetchResponse();
 
 		for(Contact contact : lst) {
-			ContactDto dto = contactToDto(contact);
+			ContactDto dto = contactConverter.contactToDto(contact);
 
 			if (isNotNull(dto)) {
 				response.addContact(dto);

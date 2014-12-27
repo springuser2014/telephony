@@ -1,8 +1,10 @@
 package telephony.core.query.filter;
 
-import java.util.Date;
-
 import telephony.core.entity.jpa.ProductStatus;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * asd.
@@ -10,6 +12,7 @@ import telephony.core.entity.jpa.ProductStatus;
 public class ProductFilterCriteria extends
 		AbstractFilterCriteria<ProductFilterCriteria> {
 
+	private List<Long> productIds;
 	private String imei;
 	private String producer;
 	private String model;
@@ -18,6 +21,28 @@ public class ProductFilterCriteria extends
 	private Date deliveryDateStart;
 	private Date deliveryDateEnd;
 	private ProductStatus status;
+
+	public ProductFilterCriteria() {
+		this.productIds = new ArrayList<Long>();
+	}
+
+	public List<Long> getProductIds() {
+		return this.productIds;
+	}
+
+	public void addProductId(Long productId) {
+
+		if (!productIds.contains(productId)) {
+			productIds.add(productId);
+		}
+	}
+
+	public void removeProductId(Long productId) {
+
+		if (productIds.contains(productId)) {
+			productIds.remove(productId);
+		}
+	}
 
 	public String getImei() {
 		return imei;

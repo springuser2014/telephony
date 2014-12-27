@@ -1,11 +1,12 @@
 package telephony.core.service.dto.request;
 
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.UserAddDto;
 import telephony.core.service.dto.UserDto;
 
 public class UserAddRequest extends AuthRequest {
 
-    UserDto userDto;
+    UserAddDto userDto;
 
     public UserAddRequest() {
         super();
@@ -15,11 +16,11 @@ public class UserAddRequest extends AuthRequest {
         super(session);
     }
 
-    public UserDto getUserDto() {
+    public UserAddDto getUserDto() {
         return userDto;
     }
 
-    public void setUserDto(UserDto userDto) {
+    public void setUserDto(UserAddDto userDto) {
         this.userDto = userDto;
     }
 }

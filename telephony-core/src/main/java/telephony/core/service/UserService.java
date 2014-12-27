@@ -58,13 +58,15 @@ public interface UserService extends BasicService<User> {
 	 * @param req d.
 	 * @return d.
 	 */
-	UserEditRoleResponse editRoles(UserEditRoleRequest req);
+	UserEditRoleResponse editRoles(UserEditRoleRequest req)
+			throws SessionServiceException;
 
 	/**
 	 * ad.
 	 * @param request a.
 	 * @return a.
 	 */
-	UserEditStoreResponse editStores(UserEditStoreRequest request);
+	UserEditStoreResponse editStores(UserEditStoreRequest request)
+			throws SessionServiceException;
 
 }

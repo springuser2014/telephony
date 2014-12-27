@@ -37,10 +37,13 @@ extends AbstractBasicService<Model>
 implements ModelService {
 	
     @Inject
-    private ModelDao modelsDao;
+    ModelDao modelsDao;
 
 	@Inject
-	private ProducerDao producerDao;
+	ProducerDao producerDao;
+
+	@Inject
+	ModelConverter modelConverter;
 
 	private Logger logger = LoggerFactory.getLogger(getClass());	
 
@@ -65,7 +68,7 @@ implements ModelService {
 		List<Model> models = modelsDao.find(request.getFilters());
 
 		for(Model model : models) {
-			modelz.add(ModelConverter.toModelDto(model));
+			modelz.add(modelConverter.toModelDto(model));
 		}
 
 		ModelFetchResponse response = new ModelFetchResponse();

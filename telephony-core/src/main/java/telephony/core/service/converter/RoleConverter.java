@@ -3,9 +3,9 @@ package telephony.core.service.converter;
 import telephony.core.entity.jpa.Role;
 import telephony.core.service.dto.RoleDto;
 
-public final class RoleConverter {
+public class RoleConverter {
 
-    public static RoleDto toDto(Role r) {
+    public RoleDto toDto(Role r) {
         RoleDto dto = new RoleDto();
 
         dto.setId(r.getId());
@@ -14,7 +14,7 @@ public final class RoleConverter {
         return dto;
     }
 
-    public static Role toEntity(RoleDto roleDto) {
+    public Role toEntity(RoleDto roleDto) {
         Role r = new Role();
 
         r.setName(roleDto.getLabel());

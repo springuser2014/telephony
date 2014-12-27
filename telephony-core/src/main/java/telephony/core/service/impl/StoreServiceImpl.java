@@ -38,25 +38,28 @@ implements StoreService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Inject
-    private ProductsDao productsDao;
+    ProductsDao productsDao;
 
     @Inject
-    private DeliveriesDao deliveriesDao;
+    DeliveriesDao deliveriesDao;
     
     @Inject
-    private StoresDao storesDao;
+    StoresDao storesDao;
     
     @Inject
-    private SessionService sessionService;
+    SessionService sessionService;
 
     @Inject
-	private SalesDao salesDao;
+	SalesDao salesDao;
  
     @Inject 
-    private UsersDao usersDao;
+    UsersDao usersDao;
     
     @Inject
-    private RolesDao rolesDao;
+    RolesDao rolesDao;
+
+	@Inject
+	StoreConverter storeConverter;
 
 	@Override
 	@Transactional
@@ -73,7 +76,7 @@ implements StoreService {
 		List<Store> stores = storesDao.find(request.getFilters());
 
 		for (Store store: stores) {
-			storez.add(StoreConverter.toDto(store));
+			storez.add(storeConverter.toDto(store));
 		}
 
 		StoreFetchResponse resp = new StoreFetchResponse();
@@ -94,7 +97,7 @@ implements StoreService {
 
 		sessionService.validate(request.getSessionDto()); // TODO add validation
 
-		Store entity = StoreConverter.toEntity(request.getStoreDto());
+		Store entity = storeConverter.toEntity(request.getStoreDto());
 
 		storesDao.save(entity);
 
@@ -137,7 +140,7 @@ implements StoreService {
 		sessionService.validate(request.getSessionDto()); // TODO add validation
 
 		Store entity = storesDao.findById(request.getStoreDto().getStoreId());
-		StoreConverter.updateEntity(request.getStoreDto(), entity);
+		storeConverter.updateEntity(request.getStoreDto(), entity);
 
 		storesDao.save(entity);
 

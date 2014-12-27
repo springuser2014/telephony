@@ -35,13 +35,16 @@ public class TaxServiceImpl
 extends AbstractBasicService<Tax>
 implements TaxService {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private TaxDao taxDao;
+	TaxDao taxDao;
 
 	@Inject
-	private SessionService sessionService;
+	SessionService sessionService;
+
+	@Inject
+	TaxConverter taxConverter;
 
 	@Transactional
 	@Override
@@ -64,7 +67,7 @@ implements TaxService {
 		List<Tax> entities = taxDao.fetch(request.getFilters());
 
 		for (Tax entity : entities) {
-			taxez.add(TaxConverter.toDto(entity));
+			taxez.add(taxConverter.toDto(entity));
 		}
 
 		TaxFetchResponse resp = new TaxFetchResponse();
@@ -87,7 +90,7 @@ implements TaxService {
 		sessionService.validate(request.getSessionDto()); // TODO add validation
 
 		TaxDto dto = request.getTaxDto();
-		Tax entity = TaxConverter.toEntity(dto);
+		Tax entity = taxConverter.toEntity(dto);
 
 		taxDao.save(entity);
 
@@ -112,7 +115,7 @@ implements TaxService {
 		TaxDto dto = request.getTaxDto();
 		Tax tax = taxDao.findById(dto.getId());
 
-		TaxConverter.updateEntity(dto, tax);
+		taxConverter.updateEntity(dto, tax);
 
 		taxDao.saveOrUpdate(tax);
 

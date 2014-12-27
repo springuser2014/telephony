@@ -7,9 +7,9 @@ import telephony.core.service.dto.PhoneNumberDto;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 
-public final class ContactConverter {
+public class ContactConverter {
 
-    public static ContactDto contactToDto(Contact contact) {
+    public ContactDto contactToDto(Contact contact) {
 
         ContactDto dto = new ContactDto();
         dto.setId(contact.getId());

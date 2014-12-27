@@ -25,6 +25,8 @@ import telephony.core.service.dto.SessionDto;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
+import static telephony.core.assertion.CommonAssertions.isNull;
+
 
 /**
  * Deliveries management service.
@@ -33,39 +35,42 @@ public class DeliveryServiceImpl
 extends AbstractBasicService<Delivery> 
 implements DeliveryService {
 	
-	private final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+	final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	
 	@Inject
-	private PricingsDao pricingsDao;
+	PricingsDao pricingsDao;
 	
     @Inject
-    private DeliveriesDao deliveriesDao;
+    DeliveriesDao deliveriesDao;
     
     @Inject
-    private SessionService sessionService;
+    SessionService sessionService;
     
     @Inject
-    private StoresDao storesDao;
+    StoresDao storesDao;
     
     @Inject
-    private ContactsDao contactsDao;
+    ContactsDao contactsDao;
 
 	@Inject
-	private ProductsDao productsDao;
+	ProductsDao productsDao;
 	
 	@Inject
-	private ProductTaxDao productTaxDao;
+	ProductTaxDao productTaxDao;
 	
 	@Inject
-	private ModelDao modelsDao;
+	ModelDao modelsDao;
 	
 	@Inject
-	private ProducerDao producerDao;
+	ProducerDao producerDao;
 	
 	@Inject
-	private TaxDao taxDao;
+	TaxDao taxDao;
+
+	@Inject
+	DeliveryConverter deliveryConverter;
 	
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 		@Transactional
 		@Override
@@ -138,7 +143,7 @@ implements DeliveryService {
         List<DeliveryDto> coll = new ArrayList<DeliveryDto>();
         
         for(Delivery d : res) {
-        	coll.add(DeliveryConverter.toDeliveryDto(d));
+        	coll.add(deliveryConverter.toDeliveryDto(d));
         }
         
         resp.setDeliveries(coll);
@@ -311,7 +316,7 @@ implements DeliveryService {
 		sessionService.validate(session);		
 
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
-		DeliveryDto bean = DeliveryConverter.toDeliveryDto(delivery);
+		DeliveryDto bean = deliveryConverter.toDeliveryDto(delivery);
 		DeliveryDetailsResponse resp = new DeliveryDetailsResponse();
 		resp.setDelivery(bean);
 		
@@ -559,7 +564,7 @@ implements DeliveryService {
 		
 		Delivery deliveryToDelete = deliveriesDao.findById(req.getDeliveryId());
 		
-		if (deliveryToDelete == null) {
+		if (isNull(deliveryToDelete)) {
 			throw new DeliveryServiceException();
 		}
 		

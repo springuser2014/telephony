@@ -7,6 +7,7 @@ import java.util.List;
 
 public class UserEditStoreRequest extends AuthRequest {
 
+    Long userId;
     List<Long> storesToAdd;
     List<Long> storesToDelete;
 
@@ -54,4 +55,19 @@ public class UserEditStoreRequest extends AuthRequest {
         }
     }
 
+    public void setStoresToAdd(List<Long> storesToAdd) {
+        this.storesToAdd = storesToAdd;
+    }
+
+    public void setStoresToDelete(List<Long> storesToDelete) {
+        this.storesToDelete = storesToDelete;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }
