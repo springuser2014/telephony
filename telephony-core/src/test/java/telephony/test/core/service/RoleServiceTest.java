@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,15 +24,12 @@ import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.RoleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
-import telephony.core.entity.jpa.Role;
 import telephony.core.query.filter.RoleFilterCriteria;
 import telephony.core.query.filter.RoleFilterCriteriaBuilder;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
-
-import javax.persistence.PersistenceException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -96,7 +91,7 @@ public class RoleServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		RoleDeleteRequest request = new RoleDeleteRequest(session);
-		request.setRoleId(TestData.ROLE1_ID);
+		request.setRoleId(TestData.ROLE_SALESMAN_ID);
 		long countBefore = roleService.count(session);
 
 		// when

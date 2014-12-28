@@ -85,7 +85,7 @@ public class UserServiceTest extends BaseCoreTest {
 		dto.setSessionId(null);
 		dto.setSessionValidity(null);
 		dto.setIsActive(true);
-		dto.addRole(TestData.ROLE1_ID);
+		dto.addRole(TestData.ROLE_SALESMAN_ID);
 		UserAddRequest request = new UserAddRequest(session);
 		request.setUserDto(dto);
 		long countBefore = userService.count(session);
@@ -146,9 +146,9 @@ public class UserServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		UserEditRoleRequest editRoleRequest = new UserEditRoleRequest(session);
-		editRoleRequest.addRoleToAdd(TestData.ROLE2_ID);
-		editRoleRequest.addRoleToAdd(TestData.ROLE3_ID);
-		editRoleRequest.addRoleToDelete(TestData.ROLE1_ID);
+		editRoleRequest.addRoleToAdd(TestData.ROLE_BOSS_ID);
+		editRoleRequest.addRoleToAdd(TestData.ROLE_SHOP_MANAGER_ID);
+		editRoleRequest.addRoleToDelete(TestData.ROLE_SALESMAN_ID);
 		editRoleRequest.setUserId(TestData.USER1_ID);
 
 		// when
@@ -168,7 +168,7 @@ public class UserServiceTest extends BaseCoreTest {
 		UserEditStoreRequest editStoreRequest = new UserEditStoreRequest(session);
 		editStoreRequest.addStoreToAdd(TestData.STORE2_ID);
 		editStoreRequest.addStoreToDelete(TestData.STORE1_ID);
-		editStoreRequest.setUserId(TestData.USER3_ID);
+		editStoreRequest.setUserId(TestData.USER_BOSS_ID);
 
 		// when
 		UserEditStoreResponse editStoreResponse = userService.editStores(editStoreRequest);

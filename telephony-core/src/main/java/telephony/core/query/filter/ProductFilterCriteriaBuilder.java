@@ -7,6 +7,7 @@
 
 package telephony.core.query.filter;
 
+import java.util.Collection;
 import java.util.Date;
 import telephony.core.entity.jpa.ProductStatus;
 
@@ -34,6 +35,20 @@ class ProductFilterCriteriaBuilderBase<GeneratorT extends ProductFilterCriteriaB
 
 	protected ProductFilterCriteria getInstance() {
 		return instance;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withProductsIds(Collection<Long> productsIds) {
+		instance.getProductIds().addAll(productsIds);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withProductId(Long productId) {
+		instance.addProductId(productId);
+
+		return (GeneratorT) this;
 	}
 
 	@SuppressWarnings("unchecked")

@@ -57,7 +57,7 @@ public class ProductResourceTest extends BaseWSTest {
 		ProductFetchRequest req = new ProductFetchRequest();
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
-		req.setFiltersCriteria(filters);
+		req.setFilters(filters);
 		
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		

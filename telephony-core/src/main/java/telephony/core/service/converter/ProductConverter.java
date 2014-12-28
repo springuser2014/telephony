@@ -2,6 +2,7 @@ package telephony.core.service.converter;
 
 import telephony.core.entity.jpa.Product;
 import telephony.core.service.dto.ProductDto;
+import telephony.core.service.dto.ProductSearchDto;
 
 public class ProductConverter {
 
@@ -27,5 +28,28 @@ public class ProductConverter {
         }
 
         return p;
+    }
+
+    public ProductSearchDto toProductSearchDto(Product p) {
+        ProductSearchDto b = new ProductSearchDto();
+
+        b.setColor(p.getColor());
+        b.setDeliveryId(p.getDelivery().getId());
+        b.setImei(p.getImei());
+        b.setPriceIn(p.getPriceIn());
+        b.setPrice(p.getCurrentPricing().getRate());
+        b.setTax(p.getCurrentTax().getTax().getRate());
+        b.setModel(p.getModel().getLabel());
+        b.setProducer(p.getModel().getProducer().getLabel());
+
+        if (p.getSale() != null) {
+            b.setSaleId(p.getSale().getId());
+        } else {
+            b.setSaleId(null);
+        }
+
+        b.setId(p.getId());
+
+        return b;
     }
 }

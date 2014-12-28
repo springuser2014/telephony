@@ -45,7 +45,7 @@ implements ModelService {
 	@Inject
 	ModelConverter modelConverter;
 
-	private Logger logger = LoggerFactory.getLogger(getClass());	
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	@Transactional
@@ -88,6 +88,7 @@ implements ModelService {
 			logger.debug("params : [ model : {} ]", request.getModelDto());
 		}
 
+		// TODO move to converter
 		// TODO add validation
 		ModelDto modelDto = request.getModelDto();
 

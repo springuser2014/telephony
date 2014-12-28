@@ -8,7 +8,7 @@ public class ProducerConverter {
     public ProducerDto toProducerDto(Producer producer) {
         ProducerDto dto = new ProducerDto();
         dto.setLabel(producer.getLabel());
-        dto.setId(producer.getId());
+        dto.setProducerId(producer.getId());
 
         return dto;
     }

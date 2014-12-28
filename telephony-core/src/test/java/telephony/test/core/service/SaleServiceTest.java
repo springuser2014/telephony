@@ -106,7 +106,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		imeis.add("123456789000005");
 		imeis.add("123456789000006");
 		
-		List<Product> products =  productService.findByIMEIs(null, imeis);
+//		List<Product> products =  productService.findByIMEIs(null, imeis);
 		
 		Sale sale = new Sale();
 		sale.setLabel("nowa dostawa");

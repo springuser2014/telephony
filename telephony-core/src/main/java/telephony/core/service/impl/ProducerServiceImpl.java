@@ -1,8 +1,6 @@
 package telephony.core.service.impl;
 
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -86,7 +84,7 @@ implements ProducerService {
 		sessionService.validate(request.getSessionDto());
 		// TODO add validation
 
-		Producer producer = producerDao.findById(request.getProducerDto().getId());
+		Producer producer = producerDao.findById(request.getProducerDto().getProducerId());
 		producer.setLabel(request.getProducerDto().getLabel());
 		producerDao.saveOrUpdate(producer);
 		

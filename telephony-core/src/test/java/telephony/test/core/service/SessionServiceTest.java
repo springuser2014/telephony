@@ -48,8 +48,8 @@ public class SessionServiceTest extends BaseCoreTest {
 	public void sessionInitialization() throws SessionServiceException {
 		
 		// given 
-		String username = TestData.USER3_NAME;
-		String password = TestData.USER3_PASSWORD;
+		String username = TestData.USER_BOSS_NAME;
+		String password = TestData.USER_BOSS_PASSWORD;
 		
 		// when
 		sessionService.setSessionValidity(30 * 60 * 1000);
@@ -68,8 +68,8 @@ public class SessionServiceTest extends BaseCoreTest {
 	public void sessionRefreshing() throws SessionServiceException {
 
 		// given 
-		String username = TestData.USER4_NAME;
-		String password = TestData.USER4_PASSWORD;
+		String username = TestData.USER_MANAGER_NAME;
+		String password = TestData.USER_MANAGER_PASSWORD;
 		sessionService.setSessionValidity(30 * 60 * 1000);
 		SessionDto sessionToRefresh = sessionService.init(username, password);		
 		

@@ -25,7 +25,6 @@ import telephony.core.service.RoleService;
 import telephony.core.service.StoreService;
 import telephony.core.service.UserService;
 import telephony.test.core.data.TestData;
-import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.StoreFilterCriteria;
 import telephony.core.query.filter.StoreFilterCriteriaBuilder;
 import telephony.core.service.dto.SessionDto;
@@ -137,7 +136,7 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		StoreFilterCriteria filters = StoreFilterCriteriaBuilder.storeFilterCriteria()
-				.withLabel(TestData.STORE2_LABEL).build();
+				.withLabel(TestData.STORE_RACIBORZ_LABEL).build();
 
 		StoreFetchRequest request = new StoreFetchRequest(session);
 		request.setFilters(filters);

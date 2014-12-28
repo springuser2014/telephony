@@ -1,18 +1,22 @@
 package telephony.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.ProductsDao;
+import telephony.core.entity.jpa.Model;
+import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.ProductStatus;
-import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteriaBuilder;
+import telephony.core.service.converter.ModelConverter;
+import telephony.core.service.converter.ProducerConverter;
+import telephony.core.service.converter.ProductConverter;
+import telephony.core.service.dto.ModelDto;
+import telephony.core.service.dto.ProducerDto;
 import telephony.core.service.dto.request.ProductFetchRequest;
 import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -31,84 +35,34 @@ public class ProductServiceImpl
 extends AbstractBasicService<Product> 
 implements ProductService {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private ProductsDao productsDao;
+	ProductsDao productsDao;
 	
 	@Inject
-	private SessionService sessionService;
+	SessionService sessionService;
+
+	@Inject
+	ProductConverter productConverter;
+
+	@Inject
+	ProducerConverter producerConverter;
+
+	@Inject
+	ModelConverter modelConverter;
 
 	@Override
 	@Transactional
-	public List<String> fetchAllImeiInUse(SessionDto session)
-			throws SessionServiceException {
-
-		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
-		
-		sessionService.validate(session);
-
-		List<String> res = productsDao.fetchImeisList();
-
-		logger.info("found {} elements", res.size());
-
-		return res;
-	}
-
-	@Override
-	@Transactional
-	public List<String> fetchAllProducersInUse(SessionDto session) {
-
-		logger.info("ProductServiceImpl.fetchAllProducers starts");
-
-		List<String> res = new ArrayList<String>();
-		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
-		List<Product> products = productsDao.findByCriteria(filters);
-
-		for (Product p : products) {
-			if (!res.contains(p.getModel().getProducer().getLabel())) {
-				res.add(p.getModel().getProducer().getLabel());
-			}
-		}
-
-		logger.info("found {} elements ", res.size());
-
-		return res;
-	}
-
-	@Override
-	@Transactional
-	public List<String> fetchAllModels(SessionDto session) 
-			throws SessionServiceException {
-
-		logger.info("ProductServiceImpl.fetchAllModels starts");
-		
-		sessionService.validate(session);
-
-		List<String> res = new ArrayList<String>();
-		
-		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
-		List<Product> products = productsDao.findByCriteria(filters);
-
-		for (Product p : products) {
-			if (!res.contains(p.getModel().getLabel())) {
-				res.add(p.getModel().getLabel());
-			}
-		}
-
-		logger.info("found {} elements ", res.size());
-
-		return res;
-	}
-
-	@Override
-	@Transactional
-	public List<String> fetchAllColors(SessionDto session) {
+	public List<String> fetchAllColors(SessionDto session) throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchAllModels starts");
 
+		sessionService.validate(session);
+
 		List<String> res = new ArrayList<String>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
+		// TODO : prepare separate JPQL for this case
 		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
@@ -117,264 +71,108 @@ implements ProductService {
 			}
 		}
 
-		logger.info("found {} elements ", res.size());
+		return res;
+	}
+
+	@Transactional
+	@Override
+	public List<ProducerDto> fetchAllProducersInUse(SessionDto session) throws SessionServiceException {
+
+		logger.info("ProductServiceImpl.fetchAllProducersInUse starts");
+
+		sessionService.validate(session);
+
+		List<ProducerDto> res = new ArrayList<ProducerDto>();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
+		// TODO : prepare separate JPQL for this case
+		List<Product> products = productsDao.findByCriteria(filters);
+
+		for (Product p : products) {
+			Producer pr = p.getModel().getProducer();
+
+			ProducerDto dto = producerConverter.toProducerDto(pr);
+
+			if (!res.contains(dto)) {
+				res.add(dto);
+			}
+		}
 
 		return res;
 	}
 
-
 	@Transactional
 	@Override
-	public List<Product> fetchAllProducts(
-			SessionDto session, Long storeId, ProductStatus productStatus) 
-			throws SessionServiceException {
+	public List<String> fetchAllImeiInUse(SessionDto session) throws SessionServiceException {
 
-		logger.info("ProductServiceImpl.fetchAllProducts starts ");
+		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
 
 		sessionService.validate(session);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ session : {}, storeId : {} , productStatus : {} ] ",
-					new Object[]{session, storeId, productStatus});
-		}
-
-		List<Product> lst = productsDao.findByStoreAndStatus(storeId, productStatus);
-		
-		logger.info("ProductServiceImpl.fetchAllProducts ends");
-
-		return lst;
-	}
-
-	@Override
-	@Transactional
-	public void moveProducts(SessionDto session, Store store, 
-			List<Product> products) {
-		
-		logger.info("ProductServiceImpl.moveProducts starts ");
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ session : {}, {}, storeId : {} , products : {}] ",
-					new Object[]{session, store, products});
-		}
+		List<String> res = new ArrayList<String>();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
+		// TODO : prepare separate JPQL for this case
+		List<Product> products = productsDao.findByCriteria(filters);
 
 		for (Product p : products) {
-			p.setStore(store);
-			productsDao.save(p);
+			String imei = p.getImei();
+
+			if (!res.contains(imei)) {
+				res.add(imei);
+			}
 		}
+
+		return res;
 	}
 
-	@Override
 	@Transactional
-	public Product fetchProductByImeiAndStoreId(
-			SessionDto session, String imei, Long storeId) 
-			throws SessionServiceException {
-		
-		logger.info("ProductServiceImpl.fetchProductByImeiAndStoreId starts");
-		
+	@Override
+	public List<ModelDto> fetchAllModelsInUse(SessionDto session) throws SessionServiceException {
+
+		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
+
 		sessionService.validate(session);
 
-		Product product = productsDao.findByImeiAndStoreId(imei, storeId);
+		List<ModelDto> res = new ArrayList<ModelDto>();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
+		// TODO : prepare separate JPQL for this case
+		List<Product> products = productsDao.findByCriteria(filters);
 
-		return product;
+		for (Product p : products) {
+			Model m = p.getModel();
+
+			ModelDto dto = modelConverter.toModelDto(m);
+
+			if (!res.contains(dto)) {
+				res.add(dto);
+			}
+		}
+
+		return res;
 	}
 
 	@Override
 	@Transactional
-	public List<Product> findByCriteria(
-			SessionDto session, ProductFilterCriteria parameterObject) 
-			throws SessionServiceException {
-		
-		logger.debug("ProductServiceImpl.fetchAllProductsByCriteria starts ");
-		Object[] params = new Object[] { parameterObject.getImei(), parameterObject.getProducer(), 
-				parameterObject.getModel(), parameterObject.getColor(), 
-				parameterObject.getStoreId(), parameterObject.getDeliveryDateStart(),
-				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
-		
+	public long count(SessionDto session) throws SessionServiceException {
+
 		sessionService.validate(session);
-		
-		// TODO : log parameterObject instaed of each part
-		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ imei : {} , producer : {} , model : {} , "
-					+ "color : {} , storeId : {} , deliveryDateStart : {} , "
-					+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
-		}
-		List<Product> result = productsDao.findByCriteria(parameterObject);
-
-		for (Product p : result) {
-//			logger.info(" model : {} , producer : {} ", p.getModel(),
-//					p.getProducer());
-		}
-
-		return result;
-	}
-	
-	
-
-	@Override
-	@Transactional
-	public long count(SessionDto session) {
 
 		return productsDao.count();
-	}
-
-	@Override
-	@Transactional
-	public List<Product> findByStore(SessionDto session, Store store) 
-			throws SessionServiceException {
-		
-		logger.info("findByStore starts");
-		logger.info("params : [ session : {}, store : {} ]", session, store);
-		
-		sessionService.validate(session);
-		
-		return productsDao.findByStore(store);		
-	}
-
-	@Transactional
-	@Override
-	public List<Product> findByIMEIs(SessionDto session, List<String> imeis) 
-			throws SessionServiceException {
-
-		logger.info("findByStore starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ session : {}, store : {} ]", session, imeis);
-		}
-
-		sessionService.validate(session);
-		
-		return productsDao.findByIMEIs(imeis);
-	}
-
-	@Transactional
-	@Override
-	public Product findById(SessionDto session, long id) {
-		
-		logger.info("findById starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ id : {} ]", id);
-		}
-		
-		return productsDao.findById(id);		
-	}
-
-	@Transactional
-	@Override
-	public Collection<Product> findById(SessionDto session, Collection<Long> coll) {
-		logger.info("findById starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ numberOfIds : {} ]", coll.size());
-		}
-		
-		return productsDao.findByIds(coll);		
-	}
-
-
-	@Transactional
-	@Override
-	public Product update(SessionDto session, Product product) {
-		logger.info("update starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ product : {} ]", product);
-		}
-		
-		return productsDao.saveOrUpdate(product);		
-	}
-	
-	@Transactional
-	@Override
-	public Product findByIMEI(SessionDto session, String imei) {
-		logger.info("update starts");
-		if(logger.isDebugEnabled()) {
-			logger.info("params : [ imei: {} ]", imei);
-		}
-		
-		return productsDao.findByIMEI(imei);		
-	}
-
-	@Transactional
-	@Override
-	public Collection<Product> updateCollection(SessionDto session, Collection<Product> coll) {
-		logger.info("updateCollection starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ numberOfProducts: {} ]", coll.size());
-		}
-		
-		return productsDao.saveOrUpdate(coll);		
-	}
-
-	@Transactional
-	@Override
-	public void remove(SessionDto session, Product product) {
-		logger.info("remove starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ product: {} ]", product);
-		}
-		
-		productsDao.remove(product);		
-	}
-
-	@Transactional
-	@Override
-	public void removeCollection(SessionDto session, Collection<Product> coll) {
-		logger.info("removeCollection starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ numberOfproduct: {} ]", coll.size());
-		}
-		
-		productsDao.remove(coll);		
-	}
-
-	@Transactional
-	@Override
-	public void removeCollectionByIds(SessionDto session, Collection<Long> coll) {
-		logger.info("removeCollection starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ numberOfproduct: {} ]", coll.size());
-		}
-		
-		productsDao.removeByIds(coll);		
-	}
-
-	@Transactional
-	@Override
-	public void removeById(SessionDto session, long id) {
-		logger.info("remove starts");
-
-		if(logger.isDebugEnabled()) {
-			logger.debug("params : [ id: {} ]", id);
-		}
-		
-		productsDao.removeById(id);		
 	}
 
 	@Transactional
 	@Override
 	public ProductFetchResponse fetch(ProductFetchRequest req)
-		throws SessionServiceException 
-	{
+		throws SessionServiceException {
+
 		logger.info("ProductServiceImpl.fetch starts ");
-		
-		SessionDto session = SessionDto.create();
-		session.setUsername(req.getUsername());
-		session.setSessionId(req.getSessionId());
-		
-		ProductFilterCriteria parameterObject = req.getFiltersCriteria();
-		
-		
-		Object[] params = new Object[] { parameterObject.getImei(), parameterObject.getProducer(), 
-				parameterObject.getModel(), parameterObject.getColor(), 
-				parameterObject.getStoreId(), parameterObject.getDeliveryDateStart(),
-				parameterObject.getDeliveryDateEnd(), parameterObject.getStatus()};
-		
-		sessionService.validate(session);
+
+		sessionService.validate(req.getSessionDto()); // TODO add some validation
+
+		ProductFilterCriteria filters = req.getFilters();
+		Object[] params = new Object[] { filters.getImei(), filters.getProducer(),
+				filters.getModel(), filters.getColor(),
+				filters.getStoreId(), filters.getDeliveryDateStart(),
+				filters.getDeliveryDateEnd(), filters.getStatus()};
 
 		if(logger.isDebugEnabled()) {
 			logger.debug("params : [ imei : {} , producer : {} , model : {} , "
@@ -382,39 +180,20 @@ implements ProductService {
 					+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
 		}
 
-		List<Product> result = productsDao.findByCriteria(parameterObject);
+		List<Product> result = productsDao.findByCriteria(filters);
 		
 		List<ProductSearchDto> lst = new ArrayList<ProductSearchDto>();
-		// TODO : move to converter
+
 		for(Product p : result) {
 					
-			ProductSearchDto b = new ProductSearchDto();
-			
-			b.setColor(p.getColor());
-			b.setDeliveryId(p.getDelivery().getId());
-			b.setImei(p.getImei());
-			b.setPriceIn(p.getPriceIn());
-			b.setPrice(p.getCurrentPricing().getRate());
-			b.setTax(p.getCurrentTax().getTax().getRate());
-			b.setModel(p.getModel().getLabel());
-			b.setProducer(p.getModel().getProducer().getLabel());
-			
-			if (p.getSale() != null) {
-				b.setSaleId(p.getSale().getId());
-			} else {
-				b.setSaleId(null);
-			}
-			
-			b.setId(p.getId());
-			
-			lst.add(b);
+			lst.add(productConverter.toProductSearchDto(p));
 		}
-
-		logger.info("ProductServiceImpl.fetch ends");
 
 		ProductFetchResponse resp = new ProductFetchResponse();
 		resp.setProducts(lst);
-		
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
 		return resp;
 	}
 

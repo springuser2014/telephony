@@ -1,12 +1,7 @@
 package telephony.test.core.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.*;
 
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,6 +9,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.dto.ModelDto;
+import telephony.core.service.dto.ProducerDto;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ProductService;
 import telephony.core.service.StoreService;
@@ -22,9 +19,7 @@ import telephony.core.service.dto.request.ProductFetchRequest;
 import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
-import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductStatus;
-import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteriaBuilder;
 
@@ -32,6 +27,8 @@ import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 import telephony.test.core.data.TestDataBuilder;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -54,13 +51,17 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-//		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
-		
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withStoreId(TestData.STORE1_ID)
+				.build();
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-//		List<Product> products = productService.findByStore(session, store);
+		ProductFetchResponse fetchResponse = productService.fetch(fetchRequest);
 		
 		// then
-//		assertTrue("should found 24 items", products.size() == 24);
+		assertTrue("should found 24 items", fetchResponse.getProducts().size() == 24);
 	}
 	
 	@Test
@@ -69,64 +70,74 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-//		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
-		
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withStatus(ProductStatus.IN_STORE)
+				.withStoreId(TestData.STORE1_ID)
+				.build();
+
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-//		List<Product> lst =  productService.fetchAllProducts(
-//			session, store.getId(), ProductStatus.IN_STORE
-//		);
+		ProductFetchResponse fetchResponse =  productService.fetch(fetchRequest);
 		
 		// then
-//		assertTrue("there should be 18 products in the given store", lst.size() == 18);
+		assertTrue(fetchResponse.isSuccess());
+		assertEquals("there should be 18 products in the given store", fetchResponse.getProducts().size(), 18);
 	}
-	
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void fetchingAllProducersInUse() {
-		
-		// given		
+	public void fetchingAllProducersInUse() throws SessionServiceException {
+
+		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		// when
-		List<String> lst = productService.fetchAllProducersInUse(session);
-		
+		List<ProducerDto> lst = productService.fetchAllProducersInUse(session);
+
 		List<String> expected = new ArrayList<String>();
-		expected.add("apple");
-		expected.add("nokia");
-		
+		expected.add(TestData.PRODUCER_NOKIA_LABEL);
+		expected.add(TestData.PRODUCER_APPLE_LABEL);
+
+
 		// then
 		assertEquals("should contains 2 ", new Integer(2), new Integer(lst.size()));
 		assertTrue("should contains 2 producers in use", lst.size() == expected.size());
-		assertTrue("exactly those 2 producers in use", lst.containsAll(expected));
-		
+
+		for (ProducerDto dto : lst) {
+			assertTrue("exactly those 2 producers in use", expected.contains(dto.getLabel()));
+		}
 	}
-	
+
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchingAllModels() throws SessionServiceException {
+	public void fetchingAllModelsInUse() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		
 		// when
-		List<String> lst = productService.fetchAllModels(session);
+		List<ModelDto> lst = productService.fetchAllModelsInUse(session);
 		
 		List<String> expected = new ArrayList<String>();
-		expected.add("iphone 4s");
-		expected.add("6610s");
-		expected.add("6600n");
-		expected.add("iphone 3g");
-		expected.add("iphone 5g");
-		expected.add("3310");
+		expected.add(TestData.MODEL1_LABEL);
+		expected.add(TestData.MODEL2_LABEL);
+		expected.add(TestData.MODEL3_LABEL);
+		expected.add(TestData.MODEL4_LABEL);
+		expected.add(TestData.MODEL5_LABEL);
+		expected.add(TestData.MODEL6_LABEL);
 		
 		// then
 		assertEquals("should return 6 different products models", 6, lst.size());
-		assertTrue("exactly those 6 products", lst.containsAll(expected));
+		for (ModelDto m : lst) {
+			assertTrue("exactly those 6 products", expected.contains(m.getLabel()));
+		}
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchingAllColors() {
+	public void fetchingAllColors() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -134,10 +145,10 @@ public class ProductServiceTest extends BaseCoreTest {
 		// when
 		List<String> lst = productService.fetchAllColors(session);
 		List<String> expected = new ArrayList<String>();
-		expected.add("black");
-		expected.add("white");
-		expected.add("blue");
-		expected.add("red");
+		expected.add(TestData.COLOR_BLACK);
+		expected.add(TestData.COLOR_WHITE);
+		expected.add(TestData.COLOR_RED);
+		expected.add(TestData.COLOR_BLUE);
 		
 		// then
 		assertTrue("should return 4 different colors", lst.size() == 4);
@@ -165,105 +176,83 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String imei = "123456789000001";
-		long storeId = 1L;
-		
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withImei(TestData.PRODUCT2_IMEI)
+				.withStoreId(TestData.STORE1_ID)
+				.build();
+
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-		Product prod = productService
-				.fetchProductByImeiAndStoreId(session, imei, storeId);
+		ProductFetchResponse fetchResponse = productService.fetch(fetchRequest);
 		
 		// then
-		assertTrue("should return appropriate product", 
-				prod.getImei().contains(imei) && prod.getImei().length() == imei.length());
+		assertEquals(fetchResponse.getProducts().get(0).getId(), TestData.PRODUCT2_ID);
+		assertEquals(fetchResponse.getProducts().get(0).getImei(), TestData.PRODUCT2_IMEI);
 	}
-	
 
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void movingProductsToAnotherStore() throws SessionServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
-		long movedFromStoreId = 1L;
-		long moveToStoreId = 2L;
-		
-//		Store store = storeService.findById(session, moveToStoreId);
-		
-		ProductStatus productStatus = ProductStatus.IN_STORE;
-		List<Product> productsToMove = productService
-				.fetchAllProducts(session, movedFromStoreId, productStatus);
-		
-		List<Product> produtsBeforeMove = productService
-				.fetchAllProducts(session, moveToStoreId, productStatus);
-		
-		long toMoveCount = productsToMove.size();
-		long beforeMoved = produtsBeforeMove.size();
-		
-		// when
-//		productService.moveProducts(session, store, productsToMove);
-
-		// then
-		List<Product> productsAfterMove = productService
-				.fetchAllProducts(session, moveToStoreId, productStatus);
-		
-		long afterMoved = productsAfterMove.size();
-		
-		assertTrue("should move few products", beforeMoved + toMoveCount == afterMoved);		
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchAllProductsByCriteria1() throws SessionServiceException {
+	public void fetchingProductByImei() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
-		ProductFilterCriteria criteria = ProductFilterCriteriaBuilder.productFilterCriteria() 		
-		.withImei("123456789000001")
-		.build();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+			.withImei("123456789000001")
+			.build();
+
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+		fetchRequest.setFilters(filters);
 		
 		// when
-		List<Product> products = productService
-				.findByCriteria(session, criteria);
+		ProductFetchResponse fetchResponse = productService.fetch(fetchRequest);
 		
 		// then
-		assertTrue("should return one product", products.size() == 1);
-		
-		assertTrue("should fetch product with given IMEI", 
-				products != null && products.get(0).getImei().contains("123456789000001")); 
+		assertTrue("should return one product", fetchResponse.getProducts().size() == 1);
 	}	
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingById() {
+	public void findingById() throws SessionServiceException {
 		
 		// given
-		long id = 1;
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withProductId(TestData.PRODUCT1_ID).build();
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+
+		fetchRequest.setFilters(filters);
 		
 		// when
-		Product product = productService.findById(null, id);
+		ProductFetchResponse fetchResponse = productService.fetch(fetchRequest);
 				
 		// then
-		assertNotNull(product);
-		assertEquals(product.getImei(), "123456789000000");
-		assertEquals(product.getColor(), "black");
+		assertNotNull(fetchRequest);
+		assertEquals(fetchResponse.getProducts().get(0).getImei(), TestData.PRODUCT1_IMEI);
+		assertEquals(fetchResponse.getProducts().get(0).getColor(), TestData.PRODUCT1_COLOR);
 	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingByIds() {
+	public void findingByIds() throws SessionServiceException {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id1 = 1, id2 = 2;
-		Collection<Long> coll = Arrays.asList(id1, id2);
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withProductId(TestData.PRODUCT1_ID)
+				.withProductId(TestData.PRODUCT2_ID)
+				.build();
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+		fetchRequest.setFilters(filters);
 		
 		// when
-		Collection<Product> products = productService.findById(session, coll);
+		ProductFetchResponse fetchResponse = productService.fetch(fetchRequest);
 				
 		// then
-		assertNotNull(products);
-		assertEquals(products.size(), 2);
+		assertNotNull(fetchResponse);
+		assertEquals(fetchResponse.getProducts().size(), 2);
 	}
 	
 	@Test
@@ -272,155 +261,37 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String imei = "123456789000047";
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withImei(TestData.PRODUCT48_IMEI)
+				.build();
+
+		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
+		fetchRequest.setFilters(filters);
 		
 		// when
-		Product product = productService.findByIMEI(session, imei);
+		ProductFetchResponse fetchResponse = productService.fetch(fetchRequest);
 		
 		// then
-		assertNotNull(product);
-		assertEquals(product.getColor(), "white");
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void update() throws SessionServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		String imei = "123456789000444";
-		long id = 1;
-		Product product = productService.findById(session, id);
-		
-		// when
-		product.setImei(imei);
-		productService.update(session, product);
-		
-		Product prod = productService.findByIMEI(session, imei);
-		
-		// then
-		assertNotNull(prod);
-		assertEquals(product.getColor(), "black");		
+		assertNotNull(fetchResponse);
+		assertTrue(fetchResponse.isSuccess());
+		assertEquals(fetchResponse.getProducts().get(0).getColor(), TestData.PRODUCT48_COLOR);
 	}
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void updateCollection() {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
-		long id1 = 1, id2 = 2;
-		Product p1 = productService.findById(session, id1);
-		Product p2 = productService.findById(session, id2);
-		String imei1 = "123456789000888";
-		String imei2 = "123456789000777";
-		Product changed1 = null;
-		Product changed2 = null;
-		
-		// when
-		p1.setImei(imei1);
-		p2.setImei(imei2);
-		Collection<Product> coll = Arrays.asList(p1, p2);
-		productService.updateCollection(session, coll);
-		
-		// then
-		changed1 = productService.findByIMEI(session, imei1);
-		changed2 = productService.findByIMEI(session, imei2);
-		
-		assertNotNull(changed1);
-		assertNotNull(changed2);
-		assertEquals(p1.getColor(), "black");
-		assertEquals(p2.getColor(), "black");
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void remove() throws SessionServiceException {
-
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id = 1;
-		Product p = productService.findById(session, id);
-		long countBefore = productService.count(session);
-		
-		// when
-		productService.remove(session, p);
-		
-		// then
-		long countAfter = productService.count(session);
-		assertEquals(countBefore - countAfter, 1);
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollection() throws SessionServiceException {
-	
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id1 = 1, id2 = 2;
-		Product p1 = productService.findById(session, id1);
-		Product p2 = productService.findById(session, id2);
-		long countBefore = productService.count(session);
-		Collection<Product> coll = Arrays.asList(p1, p2);
-		
-		// when
-		productService.removeCollection(session, coll);
-		
-		// then
-		long countAfter = productService.count(session);
-		assertEquals(countBefore - countAfter, 2);
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById() throws SessionServiceException {
-
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id = 1;
-		long countBefore = productService.count(session);
-		
-		// when
-		productService.removeById(session, id);
-		
-		// then
-		long countAfter = productService.count(session);
-		assertEquals(countBefore - countAfter, 1);
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeCollectionById() throws SessionServiceException {
-
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long id1 = 1, id2 = 2;
-		long countBefore = productService.count(session);
-		Collection<Long> coll = Arrays.asList(id1, id2);
-		
-		// when
-		productService.removeCollectionByIds(session, coll);
-		
-		// then
-		long countAfter = productService.count(session);
-		assertEquals(countBefore - countAfter, 2);
-	}
-	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchProducts1() throws SessionServiceException {
 
 		// given
+		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withColor("white")
 				.withProducer("nokia")
 				.build();
 		
-		ProductFetchRequest request = new ProductFetchRequest();
-		request.setSessionId(TestData.USER1_SESSIONID);
-		request.setUsername(TestData.USER1_NAME);
-		request.setFiltersCriteria(filters);
+		ProductFetchRequest request = new ProductFetchRequest(sessionDto);
+		request.setFilters(filters);
 		
 		// when
 		ProductFetchResponse resp = productService.fetch(request);
@@ -445,7 +316,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
-		request.setFiltersCriteria(filters);
+		request.setFilters(filters);
 		
 		// when
 		ProductFetchResponse resp = productService.fetch(request);
@@ -467,7 +338,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
-		request.setFiltersCriteria(filters);
+		request.setFilters(filters);
 		
 		// when
 		ProductFetchResponse resp = productService.fetch(request);
@@ -489,7 +360,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
-		request.setFiltersCriteria(filters);
+		request.setFilters(filters);
 		
 		// when
 		ProductFetchResponse resp = productService.fetch(request);
@@ -510,7 +381,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
-		request.setFiltersCriteria(filters);
+		request.setFilters(filters);
 		
 		// when
 		ProductFetchResponse resp = productService.fetch(request);

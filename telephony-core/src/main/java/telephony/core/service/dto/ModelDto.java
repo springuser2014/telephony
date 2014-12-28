@@ -38,4 +38,21 @@ public class ModelDto {
     public String getProducer() {
         return producer;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ModelDto modelDto = (ModelDto) o;
+
+        if (id != null ? !id.equals(modelDto.id) : modelDto.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
