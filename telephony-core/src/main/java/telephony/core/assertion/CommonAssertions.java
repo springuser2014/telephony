@@ -28,4 +28,20 @@ public final class CommonAssertions {
         return col != null && !col.isEmpty();
     }
 
+    public static boolean isEmpty(Long n) {
+        return n == null || n.equals(0l);
+    }
+
+    public static boolean isNotEmpty(Long n) {
+        return n != null && !n.equals(0l);
+    }
+
+    public static boolean isEmpty(Integer n) {
+        return n == null || n.equals(0);
+    }
+
+    public static boolean isNotEmpty(Integer n) {
+        return n != null && !n.equals(0);
+    }
+
 }

@@ -119,6 +119,8 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(PricingService.class).to(PricingServiceImpl.class);
         bind(ComplaintCommentService.class).to(ComplaintCommentServiceImpl.class);
 
+        // binding entity to dto converters
+
         bind(UserConverter.class);
         bind(DeliveryConverter.class);
         bind(ProductConverter.class);

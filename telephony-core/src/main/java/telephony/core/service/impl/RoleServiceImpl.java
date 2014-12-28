@@ -34,16 +34,16 @@ public class RoleServiceImpl
 extends AbstractBasicService<Role>
 implements RoleService {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private RolesDao rolesDao;
+	RolesDao rolesDao;
 	
 	@Inject
-	private SessionService sessionService;
+	SessionService sessionService;
 
 	@Inject
-	private RoleConverter roleConverter;
+	RoleConverter roleConverter;
 
 	@Transactional
 	@Override

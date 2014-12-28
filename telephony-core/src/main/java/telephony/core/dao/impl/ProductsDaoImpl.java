@@ -16,6 +16,8 @@ import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.ProductFilterCriteria;
 
+import static telephony.core.assertion.CommonAssertions.*;
+
 /**
  * Products management DAO.
  */
@@ -99,11 +101,11 @@ implements ProductsDao {
             sb.append("and st.id = :storeId ");
         }
 
-        if (query.getDeliveryDateStart() != null) {
+        if (isNotNull(query.getDeliveryDateStart())) {
             sb.append("and d.dateIn >= :deliveryDateStart ");
         }
 
-        if (query.getDeliveryDateEnd() != null) {
+        if (isNotNull(query.getDeliveryDateEnd())) {
             sb.append("and d.dateIn <= :deliveryDateEnd ");
         }
 
@@ -111,6 +113,10 @@ implements ProductsDao {
             sb.append("and sa.id is null ");
         } else if (query.getStatus() == ProductStatus.SOLD) {
             sb.append("and sa.id is not null ");
+        }
+
+        if (isNotEmpty(query.getProductIds())) {
+            sb.append("and p.id in (:productIds) ");
         }
 
         List<Product> res = null;
@@ -126,11 +132,11 @@ implements ProductsDao {
         	jpaQuery.setParameter("producer", query.getProducer());
         }
 
-        if (query.getModel() != null && query.getModel().length() > 0) {
+        if (isNotEmpty(query.getModel())) {
         	jpaQuery.setParameter("model", query.getModel());
         }
 
-        if (query.getColor() != null && query.getColor().length() > 0) {
+        if (isNotEmpty(query.getColor())) {
         	jpaQuery.setParameter("color", query.getColor());
         }
 
@@ -138,14 +144,18 @@ implements ProductsDao {
         	jpaQuery.setParameter("storeId", query.getStoreId());
         }
 
-        if (query.getDeliveryDateStart() != null) {
+        if (isNotNull(query.getDeliveryDateStart())) {
             Timestamp deliveryDateStartTmp = new Timestamp(query.getDeliveryDateStart().getTime());
             jpaQuery.setParameter("deliveryDateStart", deliveryDateStartTmp);
         }
 
-        if (query.getDeliveryDateEnd() != null) {
+        if (isNotNull(query.getDeliveryDateEnd())) {
             Timestamp deliveryDateEndTmp = new Timestamp(query.getDeliveryDateEnd().getTime());
             jpaQuery.setParameter("deliveryDateEnd", deliveryDateEndTmp);
+        }
+
+        if (isNotEmpty(query.getProductIds())) {
+            jpaQuery.setParameter("productIds", query.getProductIds());
         }
 
         res = jpaQuery.getResultList();

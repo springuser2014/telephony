@@ -71,56 +71,6 @@ implements DeliveryService {
 	DeliveryConverter deliveryConverter;
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
-
-		@Transactional
-		@Override
-		public void add(SessionDto session, Delivery newDelivery,
-				List<Product> products, Long storeId, Long contactId)
-		throws SessionServiceException, DeliveryServiceException {
-
-			logger.debug("DeliveryServiceImpl.addNewDelivery starts");
-			logger.debug("params : [session : {}, newDelivery : {}]", session, newDelivery);
-
-			sessionService.validate(session);
-
-			Contact contact = contactsDao.findById(contactId);
-
-			Store store = storesDao.findById(storeId);
-
-			newDelivery.setContact(contact);
-			newDelivery.setStore(store);
-
-			newDelivery = deliveriesDao.saveOrUpdate(newDelivery);
-			deliveriesDao.getEntityManager().flush();
-		
-		for (Product product : products) {
-			
-			product.setStore(store);
-			newDelivery.addProduct(product);
-			product.setDelivery(newDelivery);			
-			
-			productsDao.saveOrUpdate(product);		
-		}
-		
-        logger.debug("DeliveryServiceImpl.addNewDelivery ends");
-    }
-
-    @Override
-    @Transactional
-    public List<Delivery> find(SessionDto session, DeliveryFilterCriteria filters)
-    		throws SessionServiceException, DeliveryServiceException{
-        
-        logger.debug("DeliveryServiceImpl.fetchAllDeliveries starts");        
-		logger.debug("params : [session : {}, filters : {}]");
-
-		sessionService.validate(session);
-		
-        List<Delivery> res = deliveriesDao.find(filters);
-
-        logger.debug("DeliveryServiceImpl.fetchAllDeliveries ends");
-
-        return res;
-    }
     
     @Override
     @Transactional
@@ -153,51 +103,11 @@ implements DeliveryService {
     
     @Override
 	@Transactional
-	public long count(SessionDto session) {
+	public long count(SessionDto session) throws SessionServiceException {
+
+		sessionService.validate(session);
+
 		return deliveriesDao.count();
-	}
-    
-	@Transactional
-	@Override
-	public void update(SessionDto session, Delivery deliveryToUpdate) 
-			throws SessionServiceException,
-			DeliveryServiceException {
-		
-		logger.debug("DeliveryServiceImpl.updateDelivery starts");        
-		logger.debug("params : [session : {}, delivery: {} ]", session, deliveryToUpdate);
-
-		sessionService.validate(session);
-		
-		deliveriesDao.saveOrUpdate(deliveryToUpdate);
-	}
-
-	@Transactional
-	@Override
-	public void delete(SessionDto session, Delivery delvieryToDelete) 
-		throws SessionServiceException, DeliveryServiceException {
-		
-		logger.debug("DeliveryServiceImpl.delete starts");        
-		logger.debug("params : [ session : {}, delivery : {} ]", session, delvieryToDelete);
-
-		sessionService.validate(session);
-		
-		productsDao.removeByDeliveryId(delvieryToDelete);
-		deliveriesDao.remove(delvieryToDelete);	
-	}
-
-	@Transactional
-	@Override
-	public Delivery findById(SessionDto session, Long deliveryId) 
-			throws SessionServiceException, DeliveryServiceException {
-		
-		logger.debug("DeliveryServiceImpl.findById starts");        
-		logger.debug("params : [ session : {}, deliveryId : {} ]", session, deliveryId);
-
-		sessionService.validate(session);
-		
-		Delivery delviery = deliveriesDao.findById(deliveryId);
-		
-		return delviery;
 	}
 
 	@Transactional

@@ -5,6 +5,7 @@ import java.util.List;
 
 import telephony.core.service.dto.ProductEditDto;
 import telephony.core.service.dto.ProductDto;
+import telephony.core.service.dto.SessionDto;
 
 public class DeliveryEditRequest extends AuthRequest {
 	
@@ -15,6 +16,10 @@ public class DeliveryEditRequest extends AuthRequest {
 	
 	private Long storeId;
 	private Long contactId;
+
+	public DeliveryEditRequest(SessionDto sessionDto) {
+		super(sessionDto);
+	}
 	
 	private List<ProductDto> productsToAdd = new ArrayList<ProductDto>();
 	

@@ -71,13 +71,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 
 	public ModelDto getNokia3310() {
 
+		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 				.withLabel("3310")
 				.build();
 
-		ModelFetchRequest request = new ModelFetchRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
+		ModelFetchRequest request = new ModelFetchRequest(sessionDto);
 		request.setFilters(filters);
 
 		ModelFetchResponse resp = modelService.fetch(request);
@@ -89,13 +89,13 @@ public class DeliveryServiceTest extends BaseCoreTest {
 
 	public ModelDto getIphone4S() {
 
+		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 				.withLabel("iphone 4s")
 				.build();
 
-		ModelFetchRequest request = new ModelFetchRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
+		ModelFetchRequest request = new ModelFetchRequest(sessionDto);
 		request.setFilters(filters);
 
 		ModelFetchResponse resp = modelService.fetch(request);
@@ -104,118 +104,18 @@ public class DeliveryServiceTest extends BaseCoreTest {
 
 		return model;
 	}
-
-		
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void addingNewDelivery() 
-			throws SessionServiceException, DeliveryServiceException, ContactServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-
-//		Store store = storeService.findByLabel(session, TestData.STORE1_LABEL);
-
-		long deliveriesAfter = -1, deliveriesBefore = deliveryService.count(session);
-		long productsAfter = -1, productsBefore = productService.count(session);		
-
-		Long contactId = 0l;
-		Long storeid = 0l;
-		
-		List<ProductDto> products = new ArrayList<ProductDto>();
-		products.add(TestDataBuilder.getProductA(getIphone4S()));
-		products.add(TestDataBuilder.getProductB(getNokia3310()));
-
-		DeliveryAddRequest request = new DeliveryAddRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
-		request.setLabel("asd asd");
-		request.setDateIn(new Date());
-		request.setContactId(contactId);
-		request.setStoreId(storeid);
-
-//		DeliveryAddResponse responseDelivery = deliveryService.add(request);
-
-		deliveriesAfter = deliveryService.count(session);
-		productsAfter = productService.count(session);
-	
-		// then
-		assertTrue("Should increased number of deliveries ", 
-				deliveriesAfter - deliveriesBefore == 1);
-		
-		assertTrue("Should increased number of products ", productsAfter - productsBefore == 2);
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void editingExistingDelivery() throws SessionServiceException, DeliveryServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Long deliveryId = 1L;
-		Delivery deliveryToUpdate = deliveryService.findById(session, deliveryId);
-		
-		// when
-		deliveryToUpdate.setLabel("asd asd asd");
-		deliveryService.update(session, deliveryToUpdate);
-		
-		Delivery updated = deliveryService.findById(session, deliveryId);
-		
-		// then
-		assertTrue("Should create and return a new user", 
-				updated != null && updated.getLabel().contains("asd asd asd"));
-	}
-	
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void deletingDelivery() throws SessionServiceException, DeliveryServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		Delivery deliveryToDelete = deliveryService.findById(session, 1L);
-		long countAfter = -1, countBefore = deliveryService.count(session);
-		
-		// when
-		deliveryService.delete(session, deliveryToDelete);		
-		countAfter = deliveryService.count(session);
-		
-		// then
-		assertTrue("Should decreased number of users ", countBefore - countAfter == 1);
-	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void fetchingAllDeliveries() throws SessionServiceException, DeliveryServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long count = deliveryService.count(session);
-		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria().build();
-		
-		// when
-		List<Delivery> lst = deliveryService.find(session, filters);		
-		
-		// then
-		assertTrue("Should return exact number of deliveries ", 
-				count == 5 && lst.size() == count);
-	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
 	public void addNewDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		SessionDto session = SessionDto.create();
-		session.setSessionId(TestData.USER1_SESSIONID);
-		session.setUsername(TestData.USER1_NAME);
-				
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
 		
-		DeliveryAddRequest dto = new DeliveryAddRequest();
-		dto.setSessionId(TestData.USER1_SESSIONID);
-		dto.setUsername(TestData.USER1_NAME);
+		DeliveryAddRequest dto = new DeliveryAddRequest(session);
 		
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
 		
@@ -272,16 +172,12 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void addNewDelivery2() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		SessionDto session = SessionDto.create();
-		session.setSessionId(TestData.USER1_SESSIONID);
-		session.setUsername(TestData.USER1_NAME);
-				
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		long deliveriesBefore = deliveryService.count(session);
 		long productsBefore = productService.count(session);
 		
-		DeliveryAddRequest dto = new DeliveryAddRequest();
-		dto.setSessionId(TestData.USER1_SESSIONID);
-		dto.setUsername(TestData.USER1_NAME);
+		DeliveryAddRequest dto = new DeliveryAddRequest(session);
 		
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
 		
@@ -501,9 +397,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		DeliveryEditRequest req = new DeliveryEditRequest();
-		req.setSessionId(TestData.USER1_SESSIONID);
-		req.setUsername(TestData.USER1_NAME);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
+		DeliveryEditRequest req = new DeliveryEditRequest(session);
 		
 		req.setId(1L);
 		req.setContactId(2L);
@@ -552,10 +447,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void editDelivery2() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		DeliveryEditRequest req = new DeliveryEditRequest();
-		req.setSessionId(TestData.USER1_SESSIONID);
-		req.setUsername(TestData.USER1_NAME);
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		DeliveryEditRequest req = new DeliveryEditRequest(session);
 		req.setId(1L);
 		req.setContactId(2L);
 		req.setStoreId(2L);
@@ -627,15 +520,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	public void deleteDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
 		
 		// given
-		SessionDto session = SessionDto.create();
-		session.setUsername(TestData.USER1_NAME);
-		session.setSessionId(TestData.USER1_SESSIONID);
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
 		long countBefore = deliveryService.count(session);
 		
-		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
-		req.setSessionId(TestData.USER1_SESSIONID);
-		req.setUsername(TestData.USER1_NAME);
+		DeliveryDeleteRequest req = new DeliveryDeleteRequest(session);
 		req.setDeliveryId(1L);
 
 		// when

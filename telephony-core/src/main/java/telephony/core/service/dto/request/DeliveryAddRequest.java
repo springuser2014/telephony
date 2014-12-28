@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import telephony.core.service.dto.ProductDto;
+import telephony.core.service.dto.SessionDto;
 
 public class DeliveryAddRequest extends AuthRequest {
 	
@@ -13,6 +14,10 @@ public class DeliveryAddRequest extends AuthRequest {
 	
 	private Long storeId;
 	private Long contactId;
+
+	public DeliveryAddRequest(SessionDto sessionDto) {
+		super(sessionDto);
+	}
 	
 	private List<ProductDto> products;
 

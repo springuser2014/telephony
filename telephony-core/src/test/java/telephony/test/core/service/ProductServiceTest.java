@@ -221,7 +221,8 @@ public class ProductServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
-				.withProductId(TestData.PRODUCT1_ID).build();
+				.withProductId(TestData.PRODUCT1_ID)
+				.build();
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
 
 		fetchRequest.setFilters(filters);

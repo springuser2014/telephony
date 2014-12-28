@@ -14,6 +14,7 @@ import com.google.inject.persist.Transactional;
 /**
  * ad.
  */
+@Deprecated
 public class PricingServiceImpl
 extends AbstractBasicService<Pricing> 
 implements PricingService {
