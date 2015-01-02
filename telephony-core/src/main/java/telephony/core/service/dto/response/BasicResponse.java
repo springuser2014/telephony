@@ -1,6 +1,8 @@
 package telephony.core.service.dto.response;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static telephony.core.assertion.CommonAssertions.*;
@@ -9,7 +11,7 @@ import static telephony.core.assertion.CommonAssertions.*;
  */
 public class BasicResponse {
 
-	private Set<Error> errors;
+	private List<Error> errors;
 	private boolean success;
 	private String message;
 	
@@ -17,7 +19,7 @@ public class BasicResponse {
 	 * asd.
 	 */
 	public BasicResponse() {
-		this.errors = new HashSet<Error>();
+		this.errors = new ArrayList<Error>();
 	}
 	
 	/**
@@ -68,7 +70,7 @@ public class BasicResponse {
 	 * asd.
 	 * @return ads.
 	 */
-	public Set<Error> getErrors() {
+	public List<Error> getErrors() {
 
 		return errors;
 	}
@@ -77,7 +79,7 @@ public class BasicResponse {
 	 * d.
 	 * @param errors d.
 	 */
-	public void setErrors(Set<Error> errors) {
+	public void setErrors(List<Error> errors) {
 		if (isNotNull(errors)) {
 			this.errors = errors;
 		}

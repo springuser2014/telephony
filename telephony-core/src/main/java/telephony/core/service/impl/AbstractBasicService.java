@@ -11,7 +11,14 @@ import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * General usage basic service implementation.
@@ -23,6 +30,10 @@ public abstract class AbstractBasicService<T extends BaseEntity> implements Basi
 
     @Inject
     private Provider<EntityManager> entityManagerProvider;
+
+    public List<Error> getEmptyErrors() {
+        return new ArrayList<Error>();
+    }
 
     /**
      * {@inheritDoc}

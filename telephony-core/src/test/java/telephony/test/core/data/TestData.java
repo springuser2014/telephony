@@ -68,6 +68,9 @@ public final class TestData {
 	public static final String PRODUCT48_IMEI = "123456789000047";
 	public static final String PRODUCT48_COLOR = "white";
 
+	public static final Long PRODUCT3_ID = 3l;
+	public static final Long PRODUCT4_ID = 4l;
+
 	public static final Long PRODUCER_NOKIA_ID = 1l;
 	public static final String PRODUCER_NOKIA_LABEL = "nokia";
 
@@ -108,6 +111,14 @@ public final class TestData {
 	public static final String COLOR_WHITE = "white";
 	public static final String COLOR_BLUE = "blue";
 	public static final String COLOR_RED = "red";
+
+	public static final String SALE_CIESZYN_LABEL = "nowy rok cieszyn";
+	public static final String SALE_RACIBORZ_LABEL = "nowy rok raciborz";
+
+	public static final Long SALE1_ID = 1L;
+	public static final Long SALE2_ID = 2L;
+
+	public static final Long CONTACT1_ID = 1L;
 	
 	/**
 	 * Generates random sessionId.
@@ -117,5 +128,6 @@ public final class TestData {
 		StringGeneratorImpl g = new StringGeneratorImpl();		
 		return g.nextSessionId();
 	}
+
 
 }

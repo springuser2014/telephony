@@ -1,6 +1,8 @@
 package telephony.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,20 +19,21 @@ import telephony.core.query.filter.SaleFilterCriteria;
 import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.request.SaleAddRequest;
-import telephony.core.service.dto.request.SaleDeleteRequest;
-import telephony.core.service.dto.request.SaleEditRequest;
-import telephony.core.service.dto.request.SaleFetchRequest;
-import telephony.core.service.dto.response.SaleAddResponse;
-import telephony.core.service.dto.response.SaleDeleteResponse;
-import telephony.core.service.dto.response.SaleEditResponse;
-import telephony.core.service.dto.response.SaleFetchResponse;
+import telephony.core.service.converter.SaleConverter;
+import telephony.core.service.dto.DetailedSaleDto;
+import telephony.core.service.dto.SaleAddDto;
+import telephony.core.service.dto.SaleDto;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+
+import static telephony.core.assertion.CommonAssertions.*;
 
 /**
  * Sales management services.
@@ -54,23 +57,132 @@ implements SaleService {
 	@Inject
 	SessionService sessionService;
 
+	@Inject
+	SaleConverter saleConverter;
+
 	Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Transactional
 	@Override
-	public SaleFetchResponse fetch(SaleFetchRequest request) throws SessionServiceException, SaleServiceException {
-		return null;
+	public SaleDetailsResponse fetchDetails(SaleDetailsRequest request) throws SessionServiceException {
+
+		logger.info("SaleServiceImpl.fetchDetails starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ saleId : {} ] ", request.getSaleId());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		Sale sale = salesDao.findById(request.getSaleId());
+		DetailedSaleDto detailedSale = saleConverter.toDetailedSaleDto(sale);
+
+		SaleDetailsResponse resp = new SaleDetailsResponse();
+		resp.setDetailedSale(detailedSale);
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+		return resp;
 	}
 
+	@Transactional
+	@Override
+	public SalesFetchResponse findSales(SalesFetchRequest request) throws SessionServiceException, SaleServiceException {
+
+		logger.info("SaleServiceImpl.findSales starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ] ", request.getFilters());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation
+
+		List<SaleDto> salez = new ArrayList<SaleDto>();
+		List<Sale> sales = salesDao.find(request.getFilters());
+
+		for (Sale sale : sales) {
+			salez.add(saleConverter.toSaleDto(sale));
+		}
+
+		SalesFetchResponse resp = new SalesFetchResponse();
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		resp.setSales(salez);
+		return resp;
+	}
+
+	@Transactional
 	@Override
 	public SaleAddResponse add(SaleAddRequest request) throws SessionServiceException, SaleServiceException {
-		return null;
+
+		SaleAddResponse resp = new SaleAddResponse();
+
+		logger.info("SaleServiceImpl.add starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ saleDto : {} ] ", request.getSale());
+		}
+
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request.getSale(), errors)) { // TODO validation service? custom class?
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("errors occurred"); // TODO add localized msg
+			return resp;
+		}
+
+		sessionService.validate(request.getSessionDto());
+
+		Sale entity = saleConverter.toEntity(request.getSale());
+
+		salesDao.save(entity);
+
+		resp.setMessage("successfully added a new sale"); // TODO add localized msg
+		resp.setSuccess(true);
+		return resp;
 	}
 
+	// TODO : extract to service?
+	private boolean validate(SaleAddDto sale, List<Error> errors) {
+
+		for (Long productId : sale.getProductsIds()) {
+
+			if (isNull(productId)) {
+				errors.add(Error.create("global.warning", "productId cannot be null"));
+				continue;
+			}
+
+			if(!productsDao.checkIfProductIsAvailable(productId)) {
+				errors.add(Error.create("productsIds." + productId, "already sold"));
+			}
+		}
+
+		if (isNull(sale.getContactId())) {
+			errors.add(Error.create("contactId", "contactId cannot be null"));
+		}
+
+		if (isNull(sale.getStoreId())) {
+			errors.add(Error.create("storeId", "storeId cannot be null"));
+		}
+
+		if (isNull(sale.getLabel())) {
+			errors.add(Error.create("label", "label cannot be null"));
+		}
+
+		if (isNull(sale.getDateOut())) {
+			errors.add(Error.create("dateOut", "dateOut cannot be null"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	@Transactional
 	@Override
 	public SaleEditResponse edit(SaleEditRequest request) throws SessionServiceException, SaleServiceException {
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public SaleDeleteResponse delete(SaleDeleteRequest request) throws SessionServiceException, SaleServiceException {
 		return null;

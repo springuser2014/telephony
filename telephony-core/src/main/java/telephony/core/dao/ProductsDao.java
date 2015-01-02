@@ -1,6 +1,7 @@
 package telephony.core.dao;
 
 
+import java.util.Collection;
 import java.util.List;
 
 import telephony.core.entity.jpa.*;
@@ -98,5 +99,9 @@ public interface ProductsDao extends GenericDao<Product> {
 	Product findByIMEI(String imei);
 
 	void removeByDeliveryId(Delivery delvieryToDelete);
+
+    boolean checkIfProductsAreAvailable(Collection<Long> productsIds);
+
+    boolean checkIfProductIsAvailable(Long productId);
 
 }

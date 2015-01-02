@@ -1,6 +1,7 @@
 package telephony.core.entity.jpa;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -47,14 +48,14 @@ public class Sale extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOut;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sale", fetch = FetchType.EAGER)
     private Set<Product> products;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
@@ -62,7 +63,7 @@ public class Sale extends BaseEntity {
      * asd.
      */
     public Sale() {
-
+        products = new HashSet<Product>();
     }
 
     /**

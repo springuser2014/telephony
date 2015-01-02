@@ -6,14 +6,8 @@ import java.util.List;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.SaleAddRequest;
-import telephony.core.service.dto.request.SaleDeleteRequest;
-import telephony.core.service.dto.request.SaleEditRequest;
-import telephony.core.service.dto.request.SaleFetchRequest;
-import telephony.core.service.dto.response.SaleAddResponse;
-import telephony.core.service.dto.response.SaleDeleteResponse;
-import telephony.core.service.dto.response.SaleEditResponse;
-import telephony.core.service.dto.response.SaleFetchResponse;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -23,13 +17,20 @@ import telephony.core.service.exception.SessionServiceException;
 public interface SaleService extends BasicService<Sale> {
 
     /**
+     * sad.
+     * @param request a.
+     * @return a.
+     */
+    SaleDetailsResponse fetchDetails(SaleDetailsRequest request) throws SessionServiceException;
+
+    /**
      * asd.
      * @param request a.
      * @return d.
      * @throws SessionServiceException a.
      * @throws SaleServiceException d.
      */
-    SaleFetchResponse fetch(SaleFetchRequest request)
+    SalesFetchResponse findSales(SalesFetchRequest request)
         throws SessionServiceException, SaleServiceException;
 
     /**
@@ -109,6 +110,7 @@ public interface SaleService extends BasicService<Sale> {
      * @throws SessionServiceException asd.
      * @throws SaleServiceException asd.
      */
+    @Deprecated
     void update(SessionDto session, Sale saleToUpdate)
     		throws SessionServiceException, SaleServiceException;
     

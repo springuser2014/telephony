@@ -16,12 +16,11 @@ public class SaleFilterCriteria extends
 
 	private Long soldBy;
 	
-	private Long registeredBy;
-
 	private String label;
+	private String labelLike;
+
 	private Integer minNumberOfProducts;
 	private Integer maxNumberOfProducts;
-
 
 	public Long getSoldBy() {
 		return soldBy;
@@ -30,7 +29,6 @@ public class SaleFilterCriteria extends
 	public void setSoldBy(Long soldBy) {
 		this.soldBy = soldBy;
 	}
-
 	
 	public Date getSaleDateStart() {
 		return saleDateStart;
@@ -64,14 +62,6 @@ public class SaleFilterCriteria extends
 		this.sumTo = sumTo;
 	}
 
-	public Long getRegisteredBy() {
-		return registeredBy;
-	}
-
-	public void setRegisteredBy(Long registeredBy) {
-		this.registeredBy = registeredBy;
-	}
-
 	public String getLabel() {
 		return label;
 	}
@@ -94,5 +84,13 @@ public class SaleFilterCriteria extends
 
 	public void setMaxNumberOfProducts(Integer maxNumberOfProducts) {
 		this.maxNumberOfProducts = maxNumberOfProducts;
+	}
+
+	public String getLabelLike() {
+		return labelLike;
+	}
+
+	public void setLabelLike(String labelLike) {
+		this.labelLike = labelLike;
 	}
 }

@@ -5,7 +5,7 @@ import telephony.core.service.dto.StoreDto;
 
 public class StoreConverter {
 
-    public StoreDto toDto(Store store) {
+    public StoreDto toStoreDto(Store store) {
         StoreDto dto = new StoreDto();
 
         dto.setLabel(store.getLabel());

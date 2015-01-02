@@ -2,6 +2,7 @@ package telephony.core.dao.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -25,7 +26,7 @@ public class ProductsDaoImpl
 extends GenericDaoImpl<Product> 
 implements ProductsDao {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * asd.
@@ -367,4 +368,46 @@ implements ProductsDao {
     
 	    logger.debug("ProductsDaoImpl.removeByDeliveryId ends");
 	}
+
+    @Override
+    public boolean checkIfProductsAreAvailable(Collection<Long> productsIds) {
+
+        logger.info("ProductsDaoImpl.checkIfProductsAreAvailable starts");
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("params : [ productsIds : {} ]", productsIds);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(*) as productscount from Product p where p.id in (:ids) and p.sale is null");
+        Query query = getEntityManager().createQuery(sb.toString());
+
+        query.setParameter("ids", productsIds);
+
+        List<Object[]> res = query.getResultList();
+        Long count = (Long) res.get(0)[0];
+
+        return count.equals(productsIds.size());
+    }
+
+    @Override
+    public boolean checkIfProductIsAvailable(Long productId) {
+
+        logger.info("ProductsDaoImpl.checkIfProductIsAvailable starts");
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("params : [ productId : {} ]", productId);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(*) as productscount from Product p where p.id in (:ids) and p.sale is null");
+        Query query = getEntityManager().createQuery(sb.toString());
+
+        query.setParameter("ids", productId);
+
+        List<Long> res = query.getResultList();
+        Long count = (Long) res.get(0);
+
+        return count.equals(1L);
+    }
 }

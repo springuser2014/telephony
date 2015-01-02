@@ -9,6 +9,13 @@ public class Error {
 
     }
 
+    public static Error create(String fieldId, String errorMsg) {
+        Error e = new Error();
+        e.setFieldId(fieldId);
+        e.setErrorMsg(errorMsg);
+        return e;
+    }
+
     public Error(String fieldId, String errorMsg) {
         this.fieldId = fieldId;
         this.errorMsg = errorMsg;

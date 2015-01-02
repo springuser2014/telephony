@@ -1,10 +1,6 @@
 package telephony.test.core.service;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,21 +9,27 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.query.filter.SaleFilterCriteria;
+import telephony.core.query.filter.SaleFilterCriteriaBuilder;
+import telephony.core.service.dto.SaleAddDto;
+import telephony.core.service.dto.request.SaleAddRequest;
+import telephony.core.service.dto.request.SaleDetailsRequest;
+import telephony.core.service.dto.request.SalesFetchRequest;
+import telephony.core.service.dto.response.SaleAddResponse;
+import telephony.core.service.dto.response.SaleDetailsResponse;
+import telephony.core.service.dto.response.SalesFetchResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.*;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
-import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.Sale;
-import telephony.core.entity.jpa.Store;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.exception.ContactServiceException;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -55,105 +57,190 @@ public class SaleServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private ProductService productService;
-	
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void fetchingAllSale() throws SessionServiceException, SaleServiceException {
+	public void fetchingAllSales() throws SessionServiceException, SaleServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long count = saleService.count(session);
-		
+		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
+				.build();
+
+		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-		List<Sale> lst = saleService.find(session);
-		
+		SalesFetchResponse fetchResponse = saleService.findSales(fetchRequest);
+
 		// then
-		assertTrue("Should return exact number of sales", 
-				count == 2 && lst.size() == count);		
+		assertNotNull(fetchResponse);
+		assertTrue(fetchResponse.isSuccess());
+		assertEquals(fetchResponse.getSales().size() , 2);
 	}
-	
+
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void deletingSale() throws SessionServiceException, SaleServiceException {
+	public void fetchingSalesWithLabel() throws SessionServiceException, SaleServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long countBefore = saleService.count(session);
-		long saleId = 1L;
-		Sale saleToCancel = saleService.findById(session, saleId);
-		
+		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
+				.withLabel(TestData.SALE_CIESZYN_LABEL)
+				.build();
+
+		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-		saleService.delete(null, saleToCancel);
-		
+		SalesFetchResponse fetchResponse = saleService.findSales(fetchRequest);
+
 		// then
-		long countAfter = saleService.count(session);
-		assertTrue("should decreased number of sales", countBefore - countAfter == 1);
+		assertNotNull(fetchResponse);
+		assertTrue(fetchResponse.isSuccess());
+		assertEquals(fetchResponse.getSales().size() , 1);
 	}
-	
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void addingNewSale() 
-			throws SessionServiceException, ContactServiceException, SaleServiceException {
+	public void fetchingSalesWithLimits() throws SessionServiceException, SaleServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-//		Store store = storeService.findByLabel(null, TestData.STORE1_LABEL);
-//		Contact contact = contactService.findByLabel(null, TestData.CONTACT1_LABEL);
-		List<String> imeis = new ArrayList<String>();
-		imeis.add("123456789000002");
-		imeis.add("123456789000005");
-		imeis.add("123456789000006");
-		
-//		List<Product> products =  productService.findByIMEIs(null, imeis);
-		
-		Sale sale = new Sale();
-		sale.setLabel("nowa dostawa");
-		sale.setDateOut(new Date());
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
+				.withPerPage(1)
+				.withPage(1)
+				.build();
+
+		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-//		saleService.add(null, sale, products, store.getId(), contact.getId());
-		
-		Sale addedSale = saleService.findByLabel(null, "nowa dostawa");
-		
+		SalesFetchResponse fetchResponse = saleService.findSales(fetchRequest);
+
 		// then
-		assertTrue("should return new sale", addedSale != null);
-		assertTrue("should sold 3 products", addedSale.getProducts().size() == 3);
+		assertNotNull(fetchResponse);
+		assertTrue(fetchResponse.isSuccess());
+		assertEquals(fetchResponse.getSales().size() , 1);
+		assertEquals(fetchResponse.getSales().get(0).getId(), new Long(1));
 	}
-	
+
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void editingExistingSale() throws SessionServiceException, SaleServiceException {
+	public void fetchingSalesWithMinMaxNumberOfProducts() throws SessionServiceException, SaleServiceException {
 
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Sale saleToUpdate = saleService.findByLabel(null, TestData.SALE1_LABEL);
-		saleToUpdate.setDateOut(new Date(10000));
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
+				.withMinNumberOfProducts(4)
+				.withMaxNumberOfProducts(7)
+				.build();
+
+		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
 		// when
-		saleService.update(null, saleToUpdate);
-		Sale sale = saleService.findByLabel(null, TestData.SALE1_LABEL);
-		
+		SalesFetchResponse fetchResponse = saleService.findSales(fetchRequest);
+
 		// then
-		assertTrue("should return changed ", sale.getDateOut().getTime() == 10000);
+		assertNotNull(fetchResponse);
+		assertTrue(fetchResponse.isSuccess());
+		assertEquals(fetchResponse.getSales().size() , 1);
+		assertEquals(fetchResponse.getSales().get(0).getId(), TestData.SALE2_ID);
 	}
-	
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findById() throws SessionServiceException, SaleServiceException {
-		
+	public void fetchingSaleDetails() throws SessionServiceException {
+
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		Long saleId = 1L;
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleDetailsRequest detailsRequest = new SaleDetailsRequest(session);
+		detailsRequest.setSaleId(TestData.SALE1_ID);
+
 		// when
-		Sale sale = saleService.findById(null, saleId);
-		
+		SaleDetailsResponse detailsResponse = saleService.fetchDetails(detailsRequest);
+
 		// then
-		assertTrue("should not be null ", sale != null);
-		assertTrue("should have appropriate label", sale.getLabel().contains("nowy rok cieszyn"));
+		assertNotNull(detailsResponse);
+		assertTrue(detailsResponse.isSuccess());
+		assertEquals(detailsResponse.getDetailedSale().getId(), TestData.SALE1_ID);
+		assertEquals(detailsResponse.getDetailedSale().getContact().getLabel(), TestData.CONTACT1_LABEL);
+		assertEquals(detailsResponse.getDetailedSale().getStore().getLabel(), TestData.STORE_CIESZYN_LABEL);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void addingSale1() throws SaleServiceException, SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleAddRequest addRequest = new SaleAddRequest(session);
+		SaleAddDto addDto = new SaleAddDto();
+		addDto.setContactId(TestData.CONTACT1_ID);
+		addDto.setStoreId(TestData.STORE1_ID);
+		addDto.setDateOut(new Date());
+		addDto.addProductId(TestData.PRODUCT2_ID);
+		addDto.addProductId(TestData.PRODUCT3_ID);
+		addDto.addProductId(TestData.PRODUCT4_ID);
+		addDto.setLabel("nowe zamowienie");
+		addRequest.setSaleDto(addDto);
+
+		// when
+		SaleAddResponse resp = saleService.add(addRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
+	}
+
+	@Test()
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void addingSale2() throws SaleServiceException, SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleAddRequest addRequest = new SaleAddRequest(session);
+		SaleAddDto addDto = new SaleAddDto();
+		addDto.setContactId(TestData.CONTACT1_ID);
+		addDto.setStoreId(TestData.STORE1_ID);
+		addDto.setDateOut(new Date());
+		addDto.addProductId(TestData.PRODUCT1_ID);
+		addDto.addProductId(TestData.PRODUCT2_ID);
+		addDto.addProductId(TestData.PRODUCT3_ID);
+		addDto.setLabel("nowe zamowienie");
+		addRequest.setSaleDto(addDto);
+
+		// when
+		SaleAddResponse resp = saleService.add(addRequest);
+
+		// then
+		assertNotNull(resp);
+		assertFalse(resp.isSuccess());
+		assertEquals(resp.getErrors().get(0).getFieldId(), "productsIds.1");
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void editingSale1() {
+
+
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void editingSale2() {
+
+
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void deleteSale() {
+
+
 	}
 
 }

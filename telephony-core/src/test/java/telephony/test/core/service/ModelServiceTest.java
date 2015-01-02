@@ -50,14 +50,13 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void findingModelByLabel() {
 		
 		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		String label = "iphone 4s";
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withLabel(label)
 			.build();
 
-		ModelFetchRequest request = new ModelFetchRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
+		ModelFetchRequest request = new ModelFetchRequest(session);
 		request.setFilters(filters);
 		
 		// when
@@ -75,14 +74,14 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void findingById() {
 		
 		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		long id = 1;
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withModelId(id)
 			.build();
 
-		ModelFetchRequest request = new ModelFetchRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
+		ModelFetchRequest request = new ModelFetchRequest(session);
 		request.setFilters(filters);
 		
 		// when
@@ -99,14 +98,14 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void findingByIds() {
 		
 		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
 		List<Long> ids = Arrays.asList(1L, 2L, 3L);
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withModelIds(ids)
 			.build();
 
-		ModelFetchRequest request = new ModelFetchRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
+		ModelFetchRequest request = new ModelFetchRequest(session);
 		request.setFilters(filters);
 
 		// when
@@ -136,6 +135,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	public void edit() {
 	
 		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long id = 1;
 		String newLabel = "newlabel";
 
@@ -143,9 +143,7 @@ public class ModelServiceTest extends BaseCoreTest {
 			.withModelId(id)
 			.build();
 
-		ModelFetchRequest request = new ModelFetchRequest();
-		request.setUsername(TestData.USER1_NAME);
-		request.setSessionId(TestData.USER1_SESSIONID);
+		ModelFetchRequest request = new ModelFetchRequest(session);
 		request.setFilters(filters);
 
 		ModelFetchResponse responseFetch1 = modelService.fetch(request);
@@ -153,9 +151,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		dto.setLabel(newLabel);
 
 		// when
-		ModelEditRequest editRequest = new ModelEditRequest();
-		editRequest.setSessionId(TestData.USER1_NAME);
-		editRequest.setUsername(TestData.USER1_SESSIONID);
+		ModelEditRequest editRequest = new ModelEditRequest(session);
 		editRequest.setModelDto(dto);
 
 		ModelEditResponse editResponse = modelService.edit(editRequest);

@@ -123,6 +123,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
 
         bind(UserConverter.class);
         bind(DeliveryConverter.class);
+        bind(SaleConverter.class);
         bind(ProductConverter.class);
         bind(ModelConverter.class);
         bind(ProducerConverter.class);

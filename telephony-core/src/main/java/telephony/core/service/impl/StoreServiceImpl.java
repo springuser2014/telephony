@@ -76,7 +76,7 @@ implements StoreService {
 		List<Store> stores = storesDao.find(request.getFilters());
 
 		for (Store store: stores) {
-			storez.add(storeConverter.toDto(store));
+			storez.add(storeConverter.toStoreDto(store));
 		}
 
 		StoreFetchResponse resp = new StoreFetchResponse();

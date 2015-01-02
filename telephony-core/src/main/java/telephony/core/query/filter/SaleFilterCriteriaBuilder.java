@@ -71,15 +71,15 @@ class SaleFilterCriteriaBuilderBase<GeneratorT extends SaleFilterCriteriaBuilder
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withRegisteredBy(Long aValue) {
-		instance.setRegisteredBy(aValue);
+	public GeneratorT withLabel(String aValue) {
+		instance.setLabel(aValue);
 
 		return (GeneratorT) this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public GeneratorT withLabel(String aValue) {
-		instance.setLabel(aValue);
+	public GeneratorT withLabelLike(String aValue) {
+		instance.setLabelLike(aValue);
 
 		return (GeneratorT) this;
 	}
@@ -94,6 +94,20 @@ class SaleFilterCriteriaBuilderBase<GeneratorT extends SaleFilterCriteriaBuilder
 	@SuppressWarnings("unchecked")
 	public GeneratorT withMaxNumberOfProducts(Integer aValue) {
 		instance.setMaxNumberOfProducts(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPerPage(Integer aValue) {
+		instance.setPerPage(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPage(Integer aValue) {
+		instance.setPage(aValue);
 
 		return (GeneratorT) this;
 	}

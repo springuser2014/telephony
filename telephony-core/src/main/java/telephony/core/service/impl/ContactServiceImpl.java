@@ -74,7 +74,7 @@ implements ContactService {
 		ContactFetchResponse response = new ContactFetchResponse();
 
 		for(Contact contact : lst) {
-			ContactDto dto = contactConverter.contactToDto(contact);
+			ContactDto dto = contactConverter.contactToContactDto(contact);
 
 			if (isNotNull(dto)) {
 				response.addContact(dto);
