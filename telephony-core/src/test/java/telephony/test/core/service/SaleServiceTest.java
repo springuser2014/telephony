@@ -121,7 +121,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		assertNotNull(fetchResponse);
 		assertTrue(fetchResponse.isSuccess());
 		assertEquals(fetchResponse.getSales().size() , 1);
-		assertEquals(fetchResponse.getSales().get(0).getId(), new Long(1));
+		assertEquals(fetchResponse.getSales().get(0).getId(), new Long(2));
 	}
 
 
