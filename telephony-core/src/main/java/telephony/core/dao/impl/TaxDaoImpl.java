@@ -95,7 +95,7 @@ implements TaxDao {
 			logger.debug("params : [ filters : {} ]", filters);
 		}
 
-		boolean whereAdded = false;
+		boolean whereAdded = false; // TODO remove this variable, introduce where 1=1 in jpql
 		StringBuilder sb = new StringBuilder();
 		sb.append(" select t from Tax t ");
 
@@ -113,7 +113,7 @@ implements TaxDao {
 			}
 		}
 
-		if (isNotNull(filters.getTaxDateEnd()) && isNotNull(filters.getTaxDateStart())) {
+		if (isNotNull(filters.getTaxDateStart()) && isNotNull(filters.getTaxDateEnd())) {
 			if (whereAdded) {
 				sb.append(" and ((t.from >= :from and t.to < :to) ");
 				sb.append(" or (t.from IS NULL and t.to < :to) ");
@@ -126,8 +126,7 @@ implements TaxDao {
 			}
 		}
 
-
-		if (isNull(filters.getTaxDateEnd()) && isNotNull(filters.getTaxDateStart())) {
+		if (isNotNull(filters.getTaxDateStart()) && isNull(filters.getTaxDateEnd())) {
 			if (whereAdded) {
 				sb.append(" and t.from <= :from ");
 			} else {
@@ -136,12 +135,11 @@ implements TaxDao {
 			}
 		}
 
-
-		if (isNotNull(filters.getTaxDateEnd()) && isNull(filters.getTaxDateStart())) {
+		if (isNull(filters.getTaxDateStart()) && isNotNull(filters.getTaxDateEnd())) {
 			if (whereAdded) {
-				sb.append(" and t.to > :to ");
+				sb.append(" and t.to < :to ");
 			} else {
-				sb.append(" where t.to > :to ");
+				sb.append(" where t.to < :to ");
 				whereAdded = true;
 			}
 		}

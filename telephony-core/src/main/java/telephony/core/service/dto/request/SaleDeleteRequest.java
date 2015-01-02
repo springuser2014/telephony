@@ -1,5 +1,20 @@
 package telephony.core.service.dto.request;
 
-public class SaleDeleteRequest {
+import telephony.core.service.dto.SessionDto;
 
+public class SaleDeleteRequest extends AuthRequest {
+
+    Long saleId;
+
+    public SaleDeleteRequest(SessionDto sessionDto) {
+        super(sessionDto);
+    }
+
+    public Long getSaleId() {
+        return saleId;
+    }
+
+    public void setSaleId(Long saleId) {
+        this.saleId = saleId;
+    }
 }

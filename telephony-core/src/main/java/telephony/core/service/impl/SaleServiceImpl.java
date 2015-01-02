@@ -238,7 +238,46 @@ implements SaleService {
 	@Transactional
 	@Override
 	public SaleDeleteResponse delete(SaleDeleteRequest request) throws SessionServiceException, SaleServiceException {
-		return null;
+
+		logger.info("SaleServiceImpl.delete starts");
+
+		SaleDeleteResponse resp = new SaleDeleteResponse();
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ saleId : {} ]", request.getSaleId());
+		}
+
+		sessionService.validate(request.getSessionDto());
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request.getSaleId(), errors)) {
+			resp.setErrors(errors);
+			resp.setMessage(""); // TODO add localized msg
+			resp.setSuccess(false);
+		}
+
+		salesDao.removeById(request.getSaleId());
+
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
+	}
+
+	// TODO : extract to service?
+	private boolean validate(Long saleId, List<Error> errors) {
+
+		if (isNull(saleId)) {
+			errors.add(Error.create("saleId", "saleId cannot be null"));
+		}
+
+		Sale sale = salesDao.findById(saleId);
+
+		if (isNull(sale)) {
+			errors.add(Error.create("saleId", "there is no entity with given id"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Override
@@ -264,7 +303,8 @@ implements SaleService {
 
 	@Override
 	@Transactional
-	public long count(SessionDto session) {
+	public long count(SessionDto session) throws SessionServiceException {
+		sessionService.validate(session);
 		return salesDao.count();
 	}
 

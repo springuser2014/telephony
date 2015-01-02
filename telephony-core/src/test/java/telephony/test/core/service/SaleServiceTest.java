@@ -14,14 +14,8 @@ import telephony.core.query.filter.SaleFilterCriteria;
 import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.dto.SaleAddDto;
 import telephony.core.service.dto.SaleEditDto;
-import telephony.core.service.dto.request.SaleAddRequest;
-import telephony.core.service.dto.request.SaleDetailsRequest;
-import telephony.core.service.dto.request.SaleEditRequest;
-import telephony.core.service.dto.request.SalesFetchRequest;
-import telephony.core.service.dto.response.SaleAddResponse;
-import telephony.core.service.dto.response.SaleDetailsResponse;
-import telephony.core.service.dto.response.SaleEditResponse;
-import telephony.core.service.dto.response.SalesFetchResponse;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.*;
 import telephony.core.service.exception.SaleServiceException;
@@ -277,9 +271,19 @@ public class SaleServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void deleteSale() {
+	public void deleteSale() throws SaleServiceException, SessionServiceException {
 
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleDeleteRequest deleteRequest = new SaleDeleteRequest(session);
+		deleteRequest.setSaleId(TestData.SALE1_ID);
 
+		// when
+		SaleDeleteResponse resp = saleService.delete(deleteRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 	}
 
 }
