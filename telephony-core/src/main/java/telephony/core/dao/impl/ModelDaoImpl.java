@@ -9,6 +9,7 @@ import telephony.core.query.filter.ModelFilterCriteria;
 import javax.persistence.Query;
 import java.util.List;
 
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
 /**
@@ -64,7 +65,7 @@ implements ModelDao {
 			query.append(" and  m.label like :modelLabel ");
 		}
 
-		if (isNotNull(filters.getModelIds())) {
+		if (isNotEmpty(filters.getModelIds())) {
 			query.append(" and m.id in (:modelIds) ");
 		}
 
@@ -84,7 +85,7 @@ implements ModelDao {
 			q.setParameter("modelLabel", filters.getLabel());
 		}
 
-		if (isNotNull(filters.getModelIds())) {
+		if (isNotEmpty(filters.getModelIds())) {
 			q.setParameter("modelIds", filters.getModelIds());
 		}
 
