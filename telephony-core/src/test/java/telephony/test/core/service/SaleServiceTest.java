@@ -132,7 +132,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
-				.withMinNumberOfProducts(4)
+				.withMinNumberOfProducts(5)
 				.withMaxNumberOfProducts(7)
 				.build();
 
