@@ -11,6 +11,11 @@ import telephony.core.entity.jpa.Store;
 import telephony.core.service.dto.DetailedSaleDto;
 import telephony.core.service.dto.SaleAddDto;
 import telephony.core.service.dto.SaleDto;
+import telephony.core.service.dto.SaleEditDto;
+
+import java.util.Iterator;
+
+import static telephony.core.assertion.CommonAssertions.*;
 
 public class SaleConverter {
 
@@ -91,5 +96,41 @@ public class SaleConverter {
         }
 
         return entity;
+    }
+
+    public void updateEntity(Sale sale, SaleEditDto editDto) {
+
+        if (isNotNull(editDto.getContactId())) {
+            Contact contact = contactsDao.findById(editDto.getContactId());
+            sale.setContact(contact);
+        }
+
+        if (isNotNull(editDto.getStoreId())) {
+            Store store = storesDao.findById(editDto.getStoreId());
+            sale.setStore(store);
+        }
+
+        if (isNotEmpty(editDto.getLabel())) {
+            sale.setLabel(editDto.getLabel());
+        }
+
+        if (isNotNull(editDto.getDateOut())) {
+            sale.setDateOut(editDto.getDateOut());
+        }
+
+        if (isNotEmpty(editDto.getProductsToAdd())) {
+            for (Long productToAdd : editDto.getProductsToAdd()) {
+                Product product = productsDao.findById(productToAdd);
+                sale.addProduct(product);
+            }
+        }
+
+        if (isNotEmpty(editDto.getProductsToRemove())) {
+            for (Long productId : editDto.getProductsToRemove()) {
+                Product productToRemove = productsDao.findById(productId);
+
+                sale.removeProduct(productToRemove);
+            }
+        }
     }
 }

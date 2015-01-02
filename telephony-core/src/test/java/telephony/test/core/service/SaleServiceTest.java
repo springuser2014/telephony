@@ -2,6 +2,7 @@ package telephony.test.core.service;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,11 +13,14 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.core.query.filter.SaleFilterCriteria;
 import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.dto.SaleAddDto;
+import telephony.core.service.dto.SaleEditDto;
 import telephony.core.service.dto.request.SaleAddRequest;
 import telephony.core.service.dto.request.SaleDetailsRequest;
+import telephony.core.service.dto.request.SaleEditRequest;
 import telephony.core.service.dto.request.SalesFetchRequest;
 import telephony.core.service.dto.response.SaleAddResponse;
 import telephony.core.service.dto.response.SaleDetailsResponse;
+import telephony.core.service.dto.response.SaleEditResponse;
 import telephony.core.service.dto.response.SalesFetchResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.*;
@@ -224,16 +228,51 @@ public class SaleServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void editingSale1() {
+	public void editingSale1() throws SaleServiceException, SessionServiceException {
 
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleEditRequest editRequest = new SaleEditRequest(session);
+		SaleEditDto editDto = new SaleEditDto();
+		editDto.setSaleId(TestData.SALE1_ID);
+		editDto.setLabel("zmieniony label");
+		editDto.setDateOut(new DateTime().withDate(2010,10,10).toDate());
+		editDto.addProductToAdd(TestData.PRODUCT2_ID);
+		editDto.addProductToAdd(TestData.PRODUCT3_ID);
+		editDto.addProductToRemove(TestData.PRODUCT29_ID);
+		editRequest.setSaleEdit(editDto);
 
+		// when
+		SaleEditResponse resp = saleService.edit(editRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 	}
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void editingSale2() {
+	public void editingSale2() throws SaleServiceException, SessionServiceException {
 
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleEditRequest editRequest = new SaleEditRequest(session);
+		SaleEditDto editDto = new SaleEditDto();
+		editDto.setSaleId(TestData.SALE1_ID);
+		editDto.setLabel("zmieniony label");
+		editDto.setDateOut(new DateTime().withDate(2010,10,10).toDate());
+		editDto.addProductToAdd(TestData.PRODUCT2_ID);
+		editDto.addProductToAdd(TestData.PRODUCT3_ID);
+		editDto.addProductToRemove(TestData.PRODUCT1_ID);
+		editRequest.setSaleEdit(editDto);
 
+		// when
+		SaleEditResponse resp = saleService.edit(editRequest);
+
+		// then
+		assertNotNull(resp);
+		assertFalse(resp.isSuccess());
+		assertEquals(resp.getErrors().get(0).getFieldId(), "productsToRemove.1");
 	}
 
 	@Test

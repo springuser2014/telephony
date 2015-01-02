@@ -406,7 +406,28 @@ implements ProductsDao {
         query.setParameter("ids", productId);
 
         List<Long> res = query.getResultList();
-        Long count = (Long) res.get(0);
+        Long count = res.get(0);
+
+        return count.equals(1L);
+    }
+
+    @Override
+    public boolean checkIfProductIsAssignedToSale(Long productId, Long saleId) {
+        logger.info("ProductsDaoImpl.checkIfProductIsAvailable starts");
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("params : [ productId : {} ]", productId);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(*) as productscount from Product p join p.sale s where p.id = :productId and s.id = :saleId");
+        Query query = getEntityManager().createQuery(sb.toString());
+
+        query.setParameter("productId", productId);
+        query.setParameter("saleId", saleId);
+
+        List<Long> res = query.getResultList();
+        Long count = res.get(0);
 
         return count.equals(1L);
     }

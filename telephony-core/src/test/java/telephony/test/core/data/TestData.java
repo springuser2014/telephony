@@ -71,6 +71,8 @@ public final class TestData {
 	public static final Long PRODUCT3_ID = 3l;
 	public static final Long PRODUCT4_ID = 4l;
 
+	public static final Long PRODUCT29_ID = 29L;
+
 	public static final Long PRODUCER_NOKIA_ID = 1l;
 	public static final String PRODUCER_NOKIA_LABEL = "nokia";
 
@@ -128,6 +130,5 @@ public final class TestData {
 		StringGeneratorImpl g = new StringGeneratorImpl();		
 		return g.nextSessionId();
 	}
-
 
 }

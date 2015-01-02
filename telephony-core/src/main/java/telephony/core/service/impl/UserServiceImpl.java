@@ -172,6 +172,7 @@ implements UserService {
 		Collection<Long> rolesToAddIds = request.getRolesToAdd();
 		Collection<Role> rolesToAdd = rolesDao.findByIds(rolesToAddIds);
 
+		// TODO : move to converter
 		Iterator<Role> userRoles = user.getRoles().iterator();
 
 		while(userRoles.hasNext()) {
@@ -211,6 +212,7 @@ implements UserService {
 
 		Iterator<Store> userStores = user.getAllowedShops().iterator();
 
+		// TODO move to converter
 		while(userStores.hasNext()) {
 			Store r = userStores.next();
 			if (request.getStoresToDelete().contains(r.getId())) {

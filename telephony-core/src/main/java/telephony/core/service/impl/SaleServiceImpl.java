@@ -20,15 +20,12 @@ import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionService;
 import telephony.core.service.converter.SaleConverter;
-import telephony.core.service.dto.DetailedSaleDto;
-import telephony.core.service.dto.SaleAddDto;
-import telephony.core.service.dto.SaleDto;
+import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SaleServiceException;
 import telephony.core.service.exception.SessionServiceException;
-import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -143,6 +140,36 @@ implements SaleService {
 	}
 
 	// TODO : extract to service?
+	private boolean validate(SaleEditDto saleEdit, List<Error> errors) {
+
+		for (Long productId : saleEdit.getProductsToAdd()) {
+
+			if (isNull(productId)) {
+				errors.add(Error.create("global.warning", "productId cannot be null"));
+				continue;
+			}
+
+			if(!productsDao.checkIfProductIsAvailable(productId)) {
+				errors.add(Error.create("productsToAdd." + productId, "already sold"));
+			}
+		}
+
+		for (Long productId : saleEdit.getProductsToRemove()) {
+
+			if (isNull(productId)) {
+				errors.add(Error.create("global.warning", "productId cannot be null"));
+				continue;
+			}
+
+			if(!productsDao.checkIfProductIsAssignedToSale(productId, saleEdit.getSaleId())) {
+				errors.add(Error.create("productsToRemove." + productId, "not assigned to given sale"));
+			}
+		}
+
+		return errors.size() == 0;
+	}
+
+	// TODO : extract to service?
 	private boolean validate(SaleAddDto sale, List<Error> errors) {
 
 		for (Long productId : sale.getProductsIds()) {
@@ -179,7 +206,33 @@ implements SaleService {
 	@Transactional
 	@Override
 	public SaleEditResponse edit(SaleEditRequest request) throws SessionServiceException, SaleServiceException {
-		return null;
+
+		logger.info("SaleServiceImpl.edit starts");
+
+		SaleEditResponse resp = new SaleEditResponse();
+
+		sessionService.validate(request.getSessionDto()); //
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request.getSaleEdit(), errors)) {
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("errors occured"); // TODO add localized msg
+			return resp;
+		}
+
+		SaleEditDto editDto = request.getSaleEdit();
+
+		Sale sale = salesDao.findById(editDto.getSaleId());
+
+		saleConverter.updateEntity(sale, editDto);
+
+		salesDao.saveOrUpdate(sale);
+
+		resp.setSuccess(true);
+		resp.setMessage(""); // TODO add localized msg
+
+		return resp;
 	}
 
 	@Transactional

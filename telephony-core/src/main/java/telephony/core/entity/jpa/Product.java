@@ -181,7 +181,7 @@ public class Product extends BaseEntity {
     	this.sale = sale;
     	
     	if (oldSale != null) {
-			sale.removeProduct(this);
+            oldSale.removeProduct(this);
 		}
     	
     	if (sale != null) {
