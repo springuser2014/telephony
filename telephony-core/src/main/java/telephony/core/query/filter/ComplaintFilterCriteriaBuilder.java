@@ -38,7 +38,7 @@ class ComplaintFilterCriteriaBuilderBase<GeneratorT extends ComplaintFilterCrite
 
 	@SuppressWarnings("unchecked")
 	public GeneratorT withLabel(String aValue) {
-		instance.setLabel(aValue);
+		instance.setTitle(aValue);
 
 		return (GeneratorT) this;
 	}
@@ -74,13 +74,6 @@ class ComplaintFilterCriteriaBuilderBase<GeneratorT extends ComplaintFilterCrite
 	@SuppressWarnings("unchecked")
 	public GeneratorT withEmail(String aValue) {
 		instance.setEmail(aValue);
-
-		return (GeneratorT) this;
-	}
-
-	@SuppressWarnings("unchecked")
-	public GeneratorT withContactId(Long aValue) {
-		instance.setContactId(aValue);
 
 		return (GeneratorT) this;
 	}

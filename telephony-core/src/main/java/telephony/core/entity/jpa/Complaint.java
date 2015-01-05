@@ -52,18 +52,12 @@ public abstract class Complaint extends BaseEntity {
 	@Column(name = "title")
 	private String title;
 	
-	@Column(name = "item_id")
-	private String itemId;
-	
 	@Column(name = "unique_hash")
 	private String uniqueHash;
 	
 	@OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
 	private Set<ComplaintComment> comments;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "contact_id", nullable = false)
-	private Contact contact;
+
 
 	/**
 	 * asd.
@@ -81,28 +75,6 @@ public abstract class Complaint extends BaseEntity {
 		this.comments = comments;
 	}
 
-	/**
-	 * asd.
-	 * @param contact asd.
-	 */
-	public void setContact(Contact contact) {
-		this.contact = contact;
-	}
-	
-	/**
-	 * asd.
-	 * @return a.
-	 */
-	public Contact getContact() {
-		return this.contact;
-	}
-
-	
-	/* TODO : implement later
-	@ManyToMany(mappedBy = "complaints", fetch = FetchType.LAZY)
-	private Set<File> files;
-	*/
-	
 	@Override
 	public Long getId() {
 		return this.id;
@@ -195,26 +167,25 @@ public abstract class Complaint extends BaseEntity {
 
 	/**
 	 * asd.
-	 * @return a.
+	 * @param comment a.
 	 */
-	public String getItemId() {
-		return itemId;
-	}
-
-	/**
-	 * asd.
-	 * @param itemId a.
-	 */
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
-	}
-
-	/**
-	 * asd.
-	 * @param complaintComment a.
-	 */
-	public void addComment(ComplaintComment complaintComment) {
+	public void addComment(ComplaintComment comment) {
 		
-		this.comments.add(complaintComment);
+		if (comments.contains(comment)) {
+			return;
+		}
+
+		comments.add(comment);
+		comment.setComplaint(this);
+	}
+
+	public void removeComment(ComplaintComment comment) {
+
+		if (comments.contains(comment)) {
+			return;
+		}
+
+		comments.remove(comment);
+		comment.setComplaint(null);
 	}
 }

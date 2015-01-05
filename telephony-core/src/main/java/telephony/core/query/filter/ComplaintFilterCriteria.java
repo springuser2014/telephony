@@ -2,17 +2,10 @@ package telephony.core.query.filter;
 
 import java.util.Date;
 
-import telephony.core.entity.jpa.Contact;
-
-// TODO : refactor and create builder
-/**
- * 
- * asd.
- */
-public class ComplaintFilterCriteria 
+public class ComplaintFilterCriteria
 extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 
-	private String label;
+	private String title;
 	private String description;
 	
 	private Date reportedDateFrom;
@@ -20,15 +13,14 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 	
 	private String phoneNumber;
 	private String email;
-	
-	private Long contactId;
+	private String fax;
 
-	public String getLabel() {
-		return label;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -71,11 +63,11 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 		this.email = email;
 	}
 
-	public Long getContactId() {
-		return contactId;
+	public String getFax() {
+		return fax;
 	}
 
-	public void setContactId(Long contactId) {
-		this.contactId = contactId;
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 }

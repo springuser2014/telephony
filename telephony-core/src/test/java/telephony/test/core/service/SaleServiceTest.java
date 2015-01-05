@@ -124,7 +124,6 @@ public class SaleServiceTest extends BaseCoreTest {
 		assertEquals(fetchResponse.getSales().get(0).getId(), new Long(2));
 	}
 
-
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchingSalesWithMinMaxNumberOfProducts() throws SessionServiceException, SaleServiceException {

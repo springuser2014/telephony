@@ -69,9 +69,27 @@ public class ComplaintComment extends BaseEntity {
 	 * @param complaint a.
 	 */
 	public void setComplaint(Complaint complaint) {
+
+		if (sameAsFormter(complaint)) {
+			return;
+		}
+
+		Complaint oldComplaint = this.complaint;
 		this.complaint = complaint;
-		
-		complaint.addComment(this);
+
+		if (oldComplaint != null) {
+			oldComplaint.removeComment(this);
+		}
+
+		if (complaint != null) {
+			complaint.addComment(this);
+		}
+	}
+
+	private boolean sameAsFormter(Complaint complaint) {
+		return this.complaint == null ?
+				complaint == null :
+					this.complaint.equals(complaint);
 	}
 
 	/**

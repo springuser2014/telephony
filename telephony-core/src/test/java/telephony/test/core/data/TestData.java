@@ -121,6 +121,8 @@ public final class TestData {
 	public static final Long SALE2_ID = 2L;
 
 	public static final Long CONTACT1_ID = 1L;
+
+	public static final Long COMPLAINT1_ID = 1L;
 	
 	/**
 	 * Generates random sessionId.

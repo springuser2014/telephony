@@ -1,6 +1,7 @@
 package telephony.test.core.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -14,13 +15,21 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.dto.ProductComplaintDto;
+import telephony.core.service.dto.ProductComplaintEditDto;
+import telephony.core.service.dto.request.ComplaintChangeStatusRequest;
+import telephony.core.service.dto.request.ComplaintDeleteRequest;
+import telephony.core.service.dto.request.ProductComplaintEditRequest;
+import telephony.core.service.dto.request.ReportComplaintRequest;
+import telephony.core.service.dto.response.ComplaintChangeStatusResponse;
+import telephony.core.service.dto.response.ProductComplaintEditResponse;
+import telephony.core.service.dto.response.ReportComplaintResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ContactService;
 import telephony.core.service.ProductComplaintService;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
 import telephony.core.entity.enumz.ComplaintStatus;
-import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.dto.SessionDto;
 
@@ -43,247 +52,149 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 
 	@Inject
 	private ContactService contactService;
-	
+
 	@Inject
 	private ProductComplaintService complaintService;
-	
+
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
 	public void report() throws SessionServiceException {
-		
+
 		// given
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
-		
-//		Contact contact = contactService.findById(null, 1L);
-		ProductComplaint complaint = new ProductComplaint();
-		complaint.setDescription("aaa");
-		complaint.setItemId("123456789000000");
-		complaint.setReportedDate(new Date());
-		complaint.setStatus(ComplaintStatus.JUST_REPORTED);
-		complaint.setTitle("bbb");
-		complaint.setUniqueHash("qwertyuio12357890");
-//		complaint.setContact(contact);
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ReportComplaintRequest complaintRequest = new ReportComplaintRequest(session);
 		long countBefore = complaintService.count(session);
 
+		ProductComplaintDto complaintDto = new ProductComplaintDto();
+		complaintDto.setDescription("aaa");
+		complaintDto.setReportedDate(new Date());
+		complaintDto.setStatus(ComplaintStatus.JUST_REPORTED);
+		complaintDto.setTitle("bbb");
+		complaintDto.setUniqueHash("qwertyuio12357890");
+		complaintDto.setProductId(TestData.PRODUCT1_ID);
+		complaintRequest.setComplaint(complaintDto);
+
 		// when
-		complaintService.report(session, complaint);
+		ReportComplaintResponse resp = complaintService.report(complaintRequest);
 		long countAfter = complaintService.count(session);
-		
+
 		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 		assertEquals(countAfter - countBefore, 1L);
 	}
 
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void update() {
-	
-		// given
-		Date reportedDate = new Date();
-		String uniqueHash = "qwertyuio12357890";
-		long complaintId = 1L;
-		
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
- 
-		ProductComplaint complaint1 = complaintService.findById(complaintId);
-		complaint1.setReportedDate(reportedDate);
-		complaint1.setUniqueHash(uniqueHash);
-		
-		// when
-		complaintService.update(session, complaint1);
-		
-		ProductComplaint complaint2 = complaintService.findById(complaintId);
-		
-		// then
-		assertEquals(complaint2.getUniqueHash(), uniqueHash);
-		assertEquals(complaint2.getReportedDate().getTime(), reportedDate.getTime());
-	}
-
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void updateCollection() {
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void update1() throws SessionServiceException {
 
 		// given
-		Date reportedDate = new Date();
-		String uniqueHash1 = "qwertyuio12357890";
-		String uniqueHash2 = "asdfghjk234567890";
-		long complaintId1 = 1L, complaintId2 = 2L;
-		
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
- 
-		ProductComplaint complaint1 = complaintService.findById(complaintId1);
-		complaint1.setReportedDate(reportedDate);
-		complaint1.setUniqueHash(uniqueHash1);
-		
-		ProductComplaint complaint2 = complaintService.findById(complaintId2);
-		complaint2.setReportedDate(reportedDate);
-		complaint2.setUniqueHash(uniqueHash2);
-		
-		Collection<ProductComplaint> complaints = Arrays.asList(complaint1, complaint2); 
-		
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		ProductComplaintEditDto editDto = new ProductComplaintEditDto();
+		editDto.setComplaintId(TestData.COMPLAINT1_ID);
+		editDto.setDescription("nowy opis");
+
+		ProductComplaintEditRequest editRequest = new ProductComplaintEditRequest(session);
+		editRequest.setComplaintEditDto(editDto);
+
 		// when
-		complaintService.update(session, complaints);
-		
-		ProductComplaint complaint3 = complaintService.findById(complaintId1);
-		ProductComplaint complaint4 = complaintService.findById(complaintId2);
-		
+		ProductComplaintEditResponse resp = complaintService.editComplaint(editRequest);
+
 		// then
-		assertEquals(complaint3.getUniqueHash(), uniqueHash1);
-		assertEquals(complaint4.getUniqueHash(), uniqueHash2);
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
+	}
+
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void markAsInProgress() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ComplaintChangeStatusRequest changeStatusRequest = new ComplaintChangeStatusRequest(session);
+		changeStatusRequest.setComplaintId(TestData.COMPLAINT1_ID);
+
+		// when
+		ComplaintChangeStatusResponse resp = complaintService.markAsInProgress(changeStatusRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 	}
 
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void markAsInProgress() {
-		
-		// when
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
- 
-		long complaintId = 1L;
-		
-		// when
-		complaintService.markAsInProgress(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
-		
-		// then
-		assertTrue(complaint.getStatus() == ComplaintStatus.IN_PROGRESS);
-		
-	}
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void markAsAccepted() throws SessionServiceException {
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void markAsAccepted() {
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ComplaintChangeStatusRequest changeStatusRequest = new ComplaintChangeStatusRequest(session);
+		changeStatusRequest.setComplaintId(TestData.COMPLAINT1_ID);
 
 		// when
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
- 
-		long complaintId = 1L;
-		
-		// when
-		complaintService.markAsAccepted(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
-		
+		ComplaintChangeStatusResponse resp = complaintService.markAsAccepted(changeStatusRequest);
+
 		// then
-		assertTrue(complaint.getStatus() == ComplaintStatus.ACCEPTED);
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 
 	}
 
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void markAsRejected() {
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void markAsRejected() throws SessionServiceException {
+
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ComplaintChangeStatusRequest changeStatusRequest = new ComplaintChangeStatusRequest(session);
+		changeStatusRequest.setComplaintId(TestData.COMPLAINT1_ID);
 
 		// when
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
- 
-		long complaintId = 1L;
-		
-		// when
-		complaintService.markAsRejected(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
-		
+		ComplaintChangeStatusResponse resp = complaintService.markAsRejected(changeStatusRequest);
+
 		// then
-		assertTrue(complaint.getStatus() == ComplaintStatus.REJECTED);
-		
-	}
-
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void markAsResolved() {
-
-		// when
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
- 
-		long complaintId = 1L;
-		
-		// when
-		complaintService.markAsResolved(session, complaintId);
-		ProductComplaint complaint = complaintService.findById(complaintId);
-		
-		// then
-		assertTrue(complaint.getStatus() == ComplaintStatus.RESOLVED);
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
 
 	}
 
 	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeById() throws SessionServiceException {
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void markAsResolved() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ComplaintChangeStatusRequest changeStatusRequest = new ComplaintChangeStatusRequest(session);
+		changeStatusRequest.setComplaintId(TestData.COMPLAINT1_ID);
 
 		// when
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
-		
+		ComplaintChangeStatusResponse resp = complaintService.markAsResolved(changeStatusRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
+
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void delete1() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		long countBefore = complaintService.count(session);
-		long complaintId = 1L;
-		
+		ComplaintDeleteRequest deleteRequest = new ComplaintDeleteRequest(session);
+		deleteRequest.setComplaintId(TestData.COMPLAINT1_ID);
+
 		// when
-		complaintService.removeById(session, complaintId);
+		complaintService.deleteComplaint(deleteRequest);
 		long countAfter = complaintService.count(session);
-		
+
 		// then
 		assertEquals(countBefore - countAfter, 1);
-		
-	}
 
-	@Test
-	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void removeByIds() throws SessionServiceException {
-		// when
-		String username = TestData.USER1_NAME;
-		String sessionId = TestData.USER1_SESSIONID;
-		
-		SessionDto session = new SessionDto();
-		session.setSessionId(sessionId);
-		session.setUsername(username);
-		
-		long countBefore = complaintService.count(session);
-		long complaintId1 = 1L, complaintId2 = 2L;
-		Collection<Long> ids = Arrays.asList(complaintId1, complaintId2);
-		
-		// when
-		complaintService.removeByIds(session, ids);
-		long countAfter = complaintService.count(session);
-		
-		// then
-		assertEquals(countBefore - countAfter, 2);
-		
 	}
 }

@@ -1,7 +1,6 @@
 package telephony.core.entity.jpa;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 
 /**
@@ -11,4 +10,15 @@ import javax.persistence.Entity;
 @DiscriminatorValue("P")
 public class ProductComplaint extends Complaint {
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id", nullable = true)
+    Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

@@ -39,58 +39,5 @@ implements ComplaintService<Complaint> {
 		return dao().count();
 	}
 
-	@Override
-	public void report(SessionDto session, Complaint complaint) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Complaint update(SessionDto session, Complaint complaint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection update(SessionDto session, Collection complaints) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void markAsInProgress(SessionDto session, long complaintId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void markAsAccepted(SessionDto session, long complaintId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void markAsRejected(SessionDto session, long complaintId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void markAsResolved(SessionDto session, long complaintId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeById(SessionDto session, long complaintId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeByIds(SessionDto session, Collection complaintIds) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -1,6 +1,6 @@
-package telephony.core.service.dto.response;
+package telephony.core.service.dto;
 
-public class ComplaintChangeStatusResponse extends BasicResponse {
+public class ProductComplaintEditDto extends ProductComplaintDto {
 
     Long complaintId;
 
