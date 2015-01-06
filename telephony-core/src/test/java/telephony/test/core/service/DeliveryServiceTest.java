@@ -26,18 +26,18 @@ import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
-import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.DeliveryFilterCriteriaBuilder;
 import telephony.core.service.dto.ProductDto;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.DeliveryServiceException;
 
 import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
-import telephony.test.core.data.TestDataBuilder;
+
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
@@ -394,20 +394,20 @@ public class DeliveryServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void editDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
-		
+	public void editDelivery0() throws SessionServiceException, DeliveryServiceException, ParseException {
+
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
-		DeliveryEditRequest req = new DeliveryEditRequest(session);
-		
-		req.setId(1L);
-		req.setContactId(2L);
-		req.setStoreId(2L);
-		
-		req.setLabel("nowy label");
-		
+		DeliveryEditRequest editRequest = new DeliveryEditRequest(session);
+
+		editRequest.setId(TestData.DELIVERY2_ID);
+		editRequest.setContactId(TestData.CONTACT2_ID);
+		editRequest.setStoreId(TestData.STORE2_ID);
+
+		editRequest.setLabel("nowy label");
+
 		Date d = new Date();
-		
+
 		ProductDto productAdd = new ProductDto();
 		productAdd.setColor("green");
 		productAdd.setImei("123456789000099");
@@ -419,27 +419,77 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		productAdd.setTaxId(6L);
 		productAdd.setTaxFrom(d);
 		productAdd.setTaxTo(null);
-		
-		req.addProductToAdd(productAdd);
-		
-		req.addProductToDelete(3L);
-		
+
+		editRequest.addProductToAdd(productAdd);
+
+		editRequest.addProductToDelete(TestData.PRODUCT7_ID);
+
 		ProductEditDto productToEdit = new ProductEditDto();
-		productToEdit.setId(2L);
+		productToEdit.setId(TestData.PRODUCT8_ID);
 		productToEdit.setModel("3310");
 		productToEdit.setProducer("nokia");
 		productToEdit.setPrice(300.0d);
 		productToEdit.setPriceIn(110.0d);
-		
+
+		productToEdit.setTaxId(TestData.TAX6_ID);
+
+		editRequest.addProductToEdit(productToEdit);
+
+		// when
+		DeliveryEditResponse response = deliveryService.edit(editRequest);
+
+		// then
+		assertTrue(response.isSuccess());
+	}
+
+	@Test(expected = PersistenceException.class)
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
+	public void editDelivery1() throws SessionServiceException, DeliveryServiceException, ParseException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
+		DeliveryEditRequest editRequest = new DeliveryEditRequest(session);
+
+		editRequest.setId(1L);
+		editRequest.setContactId(2L);
+		editRequest.setStoreId(2L);
+
+		editRequest.setLabel("nowy label");
+
+		Date d = new Date();
+
+		ProductDto productAdd = new ProductDto();
+		productAdd.setColor("green");
+		productAdd.setImei("123456789000099");
+		productAdd.setModel("3310");
+		productAdd.setProducer("nokia");
+		productAdd.setPriceIn(200.0d);
+		productAdd.setPriceFrom(d);
+		productAdd.setPriceTo(null);
+		productAdd.setTaxId(6L);
+		productAdd.setTaxFrom(d);
+		productAdd.setTaxTo(null);
+
+		editRequest.addProductToAdd(productAdd);
+
+		editRequest.addProductToDelete(TestData.PRODUCT3_ID);
+
+		ProductEditDto productToEdit = new ProductEditDto();
+		productToEdit.setId(TestData.PRODUCT2_ID);
+		productToEdit.setModel("3310");
+		productToEdit.setProducer("nokia");
+		productToEdit.setPrice(300.0d);
+		productToEdit.setPriceIn(110.0d);
+
 		productToEdit.setTaxId(6L);
-		
-		req.addProductToEdit(productToEdit);
-				
+
+		editRequest.addProductToEdit(productToEdit);
+
 		// when
 
-		DeliveryEditResponse response = deliveryService.edit(req);
-		// then
-		assertTrue(response.isSuccess());		
+		DeliveryEditResponse response = deliveryService.edit(editRequest);
+
+		// then exception arise
 	}
 	
 	@Test
@@ -448,12 +498,12 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		DeliveryEditRequest req = new DeliveryEditRequest(session);
-		req.setId(1L);
-		req.setContactId(2L);
-		req.setStoreId(2L);
+		DeliveryEditRequest editRequest = new DeliveryEditRequest(session);
+		editRequest.setId(TestData.DELIVERY2_ID);
+		editRequest.setContactId(TestData.CONTACT2_ID);
+		editRequest.setStoreId(TestData.STORE2_ID);
 		
-		req.setLabel("nowy label");
+		editRequest.setLabel("nowy label");
 		
 		Date d = new Date();
 		
@@ -469,7 +519,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		productAdd1.setTaxFrom(d);
 		productAdd1.setTaxTo(null);
 		
-		req.addProductToAdd(productAdd1);
+		editRequest.addProductToAdd(productAdd1);
 		
 		ProductDto productAdd2 = new ProductDto();
 		productAdd2.setColor("green");
@@ -483,33 +533,33 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		productAdd2.setTaxFrom(d);
 		productAdd2.setTaxTo(null);
 		
-		req.addProductToAdd(productAdd2);
+		editRequest.addProductToAdd(productAdd2);
 		
-		req.addProductToDelete(3L);
+		editRequest.addProductToDelete(TestData.PRODUCT7_ID);
 		
 		ProductEditDto productToEdit1 = new ProductEditDto();
-		productToEdit1.setId(2L);
+		productToEdit1.setId(TestData.PRODUCT7_ID);
 		productToEdit1.setModel("desire y");
 		productToEdit1.setProducer("htc");
 		productToEdit1.setPrice(300.0d);
 		productToEdit1.setPriceIn(110.0d);
-		productToEdit1.setTaxId(6L);
+		productToEdit1.setTaxId(TestData.TAX6_ID);
 		
-		req.addProductToEdit(productToEdit1);
+		editRequest.addProductToEdit(productToEdit1);
 		
 		ProductEditDto productToEdit2 = new ProductEditDto();
-		productToEdit2.setId(4L);
+		productToEdit2.setId(TestData.PRODUCT8_ID);
 		productToEdit2.setModel("q10");
 		productToEdit2.setProducer("blackberry");
 		productToEdit2.setPrice(400.0d);
 		productToEdit2.setPriceIn(160.0d);
 		
-		productToEdit2.setTaxId(6L);
+		productToEdit2.setTaxId(TestData.TAX6_ID);
 		
-		req.addProductToEdit(productToEdit2);
+		editRequest.addProductToEdit(productToEdit2);
 		
 		// when
-		DeliveryEditResponse response = deliveryService.edit(req);
+		DeliveryEditResponse response = deliveryService.edit(editRequest);
 		
 		// then
 		assertTrue(response.isSuccess());		
@@ -524,7 +574,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		long countBefore = deliveryService.count(session);
 		
 		DeliveryDeleteRequest req = new DeliveryDeleteRequest(session);
-		req.setDeliveryId(1L);
+		req.setDeliveryId(TestData.DELIVERY2_ID);
 
 		// when
 		DeliveryDeleteResponse response = deliveryService.delete(req);

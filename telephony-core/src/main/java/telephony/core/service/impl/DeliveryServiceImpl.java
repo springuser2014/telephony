@@ -18,6 +18,7 @@ import telephony.core.service.dto.ProductDto;
 import telephony.core.service.dto.ProductEditDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
@@ -25,6 +26,7 @@ import telephony.core.service.dto.SessionDto;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
+import static telephony.core.assertion.CommonAssertions.isEmpty;
 import static telephony.core.assertion.CommonAssertions.isNull;
 
 
@@ -218,12 +220,8 @@ implements DeliveryService {
 	@Override
 	public DeliveryDetailsResponse fetchDetails(DeliveryDetailsRequest request)
 			throws SessionServiceException {
-		
-		SessionDto session = SessionDto.create();
-		session.setSessionId(request.getSessionId());
-		session.setUsername(request.getUsername());
-		
-		sessionService.validate(session);		
+
+		sessionService.validate(request.getSessionDto());
 
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
 		DeliveryDto bean = deliveryConverter.toDeliveryDto(delivery);
@@ -235,24 +233,19 @@ implements DeliveryService {
 
 	@Override
 	@Transactional
-	public DeliveryEditResponse edit(DeliveryEditRequest req)
+	public DeliveryEditResponse edit(DeliveryEditRequest request)
 			throws ParseException, DeliveryServiceException, SessionServiceException {
 	
-		DeliveryEditResponse resp =
-				new DeliveryEditResponse();
-		
+		DeliveryEditResponse resp = new DeliveryEditResponse();
+		sessionService.validate(request.getSessionDto());
 
-		SessionDto session = SessionDto.create();
-		session.setSessionId(req.getSessionId());
-		session.setUsername(req.getUsername());
+		// TODO : extract the stuff below to converter/methods
 		
-		sessionService.validate(session);		
-		
-		Delivery delivery = deliveriesDao.findById(req.getId());		
+		Delivery delivery = deliveriesDao.findById(request.getId());
 		Store store = null;
 		
-		if (req.getStoreId() != null) {
-			store = storesDao.findById(req.getStoreId());
+		if (request.getStoreId() != null) {
+			store = storesDao.findById(request.getStoreId());
 		} else {
 			store = delivery.getStore();
 		}
@@ -260,21 +253,21 @@ implements DeliveryService {
 		delivery.setStore(store);
 		
 		Contact contact = null;
-		if (req.getContactId() != null) {
-			contact = contactsDao.findById(req.getContactId());
+		if (request.getContactId() != null) {
+			contact = contactsDao.findById(request.getContactId());
 		} else {
 			contact = delivery.getContact();
 		}
 		
 		delivery.setContact(contact);
 		
-		for (Long id : req.getProductsToDelete()) { // TODO : to improve
+		for (Long id : request.getProductsToDelete()) { // TODO : to improve
 			productsDao.removeById(id);
 		}
 		
 		Collection<Product> products = new ArrayList<Product>();
 		
-		for (ProductDto bean:  req.getProductsToAdd()) {
+		for (ProductDto bean:  request.getProductsToAdd()) {
 			
 			Model model = null;
 			Producer producer = null;
@@ -354,7 +347,7 @@ implements DeliveryService {
 			}
 		}
 		
-		for (ProductEditDto bean : req.getProductsToEdit()) {
+		for (ProductEditDto bean : request.getProductsToEdit()) {
 			
 			Product product = productsDao.findById(bean.getId());
 			
@@ -462,24 +455,28 @@ implements DeliveryService {
 
 	@Transactional
 	@Override
-	public DeliveryDeleteResponse delete(DeliveryDeleteRequest req) throws SessionServiceException, DeliveryServiceException {
+	public DeliveryDeleteResponse delete(DeliveryDeleteRequest request) throws SessionServiceException, DeliveryServiceException {
 
-		SessionDto session = SessionDto.create();
-		session.setUsername(req.getUsername());
-		session.setSessionId(req.getSessionId());
-		
-		sessionService.validate(session);
-		
 		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
-		
-		Delivery deliveryToDelete = deliveriesDao.findById(req.getDeliveryId());
-		
-		if (isNull(deliveryToDelete)) {
-			throw new DeliveryServiceException();
+
+		logger.info("DeliveryServiceImpl.delete starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ deliveryId : {} ]", request.getDeliveryId());
 		}
-		
-		productsDao.removeByDeliveryId(deliveryToDelete);
-		deliveriesDao.removeById(deliveryToDelete.getId());
+
+		sessionService.validate(request.getSessionDto());
+		List<Error> errors = getEmptyErrors();
+
+		if (isEmpty(request.getDeliveryId())) {
+			errors.add(Error.create("deliveryId", "deliveryId cannot be empty"));
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("error occured"); // TODO add lcoalized msg
+			return resp;
+		}
+
+		deliveriesDao.removeById(request.getDeliveryId());
 		
 		resp.setSuccess(true);
 		

@@ -7,6 +7,13 @@ import telephony.core.util.StringGeneratorImpl;
  */
 public final class TestData {
 
+
+	public static final Long DELIVERY2_ID = 2L;
+	public static final Long PRODUCT7_ID = 7L;
+	public static final Long PRODUCT8_ID = 8L;
+	public static final Long TAX6_ID = 6L;
+	public static final Long PRODUCT_8_ID = 8L;
+
 	private TestData() {}
 	
 	/**
@@ -120,7 +127,10 @@ public final class TestData {
 	public static final Long SALE1_ID = 1L;
 	public static final Long SALE2_ID = 2L;
 
+	public static final Long DELIVERY7_ID = 7L;
+
 	public static final Long CONTACT1_ID = 1L;
+	public static final Long CONTACT2_ID = 2L;
 
 	public static final Long COMPLAINT1_ID = 1L;
 	public static final String COMPLAINT1_DESC = "Description of product complaint 1";
