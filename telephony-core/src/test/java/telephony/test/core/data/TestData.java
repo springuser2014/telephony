@@ -123,6 +123,7 @@ public final class TestData {
 	public static final Long CONTACT1_ID = 1L;
 
 	public static final Long COMPLAINT1_ID = 1L;
+	public static final String COMPLAINT1_DESC = "Description of product complaint 1";
 	
 	/**
 	 * Generates random sessionId.

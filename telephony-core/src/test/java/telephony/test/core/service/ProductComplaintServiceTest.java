@@ -56,7 +56,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
-	public void fetch() throws SessionServiceException {
+	public void fetch1() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -68,12 +68,12 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		fetchRequest.setFilters(filters);
 
 		// when
-
 		ProductComplaintFetchResponse resp = complaintService.fetch(fetchRequest);
 
 		// then
 		assertNotNull(resp);
-
+		assertEquals(resp.getComplaints().size(), 1);
+		assertEquals(resp.getComplaints().get(0).getDescription(), TestData.COMPLAINT1_DESC);
 	}
 
 	@Test

@@ -81,7 +81,7 @@ implements ProductComplaintDao {
 	public List<ProductComplaint> findByCriteria(ProductComplaintFilterCriteria filters) {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(" select c from ProductComplaint c where 1=1 ");
+		sb.append(" select c from ProductComplaint c join c.product p where 1=1 ");
 
 		// TODO add filtering by contact
 
@@ -101,6 +101,10 @@ implements ProductComplaintDao {
 			sb.append(" and c.title = :title ");
 		}
 
+		if (isNotEmpty(filters.getProductsIds())) {
+			sb.append(" and p.id in (:productsIds) ");
+		}
+
 		Query q = getEntityManager().createQuery(sb.toString());
 
 		if (isNotEmpty(filters.getDescription())) {
@@ -118,6 +122,11 @@ implements ProductComplaintDao {
 		if (isNotNull(filters.getTitle())) {
 			q.setParameter("title", filters.getTitle());
 		}
+
+		if (isNotEmpty(filters.getProductsIds())) {
+			q.setParameter("productsIds", filters.getProductsIds());
+		}
+
 
 		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
