@@ -17,7 +17,9 @@ public interface ComplaintService
 		 RCRes extends ReportComplaintResponse, RCReq extends ReportComplaintRequest<DTO>, DTO extends ComplaintDto,
 		 CERes extends ComplaintEditResponse, CEReq extends ComplaintEditRequest<EditDTO>, EditDTO extends ComplaintEditDto,
 		 CFRes extends ComplaintFetchResponse, CFReq extends ComplaintFetchRequest<CFC>, CFC extends ComplaintFilterCriteria>  extends GenericService<T> {
-	
+
+	// TODO add fetchDetails
+
 	/**
 	 * asd.
 	 * @param hashUnique ad.

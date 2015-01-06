@@ -205,9 +205,10 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		long countBefore = complaintService.count(session);
 		ComplaintDeleteRequest deleteRequest = new ComplaintDeleteRequest(session);
 		deleteRequest.setComplaintId(TestData.COMPLAINT1_ID);
+
+		long countBefore = complaintService.count(session);
 
 		// when
 		complaintService.deleteComplaint(deleteRequest);

@@ -121,6 +121,7 @@ implements ProductComplaintService {
 		return errors.size() == 0;
 	}
 
+	@Transactional
 	@Override
 	public ProductComplaintFetchResponse fetch(ProductComplaintFetchRequest request) throws SessionServiceException {
 
