@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Test;
@@ -15,14 +13,14 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.query.filter.ProductComplaintFilterCriteria;
+import telephony.core.query.filter.ProductComplaintFilterCriteriaBuilder;
 import telephony.core.service.dto.ProductComplaintDto;
 import telephony.core.service.dto.ProductComplaintEditDto;
-import telephony.core.service.dto.request.ComplaintChangeStatusRequest;
-import telephony.core.service.dto.request.ComplaintDeleteRequest;
-import telephony.core.service.dto.request.ProductComplaintEditRequest;
-import telephony.core.service.dto.request.ReportComplaintRequest;
+import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.ComplaintChangeStatusResponse;
 import telephony.core.service.dto.response.ProductComplaintEditResponse;
+import telephony.core.service.dto.response.ProductComplaintFetchResponse;
 import telephony.core.service.dto.response.ReportComplaintResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ContactService;
@@ -30,7 +28,6 @@ import telephony.core.service.ProductComplaintService;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
 import telephony.core.entity.enumz.ComplaintStatus;
-import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
@@ -56,13 +53,36 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 	@Inject
 	private ProductComplaintService complaintService;
 
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void fetch() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ProductComplaintFilterCriteria filters = ProductComplaintFilterCriteriaBuilder.productComplaintFilterCriteria()
+				.withProductId(TestData.PRODUCT1_ID)
+				.build();
+
+		ProductComplaintFetchRequest fetchRequest = new ProductComplaintFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
+		// when
+
+		ProductComplaintFetchResponse resp = complaintService.fetch(fetchRequest);
+
+		// then
+		assertNotNull(resp);
+
+	}
+
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
 	public void report() throws SessionServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		ReportComplaintRequest complaintRequest = new ReportComplaintRequest(session);
+		ReportProductComplaintRequest complaintRequest = new ReportProductComplaintRequest(session);
 		long countBefore = complaintService.count(session);
 
 		ProductComplaintDto complaintDto = new ProductComplaintDto();
@@ -96,7 +116,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		editDto.setDescription("nowy opis");
 
 		ProductComplaintEditRequest editRequest = new ProductComplaintEditRequest(session);
-		editRequest.setComplaintEditDto(editDto);
+		editRequest.setComplaint(editDto);
 
 		// when
 		ProductComplaintEditResponse resp = complaintService.editComplaint(editRequest);

@@ -14,6 +14,7 @@ import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
@@ -60,9 +61,9 @@ implements ProductComplaintService {
 
 	@Transactional
 	@Override
-	public ReportComplaintResponse report(ReportComplaintRequest request) throws SessionServiceException {
+	public ReportProductComplaintResponse report(ReportProductComplaintRequest request) throws SessionServiceException {
 
-		ReportComplaintResponse resp = new ReportComplaintResponse();
+		ReportProductComplaintResponse resp = new ReportProductComplaintResponse();
 
 		logger.info("ProductComplaintServiceImpl.report starts");
 
@@ -89,6 +90,7 @@ implements ProductComplaintService {
 
 		return resp;
 	}
+
 
 	private boolean validate(ProductComplaintDto complaint, List<Error> errors) {
 
@@ -120,9 +122,30 @@ implements ProductComplaintService {
 	}
 
 	@Override
-	public ComplaintFetchResponse fetch(ComplaintFetchRequest req) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProductComplaintFetchResponse fetch(ProductComplaintFetchRequest request) throws SessionServiceException {
+
+		ProductComplaintFetchResponse resp = new ProductComplaintFetchResponse();
+
+		logger.info("ProductComplaintServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", request.getFilters());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation , defualt find limits
+
+		List<ProductComplaintEditDto> complaintz = new ArrayList<ProductComplaintEditDto>();
+		List<ProductComplaint> complaints = productComplaintDao.findByCriteria(request.getFilters());
+
+		for (ProductComplaint entity : complaints) {
+			complaintz.add(productComplaintConverter.toDto(entity));
+		}
+
+		resp.setComplaints(complaintz);
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
 	}
 
 	// TODO move to external class
@@ -144,22 +167,22 @@ implements ProductComplaintService {
 		logger.info("ProductComplaintServiceImpl.editComplaint starts");
 
 		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ complaintEdit : {} ] ", request.getComplaintEditDto());
+			logger.debug("params : [ complaintEdit : {} ] ", request.getComplaint());
 		}
 
 		sessionService.validate(request.getSessionDto());
 		List<Error> errors = getEmptyErrors();
 
-		if (!validate(request.getComplaintEditDto(), errors)) {
+		if (!validate(request.getComplaint(), errors)) {
 			resp.setErrors(errors);
 			resp.setMessage(""); // TODO add localized msg
 			resp.setSuccess(false);
 			return resp;
 		}
 
-		ProductComplaint productComplaint = productComplaintDao.findById(request.getComplaintEditDto().getComplaintId());
+		ProductComplaint productComplaint = productComplaintDao.findById(request.getComplaint().getComplaintId());
 
-		productComplaintConverter.update(productComplaint, request.getComplaintEditDto());
+		productComplaintConverter.update(productComplaint, request.getComplaint());
 
 		productComplaintDao.saveOrUpdate(productComplaint);
 

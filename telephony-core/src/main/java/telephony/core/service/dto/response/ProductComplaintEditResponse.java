@@ -1,4 +1,4 @@
 package telephony.core.service.dto.response;
 
-public class ProductComplaintEditResponse extends BasicResponse {
+public class ProductComplaintEditResponse extends ComplaintEditResponse {
 }

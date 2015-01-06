@@ -108,10 +108,6 @@ implements ModelDao {
 
 		List<Model> lst = (List<Model>) q.getResultList();
 
-		if (lst.size() > 0) {
-			return lst;
-		} else {
-			return null;
-		}
+		return lst;
 	}
 }

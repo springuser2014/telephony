@@ -1,11 +1,15 @@
 package telephony.core.dao.impl;
 
-import java.util.List;
-
 import telephony.core.dao.ProductComplaintDao;
 import telephony.core.entity.enumz.ComplaintStatus;
 import telephony.core.entity.jpa.ProductComplaint;
+import telephony.core.query.filter.ProductComplaintFilterCriteria;
 
+import javax.persistence.Query;
+import java.util.List;
+
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
+import static telephony.core.assertion.CommonAssertions.isNotNull;
 /**
  * asd.
  */
@@ -19,7 +23,6 @@ implements ProductComplaintDao {
 	public ProductComplaintDaoImpl() {
 		super(ProductComplaint.class);
 	}
-	
 
 	@Override
 	public void markAsInProgress(long complaintId) {
@@ -72,6 +75,62 @@ implements ProductComplaintDao {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public List<ProductComplaint> findByCriteria(ProductComplaintFilterCriteria filters) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(" select c from ProductComplaint c where 1=1 ");
+
+		// TODO add filtering by contact
+
+		if (isNotEmpty(filters.getDescription())) {
+			sb.append(" and c.description = :description ");
+		}
+
+		if (isNotNull(filters.getReportedDateFrom())) {
+			sb.append(" and c.reportedDate >= :reportedDateFrom ");
+		}
+
+		if (isNotNull(filters.getReportedDateTo())) {
+			sb.append(" and c.reportedDate <= :reportedDateTo ");
+		}
+
+		if (isNotNull(filters.getTitle())) {
+			sb.append(" and c.title = :title ");
+		}
+
+		Query q = getEntityManager().createQuery(sb.toString());
+
+		if (isNotEmpty(filters.getDescription())) {
+			q.setParameter("description", filters.getDescription());
+		}
+
+		if (isNotNull(filters.getReportedDateFrom())) {
+			q.setParameter("reportedDateFrom", filters.getReportedDateFrom());
+		}
+
+		if (isNotNull(filters.getReportedDateTo())) {
+			q.setParameter("reportedDateTo", filters.getReportedDateTo());
+		}
+
+		if (isNotNull(filters.getTitle())) {
+			q.setParameter("title", filters.getTitle());
+		}
+
+		// TODO extract to common
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getPerPage())) {
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		List<ProductComplaint> complaints = q.getResultList();
+		return complaints;
 	}
 
 }

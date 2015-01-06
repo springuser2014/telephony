@@ -1,14 +1,12 @@
 package telephony.core.service.dto;
 
 import telephony.core.entity.enumz.ComplaintStatus;
-import telephony.core.entity.jpa.ProductComplaint;
 
 import java.util.Date;
 
-public class ProductComplaintDto extends ComplaintDto {
+public abstract class ComplaintDto {
 
     String description;
-    Long productId;
     Date reportedDate;
     ComplaintStatus status;
     String title;
@@ -20,14 +18,6 @@ public class ProductComplaintDto extends ComplaintDto {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public Date getReportedDate() {
@@ -61,5 +51,6 @@ public class ProductComplaintDto extends ComplaintDto {
     public void setUniqueHash(String uniqueHash) {
         this.uniqueHash = uniqueHash;
     }
+
 
 }

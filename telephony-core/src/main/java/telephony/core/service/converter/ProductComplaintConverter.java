@@ -62,4 +62,18 @@ public class ProductComplaintConverter {
             productComplaint.setUniqueHash(complaintEditDto.getUniqueHash());
         }
     }
+
+    public ProductComplaintEditDto toDto(ProductComplaint entity) {
+
+        ProductComplaintEditDto dto = new ProductComplaintEditDto();
+        dto.setComplaintId(entity.getId());
+        dto.setDescription(entity.getDescription());
+        dto.setProductId(entity.getProduct().getId());
+        dto.setReportedDate(entity.getReportedDate());
+        dto.setTitle(entity.getTitle());
+        dto.setUniqueHash(entity.getUniqueHash());
+        dto.setStatus(entity.getStatus());
+
+        return dto;
+    }
 }

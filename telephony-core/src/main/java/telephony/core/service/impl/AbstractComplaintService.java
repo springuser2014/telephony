@@ -1,15 +1,14 @@
 package telephony.core.service.impl;
 
-import java.util.Collection;
-
-import com.google.inject.persist.Transactional;
-
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.Complaint;
+import telephony.core.query.filter.ComplaintFilterCriteria;
+import telephony.core.service.dto.ComplaintDto;
+import telephony.core.service.dto.ComplaintEditDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.ComplaintService;
-import telephony.core.service.dto.SessionDto;
+import telephony.core.service.exception.SessionServiceException;
 
 
 /**
@@ -19,9 +18,15 @@ import telephony.core.service.dto.SessionDto;
  * @param <T> a.
  * @param <D> asd .
  */
-public class AbstractComplaintService<T extends Complaint, D extends GenericDao<T>>
+public class AbstractComplaintService<T extends Complaint, D extends GenericDao<T>,
+		RCRes extends ReportComplaintResponse, RCReq extends ReportComplaintRequest<DTO>, DTO extends ComplaintDto,
+		CERes extends ComplaintEditResponse, CEReq extends ComplaintEditRequest<EditDTO>, EditDTO extends ComplaintEditDto,
+		CFRes extends ComplaintFetchResponse, CFReq extends ComplaintFetchRequest<CFC>, CFC extends ComplaintFilterCriteria>
 extends AbstractGenericService<T, D>
-implements ComplaintService<T> {
+implements ComplaintService
+		<T, RCRes, RCReq, DTO,
+			CERes, CEReq, EditDTO,
+			CFRes, CFReq, CFC> {
 
 	public AbstractComplaintService(Class<D> clazz) {
 		super(clazz);
@@ -45,22 +50,21 @@ implements ComplaintService<T> {
 	}
 
 	@Override
-	public ReportComplaintResponse report(ReportComplaintRequest req) {
-		// TODO Auto-generated method stub
+	public CFRes fetch(CFReq req) throws SessionServiceException {
 		return null;
 	}
 
 	@Override
-	public ComplaintFetchResponse fetch(ComplaintFetchRequest req) {
-		// TODO Auto-generated method stub
+	public CERes editComplaint(CEReq req) throws SessionServiceException {
 		return null;
 	}
 
 	@Override
-	public ProductComplaintEditResponse editComplaint(ProductComplaintEditRequest req) {
+	public RCRes report(RCReq req) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 	@Override
 	public ComplaintChangeStatusResponse markAsRejected(ComplaintChangeStatusRequest req) {

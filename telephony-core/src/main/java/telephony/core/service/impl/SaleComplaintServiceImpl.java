@@ -1,16 +1,15 @@
 package telephony.core.service.impl;
 
-import java.util.Collection;
-
 import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.SaleComplaintDao;
-import telephony.core.entity.jpa.Complaint;
 import telephony.core.entity.jpa.SaleComplaint;
+import telephony.core.query.filter.SaleComplaintFilterCriteria;
+import telephony.core.service.dto.SaleComplaintDto;
+import telephony.core.service.dto.SaleComplaintEditDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 
 /**
@@ -45,21 +44,19 @@ implements SaleComplaintService {
 
 	// TODO : make this method generic
 	@Override
-	public ReportComplaintResponse report(ReportComplaintRequest req) {
+	public ReportSaleComplaintResponse report(ReportSaleComplaintRequest req) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SaleComplaintFetchResponse fetch(SaleComplaintFetchRequest saleComplaintFetchRequest) throws SessionServiceException {
 		return null;
 	}
 
 	// TODO : make this method generic
 	@Override
-	public ComplaintFetchResponse fetch(ComplaintFetchRequest req) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	// TODO : make this method generic
-	@Override
-	public ProductComplaintEditResponse editComplaint(ProductComplaintEditRequest req) {
+	public SaleComplaintEditResponse editComplaint(SaleComplaintEditRequest req) {
 		// TODO Auto-generated method stub
 		return null;
 	}

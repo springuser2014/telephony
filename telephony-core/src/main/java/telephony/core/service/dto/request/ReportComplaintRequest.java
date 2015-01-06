@@ -1,21 +1,22 @@
 package telephony.core.service.dto.request;
 
+import telephony.core.service.dto.ComplaintDto;
 import telephony.core.service.dto.ProductComplaintDto;
 import telephony.core.service.dto.SessionDto;
 
-public class ReportComplaintRequest extends AuthRequest {
+public abstract class ReportComplaintRequest<T extends ComplaintDto> extends AuthRequest {
 
-    ProductComplaintDto complaint;
+    T complaint;
 
     public ReportComplaintRequest(SessionDto sessionDto) {
         super(sessionDto);
     }
 
-    public ProductComplaintDto getComplaint() {
+    public T getComplaint() {
         return complaint;
     }
 
-    public void setComplaint(ProductComplaintDto complaint) {
+    public void setComplaint(T complaint) {
         this.complaint = complaint;
     }
 }

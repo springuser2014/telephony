@@ -1,5 +1,5 @@
 package telephony.core.service.dto.response;
 
-public class ReportComplaintResponse extends BasicResponse {
+public abstract class ReportComplaintResponse extends BasicResponse {
 
 }

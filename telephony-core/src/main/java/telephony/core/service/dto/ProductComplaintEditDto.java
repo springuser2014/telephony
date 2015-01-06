@@ -1,14 +1,14 @@
 package telephony.core.service.dto;
 
-public class ProductComplaintEditDto extends ProductComplaintDto {
+public class ProductComplaintEditDto extends ComplaintEditDto {
 
-    Long complaintId;
+    Long productId;
 
-    public Long getComplaintId() {
-        return complaintId;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setComplaintId(Long complaintId) {
-        this.complaintId = complaintId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

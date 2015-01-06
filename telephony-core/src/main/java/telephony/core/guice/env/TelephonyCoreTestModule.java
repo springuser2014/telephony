@@ -8,13 +8,18 @@ import telephony.core.dao.impl.TestEntityDaoImpl;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.entity.jpa.TestEntity;
 import telephony.core.guice.TelephonyCoreServicesModule;
+import telephony.core.query.filter.ProductComplaintFilterCriteria;
 import telephony.core.service.ComplaintService;
 import telephony.core.service.GenericService;
 import telephony.core.service.TestEntityService;
-import telephony.core.service.dto.request.ComplaintFetchRequest;
-import telephony.core.service.dto.request.ReportComplaintRequest;
-import telephony.core.service.dto.response.ComplaintFetchResponse;
-import telephony.core.service.dto.response.ReportComplaintResponse;
+import telephony.core.service.dto.ProductComplaintDto;
+import telephony.core.service.dto.ProductComplaintEditDto;
+import telephony.core.service.dto.request.ProductComplaintEditRequest;
+import telephony.core.service.dto.request.ProductComplaintFetchRequest;
+import telephony.core.service.dto.request.ReportProductComplaintRequest;
+import telephony.core.service.dto.response.ProductComplaintEditResponse;
+import telephony.core.service.dto.response.ProductComplaintFetchResponse;
+import telephony.core.service.dto.response.ReportProductComplaintResponse;
 import telephony.core.service.impl.AbstractComplaintService;
 import telephony.core.service.impl.AbstractGenericService;
 import telephony.core.service.impl.TestEntityServiceImpl;
@@ -55,9 +60,16 @@ public class TelephonyCoreTestModule extends AbstractModule {
 			new GenericDaoImpl<TestEntity>(TestEntity.class) { }
 		);
 		
-		bind(new TypeLiteral<ComplaintService<ProductComplaint>>() { })
+		bind(new TypeLiteral<ComplaintService<ProductComplaint,
+			ReportProductComplaintResponse, ReportProductComplaintRequest, ProductComplaintDto,
+			ProductComplaintEditResponse, ProductComplaintEditRequest, ProductComplaintEditDto,
+			ProductComplaintFetchResponse, ProductComplaintFetchRequest, ProductComplaintFilterCriteria>
+		>() { })
 		.toInstance(
-			new AbstractComplaintService<ProductComplaint, ProductComplaintDao>(ProductComplaintDao.class) { }
+			new AbstractComplaintService<ProductComplaint, ProductComplaintDao,
+					ReportProductComplaintResponse, ReportProductComplaintRequest, ProductComplaintDto,
+					ProductComplaintEditResponse, ProductComplaintEditRequest, ProductComplaintEditDto,
+					ProductComplaintFetchResponse, ProductComplaintFetchRequest, ProductComplaintFilterCriteria>(ProductComplaintDao.class) { }
 		);
 
 		

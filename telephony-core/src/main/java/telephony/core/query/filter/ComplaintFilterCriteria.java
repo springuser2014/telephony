@@ -2,7 +2,7 @@ package telephony.core.query.filter;
 
 import java.util.Date;
 
-public class ComplaintFilterCriteria
+public abstract class ComplaintFilterCriteria
 extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 
 	private String title;

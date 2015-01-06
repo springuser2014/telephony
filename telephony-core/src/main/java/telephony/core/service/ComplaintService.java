@@ -1,11 +1,11 @@
 package telephony.core.service;
 
-import java.util.Collection;
-
 import telephony.core.entity.jpa.Complaint;
+import telephony.core.query.filter.ComplaintFilterCriteria;
+import telephony.core.service.dto.ComplaintDto;
+import telephony.core.service.dto.ComplaintEditDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
-import telephony.core.service.dto.SessionDto;
 import telephony.core.service.exception.SessionServiceException;
 
 /**
@@ -13,7 +13,10 @@ import telephony.core.service.exception.SessionServiceException;
  * @param <T> asd.
  */
 public interface ComplaintService
-		<T extends Complaint>  extends GenericService<T> {
+		<T extends Complaint,
+		 RCRes extends ReportComplaintResponse, RCReq extends ReportComplaintRequest<DTO>, DTO extends ComplaintDto,
+		 CERes extends ComplaintEditResponse, CEReq extends ComplaintEditRequest<EditDTO>, EditDTO extends ComplaintEditDto,
+		 CFRes extends ComplaintFetchResponse, CFReq extends ComplaintFetchRequest<CFC>, CFC extends ComplaintFilterCriteria>  extends GenericService<T> {
 	
 	/**
 	 * asd.
@@ -28,21 +31,21 @@ public interface ComplaintService
 	 * @param req a. 
 	 * @return a.
 	 */
-	ReportComplaintResponse report(ReportComplaintRequest req) throws SessionServiceException;
+	RCRes report(RCReq req) throws SessionServiceException;
 	
 	/**
 	 * asd.
 	 * @param req a.
 	 * @return a.
 	 */
-	ComplaintFetchResponse fetch(ComplaintFetchRequest req);
+	CFRes fetch(CFReq req) throws SessionServiceException;
 	
 	/**
 	 * asd.
 	 * @param req a. 
 	 * @return a.
 	 */
-	ProductComplaintEditResponse editComplaint(ProductComplaintEditRequest req) throws SessionServiceException;
+	CERes editComplaint(CEReq req) throws SessionServiceException;
 	
 	/**
 	 * asd.
