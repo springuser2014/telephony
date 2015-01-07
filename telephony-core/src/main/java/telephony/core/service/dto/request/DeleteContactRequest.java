@@ -6,6 +6,7 @@ import telephony.core.service.dto.SessionBean;
 /**
  * asd.
  */
+@Deprecated // TODO remove
 public class DeleteContactRequest extends AuthRequest {
 	
 	private Long contactToDeleteId = null;

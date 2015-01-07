@@ -20,8 +20,6 @@ import com.jayway.restassured.http.ContentType;
 
 @RunWith(JUnit4ClassRunner.class)
 public class RestAssuredTest {
-	
-
 
 	private static final String TESTING_APP = TestsConfig.TESTING_HOST
 			+ TestsConfig.ARCHIVE_NAME + TestsConfig.REST_ADDR;

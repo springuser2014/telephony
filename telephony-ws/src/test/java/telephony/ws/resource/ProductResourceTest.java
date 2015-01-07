@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import telephony.core.entity.jpa.ProductStatus;
 import telephony.core.query.filter.ProductFilterCriteria;
+import telephony.core.query.filter.ProductFilterCriteriaBuilder;
 import telephony.core.service.dto.SignInDto;
 import telephony.core.service.dto.request.ProductFetchRequest;
 import telephony.core.service.dto.response.ProductFetchResponse;
@@ -51,8 +52,9 @@ public class ProductResourceTest extends BaseWSTest {
 		
 		String sessionId = authAndGetSessionId();
 		
-		ProductFilterCriteria filters = ProductFilterCriteria.create()
-				.setStatus(ProductStatus.SOLD);
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withStatus(ProductStatus.SOLD)
+				.build();
 		
 		ProductFetchRequest req = new ProductFetchRequest();
 		req.setSessionId(sessionId);

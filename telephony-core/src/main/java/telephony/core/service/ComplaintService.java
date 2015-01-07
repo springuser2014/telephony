@@ -20,6 +20,8 @@ public interface ComplaintService
 
 	// TODO add fetchDetails
 
+
+
 	/**
 	 * asd.
 	 * @param hashUnique ad.

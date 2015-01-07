@@ -24,21 +24,6 @@ import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.contact.ContactsAddResource;
 
 
-/**
- * sahdhsaudh sauhdai
- * 
- * <pre>
- *  {@code
- *  	"sessionId" : "###",
- *  	"username" : "###",
- *  	"newContact" : {
- *  		"label" : "###",
- *  		"details" : "###"
- *  	} 
- *  
- *  }
- * </pre>
- */
 public class ContactsAddResourceImpl extends TelephonyServerResource implements
 		ContactsAddResource {
 	
@@ -76,7 +61,7 @@ public class ContactsAddResourceImpl extends TelephonyServerResource implements
 		BasicResponse response = new BasicResponse(true, "Dodano sukcesywnie");
 		
 		try {
-			contactService.add(null, newContact);
+//			contactService.add(null, newContact);
 			
 		} catch (Exception ex) { // TODO : dodac rozróżnienie na różne typy wyjątków
 			response.setMessage("Wystapił błąd podczas dodawania");

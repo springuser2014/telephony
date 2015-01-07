@@ -25,26 +25,6 @@ public class DeliveriesDetailsResourceImpl
 extends TelephonyServerResource 
 implements DeliveriesDetailsResource {
 
-	public static void main(String [] args) {
-		
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-			.sumFrom(500.0d)
-			.sumTo(900.0d)
-			.minNumberOfProducts(7)
-			.maxNumberOfProducts(9);
-		
-		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
-		req.setSessionId("aaa");
-		req.setUsername("user1@gmail.com");
-		req.setFilters(filters);
-		
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		
-		String json = gson.toJson(req);
-			
-		System.out.print(json);		
-	}
-
 	@Inject
 	private SessionService sessionService;
 	

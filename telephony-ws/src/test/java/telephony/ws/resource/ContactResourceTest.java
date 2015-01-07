@@ -19,7 +19,10 @@ import org.restlet.resource.ClientResource;
 
 import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.SessionBean;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.ContactAddRequest;
+import telephony.core.service.dto.request.ContactDeleteRequest;
+import telephony.core.service.dto.request.ContactFetchRequest;
 import telephony.core.service.dto.request.DeleteContactRequest;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -123,12 +126,11 @@ public class ContactResourceTest extends BaseWSTest {
     	
     	JSONObject reponseObj = responseRep.getJsonObject();
     	String sessionId = reponseObj.getString("sessionId");
+
+		SessionDto session = SessionDto.create(username, sessionId);
+		ContactFetchRequest fetchRequest = new ContactFetchRequest(session);
     	
-    	JsonRepresentation contactFetchParam = new JsonRepresentation(
-    			new SessionBean(username, sessionId)
-    	);
-    	
-    	JsonRepresentation contacts = contactsFetchResource.fetch(contactFetchParam);
+    	JsonRepresentation contacts = contactsFetchResource.fetch(fetchRequest);
     	
     	assertTrue("should return 200", clientContactFetching
     									.getStatus()
@@ -165,10 +167,8 @@ public class ContactResourceTest extends BaseWSTest {
     	ContactDto newContact = new ContactDto();
     	newContact.setDetails("somedetails");
     	newContact.setLabel("someLabel");
-    	
-    	JsonRepresentation contactAddParam = new JsonRepresentation(
-    			new ContactAddRequest(username, sessionId, newContact)
-    	);
+
+		ContactAddRequest contactAddParam = new ContactAddRequest(username, sessionId, newContact);
     	
     	JsonRepresentation addResponse = contactsAddResource.add(contactAddParam);
     	
@@ -190,9 +190,8 @@ public class ContactResourceTest extends BaseWSTest {
 		// TODO : refactor to constatnts
     	final String username = "user1@gmail.com";
     	final String password = "rfaysdhaiufsiuf";
-    	
-		
-    	JsonRepresentation sessionInitializationParams = new JsonRepresentation(
+
+		JsonRepresentation sessionInitializationParams = new JsonRepresentation(
     			new UserBean(username, password)
     	);
     	
@@ -204,12 +203,11 @@ public class ContactResourceTest extends BaseWSTest {
     	
     	JSONObject responseObj = responseRep.getJsonObject();
     	String sessionId = responseObj.getString("sessionId");
+
+		SessionDto session = SessionDto.create(username, sessionId);
+		ContactFetchRequest fetchRequest = new ContactFetchRequest(session);
     	
-    	JsonRepresentation contactFetchParam = new JsonRepresentation(
-    			new SessionBean(username, sessionId)
-    	);
-    	
-    	JsonRepresentation contacts = contactsFetchResource.fetch(contactFetchParam);
+    	JsonRepresentation contacts = contactsFetchResource.fetch(fetchRequest);
     	
     	assertTrue("should return 200", clientContactFetching
     									.getStatus()
@@ -220,12 +218,11 @@ public class ContactResourceTest extends BaseWSTest {
     	    	
     	JSONObject contactToDelete = (JSONObject) jsonArr.get(0);
     	Long contactToDeleteId = contactToDelete.getLong("id");
+
+		ContactDeleteRequest req = new ContactDeleteRequest(session);
+		req.setContactToDelete(contactToDeleteId);
     	
-    	JsonRepresentation contactDeleteParam = new JsonRepresentation(
-    			new DeleteContactRequest(username, sessionId, contactToDeleteId)
-    	);
-    	
-    	JsonRepresentation deleteResponse = contactsDeleteResource.delete(contactDeleteParam);
+    	JsonRepresentation deleteResponse = contactsDeleteResource.delete(req);
     	
     	assertTrue("response status is 200", clientContactDeleting
 							    			.getResponse()

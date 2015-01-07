@@ -15,8 +15,10 @@ import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
 import telephony.core.query.filter.DeliveryFilterCriteria;
+import telephony.core.query.filter.DeliveryFilterCriteriaBuilder;
 import telephony.core.service.dto.ProductDto;
 import telephony.core.service.dto.ProductEditDto;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.SignInDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.DeliveriesFetchResponse;
@@ -40,8 +42,10 @@ public class DeliveryResourceTest extends BaseWSTest {
 
 		// given
 		String sessionId = authAndGetSessionId();
-		
-		DeliveryDeleteRequest req = new DeliveryDeleteRequest();
+
+		SessionDto session = SessionDto.create("user1@gmail.com", sessionId);
+
+		DeliveryDeleteRequest req = new DeliveryDeleteRequest(session);
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		req.setDeliveryId(1L);
@@ -72,7 +76,9 @@ public class DeliveryResourceTest extends BaseWSTest {
 		// given
 		String sessionId = authAndGetSessionId();
 
-		DeliveryEditRequest req = new DeliveryEditRequest();
+		SessionDto session = SessionDto.create("user1@gmail.com", sessionId);
+
+		DeliveryEditRequest req = new DeliveryEditRequest(session);
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
 		
@@ -136,11 +142,12 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		String sessionId = authAndGetSessionId();
 		
-		DeliveryFilterCriteria filters = DeliveryFilterCriteria.create()
-			.sumFrom(500.0d)
-			.sumTo(900.0d)
-			.minNumberOfProducts(7)
-			.maxNumberOfProducts(9);
+		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
+			.withSumFrom(500.0d)
+			.withSumTo(900.0d)
+			.withMinNumberOfProducts(7)
+			.withMaxNumberOfProducts(9)
+			.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
 		req.setSessionId(sessionId);
@@ -235,6 +242,8 @@ public class DeliveryResourceTest extends BaseWSTest {
 		String jsonResp = res1.asString();
 		
 		String sessionId = from(jsonResp).get("sessionId");
+
+		SessionDto session = SessionDto.create("user1@gmail.com", sessionId);
 		
 		List<ProductDto> products = new ArrayList<ProductDto>();
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
@@ -267,7 +276,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		products.add(p1);
 		products.add(p2);
 		
-		DeliveryAddRequest req = new DeliveryAddRequest();
+		DeliveryAddRequest req = new DeliveryAddRequest(session);
 		req.setContactId(1l);
 		req.setLabel("aaa");
 		req.setDateIn(new Date());

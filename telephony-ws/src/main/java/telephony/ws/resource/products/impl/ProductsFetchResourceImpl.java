@@ -40,13 +40,13 @@ implements ProductsFetchResource {
 		
 		ProductFetchResponse resp = new ProductFetchResponse();
 		
-		try {
-			resp = productsService.find(request);
-		} catch (SessionServiceException e) {
+//		try {
+//			resp = productsService.find(request);
+//		} catch (SessionServiceException e) {
 			
-			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
-		}
+//			logger.error("session problem", e);
+//			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+//		}
 		
 		return new JsonRepresentation(gson.toJson(resp)); 
 	}

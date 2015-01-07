@@ -49,8 +49,8 @@ implements RolesDeleteResource {
     	BasicResponse response = new BasicResponse(true, "Usunięto obiekt");
     	try {
     		// TODO: add to one @transactional method
-    		Role roleToDelete = roleService.findByLabel(null, label);
-    		roleService.remove(null, roleToDelete);
+//    		Role roleToDelete = roleService.findByLabel(null, label);
+//    		roleService.remove(null, roleToDelete);
     		
     	} catch (Exception ex) {
     		logger.error(ex.getMessage());

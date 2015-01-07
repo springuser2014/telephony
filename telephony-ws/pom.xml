@@ -14,11 +14,6 @@
 	<repositories>
 
 		<repository>
-			<id>nexus xwiki</id>
-			<url>http://nexus.xwiki.org/nexus/content/groups/public</url>
-		</repository>
-
-		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
 			<url>http://maven.restlet.org</url>
@@ -78,7 +73,7 @@
 		<dependency>
 			<groupId>org.bitbucket.pawelhenek.telephony</groupId>
 			<artifactId>telephony-core</artifactId>
-			<version>${parent.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
@@ -272,28 +267,10 @@
 		<!-- Shiro Dependencies -->
 		<dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-root</artifactId>
+            <artifactId>shiro-all</artifactId>
             <version>${shiro-version}</version>
         </dependency>
-        
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>${shiro-version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-web</artifactId>
-			<version>${shiro-version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-ehcache</artifactId>
-			<version>${shiro-version}</version>
-		
-		</dependency>
+
 	</dependencies>
 	
 	<build>

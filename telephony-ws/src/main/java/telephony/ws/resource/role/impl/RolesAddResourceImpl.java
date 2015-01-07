@@ -19,7 +19,9 @@ import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.RoleService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.RoleAddRequest;
 import telephony.core.service.dto.response.BasicResponse;
+import telephony.core.service.dto.response.RoleAddResponse;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.role.RolesAddResource;
 
@@ -39,36 +41,35 @@ public class RolesAddResourceImpl extends TelephonyServerResource
     @Post("json")
     @Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-    public JsonRepresentation add(JsonRepresentation entity) 
+    public RoleAddResponse add(RoleAddRequest entity)
     		throws JSONException, IOException {
     	
     	logger.info("RolesAddResource.add starts");
-    	JSONObject req = new JsonRepresentation(entity.getText()).getJsonObject();
+//    	JSONObject req = new JsonRepresentation(entity.getText()).getJsonObject();
     	
-    	String username = req.getString("username");
-    	String sessionId = req.getString("sessionId");
-    	String label = req.getString("label");
+//    	String username = req.getString("username");
+//    	String sessionId = req.getString("sessionId");
+//    	String label = req.getString("label");
     	
-    	Role newrole = new Role();
-    	newrole.setName(label);
-    	newrole.setUsers(new HashSet<User>());
+//    	Role newrole = new Role();
+//    	newrole.setName(label);
+//    	newrole.setUsers(new HashSet<User>());
     	
-    	SessionDto session = SessionDto.create()
-    						.setUsername(username)
-    						.setSessionId(sessionId);
+//    	SessionDto session = SessionDto.create(username, sessionId);
     	
     	BasicResponse response = new BasicResponse(true, "Added successfully");
     	try {
-    		roleService.add(session, newrole);
+//    		roleService.add(session, newrole);
     	} catch (Exception ex) {
     		logger.error(ex.getMessage());
     		logger.error(ex.toString());
     		response.setMessage("An error occured during");
     		response.setSuccess(false);
-    		return new JsonRepresentation(response);
+//    		return new JsonRepresentation(response);
     	}
     	
-        return new JsonRepresentation(response);
+//        return new JsonRepresentation(response);
+		return null;
     }
 
 
