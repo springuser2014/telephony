@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -66,7 +67,7 @@ implements GenericDao<E> {
         logger.debug("params: [ id : {} ]  ", id);
 
         E entity = getEntityManager().find(entityClass, id);
-
+//        getEntityManager().lock(entity, LockModeType.PESSIMISTIC_READ);
         logger.debug("findById ends");
 
         return entity;

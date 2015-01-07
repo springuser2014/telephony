@@ -192,6 +192,5 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 		
 		// then
 		assertEquals(countBefore - countAfter, 1);
-		
 	}
 }

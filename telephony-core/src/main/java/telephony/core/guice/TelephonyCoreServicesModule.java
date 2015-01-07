@@ -133,6 +133,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(StoreConverter.class);
         bind(ProductComplaintConverter.class);
         bind(SaleComplaintConverter.class);
+        bind(ComplaintCommentConverter.class);
         
         // util classses
 
