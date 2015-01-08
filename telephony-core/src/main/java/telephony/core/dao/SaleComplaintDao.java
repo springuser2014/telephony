@@ -1,6 +1,9 @@
 package telephony.core.dao;
 
 import telephony.core.entity.jpa.SaleComplaint;
+import telephony.core.query.filter.SaleComplaintFilterCriteria;
+
+import java.util.List;
 
 /**
  * asd.
@@ -37,4 +40,11 @@ public interface SaleComplaintDao extends GenericDao<SaleComplaint> {
 	 * @return a.
 	 */
 	SaleComplaint findByHash(String hashUnique);
+
+	/**
+	 * asd.
+	 * @param filters a.
+	 * @return a.
+	 */
+	List<SaleComplaint> findByCriteria(SaleComplaintFilterCriteria filters);
 }

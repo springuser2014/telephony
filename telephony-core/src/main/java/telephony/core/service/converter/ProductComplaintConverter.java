@@ -5,12 +5,15 @@ import telephony.core.dao.ContactsDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.entity.enumz.ComplaintStatus;
 import telephony.core.entity.jpa.ComplaintComment;
-import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.service.dto.*;
+import telephony.core.service.dto.DetailedComplaintCommentDto;
+import telephony.core.service.dto.ProductComplaintDto;
+import telephony.core.service.dto.ProductComplaintEditDto;
+import telephony.core.service.dto.ProductDetailedComplaintDto;
 
-import static telephony.core.assertion.CommonAssertions.*;
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
+import static telephony.core.assertion.CommonAssertions.isNotNull;
 
 public class ProductComplaintConverter {
 
@@ -19,6 +22,9 @@ public class ProductComplaintConverter {
 
     @Inject
     ContactsDao contactsDao;
+
+    @Inject
+    ProductConverter productConverter;
 
     public ProductComplaint toEntity(ProductComplaintDto dto) {
 
@@ -82,7 +88,7 @@ public class ProductComplaintConverter {
         ProductDetailedComplaintDto dto = new ProductDetailedComplaintDto();
         dto.setComplaintId(entity.getId());
         dto.setDescription(entity.getDescription());
-        dto.setProductId(entity.getProduct().getId());
+        dto.setProduct(productConverter.toProductDto(entity.getProduct()));
         dto.setReportedDate(entity.getReportedDate());
         dto.setTitle(entity.getTitle());
         dto.setUniqueHash(entity.getUniqueHash());

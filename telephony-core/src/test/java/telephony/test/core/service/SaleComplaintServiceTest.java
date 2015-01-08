@@ -15,14 +15,14 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.query.filter.ProductComplaintFilterCriteria;
+import telephony.core.query.filter.ProductComplaintFilterCriteriaBuilder;
+import telephony.core.query.filter.SaleComplaintFilterCriteria;
+import telephony.core.query.filter.SaleComplaintFilterCriteriaBuilder;
 import telephony.core.service.dto.SaleComplaintDto;
 import telephony.core.service.dto.SaleComplaintEditDto;
-import telephony.core.service.dto.request.ComplaintChangeStatusRequest;
-import telephony.core.service.dto.request.ComplaintDeleteRequest;
-import telephony.core.service.dto.request.ReportSaleComplaintRequest;
-import telephony.core.service.dto.request.SaleComplaintEditRequest;
-import telephony.core.service.dto.response.ComplaintChangeStatusResponse;
-import telephony.core.service.dto.response.SaleComplaintEditResponse;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ContactService;
 import telephony.core.service.SaleComplaintService;
@@ -55,6 +55,46 @@ public class SaleComplaintServiceTest extends BaseCoreTest {
 	
 	@Inject
 	private SaleComplaintService complaintService;
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void fetchDetails1() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleComplaintDetailsFetchRequest fetchRequest = new SaleComplaintDetailsFetchRequest(session);
+		fetchRequest.setComplaintId(TestData.COMPLAINT7_ID);
+
+		// when
+		SaleComplaintDetailsFetchResponse resp = complaintService.fetchDetails(fetchRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
+		assertEquals(resp.getDetailedComplaint().getComments().size(), 2);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void fetch1() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		SaleComplaintFilterCriteria filters = SaleComplaintFilterCriteriaBuilder.saleComplaintFilterCriteria()
+				.withSaleId(TestData.SALE1_ID)
+				.build();
+
+		SaleComplaintFetchRequest fetchRequest = new SaleComplaintFetchRequest(session);
+		fetchRequest.setFilters(filters);
+
+		// when
+		SaleComplaintFetchResponse resp = complaintService.fetch(fetchRequest);
+
+		// then
+		assertNotNull(resp);
+		assertEquals(resp.getComplaints().size(), 1);
+		assertEquals(resp.getComplaints().get(0).getDescription(), TestData.COMPLAINT7_DESC);
+	}
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })

@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class SaleComplaintFilterCriteriaBuilder extends
         SaleComplaintFilterCriteriaBuilderBase<SaleComplaintFilterCriteriaBuilder> {
-    public static ProductComplaintFilterCriteriaBuilder saleComplaintFilterCriteria() {
-        return new ProductComplaintFilterCriteriaBuilder();
+    public static SaleComplaintFilterCriteriaBuilder saleComplaintFilterCriteria() {
+        return new SaleComplaintFilterCriteriaBuilder();
     }
 
     public SaleComplaintFilterCriteriaBuilder() {

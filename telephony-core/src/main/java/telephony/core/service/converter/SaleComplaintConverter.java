@@ -14,6 +14,9 @@ public class SaleComplaintConverter {
     @Inject
     SalesDao salesDao;
 
+    @Inject
+    SaleConverter saleConverter;
+
     public SaleComplaint toEntity(SaleComplaintDto dto) {
 
         Sale sale = salesDao.findById(dto.getSaleId());
@@ -62,7 +65,7 @@ public class SaleComplaintConverter {
         SaleDetailedComplaintDto dto = new SaleDetailedComplaintDto();
         dto.setComplaintId(entity.getId());
         dto.setDescription(entity.getDescription());
-        dto.setSaleId(entity.getSale().getId());
+        dto.setSale(saleConverter.toSaleDto(entity.getSale()));
         dto.setReportedDate(entity.getReportedDate());
         dto.setTitle(entity.getTitle());
         dto.setUniqueHash(entity.getUniqueHash());
@@ -85,4 +88,18 @@ public class SaleComplaintConverter {
 
         return dto;
     }
+
+    public SaleComplaintEditDto toDto(SaleComplaint entity) {
+
+        SaleComplaintEditDto dto = new SaleComplaintEditDto();
+        dto.setComplaintId(entity.getId());
+        dto.setSaleId(entity.getSale().getId());
+        dto.setTitle(entity.getTitle());
+        dto.setDescription(entity.getDescription());
+        dto.setStatus(entity.getStatus());
+        dto.setUniqueHash(entity.getUniqueHash());
+
+        return dto;
+    }
+
 }

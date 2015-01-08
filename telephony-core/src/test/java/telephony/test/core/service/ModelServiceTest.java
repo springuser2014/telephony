@@ -47,7 +47,7 @@ public class ModelServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingModelByLabel() {
+	public void findingModelByLabel() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -71,7 +71,7 @@ public class ModelServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingById() {
+	public void findingById() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -95,7 +95,7 @@ public class ModelServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void findingByIds() {
+	public void findingByIds() throws SessionServiceException {
 		
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
@@ -132,7 +132,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void edit() {
+	public void edit() throws SessionServiceException {
 	
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);

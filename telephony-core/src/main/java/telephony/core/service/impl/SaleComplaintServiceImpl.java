@@ -8,15 +8,13 @@ import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.SaleComplaintService;
 import telephony.core.service.SessionService;
 import telephony.core.service.converter.SaleComplaintConverter;
-import telephony.core.service.dto.ProductDetailedComplaintDto;
-import telephony.core.service.dto.SaleComplaintDto;
-import telephony.core.service.dto.SaleComplaintEditDto;
-import telephony.core.service.dto.SaleDetailedComplaintDto;
+import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
@@ -156,11 +154,31 @@ implements SaleComplaintService {
 		return errors.size() == 0;
 	}
 
-
-	@Transactional
+ 	@Transactional
 	@Override
-	public SaleComplaintFetchResponse fetch(SaleComplaintFetchRequest saleComplaintFetchRequest) throws SessionServiceException {
-		return null;
+	public SaleComplaintFetchResponse fetch(SaleComplaintFetchRequest request) throws SessionServiceException {
+		SaleComplaintFetchResponse resp = new SaleComplaintFetchResponse();
+
+		logger.info("SaleComplaintServiceImpl.fetch starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", request.getFilters());
+		}
+
+		sessionService.validate(request.getSessionDto()); // TODO add validation , defualt find limits
+
+		List<SaleComplaintEditDto> complaintz = new ArrayList<SaleComplaintEditDto>();
+		List<SaleComplaint> complaints = saleComplaintDao.findByCriteria(request.getFilters());
+
+		for (SaleComplaint entity : complaints) {
+			complaintz.add(saleComplaintConverter.toDto(entity));
+		}
+
+		resp.setComplaints(complaintz);
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
 	}
 
 	// TODO : make this method generic

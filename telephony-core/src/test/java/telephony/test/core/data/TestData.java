@@ -13,7 +13,6 @@ public final class TestData {
 	public static final Long PRODUCT8_ID = 8L;
 	public static final Long TAX6_ID = 6L;
 	public static final Long PRODUCT_8_ID = 8L;
-	public static final Long COMPLAINT7_ID = 7L;
 
 	private TestData() {}
 	
@@ -135,6 +134,9 @@ public final class TestData {
 
 	public static final Long COMPLAINT1_ID = 1L;
 	public static final String COMPLAINT1_DESC = "Description of product complaint 1";
+
+	public static final Long COMPLAINT7_ID = 7L;
+	public static final String COMPLAINT7_DESC = "Description of sale complaint 1";
 	
 	/**
 	 * Generates random sessionId.

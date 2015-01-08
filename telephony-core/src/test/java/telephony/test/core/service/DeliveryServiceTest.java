@@ -69,7 +69,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	@Inject
 	private ModelService modelService;
 
-	public ModelDto getNokia3310() {
+	public ModelDto getNokia3310() throws SessionServiceException {
 
 		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
@@ -87,7 +87,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		return model;
 	}
 
-	public ModelDto getIphone4S() {
+	public ModelDto getIphone4S() throws SessionServiceException {
 
 		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 

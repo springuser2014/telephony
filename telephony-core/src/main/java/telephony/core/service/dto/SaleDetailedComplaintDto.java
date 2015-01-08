@@ -3,17 +3,17 @@ package telephony.core.service.dto;
 import telephony.core.service.DetailedComplaintDto;
 
 public class SaleDetailedComplaintDto extends DetailedComplaintDto {
-    private Long saleId;
+    private SaleDto sale;
 
     public SaleDetailedComplaintDto() {
         super();
     }
 
-    public void setSaleId(Long saleId) {
-        this.saleId = saleId;
+    public void setSale(SaleDto dto) {
+        this.sale = dto;
     }
 
-    public Long getSaleId() {
-        return saleId;
+    public SaleDto getSale() {
+        return sale;
     }
 }
