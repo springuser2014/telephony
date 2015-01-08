@@ -65,3 +65,5 @@ UPDATE complaints SET product_id = 6 WHERE item_id = '123456789000005';
 
 ALTER TABLE complaints DROP COLUMN item_id;
 ALTER TABLE complaints DROP COLUMN contact_id;
+
+

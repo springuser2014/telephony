@@ -53,7 +53,7 @@ public class Delivery extends BaseEntity {
     @JoinColumn(name = "contact_id", nullable = false)
     private Contact contact;
    
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Product> products = new HashSet<Product>();
 
     /**

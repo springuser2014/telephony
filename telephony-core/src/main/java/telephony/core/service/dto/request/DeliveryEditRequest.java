@@ -8,7 +8,8 @@ import telephony.core.service.dto.ProductDto;
 import telephony.core.service.dto.SessionDto;
 
 public class DeliveryEditRequest extends AuthRequest {
-	
+
+	// TODO move to dto
 	private Long id;
 
 	private String label;

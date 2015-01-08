@@ -425,7 +425,7 @@ implements DeliveryService {
 				}
 			}
 			
-			productsDao.saveOrUpdate(product);
+//			productsDao.saveOrUpdate(product);
 			
 			if (product.getCurrentTax() != null) {
 				if (product.getCurrentTax().getId() != bean.getTaxId()) {
