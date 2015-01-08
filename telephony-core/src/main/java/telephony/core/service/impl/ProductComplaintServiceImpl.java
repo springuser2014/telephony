@@ -9,6 +9,7 @@ import telephony.core.service.SessionService;
 import telephony.core.service.converter.ProductComplaintConverter;
 import telephony.core.service.dto.ProductComplaintDto;
 import telephony.core.service.dto.ProductComplaintEditDto;
+import telephony.core.service.dto.ProductDetailedComplaintDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
@@ -50,6 +51,38 @@ implements ProductComplaintService {
 	public ProductComplaintServiceImpl(Class<ProductComplaintDao> clazz) {
 		super(clazz);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Transactional
+	@Override
+	public ProductComplaintDetailsFetchResponse fetchDetails(ProductComplaintDetailsFetchRequest request) throws SessionServiceException {
+
+		sessionService.validate(request.getSessionDto());
+
+		ProductComplaintDetailsFetchResponse resp = new ProductComplaintDetailsFetchResponse();
+
+		logger.info("ProductComplaintServiceImpl.fetchDetails starts");
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("params : [ complaintId : {} ]", request.getComplaintId());
+		}
+
+		if (isEmpty(request.getComplaintId())) {
+			resp.addError(Error.create("complaintId", "complaintId cannot be empty"));
+			resp.setMessage(""); // TODO add localized msg
+			resp.setSuccess(true);
+
+			return resp;
+		}
+
+		ProductComplaint pc = productComplaintDao.findById(request.getComplaintId());
+		ProductDetailedComplaintDto dto = productComplaintConverter.toDetailedDto(pc);
+
+		resp.setDetailedComplaint(dto);
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
 	}
 
 	@Transactional

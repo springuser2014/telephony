@@ -14,12 +14,14 @@ import telephony.core.service.exception.SessionServiceException;
  */
 public interface ComplaintService
 		<T extends Complaint,
+		 FDRes extends ComplaintDetailsFetchResponse<DDTO>, FDReq extends ComplaintDetailsFetchRequest, DDTO extends DetailedComplaintDto,
 		 RCRes extends ReportComplaintResponse, RCReq extends ReportComplaintRequest<DTO>, DTO extends ComplaintDto,
 		 CERes extends ComplaintEditResponse, CEReq extends ComplaintEditRequest<EditDTO>, EditDTO extends ComplaintEditDto,
 		 CFRes extends ComplaintFetchResponse, CFReq extends ComplaintFetchRequest<CFC>, CFC extends ComplaintFilterCriteria>  extends GenericService<T> {
 
 	// TODO add fetchDetails
 
+	FDRes fetchDetails(FDReq req) throws SessionServiceException;
 
 
 	/**

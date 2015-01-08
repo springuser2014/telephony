@@ -4,11 +4,11 @@ import com.google.inject.Inject;
 import telephony.core.dao.ContactsDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.entity.enumz.ComplaintStatus;
+import telephony.core.entity.jpa.ComplaintComment;
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.service.dto.ProductComplaintDto;
-import telephony.core.service.dto.ProductComplaintEditDto;
+import telephony.core.service.dto.*;
 
 import static telephony.core.assertion.CommonAssertions.*;
 
@@ -73,6 +73,35 @@ public class ProductComplaintConverter {
         dto.setTitle(entity.getTitle());
         dto.setUniqueHash(entity.getUniqueHash());
         dto.setStatus(entity.getStatus());
+
+        return dto;
+    }
+
+    public ProductDetailedComplaintDto toDetailedDto(ProductComplaint entity) {
+
+        ProductDetailedComplaintDto dto = new ProductDetailedComplaintDto();
+        dto.setComplaintId(entity.getId());
+        dto.setDescription(entity.getDescription());
+        dto.setProductId(entity.getProduct().getId());
+        dto.setReportedDate(entity.getReportedDate());
+        dto.setTitle(entity.getTitle());
+        dto.setUniqueHash(entity.getUniqueHash());
+        dto.setStatus(entity.getStatus());
+
+        for (ComplaintComment cc :entity.getComments()) {
+            dto.addComment(toDetailedComplaintCommentDto(cc));
+        }
+
+        return dto;
+    }
+
+    public DetailedComplaintCommentDto toDetailedComplaintCommentDto(ComplaintComment cc) {
+
+        DetailedComplaintCommentDto dto = new DetailedComplaintCommentDto();
+        dto.setCommentId(cc.getId());
+        dto.setComment(cc.getContent());
+        dto.setAuthor(cc.getAuthor());
+        dto.setComplaintId(cc.getComplaint().getId());
 
         return dto;
     }

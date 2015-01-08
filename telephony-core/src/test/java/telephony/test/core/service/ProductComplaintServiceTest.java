@@ -18,10 +18,7 @@ import telephony.core.query.filter.ProductComplaintFilterCriteriaBuilder;
 import telephony.core.service.dto.ProductComplaintDto;
 import telephony.core.service.dto.ProductComplaintEditDto;
 import telephony.core.service.dto.request.*;
-import telephony.core.service.dto.response.ComplaintChangeStatusResponse;
-import telephony.core.service.dto.response.ProductComplaintEditResponse;
-import telephony.core.service.dto.response.ProductComplaintFetchResponse;
-import telephony.core.service.dto.response.ReportComplaintResponse;
+import telephony.core.service.dto.response.*;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ContactService;
 import telephony.core.service.ProductComplaintService;
@@ -52,6 +49,24 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 
 	@Inject
 	private ProductComplaintService complaintService;
+
+	@Test
+	@FlywayTest(locationsForMigrate = {"db/migration", "db/data"})
+	public void fetchDetails1() throws SessionServiceException {
+
+		// given
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+		ProductComplaintDetailsFetchRequest fetchRequest = new ProductComplaintDetailsFetchRequest(session);
+		fetchRequest.setComplaintId(TestData.COMPLAINT1_ID);
+
+		// when
+		ProductComplaintDetailsFetchResponse resp = complaintService.fetchDetails(fetchRequest);
+
+		// then
+		assertNotNull(resp);
+		assertTrue(resp.isSuccess());
+		assertEquals(resp.getDetailedComplaint().getComments().size(), 2);
+	}
 
 
 	@Test

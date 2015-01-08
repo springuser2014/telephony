@@ -55,19 +55,15 @@ public class ContactServiceTest extends BaseCoreTest {
 				.withLabel(label)
 				.build();
 
-		ContactFetchRequest request = new ContactFetchRequest();
-		request.setSessionId(TestData.USER1_SESSIONID);
-		request.setUsername(TestData.USER1_NAME);
+		ContactFetchRequest request = new ContactFetchRequest(session);
 		request.setFilters(filters);
 
 		ContactFetchResponse response = contactService.fetch(request);
 		ContactDto dto = response.getContacts().get(0);
 		long countAfter = -1, countBefore = contactService.count(session);
 
-		ContactDeleteRequest req = new ContactDeleteRequest();
+		ContactDeleteRequest req = new ContactDeleteRequest(session);
 		req.setContactToDelete(dto.getId());
-		req.setSessionId(TestData.USER1_SESSIONID);
-		req.setUsername(TestData.USER1_NAME);
 
 		// when
 		contactService.delete(req);
@@ -108,9 +104,7 @@ public class ContactServiceTest extends BaseCoreTest {
 				.withDetails(details)
 				.build();
 
-		ContactFetchRequest request = new ContactFetchRequest();
-		request.setSessionId(TestData.USER1_SESSIONID);
-		request.setUsername(TestData.USER1_NAME);
+		ContactFetchRequest request = new ContactFetchRequest(session);
 		request.setFilters(filters);
 
 		ContactFetchResponse response = contactService.fetch(request);
@@ -124,6 +118,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void editingContact() throws SessionServiceException, ContactServiceException {
 		
 		// given
+		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
 		String label = "leszek";
 		String newDetails = "AFK AFK";
 
@@ -131,9 +126,7 @@ public class ContactServiceTest extends BaseCoreTest {
 				.withLabel(label)
 				.build();
 
-		ContactFetchRequest request = new ContactFetchRequest();
-		request.setSessionId(TestData.USER1_SESSIONID);
-		request.setUsername(TestData.USER1_NAME);
+		ContactFetchRequest request = new ContactFetchRequest(sessionDto);
 		request.setFilters(filters);
 
 		ContactFetchResponse responseFetch1 = contactService.fetch(request);
@@ -163,9 +156,7 @@ public class ContactServiceTest extends BaseCoreTest {
 				.withDetails(newDetails)
 				.build();
 
-		ContactFetchRequest request2 = new ContactFetchRequest();
-		request2.setSessionId(TestData.USER1_SESSIONID);
-		request2.setUsername(TestData.USER1_NAME);
+		ContactFetchRequest request2 = new ContactFetchRequest(sessionDto);
 		request2.setFilters(filters2);
 
 		ContactFetchResponse responseFetch2 = contactService.fetch(request2);
@@ -190,11 +181,12 @@ public class ContactServiceTest extends BaseCoreTest {
 	public void fetchingAllContacts() throws SessionServiceException, ContactServiceException {
 
 		// given
+		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
 		ContactFilterCriteria filters = ContactFilterCriteriaBuilder
 				.contactFilterCriteria()
 				.build();
 
-		ContactFetchRequest dto = new ContactFetchRequest();
+		ContactFetchRequest dto = new ContactFetchRequest(sessionDto);
 		dto.setFilters(filters);
 		dto.setSessionId(TestData.USER1_SESSIONID);
 		dto.setUsername(TestData.USER1_NAME);

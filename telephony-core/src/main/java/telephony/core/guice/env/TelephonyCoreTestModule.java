@@ -14,9 +14,12 @@ import telephony.core.service.GenericService;
 import telephony.core.service.TestEntityService;
 import telephony.core.service.dto.ProductComplaintDto;
 import telephony.core.service.dto.ProductComplaintEditDto;
+import telephony.core.service.dto.ProductDetailedComplaintDto;
+import telephony.core.service.dto.request.ProductComplaintDetailsFetchRequest;
 import telephony.core.service.dto.request.ProductComplaintEditRequest;
 import telephony.core.service.dto.request.ProductComplaintFetchRequest;
 import telephony.core.service.dto.request.ReportProductComplaintRequest;
+import telephony.core.service.dto.response.ProductComplaintDetailsFetchResponse;
 import telephony.core.service.dto.response.ProductComplaintEditResponse;
 import telephony.core.service.dto.response.ProductComplaintFetchResponse;
 import telephony.core.service.dto.response.ReportProductComplaintResponse;
@@ -61,12 +64,14 @@ public class TelephonyCoreTestModule extends AbstractModule {
 		);
 		
 		bind(new TypeLiteral<ComplaintService<ProductComplaint,
+			ProductComplaintDetailsFetchResponse, ProductComplaintDetailsFetchRequest, ProductDetailedComplaintDto,
 			ReportProductComplaintResponse, ReportProductComplaintRequest, ProductComplaintDto,
 			ProductComplaintEditResponse, ProductComplaintEditRequest, ProductComplaintEditDto,
 			ProductComplaintFetchResponse, ProductComplaintFetchRequest, ProductComplaintFilterCriteria>
 		>() { })
 		.toInstance(
 			new AbstractComplaintService<ProductComplaint, ProductComplaintDao,
+					ProductComplaintDetailsFetchResponse, ProductComplaintDetailsFetchRequest, ProductDetailedComplaintDto,
 					ReportProductComplaintResponse, ReportProductComplaintRequest, ProductComplaintDto,
 					ProductComplaintEditResponse, ProductComplaintEditRequest, ProductComplaintEditDto,
 					ProductComplaintFetchResponse, ProductComplaintFetchRequest, ProductComplaintFilterCriteria>(ProductComplaintDao.class) { }

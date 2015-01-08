@@ -3,14 +3,8 @@ package telephony.core.service.converter;
 import com.google.inject.Inject;
 import telephony.core.dao.SalesDao;
 import telephony.core.entity.enumz.ComplaintStatus;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.entity.jpa.Sale;
-import telephony.core.entity.jpa.SaleComplaint;
-import telephony.core.service.dto.ProductComplaintDto;
-import telephony.core.service.dto.ProductComplaintEditDto;
-import telephony.core.service.dto.SaleComplaintDto;
-import telephony.core.service.dto.SaleComplaintEditDto;
+import telephony.core.entity.jpa.*;
+import telephony.core.service.dto.*;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
@@ -61,5 +55,34 @@ public class SaleComplaintConverter {
         if (isNotEmpty(complaintEditDto.getUniqueHash())) {
             saleComplaint.setUniqueHash(complaintEditDto.getUniqueHash());
         }
+    }
+
+    public SaleDetailedComplaintDto toDetailedDto(SaleComplaint entity) {
+
+        SaleDetailedComplaintDto dto = new SaleDetailedComplaintDto();
+        dto.setComplaintId(entity.getId());
+        dto.setDescription(entity.getDescription());
+        dto.setSaleId(entity.getSale().getId());
+        dto.setReportedDate(entity.getReportedDate());
+        dto.setTitle(entity.getTitle());
+        dto.setUniqueHash(entity.getUniqueHash());
+        dto.setStatus(entity.getStatus());
+
+        for (ComplaintComment cc :entity.getComments()) {
+            dto.addComment(toDetailedComplaintCommentDto(cc));
+        }
+
+        return dto;
+    }
+
+    public DetailedComplaintCommentDto toDetailedComplaintCommentDto(ComplaintComment cc) {
+
+        DetailedComplaintCommentDto dto = new DetailedComplaintCommentDto();
+        dto.setCommentId(cc.getId());
+        dto.setComment(cc.getContent());
+        dto.setAuthor(cc.getAuthor());
+        dto.setComplaintId(cc.getComplaint().getId());
+
+        return dto;
     }
 }

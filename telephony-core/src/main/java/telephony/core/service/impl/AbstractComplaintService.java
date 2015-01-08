@@ -3,6 +3,7 @@ package telephony.core.service.impl;
 import telephony.core.dao.GenericDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.query.filter.ComplaintFilterCriteria;
+import telephony.core.service.DetailedComplaintDto;
 import telephony.core.service.dto.ComplaintDto;
 import telephony.core.service.dto.ComplaintEditDto;
 import telephony.core.service.dto.request.*;
@@ -19,14 +20,17 @@ import telephony.core.service.exception.SessionServiceException;
  * @param <D> asd .
  */
 public class AbstractComplaintService<T extends Complaint, D extends GenericDao<T>,
+		FDRes extends ComplaintDetailsFetchResponse<DDTO>, FDReq extends ComplaintDetailsFetchRequest, DDTO extends DetailedComplaintDto,
 		RCRes extends ReportComplaintResponse, RCReq extends ReportComplaintRequest<DTO>, DTO extends ComplaintDto,
 		CERes extends ComplaintEditResponse, CEReq extends ComplaintEditRequest<EditDTO>, EditDTO extends ComplaintEditDto,
 		CFRes extends ComplaintFetchResponse, CFReq extends ComplaintFetchRequest<CFC>, CFC extends ComplaintFilterCriteria>
 extends AbstractGenericService<T, D>
 implements ComplaintService
-		<T, RCRes, RCReq, DTO,
-			CERes, CEReq, EditDTO,
-			CFRes, CFReq, CFC> {
+		<T,
+		FDRes, FDReq, DDTO,
+		RCRes, RCReq, DTO,
+		CERes, CEReq, EditDTO,
+		CFRes, CFReq, CFC> {
 
 	public AbstractComplaintService(Class<D> clazz) {
 		super(clazz);
@@ -41,6 +45,11 @@ implements ComplaintService
 	 */
 	protected D getComplaintDao() {
 		return complaintDao;
+	}
+
+	@Override
+	public FDRes fetchDetails(FDReq req) {
+		return null;
 	}
 
 	@Override

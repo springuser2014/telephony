@@ -8,12 +8,15 @@ import telephony.core.dao.ComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.query.filter.ComplaintFilterCriteria;
 import telephony.core.service.ComplaintService;
+import telephony.core.service.DetailedComplaintDto;
 import telephony.core.service.dto.ComplaintDto;
 import telephony.core.service.dto.ComplaintEditDto;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.ComplaintDetailsFetchRequest;
 import telephony.core.service.dto.request.ComplaintEditRequest;
 import telephony.core.service.dto.request.ComplaintFetchRequest;
 import telephony.core.service.dto.request.ReportComplaintRequest;
+import telephony.core.service.dto.response.ComplaintDetailsFetchResponse;
 import telephony.core.service.dto.response.ComplaintEditResponse;
 import telephony.core.service.dto.response.ComplaintFetchResponse;
 import telephony.core.service.dto.response.ReportComplaintResponse;
@@ -23,7 +26,9 @@ import telephony.core.service.dto.response.ReportComplaintResponse;
  */
 public abstract class ComplaintServiceImpl 
 extends AbstractGenericService<Complaint, ComplaintDao> 
-implements ComplaintService<Complaint, ReportComplaintResponse, ReportComplaintRequest<ComplaintDto>, ComplaintDto,
+implements ComplaintService<Complaint,
+		 ComplaintDetailsFetchResponse<DetailedComplaintDto>, ComplaintDetailsFetchRequest, DetailedComplaintDto,
+		 ReportComplaintResponse, ReportComplaintRequest<ComplaintDto>, ComplaintDto,
 		 ComplaintEditResponse, ComplaintEditRequest<ComplaintEditDto>, ComplaintEditDto,
 		 ComplaintFetchResponse, ComplaintFetchRequest<ComplaintFilterCriteria>, ComplaintFilterCriteria> {
 
