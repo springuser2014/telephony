@@ -2,7 +2,6 @@ package telephony.core.service.dto.request;
 
 import telephony.core.service.dto.SessionDto;
 
-import javax.mail.Session;
 import java.util.Date;
 
 public class AuthRequest {
