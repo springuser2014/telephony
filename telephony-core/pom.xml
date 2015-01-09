@@ -239,8 +239,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven.surefire.plugin.version}</version>					
 				<configuration>
-					<forkCount>0</forkCount>
-		            <reuseForks>false</reuseForks>
+					<forkCount>1</forkCount>
+		            <reuseForks>true</reuseForks>
 					<systemPropertyVariables>
 						<environment>TEST</environment>
 					</systemPropertyVariables>
@@ -273,7 +273,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${maven.jacoco.plugin.version}</version>
-                
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
@@ -322,26 +321,26 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>${maven.findbugs.plugin.version}</version>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.codehaus.mojo</groupId>-->
+				<!--<artifactId>findbugs-maven-plugin</artifactId>-->
+				<!--<version>${maven.findbugs.plugin.version}</version>-->
+			<!--</plugin>-->
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>${maven.pmd.plugin.version}</version>
-				<configuration>
-					<linkXref>true</linkXref>
-					<sourceEncoding>utf-8</sourceEncoding>
-					<minimumTokens>100</minimumTokens>
-					<targetJdk>1.6</targetJdk>
-					<excludeRoots>
-						<excludeRoot>target/</excludeRoot>
-					</excludeRoots>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-pmd-plugin</artifactId>-->
+				<!--<version>${maven.pmd.plugin.version}</version>-->
+				<!--<configuration>-->
+					<!--<linkXref>true</linkXref>-->
+					<!--<sourceEncoding>utf-8</sourceEncoding>-->
+					<!--<minimumTokens>100</minimumTokens>-->
+					<!--<targetJdk>1.6</targetJdk>-->
+					<!--<excludeRoots>-->
+						<!--<excludeRoot>target/</excludeRoot>-->
+					<!--</excludeRoots>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 
 			<plugin>
 				<groupId>org.jacoco</groupId>
