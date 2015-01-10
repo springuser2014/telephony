@@ -2,26 +2,25 @@
 
 TBD
 
-# Features
+## Features
 
 TBD
 
-# Inital configuration
+## Inital configuration
 
 TBD
 
-# Prerequisities
+## Prerequisities
 
 Properly installed basic stuff from Java world:
 
-- Java 1.6 >=
+- Java 1.7
 - Maven 3
 
 To prepare an completed development environment we also need:
 
 - PostgreSQL database >= 8.4
-- MongoDB 2.6
-- Tomcat 6.0.36 server
+- Tomcat 7 server
 
 ## Used technologies
 
@@ -34,6 +33,7 @@ To prepare an completed development environment we also need:
 - Mockito 1.9.5
 
 ## Technologies which could be in use soon:
+- Twitter bootstrap
 - Groovy
 - Spock framework
 - Geb
@@ -44,15 +44,16 @@ To prepare an completed development environment we also need:
 - handlebars
 - underscore.js
 - require.js
+- jasmine
 - karma
 - instanbul
 - sinon
 
-# TODO
+## TODO
 
 [List of upcoming features](https://github.com/pawelhenek/telephony/issues)
 
-# Testing configuration
+## Testing configuration
 
 To launch tests it is required to prepare corresponding databases and configurations:
 
