@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rest-client version="3.2.2"><request><http-version>1.1</http-version><http-follow-redirects/><URL>http://127.0.0.1:8080/telephony-ws/rest/session/validate</URL><method>POST</method><headers><header key="Content-type" value="application/json"/></headers><body><string content-type="text/plain" charset="UTF-8"> { "username" : "user1@gmail.com" , "sessionId" : "k8uihffat14chmj10m5bel38ad" }</string></body></request></rest-client>

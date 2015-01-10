@@ -33,12 +33,20 @@ To prepare an completed development environment we also need:
 - Arquillian 1.1.1
 - Mockito 1.9.5
 
-## Technologies will be in use soon
+## Technologies which could be in use soon:
 - Groovy
 - Spock framework
+- Geb
 - ElasticSearch
 - Hibernate Envers
--
+- jQuery, jQuery UI
+- backbone.js
+- handlebars
+- underscore.js
+- require.js
+- karma
+- instanbul
+- sinon
 
 # TODO
 
