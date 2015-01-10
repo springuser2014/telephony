@@ -1,8 +1,6 @@
 package telephony.test.core.service;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +13,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import telephony.core.service.dto.request.SessionDetailsRequest;
+import telephony.core.service.dto.response.SessionDetailsResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.SessionService;
 import telephony.core.service.exception.SessionServiceException;
@@ -38,11 +38,7 @@ public class SessionServiceTest extends BaseCoreTest {
 	private SessionService sessionService;
 	
 	private SessionService sessionServiceMock;
-			
-	/**
-	 * asd.
-	 * @throws telephony.core.service.exception.SessionServiceException
-	 */
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionInitialization() throws SessionServiceException {
@@ -52,17 +48,13 @@ public class SessionServiceTest extends BaseCoreTest {
 		String password = TestData.USER_BOSS_PASSWORD;
 		
 		// when
-		sessionService.setSessionValidity(30 * 60 * 1000);
+		sessionService.setSessionValidity(30 * 60 * 1000); // TODO move to setup method
 		SessionDto session = sessionService.init(username, password);
 		
 		// then
 		assertNotNull("For exisiting user should return session object", session);
 	}
-	
-	/**
-	 * asd.
-	 * @throws SessionServiceException 
-	 */
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionRefreshing() throws SessionServiceException {
@@ -70,7 +62,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		// given 
 		String username = TestData.USER_MANAGER_NAME;
 		String password = TestData.USER_MANAGER_PASSWORD;
-		sessionService.setSessionValidity(30 * 60 * 1000);
+		sessionService.setSessionValidity(30 * 60 * 1000); // TODO move to setup method
 		SessionDto sessionToRefresh = sessionService.init(username, password);		
 		
 		// when 
@@ -109,11 +101,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		// then
 		assertNotNull("Should return initialized session's object", session);
 	}
-	
-	/**
-	 * asd.
-	 * @throws SessionServiceException 
-	 */
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionValidation1() throws SessionServiceException {
@@ -129,11 +117,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		// then
 		assertTrue("should return true for being session", validated);
 	}
-	
-	/**
-	 * asd.
-	 * @throws SessionServiceException 
-	 */
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionValidation2() throws SessionServiceException {
@@ -142,7 +126,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		String username = TestData.USER2_NAME;
 		String password = TestData.USER2_PASSWORD;
 		
-		sessionService.setSessionValidity(new Integer(-60 * 60 * 24));
+		sessionService.setSessionValidity(new Integer(-60 * 60 * 24)); // TODO move to setup method
 		SessionDto sessionToValidate = sessionService.init(username, password);		
 				
 		// when 
@@ -151,11 +135,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		// then
 		assertFalse("Should return false for expired session", validated);
 	}
-	
-	/**
-	 * asd.
-	 * @throws SessionServiceException 
-	 */
+
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionDestroying() throws SessionServiceException {
@@ -172,5 +152,25 @@ public class SessionServiceTest extends BaseCoreTest {
 		// then
 		assertTrue("Should destroy active session", destroyed);
 	}
-	
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void sessionDetailsFetching() throws SessionServiceException {
+
+		// given
+		String username = TestData.USER1_NAME;
+		String password = TestData.USER1_PASSWORD;
+		sessionService.setSessionValidity(new Integer(30 * 60 * 1000)); // TODO move to setup method
+		SessionDto sessionToDelete = sessionService.init(username, password);
+		SessionDetailsRequest detailsRequest = new SessionDetailsRequest(sessionToDelete);
+
+		// when
+		SessionDetailsResponse resp = sessionService.fetchDetails(detailsRequest);
+
+		// then
+		assertNotNull("Should destroy active session", resp);
+		assertTrue(resp.isSuccess());
+		assertEquals(resp.getDetails().getRoles().get(0).getLabel(), "salesman");
+	}
 }
+

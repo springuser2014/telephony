@@ -1,28 +1,14 @@
 package telephony.ws.resource.session;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
-import org.restlet.resource.Post;
+import telephony.core.service.dto.request.SessionDestroyRequest;
+import telephony.core.service.dto.response.SessionDestroyResponse;
 
-/**
- * asd.
- */
 public interface SessionDestroyResource {
 	
 	String URL = "/session/destroy";
 
-	/**
-	 * asd.
-	 * @param entity asd. 
-	 * @return asd.
-	 * @throws JSONException 
-	 * @throws IOException 
-	 */
-	@Post("json")
-	JsonRepresentation destroy(JsonRepresentation entity) throws IOException,
-			JSONException;
+	@Delete("json")
+	SessionDestroyResponse destroy(SessionDestroyRequest destroyRequest);
 
 }

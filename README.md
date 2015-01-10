@@ -33,6 +33,13 @@ To prepare an completed development environment we also need:
 - Arquillian 1.1.1
 - Mockito 1.9.5
 
+## Technologies will be in use soon
+- Groovy
+- Spock framework
+- ElasticSearch
+- Hibernate Envers
+-
+
 # TODO
 
 [List of upcoming features](https://github.com/pawelhenek/telephony/issues)

@@ -75,6 +75,7 @@ public class TelephonyApplication extends Application {
         router.attach(SessionValidationResource.URL, SessionValidationResourceImpl.class);
         router.attach(SessionRefreshResource.URL, SessionRefreshResourceImpl.class);
         router.attach(SessionDestroyResource.URL, SessionDestoryResourceImpl.class);
+        router.attach(SessionDetailsResource.URL, SessionDetailsResourceImpl.class);
         
         // users resources - complete
         router.attach(UsersAddResource.URL, UsersAddResourceImpl.class);

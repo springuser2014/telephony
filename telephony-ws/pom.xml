@@ -115,7 +115,13 @@
 		  <artifactId>org.restlet.ext.jackson</artifactId>
 		  <version>2.2.2</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet.ext.servlet</artifactId>
@@ -337,10 +343,11 @@
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.0</version>
+				<version>2.1</version>
 				<configuration>
+					<update>true</update>
 					<server>tomcat7</server>
-					<url>http://127.0.0.1:8080/manager</url>
+					<url>http://127.0.0.1:8080/manager/text</url>
 					<warFile>./target/telephony-ws.war</warFile>
 				</configuration>
 			</plugin>

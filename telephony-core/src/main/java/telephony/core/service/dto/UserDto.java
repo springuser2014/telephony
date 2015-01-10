@@ -8,7 +8,6 @@ public abstract class UserDto {
 
     Long id;
     String email;
-    String password;
     Boolean isActive;
     String sessionId;
     Date sessionValidity;
@@ -21,14 +20,6 @@ public abstract class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Boolean getIsActive() {

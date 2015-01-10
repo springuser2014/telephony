@@ -1,13 +1,16 @@
 package telephony.core.service.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import telephony.core.service.dto.SessionDto;
 
 import java.util.Date;
 
-public class AuthRequest {
+public class AuthRequest extends BasicRequest {
 
 	private String username;
 	private String sessionId;
+
+	@JsonIgnore
 	private Date validation;
 
 	public AuthRequest() {

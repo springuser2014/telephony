@@ -8,7 +8,11 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.service.SessionService;
+import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.UserFetchDto;
+import telephony.core.service.dto.request.SessionDetailsRequest;
+import telephony.core.service.dto.response.SessionDetailsResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.util.StringGenerator;
 
@@ -23,13 +27,16 @@ public class SessionServiceImpl
 extends AbstractBasicService 
 implements SessionService {
 	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private UsersDao usersDao;
+	UsersDao usersDao;
 	
-	private StringGenerator generator;
+	StringGenerator generator;
 	
-	private Integer sessionValidity; 	
+	Integer sessionValidity;
+
+	@Inject
+	UserConverter userConverter;
     
 	//	TODO : remove?    
 	@Inject
@@ -77,7 +84,7 @@ implements SessionService {
 	        
         } catch (Exception e) {
         	
-        	logger.info("Error occured during session initialization", e);
+        	logger.error("Error occured during session initialization", e);
             return null;
         } 
         
@@ -88,7 +95,7 @@ implements SessionService {
 	@Transactional
     public SessionDto refresh(SessionDto sessionToRefresh) {
     	
-    	logger.debug("SessionServiceImpl.refresh starts");
+    	logger.info("SessionServiceImpl.refresh starts");
     	
         User u;
 
@@ -122,7 +129,7 @@ implements SessionService {
 	@Transactional
     public boolean destroy(SessionDto sessionToDelete) {
     	
-    	logger.debug("SessionServiceImpl.destroy starts");
+    	logger.info("SessionServiceImpl.destroy starts");
 
         User u;
         try {
@@ -147,7 +154,7 @@ implements SessionService {
     @Transactional
 	public boolean validate(SessionDto sessionToValidate) throws SessionServiceException {
 		
-		logger.debug("SessionServiceImpl.validate starts");
+		logger.info("SessionServiceImpl.validate starts");
 		
 		User u;
 		
@@ -172,6 +179,29 @@ implements SessionService {
 	}
 
 	@Override
+	@Transactional
+	public SessionDetailsResponse fetchDetails(SessionDetailsRequest request) throws SessionServiceException {
+
+		logger.info("SessionServiceImpl.fetchDetails starts");
+
+		this.validate(refresh(request.getSessionDto()));
+
+		SessionDetailsResponse resp = new SessionDetailsResponse();
+
+		User u = usersDao.findByNameAndSessionId(request.getUsername(),request.getSessionId());
+
+		UserFetchDto dto = userConverter.toDto(u);
+
+		resp.setDetails(dto);
+		resp.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+
+		return resp;
+	}
+
+
+	@Override
+	@Transactional
 	public long count(SessionDto session) {
 		
 		return usersDao.count();

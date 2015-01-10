@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
+import telephony.core.service.dto.request.SessionInitializationRequest;
+import telephony.core.service.dto.response.SessionInitializationResponse;
+import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionInitializationResource;
 
@@ -35,36 +38,37 @@ implements SessionInitializationResource {
 	@Inject
 	private SessionService sessionService;
 
-	//TODO : use Dto
-	
+    @Override
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-    public JsonRepresentation initialize(JsonRepresentation entity) 
+    public SessionInitializationResponse initialize(SessionInitializationRequest initializationRequest)
     		throws JSONException, IOException {
 
         logger.info("SessionInitializationResource.initialize");
-        
-        JSONObject req = new JsonRepresentation(entity).getJsonObject();
-        String name = req.getString("username");
-        String password = req.getString("password");
-        
-        logger.info(" username = {} ", name);
-        logger.info(" password = {} ", password);
+
+        SessionInitializationResponse resp = new SessionInitializationResponse();
         SessionDto session = null;
+
         try {
-        	session = sessionService.init(name, password);	
-        } catch (Exception e) {
-        	logger.error("Error occured during session initialization." , e);
+        	session = sessionService.init(initializationRequest.getUsername(), initializationRequest.getPassword());
+        } catch (Exception ex) {
+        	logger.error("Error occured during session initialization." , ex);
         }
         
         if (session == null) {
-        	getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-            return new JsonRepresentation("Error occured");
+        	getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+            resp.setMessage("internalError");
+            resp.setSuccess(false);
+
+            return resp;
         } else {
     		getResponse().setStatus(Status.SUCCESS_OK);
-    		Gson gson = new GsonBuilder().create();    		
-            return new JsonRepresentation(gson.toJson(session));
+
+            resp.setMessage("operation performed successfully");
+            resp.setSuccess(true);
+            resp.setSession(session);
+            return resp;
         }
     }
 }

@@ -19,14 +19,20 @@ public class UserConverter {
     @Inject
     UsersDao usersDao;
 
+    @Inject
+    RoleConverter roleConvert;
+
     public UserFetchDto toDto(User entity) {
         UserFetchDto dto = new UserFetchDto();
         dto.setEmail(entity.getEmail());
         dto.setId(entity.getId());
         dto.setIsActive(entity.getIsActive());
-        dto.setPassword(entity.getPassword());
         dto.setSessionId(entity.getSessionId());
         dto.setSessionValidity(entity.getSessionValidity());
+
+        for (Role r : entity.getRoles()) {
+            dto.addRole(roleConvert.toDto(r));
+        }
 
         return dto;
     }
@@ -48,7 +54,6 @@ public class UserConverter {
 
     public void updateEntity(User user, UserDto userDto) {
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
         user.setIsActive(userDto.getIsActive());
         user.setSessionId(userDto.getSessionId());
         user.setSessionValidity(userDto.getSessionValidity());

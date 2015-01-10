@@ -1,29 +1,18 @@
 package telephony.ws.resource.session;
 
+import org.json.JSONException;
+import org.restlet.resource.Post;
+import telephony.core.service.dto.request.SessionRefreshRequest;
+import telephony.core.service.dto.response.SessionRefreshResponse;
+
 import java.io.IOException;
 
-import org.json.JSONException;
-import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
-import org.restlet.resource.Post;
-import org.restlet.resource.Put;
-
-/**
- * asd.
- */
 public interface SessionRefreshResource {
 
 	String URL = "/session/refresh";
 
-	/**
-	 * asd. 
-	 * @param entity asd.
-	 * @return asd.
-	 * @throws JSONException 
-	 * @throws IOException 
-	 */
 	@Post("json")
-	JsonRepresentation refresh(JsonRepresentation entity) throws IOException,
-			JSONException;
+	SessionRefreshResponse refresh(SessionRefreshRequest refreshRequest)
+			throws IOException, JSONException;
 
 }

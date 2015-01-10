@@ -1,31 +1,18 @@
 package telephony.ws.resource.session;
 
+import org.json.JSONException;
+import org.restlet.resource.Post;
+import telephony.core.service.dto.request.SessionInitializationRequest;
+import telephony.core.service.dto.response.SessionInitializationResponse;
+
 import java.io.IOException;
 
-import org.json.JSONException;
-import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Post;
-
-
-/**
- * asd.
- */
 public interface SessionInitializationResource  {
 	
-	/**
-	 * asd.
-	 */
-    String URL = "/session/initialize";
-    
-	/**
-	 * asd.
-	 * @param entity asd. 
-	 * @return asd.
-	 * @throws IOException asd.
-	 * @throws JSONException asd.
-	 * 
-	 */
-	@Post("json") 
-	JsonRepresentation initialize(JsonRepresentation entity) throws JSONException, IOException;
+	String URL = "/session/initialize";
+
+	@Post("json")
+	SessionInitializationResponse initialize(SessionInitializationRequest initializationRequest)
+			throws JSONException, IOException;
 
 }

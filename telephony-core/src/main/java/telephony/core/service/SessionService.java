@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import telephony.core.dao.UsersDao;
+import telephony.core.service.dto.request.SessionDetailsRequest;
+import telephony.core.service.dto.response.SessionDetailsResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.util.StringGenerator;
@@ -75,4 +77,6 @@ public interface SessionService {
      * @return True if session is valid otherwise false.
      */
     boolean validate(SessionDto sessionToValidate) throws SessionServiceException;
+
+	SessionDetailsResponse fetchDetails(SessionDetailsRequest request) throws SessionServiceException;
 }

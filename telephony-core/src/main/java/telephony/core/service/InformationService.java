@@ -12,6 +12,7 @@ import telephony.core.service.dto.response.ProducersResponse;
  */
 public interface InformationService {
 
+
     /**
      * 
      * @param request
