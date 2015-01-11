@@ -5,7 +5,6 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
-
 import telephony.ws.resource.HelloWorldResource;
 import telephony.ws.resource.HelloWorldResourceImpl;
 import telephony.ws.resource.complaint.*;
@@ -28,12 +27,12 @@ import telephony.ws.resource.session.*;
 import telephony.ws.resource.session.impl.*;
 import telephony.ws.resource.store.*;
 import telephony.ws.resource.store.impl.*;
+import telephony.ws.resource.tax.TaxAddResource;
 import telephony.ws.resource.tax.TaxDeleteResource;
 import telephony.ws.resource.tax.TaxEditResource;
-import telephony.ws.resource.tax.TaxFetchResource;
+import telephony.ws.resource.tax.impl.TaxAddResourceImpl;
 import telephony.ws.resource.tax.impl.TaxDeleteResourceImpl;
 import telephony.ws.resource.tax.impl.TaxEditResourceImpl;
-import telephony.ws.resource.tax.impl.TaxFetchResourceImpl;
 import telephony.ws.resource.taxes.TaxesFetchResource;
 import telephony.ws.resource.taxes.impl.TaxesFetchResourceImpl;
 import telephony.ws.resource.user.*;
@@ -103,11 +102,10 @@ public class TelephonyApplication extends Application {
         router.attach(ProductsDetailsResource.URL, ProductsDetailsResourceImpl.class);
         
         // taxes resource - complete
-        router.attach(TaxFetchResource.URL, TaxFetchResourceImpl.class);
+        router.attach(TaxAddResource.URL, TaxAddResourceImpl.class);
         router.attach(TaxesFetchResource.URL, TaxesFetchResourceImpl.class);
         router.attach(TaxEditResource.URL, TaxEditResourceImpl.class);
         router.attach(TaxDeleteResource.URL, TaxDeleteResourceImpl.class);
-        router.attach(TaxFetchResource.URL, TaxFetchResourceImpl.class);
         
         // contacts resources - complete 
         router.attach(ContactsFetchResource.URL, ContactsFetchResourceImpl.class);

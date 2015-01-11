@@ -1,22 +1,20 @@
 package telephony.ws.resource.store;
 
-import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Get;
 import org.restlet.resource.Post;
+import telephony.core.service.dto.request.StoreFetchRequest;
+import telephony.core.service.dto.response.StoreFetchResponse;
 
-/**
- * asd.
- */
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 public interface StoresFetchResource {
 	
 	String URL = "/stores/fetch";
 
-	/**
-	 * asd.
-	 * @param entity asd.
-	 * @return asd.
-	 */
 	@Post("json")
-	JsonRepresentation list(JsonRepresentation entity);
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	StoreFetchResponse fetch(StoreFetchRequest fetchRequest);
 
 }

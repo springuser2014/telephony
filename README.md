@@ -1,16 +1,16 @@
-# About
+## About
 
 TBD
 
-## Features
+### Features
 
 TBD
 
-## Inital configuration
+### Inital configuration
 
 TBD
 
-## Prerequisities
+### Prerequisities
 
 Properly installed basic stuff from Java world:
 
@@ -22,7 +22,7 @@ To prepare an completed development environment we also need:
 - PostgreSQL database >= 8.4
 - Tomcat 7 server
 
-## Used technologies
+### Libraries currently in use:
 
 - Restlet 2.1
 - Maven 3
@@ -32,7 +32,7 @@ To prepare an completed development environment we also need:
 - Arquillian 1.1.1
 - Mockito 1.9.5
 
-## Technologies which could be in use soon:
+### Stuff which can be used in the nearest future:
 - Twitter bootstrap
 - Groovy
 - Spock framework
@@ -49,11 +49,11 @@ To prepare an completed development environment we also need:
 - instanbul
 - sinon
 
-## TODO
+### TODO
 
 [List of upcoming features](https://github.com/pawelhenek/telephony/issues)
 
-## Testing configuration
+### Testing configuration
 
 To launch tests it is required to prepare corresponding databases and configurations:
 
@@ -111,6 +111,5 @@ Of course tomcat-users.xml should like similar to:
 	    <user username="arquillian" password="arquillian" roles="manager-gui,manager-status,manager-script,manager-jmx"/>
 	
 	</tomcat-users>
-
 
 We need to add this at the beginning of the file to enable deployment by jmx.

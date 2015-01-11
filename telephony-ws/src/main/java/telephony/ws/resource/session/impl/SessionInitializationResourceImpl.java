@@ -26,9 +26,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
-/**
- * asd.
- */
 public class SessionInitializationResourceImpl 
 extends TelephonyServerResource 
 implements SessionInitializationResource {    

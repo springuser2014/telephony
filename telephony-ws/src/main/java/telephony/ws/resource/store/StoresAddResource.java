@@ -1,21 +1,20 @@
 package telephony.ws.resource.store;
 
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
+import telephony.core.service.dto.request.StoreAddRequest;
+import telephony.core.service.dto.response.StoreAddResponse;
 
-/**
- * asd.
- */
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 public interface StoresAddResource {
 	
 	String URL = "/stores/add";
 
-	/**
-	 * asd.
-	 * @param entity asd.
-	 * @return asd.
-	 */
 	@Post("json")
-	JsonRepresentation add(JsonRepresentation entity);
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	StoreAddResponse add(StoreAddRequest addRequest);
 
 }

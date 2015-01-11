@@ -26,11 +26,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- * asd.
- */
-public class SessionRefreshResourceImpl extends TelephonyServerResource
-		implements SessionRefreshResource {
+public class SessionRefreshResourceImpl
+extends TelephonyServerResource
+implements SessionRefreshResource {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 

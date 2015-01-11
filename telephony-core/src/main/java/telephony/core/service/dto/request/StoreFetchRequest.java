@@ -7,6 +7,10 @@ public class StoreFetchRequest extends AuthRequest {
 
     StoreFilterCriteria filters;
 
+    public StoreFetchRequest() {
+        super();
+    }
+
     public StoreFetchRequest(SessionDto session) {
         super(session);
     }

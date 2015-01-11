@@ -6,6 +6,7 @@ import org.restlet.resource.Put;
 /**
  * asd.
  */
+@Deprecated
 public interface StoreSetRolesResource {
 
 	String URL = "/store/setRoles/{id}";

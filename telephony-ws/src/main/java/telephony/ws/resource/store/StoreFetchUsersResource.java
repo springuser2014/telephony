@@ -7,6 +7,7 @@ import org.restlet.resource.Post;
 /**
  * asd.
  */
+@Deprecated
 public interface StoreFetchUsersResource {
 	
 	String URL = "/store/users/{id}";
