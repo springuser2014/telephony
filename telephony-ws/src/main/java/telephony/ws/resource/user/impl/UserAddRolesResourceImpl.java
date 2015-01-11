@@ -12,14 +12,12 @@ import org.slf4j.LoggerFactory;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.user.UserAddRolesResource;
 
-/**
- * asd.
- */
-public class UserAddRolesResourceImpl 
+@Deprecated
+public class UserAddRolesResourceImpl
 extends TelephonyServerResource
 implements UserAddRolesResource {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Put("json")
     @Produces(MediaType.APPLICATION_JSON)

@@ -13,16 +13,14 @@ import org.slf4j.LoggerFactory;
 
 import telephony.ws.resource.user.UserAddStoresResource;
 
-/**
- * asd.
- */
-public class UserAddStoresResourceImpl 
+@Deprecated
+public class UserAddStoresResourceImpl
 extends ServerResource 
 implements UserAddStoresResource {
 
-    private final Representation representation = new JsonRepresentation("");
+    final Representation representation = new JsonRepresentation("");
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	@Put("json")

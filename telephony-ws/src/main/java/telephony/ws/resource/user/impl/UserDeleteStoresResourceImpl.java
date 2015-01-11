@@ -15,17 +15,15 @@ import telephony.ws.resource.user.UserDeleteStoresResource;
 
 import com.google.inject.Inject;
 
-/**
- * asd.
- */
-public class UserDeleteStoresResourceImpl 
+@Deprecated
+public class UserDeleteStoresResourceImpl
 extends TelephonyServerResource
 implements UserDeleteStoresResource {
 	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
-	private UserService userService;
+	UserService userService;
 
 	@Override
 	@Delete("json")

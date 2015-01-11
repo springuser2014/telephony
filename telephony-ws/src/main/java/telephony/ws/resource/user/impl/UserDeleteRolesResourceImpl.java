@@ -10,28 +10,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import telephony.core.service.UserService;
+import telephony.core.service.dto.request.UserDeleteRequest;
+import telephony.core.service.dto.response.UserDeleteResponse;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.user.UsersDeleteResource;
 
 import com.google.inject.Inject;
 
-/**
- * asd.
- */
-public class UserDeleteRolesResourceImpl 
+@Deprecated
+public class UserDeleteRolesResourceImpl
 extends TelephonyServerResource
 implements UsersDeleteResource {
 		
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
-	private UserService userService;
+	UserService userService;
 
 	@Override
 	@Delete("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation delete(JsonRepresentation entity) {
+	public UserDeleteResponse delete(UserDeleteRequest deleteRequest) {
 		// TODO Auto-generated method stub
 		return null;
 	}

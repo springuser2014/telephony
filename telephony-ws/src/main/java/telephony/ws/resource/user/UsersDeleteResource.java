@@ -1,20 +1,19 @@
 package telephony.ws.resource.user;
 
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
-/**
- * asd.
- */
+import telephony.core.service.dto.request.UserDeleteRequest;
+import telephony.core.service.dto.response.UserDeleteResponse;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 public interface UsersDeleteResource {
 
 	String URL = "/users/delete/{id}";
-			
-	/**
-	 * asd.
-	 * @param entity asd.
-	 * @return asd.
-	 */
-	@Delete("json")
-	JsonRepresentation delete(JsonRepresentation entity);
 
+	@Delete("json")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	UserDeleteResponse delete(UserDeleteRequest deleteRequest);
 }
