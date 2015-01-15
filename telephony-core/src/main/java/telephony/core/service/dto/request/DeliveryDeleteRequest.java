@@ -4,6 +4,8 @@ import telephony.core.service.dto.SessionDto;
 
 public class DeliveryDeleteRequest extends AuthRequest {
 
+	public DeliveryDeleteRequest() {}
+
 	public DeliveryDeleteRequest(SessionDto sessionDto) {
 		super(sessionDto);
 	}

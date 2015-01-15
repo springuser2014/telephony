@@ -9,24 +9,21 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.*;
 import telephony.core.entity.jpa.*;
-import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
 import telephony.core.service.converter.DeliveryConverter;
-import telephony.core.service.dto.DeliveryDto;
-import telephony.core.service.dto.ProductDto;
-import telephony.core.service.dto.ProductEditDto;
+import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
-import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNull;
 
 
@@ -36,9 +33,7 @@ import static telephony.core.assertion.CommonAssertions.isNull;
 public class DeliveryServiceImpl
 extends AbstractBasicService<Delivery> 
 implements DeliveryService {
-	
-	final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	
+
 	@Inject
 	PricingsDao pricingsDao;
 	
@@ -77,16 +72,15 @@ implements DeliveryService {
     @Override
     @Transactional
     public DeliveriesFetchResponse findDeliveries(DeliveriesFetchRequest request)
-    		throws SessionServiceException, DeliveryServiceException{
+    		throws SessionServiceException, DeliveryServiceException {
         
-        logger.debug("DeliveryServiceImpl.findDeliveries starts");        
-		logger.debug("params : [request : {}]", request);
+        logger.info("DeliveryServiceImpl.findDeliveries starts");
 
-		SessionDto session = SessionDto.create();
-		session.setSessionId(request.getSessionId());
-		session.setUsername(request.getUsername());
-			
-		sessionService.validate(session);
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {}]", request.getFilters());
+		}
+
+		sessionService.validate(request.getSessionDto());
 		
         List<Delivery> res = deliveriesDao.find(request.getFilters());
         
@@ -99,13 +93,15 @@ implements DeliveryService {
         }
         
         resp.setDeliveries(coll);
+		resp.setMessage("operation peformed successfuly"); // TODO add localized msg
         
         return resp;
     }
     
     @Override
 	@Transactional
-	public long count(SessionDto session) throws SessionServiceException {
+	public long count(SessionDto session)
+			throws SessionServiceException {
 
 		sessionService.validate(session);
 
@@ -115,94 +111,138 @@ implements DeliveryService {
 	@Transactional
 	@Override
 	public DeliveryAddResponse add(DeliveryAddRequest request)
-			throws SessionServiceException, DeliveryServiceException, ParseException {
-		
-		// TODO : add validation
-		// TODO : add validator
-		// TODO : add bean to entity converter
-		// TODO : add entity to bean converter
-		
-		SessionDto session = SessionDto.create();
-		session.setSessionId(request.getSessionId());
-		session.setUsername(request.getUsername());
-		
-		sessionService.validate(session);		
+			throws SessionServiceException, DeliveryServiceException {
 
-		Delivery delivery = new Delivery();
-		Store store = storesDao.findById(request.getStoreId());
-		Contact contact = contactsDao.findById(request.getContactId());
-		
-		delivery.setDateIn(SDF.parse(request.getDateIn()));
-		delivery.setLabel(request.getLabel());
-		delivery.setStore(store);
-		delivery.setContact(contact);
-		
-		delivery = deliveriesDao.saveOrUpdate(delivery);
-		
-		Collection<Product> products = new ArrayList<Product>();
-		
-		for (ProductDto productBean : request.getProducts()) {
-			
-			Model model = null;
-			Producer producer = null;
-			
-			model = modelsDao.findByLabel(productBean.getModel());
-			producer = producerDao.findByLabel(productBean.getProducer());
-			
-			Product product = toProduct(productBean, delivery, store, model);
-			
-			// TODO : refactor this part
-			if (model != null && producer != null && model.getProducer().equals(producer)) {
-				product.setModel(model);
-			} else if (model != null && producer != null && !model.getProducer().equals(producer)) {
-				throw new DeliveryServiceException();
-			} else if (model == null && producer != null) {
-				model = new Model();
-				model.setLabel(productBean.getModel());
-				model.setProducer(producer);
-				
-				model = modelsDao.saveOrUpdate(model);
-			} else if (model != null && producer == null) {
-				throw new DeliveryServiceException();
-			} else {
-				producer = new Producer();
-				producer.setLabel(productBean.getProducer());
-				producer = producerDao.saveOrUpdate(producer);
-				
-				model = new Model();
-				model.setLabel(productBean.getModel());
-				model.setProducer(producer);				
-				model = modelsDao.saveOrUpdate(model);
-			}
-			
-			product.setModel(model);
-			productsDao.save(product);
-			product = productsDao.findById(product.getId());
-			
-			Tax tax = taxDao.findById(productBean.getTaxId());
-			
-			ProductTax productTax = new ProductTax();
-			productTax.setProduct(product);
-			productTax.setTax(tax);
-			productTax.setFrom(SDF.parse(productBean.getTaxFrom()));
-			productTax.setTo(SDF.parse(productBean.getTaxTo()));
-			
-			productTaxDao.save(productTax);
-			
-			
-			if (product != null ) {
-				products.add(product);
-			}
-		}
-		
 		DeliveryAddResponse resp = new DeliveryAddResponse();
+
+		logger.info("DeliveryServiceImpl.add starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ deliveryDto : {} ] ", request.getDeliveryDto());
+		}
+
+		sessionService.validate(request.getSessionDto());
+
+		DeliveryAddDto addDto = request.getDeliveryDto();
+
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(addDto, errors)) {
+
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("validationError");
+			return resp;
+		}
+
+		Delivery delivery = deliveryConverter.toEntity(addDto);
+		deliveriesDao.saveOrUpdate(delivery);
+
 		resp.setSuccess(true);
-		
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
+
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(DeliveryAddDto addDto, List<Error> errors) {
+
+		if (isNull(addDto)) {
+			errors.add(Error.create("deliveryDto", "deliveryDto cannot be null"));
+			return false;
+		}
+
+		if (isEmpty(addDto.getContactId())) {
+			errors.add(Error.create("contactId", "contactId cannot be empty"));
+		}
+
+		if (isEmpty(addDto.getStoreId())) {
+			errors.add(Error.create("storeId", "storeId cannot be empty"));
+		}
+
+		if (isEmpty(addDto.getLabel())) {
+			errors.add(Error.create("label", "label cannot be empty"));
+		}
+
+		if (isNull(addDto.getDateIn())) {
+			errors.add(Error.create("dateIn", "dateIn cannot be null"));
+		}
+
+		if (isNull(addDto.getProducts())) {
+			errors.add(Error.create("products", "products cannot be null"));
+		}
+
+		if (isEmpty(addDto.getProducts())) {
+			errors.add(Error.create("products", "products cannot be empty"));
+		}
+
+		int i = 0;
+
+		for (ProductAddDto dto : addDto.getProducts()) {
+
+			String prod = "products[" + i + "]";
+
+			if (isEmpty(dto.getColor())) {
+				errors.add(Error.create(prod + ".color", "color cannot be empty"));
+			}
+
+			if (isEmpty(dto.getImei())) {
+				errors.add(Error.create(prod + ".imei", "color cannot be empty"));
+			}
+
+			if (isNotEmpty(dto.getImei()) && dto.getImei().length() != 15) {
+				errors.add(Error.create(prod + ".imei", "imei should be 15 character long"));
+			}
+
+			if (isNull(dto.getCurrentPrice())) {
+				errors.add(Error.create(prod + ".currentPrice", "currentPrice cannot be empty"));
+			} else {
+
+				if (isEmpty(dto.getCurrentPrice().getRate())) {
+					errors.add(Error.create(prod + ".currentPrice.rate", "currentPrice.rate cannot be empty"));
+				}
+
+				if (isNull(dto.getCurrentPrice().getFrom())) {
+					errors.add(Error.create(prod + ".currentPrice.from", "currentPrice.from cannot be empty"));
+				}
+
+				if (isNull(dto.getCurrentPrice().getTo())) {
+					errors.add(Error.create(prod + ".currentPrice.to", "currentPrice.to cannot be empty"));
+				}
+			}
+
+			if (isEmpty(dto.getModel())) {
+				errors.add(Error.create(prod + ".model", "model cannot be empty"));
+			}
+
+			if (isEmpty(dto.getProducer())) {
+				errors.add(Error.create(prod + ".producer", "producer cannot be empty"));
+			}
+
+			if (isNull(dto.getProductTax())) {
+				errors.add(Error.create(prod + ".productTax", "productTax cannot be null"));
+			} else {
+				if (isEmpty(dto.getProductTax().getId())) {
+					errors.add(Error.create(prod + ".productTax.id", "productTax.id cannot be empty"));
+				}
+
+				if (isNull(dto.getProductTax().getTaxFrom())) {
+					errors.add(Error.create(prod + ".productTax.taxFrom", "productTax.taxFrom cannot be empty"));
+				}
+
+				if (isNull(dto.getProductTax().getTaxTo())) {
+					errors.add(Error.create(prod + ".productTax.taxFrom", "taxId cannot be empty"));
+				}
+			}
+
+			i++;
+		}
+
+		return errors.size() == 0;
+	}
+
 	// TODO : extract to converter
-	private Product toProduct(ProductDto bean, Delivery delivery, Store store, Model model) 
+	private Product toProduct(ProductAddDto bean, Delivery delivery, Store store, Model model)
 			throws ParseException {
 
 		Product p = new Product();
@@ -237,151 +277,142 @@ implements DeliveryService {
 			throws ParseException, DeliveryServiceException, SessionServiceException {
 	
 		DeliveryEditResponse resp = new DeliveryEditResponse();
+
 		sessionService.validate(request.getSessionDto());
+
+		DeliveryEditDto editDto = request.getDeliveryDto() ;
 
 		// TODO : extract the stuff below to converter/methods
 		
-		Delivery delivery = deliveriesDao.findById(request.getId());
+		Delivery delivery = deliveriesDao.findById(editDto.getId());
+		deliveryConverter.updateEntity(delivery, request.getDeliveryDto());
+		deliveriesDao.saveOrUpdate(delivery);
+
 		Store store = null;
-		
-		if (request.getStoreId() != null) {
-			store = storesDao.findById(request.getStoreId());
+
+		if (editDto.getStoreId() != null) {
+			store = storesDao.findById(editDto.getStoreId());
 		} else {
 			store = delivery.getStore();
 		}
-		
+
 		delivery.setStore(store);
-		
+
 		Contact contact = null;
-		if (request.getContactId() != null) {
-			contact = contactsDao.findById(request.getContactId());
+		if (editDto.getContactId() != null) {
+			contact = contactsDao.findById(editDto.getContactId());
 		} else {
 			contact = delivery.getContact();
 		}
-		
+
 		delivery.setContact(contact);
-		
-		for (Long id : request.getProductsToDelete()) { // TODO : to improve
+
+		for (Long id : editDto.getProductsToDelete()) { // TODO : to improve
 			productsDao.removeById(id);
 		}
-		
+
 		Collection<Product> products = new ArrayList<Product>();
-		
-		for (ProductDto bean:  request.getProductsToAdd()) {
-			
+
+		for (ProductAddDto dto : editDto.getProductsToAdd()) {
+
 			Model model = null;
 			Producer producer = null;
-			
-			model = modelsDao.findByLabel(bean.getModel());
-			producer = producerDao.findByLabel(bean.getProducer());
-			
-			Product product = toProduct(bean, delivery, store, model);
-			
+
+			model = modelsDao.findByLabel(dto.getModel());
+			producer = producerDao.findByLabel(dto.getProducer());
+
+			Product product = toProduct(dto, delivery, store, model);
+
 			if (model != null && producer != null && model.getProducer().equals(producer)) {
 				product.setModel(model);
 			} else if (model != null && producer != null && !model.getProducer().equals(producer)) {
 				throw new DeliveryServiceException();
 			} else if (model == null && producer != null) {
 				model = new Model();
-				model.setLabel(bean.getModel());
+				model.setLabel(dto.getModel());
 				model.setProducer(producer);
-				
+
 				model = modelsDao.saveOrUpdate(model);
 			} else if (model != null && producer == null) {
 				throw new DeliveryServiceException();
 			} else {
 				producer = new Producer();
-				producer.setLabel(bean.getProducer());
+				producer.setLabel(dto.getProducer());
 				producer = producerDao.saveOrUpdate(producer);
-				
+
 				model = new Model();
-				model.setLabel(bean.getModel());
-				model.setProducer(producer);				
+				model.setLabel(dto.getModel());
+				model.setProducer(producer);
 				model = modelsDao.saveOrUpdate(model);
 			}
-			
+
 			product.setModel(model);
 			productsDao.save(product);
 			product = productsDao.findById(product.getId());
-			
+
 			Pricing price = new Pricing();
-			if (bean.getPriceFrom() != null) {
-				price.setFrom(SDF.parse(bean.getPriceFrom()));
-			} else {
-				price.setFrom(null);
-			}
-			if (bean.getPriceTo() != null) {
-				price.setTo(SDF.parse(bean.getPriceTo()));
-			} else {
-				price.setTo(null);
-			}
-			price.setRate(bean.getPriceIn());
-			
+			price.setFrom(dto.getCurrentPrice().getFrom());
+			price.setTo(dto.getCurrentPrice().getTo());
+			price.setRate(dto.getCurrentPrice().getRate());
+
+			product.setPriceIn(dto.getPriceIn());
+
 			if (product.getPricings() == null) {
 				product.setPricings(new ArrayList<Pricing>());
 			}
 			price.setProduct(product);
 			pricingsDao.save(price);
-			
-			Tax tax = taxDao.findById(bean.getTaxId());
-			
+
+			Tax tax = taxDao.findById(dto.getProductTax().getId());
+
 			ProductTax productTax = new ProductTax();
 			productTax.setProduct(product);
 			productTax.setTax(tax);
-			
-			if (bean.getTaxFrom() != null) {
-				productTax.setFrom(SDF.parse(bean.getTaxFrom()));
-			} else {
-				productTax.setFrom(null);
-			}
-			if (bean.getTaxTo() != null) {
-				productTax.setTo(SDF.parse(bean.getTaxTo()));	
-			} else {
-				productTax.setTo(null);
-			}
-			
+			productTax.setFrom(dto.getProductTax().getTaxFrom());
+			productTax.setTo(dto.getProductTax().getTaxTo());
+
 			productTaxDao.save(productTax);
-			
+
 			if (product != null ) {
 				products.add(product);
 			}
 		}
-		
-		for (ProductEditDto bean : request.getProductsToEdit()) {
-			
+
+		for (ProductEditDto bean : editDto.getProductsToEdit()) {
+
 			Product product = productsDao.findById(bean.getId());
-			
+
 			if (bean.getColor() != null) {
 				product.setColor(bean.getColor());
 			}
 			if (bean.getImei() != null) {
 				product.setImei(bean.getImei());
 			}
-			
+
 			if (bean.getPriceIn() != null) {
 				product.setPriceIn(bean.getPriceIn());
 			}
-			
+
 			product.setStore(store);
-			
+
 			if (bean.getColor() != null) {
 				product.setColor(bean.getColor());
 			}
-			
+
 			if (bean.getImei() != null) {
 				product.setImei(bean.getImei());
 			}
-			
+
 			if (bean.getPriceIn() != null) {
 				product.setPriceIn(bean.getPriceIn());
 			}
-			
+
 			Model model = null;
 			Producer producer = null;
-			
+
 			model = modelsDao.findByLabel(bean.getModel());
 			producer = producerDao.findByLabel(bean.getProducer());
-			
+
 			if (model != null && producer != null && model.getProducer().equals(producer)) {
 				product.setModel(model);
 			} else if (model != null && producer != null && !producer.equals(model.getProducer())) {
@@ -390,7 +421,7 @@ implements DeliveryService {
 				model = new Model();
 				model.setLabel(bean.getModel());
 				model.setProducer(producer);
-				
+
 				model = modelsDao.saveOrUpdate(model);
 			} else if (model != null && producer == null) {
 				throw new DeliveryServiceException();
@@ -398,57 +429,58 @@ implements DeliveryService {
 				producer = new Producer();
 				producer.setLabel(bean.getProducer());
 				producer = producerDao.saveOrUpdate(producer);
-				
+
 				model = new Model();
 				model.setLabel(bean.getModel());
-				model.setProducer(producer);				
+				model.setProducer(producer);
 				model = modelsDao.saveOrUpdate(model);
 			}
-			
+
 			product.setModel(model);
 			Date d = new Date();
-			
+
 			if (product.getCurrentPricing() != null) {
-				
+
 				if (product.getCurrentPricing().getRate() != bean.getPrice()) {
-					
+
 					Pricing currPricing = product.getCurrentPricing();
 					currPricing.setTo(d);
-										
+
 					Pricing price = new Pricing();
 					price.setProduct(product);
 					price.setRate(bean.getPrice());
 					price.setFrom(d);
 					price.setTo(null);
-					
+
 					product.addPricing(price);
 				}
 			}
-			
+
 //			productsDao.saveOrUpdate(product);
-			
+
 			if (product.getCurrentTax() != null) {
 				if (product.getCurrentTax().getId() != bean.getTaxId()) {
-					
+
 					ProductTax currProductTax = product.getCurrentTax();
 					currProductTax.setTo(d);
-					
+
 					Tax tax = taxDao.findById(bean.getTaxId());
-					
+
 					ProductTax productTax = new ProductTax();
 					productTax.setProduct(product);
 					productTax.setTax(tax);
 					productTax.setFrom(d);
 					productTax.setTo(null);
-					
+
 					productTaxDao.save(productTax);
 				}
-			} 
+			}
 		}
-		
+
 		deliveriesDao.saveOrUpdate(delivery);
 		
 		resp.setSuccess(true);
+		resp.setMessage("operation performed successfully");
 		
 		return resp;
 	}
@@ -479,6 +511,7 @@ implements DeliveryService {
 		deliveriesDao.removeById(request.getDeliveryId());
 		
 		resp.setSuccess(true);
+		resp.setMessage("operation performed successfully");
 		
 		return resp;
 	}

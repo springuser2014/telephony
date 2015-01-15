@@ -1,37 +1,46 @@
 package telephony.core.service.converter;
 
 import telephony.core.entity.jpa.Product;
-import telephony.core.service.dto.ProductDto;
-import telephony.core.service.dto.ProductSearchDto;
+import telephony.core.service.dto.PricingDto;
+import telephony.core.service.dto.ProductAddDto;
+import telephony.core.service.dto.ProductFetchDto;
+import telephony.core.service.dto.ProductTaxDto;
 
 public class ProductConverter {
 
-    public ProductDto toProductDto(Product product) {
+    public ProductAddDto toProductDto(Product product) {
 
-        ProductDto p = new ProductDto();
+        ProductAddDto p = new ProductAddDto();
         p.setColor(product.getColor());
         p.setImei(product.getImei());
         p.setModel(product.getModel().getLabel());
         p.setProducer(product.getModel().getProducer().getLabel());
         if (product.getCurrentTax() != null) {
-            p.setTaxFrom(product.getCurrentTax().getFrom());
-            p.setTaxTo(product.getCurrentTax().getTo());
-            p.setTaxId(product.getCurrentTax().getTax().getId());
+
+            ProductTaxDto productTaxDto = new ProductTaxDto();
+            productTaxDto.setTaxFrom(product.getCurrentTax().getFrom());
+            productTaxDto.setTaxTo(product.getCurrentTax().getTo());
+            productTaxDto.setId(product.getCurrentTax().getTax().getId());
+
+            p.setProductTax(productTaxDto);
         }
 
         p.setPriceIn(product.getPriceIn());
 
         if (product.getCurrentPricing() != null) {
-            p.setPriceFrom(product.getCurrentPricing().getFrom());
-            p.setPriceTo(product.getCurrentPricing().getTo());
-            p.setCurrentPrice(product.getCurrentPricing().getRate());
+            PricingDto dto = new PricingDto();
+            dto.setFrom(product.getCurrentPricing().getFrom());
+            dto.setTo(product.getCurrentPricing().getTo());
+            dto.setRate(product.getCurrentPricing().getRate());
+
+            p.setCurrentPrice(dto);
         }
 
         return p;
     }
 
-    public ProductSearchDto toProductSearchDto(Product p) {
-        ProductSearchDto b = new ProductSearchDto();
+    public ProductFetchDto toProductFetchDto(Product p) {
+        ProductFetchDto b = new ProductFetchDto();
 
         b.setColor(p.getColor());
         b.setDeliveryId(p.getDelivery().getId());

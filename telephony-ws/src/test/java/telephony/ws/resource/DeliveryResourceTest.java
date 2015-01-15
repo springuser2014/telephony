@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.DeliveryFilterCriteriaBuilder;
-import telephony.core.service.dto.ProductDto;
+import telephony.core.service.dto.ProductAddDto;
 import telephony.core.service.dto.ProductEditDto;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.SignInDto;
@@ -90,7 +90,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		
 		Date d = new Date();
 		
-		ProductDto productAdd = new ProductDto();
+		ProductAddDto productAdd = new ProductAddDto();
 		productAdd.setColor("green");
 		productAdd.setImei("123456789000099");
 		productAdd.setModel("3310");
@@ -98,7 +98,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		productAdd.setPriceIn(200.0d);
 		productAdd.setPriceFrom(d);
 		productAdd.setPriceTo(null);
-		productAdd.setTaxId(6L);
+		productAdd.setProductTax(6L);
 		productAdd.setTaxFrom(d);
 		productAdd.setTaxTo(null);
 		
@@ -245,11 +245,11 @@ public class DeliveryResourceTest extends BaseWSTest {
 
 		SessionDto session = SessionDto.create("user1@gmail.com", sessionId);
 		
-		List<ProductDto> products = new ArrayList<ProductDto>();
+		List<ProductAddDto> products = new ArrayList<ProductAddDto>();
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
 		
 		// TODO : refactor to TestDataBuilder
-		ProductDto p1 = new ProductDto();
+		ProductAddDto p1 = new ProductAddDto();
 		p1.setProducer("Nokia");
 		p1.setModel("SX99");
 		p1.setColor("black");
@@ -259,9 +259,9 @@ public class DeliveryResourceTest extends BaseWSTest {
 		p1.setPriceIn(200.0d);
 		p1.setTaxFrom(new Date());
 		p1.setTaxTo(priceTo);
-		p1.setTaxId(7L);
+		p1.setProductTax(7L);
 		
-		ProductDto p2 = new ProductDto();
+		ProductAddDto p2 = new ProductAddDto();
 		p2.setProducer("Audi");
 		p2.setModel("X50");
 		p2.setColor("white");
@@ -271,7 +271,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 		p2.setPriceIn(300.0d);
 		p2.setTaxFrom(new Date());
 		p2.setTaxTo(priceTo);
-		p2.setTaxId(7L);
+		p2.setProductTax(7L);
 		
 		products.add(p1);
 		products.add(p2);

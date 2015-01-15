@@ -12,6 +12,15 @@ public final class CommonAssertions {
         return obj != null;
     }
 
+    public static boolean isEmpty(Double obj) {
+        return obj == null || obj.isNaN();
+    }
+
+    public static boolean isNotEmpty(Double obj) {
+        return obj != null && !obj.isNaN();
+    }
+
+
     public static boolean isEmpty(String obj) {
         return obj == null || obj.isEmpty();
     }

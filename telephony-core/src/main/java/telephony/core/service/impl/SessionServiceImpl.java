@@ -190,7 +190,7 @@ implements SessionService {
 
 		User u = usersDao.findByNameAndSessionId(request.getUsername(),request.getSessionId());
 
-		UserFetchDto dto = userConverter.toDto(u);
+		UserFetchDto dto = userConverter.toFetchDto(u);
 
 		resp.setDetails(dto);
 		resp.setMessage(""); // TODO add localized msg

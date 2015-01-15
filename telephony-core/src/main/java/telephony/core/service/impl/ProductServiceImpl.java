@@ -22,7 +22,7 @@ import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.ProductSearchDto;
+import telephony.core.service.dto.ProductFetchDto;
 import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
@@ -182,11 +182,11 @@ implements ProductService {
 
 		List<Product> result = productsDao.findByCriteria(filters);
 		
-		List<ProductSearchDto> lst = new ArrayList<ProductSearchDto>();
+		List<ProductFetchDto> lst = new ArrayList<ProductFetchDto>();
 
 		for(Product p : result) {
 					
-			lst.add(productConverter.toProductSearchDto(p));
+			lst.add(productConverter.toProductFetchDto(p));
 		}
 
 		ProductFetchResponse resp = new ProductFetchResponse();

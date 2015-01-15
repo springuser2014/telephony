@@ -1,39 +1,43 @@
 package telephony.test.core.data;
 
 import org.joda.time.DateTime;
-import telephony.core.entity.jpa.Model;
-import telephony.core.entity.jpa.Pricing;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.ProductTax;
 import telephony.core.service.dto.ModelDto;
-import telephony.core.service.dto.ProductDto;
+import telephony.core.service.dto.PricingDto;
+import telephony.core.service.dto.ProductAddDto;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 // TODO add to the class services
 public class TestDataBuilder {
 
-    public static ProductDto getProductB(ModelDto model) {
-        ProductDto p = new ProductDto();
+    public static ProductAddDto getProductB(ModelDto model) {
+        ProductAddDto p = new ProductAddDto();
         p.setColor("niebieski");
         p.setImei("123451234512345");
-        p.setModelId(model.getId());
+        p.setModel(model.getLabel());
 
-        p.setCurrentPrice(20.0);
+        PricingDto dto = new PricingDto();
+        dto.setFrom(new Date());
+        dto.setTo(null);
+        dto.setRate(200.0d);
+        p.setCurrentPrice(dto);
         p.setPriceIn(100.0);
 
         return p;
     }
 
-    public static ProductDto getProductA(ModelDto model) {
-        ProductDto p = new ProductDto();
+    public static ProductAddDto getProductA(ModelDto model) {
+        ProductAddDto p = new ProductAddDto();
         p.setColor("zielony");
         p.setImei("098760987609876");
-        p.setModelId(model.getId());
+        p.setModel(model.getLabel());
 
-        p.setCurrentPrice(20.0);
+        PricingDto dto = new PricingDto();
+        dto.setFrom(new Date());
+        dto.setTo(null);
+        dto.setRate(200.0d);
+        p.setCurrentPrice(dto);
         p.setPriceIn(110.0);
 
         return p;

@@ -13,6 +13,7 @@ public final class TestData {
 	public static final Long PRODUCT8_ID = 8L;
 	public static final Long TAX6_ID = 6L;
 	public static final Long PRODUCT_8_ID = 8L;
+	public static final Long TAX7_ID = 7L;
 
 	private TestData() {}
 	

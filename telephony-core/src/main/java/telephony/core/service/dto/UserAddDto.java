@@ -6,12 +6,12 @@ import java.util.List;
 public class UserAddDto extends UserDto {
 
     String password;
-    List<Long> roles;
+    List<Long> rolesToAdd;
 
     public UserAddDto() {
         super();
 
-        roles = new ArrayList<Long>();
+        rolesToAdd = new ArrayList<Long>();
     }
 
     public String getPassword() {
@@ -22,25 +22,25 @@ public class UserAddDto extends UserDto {
         this.password = password;
     }
 
-    public List<Long> getRoles() {
-        return roles;
+    public List<Long> getRolesToAdd() {
+        return rolesToAdd;
     }
 
-    public void setRoles(List<Long> roles) {
-        this.roles = roles;
+    public void setRolesToAdd(List<Long> rolesToAdd) {
+        this.rolesToAdd = rolesToAdd;
     }
 
-    public void addRole(Long roleId) {
+    public void addRoleToAdd(Long roleId) {
 
-        if (!roles.contains(roleId)) {
-            roles.add(roleId);
+        if (!rolesToAdd.contains(roleId)) {
+            rolesToAdd.add(roleId);
         }
     }
 
-    public void removeRole(Long roleId) {
+    public void removeRoleToAdd(Long roleId) {
 
-        if (roles.contains(roleId)) {
-            roles.remove(roleId);
+        if (rolesToAdd.contains(roleId)) {
+            rolesToAdd.remove(roleId);
         }
     }
 }

@@ -4,26 +4,32 @@ import java.util.Date;
 
 public class ProductTaxDto {
 
-	private Double rate;
+	private Long id;
 	private Date taxFrom;
 	private Date taxTo;
 	
-	public Double getRate() {
-		return rate;
+	public Long getId() {
+		return id;
 	}
-	public void setRate(Double rate) {
-		this.rate = rate;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
+
 	public Date getTaxFrom() {
 		return taxFrom;
 	}
+
 	public void setTaxFrom(Date taxFrom) {
 		this.taxFrom = taxFrom;
 	}
+
 	public Date getTaxTo() {
 		return taxTo;
 	}
+
 	public void setTaxTo(Date taxTo) {
 		this.taxTo = taxTo;
 	}
+
 }

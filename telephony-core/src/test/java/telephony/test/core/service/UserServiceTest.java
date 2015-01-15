@@ -16,7 +16,8 @@ import telephony.core.service.StoreService;
 import telephony.core.service.UserService;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.UserAddDto;
-import telephony.core.service.dto.UserDto;
+import telephony.core.service.dto.UserEditDto;
+import telephony.core.service.dto.UserFetchDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
@@ -49,28 +50,25 @@ public class UserServiceTest extends BaseCoreTest {
 	
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
-	public void update1() throws SessionServiceException, UserServiceException {
+	public void edit1() throws SessionServiceException, UserServiceException {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		UsersFetchRequest fetchReq = new UsersFetchRequest(session);
-		UserFilterCriteria filters = UserFilterCriteriaBuilder.userFilterCriteria()
-				.withEmail(TestData.USER2_NAME).build();
-		fetchReq.setFilters(filters);
-		UsersFetchResponse fetchResp = userService.fetch(fetchReq);
+		UserEditRequest editReq = new UserEditRequest(session);
+		UserEditDto editDto = new UserEditDto();
+		editDto.setId(TestData.USER2_ID);
+		editDto.setIsActive(true);
+		editDto.addRoleToAdd(TestData.ROLE_SALESMAN_ID);
+		editDto.addRoleToRemove(TestData.ROLE_BOSS_ID);
+		editDto.setEmail("new@gmail.com");
+		editReq.setUserDto(editDto);
 
 		// when
-		UserDto dto = fetchResp.getUsers().get(0);
-		dto.setIsActive(false);
-		UserEditRequest editReq = new UserEditRequest(session);
-		editReq.setUserDto(dto);
 		UserEditResponse editResp = userService.edit(editReq);
-		fetchResp = userService.fetch(fetchReq);
-		
+
 		// then
 		assertNotNull(editResp);
 		assertTrue(editResp.isSuccess());
-		assertFalse(fetchResp.getUsers().get(0).getIsActive());
 	}
 	
 	@Test
@@ -85,7 +83,7 @@ public class UserServiceTest extends BaseCoreTest {
 		dto.setSessionId(null);
 		dto.setSessionValidity(null);
 		dto.setIsActive(true);
-		dto.addRole(TestData.ROLE_SALESMAN_ID);
+		dto.addRoleToAdd(TestData.ROLE_SALESMAN_ID);
 		UserAddRequest request = new UserAddRequest(session);
 		request.setUserDto(dto);
 		long countBefore = userService.count(session);

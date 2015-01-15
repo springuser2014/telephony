@@ -22,7 +22,7 @@ public class UserConverter {
     @Inject
     RoleConverter roleConvert;
 
-    public UserFetchDto toDto(User entity) {
+    public UserFetchDto toFetchDto(User entity) {
         UserFetchDto dto = new UserFetchDto();
         dto.setEmail(entity.getEmail());
         dto.setId(entity.getId());
@@ -45,7 +45,7 @@ public class UserConverter {
         u.setSessionId(dto.getSessionId());
         u.setSessionValidity(dto.getSessionValidity());
 
-        Collection<Role> roles = rolesDao.findByIds(dto.getRoles());
+        Collection<Role> roles = rolesDao.findByIds(dto.getRolesToAdd());
 
         u.setRoles(roles);
 

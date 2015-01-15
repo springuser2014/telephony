@@ -1,30 +1,20 @@
 package telephony.core.service.dto;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SaleDto {
+public class DeliveryAddDto {
 
-    private Long id;
     private String label;
-    private String dateOut;
+    private Date dateIn;
     private Long storeId;
     private Long contactId;
 
     private List<ProductAddDto> products;
 
-    public SaleDto() {
-        products = new ArrayList<ProductAddDto>();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public DeliveryAddDto() {
+        this.products = new ArrayList<ProductAddDto>();
     }
 
     public String getLabel() {
@@ -35,13 +25,12 @@ public class SaleDto {
         this.label = label;
     }
 
-    public String getDateOut() {
-        return dateOut;
+    public Date getDateIn() {
+        return dateIn;
     }
 
-    public void setDateOut(Date dateOut) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
-        this.dateOut = sdf.format(dateOut);
+    public void setDateIn(Date dateIn) {
+        this.dateIn = dateIn;
     }
 
     public Long getStoreId() {
@@ -79,5 +68,4 @@ public class SaleDto {
             products.remove(product);
         }
     }
-
 }

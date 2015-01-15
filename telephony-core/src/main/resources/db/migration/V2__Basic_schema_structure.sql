@@ -177,7 +177,7 @@ SELECT pg_catalog.setval('stores_seq', 1, false);
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+-- Name: rolesToAdd; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE  roles (

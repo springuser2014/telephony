@@ -59,7 +59,7 @@ public class Product extends BaseEntity {
     @Column(name = "color", length = 20, nullable = false)
     private String color;
     
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.ALL } )
     private Collection<ProductTax> productTaxes;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)    

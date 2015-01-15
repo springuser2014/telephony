@@ -11,13 +11,12 @@ import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
-import telephony.core.query.filter.UserFilterCriteria;
-import telephony.core.query.filter.UserFilterCriteriaBuilder;
 import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
 import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.UserDto;
+import telephony.core.service.dto.UserFetchDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
@@ -62,11 +61,11 @@ implements UserService {
 
 		sessionService.validate(req.getSessionDto()); // TODO ; add validation
 
-		List<UserDto> userz = new ArrayList<UserDto>();
+		List<UserFetchDto> userz = new ArrayList<UserFetchDto>();
 		List<User> users = usersDao.find(req.getFilters());
 
 		for (User u : users) {
-			userz.add(userConverter.toDto(u));
+			userz.add(userConverter.toFetchDto(u));
 		}
 
 		UsersFetchResponse resp = new UsersFetchResponse();

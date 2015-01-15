@@ -1,6 +1,6 @@
 package telephony.core.service.dto;
 
-public class ProductSearchDto {
+public class ProductFetchDto {
 
 	private Long id;
 
