@@ -14,6 +14,8 @@ public final class TestData {
 	public static final Long TAX6_ID = 6L;
 	public static final Long PRODUCT_8_ID = 8L;
 	public static final Long TAX7_ID = 7L;
+	public static final Long DELIVERY1_ID = 1L;
+	public static final Long PRODUCT9_ID = 9L;
 
 	private TestData() {}
 	

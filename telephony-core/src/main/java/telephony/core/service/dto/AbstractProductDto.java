@@ -1,15 +1,16 @@
 package telephony.core.service.dto;
 
-public abstract class AbstractProductDto {
+public abstract
+class AbstractProductDto<T extends ProductTaxAddDto, P extends PricingAddDto> {
 
     private String imei;
     private String color;
 
     private Double priceIn;
 
-    private PricingDto currentPrice;
+    private P currentPrice;
 
-    private ProductTaxDto productTax;
+    private T productTax;
 
     public Double getPriceIn() {
         return priceIn;
@@ -35,19 +36,19 @@ public abstract class AbstractProductDto {
         this.color = color;
     }
 
-    public PricingDto getCurrentPrice() {
+    public P getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(PricingDto currentPrice) {
+    public void setCurrentPrice(P currentPrice) {
         this.currentPrice = currentPrice;
     }
 
-    public ProductTaxDto getProductTax() {
+    public T getProductTax() {
         return productTax;
     }
 
-    public void setProductTax(ProductTaxDto productTax) {
+    public void setProductTax(T productTax) {
         this.productTax = productTax;
     }
 }

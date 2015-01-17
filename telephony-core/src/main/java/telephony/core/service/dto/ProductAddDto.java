@@ -1,6 +1,6 @@
 package telephony.core.service.dto;
 
-public class ProductAddDto extends AbstractProductDto {
+public class ProductAddDto extends AbstractProductDto<ProductTaxAddDto, PricingAddDto> {
 
 	private String model;
 	private String producer;

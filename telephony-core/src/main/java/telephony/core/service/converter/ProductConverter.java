@@ -18,9 +18,9 @@ public class ProductConverter {
         if (product.getCurrentTax() != null) {
 
             ProductTaxDto productTaxDto = new ProductTaxDto();
-            productTaxDto.setTaxFrom(product.getCurrentTax().getFrom());
-            productTaxDto.setTaxTo(product.getCurrentTax().getTo());
-            productTaxDto.setId(product.getCurrentTax().getTax().getId());
+            productTaxDto.setFrom(product.getCurrentTax().getFrom());
+            productTaxDto.setTo(product.getCurrentTax().getTo());
+            productTaxDto.setTaxId(product.getCurrentTax().getTax().getId());
 
             p.setProductTax(productTaxDto);
         }
