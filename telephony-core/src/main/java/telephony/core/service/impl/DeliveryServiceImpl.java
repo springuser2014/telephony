@@ -6,9 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.dao.*;
 import telephony.core.entity.jpa.Delivery;
-import telephony.core.entity.jpa.Model;
-import telephony.core.entity.jpa.Product;
-import telephony.core.entity.jpa.Store;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
 import telephony.core.service.converter.DeliveryConverter;
@@ -19,7 +16,6 @@ import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +85,7 @@ implements DeliveryService {
         
         resp.setDeliveries(coll);
 		resp.setMessage("operation peformed successfuly"); // TODO add localized msg
+		resp.setSuccess(true);
         
         return resp;
     }
@@ -220,7 +217,6 @@ implements DeliveryService {
 				if (isNull(dto.getProductTax().getFrom())) {
 					errors.add(Error.create(prod + ".productTax.from", "productTax.taxFrom cannot be empty"));
 				}
-
 			}
 
 			i++;
@@ -229,34 +225,53 @@ implements DeliveryService {
 		return errors.size() == 0;
 	}
 
-	// TODO : extract to converter
-	private Product toProduct(ProductAddDto bean, Delivery delivery, Store store, Model model)
-			throws ParseException {
-
-		Product p = new Product();
-		p.setColor(bean.getColor());
-		p.setImei(bean.getImei());
-		p.setPriceIn(bean.getPriceIn());
-		p.setStore(store);
-		p.setModel(model);
-		p.setDelivery(delivery);
-		
-		return p;
-	}
-
 	@Transactional
 	@Override
 	public DeliveryDetailsResponse fetchDetails(DeliveryDetailsRequest request)
 			throws SessionServiceException {
 
+		logger.info("DeliveryServiceImpl.fetchDetails starts");
+
+		DeliveryDetailsResponse resp = new DeliveryDetailsResponse();
+
 		sessionService.validate(request.getSessionDto());
 
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+
+			resp.setErrors(errors);
+			resp.setMessage("validationFailed");
+			resp.setSuccess(false);
+
+			return resp;
+		}
+
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
-		DeliveryDto bean = deliveryConverter.toDeliveryDto(delivery);
-		DeliveryDetailsResponse resp = new DeliveryDetailsResponse();
-		resp.setDelivery(bean);
-		
+		DeliveryDto deliveryDto = deliveryConverter.toDeliveryDto(delivery);
+
+		resp.setDelivery(deliveryDto);
+		resp.setMessage("operation performed successfully");
+		resp.setSuccess(false);
+
 		return resp;
+	}
+
+	private boolean validate(DeliveryDetailsRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getDeliveryId())) {
+			errors.add(Error.create("deliveryId", "deliveryId cannot be empty"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	private boolean validate(DeliveryEditDto editDto, List<Error> errors) {
@@ -451,7 +466,7 @@ implements DeliveryService {
 			errors.add(Error.create("deliveryId", "deliveryId cannot be empty"));
 			resp.setErrors(errors);
 			resp.setSuccess(false);
-			resp.setMessage("error occured"); // TODO add lcoalized msg
+			resp.setMessage("error occured"); // TODO add localized msg
 			return resp;
 		}
 

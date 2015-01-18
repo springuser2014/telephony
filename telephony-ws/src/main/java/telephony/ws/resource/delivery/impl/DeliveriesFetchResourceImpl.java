@@ -1,66 +1,72 @@
 package telephony.ws.resource.delivery.impl;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.restlet.ext.json.JsonRepresentation;
+import com.google.inject.Inject;
+import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.request.DeliveriesFetchRequest;
-import telephony.core.service.dto.response.BasicResponse;
 import telephony.core.service.dto.response.DeliveriesFetchResponse;
-import telephony.core.service.exception.DeliveryServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.delivery.DeliveriesFetchResource;
 
-/**
- * asd.
- */
-public class DeliveriesFetchResourceImpl 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+public class DeliveriesFetchResourceImpl
 extends TelephonyServerResource
 implements DeliveriesFetchResource {
 	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
-	private DeliveryService deliveryService;
-	
-	@Inject
-	private SessionService sessionService;
+	DeliveryService deliveryService;
 
 	@Override
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation fetch(DeliveriesFetchRequest request) {
-		
-		Gson gson = new GsonBuilder().serializeNulls().create();
+	public DeliveriesFetchResponse fetch(DeliveriesFetchRequest request) {
 
-		DeliveriesFetchResponse resp;
+		logger.info("DeliveriesFetchResourceImpl.fetch starts");
+
+		DeliveriesFetchResponse resp = new DeliveriesFetchResponse();
 		
 		try {
 			resp = deliveryService.findDeliveries(request);
 			
 		} catch (SessionServiceException e) {
 			
-			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
-		} catch (DeliveryServiceException e) {
+			logger.error("sessionExpired", e);
+
+			resp.setMessage("sessionExpired");
+			resp.setSuccess(false);
+
+			getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+
+			return resp;
+		} catch (Exception e) {
 			
-			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+			logger.error("internalServerError", e);
+
+			resp.setMessage("internalServerError");
+			resp.setSuccess(false);
+
+			getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+
+			return resp;
 		}
-		
-		return new JsonRepresentation(gson.toJson(resp));
+
+		if (resp.hasErrors()) {
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return resp;
+		} else {
+			getResponse().setStatus(Status.SUCCESS_OK);
+			return resp;
+		}
 	}
 }

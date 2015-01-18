@@ -9,7 +9,9 @@ import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.ProductFilterCriteria;
 import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.ProducerDto;
+import telephony.core.service.dto.request.ProductDetailsRequest;
 import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.response.ProductDetailsResponse;
 import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
@@ -55,4 +57,7 @@ public interface ProductService extends BasicService<Product> {
 	 * @return a.
 	 */
 	List<ModelDto> fetchAllModelsInUse(SessionDto session) throws SessionServiceException;
+
+
+	ProductDetailsResponse fetchDetails(ProductDetailsRequest request) throws SessionServiceException;
 }

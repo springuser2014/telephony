@@ -1,74 +1,78 @@
 package telephony.ws.resource.contact.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.json.JSONException;
+import com.google.inject.Inject;
 import org.json.JSONObject;
+import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.inject.Inject;
-
 import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.service.ContactService;
+import telephony.core.service.SessionService;
 import telephony.core.service.dto.request.ContactAddRequest;
 import telephony.core.service.dto.response.BasicResponse;
+import telephony.core.service.dto.response.ContactAddResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.contact.ContactsAddResource;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 
-public class ContactsAddResourceImpl extends TelephonyServerResource implements
-		ContactsAddResource {
+public class ContactsAddResourceImpl
+extends TelephonyServerResource
+implements ContactsAddResource {
 	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private ContactService contactService;
+	ContactService contactService;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
     @Post("json")
-	public JsonRepresentation add(ContactAddRequest entity)
-			throws JSONException, IOException, SessionServiceException, ContactServiceException {
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ContactAddResponse add(ContactAddRequest addRequest) {
     	
-		logger.info("ContactsAddResource.add starts");		
-		JSONObject req = new JsonRepresentation(entity).getJsonObject();
-		
-		String username = req.getString("username");
-		String sessionId = req.getString("sessionId");
-		
-		JSONObject newContactJson = req.getJSONObject("newContact");
-		
-		String details = newContactJson.getString("details"); 
-		String label = newContactJson.getString("label");
-				
-		Contact newContact = new Contact();
-		newContact.setDetails(details);
-		newContact.setLabel(label);
-		newContact.setDeliveries(new ArrayList<Delivery>());
-		newContact.setSales(new ArrayList<Sale>());
-		
-		// TODO : dodac zaciaganie jezyków z properties
-		BasicResponse response = new BasicResponse(true, "Dodano sukcesywnie");
-		
+		logger.info("ContactsAddResourceImpl.add starts");
+
+		ContactAddResponse resp = new ContactAddResponse();
+
 		try {
-//			contactService.add(null, newContact);
-			
-		} catch (Exception ex) { // TODO : dodac rozróżnienie na różne typy wyjątków
-			response.setMessage("Wystapił błąd podczas dodawania");
-			response.setSuccess(false);
+
+			resp = contactService.add(addRequest);
+		} catch (SessionServiceException e) {
+
+			logger.info("sessionExpired", e);
+
+			return resp;
+		} catch (ContactServiceException e) {
+			logger.info("sessionExpired", e);
+
+
+
+			return resp;
+		} catch (Exception e) {
+			logger.info("error occurred", e);
+
+			return resp;
 		}
-		
-		return new JsonRepresentation(response);
+
+		if (resp.hasErrors()) {
+
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return resp;
+		} else {
+
+			getResponse().setStatus(Status.SUCCESS_OK);
+			return resp;
+		}
     }
 
 }

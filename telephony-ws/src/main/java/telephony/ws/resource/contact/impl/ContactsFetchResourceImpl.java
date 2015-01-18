@@ -2,6 +2,7 @@ package telephony.ws.resource.contact.impl;
 
 import com.google.inject.Inject;
 import org.json.JSONException;
+import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
 import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.request.ContactFetchRequest;
+import telephony.core.service.dto.response.ContactFetchResponse;
 import telephony.core.service.dto.response.ContactListResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -23,45 +25,53 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * asd.
- */
-public class ContactsFetchResourceImpl 
+public class ContactsFetchResourceImpl
 extends TelephonyServerResource
 implements ContactsFetchResource {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private ContactService contactService;
+	ContactService contactService;
 
+	@Override
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation fetch(ContactFetchRequest dto)
-			throws JSONException, IOException, SessionServiceException, ContactServiceException {
-        
-		logger.info("ContactsFetchResource.fetch starts");
-		
-//		List<Contact> contacts = contactService.find(dto);
-//        List<ContactDto> contactsToJsonize = convertToBeans(contacts);
-//
-        ContactListResponse response = new ContactListResponse();
-//        response.setContacts(contactsToJsonize);
-        
-        return new JsonRepresentation(response);        
-    }
+	public ContactFetchResponse fetch(ContactFetchRequest fetchRequest) {
 
+		logger.info("ContactsFetchResourceImpl.fetch starts");
 
-	private List<ContactDto> convertToBeans(List<Contact> contacts) {
-		
-		List<ContactDto> contactsToJsonize =  new ArrayList<ContactDto>();
-        
-        for (Contact c : contacts) {
-//        	contactsToJsonize.add(create(c));
-        }
-        
-		return contactsToJsonize;
+		ContactFetchResponse resp = new ContactFetchResponse();
+
+		try {
+
+			resp = contactService.fetch(fetchRequest);
+
+		} catch (SessionServiceException e) {
+			logger.error("sessionExpired", e);
+
+			getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+			resp.setMessage("sessionExpired");
+			resp.setSuccess(false);
+
+			return resp;
+		} catch (Exception e) {
+			logger.error("unrecognizedProblem", e);
+
+			getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+			resp.setMessage("unrecognizedProblem");
+			resp.setSuccess(false);
+
+			return resp;
+		}
+
+		if (resp.hasErrors()) {
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return resp;
+		} else {
+			getResponse().setStatus(Status.SUCCESS_OK);
+			return resp;
+		}
 	}
-
 }

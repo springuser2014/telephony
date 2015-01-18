@@ -17,8 +17,10 @@ import telephony.core.service.converter.ProducerConverter;
 import telephony.core.service.converter.ProductConverter;
 import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.ProducerDto;
+import telephony.core.service.dto.request.ProductDetailsRequest;
 import telephony.core.service.dto.request.ProductFetchRequest;
-import telephony.core.service.dto.response.ProductFetchResponse;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
@@ -28,10 +30,9 @@ import telephony.core.service.dto.SessionDto;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
-/**
- * Products management service.
- */
-public class ProductServiceImpl 
+import static telephony.core.assertion.CommonAssertions.isEmpty;
+
+public class ProductServiceImpl
 extends AbstractBasicService<Product> 
 implements ProductService {
 
@@ -54,7 +55,8 @@ implements ProductService {
 
 	@Override
 	@Transactional
-	public List<String> fetchAllColors(SessionDto session) throws SessionServiceException {
+	public List<String> fetchAllColors(SessionDto session)
+			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchAllModels starts");
 
@@ -76,7 +78,8 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public List<ProducerDto> fetchAllProducersInUse(SessionDto session) throws SessionServiceException {
+	public List<ProducerDto> fetchAllProducersInUse(SessionDto session)
+			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchAllProducersInUse starts");
 
@@ -102,7 +105,8 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public List<String> fetchAllImeiInUse(SessionDto session) throws SessionServiceException {
+	public List<String> fetchAllImeiInUse(SessionDto session)
+			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
 
@@ -126,13 +130,14 @@ implements ProductService {
 
 	@Transactional
 	@Override
-	public List<ModelDto> fetchAllModelsInUse(SessionDto session) throws SessionServiceException {
+	public List<ModelDto> fetchAllModelsInUse(SessionDto session)
+			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
 
 		sessionService.validate(session);
 
-		List<ModelDto> res = new ArrayList<ModelDto>();
+		List<ModelDto> res = new ArrayList<>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		// TODO : prepare separate JPQL for this case
 		List<Product> products = productsDao.findByCriteria(filters);
@@ -150,6 +155,55 @@ implements ProductService {
 		return res;
 	}
 
+	@Transactional
+	@Override
+	public ProductDetailsResponse fetchDetails(ProductDetailsRequest request)
+			throws SessionServiceException {
+
+		logger.info("ProductServiceImpl.fetchDetails starts");
+
+		ProductDetailsResponse resp = new ProductDetailsResponse();
+
+		List<telephony.core.service.dto.response.Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+
+			resp.setErrors(errors);
+			resp.setMessage("validationFailed");
+			resp.setSuccess(false);
+
+			return resp;
+		}
+
+		sessionService.validate(request.getSessionDto());
+
+		Product product = productsDao.findById(request.getProductId());
+		ProductFetchDto productDto = productConverter.toProductFetchDto(product);
+
+		resp.setSuccess(true);
+		resp.setMessage("operation performed successfully");
+		resp.setProduct(productDto);
+
+		return resp;
+	}
+
+	private boolean validate(ProductDetailsRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getProductId())) {
+			errors.add(Error.create("productId", "productId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Override
 	@Transactional
 	public long count(SessionDto session) throws SessionServiceException {
@@ -162,7 +216,7 @@ implements ProductService {
 	@Transactional
 	@Override
 	public ProductFetchResponse fetch(ProductFetchRequest req)
-		throws SessionServiceException {
+			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetch starts ");
 

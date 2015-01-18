@@ -14,10 +14,8 @@ import telephony.core.query.filter.ContactFilterCriteriaBuilder;
 import telephony.core.service.ContactService;
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.*;
-import telephony.core.service.dto.request.ContactAddRequest;
-import telephony.core.service.dto.request.ContactDeleteRequest;
-import telephony.core.service.dto.request.ContactEditRequest;
-import telephony.core.service.dto.request.ContactFetchRequest;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.ContactDetailsResponse;
 import telephony.core.service.dto.response.ContactEditResponse;
 import telephony.core.service.dto.response.ContactFetchResponse;
 import telephony.core.service.exception.ContactServiceException;
@@ -94,7 +92,8 @@ public class ContactServiceTest extends BaseCoreTest {
 		contactDto.setLabel(label);
 		contactDto.setAddress(addressDto);
 
-		ContactAddRequest dto = new ContactAddRequest(session, contactDto);
+		ContactAddRequest dto = new ContactAddRequest(session);
+		dto.setContact(contactDto);
 		
 		// when
 		contactService.add(dto);
@@ -197,5 +196,25 @@ public class ContactServiceTest extends BaseCoreTest {
 		// then		
 		assertTrue("should found all items", lst.isSuccess());
 		assertEquals("should contains all 3 contacts", lst.getContacts().size(), 3);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingContactDetails() throws SessionServiceException, ContactServiceException {
+
+		// given
+		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		ContactDetailsRequest dto = new ContactDetailsRequest(sessionDto);
+		dto.setContactId(TestData.CONTACT1_ID);
+		dto.setSessionId(TestData.USER1_SESSIONID);
+		dto.setUsername(TestData.USER1_NAME);
+
+		// when
+		ContactDetailsResponse lst = contactService.fetchDetails(dto);
+
+		// then
+		assertTrue("should found all items", lst.isSuccess());
+		assertTrue("should contains contact with label", lst.getContact().getLabel().contains(TestData.CONTACT1_LABEL));
 	}
 }

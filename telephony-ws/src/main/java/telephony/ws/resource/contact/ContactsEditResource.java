@@ -1,11 +1,19 @@
 package telephony.ws.resource.contact;
 
-import telephony.core.service.dto.request.ContactsEditRequest;
+import org.restlet.resource.Put;
+import telephony.core.service.dto.request.ContactEditRequest;
 import telephony.core.service.dto.response.ContactEditResponse;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 public interface ContactsEditResource {
 
 	String URL = "/contacts/edit";
-	
-	ContactEditResponse edit(ContactsEditRequest request);
+
+	@Put("json")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	ContactEditResponse edit(ContactEditRequest request);
 }

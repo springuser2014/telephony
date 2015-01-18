@@ -26,7 +26,7 @@ public interface DeliveryService extends BasicService<Delivery> {
 	 * @throws ParseException 
 	 */
 	DeliveryAddResponse add(DeliveryAddRequest request)
-			throws SessionServiceException, DeliveryServiceException, ParseException;
+			throws SessionServiceException, DeliveryServiceException;
 
 	/**
 	 * asd.

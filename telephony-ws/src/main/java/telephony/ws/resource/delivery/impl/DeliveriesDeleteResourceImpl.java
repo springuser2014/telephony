@@ -4,13 +4,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Delete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 import telephony.core.service.DeliveryService;
@@ -22,43 +21,69 @@ import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.delivery.DeliveriesDeleteResource;
 
-/**
- * asd.
- */
-public class DeliveriesDeleteResourceImpl 
+public class DeliveriesDeleteResourceImpl
 extends TelephonyServerResource
 implements DeliveriesDeleteResource {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private DeliveryService deliveryService; 
+	DeliveryService deliveryService;
 	
 	@Override
 	@Delete("json")	
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation delete(DeliveryDeleteRequest request) {
+	public DeliveryDeleteResponse delete(DeliveryDeleteRequest request) {
+
+		logger.info("DeliveriesDeleteResourceImpl.delete starts");
 		
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		
-		DeliveryDeleteResponse resp = null;
+		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
 		
 		try {
+
 			resp = deliveryService.delete(request);
+
 		} catch (SessionServiceException e) {
 			
-			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
+			logger.error("sessionExpired", e);
+
+			getResponse().setStatus(Status.SUCCESS_OK);
+
+			resp.setMessage("sessionExpired");
+			resp.setSuccess(false);
+
+			return resp;
 		} catch (DeliveryServiceException e) {
 			
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
+
+			getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+
+			resp.setMessage("internalServerError");
+			resp.setSuccess(false);
+
+			return resp;
+
 		} catch(Exception e) {
+
 			logger.error("unrecognized problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "unrecognized problem")));
+
+			getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+
+			resp.setMessage("sessionExpired");
+			resp.setSuccess(false);
+
+
+			return resp;
 		}
-		
-		return new JsonRepresentation(gson.toJson(resp));
+
+		if (resp.hasErrors()) {
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return resp;
+		} else {
+			getResponse().setStatus(Status.SUCCESS_OK);
+			return resp;
+		}
 	}
 }

@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 public interface StoresEditResource {
 	
-	String URL = "/stores/edit/{id}";
+	String URL = "/stores/edit";
 
 	@Put("json")
 	@Produces(MediaType.APPLICATION_JSON)

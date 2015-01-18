@@ -13,24 +13,19 @@ import telephony.core.service.SessionService;
 import telephony.core.service.converter.ContactConverter;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
-import telephony.core.service.dto.response.ContactAddResponse;
-import telephony.core.service.dto.response.ContactDeleteResponse;
-import telephony.core.service.dto.response.ContactEditResponse;
-import telephony.core.service.dto.response.ContactFetchResponse;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
+import static telephony.core.assertion.CommonAssertions.isEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
-
-/**
- * Contacts management service.
- */
-public class ContactServiceImpl 
+public class ContactServiceImpl
 extends AbstractBasicService<Contact> 
 implements ContactService {
 
@@ -97,7 +92,7 @@ implements ContactService {
 		// TODO add dtos validation
 		
 		SessionDto session = SessionDto.create(request.getUsername(), request.getSessionId());
-		ContactDto dto = request.getNewContact();
+		ContactDto dto = request.getContact();
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ session: {}, newContact : {}]", session, dto);
@@ -257,20 +252,94 @@ implements ContactService {
 
 		logger.info("ContactServiceImpl.deleteContact starts");
 
-		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());
-		Long contactId = req.getContactToDelete();
-		
+		ContactDeleteResponse resp = new ContactDeleteResponse();
+
+		sessionService.validate(req.getSessionDto());
+
 		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ session: {}, contact : {}]", session, contactId);
+			logger.debug("params : [ contactId : {}]", req.getContactToDelete());
 		}
 
-		sessionService.validate(session);
-		
-		contactsDao.removeById(contactId);
+		List<Error> errors = getEmptyErrors();
 
-		ContactDeleteResponse resp = new ContactDeleteResponse();
+		if (!validate(req, errors)) {
+
+			resp.setErrors(errors);
+			resp.setMessage("validationFailed");
+			resp.setSuccess(false);
+
+			return resp;
+		}
+		
+		contactsDao.removeById(req.getContactToDelete());
+
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
+		return resp;
+	}
+
+	private boolean validate(ContactDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getContactToDelete())) {
+			errors.add(Error.create("contactId", "contactId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	private boolean validate(ContactDetailsRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getContactId())) {
+			errors.add(Error.create("contactId", "contactId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	@Transactional
+	@Override
+	public ContactDetailsResponse fetchDetails(ContactDetailsRequest request)
+			throws SessionServiceException {
+
+		logger.info("ContactServiceImpl.fetchDetails starts");
+
+		ContactDetailsResponse resp = new ContactDetailsResponse();
+
+		sessionService.validate(request.getSessionDto());
+
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+
+			resp.setMessage("validationFailed");
+			resp.setSuccess(false);
+
+			return resp;
+		}
+
+		Contact contact = contactsDao.findById(request.getContactId());
+		ContactDto contactDto = contactConverter.contactToContactDto(contact);
+
+		resp.setMessage("operation performed successfully");
+		resp.setSuccess(true);
+		resp.setContact(contactDto);
+
 		return resp;
 	}
 }

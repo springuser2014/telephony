@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 public interface UsersEditResource {
 	
-	String URL = "/users/edit/{id}";
+	String URL = "/users/edit";
 
 	@Put("json")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -14,9 +14,6 @@ import telephony.core.service.dto.response.ProductComplaintEditResponse;
 import telephony.core.service.dto.response.ProductComplaintFetchResponse;
 import telephony.core.service.dto.response.ReportProductComplaintResponse;
 
-/**
- * asd.
- */
 public interface ProductComplaintService extends ComplaintService
         <ProductComplaint,
         ProductComplaintDetailsFetchResponse, ProductComplaintDetailsFetchRequest, ProductDetailedComplaintDto,

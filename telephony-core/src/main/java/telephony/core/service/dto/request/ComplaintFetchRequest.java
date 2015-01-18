@@ -3,7 +3,8 @@ package telephony.core.service.dto.request;
 import telephony.core.query.filter.ComplaintFilterCriteria;
 import telephony.core.service.dto.SessionDto;
 
-public abstract class ComplaintFetchRequest<F extends ComplaintFilterCriteria> extends AuthRequest {
+public abstract class ComplaintFetchRequest<F extends ComplaintFilterCriteria>
+extends AuthRequest {
 
     F filters;
 
@@ -13,6 +14,10 @@ public abstract class ComplaintFetchRequest<F extends ComplaintFilterCriteria> e
 
     public void setFilters(F filters) {
         this.filters = filters;
+    }
+
+    public ComplaintFetchRequest() {
+        super();
     }
 
     public ComplaintFetchRequest(SessionDto dto) {

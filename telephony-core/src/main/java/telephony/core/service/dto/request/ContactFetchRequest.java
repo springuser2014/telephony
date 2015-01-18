@@ -7,6 +7,10 @@ public class ContactFetchRequest extends AuthRequest {
 
 	ContactFilterCriteria filters;
 
+	public ContactFetchRequest() {
+		super();
+	}
+
 	public ContactFetchRequest(SessionDto sessionDto) {
 		super(sessionDto);
 	}

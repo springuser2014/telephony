@@ -25,10 +25,7 @@ import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
 
-/**
- * asd.
- */
-public class ComplaintCommentServiceImpl 
+public class ComplaintCommentServiceImpl
 extends AbstractBasicService<ComplaintComment> 
 implements ComplaintCommentService {
 
@@ -144,5 +141,4 @@ implements ComplaintCommentService {
 		sessionService.validate(session);
 		return complaintCommentDao.count();
 	}
-
 }

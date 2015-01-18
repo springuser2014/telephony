@@ -1,75 +1,80 @@
 package telephony.ws.resource.contact.impl;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.inject.Inject;
 import org.restlet.data.Status;
-import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Post;
+import org.restlet.resource.Delete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.inject.Inject;
-
-import telephony.core.entity.jpa.Contact;
 import telephony.core.service.ContactService;
 import telephony.core.service.dto.request.ContactDeleteRequest;
-import telephony.core.service.dto.response.BasicResponse;
+import telephony.core.service.dto.response.ContactDeleteResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.contact.ContactsDeleteResource;
 
-/**
- * asd.
- */
-public class ContactsDeleteResourceImpl 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+public class ContactsDeleteResourceImpl
 extends TelephonyServerResource
 implements ContactsDeleteResource {
 		
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
-	private ContactService contactService;
+	ContactService contactService;
 
-	@Post("json")
-	public JsonRepresentation delete(ContactDeleteRequest entity)
-			throws JSONException, IOException, SessionServiceException, ContactServiceException {
+	@Delete("json")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ContactDeleteResponse delete(ContactDeleteRequest deleteRequest) {
     	
 		logger.info("ContactsDeleteResource.delete starts");
 		
-	
-//		JSONObject req = entity.getJsonObject();
-		
-//		String username = req.getString("username");
-//		String sessionId = req.getString("sessionId");
-//		logger.info(" username = {} ", username);
-//		logger.info(" sessionId = {} ", sessionId);
-		
-//		Long contactToDeleteId = req.getLong("contactToDeleteId");
+		ContactDeleteResponse resp = new ContactDeleteResponse();
 
-		BasicResponse resp = new BasicResponse(true, "Usunieto obiekt");
 		try {
-//			Contact contactToDelete = contactService.findById(
-//					null, contactToDeleteId
-//			);
+
+			resp = contactService.delete(deleteRequest);
 			
-			contactService.delete(null);
+		} catch (SessionServiceException e) {
 			
-		} catch (Exception e) {
+			logger.error("sessionExpired", e);
 			
-			logger.error(e.getMessage());
-			
-			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
 			
 			resp.setSuccess(false);
 			resp.setMessage("Error occurred");
-			return new JsonRepresentation(resp);
+
+			return resp;
+		} catch (ContactServiceException e) {
+			logger.error("session", e);
+
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+
+			resp.setSuccess(false);
+			resp.setMessage("Error occurred");
+
+			return resp;
+		} catch (Exception e) {
+			logger.error("unrecognizedProblem", e);
+
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+
+			resp.setSuccess(false);
+			resp.setMessage("unrecognizedProblem");
+
+			return resp;
 		}
-		
-		getResponse().setStatus(Status.SUCCESS_OK);
-		
-		return new JsonRepresentation(resp);		
-    }
+
+		if (resp.hasErrors()) {
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return resp;
+		} else {
+			getResponse().setStatus(Status.SUCCESS_OK);
+			return resp;
+		}
+	}
 }

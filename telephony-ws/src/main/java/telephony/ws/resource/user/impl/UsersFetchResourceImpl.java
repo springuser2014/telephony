@@ -56,8 +56,12 @@ implements UsersFetchResource {
             return resp;
         }
 
-        getResponse().setStatus(Status.SUCCESS_OK);
-
-        return resp;
+        if (resp.hasErrors()) {
+            getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+            return resp;
+        } else {
+            getResponse().setStatus(Status.SUCCESS_OK);
+            return resp;
+        }
     }
 }

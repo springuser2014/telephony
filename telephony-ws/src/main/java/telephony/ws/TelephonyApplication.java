@@ -115,10 +115,16 @@ public class TelephonyApplication extends Application {
         router.attach(ContactsDetailsResource.URL, ContactsDetailsResourceImpl.class);
         
         // complaints resources complete
-        router.attach(ComplaintAddResource.URL, ComplaintAddResourceImpl.class);
-        router.attach(ComplaintEditResource.URL, ComplaintEditResourceImpl.class);
-        router.attach(ComplaintFetchResource.URL, ComplaintFetchResourceImpl.class);
-        router.attach(ComplaintDetailsResource.URL, ComplaintDetailsResourceImpl.class);
+        router.attach(ProductComplaintAddResource.URL, ProductComplaintAddResourceImpl.class);
+        router.attach(ProductComplaintEditResource.URL, ProductComplaintEditResourceImpl.class);
+        router.attach(ProductComplaintFetchResource.URL, ProductComplaintFetchResourceImpl.class);
+        router.attach(ProductComplaintDetailsResource.URL, ProductComplaintDetailsResourceImpl.class);
+
+        router.attach(SaleComplaintAddResource.URL, SaleComplaintAddResourceImpl.class);
+        router.attach(SaleComplaintEditResource.URL, SaleComplaintEditResourceImpl.class);
+        router.attach(SaleComplaintFetchResource.URL, SaleComplaintFetchResourceImpl.class);
+        router.attach(SaleComplaintDetailsResource.URL, SaleComplaintDetailsResourceImpl.class);
+
         router.attach(ComplaintDeleteResource.URL, ComplaintDeleteResourceImpl.class);
         router.attach(ComplaintAddCommentResource.URL, ComplaintAddCommentResourceImpl.class);
         

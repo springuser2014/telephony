@@ -4,7 +4,11 @@ import telephony.core.query.filter.ProductComplaintFilterCriteria;
 import telephony.core.service.dto.SessionDto;
 
 public class ProductComplaintFetchRequest
-        extends ComplaintFetchRequest<ProductComplaintFilterCriteria> {
+extends ComplaintFetchRequest<ProductComplaintFilterCriteria> {
+
+    public ProductComplaintFetchRequest() {
+        super();
+    }
 
     public ProductComplaintFetchRequest(SessionDto sessionDto) {
         super(sessionDto);

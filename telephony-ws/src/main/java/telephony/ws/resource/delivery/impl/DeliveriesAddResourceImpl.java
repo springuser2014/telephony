@@ -1,74 +1,71 @@
 package telephony.ws.resource.delivery.impl;
 
-import java.text.ParseException;
+import com.google.inject.Inject;
+import org.restlet.data.Status;
+import org.restlet.resource.Post;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import telephony.core.service.DeliveryService;
+import telephony.core.service.StoreService;
+import telephony.core.service.dto.request.DeliveryAddRequest;
+import telephony.core.service.dto.response.DeliveryAddResponse;
+import telephony.core.service.exception.SessionServiceException;
+import telephony.ws.resource.TelephonyServerResource;
+import telephony.ws.resource.delivery.DeliveriesAddResource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Post;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import telephony.core.service.DeliveryService;
-import telephony.core.service.StoreService;
-import telephony.core.service.dto.request.DeliveryAddRequest;
-import telephony.core.service.dto.response.BasicResponse;
-import telephony.core.service.dto.response.DeliveryAddResponse;
-import telephony.core.service.exception.DeliveryServiceException;
-import telephony.core.service.exception.SessionServiceException;
-import telephony.ws.resource.TelephonyServerResource;
-import telephony.ws.resource.delivery.DeliveriesAddResource;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-
-/**
- * asd.
- */
-public class DeliveriesAddResourceImpl 
+public class DeliveriesAddResourceImpl
 extends TelephonyServerResource
 implements DeliveriesAddResource {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Inject
-    private DeliveryService deliveryService;
-    
-    @Inject
-    private StoreService storeService;
+    DeliveryService deliveryService;
 
 	@Override
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JsonRepresentation add(DeliveryAddRequest request) {
+	public DeliveryAddResponse add(DeliveryAddRequest addRequest) {
 		
-		logger.info("entry point");
-		DeliveryAddResponse resp;
-		
-		Gson gson = new GsonBuilder().create();
+		logger.info("DeliveriesAddResourceImpl.add starts");
+
+		DeliveryAddResponse resp = new DeliveryAddResponse();
 
 		try {
-			resp = deliveryService.add(request);
+
+			resp = deliveryService.add(addRequest);
 		
 		} catch (SessionServiceException e) {
-			
-			logger.error("session problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "session error")));
-		} catch (DeliveryServiceException e) {
-			
+			logger.error("sessionExpired", e);
+
+			getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+
+			resp.setMessage("sessionExpired");
+			resp.setSuccess(false);
+
+			return resp;
+		} catch (Exception e) {
 			logger.error("internal problem", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "internal error")));
-		} catch (ParseException e) {
-			
-			logger.error("invalid date format", e);
-			return new JsonRepresentation(gson.toJson(new BasicResponse(false, "invalid date format")));
+
+			getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+
+			resp.setMessage("internalServerError");
+			resp.setSuccess(false);
+
+			return resp;
 		}
-		
-		logger.info("entry point");
-		return new JsonRepresentation(gson.toJson(resp));
+
+		if (resp.hasErrors()) {
+			getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return resp;
+		} else {
+			getResponse().setStatus(Status.SUCCESS_OK);
+			return resp;
+		}
 	}
 }

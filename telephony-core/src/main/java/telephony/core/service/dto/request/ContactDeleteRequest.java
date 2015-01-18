@@ -6,6 +6,10 @@ public class ContactDeleteRequest extends AuthRequest {
 	
 	private Long contactToDelete;
 
+	public ContactDeleteRequest() {
+		super();
+	}
+
 	public ContactDeleteRequest(SessionDto sessionDto) {
 		super(sessionDto);
 	}

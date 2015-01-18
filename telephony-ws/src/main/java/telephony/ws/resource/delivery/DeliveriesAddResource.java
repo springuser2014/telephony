@@ -1,22 +1,19 @@
 package telephony.ws.resource.delivery;
 
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
-
 import telephony.core.service.dto.request.DeliveryAddRequest;
+import telephony.core.service.dto.response.DeliveryAddResponse;
 
-/**
- * asd.
- */
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 public interface DeliveriesAddResource {
 
 	String URL = "/deliveries/add";
-	
-	/**
-	 * asd.
-	 * @param entity asd.
-	 * @return asd.
-	 */
+
 	@Post("json")
-	JsonRepresentation add(DeliveryAddRequest entity);
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	DeliveryAddResponse add(DeliveryAddRequest addRequest);
 }

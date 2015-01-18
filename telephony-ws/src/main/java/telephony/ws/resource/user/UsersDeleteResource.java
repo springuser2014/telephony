@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 public interface UsersDeleteResource {
 
-	String URL = "/users/delete/{id}";
+	String URL = "/users/delete";
 
 	@Delete("json")
 	@Produces(MediaType.APPLICATION_JSON)

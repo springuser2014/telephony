@@ -1,29 +1,20 @@
 package telephony.ws.resource.contact;
 
-import org.json.JSONException;
-import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Post;
+import org.restlet.resource.Delete;
 import telephony.core.service.dto.request.ContactDeleteRequest;
-import telephony.core.service.exception.ContactServiceException;
-import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.dto.response.ContactDeleteResponse;
 
-import java.io.IOException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 public interface ContactsDeleteResource {
 
 	String URL = "/contacts/delete";
 
-	/**
-	 * asd.
-	 * @param entity asd.
-	 * @return asd.
-	 * @throws JSONException 
-	 * @throws IOException 
-	 * @throws ContactServiceException 
-	 * @throws SessionServiceException 
-	 */
-	@Post("json")
-	JsonRepresentation delete(ContactDeleteRequest entity)
-			throws JSONException, IOException, SessionServiceException, ContactServiceException;
+	@Delete("json")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	ContactDeleteResponse delete(ContactDeleteRequest entity);
 
 }
