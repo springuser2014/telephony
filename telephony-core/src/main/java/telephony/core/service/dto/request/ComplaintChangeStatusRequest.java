@@ -6,6 +6,10 @@ public class ComplaintChangeStatusRequest extends AuthRequest {
 
     Long complaintId;
 
+    public ComplaintChangeStatusRequest() {
+        super();
+    }
+
     public ComplaintChangeStatusRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

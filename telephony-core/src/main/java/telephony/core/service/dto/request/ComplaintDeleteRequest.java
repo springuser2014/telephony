@@ -6,6 +6,10 @@ public class ComplaintDeleteRequest extends AuthRequest {
 
     Long complaintId;
 
+    public ComplaintDeleteRequest() {
+        super();
+    }
+
     public ComplaintDeleteRequest(SessionDto session) {
         super(session);
     }

@@ -1,6 +1,14 @@
 package telephony.core.service.dto.request;
 
-public class DashboardDetailsRequest extends AuthRequest {
-		
+import telephony.core.service.dto.SessionDto;
 
+public class DashboardDetailsRequest extends AuthRequest {
+
+    public DashboardDetailsRequest() {
+        super();
+    }
+
+    public DashboardDetailsRequest(SessionDto sessionDto) {
+        super(sessionDto);
+    }
 }

@@ -9,6 +9,10 @@ public class ModelEditRequest extends AuthRequest {
     // TODO : add collection for batch edition
     ModelDto modelDto;
 
+    public ModelEditRequest() {
+        super();
+    }
+
     public ModelEditRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

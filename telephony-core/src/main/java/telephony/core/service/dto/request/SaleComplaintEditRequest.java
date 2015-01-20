@@ -5,6 +5,10 @@ import telephony.core.service.dto.SessionDto;
 
 public class SaleComplaintEditRequest extends ComplaintEditRequest<SaleComplaintEditDto> {
 
+    public SaleComplaintEditRequest() {
+        super();
+    }
+
     public SaleComplaintEditRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

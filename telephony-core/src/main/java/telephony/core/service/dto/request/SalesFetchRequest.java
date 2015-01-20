@@ -7,6 +7,10 @@ public class SalesFetchRequest extends AuthRequest {
 
     SaleFilterCriteria filters;
 
+    public SalesFetchRequest() {
+        super();
+    }
+
     public SalesFetchRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

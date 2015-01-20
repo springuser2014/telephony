@@ -1,24 +1,20 @@
 package telephony.ws.resource.complaint.impl;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import com.google.inject.Inject;
 import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.service.ProductComplaintService;
-import telephony.core.service.SaleComplaintService;
-import telephony.core.service.dto.request.ComplaintDetailsRequest;
 import telephony.core.service.dto.request.ProductComplaintDetailsFetchRequest;
-import telephony.core.service.dto.response.ComplaintDetailsResponse;
 import telephony.core.service.dto.response.ProductComplaintDetailsFetchResponse;
-import telephony.core.service.dto.response.ReportProductComplaintResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.complaint.ProductComplaintDetailsResource;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 public class ProductComplaintDetailsResourceImpl
 extends TelephonyServerResource

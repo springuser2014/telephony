@@ -7,6 +7,10 @@ public class SaleEditRequest extends AuthRequest {
 
     SaleEditDto saleEdit;
 
+    public SaleEditRequest() {
+        super();
+    }
+
     public SaleEditRequest(SessionDto session) {
         super(session);
     }

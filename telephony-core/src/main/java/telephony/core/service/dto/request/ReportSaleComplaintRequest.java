@@ -12,6 +12,4 @@ public class ReportSaleComplaintRequest extends ReportComplaintRequest<SaleCompl
     public ReportSaleComplaintRequest(SessionDto sessionDto) {
         super(sessionDto);
     }
-
-
 }

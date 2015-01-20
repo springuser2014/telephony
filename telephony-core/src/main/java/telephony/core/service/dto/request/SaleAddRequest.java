@@ -10,6 +10,10 @@ public class SaleAddRequest extends AuthRequest {
 
 	SaleAddDto sale;
 
+	public SaleAddRequest() {
+		super();
+	}
+
 	public SaleAddRequest(SessionDto sessionDto) {
 		super(sessionDto);
 	}

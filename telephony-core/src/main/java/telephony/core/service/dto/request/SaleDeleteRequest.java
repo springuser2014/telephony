@@ -6,6 +6,10 @@ public class SaleDeleteRequest extends AuthRequest {
 
     Long saleId;
 
+    public SaleDeleteRequest() {
+        super();
+    }
+
     public SaleDeleteRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

@@ -7,6 +7,10 @@ public abstract class ComplaintEditRequest<T extends ComplaintEditDto> extends A
 
     T complaint;
 
+    public ComplaintEditRequest() {
+        super();
+    }
+
     public ComplaintEditRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

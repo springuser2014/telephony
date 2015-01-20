@@ -6,6 +6,10 @@ public abstract class ComplaintDetailsFetchRequest extends AuthRequest {
 
     Long complaintId;
 
+    public ComplaintDetailsFetchRequest() {
+        super();
+    }
+
     public ComplaintDetailsFetchRequest(SessionDto sessionDto) {
         super(sessionDto);
     }

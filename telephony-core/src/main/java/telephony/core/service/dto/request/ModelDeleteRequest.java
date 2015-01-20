@@ -4,6 +4,8 @@ import telephony.core.service.dto.SessionDto;
 
 public class ModelDeleteRequest extends AuthRequest {
 
+    Long modelId;
+
     public ModelDeleteRequest() {
         super();
     }
@@ -11,8 +13,6 @@ public class ModelDeleteRequest extends AuthRequest {
     public ModelDeleteRequest(SessionDto session) {
         super(session);
     }
-
-    Long modelId;
 
     public Long getModelId() {
         return modelId;

@@ -6,6 +6,10 @@ public class SaleDetailsRequest extends AuthRequest {
 
     Long saleId;
 
+    public SaleDetailsRequest() {
+        super();
+    }
+
     public SaleDetailsRequest(SessionDto session) {
         super(session);
     }

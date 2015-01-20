@@ -3,9 +3,6 @@ package telephony.core.service.dto.request;
 import telephony.core.service.dto.RoleDto;
 import telephony.core.service.dto.SessionDto;
 
-/**
- * asd.
- */
 public class RoleAddRequest extends AuthRequest {
 
 	RoleDto roleDto;

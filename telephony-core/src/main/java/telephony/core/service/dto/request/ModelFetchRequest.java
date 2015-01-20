@@ -7,6 +7,10 @@ public class ModelFetchRequest extends AuthRequest {
 
     ModelFilterCriteria filters;
 
+    public ModelFetchRequest() {
+        super();
+    }
+
     public ModelFetchRequest(SessionDto sessionDto) {
         super(sessionDto);
     }
