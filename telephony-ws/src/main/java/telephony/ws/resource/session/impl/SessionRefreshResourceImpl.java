@@ -1,19 +1,10 @@
 package telephony.ws.resource.session.impl;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.inject.Inject;
 import org.restlet.data.Status;
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Put;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.SessionRefreshRequest;
@@ -39,8 +30,7 @@ implements SessionRefreshResource {
 	@Put("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public SessionRefreshResponse refresh(SessionRefreshRequest refreshRequest)
-			throws IOException, JSONException {
+	public SessionRefreshResponse refresh(SessionRefreshRequest refreshRequest) {
 
 		logger.info("SessionRefreshResource.refresh starts");
 

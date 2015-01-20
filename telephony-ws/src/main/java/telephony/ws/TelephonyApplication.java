@@ -17,10 +17,6 @@ import telephony.ws.resource.products.ProductsDetailsResource;
 import telephony.ws.resource.products.ProductsFetchResource;
 import telephony.ws.resource.products.impl.ProductsDetailsResourceImpl;
 import telephony.ws.resource.products.impl.ProductsFetchResourceImpl;
-import telephony.ws.resource.role.RolesAddResource;
-import telephony.ws.resource.role.RolesDeleteResource;
-import telephony.ws.resource.role.impl.RolesAddResourceImpl;
-import telephony.ws.resource.role.impl.RolesDeleteResourceImpl;
 import telephony.ws.resource.sale.*;
 import telephony.ws.resource.sale.impl.*;
 import telephony.ws.resource.session.*;
@@ -141,17 +137,13 @@ public class TelephonyApplication extends Application {
         router.attach(StoresEditResource.URL, StoresEditResourceImpl.class);
         router.attach(StoresDeleteResource.URL, StoresDeleteResourceImpl.class);  
         router.attach(StoreSetRolesResource.URL, StoreSetRolesResourceImpl.class);
-         
-        router.attach(RolesAddResource.URL, RolesAddResourceImpl.class);
-        router.attach(RolesDeleteResource.URL, RolesDeleteResourceImpl.class);
-        
+
         router.attach(UserAddRolesResource.URL, UserAddRolesResourceImpl.class);
         router.attach(UserAddStoresResource.URL, UserAddStoresResourceImpl.class);
         router.attach(UserDeleteRolesResource.URL, UserDeleteRolesResourceImpl.class);
         router.attach(UserDeleteStoresResource.URL, UserDeleteStoresResourceImpl.class);
         // TODO verify the stuff above
-        
-                
+
         router.attach("/", new Directory(getContext(), "war:///"));
 
         return router;

@@ -39,8 +39,7 @@ implements SessionInitializationResource {
 	@Post("json")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-    public SessionInitializationResponse initialize(SessionInitializationRequest initializationRequest)
-    		throws JSONException, IOException {
+    public SessionInitializationResponse initialize(SessionInitializationRequest initializationRequest) {
 
         logger.info("SessionInitializationResource.initialize");
 
