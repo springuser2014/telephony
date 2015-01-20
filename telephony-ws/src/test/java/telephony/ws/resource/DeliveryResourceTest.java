@@ -16,10 +16,7 @@ import org.junit.runner.RunWith;
 
 import telephony.core.query.filter.DeliveryFilterCriteria;
 import telephony.core.query.filter.DeliveryFilterCriteriaBuilder;
-import telephony.core.service.dto.ProductAddDto;
-import telephony.core.service.dto.ProductEditDto;
-import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.SignInDto;
+import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.DeliveriesFetchResponse;
 import telephony.core.service.dto.response.DeliveryDeleteResponse;
@@ -81,41 +78,50 @@ public class DeliveryResourceTest extends BaseWSTest {
 		DeliveryEditRequest req = new DeliveryEditRequest(session);
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
-		
-		req.setId(1L);
-		req.setContactId(2L);
-		req.setStoreId(2L);
-		
-		req.setLabel("nowy label");
+
+		DeliveryEditDto editDto = new DeliveryEditDto();
+
+		editDto.setId(1L);
+		editDto.setContactId(2L);
+		editDto.setStoreId(2L);
+		editDto.setLabel("nowy label");
 		
 		Date d = new Date();
-		
-		ProductAddDto productAdd = new ProductAddDto();
-		productAdd.setColor("green");
-		productAdd.setImei("123456789000099");
-		productAdd.setModel("3310");
-		productAdd.setProducer("nokia");
-		productAdd.setPriceIn(200.0d);
-		productAdd.setPriceFrom(d);
-		productAdd.setPriceTo(null);
-		productAdd.setProductTax(6L);
-		productAdd.setTaxFrom(d);
-		productAdd.setTaxTo(null);
-		
-		req.addProductToAdd(productAdd);
-		
-		req.addProductToDelete(3L);
-		
-		ProductEditDto productToEdit = new ProductEditDto();
-		productToEdit.setId(2L);
-		productToEdit.setModel("3310");
-		productToEdit.setProducer("nokia");
-		productToEdit.setPrice(300.0d);
-		productToEdit.setPriceIn(110.0d);
-		
-		productToEdit.setTaxId(6L);
-		
-		req.addProductToEdit(productToEdit);
+
+//		PricingAddDto pricing1 = new PricingAddDto();
+//		pricing1.setFrom(new Date());
+//		pricing1.setRate(200.0d);
+//
+//		ProductTaxAddDto taxDto1 = new ProductTaxAddDto();
+//		taxDto1.setFrom(new Date());
+//		taxDto1.setTaxId(6L);
+//
+//		ProductAddDto productAdd = new ProductAddDto();
+//		productAdd.setColor("green");
+//		productAdd.setImei("123456789000099");
+//		productAdd.setModel("3310");
+//		productAdd.setProducer("nokia");
+//		productAdd.setPriceIn(200.0d);
+//		productAdd.setPriceFrom(d);
+//		productAdd.setPriceTo(null);
+//		productAdd.setProductTax(6L);
+//		productAdd.setTaxFrom(d);
+//		productAdd.setTaxTo(null);
+//
+//		editDto.addProductToAdd(productAdd);
+//
+//		editDto.addProductToDelete(3L);
+//
+//		ProductEditDto productToEdit = new ProductEditDto();
+//		productToEdit.setId(2L);
+//		productToEdit.setModel("3310");
+//		productToEdit.setProducer("nokia");
+//		productToEdit.setPrice(300.0d);
+//		productToEdit.setPriceIn(110.0d);
+//
+//		productToEdit.setTaxId(6L);
+
+//		editDto.addProductToEdit(productToEdit);
 		
 		// when
 		Gson gson = new GsonBuilder()
@@ -245,8 +251,16 @@ public class DeliveryResourceTest extends BaseWSTest {
 
 		SessionDto session = SessionDto.create("user1@gmail.com", sessionId);
 		
-		List<ProductAddDto> products = new ArrayList<ProductAddDto>();
+		List<ProductAddDto> products = new ArrayList<>();
 		Date priceTo = new DateTime().withDate(2015, 12, 31).withTime(06, 30, 0, 0).toDate();
+
+		PricingAddDto pricing1 = new PricingAddDto();
+		pricing1.setFrom(new Date());
+		pricing1.setRate(200.0d);
+
+		ProductTaxAddDto taxDto1 = new ProductTaxAddDto();
+		taxDto1.setFrom(new Date());
+		taxDto1.setTaxId(6L);
 		
 		// TODO : refactor to TestDataBuilder
 		ProductAddDto p1 = new ProductAddDto();
@@ -254,36 +268,44 @@ public class DeliveryResourceTest extends BaseWSTest {
 		p1.setModel("SX99");
 		p1.setColor("black");
 		p1.setImei("123456789000050");
-		p1.setPriceFrom(new Date());
-		p1.setPriceTo(priceTo);
+		p1.setCurrentPrice(pricing1);
 		p1.setPriceIn(200.0d);
-		p1.setTaxFrom(new Date());
-		p1.setTaxTo(priceTo);
-		p1.setProductTax(7L);
+		p1.setProductTax(taxDto1);
+
+		PricingAddDto pricing2 = new PricingAddDto();
+		pricing2.setFrom(new Date());
+		pricing2.setRate(300.0d);
+
+		ProductTaxAddDto taxDto2 = new ProductTaxAddDto();
+		taxDto2.setFrom(new Date());
+		taxDto2.setTaxId(7L);
 		
 		ProductAddDto p2 = new ProductAddDto();
 		p2.setProducer("Audi");
 		p2.setModel("X50");
 		p2.setColor("white");
 		p2.setImei("123456789000051");
-		p2.setPriceFrom(new Date());
-		p2.setPriceTo(priceTo);
+		p2.setCurrentPrice(pricing2);
 		p2.setPriceIn(300.0d);
-		p2.setTaxFrom(new Date());
-		p2.setTaxTo(priceTo);
-		p2.setProductTax(7L);
-		
+		p2.setProductTax(taxDto2);
+
 		products.add(p1);
 		products.add(p2);
 		
 		DeliveryAddRequest req = new DeliveryAddRequest(session);
-		req.setContactId(1l);
-		req.setLabel("aaa");
-		req.setDateIn(new Date());
+
 		req.setSessionId(sessionId);
 		req.setUsername("user1@gmail.com");
-		req.setStoreId(1l);
-		req.setProducts(products);
+
+		DeliveryAddDto addDto = new DeliveryAddDto();
+
+		addDto.setContactId(1l);
+		addDto.setLabel("aaa");
+		addDto.setDateIn(new Date());
+		addDto.setStoreId(1l);
+		addDto.setProducts(products);
+
+		req.setDeliveryDto(addDto);
 		
 		Response res2 = 
 				given()
