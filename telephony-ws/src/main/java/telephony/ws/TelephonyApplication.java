@@ -125,6 +125,11 @@ public class TelephonyApplication extends Application {
         router.attach(SaleComplaintFetchResource.URL, SaleComplaintFetchResourceImpl.class);
         router.attach(SaleComplaintDetailsResource.URL, SaleComplaintDetailsResourceImpl.class);
 
+        router.attach(ComplaintChangeStatusAsAcceptedResource.URL, ComplaintChangeStatusAsAcceptedResourceImpl.class);
+        router.attach(ComplaintChangeStatusAsInProgressResource.URL, ComplaintChangeStatusAsInProgressResourceImpl.class);
+        router.attach(ComplaintChangeStatusAsRejectedResource.URL, ComplaintChangeStatusAsRejectedResourceImpl.class);
+        router.attach(ComplaintChangeStatusAsResolvedResource.URL, ComplaintChangeStatusAsResolvedResourceImpl.class);
+
         router.attach(ComplaintDeleteResource.URL, ComplaintDeleteResourceImpl.class);
         router.attach(ComplaintAddCommentResource.URL, ComplaintAddCommentResourceImpl.class);
         

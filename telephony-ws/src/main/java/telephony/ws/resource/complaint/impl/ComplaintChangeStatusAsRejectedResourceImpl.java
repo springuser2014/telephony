@@ -5,22 +5,26 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import telephony.core.service.ProductComplaintService;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.dto.request.SaleComplaintFetchRequest;
-import telephony.core.service.dto.response.SaleComplaintFetchResponse;
+import telephony.core.service.dto.request.ComplaintChangeStatusRequest;
+import telephony.core.service.dto.response.ComplaintChangeStatusResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
-import telephony.ws.resource.complaint.SaleComplaintFetchResource;
+import telephony.ws.resource.complaint.ComplaintChangeStatusAsRejectedResource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-public class SaleComplaintFetchResourceImpl
+public class ComplaintChangeStatusAsRejectedResourceImpl
 extends TelephonyServerResource
-implements SaleComplaintFetchResource {
+implements ComplaintChangeStatusAsRejectedResource {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Inject
+    ProductComplaintService productComplaintService;
 
     @Inject
     SaleComplaintService saleComplaintService;
@@ -29,14 +33,15 @@ implements SaleComplaintFetchResource {
     @Post("json")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SaleComplaintFetchResponse fetch(SaleComplaintFetchRequest request) {
+    public ComplaintChangeStatusResponse markAsRejected(ComplaintChangeStatusRequest request) {
 
-        logger.info("SaleComplaintFetchResourceImpl.edit starts");
+        logger.info("ComplaintChangeStatusAsRejectedResourceImpl.markAsRejected starts");
 
-        SaleComplaintFetchResponse resp = new SaleComplaintFetchResponse();
+        ComplaintChangeStatusResponse resp = new ComplaintChangeStatusResponse();
 
         try {
-            resp = saleComplaintService.fetch(request);
+
+            resp = productComplaintService.markAsAccepted(request);
         } catch (SessionServiceException e) {
             logger.info("sessionExpired", e);
 

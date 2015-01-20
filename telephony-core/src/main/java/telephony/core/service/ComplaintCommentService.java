@@ -8,11 +8,7 @@ import telephony.core.service.dto.response.AnonymousComplaintCommentResponse;
 import telephony.core.service.dto.response.ComplaintCommentResponse;
 import telephony.core.service.exception.SessionServiceException;
 
-/**
- * asd.
- */
 public interface ComplaintCommentService extends BasicService<ComplaintComment>  {
-
 
 	ComplaintCommentResponse comment(ComplaintCommentRequest request) throws SessionServiceException;
 

@@ -31,7 +31,7 @@ implements ContactsDeleteResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ContactDeleteResponse delete(ContactDeleteRequest deleteRequest) {
     	
-		logger.info("ContactsDeleteResource.delete starts");
+		logger.info("ContactsDeleteResourceImpl.delete starts");
 		
 		ContactDeleteResponse resp = new ContactDeleteResponse();
 

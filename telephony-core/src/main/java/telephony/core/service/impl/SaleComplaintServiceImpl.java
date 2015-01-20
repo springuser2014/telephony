@@ -309,7 +309,7 @@ implements SaleComplaintService {
 			resp.setMessage("errors occurred"); // TODO : add localized msg
 		}
 
-		saleComplaintDao.markAsInProgress(request.getComplaintId());
+		saleComplaintDao.markAsAccepted(request.getComplaintId());
 
 		resp.setMessage(""); // TODO add localized msg
 		resp.setSuccess(true);

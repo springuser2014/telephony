@@ -5,47 +5,38 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.SaleComplaintService;
-import telephony.core.service.dto.request.SaleComplaintFetchRequest;
-import telephony.core.service.dto.response.SaleComplaintFetchResponse;
-import telephony.core.service.exception.SessionServiceException;
+import telephony.core.service.ComplaintCommentService;
+import telephony.core.service.dto.request.AnonymousComplaintCommentRequest;
+import telephony.core.service.dto.response.AnonymousComplaintCommentResponse;
 import telephony.ws.resource.TelephonyServerResource;
-import telephony.ws.resource.complaint.SaleComplaintFetchResource;
+import telephony.ws.resource.complaint.ComplaintAddAnonymousCommentResource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-public class SaleComplaintFetchResourceImpl
+public class ComplaintAddAnonymousCommentResourceImpl
 extends TelephonyServerResource
-implements SaleComplaintFetchResource {
+implements ComplaintAddAnonymousCommentResource {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
-    SaleComplaintService saleComplaintService;
+    ComplaintCommentService commentService;
 
     @Override
     @Post("json")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SaleComplaintFetchResponse fetch(SaleComplaintFetchRequest request) {
+    public AnonymousComplaintCommentResponse addComment(AnonymousComplaintCommentRequest request) {
 
-        logger.info("SaleComplaintFetchResourceImpl.edit starts");
+        logger.info("ComplaintAddAnonymousCommentResourceImpl.addComment starts");
 
-        SaleComplaintFetchResponse resp = new SaleComplaintFetchResponse();
+        AnonymousComplaintCommentResponse resp = new AnonymousComplaintCommentResponse();
 
         try {
-            resp = saleComplaintService.fetch(request);
-        } catch (SessionServiceException e) {
-            logger.info("sessionExpired", e);
 
-            resp.setMessage("sessionExpired");
-            resp.setSuccess(false);
-
-            getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
-
-            return resp;
+            resp = commentService.comment(request);
         } catch (Exception e) {
             logger.info("error occurred", e);
 

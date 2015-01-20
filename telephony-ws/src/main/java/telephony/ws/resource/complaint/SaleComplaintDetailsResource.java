@@ -1,7 +1,9 @@
 package telephony.ws.resource.complaint;
 
 import org.restlet.resource.Put;
+import telephony.core.service.dto.request.SaleComplaintDetailsFetchRequest;
 import telephony.core.service.dto.request.SaleComplaintEditRequest;
+import telephony.core.service.dto.response.SaleComplaintDetailsFetchResponse;
 import telephony.core.service.dto.response.SaleComplaintEditResponse;
 
 import javax.ws.rs.Consumes;
@@ -15,5 +17,5 @@ public interface SaleComplaintDetailsResource {
     @Put("json")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    SaleComplaintEditResponse edit(SaleComplaintEditRequest request);
+    SaleComplaintDetailsFetchResponse details(SaleComplaintDetailsFetchRequest request);
 }

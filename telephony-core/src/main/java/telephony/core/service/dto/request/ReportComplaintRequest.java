@@ -8,6 +8,10 @@ public abstract class ReportComplaintRequest<T extends ComplaintDto> extends Aut
 
     T complaint;
 
+    public ReportComplaintRequest() {
+        super();
+    }
+
     public ReportComplaintRequest(SessionDto sessionDto) {
         super(sessionDto);
     }
