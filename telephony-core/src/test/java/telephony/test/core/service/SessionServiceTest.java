@@ -118,7 +118,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		assertTrue("should return true for being session", validated);
 	}
 
-	@Test
+	@Test(expected = SessionServiceException.class)
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void sessionValidation2() throws SessionServiceException {
 		
@@ -133,7 +133,7 @@ public class SessionServiceTest extends BaseCoreTest {
 		boolean validated = sessionService.validate(sessionToValidate);
 		
 		// then
-		assertFalse("Should return false for expired session", validated);
+//		assertFalse("Should return false for expired session", validated);
 	}
 
 	@Test
