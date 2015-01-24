@@ -1,9 +1,6 @@
 package telephony.core.service.impl;
 
-import java.util.Collection;
-
 import com.google.inject.persist.Transactional;
-
 import telephony.core.dao.ComplaintDao;
 import telephony.core.entity.jpa.Complaint;
 import telephony.core.query.filter.ComplaintFilterCriteria;

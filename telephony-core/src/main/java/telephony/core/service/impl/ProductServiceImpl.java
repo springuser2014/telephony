@@ -30,7 +30,7 @@ import telephony.core.service.dto.SessionDto;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
-import static telephony.core.assertion.CommonAssertions.isEmpty;
+import static telephony.core.assertion.CommonAssertions.*;
 
 public class ProductServiceImpl
 extends AbstractBasicService<Product> 
@@ -53,6 +53,7 @@ implements ProductService {
 	@Inject
 	ModelConverter modelConverter;
 
+	// TODO add request and response objs
 	@Override
 	@Transactional
 	public List<String> fetchAllColors(SessionDto session)
@@ -76,6 +77,7 @@ implements ProductService {
 		return res;
 	}
 
+	// TODO add request and response objs
 	@Transactional
 	@Override
 	public List<ProducerDto> fetchAllProducersInUse(SessionDto session)
@@ -103,6 +105,7 @@ implements ProductService {
 		return res;
 	}
 
+	// TODO add request and response objs
 	@Transactional
 	@Override
 	public List<String> fetchAllImeiInUse(SessionDto session)
@@ -128,6 +131,7 @@ implements ProductService {
 		return res;
 	}
 
+	// TODO add request and response objs
 	@Transactional
 	@Override
 	public List<ModelDto> fetchAllModelsInUse(SessionDto session)
@@ -161,17 +165,13 @@ implements ProductService {
 			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchDetails starts");
-
 		ProductDetailsResponse resp = new ProductDetailsResponse();
-
 		List<telephony.core.service.dto.response.Error> errors = getEmptyErrors();
 
 		if (!validate(request, errors)) {
-
 			resp.setErrors(errors);
 			resp.setMessage("validationFailed");
 			resp.setSuccess(false);
-
 			return resp;
 		}
 
@@ -187,6 +187,7 @@ implements ProductService {
 		return resp;
 	}
 
+	// TODO extract to validation
 	private boolean validate(ProductDetailsRequest request, List<Error> errors) {
 
 		if (isEmpty(request.getSessionId())) {
@@ -213,16 +214,41 @@ implements ProductService {
 		return productsDao.count();
 	}
 
+	// TODO extract to validator
+	private boolean validate(ProductFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
-	public ProductFetchResponse fetch(ProductFetchRequest req)
+	public ProductFetchResponse fetch(ProductFetchRequest request)
 			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetch starts ");
+		ProductFetchResponse resp = new ProductFetchResponse();
+		List<Error> errors = getEmptyErrors();
 
-		sessionService.validate(req.getSessionDto()); // TODO add some validation
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
-		ProductFilterCriteria filters = req.getFilters();
+		ProductFilterCriteria filters = request.getFilters();
 		Object[] params = new Object[] { filters.getImei(), filters.getProducer(),
 				filters.getModel(), filters.getColor(),
 				filters.getStoreId(), filters.getDeliveryDateStart(),
@@ -234,18 +260,18 @@ implements ProductService {
 					+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
 		}
 
+		sessionService.validate(request.getSessionDto());
+
 		List<Product> result = productsDao.findByCriteria(filters);
 		
 		List<ProductFetchDto> lst = new ArrayList<ProductFetchDto>();
 
 		for(Product p : result) {
-					
 			lst.add(productConverter.toProductFetchDto(p));
 		}
 
-		ProductFetchResponse resp = new ProductFetchResponse();
 		resp.setProducts(lst);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 
 		return resp;

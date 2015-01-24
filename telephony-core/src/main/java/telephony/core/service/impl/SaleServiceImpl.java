@@ -32,10 +32,7 @@ import com.google.inject.persist.Transactional;
 
 import static telephony.core.assertion.CommonAssertions.*;
 
-/**
- * Sales management services.
- */
-public class SaleServiceImpl 
+public class SaleServiceImpl
 extends AbstractBasicService<Sale> 
 implements SaleService {
 
@@ -59,26 +56,70 @@ implements SaleService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
+	// TODO extract to validator
+	private boolean validate(SaleDetailsRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getSaleId())) {
+			errors.add(Error.create("saleId", "saleId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
 	public SaleDetailsResponse fetchDetails(SaleDetailsRequest request) throws SessionServiceException {
 
 		logger.info("SaleServiceImpl.fetchDetails starts");
+		SaleDetailsResponse resp = new SaleDetailsResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError"); // TODO add localized msg
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ saleId : {} ] ", request.getSaleId());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		Sale sale = salesDao.findById(request.getSaleId());
 		DetailedSaleDto detailedSale = saleConverter.toDetailedSaleDto(sale);
 
-		SaleDetailsResponse resp = new SaleDetailsResponse();
 		resp.setDetailedSale(detailedSale);
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed succesfully"); // TODO add localized msg
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(SalesFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be null"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Transactional
@@ -86,12 +127,21 @@ implements SaleService {
 	public SalesFetchResponse findSales(SalesFetchRequest request) throws SessionServiceException, SaleServiceException {
 
 		logger.info("SaleServiceImpl.findSales starts");
+		SalesFetchResponse resp = new SalesFetchResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setMessage("validationError"); // TODO add localized msg
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ filters : {} ] ", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		List<SaleDto> salez = new ArrayList<SaleDto>();
 		List<Sale> sales = salesDao.find(request.getFilters());
@@ -100,32 +150,30 @@ implements SaleService {
 			salez.add(saleConverter.toSaleDto(sale));
 		}
 
-		SalesFetchResponse resp = new SalesFetchResponse();
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation perfromed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 		resp.setSales(salez);
 		return resp;
 	}
 
-	@Transactional
 	@Override
-	public SaleAddResponse add(SaleAddRequest request) throws SessionServiceException, SaleServiceException {
-
-		SaleAddResponse resp = new SaleAddResponse();
+	@Transactional
+	public SaleAddResponse add(SaleAddRequest request)
+			throws SessionServiceException, SaleServiceException {
 
 		logger.info("SaleServiceImpl.add starts");
+		List<Error> errors = getEmptyErrors();
+		SaleAddResponse resp = new SaleAddResponse();
+
+		if (!validate(request, errors)) {
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("validationError"); // TODO add localized msg
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ saleDto : {} ] ", request.getSale());
-		}
-
-		List<Error> errors = getEmptyErrors();
-
-		if (!validate(request.getSale(), errors)) { // TODO validation service? custom class?
-			resp.setErrors(errors);
-			resp.setSuccess(false);
-			resp.setMessage("errors occurred"); // TODO add localized msg
-			return resp;
 		}
 
 		sessionService.validate(request.getSessionDto());
@@ -134,13 +182,27 @@ implements SaleService {
 
 		salesDao.save(entity);
 
-		resp.setMessage("successfully added a new sale"); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 		return resp;
 	}
 
-	// TODO : extract to service?
-	private boolean validate(SaleEditDto saleEdit, List<Error> errors) {
+	// TODO : extract to validator
+	private boolean validate(SaleEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getSaleEdit())) {
+			errors.add(Error.create("saleDto", "saleDto cannot be null"));
+		}
+
+		SaleEditDto saleEdit = request.getSaleEdit();
 
 		for (Long productId : saleEdit.getProductsToAdd()) {
 
@@ -169,8 +231,23 @@ implements SaleService {
 		return errors.size() == 0;
 	}
 
-	// TODO : extract to service?
-	private boolean validate(SaleAddDto sale, List<Error> errors) {
+	// TODO : extract to validator
+	private boolean validate(SaleAddRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getSale())) {
+			errors.add(Error.create("saleDto", "saleDto cannot be null"));
+			return false;
+		}
+
+		SaleAddDto sale = request.getSale();
 
 		for (Long productId : sale.getProductsIds()) {
 
@@ -208,18 +285,17 @@ implements SaleService {
 	public SaleEditResponse edit(SaleEditRequest request) throws SessionServiceException, SaleServiceException {
 
 		logger.info("SaleServiceImpl.edit starts");
-
 		SaleEditResponse resp = new SaleEditResponse();
-
-		sessionService.validate(request.getSessionDto()); //
 		List<Error> errors = getEmptyErrors();
 
-		if (!validate(request.getSaleEdit(), errors)) {
+		if (!validate(request, errors)) {
 			resp.setErrors(errors);
 			resp.setSuccess(false);
-			resp.setMessage("errors occured"); // TODO add localized msg
+			resp.setMessage("validationError"); // TODO add localized msg
 			return resp;
 		}
+
+		sessionService.validate(request.getSessionDto());
 
 		SaleEditDto editDto = request.getSaleEdit();
 
@@ -230,9 +306,27 @@ implements SaleService {
 		salesDao.saveOrUpdate(sale);
 
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(SaleDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getSaleId())) {
+			errors.add(Error.create("saleId", "saleId cannot be empty"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Transactional
@@ -240,31 +334,30 @@ implements SaleService {
 	public SaleDeleteResponse delete(SaleDeleteRequest request) throws SessionServiceException, SaleServiceException {
 
 		logger.info("SaleServiceImpl.delete starts");
-
 		SaleDeleteResponse resp = new SaleDeleteResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError"); // TODO add localized msg
+			resp.setSuccess(false);
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ saleId : {} ]", request.getSaleId());
 		}
 
 		sessionService.validate(request.getSessionDto());
-		List<Error> errors = getEmptyErrors();
-
-		if (!validate(request.getSaleId(), errors)) {
-			resp.setErrors(errors);
-			resp.setMessage(""); // TODO add localized msg
-			resp.setSuccess(false);
-		}
 
 		salesDao.removeById(request.getSaleId());
 
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 
 		return resp;
 	}
 
-	// TODO : extract to service?
+	// TODO : extract to validator
 	private boolean validate(Long saleId, List<Error> errors) {
 
 		if (isNull(saleId)) {

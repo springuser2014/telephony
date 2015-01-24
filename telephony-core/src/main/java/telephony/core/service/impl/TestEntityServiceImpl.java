@@ -4,10 +4,7 @@ import telephony.core.dao.TestEntityDao;
 import telephony.core.entity.jpa.TestEntity;
 import telephony.core.service.TestEntityService;
 
-/**
- * asd.
- */
-public class TestEntityServiceImpl 
+public class TestEntityServiceImpl
 extends AbstractGenericService<TestEntity, TestEntityDao> 
 implements TestEntityService {
 
@@ -15,10 +12,6 @@ implements TestEntityService {
 		super();
 	}
 	
-	/**
-	 * asd.
-	 * @param clazz a.
-	 */
 	public TestEntityServiceImpl(Class<TestEntityDao> clazz) {
 		super(clazz);
 	}

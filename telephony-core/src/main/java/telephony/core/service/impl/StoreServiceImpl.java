@@ -17,25 +17,21 @@ import telephony.core.service.dto.request.StoreAddRequest;
 import telephony.core.service.dto.request.StoreDeleteRequest;
 import telephony.core.service.dto.request.StoreEditRequest;
 import telephony.core.service.dto.request.StoreFetchRequest;
-import telephony.core.service.dto.response.StoreAddResponse;
-import telephony.core.service.dto.response.StoreDeleteResponse;
-import telephony.core.service.dto.response.StoreEditResponse;
-import telephony.core.service.dto.response.StoreFetchResponse;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import telephony.core.service.exception.StoreServiceException;
 
+import static telephony.core.assertion.CommonAssertions.*;
 
-/**
- * Stores management service.
- */
-public class StoreServiceImpl 
+public class StoreServiceImpl
 extends AbstractBasicService<Store> 
 implements StoreService {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Inject
     ProductsDao productsDao;
@@ -61,16 +57,45 @@ implements StoreService {
 	@Inject
 	StoreConverter storeConverter;
 
+	// TODO extract to validator
+	private boolean validate(StoreFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be null"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Override
 	@Transactional
-	public StoreFetchResponse fetch(StoreFetchRequest request) throws SessionServiceException, StoreServiceException {
+	public StoreFetchResponse fetch(StoreFetchRequest request)
+			throws SessionServiceException, StoreServiceException {
+
 		logger.info("StoreServiceImpl.fetch starts");
+		StoreFetchResponse resp = new StoreFetchResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ filters : {} ]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		List<StoreDto> storez = new ArrayList<StoreDto>();
 		List<Store> stores = storesDao.find(request.getFilters());
@@ -79,74 +104,161 @@ implements StoreService {
 			storez.add(storeConverter.toStoreDto(store));
 		}
 
-		StoreFetchResponse resp = new StoreFetchResponse();
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 		resp.setStores(storez);
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(StoreAddRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getStoreDto())) {
+			errors.add(Error.create("storeDto", "storeDto cannot be empty"));
+		}
+
+		// TODO add more cases
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
 	public StoreAddResponse add(StoreAddRequest request) throws SessionServiceException, StoreServiceException {
+
 		logger.info("StoreServiceImpl.add starts");
+		StoreAddResponse resp = new StoreAddResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ storeDto : {} ]", request.getStoreDto());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		Store entity = storeConverter.toEntity(request.getStoreDto());
 
 		storesDao.save(entity);
 
-		StoreAddResponse resp = new StoreAddResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(StoreDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getStoreId())) {
+			errors.add(Error.create("storeId", "storeId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
-	public StoreDeleteResponse delete(StoreDeleteRequest request) throws SessionServiceException, StoreServiceException {
+	public StoreDeleteResponse delete(StoreDeleteRequest request)
+			throws SessionServiceException, StoreServiceException {
+
 		logger.info("StoreServiceImpl.delete starts");
+		StoreDeleteResponse resp = new StoreDeleteResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ storeId : {} ]", request.getStoreId());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		storesDao.removeById(request.getStoreId());
 
-		StoreDeleteResponse resp = new StoreDeleteResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(StoreEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getStoreDto())) {
+			errors.add(Error.create("storeDto", "storeDto cannot be empty"));
+			return false;
+		}
+
+		// TODO add more cases
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
-	public StoreEditResponse edit(StoreEditRequest request) throws SessionServiceException, StoreServiceException {
+	public StoreEditResponse edit(StoreEditRequest request)
+			throws SessionServiceException, StoreServiceException {
+
 		logger.info("StoreServiceImpl.edit starts");
+		StoreEditResponse resp = new StoreEditResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ storeDto : {} ]", request.getStoreDto());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		Store entity = storesDao.findById(request.getStoreDto().getStoreId());
 		storeConverter.updateEntity(request.getStoreDto(), entity);
 
 		storesDao.save(entity);
 
-		StoreEditResponse resp = new StoreEditResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 
 		return resp;
 	}

@@ -1,10 +1,9 @@
 package telephony.core.service.impl;
 
-import java.util.*;
-
+import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import telephony.core.dao.RolesDao;
 import telephony.core.dao.StoresDao;
 import telephony.core.dao.UsersDao;
@@ -15,21 +14,21 @@ import telephony.core.service.SessionService;
 import telephony.core.service.UserService;
 import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.UserDto;
 import telephony.core.service.dto.UserFetchDto;
 import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.Error;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 
-import com.google.inject.Inject;
-import com.google.inject.persist.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
+import static telephony.core.assertion.CommonAssertions.*;
 
-/**
- * Users management service.
- */
-public class UserServiceImpl 
+public class UserServiceImpl
 extends AbstractBasicService<User> 
 implements UserService {
 
@@ -50,16 +49,45 @@ implements UserService {
 	@Inject
 	private UserConverter userConverter;
 
+	// TODO extract to validator
+	private boolean validate(UsersFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be null"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Override
 	@Transactional
-	public UsersFetchResponse fetch(UsersFetchRequest req) throws SessionServiceException {
+	public UsersFetchResponse fetch(UsersFetchRequest req)
+			throws SessionServiceException {
+
 		logger.info("UserServiceImpl.fetch starts");
+		UsersFetchResponse resp = new UsersFetchResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(req,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ filters : {} ]", req.getFilters());
 		}
 
-		sessionService.validate(req.getSessionDto()); // TODO ; add validation
+		sessionService.validate(req.getSessionDto());
 
 		List<UserFetchDto> userz = new ArrayList<UserFetchDto>();
 		List<User> users = usersDao.find(req.getFilters());
@@ -68,25 +96,53 @@ implements UserService {
 			userz.add(userConverter.toFetchDto(u));
 		}
 
-		UsersFetchResponse resp = new UsersFetchResponse();
-		resp.setMessage(""); // TODO add localized
+		resp.setMessage("operation performed succcesfully"); // TODO add localized
 		resp.setSuccess(true);
 		resp.setUsers(userz);
 
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(UserEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getUserDto())) {
+			errors.add(Error.create("userDto", "userDto cannot be null"));
+			return false;
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
 	public UserEditResponse edit(UserEditRequest request)
 			throws SessionServiceException, UserServiceException {
+
 		logger.info("UserServiceImpl.edit starts");
+		UserEditResponse resp = new UserEditResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ userDto : {} ] ", request.getUserDto());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO : add validation
+		sessionService.validate(request.getSessionDto());
 
 		User user = usersDao.findById(request.getUserDto().getId());
 
@@ -94,10 +150,30 @@ implements UserService {
 
 		usersDao.saveOrUpdate(user);
 
-		UserEditResponse resp = new UserEditResponse();
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(UserAddRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getUserDto())) {
+			errors.add(Error.create("userDto", "userDto cannot be null"));
+			return false;
+		}
+
+		// TODO add more cases
+
+		return errors.size() == 0;
 	}
 
 	@Transactional
@@ -106,21 +182,47 @@ implements UserService {
 			throws SessionServiceException, UserServiceException {
 
 		logger.info("UserServiceImpl.add starts");
+		UserAddResponse resp = new UserAddResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(" params : [ userDto : {} ] ", request.getUserDto());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		User user = userConverter.toEntity(request.getUserDto());
 
 		usersDao.save(user);
 
-		UserAddResponse resp = new UserAddResponse();
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(UserDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getUserId())) {
+			errors.add(Error.create("userId", "userId cannot be empty"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Transactional
@@ -129,22 +231,29 @@ implements UserService {
 			throws SessionServiceException, UserServiceException {
 
 		logger.info("UserServiceImpl.delete starts");
+		UserDeleteResponse resp = new UserDeleteResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if(logger.isDebugEnabled()) {
 			logger.debug(" params : [ userId : {} ] ", request.getUserId());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		usersDao.removeById(request.getUserId());
 
-		UserDeleteResponse  resp = new UserDeleteResponse();
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 
 		return resp;
 	}
-
 
 	@Override
 	@Transactional
@@ -153,11 +262,42 @@ implements UserService {
 		return usersDao.count();
 	}
 
+	// TODO extract to validator
+	private boolean validate(UserEditRoleRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getRolesToAdd())) {
+			errors.add(Error.create("rolesToAdd", "rolesToAdd cannot be null"));
+		}
+
+		if (isNull(request.getRolesToDelete())) {
+			errors.add(Error.create("rolesToDelete", "rolesToDelete cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
 	public UserEditRoleResponse editRoles(UserEditRoleRequest request) throws SessionServiceException {
 
 		logger.info("UserServiceImpl.editRoles starts");
+		UserEditRoleResponse resp = new UserEditRoleResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(" params : [ userId: {} , rolesToAdd : {} , rolesToDelete : {} ] ",
@@ -185,10 +325,31 @@ implements UserService {
 
 		usersDao.saveOrUpdate(user);
 
-		UserEditRoleResponse resp = new UserEditRoleResponse();
-		resp.setMessage(""); // TODO add validation
+		resp.setMessage("operation performed successfully");
 		resp.setSuccess(true);
 		return resp;
+	}
+
+	// TODO extract
+	private boolean validate(UserEditStoreRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getStoresToAdd())) {
+			errors.add(Error.create("username", "storesToAdd cannot be null"));
+		}
+
+		if (isNull(request.getStoresToDelete())) {
+			errors.add(Error.create("username", "storesToDelete cannot be null"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Transactional
@@ -196,13 +357,22 @@ implements UserService {
 	public UserEditStoreResponse editStores(UserEditStoreRequest request) throws SessionServiceException {
 
 		logger.info("UserServiceImpl.editStores starts");
+		UserEditStoreResponse resp = new UserEditStoreResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(" params : [ userId : {}, storesToAdd : {}, storesToRemove : {} ] ",
 					new Object[] { request.getUserId(), request.getStoresToAdd(), request.getStoresToDelete() } );
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionService.validate(request.getSessionDto());
 
 		User user = usersDao.findById(request.getUserId());
 
@@ -223,9 +393,8 @@ implements UserService {
 
 		usersDao.saveOrUpdate(user);
 
-		UserEditStoreResponse resp = new UserEditStoreResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 
 		return resp;
 	}

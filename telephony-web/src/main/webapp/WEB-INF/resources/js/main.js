@@ -6,13 +6,14 @@ require.config({
 		
 		'bootstrap' : 'bootstrap/bootstrap',
 		'bootstrap-progressbar' : 'plugin/bootstrap-progressbar',
-		'bootstrap-slider' : 'plugin/bootstrap-slidger',
-		'bootstrap-tagsinput' : 'plugin/bootstrap-tagsinput',
+		'bootstrap-slider' : 'plugin/bootstrap-slider',
+		'bootstrap-tagsinput' : 'plugin/bootstrap-tags',
 		'bootstrap-timepicker' : 'plugin/bootstrap-timepicker',
 		'bootstraptree' : 'plugin/bootstraptree',
-		'jquery-bootstrap-wizard' : 'plugin/jquery-bootstrap-wizard',
+		'jquery-bootstrap-wizard' : 'plugin/bootstrap-wizard',
 		'jquery-ui' : 'libs/jquery-ui-1.10.3.min',
 		'jquery' : 'libs/jquery-1.11.0.min',
+		'mustache' : 'libs/mustache.min',
 		'underscore' : 'libs/underscore-1.5.2',
 		'backbone' : 'libs/backbone-1.1.0',		
 		'smartwidgets' : 'smartwidgets/jarvis.widget',
@@ -57,10 +58,29 @@ require.config({
 	}
 });
 
-require(['app', 'jquery-ui'], 
-function(App, $) {
-	
-	
+require(['app', 'jquery-ui', 'mustache'],
+function(App, $, mustache) {
+
+	var authData = {
+		"username" : "user1@gmail.com",
+		"password" : "rfaysdhaiufsiuf"
+	};
+
+	$.ajax({
+		url: 'http://127.0.0.1:8080/telephony-ws/rest/session/initialize',
+		type: 'POST',
+		headers : {
+			'Content-type' : 'application/json'
+			//'Content-type' : 'text/plain; charset=UTF-8'
+		},
+		dataType : 'json',
+		data : JSON.stringify(authData),
+		complete : function(jqXHR, status) {
+			alert(status)
+		}
+	});
+
+
 	if ($.fn.datepicker) {
 		$('#asdasd').each(function() {
 
@@ -70,7 +90,7 @@ function(App, $) {
 			$this.datepicker({
 				dateFormat : dataDateFormat,
 				prevText : '<i class="fa fa-chevron-left"></i>',
-				nextText : '<i class="fa fa-chevron-right"></i>',
+				nextText : '<i class="fa fa-chevron-right"></i>'
 			});
 		});
 	}

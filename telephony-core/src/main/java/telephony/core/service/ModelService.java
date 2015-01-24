@@ -34,5 +34,5 @@ public interface ModelService extends BasicService<Model> {
 	 * @param request a.
 	 * @return a.
 	 */
-	ModelDeleteResponse delete(ModelDeleteRequest request);
+	ModelDeleteResponse delete(ModelDeleteRequest request) throws SessionServiceException;
 }

@@ -25,10 +25,11 @@ import telephony.core.service.dto.response.ProducersFetchResponse;
 import telephony.core.service.exception.ProducerServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
-/**
- * asd.
- */
-public class ProducerServiceImpl 
+import telephony.core.service.dto.response.Error;
+
+import static telephony.core.assertion.CommonAssertions.*;
+
+public class ProducerServiceImpl
 extends AbstractBasicService<Producer> 
 implements ProducerService {
 
@@ -49,10 +50,21 @@ implements ProducerService {
 			throws SessionServiceException, ProducerServiceException {
 
 		logger.info("ProducerServiceImpl.fetch starts");
+		ProducersFetchResponse resp = new ProducersFetchResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ filters : {} ] ", request.getFilters());
 		}
+
+		sessionService.validate(request.getSessionDto());
 
 		List<Producer> producers = producerDao.fetch(request.getFilters());
 		List<ProducerDto> producerDtos = new ArrayList<ProducerDto>();
@@ -62,12 +74,29 @@ implements ProducerService {
 			producerDtos.add(dto);
 		}
 
-		ProducersFetchResponse resp = new ProducersFetchResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setProducers(producerDtos);
 
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ProducersFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be empty"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Override
@@ -76,22 +105,63 @@ implements ProducerService {
 			throws SessionServiceException, ProducerServiceException {
 
 		logger.info("ProducerServiceImpl.edit starts");
+		ProducerEditResponse resp = new ProducerEditResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setMessage("validationError");
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ editDto : {} ]", request.getProducerDto());
 		}
 
 		sessionService.validate(request.getSessionDto());
-		// TODO add validation
 
 		Producer producer = producerDao.findById(request.getProducerDto().getProducerId());
 		producer.setLabel(request.getProducerDto().getLabel());
 		producerDao.saveOrUpdate(producer);
 		
-		ProducerEditResponse resp = new ProducerEditResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO : add localized msg
+		resp.setMessage("operation performed successfully");
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ProducerEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		// TODO add more validation cases
+
+		return errors.size() == 0;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ProducerDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getProducerId())) {
+			errors.add(Error.create("producerId", "producerId cannot be null"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Override
@@ -99,6 +169,15 @@ implements ProducerService {
 			throws SessionServiceException, ProducerServiceException {
 
 		logger.info("ProducerServiceImpl.delete starts");
+		ProducerDeleteResponse resp = new ProducerDeleteResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ producerId : {} ]", request.getProducerId());
@@ -108,9 +187,8 @@ implements ProducerService {
 
 		producerDao.removeById(request.getProducerId());
 
-		ProducerDeleteResponse resp = new ProducerDeleteResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO : add localized msg
+		resp.setMessage("operation performed successfully");
 
 		return resp;
 	}

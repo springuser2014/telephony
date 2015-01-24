@@ -23,7 +23,7 @@ import com.google.inject.persist.Transactional;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
-import static telephony.core.assertion.CommonAssertions.isNotNull;
+import static telephony.core.assertion.CommonAssertions.*;
 
 public class ContactServiceImpl
 extends AbstractBasicService<Contact> 
@@ -53,33 +53,55 @@ implements ContactService {
 
 		logger.info("ContactServiceImpl.fetchAll starts");
 
-		SessionDto session = SessionDto.create(request.getUsername(), request.getSessionId());
+		ContactFetchResponse resp = new ContactFetchResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+			return resp;
+		}
+
 		ContactFilterCriteria filters = request.getFilters();
 
 		if (logger.isDebugEnabled()) {
-			logger.debug("params : [filters: {}, session : {}]", filters, session);
+			logger.debug("params : [filters: {} : {}]", filters);
 		}
 
-		sessionService.validate(session);
-
+		sessionService.validate(request.getSessionDto());
 		List<Contact> lst = contactsDao.find(filters);
-
-		logger.info("found {} elements", lst.size());
-
-		ContactFetchResponse response = new ContactFetchResponse();
 
 		for(Contact contact : lst) {
 			ContactDto dto = contactConverter.contactToContactDto(contact);
 
 			if (isNotNull(dto)) {
-				response.addContact(dto);
+				resp.addContact(dto);
 			}
 		}
 
-		response.setMessage(""); // TODO localized msg
-		response.setSuccess(true);
+		resp.setMessage("operation performed successfully"); // TODO localized msg
+		resp.setSuccess(true);
 
-		return response;
+		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ContactFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be null"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Override
@@ -88,17 +110,24 @@ implements ContactService {
 			throws SessionServiceException, ContactServiceException {
 
 		logger.info("ContactServiceImpl.addNewContact starts");
+		ContactAddResponse resp = new ContactAddResponse();
+		List<Error> errors = getEmptyErrors();
 
-		// TODO add dtos validation
-		
-		SessionDto session = SessionDto.create(request.getUsername(), request.getSessionId());
+		if (!validate(request, errors)) {
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+			return resp;
+		}
+
 		ContactDto dto = request.getContact();
 		
 		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ session: {}, newContact : {}]", session, dto);
+			logger.debug("params : [ newContact : {}]", dto);
 		}
 
-		sessionService.validate(session);
+		sessionService.validate(request.getSessionDto());
+
 		// TODO extract to converter
 		Address address = new Address();
 		address.setAddressLine1(dto.getAddress().getAddressLine1());
@@ -134,30 +163,62 @@ implements ContactService {
 		}
 
 		contactsDao.save(newContact);
-		ContactAddResponse resp = new ContactAddResponse();
+
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO : add localized msg
+		resp.setMessage("operation performed successfully"); // TODO : add localized msg
+
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ContactAddRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getContact())) {
+			errors.add(Error.create("contact", "contact cannot be empty"));
+		}
+
+		// TODO add more validation cases
+
+		return errors.size() == 0;
 	}
 
 	@Override
 	@Transactional
-	public ContactEditResponse edit(ContactEditRequest req)
+	public ContactEditResponse edit(ContactEditRequest request)
 			throws SessionServiceException, ContactServiceException {
 
 		logger.info("ContactServiceImpl.updateContact starts");
+		ContactEditResponse resp = new ContactEditResponse();
+		List<Error> errors = getEmptyErrors();
 
-		SessionDto session = SessionDto.create(req.getUsername(), req.getSessionId());
-		ContactEditDto dto = req.getContactToEdit();
-		
-		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ session : {}, contact: {}]", session, dto);
+		if (!validate(request, errors)) {
+
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			resp.setErrors(errors);
+
+			return resp;
 		}
 
-		sessionService.validate(session);
+		ContactEditDto dto = request.getContactToEdit();
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ contact: {}]", dto);
+		}
+
+		sessionService.validate(request.getSessionDto());
 		
 		Contact contactToUpdate = contactsDao.findById(dto.getId());
 
+		// TODO extract to converter
 		if (isNotNull(dto.getDetails())) {
 			contactToUpdate.setDetails(dto.getDetails());
 		}
@@ -239,45 +300,54 @@ implements ContactService {
 
 		contactsDao.saveOrUpdate(contactToUpdate);
 
-		ContactEditResponse resp = new ContactEditResponse();
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ContactEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		return errors.size() == 0;
 	}
 
 	@Override
 	@Transactional
-	public ContactDeleteResponse delete(ContactDeleteRequest req)
+	public ContactDeleteResponse delete(ContactDeleteRequest request)
 			throws SessionServiceException, ContactServiceException {
 
 		logger.info("ContactServiceImpl.deleteContact starts");
-
+		List<Error> errors = getEmptyErrors();
 		ContactDeleteResponse resp = new ContactDeleteResponse();
 
-		sessionService.validate(req.getSessionDto());
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("params : [ contactId : {}]", req.getContactToDelete());
-		}
-
-		List<Error> errors = getEmptyErrors();
-
-		if (!validate(req, errors)) {
-
+		if (!validate(request, errors)) {
 			resp.setErrors(errors);
 			resp.setMessage("validationFailed");
 			resp.setSuccess(false);
-
 			return resp;
 		}
-		
-		contactsDao.removeById(req.getContactToDelete());
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ contactId : {}]", request.getContactToDelete());
+		}
+
+		sessionService.validate(request.getSessionDto());
+		contactsDao.removeById(request.getContactToDelete());
 
 		resp.setSuccess(true);
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		return resp;
 	}
 
+	// TODO extract to validator
 	private boolean validate(ContactDeleteRequest request, List<Error> errors) {
 
 		if (isEmpty(request.getSessionId())) {
@@ -295,6 +365,7 @@ implements ContactService {
 		return errors.size() == 0;
 	}
 
+	// TODO extract to validator
 	private boolean validate(ContactDetailsRequest request, List<Error> errors) {
 
 		if (isEmpty(request.getSessionId())) {
@@ -318,20 +389,19 @@ implements ContactService {
 			throws SessionServiceException {
 
 		logger.info("ContactServiceImpl.fetchDetails starts");
-
 		ContactDetailsResponse resp = new ContactDetailsResponse();
-
-		sessionService.validate(request.getSessionDto());
-
 		List<Error> errors = getEmptyErrors();
 
 		if (!validate(request, errors)) {
 
 			resp.setMessage("validationFailed");
 			resp.setSuccess(false);
+			resp.setErrors(errors);
 
 			return resp;
 		}
+
+		sessionService.validate(request.getSessionDto());
 
 		Contact contact = contactsDao.findById(request.getContactId());
 		ContactDto contactDto = contactConverter.contactToContactDto(contact);

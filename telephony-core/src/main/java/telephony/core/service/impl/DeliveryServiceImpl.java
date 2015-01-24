@@ -66,17 +66,23 @@ implements DeliveryService {
     		throws SessionServiceException, DeliveryServiceException {
         
         logger.info("DeliveryServiceImpl.findDeliveries starts");
+		DeliveriesFetchResponse resp = new DeliveriesFetchResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ filters : {}]", request.getFilters());
 		}
 
 		sessionService.validate(request.getSessionDto());
-		
+
         List<Delivery> res = deliveriesDao.find(request.getFilters());
-        
-        DeliveriesFetchResponse resp = new DeliveriesFetchResponse();
-        
         List<DeliveryDto> coll = new ArrayList<DeliveryDto>();
         
         for(Delivery d : res) {
@@ -89,8 +95,26 @@ implements DeliveryService {
         
         return resp;
     }
-    
-    @Override
+
+	// TODO extract to validator
+	private boolean validate(DeliveriesFetchRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getFilters())) {
+			errors.add(Error.create("filters", "filters cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	@Override
 	@Transactional
 	public long count(SessionDto session)
 			throws SessionServiceException {
@@ -105,9 +129,16 @@ implements DeliveryService {
 	public DeliveryAddResponse add(DeliveryAddRequest request)
 			throws SessionServiceException, DeliveryServiceException {
 
-		DeliveryAddResponse resp = new DeliveryAddResponse();
-
 		logger.info("DeliveryServiceImpl.add starts");
+		DeliveryAddResponse resp = new DeliveryAddResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("validationError");
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ deliveryDto : {} ] ", request.getDeliveryDto());
@@ -116,16 +147,6 @@ implements DeliveryService {
 		sessionService.validate(request.getSessionDto());
 
 		DeliveryAddDto addDto = request.getDeliveryDto();
-
-		List<Error> errors = getEmptyErrors();
-
-		if (!validate(addDto, errors)) {
-
-			resp.setErrors(errors);
-			resp.setSuccess(false);
-			resp.setMessage("validationError");
-			return resp;
-		}
 
 		Delivery delivery = deliveryConverter.toEntity(addDto);
 		deliveriesDao.saveOrUpdate(delivery);
@@ -137,7 +158,17 @@ implements DeliveryService {
 	}
 
 	// TODO extract to validator
-	private boolean validate(DeliveryAddDto addDto, List<Error> errors) {
+	private boolean validate(DeliveryAddRequest request, List<Error> errors) {
+
+		DeliveryAddDto addDto = request.getDeliveryDto();
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
 
 		if (isNull(addDto)) {
 			errors.add(Error.create("deliveryDto", "deliveryDto cannot be null"));
@@ -231,15 +262,10 @@ implements DeliveryService {
 			throws SessionServiceException {
 
 		logger.info("DeliveryServiceImpl.fetchDetails starts");
-
 		DeliveryDetailsResponse resp = new DeliveryDetailsResponse();
-
-		sessionService.validate(request.getSessionDto());
-
 		List<Error> errors = getEmptyErrors();
 
 		if (!validate(request, errors)) {
-
 			resp.setErrors(errors);
 			resp.setMessage("validationFailed");
 			resp.setSuccess(false);
@@ -247,16 +273,19 @@ implements DeliveryService {
 			return resp;
 		}
 
+		sessionService.validate(request.getSessionDto());
+
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
 		DeliveryDto deliveryDto = deliveryConverter.toDeliveryDto(delivery);
 
 		resp.setDelivery(deliveryDto);
 		resp.setMessage("operation performed successfully");
-		resp.setSuccess(false);
+		resp.setSuccess(true);
 
 		return resp;
 	}
 
+	// TODO extract to validator
 	private boolean validate(DeliveryDetailsRequest request, List<Error> errors) {
 
 		if (isEmpty(request.getSessionId())) {
@@ -274,7 +303,18 @@ implements DeliveryService {
 		return errors.size() == 0;
 	}
 
-	private boolean validate(DeliveryEditDto editDto, List<Error> errors) {
+	// TODO extract to validator
+	private boolean validate(DeliveryEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		DeliveryEditDto editDto = request.getDeliveryDto();
 
 		if (isNull(editDto)) {
 			errors.add(Error.create("deliveryDto", "deliveryDto cannot be null"));
@@ -421,22 +461,20 @@ implements DeliveryService {
 	@Transactional
 	public DeliveryEditResponse edit(DeliveryEditRequest request)
 			throws DeliveryServiceException, SessionServiceException {
-	
+
+		logger.info("DeliveryServiceImpl.edit starts");
 		DeliveryEditResponse resp = new DeliveryEditResponse();
-
-		sessionService.validate(request.getSessionDto());
-
-		DeliveryEditDto editDto = request.getDeliveryDto() ;
-
 		List<Error> errors = getEmptyErrors();
-		if (!validate(editDto, errors)) {
 
+		if (!validate(request, errors)) {
 			resp.setErrors(errors);
 			resp.setMessage("validationError");
 			resp.setSuccess(false);
 		}
 
-		Delivery delivery = deliveriesDao.findById(editDto.getId());
+		sessionService.validate(request.getSessionDto());
+
+		Delivery delivery = deliveriesDao.findById(request.getDeliveryDto().getId());
 		deliveryConverter.updateEntity(delivery, request.getDeliveryDto());
 		deliveriesDao.saveOrUpdate(delivery);
 
@@ -446,29 +484,45 @@ implements DeliveryService {
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(DeliveryDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getDeliveryId())) {
+			errors.add(Error.create("deliveryId", "deliveryId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Transactional
 	@Override
 	public DeliveryDeleteResponse delete(DeliveryDeleteRequest request)
 			throws SessionServiceException, DeliveryServiceException {
 
-		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
-
 		logger.info("DeliveryServiceImpl.delete starts");
+		DeliveryDeleteResponse resp = new DeliveryDeleteResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request, errors)) {
+			resp.setErrors(errors);
+			resp.setSuccess(false);
+			resp.setMessage("validationError"); // TODO add localized msg
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ deliveryId : {} ]", request.getDeliveryId());
 		}
 
 		sessionService.validate(request.getSessionDto());
-		List<Error> errors = getEmptyErrors();
-
-		if (isEmpty(request.getDeliveryId())) {
-			errors.add(Error.create("deliveryId", "deliveryId cannot be empty"));
-			resp.setErrors(errors);
-			resp.setSuccess(false);
-			resp.setMessage("error occured"); // TODO add localized msg
-			return resp;
-		}
 
 		deliveriesDao.removeById(request.getDeliveryId());
 		

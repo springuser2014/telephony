@@ -50,28 +50,30 @@ implements ComplaintCommentService {
 
 		ComplaintCommentResponse resp = new ComplaintCommentResponse();
 
-		sessionService.validate(request.getSessionDto());
-
 		logger.info("ComplaintCommentServiceImpl.comments starts");
+
 		List<Error> errors = getEmptyErrors();
 
 		if (!validate(request.getComplaintComment(), errors)) {
 
 			resp.setErrors(errors);
-			resp.setMessage(""); // TODO add localized msg
+			resp.setMessage("validationError"); // TODO add localized msg
 			resp.setSuccess(true);
 			return resp;
 		}
 
+		sessionService.validate(request.getSessionDto());
+
 		ComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
 		complaintCommentDao.save(cc);
 
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 
 		return resp;
 	}
 
+	// TODO extract to validator
 	private boolean validate(ComplaintCommentDto complaintComment, List<Error> errors) {
 
 		if(isEmpty(complaintComment.getComplaintId())) {
@@ -89,6 +91,7 @@ implements ComplaintCommentService {
 		return errors.size() == 0;
 	}
 
+	// TODO extract to validator
 	private boolean validate(AnonymousComplaintCommentDto complaintComment, List<Error> errors) {
 
 		if(isEmpty(complaintComment.getHashUnique())) {
@@ -127,7 +130,7 @@ implements ComplaintCommentService {
 		ComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
 		complaintCommentDao.save(cc);
 
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 
 		return resp;

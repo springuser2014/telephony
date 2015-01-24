@@ -3,20 +3,26 @@
         PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
         "http://java.sun.com/dtd/web-app_2_3.dtd">
 
-<web-app>
+	<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+			 version="3.0">
 
-	<listener>
-		<listener-class>telephony.ws.servlet.TelephonyServletProductionContextListener</listener-class>
-	</listener>
+		<display-name>Servlet 3.0 Web Application</display-name>
 
-	<filter>
-		<filter-name>guiceFilter</filter-name>
-		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
-	</filter>
+		<listener>
+			<listener-class>telephony.ws.servlet.TelephonyServletProductionContextListener</listener-class>
+		</listener>
 
-	<filter-mapping>
-		<filter-name>guiceFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+		<filter>
+			<filter-name>guiceFilter</filter-name>
+			<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+		</filter>
 
-</web-app>
+		<filter-mapping>
+			<filter-name>guiceFilter</filter-name>
+			<url-pattern>/*</url-pattern>
+		</filter-mapping>
+
+	</web-app>

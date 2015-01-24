@@ -13,7 +13,6 @@ public interface ContactService extends BasicService<Contact> {
 
 	/**
 	 * asd .
-	 * @param request sd.
 	 * @return asd.
 	 * @throws telephony.core.service.exception.SessionServiceException asd.
 	 * @throws ContactServiceException asd.
@@ -24,7 +23,6 @@ public interface ContactService extends BasicService<Contact> {
 
 	/**
 	 * sd.
-	 * @param request a.
 	 * @return d.
 	 * @throws SessionServiceException a.
 	 * @throws ContactServiceException a.
@@ -35,7 +33,6 @@ public interface ContactService extends BasicService<Contact> {
 	
 	/**
 	 * asd.
-	 * @param contact asd.
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 * @return b.
@@ -45,7 +42,6 @@ public interface ContactService extends BasicService<Contact> {
 	
 	/**
 	 * asd.
-	 * @param req asd.
 	 * @throws SessionServiceException asd.
 	 * @throws ContactServiceException asd.
 	 * @return asd.
@@ -58,5 +54,6 @@ public interface ContactService extends BasicService<Contact> {
 	 * @param request a.
 	 * @return d.
 	 */
-	ContactDetailsResponse fetchDetails(ContactDetailsRequest request) throws SessionServiceException;
+	ContactDetailsResponse fetchDetails(ContactDetailsRequest request)
+			throws SessionServiceException;
 }

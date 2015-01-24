@@ -61,13 +61,12 @@ implements ModelService {
 	public ModelFetchResponse fetch(ModelFetchRequest request) throws SessionServiceException {
 
 		logger.info("ModelServiceImpl.fetch starts");
-
 		ModelFetchResponse resp = new ModelFetchResponse();
-
 		List<Error> errors = getEmptyErrors();
+
 		if (!validate(request, errors)) {
 			resp.setErrors(errors);
-			resp.setMessage(""); // TODO add localized msg
+			resp.setMessage("validationError"); // TODO add localized msg
 			resp.setSuccess(false);
 			return resp;
 		}
@@ -86,13 +85,14 @@ implements ModelService {
 		}
 
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO add localized msg
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setModels(modelz);
 		return resp;
 	}
 
+	// TODO extract to validator
 	private boolean validate(ModelFetchRequest request, List<Error> errors) {
-		// extract to common
+
 		if (isEmpty(request.getSessionId())) {
 			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
 		}
@@ -108,8 +108,9 @@ implements ModelService {
 		return errors.size() == 0;
 	}
 
+	// TODO extract to validator
 	private boolean validate(ModelEditRequest request, List<Error> errors) {
-		// extract to common
+
 		if (isEmpty(request.getSessionId())) {
 			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
 		}
@@ -127,10 +128,6 @@ implements ModelService {
 			if(isEmpty(request.getModelDto().getId())) {
 				errors.add(Error.create("modelDto.id", "modelDto.id cannot be empty"));
 			}
-
-
-
-
 		}
 
 		return errors.size() == 0;
@@ -141,16 +138,12 @@ implements ModelService {
 	public ModelEditResponse edit(ModelEditRequest request) throws SessionServiceException {
 
 		logger.info("ModelServiceImpl.edit starts");
-
 		ModelEditResponse resp = new ModelEditResponse();
-
-		sessionService.validate(request.getSessionDto());
-
 		List<Error> errors = getEmptyErrors();
 
 		if (!validate(request, errors)) {
 			resp.setErrors(errors);
-			resp.setMessage(""); // TODO add localized msg
+			resp.setMessage("validationError"); // TODO add localized msg
 			resp.setSuccess(false);
 			return resp;
 		}
@@ -159,8 +152,9 @@ implements ModelService {
 			logger.debug("params : [ model : {} ]", request.getModelDto());
 		}
 
+		sessionService.validate(request.getSessionDto());
+
 		// TODO move to converter
-		// TODO add validation
 		ModelDto modelDto = request.getModelDto();
 
 		Model model = modelsDao.findById(modelDto.getId());
@@ -186,29 +180,55 @@ implements ModelService {
 
 		modelsDao.saveOrUpdate(model);
 
-
 		resp.setSuccess(true);
-		resp.setMessage(""); // TODO : add localized msg
+		resp.setMessage("operation performed successfully"); // TODO : add localized msg
 
 		return resp;
 	}
 
+	// TODO extract to validator
+	private boolean validate(ModelDeleteRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isEmpty(request.getModelId())) {
+			errors.add(Error.create("modelId", "modelId cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
 	@Override
 	@Transactional
-	public ModelDeleteResponse delete(ModelDeleteRequest request) {
+	public ModelDeleteResponse delete(ModelDeleteRequest request) throws SessionServiceException {
 
 		logger.info("ModelServiceImpl.delete starts");
+		ModelDeleteResponse resp = new ModelDeleteResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ modelId : {} ]", request.getModelId());
 		}
 
+		sessionService.validate(request.getSessionDto());
 		modelsDao.removeById(request.getModelId());
 
-		ModelDeleteResponse response = new ModelDeleteResponse();
-		response.setSuccess(true);
-		response.setMessage(""); // TODO add localized msg
+		resp.setSuccess(true);
+		resp.setMessage("operation performed successfully"); // TODO add localized msg
 
-		return response;
+		return resp;
 	}
 }
