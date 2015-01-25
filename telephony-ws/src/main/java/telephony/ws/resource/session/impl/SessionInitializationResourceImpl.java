@@ -1,30 +1,20 @@
 package telephony.ws.resource.session.impl;
 
-import java.io.IOException;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.inject.Inject;
 import org.restlet.data.Status;
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import telephony.core.service.SessionService;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.SessionInitializationRequest;
 import telephony.core.service.dto.response.SessionInitializationResponse;
-import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.session.SessionInitializationResource;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 public class SessionInitializationResourceImpl 
 extends TelephonyServerResource 

@@ -6,16 +6,16 @@ require.config({
 		
 		'bootstrap' : 'bootstrap/bootstrap',
 		'bootstrap-progressbar' : 'plugin/bootstrap-progressbar',
-		'bootstrap-slider' : 'plugin/bootstrap-slider',
 		'bootstrap-tagsinput' : 'plugin/bootstrap-tags',
 		'bootstrap-timepicker' : 'plugin/bootstrap-timepicker',
-		'bootstraptree' : 'plugin/bootstraptree',
+		'bootstrap-tree' : 'plugin/bootstrap-tree',
 		'jquery-bootstrap-wizard' : 'plugin/bootstrap-wizard',
 		'jquery-ui' : 'libs/jquery-ui-1.10.3.min',
 		'jquery' : 'libs/jquery-1.11.0.min',
 		'mustache' : 'libs/mustache.min',
 		'underscore' : 'libs/underscore-1.5.2',
-		'backbone' : 'libs/backbone-1.1.0',		
+		'backbone' : 'libs/backbone-1.1.0',
+		'moment' : 'libs/moment',
 		'smartwidgets' : 'smartwidgets/jarvis.widget',
 		'notification' : 'notification/SmartNotification.min',
 		'jquery-ui-easy-pie-chart' : 'plugin/easy-pie-chart/jquery.easy-pie-chart.min',
@@ -26,8 +26,16 @@ require.config({
 		'bootstrap-slider' : 'plugin/bootstrap-slider/bootstrap-slider.min',
 		'jquery-msie-fix' : 'plugin/msie-fix/jquery.mb.browser.min',
 		'fastclick' : 'plugin/fastclick/fastclick',
-		'jquery-fullcalendar' : 'plugin/fullcalendar/jquery.fullcalendar.min'
-
+		'jquery-fullcalendar' : 'plugin/fullcalendar/jquery.fullcalendar.min',
+		'session' : 'session',
+		'complaint' : 'complaint',
+		'contact' : 'contact',
+		'delivery' : 'delivery',
+		'sale' : 'sale',
+		'store' : 'store',
+		'user' : 'user',
+		'product' : 'product',
+		'rest' : 'rest'
 	},
 	
 	shim: {
@@ -58,41 +66,36 @@ require.config({
 	}
 });
 
-require(['app', 'jquery-ui', 'mustache'],
-function(App, $, mustache) {
+require(['app', 'jquery-ui', 'mustache', 'rest'],
+function(App, $, Mustache, rest) {
 
 	var authData = {
 		"username" : "user1@gmail.com",
-		"password" : "rfaysdhaiufsiuf"
+		"sessionId" : "vugg6ghant1gm4vfjlbhe5das1",
+		"filters" : {}
 	};
 
-	$.ajax({
-		url: 'http://127.0.0.1:8080/telephony-ws/rest/session/initialize',
-		type: 'POST',
-		headers : {
-			'Content-type' : 'application/json'
-			//'Content-type' : 'text/plain; charset=UTF-8'
+	Telephony.Rest.Deliveries.Fetch(
+		authData,
+		function(jqXHR, status) {
+
+			var resp = jqXHR.responseJSON;
+
+			var params = {
+				deliveries : resp.deliveries,
+				listlabel : 'Dostawy'
+			};
+
+			var template = $('#deliveries-list-template').html();
+
+			var rendered = Mustache.render(template, params);
+
+			$('#content').html(rendered);
+
 		},
-		dataType : 'json',
-		data : JSON.stringify(authData),
-		complete : function(jqXHR, status) {
-			alert(status)
+		function() {
+
 		}
-	});
+	);
 
-
-	if ($.fn.datepicker) {
-		$('#asdasd').each(function() {
-
-			var $this = $(this);
-			var dataDateFormat = $this.attr('data-dateformat') || 'dd.mm.yy';
-
-			$this.datepicker({
-				dateFormat : dataDateFormat,
-				prevText : '<i class="fa fa-chevron-left"></i>',
-				nextText : '<i class="fa fa-chevron-right"></i>'
-			});
-		});
-	}
-	
 });
