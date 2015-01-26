@@ -2,11 +2,8 @@ package telephony.core.query.filter;
 
 import java.util.Date;
 
-/**
- * asd.
- */
-public class SaleFilterCriteria extends
-		AbstractFilterCriteria<SaleFilterCriteria> {
+public class SaleFilterCriteria
+extends AbstractFilterCriteria<SaleFilterCriteria> {
 
 	private Date saleDateStart;
 	private Date saleDateEnd;
@@ -21,6 +18,9 @@ public class SaleFilterCriteria extends
 
 	private Integer minNumberOfProducts;
 	private Integer maxNumberOfProducts;
+
+	private Long contactId;
+	private Long storeId;
 
 	public Long getSoldBy() {
 		return soldBy;
@@ -92,5 +92,21 @@ public class SaleFilterCriteria extends
 
 	public void setLabelLike(String labelLike) {
 		this.labelLike = labelLike;
+	}
+
+	public Long getContactId() {
+		return contactId;
+	}
+
+	public void setContactId(Long contactId) {
+		this.contactId = contactId;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 }

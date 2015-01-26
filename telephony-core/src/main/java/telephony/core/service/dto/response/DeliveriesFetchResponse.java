@@ -1,32 +1,41 @@
 package telephony.core.service.dto.response;
 
-import java.util.List;
+import telephony.core.service.dto.DeliverySearchDto;
 
-import telephony.core.service.dto.DeliveryDto;
+import java.util.List;
 
 public class DeliveriesFetchResponse extends BasicResponse {
 
-	private List<DeliveryDto> deliveries;
+	private List<DeliverySearchDto> deliveries;
+	private Long countTotal;
 
-	public List<DeliveryDto> getDeliveries() {
+	public List<DeliverySearchDto> getDeliveries() {
 		return deliveries;
 	}
 
-	public void setDeliveries(List<DeliveryDto> deliveries) {
+	public void setDeliveries(List<DeliverySearchDto> deliveries) {
 		this.deliveries = deliveries;
 	}
 	
-	public void addDelivery(DeliveryDto bean) {
+	public void addDelivery(DeliverySearchDto bean) {
 		
 		if (!this.deliveries.contains(bean)) {
 			this.deliveries.add(bean);
 		}
 	}
 	
-	public void removeDelivery(DeliveryDto bean) {
+	public void removeDelivery(DeliverySearchDto bean) {
 		
 		if (this.deliveries.contains(bean)) {
 			this.deliveries.remove(bean);
 		}
+	}
+
+	public Long getCountTotal() {
+		return countTotal;
+	}
+
+	public void setCountTotal(Long countTotal) {
+		this.countTotal = countTotal;
 	}
 }

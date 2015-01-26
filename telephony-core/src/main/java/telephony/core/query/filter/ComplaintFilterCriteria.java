@@ -1,5 +1,7 @@
 package telephony.core.query.filter;
 
+import telephony.core.entity.enumz.ComplaintStatus;
+
 import java.util.Date;
 
 public abstract class ComplaintFilterCriteria
@@ -7,6 +9,7 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 
 	private String title;
 	private String description;
+	private ComplaintStatus status;
 	
 	private Date reportedDateFrom;
 	private Date reportedDateTo;
@@ -69,5 +72,13 @@ extends AbstractFilterCriteria<ComplaintFilterCriteria> {
 
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+
+	public ComplaintStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ComplaintStatus status) {
+		this.status = status;
 	}
 }

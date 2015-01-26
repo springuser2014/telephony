@@ -1,15 +1,10 @@
 package telephony.core.query.filter;
 
-import telephony.core.entity.jpa.Store;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ad.
- */
-public class StoreFilterCriteria extends
-		AbstractFilterCriteria<StoreFilterCriteria> {
+public class StoreFilterCriteria
+extends AbstractFilterCriteria<StoreFilterCriteria> {
 
 	private List<Long> storeIds;
 	private String label;

@@ -83,12 +83,14 @@ implements DeliveryService {
 		sessionService.validate(request.getSessionDto());
 
         List<Delivery> res = deliveriesDao.find(request.getFilters());
-        List<DeliveryDto> coll = new ArrayList<DeliveryDto>();
+        List<DeliverySearchDto> coll = new ArrayList<>();
+		Long count = deliveriesDao.count(request.getFilters());
         
         for(Delivery d : res) {
-        	coll.add(deliveryConverter.toDeliveryDto(d));
+        	coll.add(deliveryConverter.toDeliverySearchDto(d));
         }
-        
+
+		resp.setCountTotal(count);
         resp.setDeliveries(coll);
 		resp.setMessage("operation peformed successfuly"); // TODO add localized msg
 		resp.setSuccess(true);

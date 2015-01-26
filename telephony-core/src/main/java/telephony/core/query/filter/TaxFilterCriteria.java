@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaxFilterCriteria extends AbstractFilterCriteria<TaxFilterCriteria> {
+public class TaxFilterCriteria
+extends AbstractFilterCriteria<TaxFilterCriteria> {
 
 	private List<Long> taxIds;
 	private Date taxDateStart;

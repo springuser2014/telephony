@@ -22,6 +22,9 @@ public class DeliveryFilterCriteria extends
 	private Integer minNumberOfProducts;
 	private Integer maxNumberOfProducts;
 
+	private Long storeId;
+	private Long contactId;
+
 	public Date getDeliveryDateStart() {
 		return deliveryDateStart;
 	}
@@ -94,4 +97,19 @@ public class DeliveryFilterCriteria extends
 		this.maxNumberOfProducts = maxNumberOfProducts;
 	}
 
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
+	}
+
+	public Long getContactId() {
+		return contactId;
+	}
+
+	public void setContactId(Long contactId) {
+		this.contactId = contactId;
+	}
 }

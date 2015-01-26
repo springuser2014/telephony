@@ -97,4 +97,18 @@ class DeliveryFilterCriteriaBuilderBase<GeneratorT extends DeliveryFilterCriteri
 
 		return (GeneratorT) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withContactId(Long value) {
+		instance.setContactId(value);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withStoreId(Long value) {
+		instance.setStoreId(value);
+
+		return (GeneratorT) this;
+	}
 }

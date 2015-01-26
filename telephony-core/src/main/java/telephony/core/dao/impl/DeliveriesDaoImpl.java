@@ -14,19 +14,12 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 
-/**
- * Deliveries management DAO.
- */
-public class DeliveriesDaoImpl 
+public class DeliveriesDaoImpl
 extends GenericDaoImpl<Delivery> 
 implements DeliveriesDao {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    final Logger logger = LoggerFactory.getLogger(getClass());
 
-
-    /**
-     * basic constr.
-     */
     public DeliveriesDaoImpl() {
         super(Delivery.class);
     }
@@ -140,6 +133,14 @@ implements DeliveriesDao {
         if (filters.getDeliveryDateEnd() != null) {
         	sb.append(" and e.dateIn <= :deliveryDateEnd ");
         }
+
+        if (filters.getContactId() != null) {
+            sb.append(" and c.id = :contactId ");
+        }
+
+        if (filters.getStoreId() != null) {
+            sb.append(" and s.id = :storeId ");
+        }
         
         if (filters.getMinNumberOfProducts() != null ||  
     		filters.getMaxNumberOfProducts() != null ||  
@@ -212,12 +213,146 @@ implements DeliveriesDao {
         if (filters.getSumFrom() != null) {
         	query.setParameter("sumTo", filters.getSumTo());
         }
+
+        if (filters.getContactId() != null) {
+            query.setParameter("contactId", filters.getContactId());
+        }
+
+        if (filters.getStoreId() != null) {
+            query.setParameter("storeId", filters.getStoreId());
+        }
         
         List<Delivery> lst = query.getResultList();
 
         logger.debug("found {} elements", lst.size());
 
         return lst;
+    }
+
+    @Override
+    public Long count(DeliveryFilterCriteria filters) {
+        logger.debug("findAll starts ");
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("select count(DISTINCT e.id) from Delivery e ");
+        sb.append("inner join e.products p ");
+        sb.append("inner join e.store s ");
+        sb.append("inner join e.contact c ");
+        sb.append("inner join p.model m ");
+        sb.append("inner join m.producer pr ");
+        sb.append("where 1=1 ");
+
+        if (filters.getDeliveredBy() != null) {
+            sb.append(" and c.id = :deliveredBy ");
+        }
+
+        if (filters.getRegisteredBy() != null) {
+
+        }
+
+        if (filters.getLabel() != null) {
+            sb.append(" and e.label LIKE :label ");
+        }
+
+        if (filters.getDeliveryDateStart() != null) {
+            sb.append(" and e.dateIn >= :deliveryDateStart ");
+        }
+
+        if (filters.getDeliveryDateEnd() != null) {
+            sb.append(" and e.dateIn <= :deliveryDateEnd ");
+        }
+
+        if (filters.getContactId() != null) {
+            sb.append(" and c.id = :contactId ");
+        }
+
+        if (filters.getStoreId() != null) {
+            sb.append(" and s.id = :storeId ");
+        }
+
+        if (filters.getMinNumberOfProducts() != null ||
+                filters.getMaxNumberOfProducts() != null ||
+                filters.getSumFrom() != null ||
+                filters.getSumTo() != null)
+        {
+            sb.append(" group by e.id ");
+            sb.append(" having 1=1 ");
+
+            if (filters.getMinNumberOfProducts() != null) {
+                sb.append(" and count(e.id) <= :max ");
+            }
+
+            if (filters.getMaxNumberOfProducts() != null) {
+                sb.append(" and count(e.id) >= :min ");
+            }
+
+            if (filters.getSumTo() != null) {
+                sb.append(" and sum(p.priceIn) <= :sumTo ");
+            }
+
+            if (filters.getSumFrom() != null) {
+                sb.append(" and sum(p.priceIn) >= :sumFrom ");
+            }
+        }
+
+        String queryStr = sb.toString();
+
+        Query query = getEntityManager()
+                .createQuery(queryStr);
+
+        if (filters.getDeliveryDateStart() != null) {
+            Timestamp deliveryDateStart = new Timestamp(filters.getDeliveryDateStart().getTime());
+            query.setParameter("deliveryDateStart", deliveryDateStart);
+        }
+
+        if (filters.getDeliveryDateEnd() != null) {
+            Timestamp deliveryDateEnd= new Timestamp(filters.getDeliveryDateEnd().getTime());
+            query.setParameter("deliveryDateEnd", deliveryDateEnd);
+        }
+
+        if (filters.getLabel() != null) {
+            query.setParameter("label", "%" +  filters.getLabel() + "%");
+        }
+
+        if (filters.getDeliveredBy() != null) {
+            query.setParameter("deliveredBy", filters.getDeliveredBy());
+        }
+
+        if (filters.getMinNumberOfProducts() != null) {
+            query.setParameter("min", new Long(filters.getMinNumberOfProducts()));
+        }
+
+        if (filters.getMaxNumberOfProducts() != null) {
+            query.setParameter("max", new Long(filters.getMaxNumberOfProducts()));
+        }
+
+        if (filters.getSumFrom() != null) {
+            query.setParameter("sumFrom", filters.getSumFrom());
+        }
+
+        if (filters.getSumFrom() != null) {
+            query.setParameter("sumTo", filters.getSumTo());
+        }
+
+        if (filters.getContactId() != null) {
+            query.setParameter("contactId", filters.getContactId());
+        }
+
+        if (filters.getStoreId() != null) {
+            query.setParameter("storeId", filters.getStoreId());
+        }
+
+
+        // TODO improve it later
+        List<Long> lst = (List<Long>) query.getResultList();
+        long count = 0;
+
+        for (Long l : lst) {
+            count += l;
+        }
+
+        return count;
     }
 
 }

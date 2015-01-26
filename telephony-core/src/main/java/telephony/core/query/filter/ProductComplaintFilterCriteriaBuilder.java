@@ -1,6 +1,8 @@
 package telephony.core.query.filter;
 
 
+import telephony.core.entity.enumz.ComplaintStatus;
+
 import java.util.Date;
 
 public class ProductComplaintFilterCriteriaBuilder extends
@@ -75,6 +77,13 @@ class ProductComplaintFilterCriteriaBuilderBase<GeneratorT extends ProductCompla
     @SuppressWarnings("unchecked")
     public GeneratorT withProductId(Long productId) {
         instance.addProductId(productId);
+
+        return (GeneratorT) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withStatus(ComplaintStatus status) {
+        instance.setStatus(status);
 
         return (GeneratorT) this;
     }

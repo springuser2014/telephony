@@ -83,8 +83,13 @@ Telephony.Rest.Url = {
 
 Telephony.Rest.Complaints = {
 
-    Comment : function(data, completeFunc, errorFunc) {
+    Comment : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.Comment,
             type: 'POST',
             headers : {
@@ -97,8 +102,13 @@ Telephony.Rest.Complaints = {
         });
     },
 
-    CommentAnonymous : function(data, completeFunc, errorFunc) {
+    CommentAnonymous : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.CommentAnonymous,
             type: 'POST',
             headers : {
@@ -111,8 +121,13 @@ Telephony.Rest.Complaints = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.Delete,
             type: 'POST',
             headers : {
@@ -125,8 +140,13 @@ Telephony.Rest.Complaints = {
         });
     },
 
-    MarkAsResolved : function(data, completeFunc, errorFunc) {
+    MarkAsResolved : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.MarkAsResolved,
             type: 'POST',
             headers : {
@@ -139,8 +159,13 @@ Telephony.Rest.Complaints = {
         });
     },
 
-    MarkAsAccepted : function(data, completeFunc, errorFunc) {
+    MarkAsAccepted : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.MarkAsAccepted,
             type: 'POST',
             headers : {
@@ -153,8 +178,13 @@ Telephony.Rest.Complaints = {
         });
     },
 
-    MarkAsInProgress : function(data, completeFunc, errorFunc) {
+    MarkAsInProgress : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.MarkAsInProgress,
             type: 'POST',
             headers : {
@@ -167,8 +197,13 @@ Telephony.Rest.Complaints = {
         });
     },
 
-    MarkAsRejected : function(data, completeFunc, errorFunc) {
+    MarkAsRejected : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Complaints.MarkAsRejected,
             type: 'POST',
             headers : {
@@ -183,8 +218,13 @@ Telephony.Rest.Complaints = {
 };
 
 Telephony.Rest.SaleComplaints = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.SaleComplaints.Fetch,
             type: 'POST',
             headers : {
@@ -197,8 +237,13 @@ Telephony.Rest.SaleComplaints = {
         });
     },
 
-    Details : function(data, completeFunc, errorFunc) {
+    Details : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.SaleComplaints.Details,
             type: 'POST',
             headers : {
@@ -211,8 +256,13 @@ Telephony.Rest.SaleComplaints = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.SaleComplaints.Edit,
             type: 'PUT',
             headers : {
@@ -225,8 +275,13 @@ Telephony.Rest.SaleComplaints = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.SaleComplaints.Add,
             type: 'POST',
             headers : {
@@ -241,8 +296,13 @@ Telephony.Rest.SaleComplaints = {
 };
 
 Telephony.Rest.ProductComplaints = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.ProductComplaints.Fetch,
             type: 'POST',
             headers : {
@@ -255,8 +315,13 @@ Telephony.Rest.ProductComplaints = {
         });
     },
 
-    Details : function(data, completeFunc, errorFunc) {
+    Details : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.ProductComplaints.Details,
             type: 'POST',
             headers : {
@@ -269,8 +334,13 @@ Telephony.Rest.ProductComplaints = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.ProductComplaints.Edit,
             type: 'PUT',
             headers : {
@@ -283,8 +353,13 @@ Telephony.Rest.ProductComplaints = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.ProductComplaints.Add,
             type: 'POST',
             headers : {
@@ -299,8 +374,13 @@ Telephony.Rest.ProductComplaints = {
 };
 
 Telephony.Rest.Sales = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Sales.Fetch,
             type: 'POST',
             headers : {
@@ -313,8 +393,13 @@ Telephony.Rest.Sales = {
         });
     },
 
-    Details : function(data, completeFunc, errorFunc) {
+    Details : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Sales.Details,
             type: 'POST',
             headers : {
@@ -327,8 +412,13 @@ Telephony.Rest.Sales = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Sales.Edit,
             type: 'PUT',
             headers : {
@@ -341,8 +431,13 @@ Telephony.Rest.Sales = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Sales.Delete,
             type: 'DELETE',
             headers : {
@@ -355,8 +450,13 @@ Telephony.Rest.Sales = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Sales.Add,
             type: 'POST',
             headers : {
@@ -371,8 +471,13 @@ Telephony.Rest.Sales = {
 };
 
 Telephony.Rest.Deliveries = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Deliveries.Fetch,
             type: 'POST',
             headers : {
@@ -385,8 +490,13 @@ Telephony.Rest.Deliveries = {
         });
     },
 
-    Details : function(data, completeFunc, errorFunc) {
+    Details : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Deliveries.Details,
             type: 'POST',
             headers : {
@@ -399,8 +509,13 @@ Telephony.Rest.Deliveries = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Deliveries.Edit,
             type: 'PUT',
             headers : {
@@ -413,8 +528,13 @@ Telephony.Rest.Deliveries = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Deliveries.Delete,
             type: 'DELETE',
             headers : {
@@ -427,8 +547,13 @@ Telephony.Rest.Deliveries = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Deliveries.Add,
             type: 'POST',
             headers : {
@@ -443,8 +568,13 @@ Telephony.Rest.Deliveries = {
 };
 
 Telephony.Rest.Contacts = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Contacts.Fetch,
             type: 'POST',
             headers : {
@@ -457,8 +587,13 @@ Telephony.Rest.Contacts = {
         });
     },
 
-    Details : function(data, completeFunc, errorFunc) {
+    Details : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Contacts.Details,
             type: 'POST',
             headers : {
@@ -471,8 +606,13 @@ Telephony.Rest.Contacts = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Contacts.Edit,
             type: 'PUT',
             headers : {
@@ -485,8 +625,13 @@ Telephony.Rest.Contacts = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Contacts.Delete,
             type: 'DELETE',
             headers : {
@@ -499,8 +644,13 @@ Telephony.Rest.Contacts = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Contacts.Add,
             type: 'POST',
             headers : {
@@ -515,8 +665,13 @@ Telephony.Rest.Contacts = {
 };
 
 Telephony.Rest.Products = {
-    Fetch: function (data, completeFunc, errorFunc) {
+    Fetch: function (data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Products.Fetch,
             type: 'POST',
             headers: {
@@ -529,8 +684,13 @@ Telephony.Rest.Products = {
         });
     },
 
-    Details: function (data, completeFunc, errorFunc) {
+    Details: function (data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Products.Details,
             type: 'POST',
             headers: {
@@ -545,8 +705,13 @@ Telephony.Rest.Products = {
 };
 
 Telephony.Rest.Roles = {
-    Fetch: function (data, completeFunc, errorFunc) {
+    Fetch: function (data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Roles.Fetch,
             type: 'POST',
             headers: {
@@ -561,8 +726,14 @@ Telephony.Rest.Roles = {
 };
 
 Telephony.Rest.Stores = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async === "undefined") {
+            async = true;
+        }
+
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Stores.Fetch,
             type: 'POST',
             headers : {
@@ -575,8 +746,13 @@ Telephony.Rest.Stores = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Stores.Edit,
             type: 'PUT',
             headers : {
@@ -589,8 +765,13 @@ Telephony.Rest.Stores = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Stores.Delete,
             type: 'DELETE',
             headers : {
@@ -603,8 +784,13 @@ Telephony.Rest.Stores = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Stores.Add,
             type: 'POST',
             headers : {
@@ -619,8 +805,13 @@ Telephony.Rest.Stores = {
 };
 
 Telephony.Rest.Taxes = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Taxes.Fetch,
             type: 'POST',
             headers : {
@@ -633,8 +824,13 @@ Telephony.Rest.Taxes = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Taxes.Edit,
             type: 'PUT',
             headers : {
@@ -647,8 +843,13 @@ Telephony.Rest.Taxes = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Taxes.Delete,
             type: 'DELETE',
             headers : {
@@ -661,8 +862,13 @@ Telephony.Rest.Taxes = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Taxes.Add,
             type: 'POST',
             headers : {
@@ -677,8 +883,13 @@ Telephony.Rest.Taxes = {
 };
 
 Telephony.Rest.Users = {
-    Fetch : function(data, completeFunc, errorFunc) {
+    Fetch : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Users.Fetch,
             type: 'POST',
             headers : {
@@ -691,8 +902,13 @@ Telephony.Rest.Users = {
         });
     },
 
-    Edit : function(data, completeFunc, errorFunc) {
+    Edit : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Users.Edit,
             type: 'PUT',
             headers : {
@@ -705,8 +921,13 @@ Telephony.Rest.Users = {
         });
     },
 
-    Delete : function(data, completeFunc, errorFunc) {
+    Delete : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Users.Delete,
             type: 'DELETE',
             headers : {
@@ -719,8 +940,13 @@ Telephony.Rest.Users = {
         });
     },
 
-    Add : function(data, completeFunc, errorFunc) {
+    Add : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Users.Add,
             type: 'POST',
             headers : {
@@ -736,8 +962,13 @@ Telephony.Rest.Users = {
 
 Telephony.Rest.Session = {
 
-    Initialize : function(data, completeFunc, errorFunc) {
+    Initialize : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Session.Initialize,
             type: 'POST',
             headers : {
@@ -750,8 +981,13 @@ Telephony.Rest.Session = {
         });
     },
 
-    Refresh : function(data, completeFunc, errorFunc) {
+    Refresh : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Session.Refresh,
             type: 'POST',
             headers : {
@@ -764,8 +1000,13 @@ Telephony.Rest.Session = {
         });
     },
 
-    Validate : function(data, completeFunc, errorFunc) {
+    Validate : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Session.Validate,
             type: 'POST',
             headers : {
@@ -778,8 +1019,13 @@ Telephony.Rest.Session = {
         });
     },
 
-    Destroy : function(data, completeFunc, errorFunc) {
+    Destroy : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Session.Destroy,
             type: 'DELETE',
             headers : {
@@ -792,8 +1038,13 @@ Telephony.Rest.Session = {
         });
     },
 
-    Details : function(data, completeFunc, errorFunc) {
+    Details : function(data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
         $.ajax({
+            async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Session.Details,
             type: 'POST',
             headers : {

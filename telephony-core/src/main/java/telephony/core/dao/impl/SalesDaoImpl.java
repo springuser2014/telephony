@@ -192,6 +192,7 @@ implements SalesDao {
 		sbMainQuery.append("inner join s.products p ");
 		sbMainQuery.append("inner join p.model m ");
 		sbMainQuery.append("inner join s.contact c ");
+		sbMainQuery.append("inner join s.store st ");
 		sbMainQuery.append("inner join p.pricings pr ");
 		sbMainQuery.append("inner join p.productTaxes pt ");
 		sbMainQuery.append("inner join pt.tax t ");
@@ -223,6 +224,14 @@ implements SalesDao {
 
 		if (isNotNull(sumMinMaxIds)) {
 			sbMainQuery.append(" and s.id in (:sumMinMaxIds) ");
+		}
+
+		if (isNotNull(filters.getContactId())) {
+			sbMainQuery.append(" and c.id = :contactId ");
+		}
+
+		if (isNotNull(filters.getStoreId())) {
+			sbMainQuery.append(" and st.id = :storeId ");
 		}
 				
 		Query query = getEntityManager().createQuery(sbMainQuery.toString());
@@ -262,6 +271,15 @@ implements SalesDao {
 		if (isNotNull(sumMinMaxIds)) {
 			query.setParameter("sumMinMaxIds", sumMinMaxIds);
 		}
+
+		if (isNotNull(filters.getContactId())) {
+			query.setParameter("contactId", filters.getContactId());
+		}
+
+		if (isNotNull(filters.getStoreId())) {
+			query.setParameter("storeId", filters.getStoreId());
+		}
+
 
 		List<Sale> res = (List<Sale>) query.getResultList();
 		

@@ -40,7 +40,6 @@ public class DeliveryConverter {
     @Inject
     PricingsDao pricingsDao;
 
-
     public DeliveryDto toDeliveryDto(Delivery delivery) {
 
         DeliveryDto bean = new DeliveryDto();
@@ -353,7 +352,20 @@ public class DeliveryConverter {
                 }
             }
         }
+    }
 
+    public DeliverySearchDto toDeliverySearchDto(Delivery entity) {
+        DeliverySearchDto dto = new DeliverySearchDto();
 
+        dto.setId(entity.getId());
+        dto.setContactId(entity.getContact().getId());
+        dto.setContactLabel(entity.getContact().getLabel());
+        dto.setNumberOfProducts(new Long(entity.getProducts().size()));
+        dto.setLabel(entity.getLabel());
+        dto.setStoreId(entity.getStore().getId());
+        dto.setStoreLabel(entity.getStore().getLabel());
+        dto.setDateIn(entity.getDateIn());
+
+        return dto;
     }
 }

@@ -281,7 +281,8 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		DeliveriesFetchResponse lst = deliveryService.findDeliveries(req);
 		
 		// then
-		assertEquals(lst.getDeliveries().size(), 5);		
+		assertEquals(lst.getDeliveries().size(), 5);
+		assertEquals(5L, lst.getCountTotal().longValue());
 	}
 	
 	@Test

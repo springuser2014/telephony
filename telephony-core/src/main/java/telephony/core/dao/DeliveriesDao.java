@@ -37,4 +37,6 @@ public interface DeliveriesDao extends GenericDao<Delivery> {
 	Delivery findDetailsById(Long deliveryId);
 
 	List<Delivery> find(DeliveryFilterCriteria filters);
+
+    Long count(DeliveryFilterCriteria filters);
 }
