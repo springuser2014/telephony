@@ -3,9 +3,6 @@ package telephony.core.entity.jpa;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-/**
- * asd.
- */
 @Embeddable
 public class PhoneNumber {
 	
@@ -15,9 +12,6 @@ public class PhoneNumber {
 	@Column(name = "prefix", nullable = false, length = 10)
 	private String prefix;
 	
-	/**
-	 * ad.
-	 */
 	public PhoneNumber() {
 	
 	}
@@ -27,34 +21,18 @@ public class PhoneNumber {
 		this.content = content;
 	}
 
-	/**
-	 * ad.
-	 * @return a.
-	 */
 	public String getContent() {
 		return content;
 	}
 
-	/**
-	 * ad.
-	 * @param content a.
-	 */
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public String getPrefix() {
 		return prefix;
 	}
 
-	/**
-	 * asd.
-	 * @param prefix a.
-	 */
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
 	}

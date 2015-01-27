@@ -1,7 +1,5 @@
 package telephony.core.service.dto;
 
-import telephony.core.service.DetailedComplaintDto;
-
 public class ProductDetailedComplaintDto extends DetailedComplaintDto {
     private ProductAddDto product;
 

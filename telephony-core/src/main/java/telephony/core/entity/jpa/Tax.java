@@ -17,9 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "taxes")
 public class Tax extends BaseEntity {
@@ -52,68 +49,36 @@ public class Tax extends BaseEntity {
     @OneToMany(mappedBy = "tax", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE } )
     private Collection<ProductTax> productTaxes;
 
-    /**
-     * as.
-     * @return as.
-     */
 	@Override
 	public Long getId() {
 		return this.id;
 	}
 
-	/**
-	 * asd.
-	 * @param id a.
-	 */
 	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Date getFrom() {
 		return from;
 	}
 
-	/**
-	 * asd.
-	 * @param from a.
-	 */
 	public void setFrom(Date from) {
 		this.from = from;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Date getTo() {
 		return to;
 	}
 
-	/**
-	 * asd.
-	 * @param to a.
-	 */
 	public void setTo(Date to) {
 		this.to = to;
 	}
 
-	/**
-	 * ad.
-	 * @return a.
-	 */
 	public Double getRate() {
 		return rate;
 	}
 
-	/**
-	 * q.
-	 * @param rate a.
-	 */
 	public void setRate(Double rate) {
 		this.rate = rate;
 	}

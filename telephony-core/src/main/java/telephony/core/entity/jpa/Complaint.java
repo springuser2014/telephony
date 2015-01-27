@@ -23,9 +23,6 @@ import javax.persistence.TemporalType;
 
 import telephony.core.entity.enumz.ComplaintStatus;
 
-/**
- * asd.
- */
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "complaint_type")
@@ -58,19 +55,10 @@ public abstract class Complaint extends BaseEntity {
 	@OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
 	private Set<ComplaintComment> comments;
 
-
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Set<ComplaintComment> getComments() {
 		return comments;
 	}
 
-	/**
-	 * asd.
-	 * @param comments a.
-	 */
 	public void setComments(Set<ComplaintComment> comments) {
 		this.comments = comments;
 	}
@@ -85,90 +73,46 @@ public abstract class Complaint extends BaseEntity {
 		this.id = id;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * asd.
-	 * @param description asd.
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Date getReportedDate() {
 		return reportedDate;
 	}
 
-	/**
-	 * asd.
-	 * @param reportedDate a.
-	 */
 	public void setReportedDate(Date reportedDate) {
 		this.reportedDate = reportedDate;
 	}
 
-	/**
-	 * as.
-	 * @return a.
-	 */
 	public ComplaintStatus getStatus() {
 		return status;
 	}
 
-	/**
-	 * ad.
-	 * @param status a.
-	 */
 	public void setStatus(ComplaintStatus status) {
 		this.status = status;
 	}
 
-	/**
-	 * a.
-	 * @return a.
-	 */
 	public String getTitle() {
 		return title;
 	}
 
-	/**
-	 * a.
-	 * @param title a.
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public String getUniqueHash() {
 		return uniqueHash;
 	}
 
-	/**
-	 * asd.
-	 * @param uniqueHash a.
-	 */
 	public void setUniqueHash(String uniqueHash) {
 		this.uniqueHash = uniqueHash;
 	}
 
-	/**
-	 * asd.
-	 * @param comment a.
-	 */
 	public void addComment(ComplaintComment comment) {
 		
 		if (comments.contains(comment)) {

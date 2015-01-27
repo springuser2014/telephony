@@ -18,9 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -64,122 +61,60 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    /**
-     * asd.
-     */
-    public User() {
+    public User() { }
 
-    }
-
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getSessionId() {
         return sessionId;
     }
 
-    /**
-     * asd.
-     * @return a.
-     */
     public Boolean getIsActive() {
 		return isActive;
 	}
 
-    /**
-	 * asd.
-     * @param isActive fo.
-     */
-	public void setIsActive(Boolean isActive) {
+    public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
 
-	/**
-     * asd.
-     * @param sessionId asd.
-     */
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Date getSessionValidity() {
         return sessionValidity;
     }
 
-    /**
-     * asd.
-     * @param sessionValidity asd.
-     */
     public void setSessionValidity(Date sessionValidity) {
         this.sessionValidity = sessionValidity;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getEmail() {
         return email;
     }
 
-
-    /**
-     * asd.
-     * @param email asd.
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * asd.
-     * @param password asd.
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Set<Store> getAllowedShops() {
         return allowedShops;
     }
 
-    /**
-     * asd.
-     * @param allowedShops asd.
-     */
     public void setAllowedShops(Set<Store> allowedShops) {
         this.allowedShops = allowedShops;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Collection<Role> getRoles() {
         return roles;
     }
 
-    /**
-     * asd.
-     * @param roles asd.
-     */
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }

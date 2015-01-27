@@ -1,4 +1,4 @@
-package telephony.core.service;
+package telephony.core.service.dto;
 
 import telephony.core.service.dto.ComplaintCommentDto;
 import telephony.core.service.dto.ComplaintEditDto;

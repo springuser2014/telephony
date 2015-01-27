@@ -19,9 +19,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "sales")
 public class Sale extends BaseEntity {
@@ -59,50 +56,27 @@ public class Sale extends BaseEntity {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
-    /**
-     * asd.
-     */
     public Sale() {
         products = new HashSet<Product>();
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Contact getContact() {
         return contact;
     }
 
-    /**
-     * asd.
-     * @param contact asd.
-     */
     public void setContact(Contact contact) {
         this.contact = contact;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getLabel() {
         return label;
     }
 
-    /**
-     * asd.
-     * @param label asd.
-     */
     public void setLabel(String label) {
         this.label = label;
     }
     
-    /**
-     * asd.
-     * @param product asd.
-     */
-	public void addProduct(Product product) {
+    public void addProduct(Product product) {
 		
 		if (products.contains(product)) {
 			return;
@@ -112,10 +86,6 @@ public class Sale extends BaseEntity {
 		product.setSale(this);		
 	}
 	
-	/**
-	 * asd.
-	 * @param product asd.
-	 */
 	public void removeProduct(Product product) {
 		
 		if (!products.contains(product)) {
@@ -126,50 +96,26 @@ public class Sale extends BaseEntity {
 		product.setSale(null);
 	}
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Set<Product> getProducts() {
         return products;
     }
 
-    /**
-     * asd.
-     * @param products asd.
-     */
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Date getDateOut() {
         return dateOut;
     }
 
-    /**
-     * asd.
-     * @param dateOut asd.
-     */
     public void setDateOut(Date dateOut) {
         this.dateOut = dateOut;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Store getStore() {
         return store;
     }
 
-    /**
-     * asd.
-     * @param store asd.
-     */
     public void setStore(Store store) {
         this.store = store;
     }

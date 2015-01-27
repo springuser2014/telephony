@@ -1,17 +1,21 @@
 package telephony.core.query.filter;
 
-/**
- * asd.
- */
-public class ContactFilterCriteria
-		extends AbstractFilterCriteria<ContactFilterCriteria> {
+import java.util.ArrayList;
+import java.util.List;
 
-	private Long id;
+public class ContactFilterCriteria
+extends AbstractFilterCriteria<ContactFilterCriteria> {
+
+	private List<Long> ids;
 	private String label;
 	private String details;
 	private String phonenumber;
 	private String email;
 	private String fax;
+
+	public ContactFilterCriteria() {
+		ids = new ArrayList<>();
+	}
 
 	public String getLabel() {
 		return label;
@@ -53,11 +57,25 @@ public class ContactFilterCriteria
 		this.fax = fax;
 	}
 
-	public Long getId() {
-		return id;
+	public List<Long> getId() {
+		return ids;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(List<Long> ids) {
+		this.ids = ids;
+	}
+
+	public void addId(Long id) {
+
+		if (!ids.contains(id)) {
+			ids.add(id);
+		}
+	}
+
+	public void removeId(Long id) {
+
+		if (ids.contains(id)) {
+			ids.remove(id);
+		}
 	}
 }

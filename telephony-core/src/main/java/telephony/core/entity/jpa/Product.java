@@ -16,9 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
@@ -65,40 +62,21 @@ public class Product extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)    
     private Collection<Pricing> pricings;
     
-    /**
-     * asd.
-     */
     public Product() {
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getImei() {
         return imei;
     }
 
-    /**
-     * asd.
-     * @param imei asd.
-     */
     public void setImei(String imei) {
         this.imei = imei;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public final Store getStore() {
         return store;
     }
 
-    /**
-     * asd.
-     * @param pmStore asd.
-     */
     public void setStore(Store pmStore) {
     	
     	if (sameAsFormer(pmStore)) {
@@ -123,18 +101,10 @@ public class Product extends BaseEntity {
     					this.store.equals(store);
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Delivery getDelivery() {
         return delivery;
     }
 
-    /**
-     * asd.
-     * @param delivery asd
-     */
     public void setDelivery(Delivery delivery) {
         
         if (sameAsFormer(delivery)) {
@@ -159,18 +129,10 @@ public class Product extends BaseEntity {
     					this.delivery.equals(delivery);
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public Sale getSale() {
         return sale;
     }
 
-    /**
-     * asd.
-     * @param sale asd.
-     */
     public void setSale(Sale sale) {
         
     	if (sameAsFormer(sale)) {
@@ -195,35 +157,18 @@ public class Product extends BaseEntity {
 						this.sale.equals(sale);
 	}
 
-	
-    /**
-     * asd.
-     * @return asd.
-     */
-    public Model getModel() {
+	public Model getModel() {
         return model;
     }
 
-    /**
-     * asd.
-     * @param model asd.
-     */
     public void setModel(Model model) {
         this.model = model;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getColor() {
         return color;
     }
 
-    /**
-     * asd.
-     * @param color asd.
-     */
     public void setColor(String color) {
         this.color = color;
     }
@@ -302,34 +247,18 @@ public class Product extends BaseEntity {
 		}
 	}
 
-    /**
-     * asd.
-     * @return asd.
-     */
-	public Collection<ProductTax> getProductTaxes() {
+    public Collection<ProductTax> getProductTaxes() {
 		return productTaxes;
 	}
 
-	/**
-	 * asd.
-	 * @param taxes a.
-	 */
 	public void setProductTaxes(Collection<ProductTax> taxes) {
 		this.productTaxes = taxes;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Collection<Pricing> getPricings() {
 		return pricings;
 	}
 
-	/**
-	 * ads.
-	 * @param pricings a.
-	 */
 	public void setPricings(Collection<Pricing> pricings) {
 		this.pricings = pricings;
 	}
@@ -348,18 +277,10 @@ public class Product extends BaseEntity {
 		}
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Double getPriceIn() {
 		return priceIn;
 	}
 
-	/**
-	 * ads.
-	 * @param priceIn a.
-	 */
 	public void setPriceIn(Double priceIn) {
 		this.priceIn = priceIn;
 	}

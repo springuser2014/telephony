@@ -16,9 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "roles")
 public class Role extends BaseEntity {
@@ -44,68 +41,35 @@ public class Role extends BaseEntity {
     			mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
     
-    /**
-     * asd.
-     * @return asd.
-     */
     public Set<User> getUsers() {
 		return users;
 	}
 
-    /**
-     * asd.
-     * @param users asd.
-     */
-	public void setUsers(Set<User> users) {
+    public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
 
-	
-    /**
-     * asd.
-     * @param user asd.
-     */
+	// TODO implement
     public void addUser(User user) {
     	
     }
 
-    /**
-     * asd.
-     * @param user asd.
-     */
+    // TODO implemnet
 	public void removeUser(User user) {
 		
 	}
 
-    /**
-     * asd.
-     */
-    public Role() {
+    public Role() { }
 
-    }
-
-    /**
-     * asd.
-     * @return asd.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * asd.
-     * @param name asd.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * asd.
-     * @param o asd.
-     * @return asd.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -127,10 +91,6 @@ public class Role extends BaseEntity {
         return true;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     @Override
     public int hashCode() {
         int result = super.hashCode();
@@ -138,19 +98,11 @@ public class Role extends BaseEntity {
         return result;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     @Override
     public Long getId() {
         return this.id;
     }
 
-    /**
-     * asd.
-     * @param id asd.
-     */
     @Override
     public void setId(Long id) {
         this.id = id;

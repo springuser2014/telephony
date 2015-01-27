@@ -14,9 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "complaint_comments")
 public class ComplaintComment extends BaseEntity {
@@ -56,18 +53,10 @@ public class ComplaintComment extends BaseEntity {
 		this.id = id;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Complaint getComplaint() {
 		return complaint;
 	}
 	
-	/**
-	 * asd.
-	 * @param complaint a.
-	 */
 	public void setComplaint(Complaint complaint) {
 
 		if (sameAsFormter(complaint)) {
@@ -92,50 +81,26 @@ public class ComplaintComment extends BaseEntity {
 					this.complaint.equals(complaint);
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public String getAuthor() {
 		return author;
 	}
 
-	/**
-	 * asd.
-	 * @param author a.
-	 */
 	public void setAuthor(String author) {
 		this.author = author;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public String getContent() {
 		return content;
 	}
 
-	/**
-	 * asd.
-	 * @param content a.
-	 */
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	public Date getReportedDate() {
 		return reportedDate;
 	}
 
-	/**
-	 * asd.
-	 * @param reportedDate a.
-	 */
 	public void setReportedDate(Date reportedDate) {
 		this.reportedDate = reportedDate;
 	}	

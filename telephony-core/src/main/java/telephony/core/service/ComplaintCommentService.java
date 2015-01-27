@@ -10,7 +10,8 @@ import telephony.core.service.exception.SessionServiceException;
 
 public interface ComplaintCommentService extends BasicService<ComplaintComment>  {
 
-	ComplaintCommentResponse comment(ComplaintCommentRequest request) throws SessionServiceException;
+	ComplaintCommentResponse comment(ComplaintCommentRequest request)
+			throws SessionServiceException;
 
 	AnonymousComplaintCommentResponse comment(AnonymousComplaintCommentRequest request);
 }

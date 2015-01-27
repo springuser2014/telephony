@@ -2,9 +2,6 @@ package telephony.core.entity.jpa;
 
 import javax.persistence.*;
 
-/**
- * asd.
- */
 @Entity
 @DiscriminatorValue("S")
 public class SaleComplaint extends Complaint {

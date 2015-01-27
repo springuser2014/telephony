@@ -14,9 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "models")
 public class Model extends BaseEntity {
@@ -54,34 +51,18 @@ public class Model extends BaseEntity {
 		this.id = id;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
 	public String getLabel() {
 		return label;
 	}
 
-	/**
-	 * asd.
-	 * @param label asd.
-	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
-	/**
-	 * asd.
-	 * @return asd.
-	 */
 	public Producer getProducer() {
 		return producer;
 	}
 
-	/**
-	 * asd.
-	 * @param producer asd.
- 	 */
 	public void setProducer(Producer producer) {
 		this.producer = producer;
 	}

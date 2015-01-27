@@ -20,5 +20,4 @@ public interface ProductComplaintService extends ComplaintService
         ReportProductComplaintResponse, ReportProductComplaintRequest, ProductComplaintDto,
         ProductComplaintEditResponse, ProductComplaintEditRequest, ProductComplaintEditDto,
         ProductComplaintFetchResponse, ProductComplaintFetchRequest, ProductComplaintFilterCriteria> {
-
 }

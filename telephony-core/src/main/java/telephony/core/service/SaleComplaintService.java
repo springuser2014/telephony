@@ -14,9 +14,6 @@ import telephony.core.service.dto.response.SaleComplaintDetailsFetchResponse;
 import telephony.core.service.dto.response.SaleComplaintEditResponse;
 import telephony.core.service.dto.response.SaleComplaintFetchResponse;
 
-/**
- * asd.
- */
 public interface SaleComplaintService extends ComplaintService
         <SaleComplaint,
          SaleComplaintDetailsFetchResponse, SaleComplaintDetailsFetchRequest, SaleDetailedComplaintDto,

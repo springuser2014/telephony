@@ -15,9 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "stores")
 public class Store extends BaseEntity {

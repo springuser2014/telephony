@@ -9,30 +9,14 @@ import telephony.core.service.dto.response.ModelEditResponse;
 import telephony.core.service.dto.response.ModelFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 
-/**
- * asd.
- */
 public interface ModelService extends BasicService<Model> {
 	
+	ModelFetchResponse fetch(ModelFetchRequest request)
+			throws SessionServiceException;
 
-	/**
-	 * asd.
-	 * @param request a.
-	 * @return a.
-	 */
-	ModelFetchResponse fetch(ModelFetchRequest request) throws SessionServiceException;
+	ModelEditResponse edit(ModelEditRequest request)
+			throws SessionServiceException;
 
-	/**
-	 * asd.
-	 * @param request a.
-	 * @return a.
-	 */
-	ModelEditResponse edit(ModelEditRequest request) throws SessionServiceException;
-
-	/**
-	 * asd.
-	 * @param request a.
-	 * @return a.
-	 */
-	ModelDeleteResponse delete(ModelDeleteRequest request) throws SessionServiceException;
+	ModelDeleteResponse delete(ModelDeleteRequest request)
+			throws SessionServiceException;
 }

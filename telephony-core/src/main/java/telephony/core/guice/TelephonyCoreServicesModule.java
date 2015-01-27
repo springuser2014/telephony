@@ -32,39 +32,9 @@ import telephony.core.dao.impl.SalesDaoImpl;
 import telephony.core.dao.impl.StoresDaoImpl;
 import telephony.core.dao.impl.TaxDaoImpl;
 import telephony.core.dao.impl.UsersDaoImpl;
-import telephony.core.service.ComplaintCommentService;
-import telephony.core.service.ContactService;
-import telephony.core.service.DeliveryService;
-import telephony.core.service.InformationService;
-import telephony.core.service.ModelService;
-import telephony.core.service.PricingService;
-import telephony.core.service.ProducerService;
-import telephony.core.service.ProductComplaintService;
-import telephony.core.service.ProductService;
-import telephony.core.service.RoleService;
-import telephony.core.service.SaleComplaintService;
-import telephony.core.service.SaleService;
-import telephony.core.service.SessionService;
-import telephony.core.service.StoreService;
-import telephony.core.service.TaxService;
-import telephony.core.service.UserService;
+import telephony.core.service.*;
 import telephony.core.service.converter.*;
-import telephony.core.service.impl.ComplaintCommentServiceImpl;
-import telephony.core.service.impl.ContactServiceImpl;
-import telephony.core.service.impl.DeliveryServiceImpl;
-import telephony.core.service.impl.InformationServiceImpl;
-import telephony.core.service.impl.ModelServiceImpl;
-import telephony.core.service.impl.PricingServiceImpl;
-import telephony.core.service.impl.ProducerServiceImpl;
-import telephony.core.service.impl.ProductComplaintServiceImpl;
-import telephony.core.service.impl.ProductServiceImpl;
-import telephony.core.service.impl.RoleServiceImpl;
-import telephony.core.service.impl.SaleComplaintServiceImpl;
-import telephony.core.service.impl.SaleServiceImpl;
-import telephony.core.service.impl.SessionServiceImpl;
-import telephony.core.service.impl.StoreServiceImpl;
-import telephony.core.service.impl.TaxServiceImpl;
-import telephony.core.service.impl.UserServiceImpl;
+import telephony.core.service.impl.*;
 import telephony.core.util.StringGenerator;
 import telephony.core.util.StringGeneratorImpl;
 
@@ -75,9 +45,6 @@ import com.google.inject.AbstractModule;
  */
 public class TelephonyCoreServicesModule extends AbstractModule {
 
-    /**
-     *
-     */
     @Override
     protected final void configure() {
 
@@ -118,6 +85,8 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(ProductComplaintService.class).to(ProductComplaintServiceImpl.class);
         bind(PricingService.class).to(PricingServiceImpl.class);
         bind(ComplaintCommentService.class).to(ComplaintCommentServiceImpl.class);
+
+        bind(PermissionChecker.class).to(PermissionCheckerImpl.class);
 
         // binding entity to dto converters
 

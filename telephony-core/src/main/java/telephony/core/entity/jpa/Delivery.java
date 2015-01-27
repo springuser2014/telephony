@@ -20,9 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * Represents Delivery domain object.
- */
 @Entity
 @Table(name = "deliveries")
 public class Delivery extends BaseEntity {
@@ -56,26 +53,14 @@ public class Delivery extends BaseEntity {
     @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Product> products = new HashSet<Product>();
 
-    /**
-     * Gets delivery's label.
-     * @return the label.
-     */
     public final String getLabel() {
         return label;
     }
 
-    /**
-     * Sets delivery's label.
-     * @param label of delivery.
-     */
     public final void setLabel(String label) {
         this.label = label;
     }
-    
-    /**
-     * Adds product to delivery.
-     * @param product to be added
-     */
+
     public void addProduct(Product product) {
     	
     	if (products.contains(product)) {
@@ -86,10 +71,6 @@ public class Delivery extends BaseEntity {
     	product.setDelivery(this);
     }
     
-    /**
-     * Removes product from delivery.
-     * @param product sad.
-     */
     public void removeProduct(Product product) {
     	
     	if (!products.contains(product)) {
@@ -100,57 +81,30 @@ public class Delivery extends BaseEntity {
     	product.setDelivery(null);
     }
 
-    /**
-     * Gets delivery's products.
-     * @return collection of the products.
-     */
     public final Collection<Product> getProducts() {
         return products;
     }
 
-    /**
-     * Set delivery's products.
-     * @param products of delivery.
-     */
     public final void setProducts(Collection<Product> products) {
         this.products = products;
     }
 
-    /**
-     * Initialize.
-     */
     public Delivery() {
         products = new HashSet<Product>();
     }
 
-    /**
-     * Gets delivery's date of arrival.
-     * @return the arrival date.
-     */
     public final Date getDateIn() {
         return dateIn;
     }
 
-    /**
-     * Sets delivery's date of arrival.
-     * @param dateIn arrival date.
-     */
     public final void setDateIn(Date dateIn) {
         this.dateIn = dateIn;
     }
 
-    /**
-     * Gets delivery's arrival store.
-     * @return the store.
-     */
     public final Store getStore() {
         return store;
     }
 
-    /**
-     * Set delivery's arrival store.
-     * @param store of delivery.
-     */
     public final void setStore(Store store) {
     	
     	if (sameAsFormer(store)) {
@@ -175,12 +129,6 @@ public class Delivery extends BaseEntity {
     					this.store.equals(store);
     }
 
-    /**
-     * Compares object with another one.
-     * The comparison bases on entity's properties.
-     * @param obj to compare with
-     * @return result of the comparison
-     */
     @Override
     public final boolean equals(Object obj) {
         if (this == obj) {
@@ -219,9 +167,6 @@ public class Delivery extends BaseEntity {
         return true;
     }
 
-   /**
-    * {@inheritDoc}
-    */
     @Override
     public final int hashCode() {
         int result = super.hashCode();
@@ -233,34 +178,20 @@ public class Delivery extends BaseEntity {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Long getId() {
         return this.id;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public final Contact getContact() {
         return contact;
     }
 
-    /**
-     * asd.
-     * @param contact asd.
-     */
     public final void setContact(Contact contact) {
     	
     	if (sameAsFormer(contact)) {

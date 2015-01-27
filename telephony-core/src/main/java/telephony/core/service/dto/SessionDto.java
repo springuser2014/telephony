@@ -1,39 +1,21 @@
 package telephony.core.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
-/**
- * asd.
- */
 public class SessionDto {
 
     private String username;
     private String sessionId;
     private Date validity;
 
-    /**
-     * asd.
-     */
     public SessionDto() {
 
     }
     
-    /**
-     * asd.
-     * @return a.
-     */
     public static SessionDto create() {
     	return new SessionDto();
     }
     
-    /**
-     * a.
-     * @param username d.
-     * @param sessionId d.
-     * @return s.
-     */
     public static SessionDto create(String username, String sessionId) {
     	SessionDto sess = new SessionDto();
     	sess.setSessionId(sessionId);
@@ -43,12 +25,6 @@ public class SessionDto {
     	return sess;
     }
 
-    /**
-     * a.
-     * @param username d.
-     * @param sessionId d.
-     * @return s.
-     */
     public static SessionDto create(String username, String sessionId, Date validity) {
         SessionDto sess = new SessionDto();
         sess.setSessionId(sessionId);
@@ -58,76 +34,37 @@ public class SessionDto {
         return sess;
     }
 
-    /**
-     * asd.
-     * @param username asd.
-     * @param sessionId asd.
-     * @param validity asd.
-     */
     public SessionDto(final String username, final String sessionId, final Date validity) {
         this.username = username;
         this.sessionId = sessionId;
         this.validity = validity;
     }
 
-
-	/**
-     * asd.
-     * @return asd.
-     */
     public final String getUsername() {
         return username;
     }
 
-    /**
-     * asd.
-     * @param username asd.
-     * @return asd.
-     */
     public final void setUsername(final String username) {
         this.username = username;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     public final String getSessionId() {
         return sessionId;
     }
 
-    /**
-     * asd.
-     * @param sessionId asd.
-     * @return asd.
-     */
     public final void setSessionId(final String sessionId) {
         this.sessionId = sessionId;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
-	public Date getValidity() {
+    public Date getValidity() {
 		return validity;
 	}
 
-	/**
-	 * asd.
-	 * @param validity asd.
-	 * @return asd.
-	 */
 	public SessionDto setValidity(Date validity) {
 		this.validity = validity;
 		return this;
 	}
 
-    /**
-     * asd.
-     * @param o asd.
-     * @return asd.
-     */
     @Override
     public final boolean equals(final Object o) {
         if (this == o) {
@@ -153,10 +90,6 @@ public class SessionDto {
         return true;
     }
 
-    /**
-     * asd.
-     * @return asd.
-     */
     @Override
     public final int hashCode() {
         int result = username.hashCode();

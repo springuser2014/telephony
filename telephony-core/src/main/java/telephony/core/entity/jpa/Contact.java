@@ -4,9 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
-/**
- * asd.
- */
 @Entity
 @Table(name = "contacts")
 public class Contact extends BaseEntity {
@@ -66,8 +63,7 @@ public class Contact extends BaseEntity {
     )
     @ElementCollection
     private Collection<Email> emails;
-    
-    
+
     @CollectionTable(
     		name = "phonenumbers",
     		joinColumns = @JoinColumn(name = "contact_id")

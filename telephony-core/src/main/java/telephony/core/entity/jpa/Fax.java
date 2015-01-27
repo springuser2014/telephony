@@ -9,9 +9,7 @@ public class Fax {
     @Column(name = "content", nullable = false, length = 100)
     private String content;
 
-    public Fax() {
-
-    }
+    public Fax() { }
 
     public Fax(String content) {
         this.content = content;

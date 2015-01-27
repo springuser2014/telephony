@@ -14,10 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
-/**
- * asd.
- */
 @Entity
 @Table(name = "pricings")
 public class Pricing extends BaseEntity {

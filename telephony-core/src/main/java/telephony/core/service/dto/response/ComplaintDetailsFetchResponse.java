@@ -1,6 +1,6 @@
 package telephony.core.service.dto.response;
 
-import telephony.core.service.DetailedComplaintDto;
+import telephony.core.service.dto.DetailedComplaintDto;
 
 public abstract class ComplaintDetailsFetchResponse<T extends DetailedComplaintDto> extends BasicResponse {
 
