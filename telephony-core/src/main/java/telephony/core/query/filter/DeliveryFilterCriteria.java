@@ -3,11 +3,9 @@ package telephony.core.query.filter;
 import java.util.Date;
 
 // TODO : refactor , create builder
-/**
- * asd.
- */
-public class DeliveryFilterCriteria extends
-		AbstractFilterCriteria<DeliveryFilterCriteria> {
+
+public class DeliveryFilterCriteria
+extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 
 	private Date deliveryDateStart;
 	private Date deliveryDateEnd;

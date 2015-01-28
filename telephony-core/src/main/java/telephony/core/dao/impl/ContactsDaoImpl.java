@@ -11,20 +11,15 @@ import telephony.core.query.filter.ContactFilterCriteria;
 
 import javax.persistence.Query;
 
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
-/**
- * Contacts management DAO.
- */
-public class ContactsDaoImpl 
+public class ContactsDaoImpl
 extends GenericDaoImpl<Contact> 
 implements ContactsDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
     public ContactsDaoImpl() {
         super(Contact.class);
     }
@@ -55,12 +50,12 @@ implements ContactsDao {
 		queryStr.append(" select distinct e from Contact e ");
 		queryStr.append(" left outer join e.emails em left outer join e.phonenumbers p left outer join e.faxes f ");
 
-		if (isNotNull(filters.getId())) {
+		if (isNotEmpty(filters.getIds())) {
 			queryStr.append(" where ");
 
 			whereAdded = true;
 
-			queryStr.append(" e.id = :id ");
+			queryStr.append(" e.id IN (:ids) ");
 		}
 
 		if(isNotNull(filters.getDetails())) {
@@ -151,8 +146,8 @@ implements ContactsDao {
 			query.setParameter("email", filters.getEmail());
 		}
 
-		if (isNotNull(filters.getId())) {
-			query.setParameter("id", filters.getId());
+		if (isNotEmpty(filters.getIds())) {
+			query.setParameter("ids", filters.getIds());
 		}
 
 		List<Contact> contact = (List<Contact>) query.getResultList();

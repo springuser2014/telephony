@@ -14,9 +14,7 @@ import telephony.web.EnvironmentResolver;
 @RequestMapping("/")
 public class BaseController {
 	
-	public BaseController() {
-
-	}
+	public BaseController() { }
 
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView main() {
@@ -50,6 +48,15 @@ public class BaseController {
 	public ModelAndView editDelivery(@PathVariable(value="id") Long id) {
 
 		ModelAndView mv = new ModelAndView("editDelivery");
+		appendEnvironment(mv);
+
+		return mv;
+	}
+
+	@RequestMapping(value="deliveryDetails/{id}", method = RequestMethod.GET)
+	public ModelAndView deliveryDetails(@PathVariable(value="id") Long id) {
+
+		ModelAndView mv = new ModelAndView("deliveryDetails");
 		appendEnvironment(mv);
 
 		return mv;

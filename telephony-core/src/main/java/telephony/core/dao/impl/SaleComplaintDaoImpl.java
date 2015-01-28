@@ -14,17 +14,10 @@ import javax.persistence.Query;
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
-
-/**
- * asd.
- */
-public class SaleComplaintDaoImpl 
+public class SaleComplaintDaoImpl
 extends GenericDaoImpl<SaleComplaint> 
 implements SaleComplaintDao {
 
-	/**
-	 * asd.
-	 */
 	public SaleComplaintDaoImpl() {
 		super(SaleComplaint.class);
 	}
@@ -134,11 +127,7 @@ implements SaleComplaintDao {
 
 		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
-			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
-			q.setMaxResults(filters.getPerPage());
-		}
-
-		if (isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage()) * filters.getPage());
 			q.setMaxResults(filters.getPerPage());
 		}
 

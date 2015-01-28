@@ -14,6 +14,8 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 
+import static telephony.core.assertion.CommonAssertions.isNotNull;
+
 public class DeliveriesDaoImpl
 extends GenericDaoImpl<Delivery> 
 implements DeliveriesDao {
@@ -197,14 +199,6 @@ implements DeliveriesDao {
         if (filters.getMaxNumberOfProducts() != null) {
         	query.setParameter("max", new Long(filters.getMaxNumberOfProducts()));
         }
-        
-        if (filters.getPerPage() != null) {
-            query.setMaxResults(filters.getPerPage());
-        }
-        
-        if (filters.getPage() != null) {
-        	query.setFirstResult(filters.getPage());
-        }
 
         if (filters.getSumFrom() != null) {
         	query.setParameter("sumFrom", filters.getSumFrom());
@@ -221,7 +215,12 @@ implements DeliveriesDao {
         if (filters.getStoreId() != null) {
             query.setParameter("storeId", filters.getStoreId());
         }
-        
+
+        if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+            query.setFirstResult((filters.getPerPage())* filters.getPage());
+            query.setMaxResults(filters.getPerPage());
+        }
+
         List<Delivery> lst = query.getResultList();
 
         logger.debug("found {} elements", lst.size());

@@ -10,16 +10,11 @@ import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
-/**
- * asd.
- */
-public class ProductComplaintDaoImpl 
+
+public class ProductComplaintDaoImpl
 extends GenericDaoImpl<ProductComplaint> 
 implements ProductComplaintDao {
 
-	/**
-	 * ads.
-	 */
 	public ProductComplaintDaoImpl() {
 		super(ProductComplaint.class);
 	}
@@ -127,14 +122,8 @@ implements ProductComplaintDao {
 			q.setParameter("productsIds", filters.getProductsIds());
 		}
 
-
-		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
-			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
-			q.setMaxResults(filters.getPerPage());
-		}
-
-		if (isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage()) * filters.getPage());
 			q.setMaxResults(filters.getPerPage());
 		}
 

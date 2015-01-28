@@ -64,6 +64,14 @@ implements UserService {
 			errors.add(Error.create("filters", "filters cannot be null"));
 		}
 
+		if (isNull(request.getFilters().getPage())) {
+			errors.add(Error.create("filters.page", "filters.page cannot be null"));
+		}
+
+		if (isNull(request.getFilters().getPerPage())) {
+			errors.add(Error.create("filters.perPage", "filters.perPage cannot be null"));
+		}
+
 		return errors.size() == 0;
 	}
 

@@ -5,12 +5,10 @@
 <head>
 <c:if test="${environment == 'PROD'}">
 	<jsp:include page="include/header_css_prod.jsp" />
-	<jsp:include page="include/header_js_prod.jsp" />
 </c:if>
 
 <c:if test="${environment == 'TEST'}">
 	<jsp:include page="include/header_css_test.jsp" />
-	<jsp:include page="include/header_js_test.jsp" />
 </c:if>
 </head>
 

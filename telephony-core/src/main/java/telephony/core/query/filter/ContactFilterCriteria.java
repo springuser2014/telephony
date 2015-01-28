@@ -57,7 +57,7 @@ extends AbstractFilterCriteria<ContactFilterCriteria> {
 		this.fax = fax;
 	}
 
-	public List<Long> getId() {
+	public List<Long> getIds() {
 		return ids;
 	}
 

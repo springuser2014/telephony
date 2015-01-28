@@ -10,12 +10,7 @@ import telephony.core.service.dto.SessionDto;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
-/**
- * asd.
- * @param <E> asd.
- * @param <D> as.
- */
-public abstract class AbstractGenericService<E extends BaseEntity, D extends GenericDao<E>> 
+public abstract class AbstractGenericService<E extends BaseEntity, D extends GenericDao<E>>
 extends AbstractBasicService<E> 
 implements GenericService<E> {
 	
@@ -24,25 +19,14 @@ implements GenericService<E> {
 	
     private final Class<D> daoClazz;
 	
-    /**
-     * asd.
-     */
     public AbstractGenericService() {
     	daoClazz = null;
     }
-    
-	/**
-	 * asd.
-	 * @param clazz asd.
-	 */
+
 	public AbstractGenericService(Class<D> clazz) {
 		daoClazz = clazz; 
 	}
 	
-	/**
-	 * asd.
-	 * @return a.
-	 */
 	protected D dao() {
 		return dao;
 	}

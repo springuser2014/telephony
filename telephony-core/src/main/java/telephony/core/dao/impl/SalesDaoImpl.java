@@ -16,27 +16,16 @@ import telephony.core.query.filter.SaleFilterCriteria;
 
 import static telephony.core.assertion.CommonAssertions.*;
 
-/**
- * Sales management DAO.
- */
-public class SalesDaoImpl 
+public class SalesDaoImpl
 extends GenericDaoImpl<Sale> 
 implements SalesDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
     public SalesDaoImpl() {
         super(Sale.class);
     }
 
-    /**
-     * asd.
-     * @param store asd.
-     * @return asd.
-     */	
     @SuppressWarnings("unchecked")
 	public List<Sale> findByStore(Store store) {
         logger.debug("SalesDaoImpl.findByStore starts");
@@ -51,11 +40,7 @@ implements SalesDao {
         return result;
     }
 
-	/**
-	 * asd.
-	 * @param store asd.
-	 * @return asd.
-	 */
+
     @Override
     public long getNumberOfSales(Store store) {
         Query query = getEntityManager().createQuery("select count(sa) from Sale sa "
@@ -235,12 +220,9 @@ implements SalesDao {
 		}
 				
 		Query query = getEntityManager().createQuery(sbMainQuery.toString());
-		
-		if (isNotNull(filters.getPage())) {
-			query.setFirstResult(filters.getPage());
-		}
-		
-		if (isNotNull(filters.getPerPage())) {
+
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			query.setFirstResult((filters.getPerPage()) * filters.getPage());
 			query.setMaxResults(filters.getPerPage());
 		}
 		
@@ -279,7 +261,6 @@ implements SalesDao {
 		if (isNotNull(filters.getStoreId())) {
 			query.setParameter("storeId", filters.getStoreId());
 		}
-
 
 		List<Sale> res = (List<Sale>) query.getResultList();
 		

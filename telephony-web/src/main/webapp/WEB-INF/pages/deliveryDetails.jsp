@@ -14,22 +14,22 @@
         <jsp:include page="include/header_css_test.jsp" />
     </c:if>
 </head>
+
 <body>
 
-<jsp:include page="include/common_templates.jsp"/>
 <jsp:include page="top.jsp"/>
 
 <div class="container theme-showcase">
     <div class="row show-grid">
+
         <div id="submenu"></div>
+
     </div>
 
     <div class="row show-grid">
+
         <div id="deliveries-content"></div>
-    </div>
 
-    <div class="row show-grid">
-        <div class="jarviswidget" id="submenu2"></div>
     </div>
 </div>
 
@@ -180,54 +180,41 @@
         </tbody>
 
     </table>
-
-    {{#pagination}}
+    {{showPagination}}
         <ul class="pagination">
-            {{#first}}
-            <li id="showFirst" class="first {{#disabled}}disabled{{/disabled}}">
-                <a href="#" class="changePage" page=0>First</a>
+            <li class="first">
+                <a href="#">First</a>
             </li>
-            {{/first}}
-            {{#previous}}
-            <li id="showPrevious" class="prev {{#disabled}}disabled{{/disabled}}">
-                <a href="#" class="changePage" page={{page}}>Previous</a>
+            <li class="prev">
+                <a href="#">Previous</a>
             </li>
-            {{/previous}}
-
-            {{#pages}}
-                {{#isActive}}
-                <li class="active">
-                    <a class="changePage" href="#" page={{page}}>{{label}}</a>
-                </li>
-                {{/isActive}}
-                {{^isActive}}
-                <li>
-                    <a class="changePage" href="#" page={{page}}>{{label}}</a>
-                </li>
-                {{/isActive}}
-            {{/pages}}
-
-            {{#next}}
-            <li id="showNext" class="next {{#disabled}}disabled{{/disabled}}">
-                <a href="#" class="changePage" page={{page}}>Next</a>
+            <li>
+                <a href="#">1</a>
             </li>
-            {{/next}}
-            {{#last}}
-            <li id="showLast" class="last {{#disabled}}disabled{{/disabled}}">
-                <a href="#" class="changePage" page={{page}}>Last</a>
+            <li class="active">
+                <a href="#">2</a>
             </li>
-            {{/last}}
+            <li>
+                <a href="#">3</a>
+            </li>
+            <li>
+                <a href="#">4</a>
+            </li>
+            <li>
+                <a href="#">5</a>
+            </li>
+            <li class="next">
+                <a href="#">Next</a>
+            </li>
+            <li class="last">
+                <a href="#">Last</a>
+            </li>
         </ul>
-    {{/pagination}}
-
+    {{/showPagination}}
     </div>
 
     </div>
 
-</script>
-
-<script id="delivery-add-template" type="x-tmpl-mustache">
-    <a class="btn btn-warning" href='<c:url value="/addDelivery"/>'>Dodaj dostawę</a>
 </script>
 
 </body>
