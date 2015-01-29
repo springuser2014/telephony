@@ -8,9 +8,10 @@ import java.util.List;
 public class SalesFetchResponse extends BasicResponse {
 
     List<SaleDto> sales;
+    Long countTotal;
 
     public SalesFetchResponse() {
-        sales = new ArrayList<SaleDto>();
+        sales = new ArrayList<>();
     }
 
     public List<SaleDto> getSales() {
@@ -33,5 +34,13 @@ public class SalesFetchResponse extends BasicResponse {
         if (sales.contains(sale)) {
             sales.remove(sale);
         }
+    }
+
+    public Long getCountTotal() {
+        return countTotal;
+    }
+
+    public void setCountTotal(Long countTotal) {
+        this.countTotal = countTotal;
     }
 }

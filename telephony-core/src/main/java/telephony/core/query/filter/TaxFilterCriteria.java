@@ -14,8 +14,11 @@ extends AbstractFilterCriteria<TaxFilterCriteria> {
 	private Double rateFrom;
 	private Double rateTo;
 
+	private Boolean currentlyActive;
+	private Date activeAt;
+
 	public TaxFilterCriteria() {
-		this.taxIds = new ArrayList<Long>();
+		this.taxIds = new ArrayList<>();
 	}
 
 	public Date getTaxDateStart() {
@@ -66,5 +69,21 @@ extends AbstractFilterCriteria<TaxFilterCriteria> {
 		if (this.taxIds.contains(taxId)) {
 			this.taxIds.remove(taxId);
 		}
+	}
+
+	public Boolean getCurrentlyActive() {
+		return currentlyActive;
+	}
+
+	public void setCurrentlyActive(Boolean currentlyActive) {
+		this.currentlyActive = currentlyActive;
+	}
+
+	public Date getActiveAt() {
+		return activeAt;
+	}
+
+	public void setActiveAt(Date activeAt) {
+		this.activeAt = activeAt;
 	}
 }

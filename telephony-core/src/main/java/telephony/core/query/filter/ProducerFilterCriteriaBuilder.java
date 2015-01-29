@@ -42,5 +42,16 @@ class ProducerFilterCriteriaBuilderBase<GeneratorT extends ProducerFilterCriteri
         return (GeneratorT) this;
     }
 
+    public GeneratorT withPage(Integer page) {
+        instance.setPage(page);
+
+        return (GeneratorT) this;
+    }
+
+    public GeneratorT withPerPage(Integer perPage) {
+        instance.setPerPage(perPage);
+
+        return (GeneratorT) this;
+    }
 
 }

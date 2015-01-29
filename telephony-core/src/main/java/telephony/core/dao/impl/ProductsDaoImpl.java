@@ -19,18 +19,13 @@ import telephony.core.query.filter.ProductFilterCriteria;
 
 import static telephony.core.assertion.CommonAssertions.*;
 
-/**
- * Products management DAO.
- */
+
 public class ProductsDaoImpl 
 extends GenericDaoImpl<Product> 
 implements ProductsDao {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
     public ProductsDaoImpl() {
         super(Product.class);
     }
@@ -420,7 +415,7 @@ implements ProductsDao {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("select count(*) as productscount from Product p join p.sale s where p.id = :productId and s.id = :saleId");
+        sb.append(" select count(*) as productscount from Product p join p.sale s where p.id = :productId and s.id = :saleId ");
         Query query = getEntityManager().createQuery(sb.toString());
 
         query.setParameter("productId", productId);
@@ -430,5 +425,18 @@ implements ProductsDao {
         Long count = res.get(0);
 
         return count.equals(1L);
+    }
+
+    @Override
+    public List<String> fetchColorsList() {
+        logger.info("ProductsDaoImpl.fetchColorsList starts");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select distinct color from Product p ");
+        Query query = getEntityManager().createQuery(sb.toString());
+
+        List<String> lst = (List<String>) query.getResultList();
+
+        return lst;
     }
 }

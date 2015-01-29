@@ -18,8 +18,10 @@
 <body>
 
 <jsp:include page="top.jsp"/>
+<jsp:include page="include/common_templates.jsp"/>
 
 <div class="container theme-showcase">
+
     <div class="row show-grid">
 
         <div id="submenu"></div>
@@ -28,192 +30,270 @@
 
     <div class="row show-grid">
 
-        <div id="deliveries-content"></div>
+        <div id="add-delivery-content"></div>
 
     </div>
+
 </div>
 
-<script id="deliveries-search-form-template" type="x-tmpl-mustache">
+<script id="add-delivery-submenu" type="x-tmpl-mustache">
+
     <div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
 
-        <header role="heading">
-            <h2> Szukaj </h2>
-        </header>
+        <a class="btn btn-warning" href='<c:url value="/deliveries"/>'>Powrót</a>
 
-        <div id='deliveries-search-form'>
-            <table class="table table-bordered">
-                <form id="deliveries-search-form">
-                    <fieldset class="smart-form">
-                        <div class="row">
-                            <section class="col col-2">
-                                <label class="input">
-                                    <input type="text" name="label" id="label" placeholder="nazwa"/>
-                                    <b class="tooltip tooltip-top-left">Nazwa dostawy</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-3">
-                                <label class="select">
-                                    <select name="store" id="store" class="valid">
-                                        <option value="0" selected="" disabled="">magazyn</option>
-                                        {{#stores}}
-                                            <option value="{{storeId}}">{{label}}</option>
-                                        {{/stores}}
-                                    </select>
-                                    <i></i>
-                                </label>
-                            </section>
-
-                            <section class="col col-3">
-                                <label class="select">
-                                    <select name="contact" id="contact" class="valid">
-                                        <option value="0" selected="" disabled="">kontakt</option>
-                                        {{#contacts}}
-                                            <option value="{{id}}">{{label}}</option>
-                                        {{/contacts}}
-                                    </select>
-                                    <i></i>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <a class="btn btn-info btn-sm" id='filter-results'>Filtruj wyniki</a>
-                            </section>
-
-                            <section class="col col-2">
-                                <a class="btn btn-success btn-sm" id='clear-form'>Czyść formularz</a>
-                            </section>
-                        </div>
-
-                        <div class="row">
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-dollar"></i>
-                                    <input type="text" id="sum_from" name="sum_from" placeholder="od"/>
-                                    <b class="tooltip tooltip-bottom-right">Suma dostawy (od)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-dollar"></i>
-                                    <input type="text" id="sum_to" name="sum_to" placeholder="do"/>
-                                    <b class="tooltip tooltip-bottom-right">Suma dostawy (do)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-calendar"></i>
-                                    <input type="text" class="date" id="date_from" name="date_from" placeholder="od"/>
-                                    <b class="tooltip tooltip-top-left">Data dostawy (od)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-calendar"></i>
-                                    <input type="text" class="date" id="date_to" name="date_to" placeholder="do"/>
-                                    <b class="tooltip tooltip-top-right">Data dostawy (do)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-ellipsis-vertical"></i>
-                                    <input type="text" name="minNumberOfProducts" id="minNumberOfProducts" placeholder="od"/>
-                                    <b class="tooltip tooltip-bottom-right">Liczba dostarczonych produktów (od)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-ellipsis-vertical"></i>
-                                    <input type="text" name="maxNumberOfProducts" id="maxNumberOfProducts" placeholder="do"/>
-                                    <b class="tooltip tooltip-bottom-right">Liczba dostarczonych produktów (do)</b>
-                                </label>
-                            </section>
-
-                        </div>
-                    </fieldset>
-                </form>
-            </table>
-        </div>
     </div>
 </script>
-<script id="deliveries-list-template" type="x-tmpl-mustache">
 
-    <div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
+
+<script id="add-delivery-template" type="x-tmpl-mustache">
+
+<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
 
     <header role="heading">
-        <h2> Dostawy </h2>
+        <h2> Nowa dostawa </h2>
     </header>
 
     <div>
-    <table class="table table-bordered">
+        <div id='delivery-add'>
+            <form id="add-delivery-form">
+                <fieldset class="smart-form">
+                    <div class="row">
+                        <section class="col col-3">
+                            <label class="input">
+                                <input type="text" name="label" id="label" placeholder="Nazwa"/>
+                                <b class="tooltip tooltip-bottom-right">Nazwa dostawy</b>
+                            </label>
+                        </section>
+
+                        <section class="col col-3">
+                            <label class="select">
+                                <select name="store" id="store" class="valid">
+                                    <option value="0" selected="" disabled="">magazyn</option>
+                                    {{#stores}}
+                                        <option value="{{storeId}}">{{label}}</option>
+                                    {{/stores}}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+{{#add}}
+                        <section class="col col-2">
+                            <a class="btn btn-info btn-sm" id='add-new-store' href='<c:url value="/addStore"/>'>Dodaj nowy magazyn</a>
+                        </section>
+{{/add}}
+                    </div>
+
+                    <div class="row">
+
+                        <section class="col col-3">
+                            <label class="input">
+                                <i class="icon-prepend fa fa-calendar"></i>
+                                <input type="text" class="date" id="date_in" name="date_in" placeholder="Data dostawy"/>
+                                <b class="tooltip tooltip-top-right">Data dostawy</b>
+                            </label>
+                        </section>
+
+                        <section class="col col-3">
+                            <label class="select">
+                                <select name="contact" id="contact" class="valid">
+                                    <option value="0" selected="" disabled="">kontakt</option>
+                                    {{#contacts}}
+                                        <option value="{{id}}">{{label}}</option>
+                                    {{/contacts}}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+{{#add}}
+                        <section class="col col-2">
+                            <a class="btn btn-info btn-sm" id='add-new-contact' href='<c:url value="/addContact"/>'>Dodaj nowy kontakt</a>
+                        </section>
+{{/add}}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <legend>Dodaj produkt</legend>
+
+        <div id='add-product'>
+            <form id="add-product-form">
+                <fieldset class="smart-form">
+                    <div class="row">
+                        <section class="col col-2">
+                            <label class="input">
+                                <input type="text" name="imei" id="imei" placeholder="IMEI"/>
+                                <b class="tooltip tooltip-bottom-right">Unikalny IMEI produktu</b>
+                            </label>
+                        </section>
+
+                        <section class="col col-2">
+                            <label class="input">
+                                <input type="text" name="producer" id="producer" placeholder="Producent"/>
+                                <b class="tooltip tooltip-bottom-right">Producent</b>
+                            </label>
+                        </section>
+
+                        <section class="col col-2">
+                            <label class="input">
+                                <input type="text" name="model" id="model" placeholder="Model"/>
+                                <b class="tooltip tooltip-bottom-right">Model</b>
+                            </label>
+                        </section>
+
+                        <section class="col col-2">
+                            <label class="input">
+                                <input type="text" name="color" id="color" placeholder="Kolor"/>
+                                <b class="tooltip tooltip-bottom-right">Kolor</b>
+                            </label>
+                        </section>
+                     </div>
+                     <div class='row'>
+
+                         <section class="col col-2">
+                            <label class="input">
+                                <input type="text" name="price_in" id="price_in" placeholder="Cena zakupu"/>
+                                <b class="tooltip tooltip-bottom-right">Cena zakupu</b>
+                            </label>
+                         </section>
+
+                        <section class="col col-2">
+                            <label class="input">
+                                <input type="text" name="price_out" id="price_out" placeholder="Cena sprzedaży"/>
+                                <b class="tooltip tooltip-bottom-right">Cena sprzedaży</b>
+                            </label>
+                         </section>
+
+                         <section class="col col-2">
+                            <label class="select">
+                                <select name="tax" id="tax" class="valid">
+                                    <option value="0" selected="" disabled="">Podatek</option>
+                                    {{#taxes}}
+                                        <option value="{{id}}">VAT {{rate}} %</option>
+                                    {{/taxes}}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+
+                        <section class="col col-2">
+                            <a id='add-product-btn' class="btn btn-info btn-sm">Dodaj</a>
+                        </section>
+
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <legend>Produkty</legend>
+
+        <div id='products-list'>
+        </div>
+
+        <div class='bottom-buttons'>
+            <fieldset class="smart-form">
+
+                <div class='row' id='add-delivery-form-bottom'>
+
+                <section class="col col-2">
+                    <a class="btn btn-info btn-sm" id="clear-form">Czyść formularz</a>
+                </section>
+
+                <section class="col col-2">
+                    <a class="btn btn-success btn-sm" id="save-delivery">Zapisz dostawę</a>
+                </section>
+
+                </div>
+
+            </fieldset>
+        </div>
+    </div>
+
+    </div>
+</div>
+</script>
+
+
+<script id="delivery-products-table" type="x-tmpl-mustache">
+
+    <table class='table table-bordered' id='products-table'>
         <thead>
             <tr>
-                <th>Nazwa</th>
-                <th>Data dodania</th>
-                <th>Magazyn</th>
-                <th>Kontakt</th>
-                <th>Liczba produktów</th>
+                <th class='imei'>IMEI</th>
+                <th class='producent'>Producent</th>
+                <th class='model'>Model</th>
+                <th class='color'>Kolor</th>
+                <th class='price-in'>Cena zakupu</th>
+                <th class='price-out'>Cena sprzedaży</th>
+                <th class='tax'>Podatek</th>
                 <th>Akcje</th>
             </tr>
         </thead>
-        <tbody>
-        {{#deliveries}}
-        <tr>
-            <td>{{label}}</td>
-            <td>{{dateIn}}</td>
-            <td>{{storeLabel}}</td>
-            <td>{{contactLabel}}</td>
-            <td>{{numberOfProducts}}</td>
-            <td>
-                <a class="btn btn-info btn-xs" href="/deliveryDetails/{{id}}">Szczegóły</a>
-                <a class="btn btn-success btn-xs" href="/editDelivery/{{id}}">Edytuj</a>
-                <a class="btn btn-danger btn-xs" delivery-id="{{id}}">Usuń</a>
-            </td>
-        </tr>
-        {{/deliveries}}
+        <tbody id='products-content'>
         </tbody>
-
     </table>
-    {{showPagination}}
-        <ul class="pagination">
-            <li class="first">
-                <a href="#">First</a>
-            </li>
-            <li class="prev">
-                <a href="#">Previous</a>
-            </li>
-            <li>
-                <a href="#">1</a>
-            </li>
-            <li class="active">
-                <a href="#">2</a>
-            </li>
-            <li>
-                <a href="#">3</a>
-            </li>
-            <li>
-                <a href="#">4</a>
-            </li>
-            <li>
-                <a href="#">5</a>
-            </li>
-            <li class="next">
-                <a href="#">Next</a>
-            </li>
-            <li class="last">
-                <a href="#">Last</a>
-            </li>
-        </ul>
-    {{/showPagination}}
+
+</script>
+
+<script id="delivery-product-row" type="x-tmpl-mustache">
+
+    {{#products}}
+    <tr>
+        <td>{{imei}}</td>
+        <td>{{producer}}</td>
+        <td>{{model}}</td>
+        <td>{{color}}</td>
+        <td>{{priceIn}}</td>
+        <td>
+            {{#currentPrice}}
+                {{rate}}
+            {{/currentPrice}}
+        </td>
+        <td>
+            {{#productTax}}
+            VAT {{rate}} %
+            {{/productTax}}
+        </td>
+        <td>
+            <a class="btn btn-success btn-xs edit-product" product-index="{{index}}">Edytuj</a>
+            {{^sale_id}}
+            <a class="btn btn-danger btn-xs delete-product product-index="{{index}}">Usuń</a>
+            {{/sale_id}}
+        </td>
+    </tr>
+    {{/products}}
+
+</script>
+
+<script id="delivery-add-product-empty-info" type="x-tmpl-mustache">
+
+    <div class="alert alert-info alert-block">
+        Nie został dodany jeszcze żaden produkt
     </div>
 
-    </div>
+</script>
+
+<script id="delivery-add-element" type="x-tmpl-mustache">
+     <div class="row">
+            <section class="col col-2">
+                <label class="input">
+                    <i class="icon-prepend fa fa-dollar"></i>
+                    <input type="text" id="sum_from" name="sum_from" placeholder="Cena zakupu"/>
+                    <b class="tooltip tooltip-bottom-right">Cena zakupu </b>
+                </label>
+            </section>
+        </div>
+
+        <div class="row">
+            <section class="col col-2">
+                <label class="input">
+                    <i class="icon-prepend fa fa-dollar"></i>
+                    <input type="text" id="sum_from" name="sum_from" placeholder="Cena zakupu"/>
+                    <b class="tooltip tooltip-bottom-right">Cena sprzedaży </b>
+                </label>
+            </section>
+        </div>
 
 </script>
 

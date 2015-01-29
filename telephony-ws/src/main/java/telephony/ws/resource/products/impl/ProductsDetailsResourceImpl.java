@@ -1,24 +1,20 @@
 package telephony.ws.resource.products.impl;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import com.google.inject.Inject;
 import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.service.ProductService;
-import telephony.core.service.dto.request.DeliveryDetailsRequest;
 import telephony.core.service.dto.request.ProductDetailsRequest;
 import telephony.core.service.dto.response.ProductDetailsResponse;
-import telephony.core.service.dto.response.ProductFetchResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.products.ProductsDetailsResource;
 
-import com.google.gson.GsonBuilder;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 public class ProductsDetailsResourceImpl
 extends TelephonyServerResource 

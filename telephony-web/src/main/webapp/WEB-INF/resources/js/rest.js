@@ -74,7 +74,9 @@ Telephony.Rest.Url = {
     },
     Products : {
         Fetch : '/products/fetch',
-        Details : '/products/details'
+        Details : '/products/details',
+        FetchData : '/products/fetchData',
+        IsImeiAvailable : '/product/isImeiAvailable'
     },
     Roles : {
         Fetch : '/roles/fetch'
@@ -673,6 +675,44 @@ Telephony.Rest.Products = {
         $.ajax({
             async : async,
             url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Products.Fetch,
+            type: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            dataType: 'json',
+            data: JSON.stringify(data),
+            complete: completeFunc,
+            error: errorFunc
+        });
+    },
+
+    IsImeiAvailable: function (data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
+        $.ajax({
+            async : async,
+            url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Products.IsImeiAvailable,
+            type: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            dataType: 'json',
+            data: JSON.stringify(data),
+            complete: completeFunc,
+            error: errorFunc
+        });
+    },
+
+    FetchData: function (data, completeFunc, errorFunc, async) {
+
+        if (typeof async == "undefined") {
+            async = true;
+        }
+        $.ajax({
+            async : async,
+            url: Telephony.Rest.Url.Server + Telephony.Rest.Url.Products.FetchData,
             type: 'POST',
             headers: {
                 'Content-type': 'application/json'

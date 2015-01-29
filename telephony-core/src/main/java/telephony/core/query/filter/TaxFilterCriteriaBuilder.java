@@ -78,4 +78,32 @@ class TaxFilterCriteriaBuilderBase<GeneratorT extends TaxFilterCriteriaBuilderBa
 
 		return (GeneratorT) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withActiveAt(Date at) {
+		instance.setActiveAt(at);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withCurrentlyActive(Boolean val) {
+		instance.setCurrentlyActive(val);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPage(Integer page) {
+		instance.setPage(page);
+
+		return (GeneratorT) this;
+	}
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPerPage(Integer perPage) {
+		instance.setPerPage(perPage);
+
+		return (GeneratorT) this;
+	}
+
 }

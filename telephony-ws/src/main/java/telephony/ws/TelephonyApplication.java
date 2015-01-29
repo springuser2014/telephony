@@ -13,8 +13,12 @@ import telephony.ws.resource.contact.*;
 import telephony.ws.resource.contact.impl.*;
 import telephony.ws.resource.delivery.*;
 import telephony.ws.resource.delivery.impl.*;
+import telephony.ws.resource.products.ProductCheckImeiResource;
+import telephony.ws.resource.products.ProductFetchDataResource;
 import telephony.ws.resource.products.ProductsDetailsResource;
 import telephony.ws.resource.products.ProductsFetchResource;
+import telephony.ws.resource.products.impl.ProductCheckImeiResourceImpl;
+import telephony.ws.resource.products.impl.ProductFetchDataResourceImpl;
 import telephony.ws.resource.products.impl.ProductsDetailsResourceImpl;
 import telephony.ws.resource.products.impl.ProductsFetchResourceImpl;
 import telephony.ws.resource.sale.*;
@@ -35,7 +39,7 @@ import telephony.ws.resource.user.*;
 import telephony.ws.resource.user.impl.*;
 
 /**
- * Heart of telephony application.
+ * Heart of the application.
  */
 public class TelephonyApplication extends Application {	
 	
@@ -96,6 +100,9 @@ public class TelephonyApplication extends Application {
         // products resources - complete
         router.attach(ProductsFetchResource.URL, ProductsFetchResourceImpl.class);
         router.attach(ProductsDetailsResource.URL, ProductsDetailsResourceImpl.class);
+
+        router.attach(ProductCheckImeiResource.URL, ProductCheckImeiResourceImpl.class);
+        router.attach(ProductFetchDataResource.URL, ProductFetchDataResourceImpl.class);
         
         // taxes resource - complete
         router.attach(TaxAddResource.URL, TaxAddResourceImpl.class);

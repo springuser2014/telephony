@@ -15,25 +15,17 @@ import telephony.core.query.filter.TaxFilterCriteria;
 import javax.persistence.Query;
 
 import static  telephony.core.assertion.CommonAssertions.*;
-/**
- * asd.
- */
-public class TaxDaoImpl 
+
+public class TaxDaoImpl
 extends GenericDaoImpl<Tax> 
 implements TaxDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * asd.
-	 */
 	public TaxDaoImpl() {
 		super(Tax.class);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Tax> findInDateRange(Date from, Date to) {
@@ -95,62 +87,40 @@ implements TaxDao {
 			logger.debug("params : [ filters : {} ]", filters);
 		}
 
-		boolean whereAdded = false; // TODO remove this variable, introduce where 1=1 in jpql
 		StringBuilder sb = new StringBuilder();
 		sb.append(" select t from Tax t ");
+		sb.append(" where 1=1 ");
 
 		if (isNotNull(filters.getRateFrom())) {
-			sb.append(" where t.rate >= :rateFrom ");
-			whereAdded = true;
+			sb.append(" and t.rate >= :rateFrom ");
 		}
 
 		if (isNotNull(filters.getRateTo())) {
-			if (whereAdded) {
-				sb.append(" and t.rate < :rateTo ");
-			} else {
-				sb.append(" and t.rate < :rateTo ");
-				whereAdded = true;
-			}
+			sb.append(" and t.rate < :rateTo ");
 		}
 
 		if (isNotNull(filters.getTaxDateStart()) && isNotNull(filters.getTaxDateEnd())) {
-			if (whereAdded) {
-				sb.append(" and ((t.from >= :from and t.to < :to) ");
-				sb.append(" or (t.from IS NULL and t.to < :to) ");
-				sb.append(" or (t.from >= :from and t.to IS NULL)) ");
-			} else {
-				sb.append(" where ((t.from >= :from and t.to < :to) ");
-				sb.append(" or (t.from IS NULL and t.to < :to) ");
-				sb.append(" or (t.from >= :from and t.to IS NULL)) ");
-				whereAdded = true;
-			}
+			sb.append(" and ((t.from >= :from and t.to < :to) ");
+			sb.append(" or (t.from IS NULL and t.to < :to) ");
+			sb.append(" or (t.from >= :from and t.to IS NULL)) ");
 		}
 
 		if (isNotNull(filters.getTaxDateStart()) && isNull(filters.getTaxDateEnd())) {
-			if (whereAdded) {
-				sb.append(" and t.from <= :from ");
-			} else {
-				sb.append(" where t.from <= :from ");
-				whereAdded = true;
-			}
+			sb.append(" and t.from <= :from ");
 		}
 
 		if (isNull(filters.getTaxDateStart()) && isNotNull(filters.getTaxDateEnd())) {
-			if (whereAdded) {
-				sb.append(" and t.to < :to ");
-			} else {
-				sb.append(" where t.to < :to ");
-				whereAdded = true;
-			}
+			sb.append(" and t.to < :to ");
 		}
 
 		if (isNotEmpty(filters.getTaxIds())) {
-			if (whereAdded) {
-				sb.append(" and t.id IN (:ids) ");
-		 	} else {
-				sb.append(" where t.id IN (:ids) ");
-				whereAdded = true;
-			}
+			sb.append(" and t.id IN (:ids) ");
+		}
+
+		if(isNotNull(filters.getActiveAt())) {
+			sb.append(" and ((t.from >= :at and t.to < :at) ");
+			sb.append(" or (t.from IS NULL and t.to < :at) ");
+			sb.append(" or (t.from >= :at and t.to IS NULL)) ");
 		}
 
 		Query q = getEntityManager().createQuery(sb.toString());
@@ -178,6 +148,10 @@ implements TaxDao {
 
 		if (isNotEmpty(filters.getTaxIds())) {
 			q.setParameter("ids", filters.getTaxIds());
+		}
+
+		if (isNotNull(filters.getActiveAt())) {
+			q.setParameter("at", filters.getActiveAt());
 		}
 
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {

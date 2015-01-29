@@ -3,7 +3,8 @@ package telephony.core.query.filter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelFilterCriteria extends AbstractFilterCriteria<ModelFilterCriteria> {
+public class ModelFilterCriteria
+extends AbstractFilterCriteria<ModelFilterCriteria> {
 
     List<Long> modelIds;
     String label;

@@ -183,6 +183,91 @@ public class TaxServiceTest extends BaseCoreTest {
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingTaxActiveAt1() throws SessionServiceException {
+
+		// given
+		Date activeAt = new DateTime().withDate(2009,01,01).withTime(0,0,0,0).toDate();
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
+				.withPage(0).withPerPage(5)
+				.withActiveAt(activeAt).build();
+		TaxFetchRequest request = new TaxFetchRequest(session);
+		request.setFilters(filters);
+
+		// when
+		TaxFetchResponse resp = taxService.fetch(request);
+
+		// then
+		assertNotNull(resp);
+		assertEquals(resp.getTaxes().size(), 1);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingTaxActiveAt2() throws SessionServiceException {
+
+		// given
+		Date activeAt = new DateTime().withDate(2011,01,01).withTime(0,0,0,0).toDate();
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
+				.withActiveAt(activeAt).build();
+		TaxFetchRequest request = new TaxFetchRequest(session);
+		request.setFilters(filters);
+
+		// when
+		TaxFetchResponse resp = taxService.fetch(request);
+
+		// then
+		assertNotNull(resp);
+		assertEquals(resp.getTaxes().size(), 2);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingTaxActiveAt3() throws SessionServiceException {
+
+		// given
+		Date activeAt = new DateTime().withDate(2013,07,01).withTime(0,0,0,0).toDate();
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
+				.withActiveAt(activeAt).build();
+		TaxFetchRequest request = new TaxFetchRequest(session);
+		request.setFilters(filters);
+
+		// when
+		TaxFetchResponse resp = taxService.fetch(request);
+
+		// then
+		assertNotNull(resp);
+		assertEquals(resp.getTaxes().size(), 2);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchingTaxActiveAt4() throws SessionServiceException {
+
+		// given
+		Date activeAt = new DateTime().withDate(2015,07,01).withTime(0,0,0,0).toDate();
+		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
+
+		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
+				.withActiveAt(activeAt).build();
+		TaxFetchRequest request = new TaxFetchRequest(session);
+		request.setFilters(filters);
+
+		// when
+		TaxFetchResponse resp = taxService.fetch(request);
+
+		// then
+		assertNotNull(resp);
+		assertEquals(resp.getTaxes().size(), 1);
+	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void edit1() throws SessionServiceException {
 
 		// given

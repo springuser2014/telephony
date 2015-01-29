@@ -41,4 +41,6 @@ public interface ProductsDao extends GenericDao<Product> {
     boolean checkIfProductIsAvailable(Long productId);
 
     boolean checkIfProductIsAssignedToSale(Long productId, Long saleId);
+
+    List<String> fetchColorsList();
 }

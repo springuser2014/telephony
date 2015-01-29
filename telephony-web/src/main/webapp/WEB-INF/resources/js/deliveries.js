@@ -86,7 +86,7 @@ function(App, $, Mustache, cookies, rest, auth) {
 	var filters = {};
 	var oldFilters = {};
 	var page = 0;
-	var perPage = 2;
+	var perPage = 5;
 	var numberOfResults = 0;
 
 	var getOldFilters = function() {

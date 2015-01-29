@@ -8,9 +8,9 @@ public class DeliveryEditDto extends AbstractDeliveryDto {
     private Long id;
 
     public DeliveryEditDto() {
-        productsToAdd = new ArrayList<ProductAddDto>();
-        productsToEdit = new ArrayList<ProductEditDto>();
-        productsToDelete = new ArrayList<Long>();
+        productsToAdd = new ArrayList<>();
+        productsToEdit = new ArrayList<>();
+        productsToDelete = new ArrayList<>();
     }
 
     private List<ProductAddDto> productsToAdd;

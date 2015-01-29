@@ -6,18 +6,21 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import telephony.core.dao.ModelDao;
+import telephony.core.dao.ProducerDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.entity.jpa.Model;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.entity.jpa.Product;
-import telephony.core.query.filter.ProductFilterCriteria;
-import telephony.core.query.filter.ProductFilterCriteriaBuilder;
+import telephony.core.query.filter.*;
 import telephony.core.service.converter.ModelConverter;
 import telephony.core.service.converter.ProducerConverter;
 import telephony.core.service.converter.ProductConverter;
 import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.ProducerDto;
+import telephony.core.service.dto.request.ProductCheckImeiRequest;
 import telephony.core.service.dto.request.ProductDetailsRequest;
+import telephony.core.service.dto.request.ProductFetchDataRequest;
 import telephony.core.service.dto.request.ProductFetchRequest;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
@@ -40,6 +43,12 @@ implements ProductService {
 
 	@Inject
 	ProductsDao productsDao;
+
+	@Inject
+	ModelDao modelDao;
+
+	@Inject
+	ProducerDao producerDao;
 	
 	@Inject
 	SessionService sessionService;
@@ -53,6 +62,69 @@ implements ProductService {
 	@Inject
 	ModelConverter modelConverter;
 
+	//  TODO extract to validator
+	private boolean validate(ProductFetchDataRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	@Override
+	@Transactional
+	public ProductFetchDataResponse fetchData(ProductFetchDataRequest request)
+			throws SessionServiceException {
+
+		logger.info("ProductServiceImpl.fetchData starts");
+		ProductFetchDataResponse resp = new ProductFetchDataResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
+
+		sessionService.validate(request.getSessionDto());
+
+		ModelFilterCriteria modelFilterCriteria = ModelFilterCriteriaBuilder.modelFilterCriteria()
+				.withPage(0).withPerPage(1000)
+				.build();
+
+		ProducerFilterCriteria producerFilterCriteria = ProducerFilterCriteriaBuilder.producerFilterCriteria()
+				.withPage(0).withPerPage(1000)
+				.build();
+
+		List<String> colors = productsDao.fetchColorsList();
+		List<Model> models = modelDao.find(modelFilterCriteria);
+		List<Producer> producers = producerDao.fetch(producerFilterCriteria);
+
+		List<ModelDto> m = new ArrayList<>();
+		List<ProducerDto> p = new ArrayList<>();
+
+		for(Model model : models) {
+			m.add(modelConverter.toModelDto(model));
+		}
+
+		for (Producer producer : producers) {
+			p.add(producerConverter.toProducerDto(producer));
+		}
+
+		resp.setProducers(p);
+		resp.setModels(m);
+		resp.setColors(colors);
+		resp.setSuccess(true);
+		resp.setMessage("operation performed successfully");
+		return resp;
+	}
+
 	// TODO add request and response objs
 	@Override
 	@Transactional
@@ -63,7 +135,7 @@ implements ProductService {
 
 		sessionService.validate(session);
 
-		List<String> res = new ArrayList<String>();
+		List<String> res = new ArrayList<>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		// TODO : prepare separate JPQL for this case
 		List<Product> products = productsDao.findByCriteria(filters);
@@ -87,7 +159,7 @@ implements ProductService {
 
 		sessionService.validate(session);
 
-		List<ProducerDto> res = new ArrayList<ProducerDto>();
+		List<ProducerDto> res = new ArrayList<>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		// TODO : prepare separate JPQL for this case
 		List<Product> products = productsDao.findByCriteria(filters);
@@ -105,17 +177,53 @@ implements ProductService {
 		return res;
 	}
 
-	// TODO add request and response objs
-	@Transactional
 	@Override
-	public List<String> fetchAllImeiInUse(SessionDto session)
+	public List<String> fetchAllImeiInUse(SessionDto session) throws SessionServiceException {
+		return null;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ProductCheckImeiRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getImei())) {
+			errors.add(Error.create("imiei", "imei cannot be empty"));
+			return false;
+		}
+
+		if (request.getImei().trim().length() != 15) {
+			errors.add(Error.create("imiei", "imei should be 15 chars length"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	@Override
+	@Transactional
+	public ProductCheckImeiResponse checkImei(ProductCheckImeiRequest request)
 			throws SessionServiceException {
 
 		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
+		ProductCheckImeiResponse resp = new ProductCheckImeiResponse();
+		List<Error> errors = getEmptyErrors();
 
-		sessionService.validate(session);
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
 
-		List<String> res = new ArrayList<String>();
+		sessionService.validate(request.getSessionDto());
+
+		List<String> imeis = new ArrayList<>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
 		// TODO : prepare separate JPQL for this case
 		List<Product> products = productsDao.findByCriteria(filters);
@@ -123,12 +231,15 @@ implements ProductService {
 		for (Product p : products) {
 			String imei = p.getImei();
 
-			if (!res.contains(imei)) {
-				res.add(imei);
+			if (!imeis.contains(imei)) {
+				imeis.add(imei);
 			}
 		}
 
-		return res;
+		resp.setIsAvailable(!imeis.contains(request.getImei()));
+		resp.setMessage("operation performed successfully");
+		resp.setSuccess(true);
+		return resp;
 	}
 
 	// TODO add request and response objs
@@ -272,7 +383,7 @@ implements ProductService {
 
 		List<Product> result = productsDao.findByCriteria(filters);
 		
-		List<ProductFetchDto> lst = new ArrayList<ProductFetchDto>();
+		List<ProductFetchDto> lst = new ArrayList<>();
 
 		for(Product p : result) {
 			lst.add(productConverter.toProductFetchDto(p));

@@ -11,6 +11,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.ProducerDto;
+import telephony.core.service.dto.request.ProductFetchDataRequest;
+import telephony.core.service.dto.response.ProductFetchDataResponse;
 import telephony.test.BaseCoreTest;
 import telephony.core.service.ProductService;
 import telephony.core.service.StoreService;
@@ -378,17 +380,34 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withStatus(ProductStatus.SOLD)
 				.build();
-				
+
 		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
 		request.setUsername(TestData.USER1_NAME);
 		request.setFilters(filters);
-		
+
 		// when
 		ProductFetchResponse resp = productService.fetch(request);
-		
+
 		// then
 		assertEquals(resp.getProducts().size(), 10);
 	}
+
+	@Test
+	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
+	public void fetchData() throws SessionServiceException {
+
+		// given
+		ProductFetchDataRequest request = new ProductFetchDataRequest();
+		request.setSessionId(TestData.USER1_SESSIONID);
+		request.setUsername(TestData.USER1_NAME);
+
+		// when
+		ProductFetchDataResponse resp = productService.fetchData(request);
+
+		// then
+		assertEquals(resp.getColors().size(), 4);
+	}
+
 
 }
