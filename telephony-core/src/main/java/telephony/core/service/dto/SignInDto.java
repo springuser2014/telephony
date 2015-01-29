@@ -1,10 +1,13 @@
 package telephony.core.service.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * asd.
  */
 // TODO : replace using AuthDto
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SignInDto {
 	
 	private String username;

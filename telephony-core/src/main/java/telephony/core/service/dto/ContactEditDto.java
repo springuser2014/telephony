@@ -1,8 +1,11 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ContactEditDto extends ContactDto {
 	
 	private List<String> emailsToRemove = new ArrayList<String>();

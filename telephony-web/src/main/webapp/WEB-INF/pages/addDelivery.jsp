@@ -212,6 +212,7 @@
 
     </div>
 </div>
+
 </script>
 
 
@@ -275,6 +276,7 @@
 </script>
 
 <script id="delivery-add-element" type="x-tmpl-mustache">
+
      <div class="row">
             <section class="col col-2">
                 <label class="input">
@@ -296,6 +298,12 @@
         </div>
 
 </script>
+
+
+<div id="no-products-dialog" title="Nie masz żadnych produktów" style="display:none">
+Nie masz dodanych żadnych produktów na liście dostawy
+</div>
+
 
 </body>
 </html>

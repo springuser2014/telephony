@@ -1,5 +1,8 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AnonymousComplaintCommentDto extends BaseComplaintCommentDto {
 
     String hashUnique;

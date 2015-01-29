@@ -1,6 +1,10 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDetailedComplaintDto extends DetailedComplaintDto {
+
     private ProductAddDto product;
 
     public ProductDetailedComplaintDto() {

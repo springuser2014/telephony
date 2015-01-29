@@ -14,3 +14,7 @@
 #add-delivery-form-bottom #save-delivery {
     width: 100%;
 }
+
+body {
+    overflow: scroll;
+}

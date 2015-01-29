@@ -1,9 +1,12 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SaleEditDto {
 
     private Long saleId;
@@ -16,8 +19,8 @@ public class SaleEditDto {
     private List<Long> productsToRemove;
 
     public SaleEditDto() {
-        productsToAdd = new ArrayList<Long>();
-        productsToRemove = new ArrayList<Long>();
+        productsToAdd = new ArrayList<>();
+        productsToRemove = new ArrayList<>();
     }
 
     public Long getSaleId() {
@@ -41,8 +44,6 @@ public class SaleEditDto {
     }
 
     public void setDateOut(Date dateOut) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
-//        this.dateOut = sdf.format(dateOut);
         this.dateOut = dateOut;
     }
 

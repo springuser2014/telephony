@@ -1,22 +1,25 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SaleDto {
 
     private Long id;
     private String label;
-    private String dateOut;
+    private Date dateOut;
     private Long storeId;
     private Long contactId;
 
     private List<ProductAddDto> products;
 
     public SaleDto() {
-        products = new ArrayList<ProductAddDto>();
+        products = new ArrayList<>();
     }
 
     public Long getId() {
@@ -35,13 +38,12 @@ public class SaleDto {
         this.label = label;
     }
 
-    public String getDateOut() {
+    public Date getDateOut() {
         return dateOut;
     }
 
     public void setDateOut(Date dateOut) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); // TODO to const
-        this.dateOut = sdf.format(dateOut);
+        this.dateOut = dateOut;
     }
 
     public Long getStoreId() {

@@ -90,6 +90,15 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
         var numberOfElements = 0;
         var products = [];
         var taxes = [];
+        var editedProductIndex = null;
+
+        var getEditedProductIndex = function() {
+            return editedProductIndex;
+        };
+
+        var setEditedProductIndex = function(v) {
+            editedProductIndex = v;
+        };
 
         var setTaxes = function(_taxes) {
             taxes = _taxes;
@@ -100,7 +109,6 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
         };
 
         var getTax = function(id) {
-            var t = null;
             for (var i = 0; i < taxes.length;i++) {
                 if (taxes[i].id == id)
                     return taxes[i];
@@ -121,6 +129,10 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
         var setProducts = function(prods) {
             products = prods;
+        };
+
+        var setProduct = function(i, obj) {
+            products[i] = obj;
         };
 
         var removeProduct = function(i) {
@@ -173,10 +185,6 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             clearDeliveryForm();
             clearProductForm();
             refreshProductsTable();
-        };
-
-        var saveDelivery = function() {
-
         };
 
         var setAddProductFormValues = function (product) {
@@ -245,7 +253,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 $('.date').each(function() {
 
                     var $this = $(this);
-                    var dataDateFormat = $this.attr('data-dateformat') || 'dd.mm.yy';
+                    var dataDateFormat = 'yy-mm-dd';
 
                     $this.datepicker({
                         dateFormat : dataDateFormat,
@@ -263,15 +271,48 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
                 if (validateAddProductForm()) {
 
-                    var obj = getProductObj();
-                    addProduct(obj);
-                    clearProductForm();
-                    refreshProductsTable();
+                    if (getEditedProductIndex() == null) {
+                        var obj = getProductObj();
+                        addProduct(obj);
+                        clearProductForm();
+                        refreshProductsTable();
+                    } else {
+                        getEditedProductIndex();
+                        var obj = getProductObj();
+                        setProduct(index, obj);
+                        clearProductForm();
+                        setEditedProductIndex(null);
+                        refreshProductsTable();
+                    }
                 }
             });
 
             $('#save-delivery').click(function() {
-                validateDeliveryForm();
+
+                if (getProducts().length == 0) {
+                    $('#no-products-dialog').dialog('open');
+                    return;
+                }
+
+                if (validateDeliveryForm()) {
+
+                    var auth = Telephony.Auth.getAuthObj();
+                    auth.deliveryDto = getDeliveryObj();
+
+                    auth.deliveryDto.products = getProducts();
+
+                    Telephony.Rest.Deliveries.Add(
+                        auth,
+                        function(jqxhr, status) {
+                            alert(status);
+                            alert(jqxhr);
+                        },
+                        function(jqxhr, status, error) {
+
+                        },
+                        false
+                    );
+                }
             });
 
             $('#clear-form').click(function() {
@@ -299,6 +340,18 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
             return obj;
         };
+
+        var getDeliveryObj = function() {
+
+            var obj = {
+               label : $('#label').val(),
+               dateIn : $('#date_in').val(),
+               storeId : $('#store').val(),
+               contactId : $('#contact').val()
+            };
+
+            return obj;
+        }
 
         var refreshProductsTable = function() {
 
@@ -335,24 +388,23 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 $('#products-content').html(rendered);
 
                 $('.edit-product').click(function(e) {
-                    editProduct(e);
+                    editProductClick(e);
                 });
 
                 $('.delete-product').click(function(e) {
-                    deleteProduct(e);
+                    deleteProductClick(e);
                 });
-
             }
-
         };
 
-        var editProduct = function(e) {
+        var editProductClick = function(e) {
             var index = $(e.target).attr('product-index');
             var product = getProduct(index);
+            setEditedProductIndex(index);
             setAddProductFormValues(product);
         };
 
-        var deleteProduct = function(e) {
+        var deleteProductClick = function(e) {
             var index = $(e.target).attr('product-index');
             removeProduct(index);
             refreshProductsTable();
@@ -363,7 +415,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 rules : {
                     label : {
                         required : true,
-                        minLength : 3
+                        minlength : 3
                     },
                     store : {
                         required : true
@@ -372,7 +424,8 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                         required : true
                     },
                     date_in : {
-                        required : true
+                        required : true,
+                        dateISO : true
                     }
                 }
             });
@@ -458,6 +511,21 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
         $('#submenu').html(rendered);
 
         createView();
+
+        $('#no-products-dialog').dialog({
+            autoOpen : false,
+            width : 500,
+            resizable : false,
+            modal : true,
+            title : 'Brak produktów',
+            buttons : [{
+                html : "<i class='fa fa-times'></i>&nbsp; Okay",
+                "class" : "btn btn-default",
+                click : function() {
+                    $(this).dialog("close");
+                }
+            }]
+        });
 
     }
 );

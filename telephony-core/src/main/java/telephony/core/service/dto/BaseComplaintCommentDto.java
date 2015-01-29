@@ -1,5 +1,8 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BaseComplaintCommentDto {
 
     String comment;

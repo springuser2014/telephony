@@ -1,7 +1,10 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class UserDto {
 
     Long id;

@@ -1,17 +1,19 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import telephony.core.service.dto.ComplaintCommentDto;
 import telephony.core.service.dto.ComplaintEditDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class DetailedComplaintDto extends ComplaintEditDto {
 
     List<ComplaintCommentDto> comments;
 
     public DetailedComplaintDto() {
-        comments = new ArrayList<ComplaintCommentDto>();
+        comments = new ArrayList<>();
     }
 
     public List<ComplaintCommentDto> getComments() {

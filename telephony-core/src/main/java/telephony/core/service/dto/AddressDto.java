@@ -1,5 +1,8 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressDto {
 
     private String addressLine1;
@@ -8,9 +11,7 @@ public class AddressDto {
     private String zipCode;
     private String country;
 
-    public AddressDto() {
-
-    }
+    public AddressDto() { }
 
     public String getAddressLine1() {
         return addressLine1;

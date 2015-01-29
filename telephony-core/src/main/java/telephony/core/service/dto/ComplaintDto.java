@@ -1,9 +1,11 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import telephony.core.entity.enumz.ComplaintStatus;
 
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class ComplaintDto {
 
     String description;

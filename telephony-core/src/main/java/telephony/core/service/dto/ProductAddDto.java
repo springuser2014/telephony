@@ -1,6 +1,10 @@
 package telephony.core.service.dto;
 
-public class ProductAddDto extends AbstractProductDto<ProductTaxAddDto, PricingAddDto> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProductAddDto
+extends AbstractProductDto<ProductTaxAddDto, PricingAddDto> {
 
 	private String model;
 	private String producer;

@@ -1,14 +1,15 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PhoneNumberDto {
 
     private String prefix;
 
     private String number;
 
-    public PhoneNumberDto() {
-
-    }
+    public PhoneNumberDto() {}
 
     public PhoneNumberDto(String prefix, String number) {
         this.prefix = prefix;

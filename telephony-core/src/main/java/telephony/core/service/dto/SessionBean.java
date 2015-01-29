@@ -1,11 +1,14 @@
 package telephony.core.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 /**
  * asd.
  */
 // TODO : replace using SessionDto
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionBean {
 
 	protected String username;
