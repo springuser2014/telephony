@@ -218,11 +218,62 @@ function(App, $, Mustache, cookies, rest, auth) {
 					fetchAndUpdateView();
 				});
 
+				$('.delete-delivery').click(function(e) {
+					var delivery = $(e.target).attr('delivery-id');
+					var id = parseInt(delivery);
+
+					var authData = Telephony.Auth.getAuthObj();
+					authData.deliveryId = id;
+
+					Telephony.Rest.Deliveries.Delete(
+						authData,
+						function(jqxhr,status) {
+							// TODO handle problems
+
+							var resp = jqxhr.responseJSON;
+
+							if (resp.success) {
+								showSuccessDeleteDialog();
+								fetchAndUpdateView();
+							} else {
+								showErrorDeleteDialog();
+							}
+						},
+						function(jqxhr,status,error) {
+							// TODO handle problems
+
+
+						},
+						false
+					);
+
+				});
+
 			},
 			function(jqxhr,status,error) {
 				// TODO handle problems
 			}
 		);
+	};
+
+	var showSuccessDeleteDialog = function() {
+		var tmpl = $('#delete-delivery-success').html();
+		var ren = Mustache.render(tmpl, {});
+		$('#submenu').html($('#submenu').html() + ren);
+
+		$('button.close').click(function(e) {
+			$(e.target).parent().hide();
+		});
+	};
+
+	var showErrorDeleteDialog = function() {
+		var tmpl = $('#delete-delivery-error').html();
+		var ren = Mustache.render(tmpl, {});
+		$('#submenu').html($('#submenu').html() + ren);
+
+		$('button.close').click(function(e) {
+			$(e.target).parent().hide();
+		});
 	};
 
 	var addDeliveryView = function() {

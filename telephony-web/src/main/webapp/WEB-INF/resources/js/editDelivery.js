@@ -98,7 +98,8 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
         var numberOfElements = 0;
         var products = [];
-        var taxes = [];
+        var activeTaxes = [];
+        var allTaxes = [];
         var editedProductIndex = null;
         var editedProductId = null;
         var delivery = null;
@@ -163,18 +164,33 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             editedProductId = v;
         };
 
-        var setTaxes = function(_taxes) {
-            taxes = _taxes;
+        var setActiveTaxes = function(_taxes) {
+            activeTaxes = _taxes;
         };
 
-        var getTaxes = function() {
-            return taxes;
+        var getActiveTaxes = function() {
+            return activeTaxes;
         };
 
-        var getTax = function(id) {
-            for (var i = 0; i < taxes.length;i++) {
-                if (taxes[i].id == id)
-                    return taxes[i];
+        var getActiveTax = function(id) {
+            for (var i = 0; i < activeTaxes.length;i++) {
+                if (activeTaxes[i].id == id)
+                    return activeTaxes[i];
+            }
+        };
+
+        var setAllTaxes = function(_taxes) {
+            allTaxes = _taxes;
+        };
+
+        var getAllTaxes = function() {
+            return allTaxes;
+        };
+
+        var getAllTax = function(id) {
+            for (var i = 0; i < allTaxes.length;i++) {
+                if (allTaxes[i].id == id)
+                    return allTaxes[i];
             }
         };
 
@@ -225,24 +241,6 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 }
             }
         }
-
-        var decrementNumberOfElements = function() {
-            numberOfElements--;
-            if (numberOfElements <0) numberOfElements = 0;
-        };
-
-        var incrementNumberOfElements = function() {
-          numberOfElements++;
-        };
-
-        var getNumberOfElements = function() {
-            return numberOfElements;
-        };
-
-        var setNumberOfElements = function(n) {
-           numberOfElements = n;
-        };
-
         var getDeliveryId = function() {
             var splitted = document.URL.split('/');
             var id = splitted[splitted.length-1];
@@ -338,9 +336,24 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 function(jqXHR, status) {
                     // TODO handle problems
                     var resp = jqXHR.responseJSON;
-                    taxes = resp.taxes;
+                    activeTaxes = resp.taxes;
 
-                    setTaxes(taxes);
+                    setActiveTaxes(activeTaxes);
+                },
+                function(jqxhr,status,error) {
+                    // TODO handle problems
+                },
+                false
+            );
+
+            Telephony.Rest.Taxes.Fetch(
+                authData,
+                function(jqXHR, status) {
+                    // TODO handle problems
+                    var resp = jqXHR.responseJSON;
+                    activeTaxes = resp.taxes;
+
+                    setAllTaxes(activeTaxes);
                 },
                 function(jqxhr,status,error) {
                     // TODO handle problems
@@ -362,7 +375,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             );
 
             var params2 = {
-                taxes : taxes,
+                taxes : activeTaxes,
                 contacts : contacts,
                 stores : stores
             };
@@ -557,7 +570,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
                 for(var i = 0; i < products.length ; i++) {
                     var params = products[i];
-                    var tax = getTax(params.productTax.taxId);
+                    var tax = getActiveTax(params.productTax.taxId);
                     params.index = i;
                     params.productTax.rate = tax.rate;
 

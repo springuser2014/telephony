@@ -234,5 +234,27 @@
     <a class="btn btn-warning" href='<c:url value="/addDelivery"/>'>Dodaj dostawę</a>
 </script>
 
+<script id="delete-delivery-success" type="x-tmpl-mustache">
+
+    <div class="alert alert-success alert-block">
+        Dostawa została usunięta
+        <button class="close" data-dismiss="alert">
+            ×
+        </button>
+    </div>
+
+</script>
+
+<script id="delete-delivery-error" type="x-tmpl-mustache">
+
+    <div class="alert alert-danger alert-block">
+        Wystąpił problem podczas usuwania dostawy, spóbuj ponownie
+        <button class="close" data-dismiss="alert">
+            ×
+        </button>
+    </div>
+
+</script>
+
 </body>
 </html>
