@@ -1,10 +1,11 @@
 package telephony.core.service.dto;
 
+import java.util.Date;
+
 public abstract class AbstractDeliveryDto {
 
     private String label;
-    private String dateIn;
-
+    private Date dateIn;
     private Long storeId;
     private Long contactId;
 
@@ -16,11 +17,11 @@ public abstract class AbstractDeliveryDto {
         this.label = label;
     }
 
-    public String getDateIn() {
+    public Date getDateIn() {
         return dateIn;
     }
 
-    public void setDateIn(String dateIn) {
+    public void setDateIn(Date dateIn) {
         this.dateIn = dateIn;
     }
 

@@ -26,6 +26,18 @@ public class ProductComplaintConverter {
     @Inject
     ProductConverter productConverter;
 
+    public ProductComplaintDto toProductComplaintDto(ProductComplaint pc) {
+        ProductComplaintDto dto = new ProductComplaintDto();
+        dto.setProductId(pc.getProduct().getId());
+        dto.setDescription(pc.getDescription());
+        dto.setTitle(pc.getTitle());
+        dto.setReportedDate(pc.getReportedDate());
+        dto.setStatus(pc.getStatus());
+        dto.setUniqueHash(pc.getUniqueHash());
+
+        return dto;
+    }
+
     public ProductComplaint toEntity(ProductComplaintDto dto) {
 
         Product product = productsDao.findById(dto.getProductId());

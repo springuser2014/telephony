@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ProductEditDto extends ProductAddDto {
 
 	private Long id;
+	private Long saleId;
 
 	public Long getId() {
 		return id;
@@ -13,5 +14,13 @@ public class ProductEditDto extends ProductAddDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getSaleId() {
+		return saleId;
+	}
+
+	public void setSaleId(Long saleId) {
+		this.saleId = saleId;
 	}
 }

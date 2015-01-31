@@ -7,49 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeliveryAddDto {
-
-    private String label;
-    private Date dateIn;
-    private Long storeId;
-    private Long contactId;
+public class DeliveryAddDto
+extends AbstractDeliveryDto {
 
     private List<ProductAddDto> products;
 
     public DeliveryAddDto() {
-        this.products = new ArrayList<ProductAddDto>();
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public Date getDateIn() {
-        return dateIn;
-    }
-
-    public void setDateIn(Date dateIn) {
-        this.dateIn = dateIn;
-    }
-
-    public Long getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
-    }
-
-    public Long getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(Long contactId) {
-        this.contactId = contactId;
+        this.products = new ArrayList<>();
     }
 
     public List<ProductAddDto> getProducts() {

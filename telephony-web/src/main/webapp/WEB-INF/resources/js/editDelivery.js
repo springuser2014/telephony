@@ -1,7 +1,7 @@
 
 require.config({
 
-    baseUrl : 'resources/js',
+    baseUrl : '../resources/js',
     paths : {
 
         'bootstrap' : 'bootstrap/bootstrap',
@@ -45,7 +45,7 @@ require.config({
         // TODO : add other modules dependencies
 
         'app' : {
-            deps : [    'bootstrap']
+            deps : ['bootstrap']
         },
 
         'jquery-ui' : {
@@ -78,19 +78,74 @@ require.config({
 
         'auth' : {
             deps: ['jquery', 'rest']
+        },
+
+        'moment' : {
+            exports : 'moment'
         }
-    }
+    },
+
 });
 
-require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquery-validate'],
+require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquery-validate', 'moment'],
     function(App, $, Mustache, cookies, rest, auth) {
 
         Telephony.Auth.authorize('user1@gmail.com', 'rfaysdhaiufsiuf');
+
+        var productsToAdd = [];
+        var productsToEdit = [];
+        var productsToDelete = [];
 
         var numberOfElements = 0;
         var products = [];
         var taxes = [];
         var editedProductIndex = null;
+        var editedProductId = null;
+        var delivery = null;
+
+        var getProductsToAdd = function() {
+            return productsToAdd;
+        };
+
+        var getProductsToEdit = function() {
+            return productsToEdit;
+        };
+
+        var getProductsToDelete = function() {
+            return productsToDelete;
+        };
+
+        var setProductsToAdd = function(_productsToAdd) {
+            productsToAdd = _productsToAdd;;
+        };
+
+        var setProductsToEdit = function(_productsToEdit) {
+            productsToEdit = _productsToEdit;
+        };
+
+        var setProductsToDelete = function(_productsToDelete) {
+            productsToDelete = _productsToDelete;
+        };
+
+        var setProductToAdd = function(i, productToAdd) {
+            productsToAdd[i] = productToAdd;
+        };
+
+        var setProductToEdit = function(i, productToEdit) {
+            productsToEdit[i] = productToEdit;
+        };
+
+        var setProductToDelete = function(i, productToDelete) {
+            productsToDelete[i] = productToDelete;
+        };
+
+        var setDelivery = function(_delivery) {
+            delivery = _delivery;
+        };
+
+        var getDelivery = function() {
+            return delivery;
+        };
 
         var getEditedProductIndex = function() {
             return editedProductIndex;
@@ -98,6 +153,14 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
         var setEditedProductIndex = function(v) {
             editedProductIndex = v;
+        };
+
+        var getEditedProductId = function() {
+            return editedProductId;
+        };
+
+        var setEditedProductId = function(v) {
+            editedProductId = v;
         };
 
         var setTaxes = function(_taxes) {
@@ -127,6 +190,10 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             products.push(p);
         };
 
+        var addProductToAdd = function(p) {
+            productsToAdd.push(p);
+        };
+
         var setProducts = function(prods) {
             products = prods;
         };
@@ -138,6 +205,26 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
         var removeProduct = function(i) {
             products.splice(i,1);
         };
+
+        var removeProductToAdd = function(obj) {
+            var index = null;
+            for (var i = i; i < productsToAdd.length; i++) {
+                if (_.isEqual(obj, productsToAdd[i])) {
+                    index = i;
+                }
+            }
+
+            productsToAdd.splice(index, 1);
+        };
+
+        var setEditingProduct = function (index,obj) {
+            var index = null;
+            for (var i = i; i < productsToEdit.length; i++) {
+                if (_.isEqual(obj, productsToAdd[i])) {
+                    index = i;
+                }
+            }
+        }
 
         var decrementNumberOfElements = function() {
             numberOfElements--;
@@ -156,32 +243,58 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
            numberOfElements = n;
         };
 
+        var getDeliveryId = function() {
+            var splitted = document.URL.split('/');
+            var id = splitted[splitted.length-1];
+            return parseInt(id);
+        };
+
+        var fetchDeliveryData = function()  {
+
+            var authData = Telephony.Auth.getAuthObj();
+
+            authData.deliveryId = getDeliveryId();
+
+            Telephony.Rest.Deliveries.Details(
+                authData,
+                function(jqxhr, status) {
+                    var resp = jqxhr.responseJSON;
+
+                    // TODO handle problems
+                    setDelivery(resp.delivery);
+                    setProducts(resp.delivery.products);
+                },
+                function(jqxhr, status, error) {
+                    // TODO handle problems
+                },
+                false);
+
+        };
+
         var clearDeliveryForm = function() {
             getDeliveryFormValidator().resetForm();
 
-            $('#add-delivery-form label.state-error').removeClass('state-error');
-            $('#add-delivery-form label.state-success').removeClass('state-success');
+            $('#edit-delivery-form label.state-error').removeClass('state-error');
+            $('#edit-delivery-form label.state-success').removeClass('state-success');
 
-            $('#add-delivery-form input').val('');
-            $('#add-delivery-form select').val(0);
+            $('#edit-delivery-form input').val('');
+            $('#edit-delivery-form select').val(0);
         };
 
         var clearProductForm = function() {
             getAddProductValidator().resetForm();
 
-            $('#add-product-form label.state-error').removeClass('state-error');
-            $('#add-product-form label.state-success').removeClass('state-success');
+            $('#edit-product-form label.state-error').removeClass('state-error');
+            $('#edit-product-form label.state-success').removeClass('state-success');
 
-            $('#add-product-form input').val('');
-            $('#add-product-form select').val(0);
-        };
-
-        var clearProductTable = function() {
-
+            $('#edit-product-form input').val('');
+            $('#edit-product-form select').val(0);
         };
 
         var clearForms = function() {
             setProducts([]);
+            setEditedProductId(null);
+            setEditedProductIndex(null);
             clearDeliveryForm();
             clearProductForm();
             refreshProductsTable();
@@ -199,6 +312,8 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
         var createView = function() {
 
+            fetchDeliveryData();
+
             var authData = Telephony.Auth.getAuthObj();
             authData.filters = { page : 0, perPage : 100 };
 
@@ -208,32 +323,41 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             Telephony.Rest.Stores.Fetch(
                 authData,
                 function(jqXHR, status) {
+                    // TODO handle problems
                     var resp = jqXHR.responseJSON;
                     stores = resp.stores;
                 },
-                function() { },
+                function(jqxhr,status,error) {
+                    // TODO handle problems
+                },
                 false
             );
 
             Telephony.Rest.Taxes.Fetch(
                 authData2,
                 function(jqXHR, status) {
+                    // TODO handle problems
                     var resp = jqXHR.responseJSON;
                     taxes = resp.taxes;
 
                     setTaxes(taxes);
                 },
-                function() { },
+                function(jqxhr,status,error) {
+                    // TODO handle problems
+                },
                 false
             );
 
             Telephony.Rest.Contacts.Fetch(
                 authData,
                 function(jqXHR, status) {
+                    // TODO handle problems
                     var resp = jqXHR.responseJSON;
                     contacts = resp.contacts;
                 },
-                function() { },
+                function(jqxhr,status,error) {
+                    // TODO handle problems
+                },
                 false
             );
 
@@ -243,11 +367,11 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 stores : stores
             };
 
-            var tmpl = $('#add-delivery-template').html();
+            var tmpl = $('#edit-delivery-template').html();
 
             var rendered = Mustache.render(tmpl, params2);
 
-            $('#add-delivery-content').html(rendered);
+            $('#edit-delivery-content').html(rendered);
 
             if ($.fn.datepicker) {
                 $('.date').each(function() {
@@ -267,27 +391,41 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
             $('.tooltip').tooltip();
 
-            $('a#add-product-btn').click(function() {
+            $('a#edit-product-btn').click(function() {
 
                 if (validateAddProductForm()) {
 
-                    if (getEditedProductIndex() == null) {
+                    // adding new product
+                    if (getEditedProductIndex() == null
+                        && getEditedProductId() == null) {
+
                         var obj = getProductObj();
                         addProduct(obj);
+                        addProductToAdd(obj);
                         clearProductForm();
                         refreshProductsTable();
-                    } else {
+                    } else if(getEditedProductIndex() != null
+                        && getEditedProductId() == null) { // editing new product
+
                         index = getEditedProductIndex();
                         var obj = getProductObj();
                         setProduct(index, obj);
                         clearProductForm();
                         setEditedProductIndex(null);
+                        setEditedProductId(null);
                         refreshProductsTable();
+                    } else if (getEditedProductIndex() != null
+                        && getEditedProductId() != null) { // editing old product
+
+                        index = getEditedProductIndex();
+                        var obj = getProductObj();
+                        setProduct(index,obj);
+                        setEditingProduct(index,obj);
                     }
                 }
             });
 
-            $('#save-delivery').click(function() {
+            $('#save-changes').click(function() {
 
                 if (getProducts().length == 0) {
                     $('#no-products-dialog').dialog('open');
@@ -297,40 +435,47 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 if (validateDeliveryForm()) {
 
                     var auth = Telephony.Auth.getAuthObj();
+                    var delivery = getDelivery();
+
                     auth.deliveryDto = getDeliveryObj();
+                    auth.deliveryDto.id = delivery.id;
+                    auth.deliveryDto.productsToAdd = getProductsToAdd();
+                    auth.deliveryDto.productsToEdit = getProductsToEdit();
+                    auth.deliveryDto.productsToDelete = getProductsToDelete();
 
-                    auth.deliveryDto.products = getProducts();
-
-                    Telephony.Rest.Deliveries.Add(
+                    Telephony.Rest.Deliveries.Edit(
                         auth,
                         function(jqxhr, status) {
+
+                            // TODO handle problems
 
                             var resp = jqxhr.responseJSON;
 
                             if (resp.success) {
                                 clearForms();
 
-                                var tmpl = $('#delivery-add-delivery-success').html();
+                                var tmpl = $('#delivery-edit-delivery-success').html();
                                 var ren = Mustache.render(tmpl, {});
                                 $('#submenu').html($('#submenu').html() + ren);
 
                                 $('button.close').click(function(e) {
                                     $(e.target).parent().hide();
                                 });
+
+                                createView();
 
                             } else {
-                                var tmpl = $('#delivery-add-delivery-error').html();
+                                var tmpl = $('#delivery-edit-delivery-error').html();
                                 var ren = Mustache.render(tmpl, {});
                                 $('#submenu').html($('#submenu').html() + ren);
 
                                 $('button.close').click(function(e) {
                                     $(e.target).parent().hide();
                                 });
-
                             }
                         },
                         function(jqxhr, status, error) {
-
+                            // TODO handle problems
                         },
                         false
                     );
@@ -340,6 +485,8 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             $('#clear-form').click(function() {
                 clearForms();
             });
+
+            setDeliveryForm(getDelivery());
         };
 
         var getProductObj = function() {
@@ -373,14 +520,25 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             };
 
             return obj;
-        }
+        };
+
+        var setDeliveryForm = function(obj) {
+            var date = new Date();
+            date.setTime(parseInt(obj.dateIn));
+            var dateStr = moment(date).format('YYYY-MM-DD');
+
+            $('#label').val(obj.label);
+            $('#date_in').val(dateStr);
+            $('#store').val(obj.storeId);
+            $('#contact').val(obj.contactId);
+        };
 
         var refreshProductsTable = function() {
 
             var products = getProducts();
 
             if (products.length == 0) {
-                var tmpl2 = $('#delivery-add-product-empty-info').html();
+                var tmpl2 = $('#delivery-edit-product-empty-info').html();
 
                 var rendered2 = Mustache.render(tmpl2, {});
 
@@ -413,27 +571,55 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                     editProductClick(e);
                 });
 
+                $('.edit-new-product').click(function(e) {
+                    editNewProductClick(e);
+                });
+
                 $('.delete-product').click(function(e) {
                     deleteProductClick(e);
+                });
+
+                $('.delete-new-product').click(function(e) {
+                    deleteNewProductClick(e);
                 });
             }
         };
 
-        var editProductClick = function(e) {
+        var editNewProductClick = function(e) {
             var index = $(e.target).attr('product-index');
             var product = getProduct(index);
             setEditedProductIndex(index);
+            setEditedProductId(null);
             setAddProductFormValues(product);
         };
 
-        var deleteProductClick = function(e) {
+        var editProductClick = function(e) {
             var index = $(e.target).attr('product-index');
+            var id = $(e.target).attr('product-id');
+            var product = getProduct(index);
+            setEditedProductIndex(index);
+            setEditedProductId(id);
+            setAddProductFormValues(product);
+        };
+
+        var deleteNewProductClick = function(e) {
+            var index = $(e.target).attr('product-index');
+            var prod = getProduct(index);
+            removeProductToAdd(prod);
             removeProduct(index);
             refreshProductsTable();
         };
 
+        var deleteProductClick = function(e) {
+            var index = $(e.target).attr('product-index');
+            var id = $(e.target).attr('product-id');
+            removeProduct(index);
+            getProductsToDelete().push(id);
+            refreshProductsTable();
+        };
+
         var getDeliveryFormValidator = function() {
-            var deliveryValidator =  $('#add-delivery-form').validate({
+            var deliveryValidator =  $('#edit-delivery-form').validate({
                 rules : {
                     label : {
                         required : true,
@@ -471,10 +657,12 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 Telephony.Rest.Products.IsImeiAvailable(
                     _data,
                     function(jqxhr,status) {
+                        // TODO handle problems
                         var resp = jqxhr.responseJSON;
                         isAvailable = resp.isAvailable;
                     },
                     function(jqxhr,status,error) {
+                        // TODO handle problems
                     },
                     false
                 );
@@ -499,7 +687,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
             }, 'Podany IMEI został już dodany do listy');
 
-            var addProductValidator = $('#add-product-form').validate({
+            var addProductValidator = $('#edit-product-form').validate({
                 rules : {
                     imei : {
                         required : true,
@@ -544,7 +732,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
             return getAddProductValidator().form();
         };
 
-        var tmpl = $('#add-delivery-submenu').html();
+        var tmpl = $('#edit-delivery-submenu').html();
 
         var rendered = Mustache.render(tmpl, {});
 

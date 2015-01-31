@@ -1,23 +1,11 @@
 package telephony.core.entity.jpa;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "sales")
@@ -56,8 +44,11 @@ public class Sale extends BaseEntity {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sale", cascade = CascadeType.ALL)
+//    private Collection<SaleComplaint> complaints;
+
     public Sale() {
-        products = new HashSet<Product>();
+        products = new HashSet<>();
     }
 
     public Contact getContact() {
@@ -129,6 +120,22 @@ public class Sale extends BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
+
+//    public void addComplaint(SaleComplaint sc) {
+//        complaints.add(sc);
+//    }
+//
+//    public void removeComplaint(SaleComplaint sc) {
+//        complaints.remove(sc);
+//    }
+//
+//    public Collection<SaleComplaint> getComplaints() {
+//        return complaints;
+//    }
+//
+//    public void setComplaints(Collection<SaleComplaint> complaints) {
+//        this.complaints = complaints;
+//    }
 
     @Override
     public boolean equals(Object o) {

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script data-main="/telephony-web/resources/js/deliveries.js" src='<c:url value="/resources/js/libs/require-2.1.10.js"/>'>
+    <script data-main="/telephony-web/resources/js/deliveryDetails.js" src='<c:url value="../resources/js/libs/require-2.1.10.js"/>'>
     </script>
 
     <c:if test="${environment == 'PROD'}">
@@ -18,8 +18,10 @@
 <body>
 
 <jsp:include page="top.jsp"/>
+<jsp:include page="include/common_templates.jsp"/>
 
 <div class="container theme-showcase">
+
     <div class="row show-grid">
 
         <div id="submenu"></div>
@@ -28,194 +30,228 @@
 
     <div class="row show-grid">
 
-        <div id="deliveries-content"></div>
+        <div id="edit-delivery-content"></div>
 
     </div>
+
 </div>
 
-<script id="deliveries-search-form-template" type="x-tmpl-mustache">
+<script id="edit-delivery-submenu" type="x-tmpl-mustache">
+
     <div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
 
-        <header role="heading">
-            <h2> Szukaj </h2>
-        </header>
+        <a class="btn btn-warning" href='<c:url value="/deliveries"/>'>Powrót</a>
 
-        <div id='deliveries-search-form'>
-            <table class="table table-bordered">
-                <form id="deliveries-search-form">
-                    <fieldset class="smart-form">
-                        <div class="row">
-                            <section class="col col-2">
-                                <label class="input">
-                                    <input type="text" name="label" id="label" placeholder="nazwa"/>
-                                    <b class="tooltip tooltip-top-left">Nazwa dostawy</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-3">
-                                <label class="select">
-                                    <select name="store" id="store" class="valid">
-                                        <option value="0" selected="" disabled="">magazyn</option>
-                                        {{#stores}}
-                                            <option value="{{storeId}}">{{label}}</option>
-                                        {{/stores}}
-                                    </select>
-                                    <i></i>
-                                </label>
-                            </section>
-
-                            <section class="col col-3">
-                                <label class="select">
-                                    <select name="contact" id="contact" class="valid">
-                                        <option value="0" selected="" disabled="">kontakt</option>
-                                        {{#contacts}}
-                                            <option value="{{id}}">{{label}}</option>
-                                        {{/contacts}}
-                                    </select>
-                                    <i></i>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <a class="btn btn-info btn-sm" id='filter-results'>Filtruj wyniki</a>
-                            </section>
-
-                            <section class="col col-2">
-                                <a class="btn btn-success btn-sm" id='clear-form'>Czyść formularz</a>
-                            </section>
-                        </div>
-
-                        <div class="row">
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-dollar"></i>
-                                    <input type="text" id="sum_from" name="sum_from" placeholder="od"/>
-                                    <b class="tooltip tooltip-bottom-right">Suma dostawy (od)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-dollar"></i>
-                                    <input type="text" id="sum_to" name="sum_to" placeholder="do"/>
-                                    <b class="tooltip tooltip-bottom-right">Suma dostawy (do)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-calendar"></i>
-                                    <input type="text" class="date" id="date_from" name="date_from" placeholder="od"/>
-                                    <b class="tooltip tooltip-top-left">Data dostawy (od)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-calendar"></i>
-                                    <input type="text" class="date" id="date_to" name="date_to" placeholder="do"/>
-                                    <b class="tooltip tooltip-top-right">Data dostawy (do)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-ellipsis-vertical"></i>
-                                    <input type="text" name="minNumberOfProducts" id="minNumberOfProducts" placeholder="od"/>
-                                    <b class="tooltip tooltip-bottom-right">Liczba dostarczonych produktów (od)</b>
-                                </label>
-                            </section>
-
-                            <section class="col col-2">
-                                <label class="input">
-                                    <i class="icon-prepend fa fa-ellipsis-vertical"></i>
-                                    <input type="text" name="maxNumberOfProducts" id="maxNumberOfProducts" placeholder="do"/>
-                                    <b class="tooltip tooltip-bottom-right">Liczba dostarczonych produktów (do)</b>
-                                </label>
-                            </section>
-
-                        </div>
-                    </fieldset>
-                </form>
-            </table>
-        </div>
     </div>
 </script>
-<script id="deliveries-list-template" type="x-tmpl-mustache">
 
-    <div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
+
+<script id="edit-delivery-template" type="x-tmpl-mustache">
+
+<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
 
     <header role="heading">
-        <h2> Dostawy </h2>
+        <h2> Szczegóły dostawy </h2>
     </header>
 
     <div>
-    <table class="table table-bordered">
+        <div id='delivery-details' class='smart-form'>
+
+            <div class="row">
+                <div class="col col-3">
+                    Nazwa
+                </div>
+                <div class="col col-3" id="label">
+                    label
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    Magazyn
+                </div>
+                <div class="col col-3" id="store">
+                    store
+                </div>
+           </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    Data dostawy
+                </div>
+                <div class="col col-3" id="date_in">
+                    label
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    Kontakt
+                </div>
+                <div class="col col-3" id="contact">
+                    contact
+                </div>
+            </div>
+        </div>
+
+        <legend>Produkty</legend>
+
+        <div id='products-list'>
+        </div>
+
+    </div>
+
+</div>
+
+</script>
+
+
+<script id="delivery-products-table" type="x-tmpl-mustache">
+
+    <table class='table table-bordered' id='products-table'>
         <thead>
             <tr>
-                <th>Nazwa</th>
-                <th>Data dodania</th>
-                <th>Magazyn</th>
-                <th>Kontakt</th>
-                <th>Liczba produktów</th>
-                <th>Akcje</th>
+                <th class='imei'>IMEI</th>
+                <th class='producent'>Producent</th>
+                <th class='model'>Model</th>
+                <th class='color'>Kolor</th>
+                <th class='price-in'>Cena zakupu</th>
+                <th class='price-out'>Cena sprzedaży</th>
+                <th class='tax'>Podatek</th>
             </tr>
         </thead>
-        <tbody>
-        {{#deliveries}}
-        <tr>
-            <td>{{label}}</td>
-            <td>{{dateIn}}</td>
-            <td>{{storeLabel}}</td>
-            <td>{{contactLabel}}</td>
-            <td>{{numberOfProducts}}</td>
-            <td>
-                <a class="btn btn-info btn-xs" href="/deliveryDetails/{{id}}">Szczegóły</a>
-                <a class="btn btn-success btn-xs" href="/editDelivery/{{id}}">Edytuj</a>
-                <a class="btn btn-danger btn-xs" delivery-id="{{id}}">Usuń</a>
-            </td>
-        </tr>
-        {{/deliveries}}
+        <tbody id='products-content'>
         </tbody>
 
     </table>
-    {{showPagination}}
-        <ul class="pagination">
-            <li class="first">
-                <a href="#">First</a>
-            </li>
-            <li class="prev">
-                <a href="#">Previous</a>
-            </li>
-            <li>
-                <a href="#">1</a>
-            </li>
-            <li class="active">
-                <a href="#">2</a>
-            </li>
-            <li>
-                <a href="#">3</a>
-            </li>
-            <li>
-                <a href="#">4</a>
-            </li>
-            <li>
-                <a href="#">5</a>
-            </li>
-            <li class="next">
-                <a href="#">Next</a>
-            </li>
-            <li class="last">
-                <a href="#">Last</a>
-            </li>
-        </ul>
-    {{/showPagination}}
-    </div>
 
+    <div id='delivery-table-pagination'>
+    </div>
+</script>
+
+<script id="delivery-product-row" type="x-tmpl-mustache">
+
+    {{#products}}
+    <tr>
+        <td>{{imei}}</td>
+        <td>{{producer}}</td>
+        <td>{{model}}</td>
+        <td>{{color}}</td>
+        <td>{{priceIn}}</td>
+        <td>
+            {{price}}
+        </td>
+        <td>
+            VAT {{tax}} %
+        </td>
+
+    </tr>
+    {{/products}}
+
+</script>
+
+<script id="delivery-table-pagination-template" type="x-tmpl-mustache">
+
+    {{#pagination}}
+    <ul class="pagination">
+    {{#first}}
+    <li id="showFirst" class="first {{#disabled}}disabled{{/disabled}}">
+    <a href="#" class="changePage" page=0>First</a>
+    </li>
+    {{/first}}
+    {{#previous}}
+    <li id="showPrevious" class="prev {{#disabled}}disabled{{/disabled}}">
+    <a href="#" class="changePage" page={{page}}>Previous</a>
+    </li>
+    {{/previous}}
+
+    {{#pages}}
+    {{#isActive}}
+    <li class="active">
+    <a class="changePage" href="#" page={{page}}>{{label}}</a>
+    </li>
+    {{/isActive}}
+    {{^isActive}}
+    <li>
+    <a class="changePage" href="#" page={{page}}>{{label}}</a>
+    </li>
+    {{/isActive}}
+    {{/pages}}
+
+    {{#next}}
+    <li id="showNext" class="next {{#disabled}}disabled{{/disabled}}">
+    <a href="#" class="changePage" page={{page}}>Next</a>
+    </li>
+    {{/next}}
+    {{#last}}
+    <li id="showLast" class="last {{#disabled}}disabled{{/disabled}}">
+    <a href="#" class="changePage" page={{page}}>Last</a>
+    </li>
+    {{/last}}
+    </ul>
+    {{/pagination}}
+
+</script>
+
+<script id="delivery-edit-product-empty-info" type="x-tmpl-mustache">
+
+    <div class="alert alert-info alert-block">
+        Lista produktów jest pusta
     </div>
 
 </script>
+
+<script id="delivery-edit-delivery-success" type="x-tmpl-mustache">
+
+    <div class="alert alert-success alert-block">
+        Dostawa została zaktualizowana w bazie danych
+        <button class="close" data-dismiss="alert">
+            ×
+        </button>
+    </div>
+
+</script>
+
+<script id="delivery-edit-delivery-error" type="x-tmpl-mustache">
+
+    <div class="alert alert-danger alert-block">
+        Wystąpił problem podczas zapisu danych, spóbuj ponownie
+        <button class="close" data-dismiss="alert">
+            ×
+        </button>
+    </div>
+
+</script>
+
+<script id="delivery-edit-element" type="x-tmpl-mustache">
+
+     <div class="row">
+            <section class="col col-2">
+                <label class="input">
+                    <i class="icon-prepend fa fa-dollar"></i>
+                    <input type="text" id="sum_from" name="sum_from" placeholder="Cena zakupu"/>
+                    <b class="tooltip tooltip-bottom-right">Cena zakupu </b>
+                </label>
+            </section>
+        </div>
+
+        <div class="row">
+            <section class="col col-2">
+                <label class="input">
+                    <i class="icon-prepend fa fa-dollar"></i>
+                    <input type="text" id="sum_from" name="sum_from" placeholder="Cena zakupu"/>
+                    <b class="tooltip tooltip-bottom-right">Cena sprzedaży </b>
+                </label>
+            </section>
+        </div>
+
+</script>
+
+
+<div id="no-products-dialog" title="Nie masz żadnych produktów" style="display:none">
+    Nie masz dodanych żadnych produktów na liście dostawy
+</div>
+
 
 </body>
 </html>

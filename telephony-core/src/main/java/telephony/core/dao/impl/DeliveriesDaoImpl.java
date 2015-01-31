@@ -102,7 +102,7 @@ implements DeliveriesDao {
 	// TODO : extract to interface searchable
 	@Override
     @SuppressWarnings("unchecked")
-	public List<Delivery> find(DeliveryFilterCriteria filters) {
+	public List<Delivery> findByCriteria(DeliveryFilterCriteria filters) {
 
         logger.debug("findAll starts ");
         
@@ -229,7 +229,7 @@ implements DeliveriesDao {
     }
 
     @Override
-    public Long count(DeliveryFilterCriteria filters) {
+    public Long countByCriteria(DeliveryFilterCriteria filters) {
         logger.debug("findAll starts ");
 
         StringBuilder sb = new StringBuilder();
@@ -341,7 +341,6 @@ implements DeliveriesDao {
         if (filters.getStoreId() != null) {
             query.setParameter("storeId", filters.getStoreId());
         }
-
 
         // TODO improve it later
         List<Long> lst = (List<Long>) query.getResultList();

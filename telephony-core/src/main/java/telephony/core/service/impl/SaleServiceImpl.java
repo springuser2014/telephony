@@ -151,13 +151,15 @@ implements SaleService {
 
 		sessionService.validate(request.getSessionDto());
 
-		List<SaleDto> salez = new ArrayList<SaleDto>();
-		List<Sale> sales = salesDao.find(request.getFilters());
+		List<SaleDto> salez = new ArrayList<>();
+		List<Sale> sales = salesDao.findByCriteria(request.getFilters());
+		Long count = salesDao.countByCriteria(request.getFilters());
 
 		for (Sale sale : sales) {
 			salez.add(saleConverter.toSaleDto(sale));
 		}
 
+		resp.setCountTotal(count);
 		resp.setMessage("operation perfromed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 		resp.setSales(salez);

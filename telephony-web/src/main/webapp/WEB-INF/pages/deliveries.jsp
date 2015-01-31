@@ -159,6 +159,7 @@
                 <th>Magazyn</th>
                 <th>Kontakt</th>
                 <th>Liczba produktów</th>
+                <th>Wartość dostawy</th>
                 <th>Akcje</th>
             </tr>
         </thead>
@@ -170,10 +171,11 @@
             <td>{{storeLabel}}</td>
             <td>{{contactLabel}}</td>
             <td>{{numberOfProducts}}</td>
+            <td>{{sum}}</td>
             <td>
-                <a class="btn btn-info btn-xs" href="/deliveryDetails/{{id}}">Szczegóły</a>
-                <a class="btn btn-success btn-xs" href="/editDelivery/{{id}}">Edytuj</a>
-                <a class="btn btn-danger btn-xs" delivery-id="{{id}}">Usuń</a>
+                <a class="btn btn-info btn-xs" href="<c:url value="/deliveryDetails/"/>{{id}}">Szczegóły</a>
+                <a class="btn btn-success btn-xs" href="<c:url value="/editDelivery/"/>{{id}}">Edytuj</a>
+                <a class="btn btn-danger btn-xs delete-delivery" delivery-id="{{id}}" href="#">Usuń</a>
             </td>
         </tr>
         {{/deliveries}}
@@ -225,6 +227,8 @@
     </div>
 
 </script>
+
+<!-- TODO extract pagination to reusable component -->
 
 <script id="delivery-add-template" type="x-tmpl-mustache">
     <a class="btn btn-warning" href='<c:url value="/addDelivery"/>'>Dodaj dostawę</a>

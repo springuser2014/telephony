@@ -1,15 +1,13 @@
 package telephony.core.dao.impl;
 
-import java.util.List;
-
 import telephony.core.dao.SaleComplaintDao;
 import telephony.core.entity.enumz.ComplaintStatus;
-import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.entity.jpa.SaleComplaint;
-import telephony.core.query.filter.ProductComplaintFilterCriteria;
 import telephony.core.query.filter.SaleComplaintFilterCriteria;
 
 import javax.persistence.Query;
+import java.util.Collection;
+import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
@@ -20,6 +18,21 @@ implements SaleComplaintDao {
 
 	public SaleComplaintDaoImpl() {
 		super(SaleComplaint.class);
+	}
+
+	@Override
+	public List<SaleComplaint> findBySalesIds(Collection<Long> salesIds) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("select SaleComplaint pc inner join pc.sale s where s.id IN (:salesIds) ");
+
+		List<SaleComplaint> complaints =
+				(List<SaleComplaint>) getEntityManager()
+						.createQuery(sb.toString())
+						.setParameter("salesIds", salesIds)
+						.getResultList();
+
+		return complaints;
 	}
 
 	@Override

@@ -78,7 +78,7 @@ require.config({
 });
 
 
-require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth'],
+require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth','moment'],
 function(App, $, Mustache, cookies, rest, auth) {
 
 	var contacts = [];
@@ -174,12 +174,6 @@ function(App, $, Mustache, cookies, rest, auth) {
 		return obj;
 	};
 
-	var changePage = function(e) {
-
-		var asd= 1 ;
-		alert(e);
-	};
-
 	var fetchAndUpdateView = function() {
 
 		var authData = Telephony.Auth.getAuthObj();
@@ -189,11 +183,22 @@ function(App, $, Mustache, cookies, rest, auth) {
 			authData,
 			function(jqXHR, status) {
 
+				// TODO handle problems
+
 				var resp = jqXHR.responseJSON;
 
 				var params1 = {
 					deliveries : resp.deliveries
 				};
+
+				for (var i = 0; i < params1.deliveries.length; i++) {
+					var d = params1.deliveries[i];
+
+					var date = new Date();
+					date.setTime(d.dateIn);
+					var dateStr = moment(date).format('YYYY-MM-DD');
+					d.dateIn = dateStr;
+				}
 
 				setNumberOfResults(resp.countTotal);
 
@@ -214,8 +219,8 @@ function(App, $, Mustache, cookies, rest, auth) {
 				});
 
 			},
-			function() {
-
+			function(jqxhr,status,error) {
+				// TODO handle problems
 			}
 		);
 	};
@@ -233,25 +238,31 @@ function(App, $, Mustache, cookies, rest, auth) {
 	var createFiltersView = function() {
 
 		var authData = Telephony.Auth.getAuthObj();
-		authData.filters = {};
+		authData.filters = { page : 0, perPage : 30 };
 
 		Telephony.Rest.Stores.Fetch(
 			authData,
-			function(jqXHR, status) {
-				var resp = jqXHR.responseJSON;
+			function(jqxhr,status) {
+				// TODO handle problems
+				var resp = jqxhr.responseJSON;
 				stores = resp.stores;
 			},
-			function() { },
+			function(jqxhr,status,error) {
+				// TODO handle problems
+			},
 			false
 		);
 
 		Telephony.Rest.Contacts.Fetch(
 			authData,
-			function(jqXHR, status) {
-				var resp = jqXHR.responseJSON;
+			function(jqxhr,status) {
+				// TODO handle problems
+				var resp = jqxhr.responseJSON;
 				contacts = resp.contacts;
 			},
-			function() { },
+			function(jqxhr,status,error) {
+				// TODO handle problems
+			},
 			false
 		);
 

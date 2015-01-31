@@ -82,9 +82,9 @@ implements DeliveryService {
 
 		sessionService.validate(request.getSessionDto());
 
-        List<Delivery> res = deliveriesDao.find(request.getFilters());
+        List<Delivery> res = deliveriesDao.findByCriteria(request.getFilters());
         List<DeliverySearchDto> coll = new ArrayList<>();
-		Long count = deliveriesDao.count(request.getFilters());
+		Long count = deliveriesDao.countByCriteria(request.getFilters());
         
         for(Delivery d : res) {
         	coll.add(deliveryConverter.toDeliverySearchDto(d));

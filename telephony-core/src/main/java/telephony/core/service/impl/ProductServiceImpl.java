@@ -16,8 +16,7 @@ import telephony.core.query.filter.*;
 import telephony.core.service.converter.ModelConverter;
 import telephony.core.service.converter.ProducerConverter;
 import telephony.core.service.converter.ProductConverter;
-import telephony.core.service.dto.ModelDto;
-import telephony.core.service.dto.ProducerDto;
+import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.ProductCheckImeiRequest;
 import telephony.core.service.dto.request.ProductDetailsRequest;
 import telephony.core.service.dto.request.ProductFetchDataRequest;
@@ -27,8 +26,6 @@ import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
-import telephony.core.service.dto.ProductFetchDto;
-import telephony.core.service.dto.SessionDto;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -223,20 +220,9 @@ implements ProductService {
 
 		sessionService.validate(request.getSessionDto());
 
-		List<String> imeis = new ArrayList<>();
-		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
-		// TODO : prepare separate JPQL for this case
-		List<Product> products = productsDao.findByCriteria(filters);
-
-		for (Product p : products) {
-			String imei = p.getImei();
-
-			if (!imeis.contains(imei)) {
-				imeis.add(imei);
-			}
-		}
-
-		resp.setIsAvailable(!imeis.contains(request.getImei()));
+		Product product = productsDao.findByIMEI(request.getImei());
+		boolean isAvailable = product == null;
+		resp.setIsAvailable(isAvailable);
 		resp.setMessage("operation performed successfully");
 		resp.setSuccess(true);
 		return resp;
@@ -289,7 +275,7 @@ implements ProductService {
 		sessionService.validate(request.getSessionDto());
 
 		Product product = productsDao.findById(request.getProductId());
-		ProductFetchDto productDto = productConverter.toProductFetchDto(product);
+		ProductDetailsDto productDto = productConverter.toProductDetailsDto(product);
 
 		resp.setSuccess(true);
 		resp.setMessage("operation performed successfully");
@@ -382,6 +368,7 @@ implements ProductService {
 		sessionService.validate(request.getSessionDto());
 
 		List<Product> result = productsDao.findByCriteria(filters);
+		Long count = productsDao.countByCriteria(filters);
 		
 		List<ProductFetchDto> lst = new ArrayList<>();
 
@@ -389,6 +376,7 @@ implements ProductService {
 			lst.add(productConverter.toProductFetchDto(p));
 		}
 
+		resp.setCountTotal(count);
 		resp.setProducts(lst);
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);

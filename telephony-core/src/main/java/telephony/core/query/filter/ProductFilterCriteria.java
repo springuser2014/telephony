@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * asd.
- */
-public class ProductFilterCriteria extends
-		AbstractFilterCriteria<ProductFilterCriteria> {
+public class ProductFilterCriteria
+extends AbstractFilterCriteria<ProductFilterCriteria> {
 
 	private List<Long> productIds;
 	private String imei;
@@ -20,10 +17,18 @@ public class ProductFilterCriteria extends
 	private Long storeId;
 	private Date deliveryDateStart;
 	private Date deliveryDateEnd;
+	private Date saleDateStart;
+	private Date saleDateEnd;
 	private ProductStatus status;
+	private List<Long> salesIds;
+	private List<Long> deliveriesIds;
 
 	public ProductFilterCriteria() {
-		this.productIds = new ArrayList<Long>();
+		this.productIds = new ArrayList<>();
+	}
+
+	public void setProductIds(List<Long> productIds) {
+		this.productIds = productIds;
 	}
 
 	public List<Long> getProductIds() {
@@ -96,8 +101,68 @@ public class ProductFilterCriteria extends
 		return deliveryDateEnd;
 	}
 
+	public List<Long> getSalesIds() {
+		return salesIds;
+	}
+
+	public void setSalesIds(List<Long> salesIds) {
+		this.salesIds = salesIds;
+	}
+
+	public void addSaleId(Long id) {
+
+		if (!salesIds.contains(id)) {
+			salesIds.add(id);
+		}
+	}
+
+	public void removeSaleId(Long id) {
+
+		if (salesIds.contains(id)) {
+			salesIds.remove(id);
+		}
+	}
+
+	public List<Long> getDeliveriesIds() {
+		return deliveriesIds;
+	}
+
+	public void setDeliveriesIds(List<Long> deliveriesIds) {
+		this.deliveriesIds = deliveriesIds;
+	}
+
+	public void addDeliveryId(Long id) {
+
+		if (!deliveriesIds.contains(id)) {
+			deliveriesIds.add(id);
+		}
+	}
+
+	public void removeDeliveryId(Long id) {
+
+		if (deliveriesIds.contains(id)) {
+			deliveriesIds.remove(id);
+		}
+	}
+
 	public void setDeliveryDateEnd(Date deliveryDateEnd) {
 		this.deliveryDateEnd = deliveryDateEnd;
+	}
+
+	public Date getSaleDateStart() {
+		return saleDateStart;
+	}
+
+	public void setSaleDateStart(Date saleDateStart) {
+		this.saleDateStart = saleDateStart;
+	}
+
+	public Date getSaleDateEnd() {
+		return saleDateEnd;
+	}
+
+	public void setSaleDateEnd(Date saleDateEnd) {
+		this.saleDateEnd = saleDateEnd;
 	}
 
 	public ProductStatus getStatus() {
@@ -107,4 +172,6 @@ public class ProductFilterCriteria extends
 	public void setStatus(ProductStatus status) {
 		this.status = status;
 	}
+
+
 }

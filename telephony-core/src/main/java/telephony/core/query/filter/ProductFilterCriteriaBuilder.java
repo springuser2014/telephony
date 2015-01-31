@@ -101,9 +101,36 @@ class ProductFilterCriteriaBuilderBase<GeneratorT extends ProductFilterCriteriaB
 	}
 
 	@SuppressWarnings("unchecked")
+	public GeneratorT withSaleDateStart(Date aValue) {
+		instance.setSaleDateStart(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSaleDateEnd(Date aValue) {
+		instance.setSaleDateEnd(aValue);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
 	public GeneratorT withStatus(ProductStatus aValue) {
 		instance.setStatus(aValue);
 
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withSaleId(Long id) {
+		instance.addSaleId(id);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withDeliveryId(Long id) {
+		instance.addDeliveryId(id);
 		return (GeneratorT) this;
 	}
 }

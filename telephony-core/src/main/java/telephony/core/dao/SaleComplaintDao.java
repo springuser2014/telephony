@@ -3,12 +3,15 @@ package telephony.core.dao;
 import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.query.filter.SaleComplaintFilterCriteria;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
  * asd.
  */
 public interface SaleComplaintDao extends GenericDao<SaleComplaint> {
+
+	List<SaleComplaint> findBySalesIds(Collection<Long> salesIds);
 
 	/**
 	 * asd.

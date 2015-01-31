@@ -1,6 +1,5 @@
 package telephony.core.dao;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -13,10 +12,7 @@ public interface ProductsDao extends GenericDao<Product> {
 
     List<Product> findByStore(Store store);
 
-    List<Product> findByCriteria(
-        ProductFilterCriteria parameterObject);
-
-    Product findByImei(String imei);
+    List<Product> findByCriteria(ProductFilterCriteria parameterObject);
 
     List<String> fetchImeisList();
 
@@ -43,4 +39,6 @@ public interface ProductsDao extends GenericDao<Product> {
     boolean checkIfProductIsAssignedToSale(Long productId, Long saleId);
 
     List<String> fetchColorsList();
+
+    Long countByCriteria(ProductFilterCriteria filters);
 }

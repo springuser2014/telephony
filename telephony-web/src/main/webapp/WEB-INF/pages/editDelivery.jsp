@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script data-main="/telephony-web/resources/js/addDelivery.js" src='<c:url value="/resources/js/libs/require-2.1.10.js"/>'>
+    <script data-main="/telephony-web/resources/js/editDelivery.js" src='<c:url value="../resources/js/libs/require-2.1.10.js"/>'>
     </script>
 
     <c:if test="${environment == 'PROD'}">
@@ -30,13 +30,13 @@
 
     <div class="row show-grid">
 
-        <div id="add-delivery-content"></div>
+        <div id="edit-delivery-content"></div>
 
     </div>
 
 </div>
 
-<script id="add-delivery-submenu" type="x-tmpl-mustache">
+<script id="edit-delivery-submenu" type="x-tmpl-mustache">
 
     <div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
 
@@ -46,17 +46,17 @@
 </script>
 
 
-<script id="add-delivery-template" type="x-tmpl-mustache">
+<script id="edit-delivery-template" type="x-tmpl-mustache">
 
 <div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable">
 
     <header role="heading">
-        <h2> Nowa dostawa </h2>
+        <h2> Edytowanie dostawy </h2>
     </header>
 
     <div>
-        <div id='delivery-add'>
-            <form id="add-delivery-form">
+        <div id='delivery-edit'>
+            <form id="edit-delivery-form">
                 <fieldset class="smart-form">
                     <div class="row">
                         <section class="col col-3">
@@ -79,7 +79,7 @@
                         </section>
 {{#add}}
                         <section class="col col-2">
-                            <a class="btn btn-info btn-sm" id='add-new-store' href='<c:url value="/addStore"/>'>Dodaj nowy magazyn</a>
+                            <a class="btn btn-info btn-sm" id='edit-new-store' href='<c:url value="/addStore"/>'>Dodaj nowy magazyn</a>
                         </section>
 {{/add}}
                     </div>
@@ -117,8 +117,8 @@
 
         <legend>Dodaj produkt</legend>
 
-        <div id='add-product'>
-            <form id="add-product-form">
+        <div id='edit-product'>
+            <form id="edit-product-form">
                 <fieldset class="smart-form">
                     <div class="row">
                         <section class="col col-2">
@@ -178,7 +178,7 @@
                         </section>
 
                         <section class="col col-2">
-                            <a id='add-product-btn' class="btn btn-info btn-sm">Dodaj</a>
+                            <a id='edit-product-btn' class="btn btn-info btn-sm">Dodaj</a>
                         </section>
 
                     </div>
@@ -194,14 +194,14 @@
         <div class='bottom-buttons'>
             <fieldset class="smart-form">
 
-                <div class='row' id='add-delivery-form-bottom'>
+                <div class='row' id='edit-delivery-form-bottom'>
 
                 <section class="col col-2">
                     <a class="btn btn-info btn-sm" id="clear-form">Czyść formularz</a>
                 </section>
 
                 <section class="col col-2">
-                    <a class="btn btn-success btn-sm" id="save-delivery">Zapisz dostawę</a>
+                    <a class="btn btn-success btn-sm" id="save-changes">Potwierdź zmiany</a>
                 </section>
 
                 </div>
@@ -257,28 +257,37 @@
             {{/productTax}}
         </td>
         <td>
-            <a class="btn btn-success btn-xs edit-product" product-index="{{index}}">Edytuj</a>
-            {{^sale_id}}
-            <a class="btn btn-danger btn-xs delete-product product-index="{{index}}">Usuń</a>
-            {{/sale_id}}
+            {{#id}}
+                {{^saleId}}
+                    <a class="btn btn-success btn-xs edit-product" product-index="{{index}}" product-id="{{id}}">Edytuj</a>
+
+                    <a class="btn btn-danger btn-xs delete-product product-index="{{index}}" product-id="{{id}}">Usuń</a>
+                {{/saleId}}
+            {{/id}}
+
+            {{^id}}
+                    <a class="btn btn-success btn-xs edit-new-product" product-index="{{index}}">Edytuj</a>
+
+                    <a class="btn btn-danger btn-xs delete-new-product product-index="{{index}}">Usuń</a>
+            {{/id}}
         </td>
     </tr>
     {{/products}}
 
 </script>
 
-<script id="delivery-add-product-empty-info" type="x-tmpl-mustache">
+<script id="delivery-edit-product-empty-info" type="x-tmpl-mustache">
 
     <div class="alert alert-info alert-block">
-        Nie został dodany jeszcze żaden produkt
+        Lista produktów jest pusta
     </div>
 
 </script>
 
-<script id="delivery-add-delivery-success" type="x-tmpl-mustache">
+<script id="delivery-edit-delivery-success" type="x-tmpl-mustache">
 
     <div class="alert alert-success alert-block">
-        Dostawa została zapisana w bazie danych
+        Dostawa została zaktualizowana w bazie danych
         <button class="close" data-dismiss="alert">
             ×
         </button>
@@ -286,7 +295,7 @@
 
 </script>
 
-<script id="delivery-add-delivery-error" type="x-tmpl-mustache">
+<script id="delivery-edit-delivery-error" type="x-tmpl-mustache">
 
     <div class="alert alert-danger alert-block">
         Wystąpił problem podczas zapisu danych, spóbuj ponownie
@@ -297,7 +306,7 @@
 
 </script>
 
-<script id="delivery-add-element" type="x-tmpl-mustache">
+<script id="delivery-edit-element" type="x-tmpl-mustache">
 
      <div class="row">
             <section class="col col-2">

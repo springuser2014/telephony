@@ -38,7 +38,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", nullable = false)
     private Delivery delivery;
     
@@ -59,11 +59,30 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.ALL } )
     private Collection<ProductTax> productTaxes;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Pricing> pricings;
+
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
+//    private Collection<ProductComplaint> complaints;
     
     public Product() {
     }
+
+//    public Collection<ProductComplaint> getComplaints() {
+//        return complaints;
+//    }
+//
+//    public void setComplaints(Collection<ProductComplaint> complaints) {
+//        this.complaints = complaints;
+//    }
+//
+//    public void addComplaint(ProductComplaint pc) {
+//        complaints.add(pc);
+//    }
+//
+//    public void removecomplaint(ProductComplaint pc) {
+//        complaints.remove(pc);
+//    }
 
     public String getImei() {
         return imei;

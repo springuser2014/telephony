@@ -95,7 +95,7 @@ implements SalesDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Sale> find(SaleFilterCriteria filters) {
+	public List<Sale> findByCriteria(SaleFilterCriteria filters) {
 
 		StringBuilder sbSubQuery1 = new StringBuilder();
 
@@ -182,7 +182,7 @@ implements SalesDao {
 		sbMainQuery.append("inner join p.productTaxes pt ");
 		sbMainQuery.append("inner join pt.tax t ");
 		sbMainQuery.append("where 1=1 ");
-		
+
 		if (isNotNull(filters.getSoldBy())) {
 			sbMainQuery.append(" and c.id = :soldBy ");
 		}
@@ -194,15 +194,15 @@ implements SalesDao {
 		if (isNotNull(filters.getLabelLike())) {
 			sbMainQuery.append(" and s.label like :labelLike ");
 		}
-		
+
 		if (isNotNull(filters.getSaleDateStart())) {
 			sbMainQuery.append(" and s.dateOut >= :saleDateStart ");
 		}
-		
+
 		if (isNotNull(filters.getSaleDateEnd())) {
 			sbMainQuery.append(" and s.dateOut <= :saleDateEnd ");
 		}
-	
+
 		if (isNotNull(numberMinMaxIds)) {
 			sbMainQuery.append(" and s.id in (:numberMinMaxIds) ");
 		}
@@ -218,22 +218,22 @@ implements SalesDao {
 		if (isNotNull(filters.getStoreId())) {
 			sbMainQuery.append(" and st.id = :storeId ");
 		}
-				
+
 		Query query = getEntityManager().createQuery(sbMainQuery.toString());
 
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
 			query.setFirstResult((filters.getPerPage()) * filters.getPage());
 			query.setMaxResults(filters.getPerPage());
 		}
-		
+
 		if (isNotNull(filters.getSaleDateEnd())) {
 			query.setParameter("saleDateEnd", filters.getSaleDateEnd());
 		}
-		
+
 		if (isNotNull(filters.getSaleDateStart())) {
 			query.setParameter("saleDateStart", filters.getSaleDateStart());
 		}
-		
+
 		if (isNotNull(filters.getSoldBy())) {
 			query.setParameter("soldBy", filters.getSoldBy());
 		}
@@ -263,8 +263,188 @@ implements SalesDao {
 		}
 
 		List<Sale> res = (List<Sale>) query.getResultList();
-		
+
 		return res;
 	}
-    
+	@SuppressWarnings("unchecked")
+	@Override
+	public Long countByCriteria(SaleFilterCriteria filters) {
+
+		StringBuilder sbSubQuery1 = new StringBuilder();
+
+		List<Long> sumMinMaxIds = null;
+
+		// TODO : extract to method
+		// TODO : add fetching only one price per product
+		if (isNotNull(filters.getSumFrom()) || isNotNull(filters.getSumTo())) {
+			sbSubQuery1.append(" select s2.id, sum(pr.rate) as countproducts from Product p2 ");
+			sbSubQuery1.append(" join p2.sale s2 join p2.pricings pr group by s2.id ");
+			sbSubQuery1.append(" having 1=1 ");
+
+			if (isNotNull(filters.getSumFrom())) {
+				sbSubQuery1.append(" and count(pr.rate) >= :sumFrom ");
+			}
+
+			if (isNotNull(filters.getSumTo())) {
+				sbSubQuery1.append(" and count(pr.rate) <= :sumTo ");
+			}
+
+			Query subQuery = getEntityManager().createQuery(sbSubQuery1.toString());
+
+			if (isNotNull(filters.getSumFrom())) {
+				subQuery.setParameter("sumFrom", filters.getSumFrom());
+			}
+
+			if (isNotNull(filters.getSumTo())) {
+				subQuery.setParameter("sumTo", filters.getSumTo());
+			}
+
+			List<Object[]> subResult1 = subQuery.getResultList();
+
+			sumMinMaxIds = new ArrayList<Long>();
+
+			for (Object[] row : subResult1) {
+				sumMinMaxIds.add((Long) row[0]); // adding ids
+			}
+		}
+
+		StringBuilder sbSubQuery2 = new StringBuilder();
+
+		List<Long> numberMinMaxIds = null;
+
+		// TODO : extract to method
+		if (isNotNull(filters.getMinNumberOfProducts()) || isNotNull(filters.getMaxNumberOfProducts())) {
+			sbSubQuery2.append(" select s2.id, count(s2.id) as numberofproducts from Product p2  ");
+			sbSubQuery2.append(" join p2.sale s2 group by s2.id ");
+			sbSubQuery2.append(" having 1=1 ");
+
+			if (isNotNull(filters.getMinNumberOfProducts())) {
+				sbSubQuery2.append(" and count(s2.id) >= :min ");
+			}
+
+			if (isNotNull(filters.getMaxNumberOfProducts())) {
+				sbSubQuery2.append(" and count(s2.id) <= :max ");
+			}
+
+			Query subQuery = getEntityManager().createQuery(sbSubQuery2.toString());
+
+			if (isNotNull(filters.getMinNumberOfProducts())) {
+				subQuery.setParameter("min", new Long(filters.getMinNumberOfProducts()));
+			}
+
+			if (isNotNull(filters.getMaxNumberOfProducts())) {
+				subQuery.setParameter("max", new Long(filters.getMaxNumberOfProducts()));
+			}
+
+			List<Object[]> subResult2 = subQuery.getResultList();
+
+			numberMinMaxIds = new ArrayList<Long>();
+
+			for (Object[] row : subResult2) {
+				numberMinMaxIds.add((Long) row[0]); // adding ids
+			}
+		}
+
+		StringBuilder sbMainQuery = new StringBuilder();
+		sbMainQuery.append("select count(distinct s) from Sale s ");
+		sbMainQuery.append("inner join s.products p ");
+		sbMainQuery.append("inner join p.model m ");
+		sbMainQuery.append("inner join s.contact c ");
+		sbMainQuery.append("inner join s.store st ");
+		sbMainQuery.append("inner join p.pricings pr ");
+		sbMainQuery.append("inner join p.productTaxes pt ");
+		sbMainQuery.append("inner join pt.tax t ");
+		sbMainQuery.append("where 1=1 ");
+
+		if (isNotNull(filters.getSoldBy())) {
+			sbMainQuery.append(" and c.id = :soldBy ");
+		}
+
+		if (isNotNull(filters.getLabel())) {
+			sbMainQuery.append(" and s.label = :label ");
+		}
+
+		if (isNotNull(filters.getLabelLike())) {
+			sbMainQuery.append(" and s.label like :labelLike ");
+		}
+
+		if (isNotNull(filters.getSaleDateStart())) {
+			sbMainQuery.append(" and s.dateOut >= :saleDateStart ");
+		}
+
+		if (isNotNull(filters.getSaleDateEnd())) {
+			sbMainQuery.append(" and s.dateOut <= :saleDateEnd ");
+		}
+
+		if (isNotNull(numberMinMaxIds)) {
+			sbMainQuery.append(" and s.id in (:numberMinMaxIds) ");
+		}
+
+		if (isNotNull(sumMinMaxIds)) {
+			sbMainQuery.append(" and s.id in (:sumMinMaxIds) ");
+		}
+
+		if (isNotNull(filters.getContactId())) {
+			sbMainQuery.append(" and c.id = :contactId ");
+		}
+
+		if (isNotNull(filters.getStoreId())) {
+			sbMainQuery.append(" and st.id = :storeId ");
+		}
+
+		Query query = getEntityManager().createQuery(sbMainQuery.toString());
+
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			query.setFirstResult((filters.getPerPage()) * filters.getPage());
+			query.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getSaleDateEnd())) {
+			query.setParameter("saleDateEnd", filters.getSaleDateEnd());
+		}
+
+		if (isNotNull(filters.getSaleDateStart())) {
+			query.setParameter("saleDateStart", filters.getSaleDateStart());
+		}
+
+		if (isNotNull(filters.getSoldBy())) {
+			query.setParameter("soldBy", filters.getSoldBy());
+		}
+
+		if (isNotNull(filters.getLabel())) {
+			query.setParameter("label", filters.getLabel());
+		}
+
+		if (isNotNull(filters.getLabelLike())) {
+			query.setParameter("labelLike", "%" + filters.getLabelLike() + "%");
+		}
+
+		if (isNotNull(numberMinMaxIds)) {
+			query.setParameter("numberMinMaxIds", numberMinMaxIds);
+		}
+
+		if (isNotNull(sumMinMaxIds)) {
+			query.setParameter("sumMinMaxIds", sumMinMaxIds);
+		}
+
+		if (isNotNull(filters.getContactId())) {
+			query.setParameter("contactId", filters.getContactId());
+		}
+
+		if (isNotNull(filters.getStoreId())) {
+			query.setParameter("storeId", filters.getStoreId());
+		}
+
+		// TODO improve it later
+		List<Long> lst = (List<Long>) query.getResultList();
+		long count = 0;
+
+		for (Long l : lst) {
+			count += l;
+		}
+
+		return count;
+
+	}
+
 }

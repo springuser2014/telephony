@@ -1,15 +1,19 @@
 package telephony.core.dao;
 
 import telephony.core.entity.jpa.ProductComplaint;
+import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.query.filter.ComplaintFilterCriteria;
 import telephony.core.query.filter.ProductComplaintFilterCriteria;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
  * asd.
  */
 public interface ProductComplaintDao extends GenericDao<ProductComplaint> {
+
+	List<ProductComplaint> findByProductsIds(Collection<Long> productsIds);
 
 	/**
 	 * asd.

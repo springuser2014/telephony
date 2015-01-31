@@ -8,10 +8,7 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
 import telephony.core.entity.jpa.Store;
-import telephony.core.service.dto.DetailedSaleDto;
-import telephony.core.service.dto.SaleAddDto;
-import telephony.core.service.dto.SaleDto;
-import telephony.core.service.dto.SaleEditDto;
+import telephony.core.service.dto.*;
 
 import java.util.Iterator;
 
@@ -36,6 +33,27 @@ public class SaleConverter {
 
     @Inject
     StoresDao storesDao;
+
+    public SaleSearchDto toSaleSearchDto(Sale entity) {
+        SaleSearchDto dto = new SaleSearchDto();
+
+        dto.setId(entity.getId());
+        dto.setContactId(entity.getContact().getId());
+        dto.setContactLabel(entity.getContact().getLabel());
+        dto.setDateOut(entity.getDateOut());
+        dto.setLabel(entity.getLabel());
+        dto.setNumberOfProducts(new Long(entity.getProducts().size()));
+        dto.setStoreId(entity.getStore().getId());
+        dto.setStoreLabel(entity.getStore().getLabel());
+        double sum = 0;
+
+        for (Product product : entity.getProducts() ) {
+            sum += product.getCurrentPricing().getRate();
+        }
+
+        dto.setSum(sum);
+        return dto;
+    }
 
     public void toSaleDto(SaleDto dto , Sale entity) {
 

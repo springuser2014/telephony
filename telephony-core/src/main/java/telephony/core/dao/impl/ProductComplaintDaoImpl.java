@@ -6,6 +6,7 @@ import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.query.filter.ProductComplaintFilterCriteria;
 
 import javax.persistence.Query;
+import java.util.Collection;
 import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
@@ -17,6 +18,21 @@ implements ProductComplaintDao {
 
 	public ProductComplaintDaoImpl() {
 		super(ProductComplaint.class);
+	}
+
+	@Override
+	public List<ProductComplaint> findByProductsIds(Collection<Long> productsIds) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("select ProductComplaint pc inner join pc.product p where p.id IN (:productsIds) ");
+
+		List<ProductComplaint> complaints =
+				(List<ProductComplaint>) getEntityManager()
+				.createQuery(sb.toString())
+				.setParameter("productsIds", productsIds)
+				.getResultList();
+
+		return complaints;
 	}
 
 	@Override

@@ -49,14 +49,14 @@ public class DeliveryConverter {
         bean.setId(delivery.getId());
         bean.setLabel(delivery.getLabel());
 
-        List<ProductAddDto> products = new ArrayList<ProductAddDto>();
+        List<ProductEditDto> products = new ArrayList<>();
 
         if (delivery.getProducts() == null) {
             delivery.setProducts(new ArrayList<Product>());
         }
 
         for (Product prod : delivery.getProducts()) {
-            ProductAddDto p = productConverter.toProductDto(prod);
+            ProductEditDto p = productConverter.toProductEditDto(prod);
             products.add(p);
         }
 
@@ -365,6 +365,13 @@ public class DeliveryConverter {
         dto.setStoreId(entity.getStore().getId());
         dto.setStoreLabel(entity.getStore().getLabel());
         dto.setDateIn(entity.getDateIn());
+
+        double sum = 0;
+
+        for (Product product : entity.getProducts() ) {
+            sum += product.getPriceIn();       }
+
+        dto.setSum(sum);
 
         return dto;
     }

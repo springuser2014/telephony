@@ -17,6 +17,7 @@ public class SaleComplaintConverter {
     @Inject
     SaleConverter saleConverter;
 
+
     public SaleComplaint toEntity(SaleComplaintDto dto) {
 
         Sale sale = salesDao.findById(dto.getSaleId());
@@ -102,4 +103,10 @@ public class SaleComplaintConverter {
         return dto;
     }
 
+    public SaleComplaintDto toSaleComplaintDto(SaleComplaint pc) {
+        SaleComplaintDto dto = new SaleComplaintDto();
+
+
+        return dto;
+    }
 }

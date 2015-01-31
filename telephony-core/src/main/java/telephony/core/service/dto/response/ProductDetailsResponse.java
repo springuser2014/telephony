@@ -1,16 +1,16 @@
 package telephony.core.service.dto.response;
 
-import telephony.core.service.dto.ProductFetchDto;
+import telephony.core.service.dto.ProductDetailsDto;
 
 public class ProductDetailsResponse extends BasicResponse {
 
-    ProductFetchDto product;
+    ProductDetailsDto product;
 
-    public void setProduct(ProductFetchDto product) {
+    public void setProduct(ProductDetailsDto product) {
         this.product = product;
     }
 
-    public ProductFetchDto getProduct() {
+    public ProductDetailsDto getProduct() {
         return product;
     }
 }

@@ -105,10 +105,20 @@ implements ProductsDao {
             sb.append("and d.dateIn <= :deliveryDateEnd ");
         }
 
-        if (query.getStatus() == ProductStatus.IN_STORE) {
-            sb.append("and sa.id is null ");
-        } else if (query.getStatus() == ProductStatus.SOLD) {
-            sb.append("and sa.id is not null ");
+        if (isNotNull(query.getStatus())) {
+            if (query.getStatus() == ProductStatus.IN_STORE) {
+                sb.append("and sa.id is null ");
+            } else if (query.getStatus() == ProductStatus.SOLD) {
+                sb.append("and sa.id is not null ");
+            }
+        }
+
+        if (isNotEmpty(query.getDeliveriesIds())) {
+            sb.append("and d.id IN (:deliveriesIds) ");
+        }
+
+        if (isNotEmpty(query.getSalesIds())) {
+            sb.append("and d.id IN (:salesIds) ");
         }
 
         if (isNotEmpty(query.getProductIds())) {
@@ -154,17 +164,24 @@ implements ProductsDao {
             jpaQuery.setParameter("productIds", query.getProductIds());
         }
 
+        if (isNotEmpty(query.getDeliveriesIds())) {
+            jpaQuery.setParameter("deliveriesIds", query.getDeliveriesIds());
+        }
+
+        if (isNotEmpty(query.getSalesIds())) {
+            jpaQuery.setParameter("salesIds", query.getSalesIds());
+        }
+
+        if (isNotNull(query.getPage()) && isNotNull(query.getPerPage())) {
+            jpaQuery.setFirstResult((query.getPerPage())* query.getPage());
+            jpaQuery.setMaxResults(query.getPerPage());
+        }
+
         res = jpaQuery.getResultList();
 
         logger.info(" size : {}", res.size());
 
-
         return res;
-    }
-
-    @Override
-    public Product findByImei(String imei) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -438,5 +455,142 @@ implements ProductsDao {
         List<String> lst = (List<String>) query.getResultList();
 
         return lst;
+    }
+
+    @Override
+    public Long countByCriteria(ProductFilterCriteria query) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select count(distinct p.id) from Product p ");
+        sb.append(" join p.delivery d ");
+        sb.append(" join p.store st ");
+        sb.append(" join p.model m ");
+        sb.append(" join m.producer pr ");
+        sb.append(" left join p.sale sa ");
+        sb.append(" where 1=1 ");
+
+        if (query.getImei() != null && query.getImei().length() > 0) {
+            sb.append("and p.imei = :imei ");
+        }
+
+        if (query.getProducer() != null && query.getProducer().length() > 0) {
+            sb.append("and pr.label = :producer ");
+        }
+
+        if (query.getModel() != null && query.getModel().length() > 0) {
+            sb.append("and m.label = :model ");
+        }
+
+        if (query.getColor() != null && query.getColor().length() > 0) {
+            sb.append("and p.color = :color ");
+        }
+
+        if (query.getStoreId() != null && query.getStoreId() > 0) {
+            sb.append("and st.id = :storeId ");
+        }
+
+        if (isNotNull(query.getDeliveryDateStart())) {
+            sb.append("and d.dateIn >= :deliveryDateStart ");
+        }
+
+        if (isNotNull(query.getDeliveryDateEnd())) {
+            sb.append("and d.dateIn <= :deliveryDateEnd ");
+        }
+
+        if (isNotNull(query.getSaleDateStart())) {
+            sb.append("and sa.dateIn >= :saleDateStart ");
+        }
+
+        if (isNotNull(query.getSaleDateEnd())) {
+            sb.append("and sa.dateIn <= :saleDateEnd ");
+        }
+
+        if (isNotNull(query.getStatus())) {
+            if (query.getStatus() == ProductStatus.IN_STORE) {
+                sb.append("and sa.id is null ");
+            } else if (query.getStatus() == ProductStatus.SOLD) {
+                sb.append("and sa.id is not null ");
+            }
+        }
+
+        if (isNotEmpty(query.getDeliveriesIds())) {
+            sb.append("and d.id IN (:deliveriesIds) ");
+        }
+
+        if (isNotEmpty(query.getSalesIds())) {
+            sb.append("and d.id IN (:salesIds) ");
+        }
+
+        if (isNotEmpty(query.getProductIds())) {
+            sb.append("and p.id in (:productIds) ");
+        }
+
+        List<Product> res = null;
+
+        Query jpaQuery = getEntityManager()
+                .createQuery(sb.toString());
+
+        if (query.getImei() != null && query.getImei().length() > 0) {
+            jpaQuery.setParameter("imei", query.getImei());
+        }
+
+        if (query.getProducer() != null && query.getProducer().length() > 0) {
+            jpaQuery.setParameter("producer", query.getProducer());
+        }
+
+        if (isNotEmpty(query.getModel())) {
+            jpaQuery.setParameter("model", query.getModel());
+        }
+
+        if (isNotEmpty(query.getColor())) {
+            jpaQuery.setParameter("color", query.getColor());
+        }
+
+        if (query.getStoreId() != null && query.getStoreId() > 0) {
+            jpaQuery.setParameter("storeId", query.getStoreId());
+        }
+
+        if (isNotNull(query.getDeliveryDateStart())) {
+            Timestamp deliveryDateStartTmp = new Timestamp(query.getDeliveryDateStart().getTime());
+            jpaQuery.setParameter("deliveryDateStart", deliveryDateStartTmp);
+        }
+
+        if (isNotNull(query.getDeliveryDateEnd())) {
+            Timestamp deliveryDateEndTmp = new Timestamp(query.getDeliveryDateEnd().getTime());
+            jpaQuery.setParameter("deliveryDateEnd", deliveryDateEndTmp);
+        }
+
+        if (isNotNull(query.getSaleDateStart())) {
+            Timestamp saleDateStartTmp = new Timestamp(query.getSaleDateStart().getTime());
+            jpaQuery.setParameter("saleDateStart", saleDateStartTmp);
+        }
+
+        if (isNotNull(query.getDeliveryDateEnd())) {
+            Timestamp saleDateEndTmp = new Timestamp(query.getSaleDateEnd().getTime());
+            jpaQuery.setParameter("saleDateEnd", saleDateEndTmp);
+        }
+
+        if (isNotEmpty(query.getProductIds())) {
+            jpaQuery.setParameter("productIds", query.getProductIds());
+        }
+
+        if (isNotEmpty(query.getDeliveriesIds())) {
+            jpaQuery.setParameter("deliveriesIds", query.getDeliveriesIds());
+        }
+
+        if (isNotEmpty(query.getSalesIds())) {
+            jpaQuery.setParameter("salesIds", query.getSalesIds());
+        }
+
+
+        // TODO improve it later
+        List<Long> lst = (List<Long>) jpaQuery.getResultList();
+        long count = 0;
+
+        for (Long l : lst) {
+            count += l;
+        }
+
+        return count;
     }
 }
