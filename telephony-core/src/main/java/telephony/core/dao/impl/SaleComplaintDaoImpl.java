@@ -11,9 +11,8 @@ import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
-
 public class SaleComplaintDaoImpl
-extends GenericDaoImpl<SaleComplaint> 
+extends GenericDaoImpl<SaleComplaint>
 implements SaleComplaintDao {
 
 	public SaleComplaintDaoImpl() {
@@ -24,7 +23,7 @@ implements SaleComplaintDao {
 	public List<SaleComplaint> findBySalesIds(Collection<Long> salesIds) {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("select SaleComplaint pc inner join pc.sale s where s.id IN (:salesIds) ");
+		sb.append("select sc from SaleComplaint sc inner join sc.sale s where s.id IN (:salesIds) ");
 
 		List<SaleComplaint> complaints =
 				(List<SaleComplaint>) getEntityManager()

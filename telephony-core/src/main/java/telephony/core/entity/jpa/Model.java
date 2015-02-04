@@ -76,4 +76,12 @@ public class Model extends BaseEntity {
 	public void removeProduct(Product product) {
 		
 	}
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
 }

@@ -29,11 +29,11 @@ public class ComplaintCommentConverter {
         ProductComplaint pc = productComplaintDao.findById(complaintComment.getComplaintId());
 
         if (isNotNull(sc)) {
-            cc.setComplaint(sc);
+//            cc.setComplaint(sc);
         }
 
         if (isNotNull(pc)) {
-            cc.setComplaint(pc);
+//            cc.setComplaint(pc);
         }
 
         cc.setAuthor(complaintComment.getAuthor());
@@ -50,11 +50,11 @@ public class ComplaintCommentConverter {
         ProductComplaint pc = productComplaintDao.findByHash(complaintComment.getHashUnique());
 
         if (isNotNull(sc)) {
-            cc.setComplaint(sc);
+//            cc.setComplaint(sc);
         }
 
         if (isNotNull(pc)) {
-            cc.setComplaint(pc);
+//            cc.setComplaint(pc);
         }
 
         cc.setAuthor(complaintComment.getAuthor());

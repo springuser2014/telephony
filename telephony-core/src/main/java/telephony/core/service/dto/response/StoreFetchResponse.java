@@ -1,37 +1,37 @@
 package telephony.core.service.dto.response;
 
-import telephony.core.service.dto.StoreDto;
+import telephony.core.service.dto.StoreSearchDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoreFetchResponse extends BasicResponse {
 
-    List<StoreDto> stores;
+    List<StoreSearchDto> stores;
 
     public StoreFetchResponse() {
-        this.stores = new ArrayList<StoreDto>();
+        this.stores = new ArrayList<>();
     }
 
-    public List<StoreDto> getStores() {
+    public List<StoreSearchDto> getStores() {
         return stores;
     }
 
-    public void addStore(StoreDto dto) {
+    public void addStore(StoreSearchDto dto) {
 
         if (!this.stores.contains(dto)) {
             this.stores.add(dto);
         }
     }
 
-    public void removeStore(StoreDto dto) {
+    public void removeStore(StoreSearchDto dto) {
 
         if (this.stores.contains(dto)) {
             this.stores.remove(dto);
         }
     }
 
-    public void setStores(List<StoreDto> stores) {
+    public void setStores(List<StoreSearchDto> stores) {
         this.stores = stores;
     }
 }

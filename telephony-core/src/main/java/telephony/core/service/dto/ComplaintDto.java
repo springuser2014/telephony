@@ -13,6 +13,15 @@ public abstract class ComplaintDto {
     ComplaintStatus status;
     String title;
     String uniqueHash;
+    Long contactId;
+
+    public Long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
+    }
 
     public String getDescription() {
         return description;

@@ -21,6 +21,7 @@ import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -97,8 +98,8 @@ implements UserService {
 
 		sessionService.validate(req.getSessionDto());
 
-		List<UserFetchDto> userz = new ArrayList<UserFetchDto>();
-		List<User> users = usersDao.find(req.getFilters());
+		List<UserFetchDto> userz = new ArrayList<>();
+		List<User> users = usersDao.findByCriteria(req.getFilters());
 
 		for (User u : users) {
 			userz.add(userConverter.toFetchDto(u));
@@ -125,6 +126,10 @@ implements UserService {
 		if (isNull(request.getUserDto())) {
 			errors.add(Error.create("userDto", "userDto cannot be null"));
 			return false;
+		}
+
+		if (isEmpty(request.getUserDto().getId())) {
+			errors.add(Error.create("userDto.id", "userDto.id cannot be empty"));
 		}
 
 		return errors.size() == 0;
@@ -160,6 +165,69 @@ implements UserService {
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
+		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(UserChangePasswordRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getUserDto())) {
+			errors.add(Error.create("userDto", "userDto cannot be null"));
+			return false;
+		}
+
+		if (isEmpty(request.getUserDto().getUserId())) {
+			errors.add(Error.create("userDto.id", "userDto.id cannot be empty"));
+		}
+
+		if (isEmpty(request.getUserDto().getPassword1())) {
+			errors.add(Error.create("userDto.password1", "userDto.password1 cannot be empty"));
+		}
+
+		if (isEmpty(request.getUserDto().getPassword2())) {
+			errors.add(Error.create("userDto.password2", "userDto.password2 cannot be empty"));
+		}
+
+		if (isEmpty(request.getUserDto().getPassword2())) {
+			errors.add(Error.create("userDto.passwords", "userDto.password1 and userDto.password2 should be identical"));
+		}
+
+		// TODO add more cases
+
+		return errors.size() == 0;
+	}
+
+	@Override
+	@Transactional
+	public UserChangePasswordResponse changePassword(UserChangePasswordRequest request)
+			throws SessionServiceException, UserServiceException, NoSuchAlgorithmException {
+		
+		logger.info("UserServiceImpl.changePassword starts");
+		UserChangePasswordResponse resp = new UserChangePasswordResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(request,errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
+
+		sessionService.validate(request.getSessionDto());
+
+		usersDao.changePassword(request.getUserDto());
+
+		resp.setMessage("operation performed successfully");
+		resp.setSuccess(true);
+
 		return resp;
 	}
 
@@ -387,17 +455,17 @@ implements UserService {
 		Collection<Long> storesToAddIds = request.getStoresToAdd();
 		Collection<Store> storesToAdd = storesDao.findByIds(storesToAddIds);
 
-		Iterator<Store> userStores = user.getAllowedShops().iterator();
+//		Iterator<Store> userStores = user.getAllowedShops().iterator();
 
 		// TODO move to converter
-		while(userStores.hasNext()) {
-			Store r = userStores.next();
-			if (request.getStoresToDelete().contains(r.getId())) {
-				userStores.remove();
-			}
-		}
+//		while(userStores.hasNext()) {
+//			Store r = userStores.next();
+//			if (request.getStoresToDelete().contains(r.getId())) {
+//				userStores.remove();
+//			}
+//		}
 
-		user.getAllowedShops().addAll(storesToAdd);
+//		user.getAllowedShops().addAll(storesToAdd);
 
 		usersDao.saveOrUpdate(user);
 

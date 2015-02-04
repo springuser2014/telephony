@@ -59,37 +59,37 @@
 
             <div class="row">
                 <div class="col col-3">
-                    Nazwa
+                    <h5>Nazwa</h5>
                 </div>
                 <div class="col col-3" id="label">
-                    label
+
                 </div>
             </div>
 
             <div class="row">
                 <div class="col col-3">
-                    Magazyn
+                    <h5>Magazyn</h5>
                 </div>
                 <div class="col col-3" id="store">
-                    store
+
                 </div>
            </div>
 
             <div class="row">
                 <div class="col col-3">
-                    Data dostawy
+                    <h5>Data dostawy</h5>
                 </div>
                 <div class="col col-3" id="date_in">
-                    label
+
                 </div>
             </div>
 
             <div class="row">
                 <div class="col col-3">
-                    Kontakt
+                    <h5>Kontakt</h5>
                 </div>
                 <div class="col col-3" id="contact">
-                    contact
+
                 </div>
             </div>
         </div>

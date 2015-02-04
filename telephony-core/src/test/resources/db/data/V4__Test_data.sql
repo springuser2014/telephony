@@ -2,20 +2,21 @@
 -- USERS
 
 
+-- password: rfaysdhaiufsiuf
 insert into users (id, email, password, created_at, session_id, session_validity, created_by) values (
-    1, 'user1@gmail.com', 'rfaysdhaiufsiuf', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21',  now() + interval '3 days', 1
+    1, 'user1@gmail.com', 'Ü}OđöŃ[''čę!FŇq‰đ', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21',  now() + interval '3 days', 1
 );
 
 insert into users (id, email, password, created_at, session_id, session_validity, created_by) values (
-    2, 'user2@gmail.com', 'sdaysdhaiufsiua', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21', now() - interval '3 days', 1
+    2, 'user2@gmail.com', 'Ü}OđöŃ[''čę!FŇq‰đ', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21', now() - interval '3 days', 1
 );
 
 insert into users (id, email, password, created_at, session_id, session_validity, created_by) values (
-    3, 'boss@gmail.com', 'zwaysdhaiufsiko', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21',  now() + interval '3 days', 1
+    3, 'boss@gmail.com', 'Ü}OđöŃ[''čę!FŇq‰đ', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21',  now() + interval '3 days', 1
 );
 
 insert into users (id, email, password, created_at, session_id, session_validity, created_by) values (
-    4, 'manager@gmail.com', 'wertsdhnbgfsiko', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21',  now() + interval '3 days', 1
+    4, 'manager@gmail.com', 'Ü}OđöŃ[''čę!FŇq‰đ', now() - interval '1 days', 'asdweasdweasdweasdweasdweasdwe21',  now() + interval '3 days', 1
 );
 
 

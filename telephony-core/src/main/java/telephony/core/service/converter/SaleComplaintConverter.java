@@ -72,14 +72,26 @@ public class SaleComplaintConverter {
         dto.setUniqueHash(entity.getUniqueHash());
         dto.setStatus(entity.getStatus());
 
-        for (ComplaintComment cc :entity.getComments()) {
+        for (SaleComplaintComment cc :entity.getComments()) {
             dto.addComment(toDetailedComplaintCommentDto(cc));
         }
 
         return dto;
     }
 
-    public DetailedComplaintCommentDto toDetailedComplaintCommentDto(ComplaintComment cc) {
+    public DetailedComplaintCommentDto toDetailedComplaintCommentDto(SaleComplaintComment cc) {
+
+        DetailedComplaintCommentDto dto = new DetailedComplaintCommentDto();
+        dto.setCommentId(cc.getId());
+        dto.setComment(cc.getContent());
+        dto.setAuthor(cc.getAuthor());
+        dto.setComplaintId(cc.getComplaint().getId());
+
+        return dto;
+
+    }
+
+    public DetailedComplaintCommentDto toDetailedComplaintCommentDto(ProductComplaintComment cc) {
 
         DetailedComplaintCommentDto dto = new DetailedComplaintCommentDto();
         dto.setCommentId(cc.getId());
@@ -89,6 +101,7 @@ public class SaleComplaintConverter {
 
         return dto;
     }
+
 
     public SaleComplaintEditDto toDto(SaleComplaint entity) {
 

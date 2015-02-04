@@ -13,22 +13,15 @@ import telephony.core.query.filter.StoreFilterCriteria;
 
 import javax.persistence.Query;
 
-/**
- * Stores management DAO.
- */
-public class StoresDaoImpl 
+public class StoresDaoImpl
 extends GenericDaoImpl<Store> 
 implements StoresDao {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * asd.
-     */
     public StoresDaoImpl() {
         super(Store.class);
     }
-
 
 	@Override
 	public Store findByLabel(String storelabel) {
@@ -45,9 +38,8 @@ implements StoresDao {
 		return s;
 	}
 
-
 	@Override
-	public List<Store> find(StoreFilterCriteria filters) {
+	public List<Store> findByCriteria(StoreFilterCriteria filters) {
 		logger.info("StoresDaoImpl.find starts");
 
 		if (logger.isDebugEnabled()) {
@@ -56,39 +48,22 @@ implements StoresDao {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(" select s, count(s.id) as count from Store s left outer join s.products ");
-		boolean whereAdded = false;
+		sb.append(" where 1=1 ");
 
 		if (isNotNull(filters.getLabel())) {
-			sb.append(" where s.label = :label ");
-			whereAdded = true;
+			sb.append(" and where s.label = :label ");
 		}
 
 		if (isNotNull(filters.getMaxNumberOfProducts())) {
-			if (whereAdded) {
-				sb.append(" and count <= :maxNumberOfProducts ");
-			} else {
-				sb.append(" where count <= :maxNumberOfProducts ");
-				whereAdded = true;
-			}
+			sb.append(" and count <= :maxNumberOfProducts ");
 		}
 
 		if (isNotNull(filters.getMinNumberOfProducts())) {
-			if (whereAdded) {
-				sb.append(" and count >= :minNumberOfProducts ");
-
-			} else {
-				sb.append(" where count >= :minNumberOfProducts ");
-				whereAdded = true;
-			}
+			sb.append(" and count >= :minNumberOfProducts ");
 		}
 
 		if (isNotEmpty(filters.getStoreIds())) {
-			if (whereAdded) {
-				sb.append(" and s.id in (:ids) ");
-			} else {
-				sb.append(" where s.id in (:ids) ");
-				whereAdded = true;
-			}
+			sb.append(" and s.id in (:ids) ");
 		}
 
 		sb.append(" group by s.id ");
@@ -113,7 +88,7 @@ implements StoresDao {
 
 		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
-			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
 			q.setMaxResults(filters.getPerPage());
 		}
 
@@ -131,5 +106,59 @@ implements StoresDao {
 
 		return stores;
 
+	}
+
+	@Override
+	public Long countByCriteria(StoreFilterCriteria filters) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(" select s, count(s.id) as count from Store s left outer join s.products ");
+		sb.append(" where 1=1 ");
+
+		if (isNotNull(filters.getLabel())) {
+			sb.append(" and where s.label = :label ");
+		}
+
+		if (isNotNull(filters.getMaxNumberOfProducts())) {
+			sb.append(" and count <= :maxNumberOfProducts ");
+		}
+
+		if (isNotNull(filters.getMinNumberOfProducts())) {
+			sb.append(" and count >= :minNumberOfProducts ");
+		}
+
+		if (isNotEmpty(filters.getStoreIds())) {
+			sb.append(" and s.id in (:ids) ");
+		}
+
+		sb.append(" group by s.id ");
+
+		Query q = getEntityManager().createQuery(sb.toString());
+
+		if (isNotNull(filters.getLabel())) {
+			q.setParameter("label", filters.getLabel());
+		}
+
+		if (isNotNull(filters.getMaxNumberOfProducts())) {
+			q.setParameter("maxNumberOfProducts", filters.getMaxNumberOfProducts());
+		}
+
+		if (isNotNull(filters.getMinNumberOfProducts())) {
+			q.setParameter("minNumberOfProducts", filters.getMinNumberOfProducts());
+		}
+
+		if (isNotEmpty(filters.getStoreIds())) {
+			q.setParameter("ids", filters.getStoreIds());
+		}
+
+		// TODO improve it later
+		List<Long> lst = (List<Long>) q.getResultList();
+		long count = 0;
+
+		for (Long l : lst) {
+			count += l;
+		}
+
+		return count;
 	}
 }

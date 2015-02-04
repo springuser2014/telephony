@@ -3,30 +3,14 @@ package telephony.core.entity.jpa;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import telephony.core.entity.enumz.ComplaintStatus;
 
-@Entity
-@Inheritance
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "complaint_type")
 @Table(name = "complaints")
+@MappedSuperclass
 public abstract class Complaint extends BaseEntity {
 	
 	@Id
@@ -52,15 +36,16 @@ public abstract class Complaint extends BaseEntity {
 	@Column(name = "unique_hash")
 	private String uniqueHash;
 	
-	@OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
-	private Set<ComplaintComment> comments;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "contact_id", nullable = false)
+	private Contact contact;
 
-	public Set<ComplaintComment> getComments() {
-		return comments;
+	public Contact getContact() {
+		return contact;
 	}
 
-	public void setComments(Set<ComplaintComment> comments) {
-		this.comments = comments;
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 
 	@Override
@@ -113,23 +98,4 @@ public abstract class Complaint extends BaseEntity {
 		this.uniqueHash = uniqueHash;
 	}
 
-	public void addComment(ComplaintComment comment) {
-		
-		if (comments.contains(comment)) {
-			return;
-		}
-
-		comments.add(comment);
-		comment.setComplaint(this);
-	}
-
-	public void removeComment(ComplaintComment comment) {
-
-		if (comments.contains(comment)) {
-			return;
-		}
-
-		comments.remove(comment);
-		comment.setComplaint(null);
-	}
 }

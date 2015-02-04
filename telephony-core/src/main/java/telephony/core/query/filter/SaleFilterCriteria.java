@@ -1,9 +1,14 @@
 package telephony.core.query.filter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class SaleFilterCriteria
 extends AbstractFilterCriteria<SaleFilterCriteria> {
+
+	private List<Long> salesIds;
+	private List<Long> ignoreIds;
 
 	private Date saleDateStart;
 	private Date saleDateEnd;
@@ -21,6 +26,56 @@ extends AbstractFilterCriteria<SaleFilterCriteria> {
 
 	private Long contactId;
 	private Long storeId;
+
+	public SaleFilterCriteria() {
+		this.salesIds = new ArrayList<>();
+		this.ignoreIds = new ArrayList<>();
+	}
+
+	public void addSaleId(Long id) {
+
+		if(!salesIds.contains(id)) {
+			salesIds.add(id);
+		}
+	}
+
+	public void removeSaleId(Long id) {
+
+		if (salesIds.contains(id)) {
+			salesIds.remove(id);
+		}
+	}
+
+	public List<Long> getSalesIds() {
+		return salesIds;
+	}
+
+	public void setSalesIds(List<Long> salesIds) {
+		this.salesIds = salesIds;
+	}
+
+	public List<Long> getIgnoreIds() {
+		return ignoreIds;
+	}
+
+	public void setIgnoreIds(List<Long> ignoreIds) {
+		this.ignoreIds = ignoreIds;
+	}
+
+	public void addIgnoreId(Long productId) {
+
+		if (!ignoreIds.contains(productId)) {
+			ignoreIds.add(productId);
+		}
+	}
+
+	public void removeIgnoreId(Long productId) {
+
+		if (ignoreIds.contains(productId)) {
+			ignoreIds.remove(productId);
+		}
+	}
+
 
 	public Long getSoldBy() {
 		return soldBy;

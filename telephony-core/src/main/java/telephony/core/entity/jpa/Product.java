@@ -62,27 +62,27 @@ public class Product extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Pricing> pricings;
 
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
-//    private Collection<ProductComplaint> complaints;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+    private Collection<ProductComplaint> complaints;
     
     public Product() {
     }
 
-//    public Collection<ProductComplaint> getComplaints() {
-//        return complaints;
-//    }
-//
-//    public void setComplaints(Collection<ProductComplaint> complaints) {
-//        this.complaints = complaints;
-//    }
-//
-//    public void addComplaint(ProductComplaint pc) {
-//        complaints.add(pc);
-//    }
-//
-//    public void removecomplaint(ProductComplaint pc) {
-//        complaints.remove(pc);
-//    }
+    public Collection<ProductComplaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(Collection<ProductComplaint> complaints) {
+        this.complaints = complaints;
+    }
+
+    public void addComplaint(ProductComplaint pc) {
+        complaints.add(pc);
+    }
+
+    public void removecomplaint(ProductComplaint pc) {
+        complaints.remove(pc);
+    }
 
     public String getImei() {
         return imei;

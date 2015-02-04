@@ -7,6 +7,7 @@ import java.util.List;
 public class TaxFilterCriteria
 extends AbstractFilterCriteria<TaxFilterCriteria> {
 
+	private List<Long> ignoreIds;
 	private List<Long> taxIds;
 	private Date taxDateStart;
 	private Date taxDateEnd;
@@ -18,7 +19,30 @@ extends AbstractFilterCriteria<TaxFilterCriteria> {
 	private Date activeAt;
 
 	public TaxFilterCriteria() {
-		this.taxIds = new ArrayList<>();
+		taxIds = new ArrayList<>();
+		ignoreIds = new ArrayList<>();
+	}
+
+	public void addIgnoreId(Long id) {
+
+		if (!ignoreIds.contains(id)) {
+			ignoreIds.add(id);
+		}
+	}
+
+	public void removeIgnoreId(Long id) {
+
+		if (ignoreIds.contains(id)) {
+			ignoreIds.remove(id);
+		}
+	}
+
+	public List<Long> getIgnoreIds() {
+		return ignoreIds;
+	}
+
+	public void setIgnoreIds(List<Long> ignoreIds) {
+		this.ignoreIds = ignoreIds;
 	}
 
 	public Date getTaxDateStart() {
@@ -51,6 +75,10 @@ extends AbstractFilterCriteria<TaxFilterCriteria> {
 	
 	public void setRateTo(Double rateTo) {
 		this.rateTo = rateTo;
+	}
+
+	public void setTaxIds(List<Long> taxIds) {
+		this.taxIds = taxIds;
 	}
 
 	public List<Long> getTaxIds() {

@@ -70,10 +70,10 @@ implements ContactService {
 		}
 
 		sessionService.validate(request.getSessionDto());
-		List<Contact> lst = contactsDao.find(filters);
+		List<Contact> lst = contactsDao.findByCriteria(filters);
 
 		for(Contact contact : lst) {
-			ContactDto dto = contactConverter.contactToContactDto(contact);
+			ContactSearchDto dto = contactConverter.contactToContactSearchDto(contact);
 
 			if (isNotNull(dto)) {
 				resp.addContact(dto);

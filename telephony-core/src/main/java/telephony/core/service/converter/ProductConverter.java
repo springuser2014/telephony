@@ -1,13 +1,16 @@
 package telephony.core.service.converter;
 
 import com.google.inject.Inject;
-import org.apache.commons.collections.CollectionUtils;
-import telephony.core.dao.ProductComplaintDao;
-import telephony.core.dao.SaleComplaintDao;
+import telephony.core.dao.*;
 import telephony.core.entity.jpa.*;
 import telephony.core.service.dto.*;
+import telephony.core.service.exception.ProductServiceException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
+import static telephony.core.assertion.CommonAssertions.*;
 
 public class ProductConverter {
 
@@ -28,6 +31,24 @@ public class ProductConverter {
 
     @Inject
     ProductComplaintDao productComplaintDao;
+
+    @Inject
+    StoresDao storesDao;
+
+    @Inject
+    DeliveriesDao deliveriesDao;
+
+    @Inject
+    ModelDao modelDao;
+
+    @Inject
+    ProducerDao producerDao;
+
+    @Inject
+    TaxDao taxDao;
+
+    @Inject
+    ProductTaxDao productTaxDao;
 
     public ProductAddDto toProductDto(Product product) {
 
@@ -71,6 +92,7 @@ public class ProductConverter {
         b.setTax(p.getCurrentTax().getTax().getRate());
         b.setModel(p.getModel().getLabel());
         b.setProducer(p.getModel().getProducer().getLabel());
+        b.setStoreId(p.getStore().getId());
 
         if (p.getSale() != null) {
             b.setSaleId(p.getSale().getId());
@@ -79,6 +101,15 @@ public class ProductConverter {
         }
 
         b.setId(p.getId());
+
+        boolean editable = isNull(p.getSale());
+        boolean deletable = (
+            isEmpty(p.getComplaints()) &&
+            isNull(p.getSale())
+        );
+
+        b.setDeletable(deletable);
+        b.setEditable(editable);
 
         return b;
     }
@@ -172,5 +203,100 @@ public class ProductConverter {
         }
 
         return dto;
+    }
+
+    public void updateEntity(Product product, ProductEditDto editingProduct) throws ProductServiceException {
+
+        // TODO cleanup this mess
+
+        if (editingProduct.getColor() != null) {
+            product.setColor(editingProduct.getColor());
+        }
+        if (editingProduct.getImei() != null) {
+            product.setImei(editingProduct.getImei());
+        }
+
+        if (editingProduct.getPriceIn() != null) {
+            product.setPriceIn(editingProduct.getPriceIn());
+        }
+
+        if (editingProduct.getColor() != null) {
+            product.setColor(editingProduct.getColor());
+        }
+
+        if (editingProduct.getImei() != null) {
+            product.setImei(editingProduct.getImei());
+        }
+
+        if (editingProduct.getPriceIn() != null) {
+            product.setPriceIn(editingProduct.getPriceIn());
+        }
+
+        Model model = null;
+        Producer producer = null;
+
+        model = modelDao.findByLabel(editingProduct.getModel());
+        producer = producerDao.findByLabel(editingProduct.getProducer());
+
+        if (model != null && producer != null && model.getProducer().equals(producer)) {
+            product.setModel(model);
+        } else if (model != null && producer != null && !producer.equals(model.getProducer())) {
+            throw new ProductServiceException();
+        } else if (model == null && producer != null) {
+            model = new Model();
+            model.setLabel(editingProduct.getModel());
+            model.setProducer(producer);
+
+            model = modelDao.saveOrUpdate(model);
+        } else if (model != null && producer == null) {
+            throw new ProductServiceException();
+        } else {
+            producer = new Producer();
+            producer.setLabel(editingProduct.getProducer());
+            producer = producerDao.saveOrUpdate(producer);
+
+            model = new Model();
+            model.setLabel(editingProduct.getModel());
+            model.setProducer(producer);
+            model = modelDao.saveOrUpdate(model);
+        }
+
+        product.setModel(model);
+        Date d = new Date();
+
+        if (product.getCurrentPricing() != null && editingProduct.getProductTax() != null) {
+
+            if (product.getCurrentPricing().getRate() != editingProduct.getCurrentPrice().getRate()) {
+
+                Pricing currPricing = product.getCurrentPricing();
+                currPricing.setTo(d);
+
+                Pricing price = new Pricing();
+                price.setProduct(product);
+                price.setRate(editingProduct.getCurrentPrice().getRate());
+                price.setFrom(d);
+                price.setTo(null);
+
+                product.addPricing(price);
+            }
+        }
+
+        if (product.getCurrentTax() != null && editingProduct.getProductTax() != null) {
+            if (product.getCurrentTax().getId() != editingProduct.getProductTax().getTaxId()) {
+
+                ProductTax currProductTax = product.getCurrentTax();
+                currProductTax.setTo(d);
+
+                Tax tax = taxDao.findById(editingProduct.getProductTax().getTaxId());
+
+                ProductTax productTax = new ProductTax();
+                productTax.setProduct(product);
+                productTax.setTax(tax);
+                productTax.setFrom(d);
+                productTax.setTo(null);
+
+                productTaxDao.save(productTax);
+            }
+        }
     }
 }

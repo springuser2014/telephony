@@ -33,7 +33,7 @@ public class Sale extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOut;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 

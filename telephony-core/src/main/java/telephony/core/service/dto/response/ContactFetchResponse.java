@@ -1,37 +1,46 @@
 package telephony.core.service.dto.response;
 
-import telephony.core.service.dto.ContactDto;
+import telephony.core.service.dto.ContactSearchDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactFetchResponse extends BasicResponse {
 
-    List<ContactDto> contacts;
+    List<ContactSearchDto> contacts;
+    Long countTotal;
 
     public ContactFetchResponse() {
-        contacts = new ArrayList<ContactDto>();
+        contacts = new ArrayList<>();
     }
 
-    public List<ContactDto> getContacts() {
+    public List<ContactSearchDto> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<ContactDto> contacts) {
+    public void setContacts(List<ContactSearchDto> contacts) {
         this.contacts = contacts;
     }
 
-    public void addContact(ContactDto contactDto) {
+    public void addContact(ContactSearchDto contactDto) {
 
         if (!this.contacts.contains(contactDto)) {
             this.contacts.add(contactDto);
         }
     }
 
-    public void removeContact(ContactDto contactDto) {
+    public void removeContact(ContactSearchDto contactDto) {
 
         if (this.contacts.contains(contactDto)) {
             this.contacts.remove(contactDto);
         }
+    }
+
+    public Long getCountTotal() {
+        return countTotal;
+    }
+
+    public void setCountTotal(Long countTotal) {
+        this.countTotal = countTotal;
     }
 }

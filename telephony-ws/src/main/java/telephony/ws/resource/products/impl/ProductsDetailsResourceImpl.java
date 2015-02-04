@@ -50,7 +50,7 @@ implements ProductsDetailsResource {
 		} catch (Exception e) {
 			logger.error("unrecognizedProblem", e);
 
-			getResponse().setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+			getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
 			resp.setMessage("unrecognizedProblem");
 			resp.setSuccess(false);
 

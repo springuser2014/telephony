@@ -16,11 +16,32 @@ public class ProductFetchDto {
 	private String imei;
 	private String color;
 
+	private Long storeId;
+
 	private Double priceIn;
 
 	private Double price;
 
 	private Double tax;
+
+	private Boolean editable;
+	private Boolean deletable;
+
+	public Boolean getDeletable() {
+		return deletable;
+	}
+
+	public void setDeletable(Boolean deleteable) {
+		this.deletable = deleteable;
+	}
+
+	public Boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
+	}
 
 	public Double getPrice() {
 		return price;
@@ -102,4 +123,11 @@ public class ProductFetchDto {
 		this.deliveryId = deliveryId;
 	}
 
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
+	}
 }

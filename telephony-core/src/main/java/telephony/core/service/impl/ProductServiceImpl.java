@@ -17,12 +17,10 @@ import telephony.core.service.converter.ModelConverter;
 import telephony.core.service.converter.ProducerConverter;
 import telephony.core.service.converter.ProductConverter;
 import telephony.core.service.dto.*;
-import telephony.core.service.dto.request.ProductCheckImeiRequest;
-import telephony.core.service.dto.request.ProductDetailsRequest;
-import telephony.core.service.dto.request.ProductFetchDataRequest;
-import telephony.core.service.dto.request.ProductFetchRequest;
+import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.dto.response.Error;
+import telephony.core.service.exception.ProductServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.ProductService;
 import telephony.core.service.SessionService;
@@ -100,7 +98,7 @@ implements ProductService {
 				.build();
 
 		List<String> colors = productsDao.fetchColorsList();
-		List<Model> models = modelDao.find(modelFilterCriteria);
+		List<Model> models = modelDao.findByCriteria(modelFilterCriteria);
 		List<Producer> producers = producerDao.fetch(producerFilterCriteria);
 
 		List<ModelDto> m = new ArrayList<>();
@@ -381,6 +379,50 @@ implements ProductService {
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setSuccess(true);
 
+		return resp;
+	}
+
+	// TODO extract to validator
+	private boolean validate(ProductEditRequest request, List<Error> errors) {
+
+		if (isEmpty(request.getSessionId())) {
+			errors.add(Error.create("sessionId", "sessionId cannot be empty"));
+		}
+
+		if (isEmpty(request.getUsername())) {
+			errors.add(Error.create("username", "username cannot be empty"));
+		}
+
+		if (isNull(request.getProductDto())) {
+			errors.add(Error.create("productDto", "productDto cannot be null"));
+		}
+
+		return errors.size() == 0;
+	}
+
+	@Transactional
+	@Override
+	public ProductEditResponse edit(ProductEditRequest req) throws SessionServiceException, ProductServiceException {
+
+		logger.info("ProductServiceImpl.edit starts");
+		ProductEditResponse resp = new ProductEditResponse();
+		List<Error> errors = getEmptyErrors();
+
+		if (!validate(req, errors)) {
+			resp.setErrors(errors);
+			resp.setMessage("validationError");
+			resp.setSuccess(false);
+			return resp;
+		}
+
+		sessionService.validate(req.getSessionDto());
+
+		Product product = productsDao.findById(req.getProductDto().getId());
+		productConverter.updateEntity(product, req.getProductDto());
+		productsDao.saveOrUpdate(product);
+
+		resp.setMessage("operation performed successfully");
+		resp.setSuccess(true);
 		return resp;
 	}
 

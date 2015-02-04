@@ -14,6 +14,7 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Store;
 import telephony.core.query.filter.DeliveryFilterCriteria;
 
+import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
 public class DeliveriesDaoImpl
@@ -115,6 +116,14 @@ implements DeliveriesDao {
 		sb.append("inner join p.model m ");
 		sb.append("inner join m.producer pr ");
         sb.append("where 1=1 ");
+
+        if (isNotEmpty(filters.getDeliveriesIds())) {
+            sb.append(" and e.id IN (:deliveriesIds) ");
+        }
+
+        if (isNotEmpty(filters.getIgnoreIds())) {
+            sb.append(" and e.id NOT IN (:ignoreIds) ");
+        }
         
         if (filters.getDeliveredBy() != null) {
         	sb.append(" and c.id = :deliveredBy ");
@@ -173,7 +182,15 @@ implements DeliveriesDao {
         
         Query query = getEntityManager()
             			.createQuery(queryStr);
-        
+
+        if (isNotEmpty(filters.getDeliveriesIds())) {
+            query.setParameter("deliveriesIds", filters.getDeliveriesIds());
+        }
+
+        if (isNotEmpty(filters.getIgnoreIds())) {
+            query.setParameter("ignoreIds", filters.getIgnoreIds());
+        }
+
         if (filters.getDeliveryDateStart() != null) {
         	Timestamp deliveryDateStart = new Timestamp(filters.getDeliveryDateStart().getTime());
         	query.setParameter("deliveryDateStart", deliveryDateStart);
@@ -242,6 +259,14 @@ implements DeliveriesDao {
         sb.append("inner join m.producer pr ");
         sb.append("where 1=1 ");
 
+        if (isNotEmpty(filters.getDeliveriesIds())) {
+            sb.append(" and e.id IN (:deliveriesIds) ");
+        }
+
+        if (isNotEmpty(filters.getIgnoreIds())) {
+            sb.append(" and e.id NOT IN (:ignoreIds) ");
+        }
+
         if (filters.getDeliveredBy() != null) {
             sb.append(" and c.id = :deliveredBy ");
         }
@@ -299,6 +324,14 @@ implements DeliveriesDao {
 
         Query query = getEntityManager()
                 .createQuery(queryStr);
+
+        if (isNotEmpty(filters.getDeliveriesIds())) {
+            query.setParameter("deliveriesIds", filters.getDeliveriesIds());
+        }
+
+        if (isNotEmpty(filters.getIgnoreIds())) {
+            query.setParameter("ignoreIds", filters.getIgnoreIds());
+        }
 
         if (filters.getDeliveryDateStart() != null) {
             Timestamp deliveryDateStart = new Timestamp(filters.getDeliveryDateStart().getTime());

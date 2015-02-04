@@ -219,6 +219,14 @@ implements SalesDao {
 			sbMainQuery.append(" and st.id = :storeId ");
 		}
 
+		if (isNotEmpty(filters.getSalesIds())) {
+			sbMainQuery.append("and s.id in (:salesIds) ");
+		}
+
+		if (isNotEmpty(filters.getIgnoreIds())) {
+			sbMainQuery.append("and s.id not in (:ignoreIds) ");
+		}
+
 		Query query = getEntityManager().createQuery(sbMainQuery.toString());
 
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
@@ -260,6 +268,14 @@ implements SalesDao {
 
 		if (isNotNull(filters.getStoreId())) {
 			query.setParameter("storeId", filters.getStoreId());
+		}
+
+		if (isNotEmpty(filters.getSalesIds())) {
+			query.setParameter("salesIds", filters.getSaleDateEnd());
+		}
+
+		if (isNotEmpty(filters.getIgnoreIds())) {
+			query.setParameter("ignoreIds", filters.getIgnoreIds());
 		}
 
 		List<Sale> res = (List<Sale>) query.getResultList();
@@ -392,6 +408,14 @@ implements SalesDao {
 			sbMainQuery.append(" and st.id = :storeId ");
 		}
 
+		if (isNotEmpty(filters.getSalesIds())) {
+			sbMainQuery.append("and s.id in (:salesIds) ");
+		}
+
+		if (isNotEmpty(filters.getIgnoreIds())) {
+			sbMainQuery.append("and s.id not in (:ignoreIds) ");
+		}
+
 		Query query = getEntityManager().createQuery(sbMainQuery.toString());
 
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
@@ -433,6 +457,14 @@ implements SalesDao {
 
 		if (isNotNull(filters.getStoreId())) {
 			query.setParameter("storeId", filters.getStoreId());
+		}
+
+		if (isNotEmpty(filters.getSalesIds())) {
+			query.setParameter("salesIds", filters.getSalesIds());
+		}
+
+		if (isNotEmpty(filters.getIgnoreIds())) {
+			query.setParameter("ignoreIds", filters.getIgnoreIds());
 		}
 
 		// TODO improve it later

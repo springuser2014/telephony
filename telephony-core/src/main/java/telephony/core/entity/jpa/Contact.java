@@ -7,7 +7,25 @@ import javax.persistence.*;
 @Entity
 @Table(name = "contacts")
 public class Contact extends BaseEntity {
-	
+
+    @OneToMany(
+            mappedBy = "contact",
+            fetch    = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+            }
+    )
+    private Collection<ProductComplaint> productComplaints;
+
+    @OneToMany(
+            mappedBy = "contact",
+            fetch    = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+            }
+    )
+    private Collection<SaleComplaint> salesComplaints;
+
     @OneToMany(
         mappedBy = "contact",
         fetch    = FetchType.LAZY,
@@ -323,4 +341,47 @@ public class Contact extends BaseEntity {
         }
     }
 
+    public void addProductComplaint(ProductComplaint pc) {
+
+        if (!productComplaints.contains(pc)) {
+            productComplaints.add(pc);
+        }
+    }
+
+    public void removeProductComplaint(ProductComplaint pc) {
+
+        if (productComplaints.contains(pc)) {
+            productComplaints.remove(pc);
+        }
+    }
+
+    public Collection<ProductComplaint> getProductComplaints() {
+        return productComplaints;
+    }
+
+    public void setProductComplaints(Collection<ProductComplaint> productComplaints) {
+        this.productComplaints = productComplaints;
+    }
+
+    public Collection<SaleComplaint> getSalesComplaints() {
+        return salesComplaints;
+    }
+
+    public void setSalesComplaints(Collection<SaleComplaint> salesComplaints) {
+        this.salesComplaints = salesComplaints;
+    }
+
+    public void addSaleComplaint(SaleComplaint sc) {
+
+        if (!salesComplaints.contains(sc)) {
+            salesComplaints.add(sc);
+        }
+    }
+
+    public void removeSaleComplaint(SaleComplaint sc) {
+
+        if (salesComplaints.contains(sc)) {
+            salesComplaints.remove(sc);
+        }
+    }
 }

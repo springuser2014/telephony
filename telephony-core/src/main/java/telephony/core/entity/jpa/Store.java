@@ -36,15 +36,17 @@ public class Store extends BaseEntity {
     @Column(name = "label", nullable = false, length = 255)
     private String label;
     
-    @ManyToMany(mappedBy = "allowedShops")
-    private Set<User> users = new HashSet<User>();
+//    @ManyToMany(mappedBy = "allowedShops")
+//    private Set<User> users = new HashSet<User>();
       
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
     private Set<Product> products = new HashSet<Product>();
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
     private Set<Delivery> deliveries = new HashSet<Delivery>();
-    
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
+    private Set<Sale> sales = new HashSet<>();
     /**
      * sd.
      * @param delivery a.
@@ -74,23 +76,31 @@ public class Store extends BaseEntity {
     	
     }
     
-    /**
-     * asd.
-     * @return a.
-     */
     public Set<Delivery> getDeliveries() {
 		return deliveries;
 	}
 
-    /**
-     * asd.
-     * @param deliveries a.
-     */
 	public void setDeliveries(Set<Delivery> deliveries) {
 		this.deliveries = deliveries;
 	}
 
-	/**
+    public void addSale(Sale sale) {
+        sales.add(sale);
+    }
+
+    public void removeSale(Sale sale) {
+        sales.remove(sale);
+    }
+
+    public Set<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(Set<Sale> sales) {
+        this.sales = sales;
+    }
+
+    /**
 	 * a.
 	 * @param product a.
 	 */
@@ -118,25 +128,17 @@ public class Store extends BaseEntity {
     	product.setStore(null);
     }
     
-    /**
-     * ad.
-     * @return a.
-     */
     public Set<Product> getProducts() {
 		return products;
 	}
 
-    /**
-     * a.
-     * @param products a.
-     */
-	public void setProducts(Set<Product> products) {
+    public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 
 	@Override
 	public String toString() {
-		return "Store [id=" + id + ", label=" + label + ", users=" + users
+		return "Store [id=" + id + ", label=" + label
 				+ ", products=" + products
 				+ ", deliveries=" + deliveries + "]";
 	}
@@ -145,17 +147,17 @@ public class Store extends BaseEntity {
      * asd.
      * @return as.
      */
-    public Set<User> getUsers() {
-		return users;
-	}
+//    public Set<User> getUsers() {
+//		return users;
+//	}
 
     /**
      * asd.
      * @param users asd.
      */
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
+//	public void setUsers(Set<User> users) {
+//		this.users = users;
+//	}
 
 	/**
      * asd.

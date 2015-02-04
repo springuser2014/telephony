@@ -24,7 +24,7 @@ implements ProductComplaintDao {
 	public List<ProductComplaint> findByProductsIds(Collection<Long> productsIds) {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("select ProductComplaint pc inner join pc.product p where p.id IN (:productsIds) ");
+		sb.append("select pc from ProductComplaint pc join pc.product p where p.id IN (:productsIds) ");
 
 		List<ProductComplaint> complaints =
 				(List<ProductComplaint>) getEntityManager()

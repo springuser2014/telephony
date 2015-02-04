@@ -24,7 +24,10 @@
         <class>telephony.core.entity.jpa.Producer</class>
         <class>telephony.core.entity.jpa.TestEntity</class>
         <class>telephony.core.entity.jpa.ProductTax</class>
-        
+		<class>telephony.core.entity.jpa.ProductComplaintComment</class>
+		<class>telephony.core.entity.jpa.SaleComplaintComment</class>
+
+
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.archive.autodetection" value="class" />

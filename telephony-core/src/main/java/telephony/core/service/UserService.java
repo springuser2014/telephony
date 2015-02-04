@@ -6,6 +6,8 @@ import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.exception.UserServiceException;
 
+import java.security.NoSuchAlgorithmException;
+
 public interface UserService extends BasicService<User> {
 	
 	UsersFetchResponse fetch(UsersFetchRequest req)
@@ -13,6 +15,9 @@ public interface UserService extends BasicService<User> {
 
     UserEditResponse edit(UserEditRequest req)
     		throws SessionServiceException, UserServiceException;
+
+	UserChangePasswordResponse changePassword(UserChangePasswordRequest request)
+			throws SessionServiceException, UserServiceException, NoSuchAlgorithmException;
 
     UserAddResponse add(UserAddRequest req)
     		throws SessionServiceException, UserServiceException;

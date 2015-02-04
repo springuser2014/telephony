@@ -10,6 +10,7 @@ public class ProductFilterCriteria
 extends AbstractFilterCriteria<ProductFilterCriteria> {
 
 	private List<Long> productIds;
+	private List<Long> ignoreIds;
 	private String imei;
 	private String producer;
 	private String model;
@@ -25,6 +26,29 @@ extends AbstractFilterCriteria<ProductFilterCriteria> {
 
 	public ProductFilterCriteria() {
 		this.productIds = new ArrayList<>();
+		this.ignoreIds = new ArrayList<>();
+	}
+
+	public List<Long> getIgnoreIds() {
+		return ignoreIds;
+	}
+
+	public void setIgnoreIds(List<Long> ignoreIds) {
+		this.ignoreIds = ignoreIds;
+	}
+
+	public void addIgnoreId(Long productId) {
+
+		if (!ignoreIds.contains(productId)) {
+			ignoreIds.add(productId);
+		}
+	}
+
+	public void removeIgnoreId(Long productId) {
+
+		if (ignoreIds.contains(productId)) {
+			ignoreIds.remove(productId);
+		}
 	}
 
 	public void setProductIds(List<Long> productIds) {

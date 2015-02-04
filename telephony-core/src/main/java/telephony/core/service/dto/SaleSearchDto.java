@@ -18,7 +18,24 @@ public class SaleSearchDto {
     private Long numberOfProducts;
     private Double sum;
 
-    public SaleSearchDto() { }
+    private Boolean editable;
+    private Boolean deletable;
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(Boolean deletable) {
+        this.deletable = deletable;
+    }
 
     public String getStoreLabel() {
         return storeLabel;
@@ -91,5 +108,7 @@ public class SaleSearchDto {
     public void setContactId(Long contactId) {
         this.contactId = contactId;
     }
+
+
 
 }

@@ -13,6 +13,7 @@ import telephony.core.service.StoreService;
 import telephony.core.service.converter.StoreConverter;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.StoreDto;
+import telephony.core.service.dto.StoreSearchDto;
 import telephony.core.service.dto.request.StoreAddRequest;
 import telephony.core.service.dto.request.StoreDeleteRequest;
 import telephony.core.service.dto.request.StoreEditRequest;
@@ -105,11 +106,11 @@ implements StoreService {
 
 		sessionService.validate(request.getSessionDto());
 
-		List<StoreDto> storez = new ArrayList<StoreDto>();
-		List<Store> stores = storesDao.find(request.getFilters());
+		List<StoreSearchDto> storez = new ArrayList<StoreSearchDto>();
+		List<Store> stores = storesDao.findByCriteria(request.getFilters());
 
 		for (Store store: stores) {
-			storez.add(storeConverter.toStoreDto(store));
+			storez.add(storeConverter.toStoreSearchDto(store));
 		}
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg

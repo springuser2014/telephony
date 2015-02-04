@@ -7,22 +7,16 @@ import telephony.core.entity.jpa.Contact;
 import telephony.core.entity.jpa.Email;
 import telephony.core.entity.jpa.PhoneNumber;
 
-/**
- * asd.
- */
 public class ContactDto {
 	
 	private Long id;
 	private String label;
 	private String details;
 	private AddressDto address;
-	private List<String> emails = new ArrayList<String>();
-	private List<PhoneNumberDto> phoneNumbers = new ArrayList<PhoneNumberDto>();
-	private List<String> faxes = new ArrayList<String>();
+	private List<String> emails = new ArrayList<>();
+	private List<PhoneNumberDto> phoneNumbers = new ArrayList<>();
+	private List<String> faxes = new ArrayList<>();
 
-	/**
-	 * asd.
-	 */
 	public ContactDto() {
 
 	}
@@ -30,7 +24,6 @@ public class ContactDto {
 	/**
 	 * asd.
 	 * @param email a.
-
 	 */
 	public void addEmail(String email) {
 		this.emails.add(email);

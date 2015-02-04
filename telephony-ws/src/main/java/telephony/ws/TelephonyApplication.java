@@ -13,14 +13,8 @@ import telephony.ws.resource.contact.*;
 import telephony.ws.resource.contact.impl.*;
 import telephony.ws.resource.delivery.*;
 import telephony.ws.resource.delivery.impl.*;
-import telephony.ws.resource.products.ProductCheckImeiResource;
-import telephony.ws.resource.products.ProductFetchDataResource;
-import telephony.ws.resource.products.ProductsDetailsResource;
-import telephony.ws.resource.products.ProductsFetchResource;
-import telephony.ws.resource.products.impl.ProductCheckImeiResourceImpl;
-import telephony.ws.resource.products.impl.ProductFetchDataResourceImpl;
-import telephony.ws.resource.products.impl.ProductsDetailsResourceImpl;
-import telephony.ws.resource.products.impl.ProductsFetchResourceImpl;
+import telephony.ws.resource.products.*;
+import telephony.ws.resource.products.impl.*;
 import telephony.ws.resource.sale.*;
 import telephony.ws.resource.sale.impl.*;
 import telephony.ws.resource.session.*;
@@ -80,6 +74,7 @@ public class TelephonyApplication extends Application {
         router.attach(UsersAddResource.URL, UsersAddResourceImpl.class);
         router.attach(UsersFetchResource.URL, UsersFetchResourceImpl.class);
         router.attach(UsersEditResource.URL, UsersEditResourceImpl.class);
+        router.attach(UsersChangePasswordResource.URL, UsersChangePasswordResourceImpl.class);
         router.attach(UsersDeleteResource.URL, UsersDeleteResourceImpl.class);
         router.attach(UsersDetailsResource.URL, UsersDetailsResourceImpl.class);
         
@@ -100,6 +95,7 @@ public class TelephonyApplication extends Application {
         // products resources - complete
         router.attach(ProductsFetchResource.URL, ProductsFetchResourceImpl.class);
         router.attach(ProductsDetailsResource.URL, ProductsDetailsResourceImpl.class);
+        router.attach(ProductEditResource.URL, ProductEditResourceImpl.class);
 
         router.attach(ProductCheckImeiResource.URL, ProductCheckImeiResourceImpl.class);
         router.attach(ProductFetchDataResource.URL, ProductFetchDataResourceImpl.class);
@@ -135,6 +131,7 @@ public class TelephonyApplication extends Application {
 
         router.attach(ComplaintDeleteResource.URL, ComplaintDeleteResourceImpl.class);
         router.attach(ComplaintAddCommentResource.URL, ComplaintAddCommentResourceImpl.class);
+        router.attach(ComplaintAddAnonymousCommentResource.URL, ComplaintAddAnonymousCommentResourceImpl.class);
         
         // TODO verify the stuff below
         router.attach(StoreFetchUsersResource.URL, StoreFetchUsersResourceImpl.class);

@@ -3,9 +3,7 @@ package telephony.core.service.dto.request;
 import telephony.core.service.dto.SaleAddDto;
 import telephony.core.service.dto.SessionDto;
 
-/**
- * sad.
- */
+
 public class SaleAddRequest extends AuthRequest {
 
 	SaleAddDto sale;

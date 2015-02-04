@@ -17,7 +17,6 @@ import telephony.core.service.UserService;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.UserAddDto;
 import telephony.core.service.dto.UserEditDto;
-import telephony.core.service.dto.UserFetchDto;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.*;
 import telephony.core.service.exception.SessionServiceException;
@@ -79,7 +78,7 @@ public class UserServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		UserAddDto dto = new UserAddDto();
 		dto.setEmail("any@mail.com");
-		dto.setPassword("somePa$$word");
+		dto.setPassword1("somePa$$word");
 		dto.setSessionId(null);
 		dto.setSessionValidity(null);
 		dto.setIsActive(true);

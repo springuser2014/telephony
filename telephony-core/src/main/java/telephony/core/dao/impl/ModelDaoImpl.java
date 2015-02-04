@@ -12,18 +12,13 @@ import java.util.List;
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
-/**
- * asd.
- */
-public class ModelDaoImpl 
+
+public class ModelDaoImpl
 extends GenericDaoImpl<Model> 
 implements ModelDao {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * asd.
-	 */
 	public ModelDaoImpl() {
 		super(Model.class);
 	}
@@ -54,7 +49,7 @@ implements ModelDao {
 	}
 
 	@Override
-	public List<Model> find(ModelFilterCriteria filters) {
+	public List<Model> findByCriteria(ModelFilterCriteria filters) {
 		logger.info("ModelDaoImpl.find starts");
 
 		StringBuilder query = new StringBuilder();

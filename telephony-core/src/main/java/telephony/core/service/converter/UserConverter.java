@@ -41,7 +41,7 @@ public class UserConverter {
         User u = new User();
         u.setEmail(dto.getEmail());
         u.setIsActive(dto.getIsActive());
-        u.setPassword(dto.getPassword());
+        u.setPassword(dto.getPassword1());
         u.setSessionId(dto.getSessionId());
         u.setSessionValidity(dto.getSessionValidity());
 

@@ -6,6 +6,7 @@ import java.util.List;
 public class ContactFilterCriteria
 extends AbstractFilterCriteria<ContactFilterCriteria> {
 
+	private List<Long> ignoreIds;
 	private List<Long> ids;
 	private String label;
 	private String details;
@@ -15,6 +16,7 @@ extends AbstractFilterCriteria<ContactFilterCriteria> {
 
 	public ContactFilterCriteria() {
 		ids = new ArrayList<>();
+		ignoreIds = new ArrayList<>();
 	}
 
 	public String getLabel() {
@@ -55,6 +57,28 @@ extends AbstractFilterCriteria<ContactFilterCriteria> {
 
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+
+	public void addIgnoreId(Long id) {
+
+		if (!ignoreIds.contains(id)) {
+			ignoreIds.add(id);
+		}
+	}
+
+	public void removeIgnoreId(Long id) {
+
+		if (ignoreIds.contains(id)) {
+			ignoreIds.remove(id);
+		}
+	}
+
+	public List<Long> getIgnoreIds() {
+		return ignoreIds;
+	}
+
+	public void setIgnoreIds(List<Long> ignoreIds) {
+		this.ignoreIds = ignoreIds;
 	}
 
 	public List<Long> getIds() {

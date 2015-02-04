@@ -3,6 +3,7 @@ package telephony.core.service.converter;
 import telephony.core.entity.jpa.*;
 import telephony.core.service.dto.AddressDto;
 import telephony.core.service.dto.ContactDto;
+import telephony.core.service.dto.ContactSearchDto;
 import telephony.core.service.dto.PhoneNumberDto;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
@@ -12,6 +13,10 @@ public class ContactConverter {
     public ContactDto contactToContactDto(Contact contact) {
 
         ContactDto dto = new ContactDto();
+        return update(dto,contact);
+    }
+
+    private ContactDto update(ContactDto dto, Contact contact) {
         dto.setId(contact.getId());
         dto.setDetails(contact.getDetails());
         dto.setLabel(contact.getLabel());
@@ -60,10 +65,17 @@ public class ContactConverter {
         return dto;
     }
 
-    public Contact contactDtoToContact(ContactDto contactDto) {
+    public ContactSearchDto contactToContactSearchDto(Contact contact) {
 
-        Contact contact = new Contact();
+        ContactSearchDto dto = new ContactSearchDto();
+        update(dto,contact);
 
-        return contact;
+        boolean is = contact.getDeliveries().isEmpty() && contact.getSales().isEmpty();
+
+        dto.setEditable(is);
+        dto.setDeletable(is);
+
+
+        return dto;
     }
 }

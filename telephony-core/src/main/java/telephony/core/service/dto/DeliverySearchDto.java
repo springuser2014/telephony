@@ -18,6 +18,25 @@ public class DeliverySearchDto {
     private Long numberOfProducts;
     private Double sum;
 
+    private Boolean editable;
+    private Boolean deletable;
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(Boolean deletable) {
+        this.deletable = deletable;
+    }
+
     public Long getId() {
         return id;
     }

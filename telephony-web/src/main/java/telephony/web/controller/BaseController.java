@@ -1,12 +1,10 @@
 package telephony.web.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import telephony.web.Environment;
 import telephony.web.EnvironmentResolver;
  
@@ -215,7 +213,7 @@ public class BaseController {
 	@RequestMapping(value="complaints", method = RequestMethod.GET)
 	public ModelAndView complaints() {
 
-		ModelAndView mv = new ModelAndView("oomplaints");
+		ModelAndView mv = new ModelAndView("complaints");
 		appendEnvironment(mv);
 
 		return mv;

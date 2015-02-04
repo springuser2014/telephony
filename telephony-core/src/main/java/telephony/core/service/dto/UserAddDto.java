@@ -8,21 +8,30 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserAddDto extends UserDto {
 
-    String password;
+    String password1;
+    String password2;
     List<Long> rolesToAdd;
 
     public UserAddDto() {
         super();
 
-        rolesToAdd = new ArrayList<Long>();
+        rolesToAdd = new ArrayList<>();
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassword1() {
+        return password1;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword1(String password1) {
+        this.password1 = password1;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
     }
 
     public List<Long> getRolesToAdd() {

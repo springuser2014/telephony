@@ -1,22 +1,8 @@
 package telephony.core.entity.jpa;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "users")
@@ -44,16 +30,16 @@ public class User extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionValidity;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-		name = "user_stores",
-        joinColumns = @JoinColumn(
-    		name = "user_id", 
-    		referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(
-    		name = "store_id", 
-    		referencedColumnName = "id"))
-    private Set<Store> allowedShops;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//		name = "user_stores",
+//        joinColumns = @JoinColumn(
+//    		name = "user_id",
+//    		referencedColumnName = "id"),
+//        inverseJoinColumns = @JoinColumn(
+//    		name = "store_id",
+//    		referencedColumnName = "id"))
+//    private Set<Store> allowedShops;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "user_roles",
@@ -103,13 +89,13 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public Set<Store> getAllowedShops() {
-        return allowedShops;
-    }
-
-    public void setAllowedShops(Set<Store> allowedShops) {
-        this.allowedShops = allowedShops;
-    }
+//    public Set<Store> getAllowedShops() {
+//        return allowedShops;
+//    }
+//
+//    public void setAllowedShops(Set<Store> allowedShops) {
+//        this.allowedShops = allowedShops;
+//    }
 
     public Collection<Role> getRoles() {
         return roles;
@@ -142,11 +128,11 @@ public class User extends BaseEntity {
         }
 
         User user = (User) o;
-
-        if (allowedShops != null
-                        ? !allowedShops.equals(user.allowedShops) : user.allowedShops != null) {
-            return false;
-        }
+//
+//        if (allowedShops != null
+//                        ? !allowedShops.equals(user.allowedShops) : user.allowedShops != null) {
+//            return false;
+//        }
         if (email != null ? !email.equals(user.email) : user.email != null) {
             return false;
         }
@@ -165,7 +151,7 @@ public class User extends BaseEntity {
         int result = super.hashCode();
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (allowedShops != null ? allowedShops.hashCode() : 0);
+//        result = 31 * result + (allowedShops != null ? allowedShops.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }

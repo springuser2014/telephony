@@ -19,7 +19,6 @@ import telephony.core.query.filter.ProductFilterCriteria;
 
 import static telephony.core.assertion.CommonAssertions.*;
 
-
 public class ProductsDaoImpl 
 extends GenericDaoImpl<Product> 
 implements ProductsDao {
@@ -125,6 +124,10 @@ implements ProductsDao {
             sb.append("and p.id in (:productIds) ");
         }
 
+        if (isNotEmpty(query.getIgnoreIds())) {
+            sb.append("and p.id not in (:ignoreIds) ");
+        }
+
         List<Product> res = null;
 
         Query jpaQuery = getEntityManager()
@@ -162,6 +165,10 @@ implements ProductsDao {
 
         if (isNotEmpty(query.getProductIds())) {
             jpaQuery.setParameter("productIds", query.getProductIds());
+        }
+
+        if (isNotEmpty(query.getIgnoreIds())) {
+            jpaQuery.setParameter("ignoreIds", query.getIgnoreIds());
         }
 
         if (isNotEmpty(query.getDeliveriesIds())) {
@@ -234,9 +241,6 @@ implements ProductsDao {
         return res;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Transactional
     public Product findByImeiAndStoreId(String imei, Long storeId) {
@@ -353,28 +357,33 @@ implements ProductsDao {
 	public Product findByIMEI(String imei) {
 	
 	    logger.debug("ProductsDaoImpl.findByIMEI starts");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select e from Product e  where e.imei in (?1)");
 	    
-        Product lst = (Product) 
+        List<Product> lst = (List<Product>)
         		getEntityManager()
-        		.createQuery(
-        		"select e from Product e " +
-        		"where e.imei in (?1)")
+        		.createQuery(sb.toString())
 				.setParameter(1, imei)
-				.getSingleResult();
+				.getResultList();
         
-        
-        return lst;
+        if (lst.size() > 0) {
+            return lst.get(0);
+        } else {
+            return null;
+        }
 	}
 
 	@Override
 	public void removeByDeliveryId(Delivery delvieryToDelete) {
 
 	    logger.debug("ProductsDaoImpl.removeByDeliveryId starts");
-	    
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("delete from Product e where e.delivery = :delivery");
+
 		getEntityManager()
-			.createQuery(
-			"delete from Product e " +
-			"where e.delivery = :delivery")
+			.createQuery(sb.toString())
 			.setParameter("delivery", delvieryToDelete)
 			.executeUpdate();
     

@@ -16,9 +16,26 @@ public class ProductDetailsDto extends ProductFetchDto {
 
     private List<SaleComplaintDto> saleComplaints;
 
+    private List<PricingDto> historicalPricing;
+
     public ProductDetailsDto() {
         productComplaints = new ArrayList<>();
         saleComplaints = new ArrayList<>();
+    }
+
+    public void addHistoricalPricing(PricingDto pricingDto) {
+
+        if (historicalPricing.contains(pricingDto)) {
+
+        }
+    }
+
+    public List<PricingDto> getHistoricalPricing() {
+        return historicalPricing;
+    }
+
+    public void setHistoricalPricing(List<PricingDto> historicalPricing) {
+        this.historicalPricing = historicalPricing;
     }
 
     public DeliverySearchDto getDelivery() {

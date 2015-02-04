@@ -28,7 +28,7 @@ public class HelloWorldResourceImpl extends TelephonyServerResource implements H
 
     	logger.info("helloworld resource");
 
-        return new JsonRepresentation("hello world");
+        return new JsonRepresentation("hello1 world");
     }
 
 }

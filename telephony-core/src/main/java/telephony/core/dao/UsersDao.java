@@ -1,11 +1,13 @@
 package telephony.core.dao;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.UserFilterCriteria;
+import telephony.core.service.dto.UserChangePasswordDto;
 
 /**
  * Defines basic operations on User entity.
@@ -55,7 +57,11 @@ public interface UsersDao extends GenericDao<User> {
      */
 	List<User> findByStoreId(Long storeId);
 
-	List<User> find(UserFilterCriteria filters);
+	List<User> findByCriteria(UserFilterCriteria filters);
 
+	Long countByCriteria(UserFilterCriteria filters);
 
+	void changePassword(UserChangePasswordDto userDto) throws NoSuchAlgorithmException;
+
+	String encodePassword(String bytes) throws NoSuchAlgorithmException;
 }

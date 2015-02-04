@@ -4,14 +4,9 @@ import telephony.core.entity.jpa.Product;
 import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.ProducerDto;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.request.ProductCheckImeiRequest;
-import telephony.core.service.dto.request.ProductDetailsRequest;
-import telephony.core.service.dto.request.ProductFetchDataRequest;
-import telephony.core.service.dto.request.ProductFetchRequest;
-import telephony.core.service.dto.response.ProductCheckImeiResponse;
-import telephony.core.service.dto.response.ProductDetailsResponse;
-import telephony.core.service.dto.response.ProductFetchDataResponse;
-import telephony.core.service.dto.response.ProductFetchResponse;
+import telephony.core.service.dto.request.*;
+import telephony.core.service.dto.response.*;
+import telephony.core.service.exception.ProductServiceException;
 import telephony.core.service.exception.SessionServiceException;
 
 import java.util.List;
@@ -20,6 +15,9 @@ public interface ProductService extends BasicService<Product> {
 
 	ProductFetchResponse fetch(ProductFetchRequest req)
 			throws SessionServiceException;
+
+	ProductEditResponse edit(ProductEditRequest req)
+			throws SessionServiceException, ProductServiceException;
 
 	List<String> fetchAllColors(SessionDto session)
 			throws SessionServiceException;

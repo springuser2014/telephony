@@ -6,26 +6,23 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
 import telephony.core.query.filter.UserFilterCriteria;
+import telephony.core.service.dto.UserChangePasswordDto;
 
 import javax.persistence.Query;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotNull;
 
-/**
- * Users management DAO.
- */
 public class UsersDaoImpl 
 extends GenericDaoImpl<User> 
 implements UsersDao {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-	
-	/**
-	 * Sets entities class.
-	 */
+
 	public UsersDaoImpl() {
 		super(User.class);
 	}
@@ -101,8 +98,7 @@ implements UsersDao {
 				username, sessionId);
 		
 		List<User> lst = (List<User>) getEntityManager()
-				.createQuery(
-						"select e from User e where e.email = ?1 and e.sessionId = ?2")
+				.createQuery("select e from User e where e.email = ?1 and e.sessionId = ?2")
 				.setParameter(1, username)
 				.setParameter(2, sessionId)
 				.getResultList();
@@ -122,8 +118,7 @@ implements UsersDao {
 		logger.info("params : [ storeId : {} ] ", storeId);
 
 		List<User> lst = (List<User>) getEntityManager()
-				.createQuery(
-						"select e from User e inner join fetch e.allowedShops s where s.id = ?1")
+				.createQuery("select e from User e inner join fetch e.allowedShops s where s.id = ?1")
 				.setParameter(1, storeId)
 				.getResultList();
 
@@ -141,65 +136,39 @@ implements UsersDao {
 	}
 
 	@Override
-	public List<User> find(UserFilterCriteria filters) {
-		logger.info("UsersDaoImpl.find starts");
+	public List<User> findByCriteria(UserFilterCriteria filters) {
+		logger.info("UsersDaoImpl.findByCriteria starts");
 
 		if(logger.isDebugEnabled()) {
 			logger.debug(" params : [ filters : {} ]", filters);
 		}
 
-		boolean whereAdded = false;
 		StringBuilder sb = new StringBuilder();
 		sb.append(" select distinct u from User u left outer join u.allowedShops s ");
+		sb.append(" where 1=1 ");
 
 		if (isNotNull(filters.getEmail())) {
-			sb.append(" where u.email = :email ");
-			whereAdded = true;
+			sb.append(" and where u.email = :email ");
 		}
 
 		if (isNotNull(filters.getIsActive())) {
-			if (whereAdded) {
-				sb.append(" and u.isActive = :isActive ");
-			} else {
-				sb.append(" where u.isActive = :isActive ");
-				whereAdded = true;
-			}
+			sb.append(" and u.isActive = :isActive ");
 		}
 
 		if (isNotNull(filters.getLastLoginFrom())) {
-			if (whereAdded) {
-				sb.append(" and u.sessionValidity >= :lastLoginFrom ");
-			} else {
-				sb.append(" where u.sessionValidity >= :lastLoginFrom ");
-				whereAdded = true;
-			}
+			sb.append(" and u.sessionValidity >= :lastLoginFrom ");
 		}
 
 		if (isNotNull(filters.getLastLoginTo())) {
-			if (whereAdded) {
-				sb.append(" and u.sessionValidity <= :lastLoginTo ");
-			} else {
-				sb.append(" where u.sessionValidity <= :lastLoginTo ");
-				whereAdded = true;
-			}
+			sb.append(" and u.sessionValidity <= :lastLoginTo ");
 		}
 
 		if (isNotEmpty(filters.getUserIds())) {
-			if (whereAdded) {
-				sb.append(" and u.id IN (:ids) ");
-			} else {
-				sb.append(" where u.id IN (:ids) ");
-				whereAdded = true;
-			}
+			sb.append(" and u.id IN (:ids) ");
 		}
 
 		if (isNotEmpty(filters.getStoreIds())) {
-			if (whereAdded) {
-				sb.append(" and s.id IN (:storeIds) ");
-			} else {
-				sb.append(" where s.id IN (:storeIds) ");
-				whereAdded = true;
-			}
+			sb.append(" and s.id IN (:storeIds) ");
 		}
 
 		Query q = getEntityManager().createQuery(sb.toString());
@@ -229,7 +198,7 @@ implements UsersDao {
 		}
 		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
-			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
 			q.setMaxResults(filters.getPerPage());
 		}
 
@@ -240,6 +209,105 @@ implements UsersDao {
 		List<User> users = (List<User>) q.getResultList();
 
 		return users;
+	}
+
+	@Override
+	public Long countByCriteria(UserFilterCriteria filters) {
+
+		logger.info("UsersDaoImpl.countByCriteria starts");
+
+		if(logger.isDebugEnabled()) {
+			logger.debug(" params : [ filters : {} ]", filters);
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(" select count(distinct u) from User u left outer join u.allowedShops s ");
+		sb.append(" where 1=1 ");
+
+		if (isNotNull(filters.getEmail())) {
+			sb.append(" and where u.email = :email ");
+		}
+
+		if (isNotNull(filters.getIsActive())) {
+			sb.append(" and u.isActive = :isActive ");
+		}
+
+		if (isNotNull(filters.getLastLoginFrom())) {
+			sb.append(" and u.sessionValidity >= :lastLoginFrom ");
+		}
+
+		if (isNotNull(filters.getLastLoginTo())) {
+			sb.append(" and u.sessionValidity <= :lastLoginTo ");
+		}
+
+		if (isNotEmpty(filters.getUserIds())) {
+			sb.append(" and u.id IN (:ids) ");
+		}
+
+		if (isNotEmpty(filters.getStoreIds())) {
+			sb.append(" and s.id IN (:storeIds) ");
+		}
+
+		Query q = getEntityManager()
+				.createQuery(sb.toString());
+
+		if (isNotNull(filters.getEmail())) {
+			q.setParameter("email", filters.getEmail());
+		}
+
+		if (isNotNull(filters.getIsActive())) {
+			q.setParameter("isActive", filters.getIsActive());
+		}
+
+		if (isNotNull(filters.getLastLoginFrom())) {
+			q.setParameter("lastLoginFrom", filters.getLastLoginFrom());
+		}
+
+		if (isNotNull(filters.getLastLoginTo())) {
+			q.setParameter("lastLoginTo", filters.getLastLoginTo());
+		}
+
+		if (isNotEmpty(filters.getUserIds())) {
+			q.setParameter("ids", filters.getUserIds());
+		}
+
+		if (isNotEmpty(filters.getStoreIds())) {
+			q.setParameter("storeIds", filters.getStoreIds());
+		}
+		// TODO extract to common
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getPerPage())) {
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		Long count = (Long) q.getSingleResult();
+
+		return count;
+	}
+
+	@Override
+	public void changePassword(UserChangePasswordDto userDto) throws NoSuchAlgorithmException {
+
+		logger.info("UsersDaoImpl.changePassword starts");
+		User user = findById(userDto.getUserId());
+
+		user.setPassword(encodePassword(userDto.getPassword1()));
+
+		this.saveOrUpdate(user);
+	}
+
+	@Override
+	public String encodePassword(String bytes) throws NoSuchAlgorithmException {
+
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(bytes.getBytes());
+		byte[] digest = md.digest();
+
+		return new String (digest);
 	}
 }
 

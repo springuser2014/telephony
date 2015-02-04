@@ -10,8 +10,27 @@ public class UserFetchDto extends UserDto {
 
     List<RoleDto> roles;
 
+    Boolean editable;
+    Boolean deletable;
+
     public UserFetchDto() {
-        this.roles = new ArrayList<RoleDto>();
+        this.roles = new ArrayList<>();
+    }
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(Boolean deletable) {
+        this.deletable = deletable;
     }
 
     public List<RoleDto> getRoles() {

@@ -9,5 +9,5 @@ public interface ModelDao extends GenericDao<Model> {
 
 	Model findByLabel(String label);
 
-	List<Model> find(ModelFilterCriteria filters);
+	List<Model> findByCriteria(ModelFilterCriteria filters);
 }

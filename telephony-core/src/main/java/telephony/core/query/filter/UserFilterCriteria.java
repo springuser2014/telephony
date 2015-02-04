@@ -7,8 +7,10 @@ import java.util.List;
 public class UserFilterCriteria
 extends AbstractFilterCriteria<UserFilterCriteria> {
 
-	private List<Long> storeIds;
+	private List<Long> ignoreIds;
 	private List<Long> userIds;
+
+	private List<Long> storeIds;
 	private String email;
 	private Boolean isActive;
 
@@ -16,8 +18,8 @@ extends AbstractFilterCriteria<UserFilterCriteria> {
 	private Date lastLoginTo;
 
 	public UserFilterCriteria() {
-		this.userIds = new ArrayList<Long>();
-		this.storeIds = new ArrayList<Long>();
+		this.userIds = new ArrayList<>();
+		this.storeIds = new ArrayList<>();
 	}
 
 	public List<Long> getUserIds() {
@@ -36,6 +38,32 @@ extends AbstractFilterCriteria<UserFilterCriteria> {
 		if (userIds.contains(userId)) {
 			userIds.remove(userId);
 		}
+	}
+
+	public void setUserIds(List<Long> userIds) {
+		this.userIds = userIds;
+	}
+
+	public void addIgnoreId(Long userId) {
+
+		if (!ignoreIds.contains(userId)) {
+			ignoreIds.add(userId);
+		}
+	}
+
+	public void removeIgnoreId(Long userId) {
+
+		if (ignoreIds.contains(userId)) {
+			ignoreIds.remove(userId);
+		}
+	}
+
+	public List<Long> getIgnoreIds() {
+		return ignoreIds;
+	}
+
+	public void setIgnoreIds(List<Long> ignoreIds) {
+		this.ignoreIds = ignoreIds;
 	}
 
 	public String getEmail() {
@@ -68,6 +96,10 @@ extends AbstractFilterCriteria<UserFilterCriteria> {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public void setStoreIds(List<Long> storeIds) {
+		this.storeIds = storeIds;
 	}
 
 	public List<Long> getStoreIds() {

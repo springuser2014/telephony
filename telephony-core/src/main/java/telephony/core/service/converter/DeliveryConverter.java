@@ -317,7 +317,7 @@ public class DeliveryConverter {
             product.setModel(model);
             Date d = new Date();
 
-            if (product.getCurrentPricing() != null) {
+            if (product.getCurrentPricing() != null && editingProduct.getCurrentPrice() != null) {
 
                 if (product.getCurrentPricing().getRate() != editingProduct.getCurrentPrice().getRate()) {
 
@@ -334,7 +334,7 @@ public class DeliveryConverter {
                 }
             }
 
-            if (product.getCurrentTax() != null) {
+            if (product.getCurrentTax() != null && editingProduct.getProductTax() != null) {
                 if (product.getCurrentTax().getId() != editingProduct.getProductTax().getTaxId()) {
 
                     ProductTax currProductTax = product.getCurrentTax();

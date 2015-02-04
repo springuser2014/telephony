@@ -3,8 +3,6 @@
 	version="1.0">
 	<persistence-unit name="telephony" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-
-
         <class>telephony.core.entity.jpa.User</class>
         <class>telephony.core.entity.jpa.Store</class>
         <class>telephony.core.entity.jpa.Delivery</class>
@@ -25,6 +23,9 @@
         <class>telephony.core.entity.jpa.Producer</class>
         <class>telephony.core.entity.jpa.TestEntity</class>
         <class>telephony.core.entity.jpa.ProductTax</class>
+		<class>telephony.core.entity.jpa.ProductComplaintComment</class>
+		<class>telephony.core.entity.jpa.SaleComplaintComment</class>
+
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

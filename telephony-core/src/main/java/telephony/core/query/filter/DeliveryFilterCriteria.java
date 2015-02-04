@@ -1,11 +1,16 @@
 package telephony.core.query.filter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 // TODO : refactor , create builder
 
 public class DeliveryFilterCriteria
 extends AbstractFilterCriteria<DeliveryFilterCriteria> {
+
+	private List<Long> ignoreIds;
+	private List<Long> deliveriesIds;
 
 	private Date deliveryDateStart;
 	private Date deliveryDateEnd;
@@ -22,6 +27,56 @@ extends AbstractFilterCriteria<DeliveryFilterCriteria> {
 
 	private Long storeId;
 	private Long contactId;
+
+	public DeliveryFilterCriteria() {
+		this.ignoreIds = new ArrayList<>();
+		this.deliveriesIds = new ArrayList<>();
+	}
+
+	public List<Long> getDeliveriesIds() {
+		return deliveriesIds;
+	}
+
+	public void setDeliveriesIds(List<Long> deliveriesIds) {
+		this.deliveriesIds = deliveriesIds;
+	}
+
+	public void addDeliveryId(Long deliveryId) {
+
+		if (!deliveriesIds.contains(deliveryId)) {
+			deliveriesIds.add(deliveryId);
+		}
+	}
+
+	public void removeDeliveryId(Long deliveryId) {
+
+		if (deliveriesIds.contains(deliveryId)) {
+			deliveriesIds.remove(deliveryId);
+		}
+	}
+
+	public List<Long> getIgnoreIds() {
+		return ignoreIds;
+	}
+
+	public void setIgnoreIds(List<Long> ignoreIds) {
+		this.ignoreIds = ignoreIds;
+	}
+
+	public void addIgnoreId(Long productId) {
+
+		if (!ignoreIds.contains(productId)) {
+			ignoreIds.add(productId);
+		}
+	}
+
+	public void removeIgnoreId(Long productId) {
+
+		if (ignoreIds.contains(productId)) {
+			ignoreIds.remove(productId);
+		}
+	}
+
 
 	public Date getDeliveryDateStart() {
 		return deliveryDateStart;

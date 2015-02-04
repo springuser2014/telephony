@@ -16,7 +16,7 @@
         <class>telephony.core.entity.jpa.ProductComplaint</class>
         <class>telephony.core.entity.jpa.Complaint</class>
         <class>telephony.core.entity.jpa.ComplaintComment</class>
-        <class>telephony.core.entity.jpa.Email</class>
+		<class>telephony.core.entity.jpa.Email</class>
         <class>telephony.core.entity.jpa.PhoneNumber</class>
 		<class>telephony.core.entity.jpa.Fax</class>
         <class>telephony.core.entity.jpa.Tax</class>
@@ -25,7 +25,9 @@
         <class>telephony.core.entity.jpa.Producer</class>
         <class>telephony.core.entity.jpa.TestEntity</class>
         <class>telephony.core.entity.jpa.ProductTax</class>
-          
+		<class>telephony.core.entity.jpa.ProductComplaintComment</class>
+		<class>telephony.core.entity.jpa.SaleComplaintComment</class>
+
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

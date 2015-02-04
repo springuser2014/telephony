@@ -1,7 +1,6 @@
 package telephony.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -78,7 +77,7 @@ implements ModelService {
 		sessionService.validate(request.getSessionDto());
 
 		List<ModelDto> modelz = new ArrayList<ModelDto>();
-		List<Model> models = modelsDao.find(request.getFilters());
+		List<Model> models = modelsDao.findByCriteria(request.getFilters());
 
 		for(Model model : models) {
 			modelz.add(modelConverter.toModelDto(model));

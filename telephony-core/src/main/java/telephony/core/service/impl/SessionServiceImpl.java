@@ -75,7 +75,10 @@ implements SessionService {
         User u;
 
         try {
-	        u = usersDao.findByNameAndPassword(username, password);
+
+			String encodedPassword = usersDao.encodePassword(password);
+
+	        u = usersDao.findByNameAndPassword(username, encodedPassword);
 	
 	        String sessionId = generator.nextSessionId();
 	
@@ -93,6 +96,7 @@ implements SessionService {
         SessionDto session = new SessionDto(u.getEmail(), u.getSessionId(), u.getSessionValidity());
         return session;
     }
+
 
 	@Transactional
 	@Override
@@ -227,11 +231,9 @@ implements SessionService {
 		return resp;
 	}
 
-
 	@Override
 	@Transactional
 	public long count(SessionDto session) {
-		
 		return usersDao.count();
 	}	
 }

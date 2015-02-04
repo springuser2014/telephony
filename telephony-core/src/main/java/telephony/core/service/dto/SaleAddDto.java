@@ -18,7 +18,7 @@ public class SaleAddDto {
     private List<Long> productsIds;
 
     public SaleAddDto() {
-        productsIds = new ArrayList<Long>();
+        productsIds = new ArrayList<>();
     }
 
     public Long getId() {
