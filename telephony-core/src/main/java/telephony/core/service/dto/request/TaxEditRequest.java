@@ -6,6 +6,7 @@ import telephony.core.service.dto.TaxDto;
 public class TaxEditRequest extends AuthRequest {
 
     TaxDto taxDto;
+    Long newTaxId;
 
     public TaxEditRequest() {
         super();
@@ -21,5 +22,13 @@ public class TaxEditRequest extends AuthRequest {
 
     public void setTaxDto(TaxDto taxDto) {
         this.taxDto = taxDto;
+    }
+
+    public Long getNewTaxId() {
+        return newTaxId;
+    }
+
+    public void setNewTaxId(Long newTaxId) {
+        this.newTaxId = newTaxId;
     }
 }

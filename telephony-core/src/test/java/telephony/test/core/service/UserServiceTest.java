@@ -124,7 +124,9 @@ public class UserServiceTest extends BaseCoreTest {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		UserFilterCriteria filters = UserFilterCriteriaBuilder.userFilterCriteria().build();
+		UserFilterCriteria filters = UserFilterCriteriaBuilder.userFilterCriteria()
+				.withPage(0).withPerPage(100)
+				.build();
 		UsersFetchRequest fetchRequest = new UsersFetchRequest(session);
 		fetchRequest.setFilters(filters);
 

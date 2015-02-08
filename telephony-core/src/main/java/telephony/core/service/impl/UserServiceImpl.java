@@ -10,7 +10,7 @@ import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.entity.jpa.Store;
 import telephony.core.entity.jpa.User;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.UserService;
 import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.SessionDto;
@@ -45,7 +45,7 @@ implements UserService {
 	private StoresDao storesDao;
     
     @Inject
-    private SessionService sessionService;
+    private SessionManager sessionManager;
 
 	@Inject
 	private UserConverter userConverter;
@@ -96,15 +96,17 @@ implements UserService {
 			logger.debug("params : [ filters : {} ]", req.getFilters());
 		}
 
-		sessionService.validate(req.getSessionDto());
+		sessionManager.validate(req.getSessionDto());
 
 		List<UserFetchDto> userz = new ArrayList<>();
 		List<User> users = usersDao.findByCriteria(req.getFilters());
+		Long count = usersDao.countByCriteria(req.getFilters());
 
 		for (User u : users) {
 			userz.add(userConverter.toFetchDto(u));
 		}
 
+		resp.setCountTotal(count);
 		resp.setMessage("operation performed succcesfully"); // TODO add localized
 		resp.setSuccess(true);
 		resp.setUsers(userz);
@@ -155,7 +157,7 @@ implements UserService {
 			logger.debug("params : [ userDto : {} ] ", request.getUserDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		User user = usersDao.findById(request.getUserDto().getId());
 
@@ -221,7 +223,7 @@ implements UserService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		usersDao.changePassword(request.getUserDto());
 
@@ -272,7 +274,7 @@ implements UserService {
 			logger.debug(" params : [ userDto : {} ] ", request.getUserDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		User user = userConverter.toEntity(request.getUserDto());
 
@@ -321,7 +323,7 @@ implements UserService {
 			logger.debug(" params : [ userId : {} ] ", request.getUserId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		usersDao.removeById(request.getUserId());
 
@@ -380,7 +382,7 @@ implements UserService {
 					new Object[] { request.getUserId(), request.getRolesToAdd(), request.getRolesToDelete() } );
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionManager.validate(request.getSessionDto()); // TODO add validation
 
 		User user = usersDao.findById(request.getUserId());
 
@@ -448,7 +450,7 @@ implements UserService {
 					new Object[] { request.getUserId(), request.getStoresToAdd(), request.getStoresToDelete() } );
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		User user = usersDao.findById(request.getUserId());
 

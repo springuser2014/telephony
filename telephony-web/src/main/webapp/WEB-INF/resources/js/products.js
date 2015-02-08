@@ -160,14 +160,7 @@ function(App, $, Mustache, cookies, rest, auth) {
 			model : ($('#model').val().length ? $('#model').val() : null),
 			color : ($('#color').val().length ? $('#color').val() : null),
 			status : ($('#status').val() != 0 ? $('#status').val() : null),
-			//minNumberOfProducts : ($('#minNumberOfProducts') != null > 0 ? $('#minNumberOfProducts').val() : null),
-			//label : ($('#label') != null > 0 ? $('#label').val() : null),
-			//saleDateEnd : ($('#date_to') != null ? $('#date_to').val() : null),
-			//saleDateStart : ($('#date_from') != null ? $('#date_from').val() : null),
-			//sumFrom : ($('#sum_from') != null ? $('#sum_from').val() : null),
-			//sumTo : ($('#sum_to') != null ? $('#sum_to').val() : null),
 			storeId : ($('#store') != null ? $('#store').val() : null),
-			//contactId : ($('#contact') != null ? $('#contact').val() : null),
 			page : getCurrentPage(),
 			perPage : getCurrentPerPage()
 		};

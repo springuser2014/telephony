@@ -10,7 +10,7 @@ import telephony.core.dao.ModelDao;
 import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Model;
 import telephony.core.entity.jpa.Producer;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.ModelConverter;
 import telephony.core.service.dto.ModelDto;
 import telephony.core.service.dto.request.ModelDeleteRequest;
@@ -27,10 +27,7 @@ import telephony.core.service.exception.SessionServiceException;
 
 import static telephony.core.assertion.CommonAssertions.*;
 
-/**
- * asd.
- */
-public class ModelServiceImpl 
+public class ModelServiceImpl
 extends AbstractBasicService<Model> 
 implements ModelService {
 	
@@ -44,7 +41,7 @@ implements ModelService {
 	ModelConverter modelConverter;
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -74,15 +71,17 @@ implements ModelService {
 			logger.debug("params : [ filters : {} ]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<ModelDto> modelz = new ArrayList<ModelDto>();
 		List<Model> models = modelsDao.findByCriteria(request.getFilters());
+		Long count = modelsDao.countByCriteria(request.getFilters());
 
 		for(Model model : models) {
 			modelz.add(modelConverter.toModelDto(model));
 		}
 
+		resp.setCountTotal(count);
 		resp.setSuccess(true);
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
 		resp.setModels(modelz);
@@ -159,7 +158,7 @@ implements ModelService {
 			logger.debug("params : [ model : {} ]", request.getModelDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		// TODO move to converter
 		ModelDto modelDto = request.getModelDto();
@@ -230,7 +229,7 @@ implements ModelService {
 			logger.debug("params : [ modelId : {} ]", request.getModelId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		modelsDao.removeById(request.getModelId());
 
 		resp.setSuccess(true);

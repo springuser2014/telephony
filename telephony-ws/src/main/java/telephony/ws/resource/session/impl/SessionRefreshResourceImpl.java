@@ -5,7 +5,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Put;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.SessionRefreshRequest;
 import telephony.core.service.dto.response.SessionRefreshResponse;
@@ -24,7 +24,7 @@ implements SessionRefreshResource {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 
 	@Override
 	@Put("json")
@@ -40,7 +40,7 @@ implements SessionRefreshResource {
 		SessionDto session = null;
 
 		try {
-			session = sessionService.refresh(sessionToRefresh);
+			session = sessionManager.refresh(sessionToRefresh);
 
 		} catch (SessionServiceException e) {
 			logger.error("Error occured during session refreshing.", e);

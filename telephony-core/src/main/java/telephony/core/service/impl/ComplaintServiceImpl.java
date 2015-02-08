@@ -18,10 +18,7 @@ import telephony.core.service.dto.response.ComplaintEditResponse;
 import telephony.core.service.dto.response.ComplaintFetchResponse;
 import telephony.core.service.dto.response.ReportComplaintResponse;
 
-/**
- * asd.
- */
-public abstract class ComplaintServiceImpl 
+public abstract class ComplaintServiceImpl
 extends AbstractGenericService<Complaint, ComplaintDao> 
 implements ComplaintService<Complaint,
 		 ComplaintDetailsFetchResponse<DetailedComplaintDto>, ComplaintDetailsFetchRequest, DetailedComplaintDto,
@@ -29,10 +26,6 @@ implements ComplaintService<Complaint,
 		 ComplaintEditResponse, ComplaintEditRequest<ComplaintEditDto>, ComplaintEditDto,
 		 ComplaintFetchResponse, ComplaintFetchRequest<ComplaintFilterCriteria>, ComplaintFilterCriteria> {
 
-	/**
-	 * asd.
-	 * @param clazz a.
-	 */
 	public ComplaintServiceImpl(Class<ComplaintDao> clazz) {
 		super(clazz);
 		// TODO Auto-generated constructor stub
@@ -44,13 +37,10 @@ implements ComplaintService<Complaint,
 		return dao().findByHash(hashUnique);
 	}
 
-
 	@Transactional
 	@Override
 	public long count(SessionDto session) {
 
 		return dao().count();
 	}
-
-
 }

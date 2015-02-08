@@ -574,7 +574,7 @@ implements ProductsDao {
             jpaQuery.setParameter("saleDateStart", saleDateStartTmp);
         }
 
-        if (isNotNull(query.getDeliveryDateEnd())) {
+        if (isNotNull(query.getSaleDateEnd())) {
             Timestamp saleDateEndTmp = new Timestamp(query.getSaleDateEnd().getTime());
             jpaQuery.setParameter("saleDateEnd", saleDateEndTmp);
         }

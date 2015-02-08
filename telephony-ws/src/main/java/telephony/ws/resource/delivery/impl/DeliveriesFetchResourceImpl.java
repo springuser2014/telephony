@@ -6,7 +6,6 @@ import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.service.DeliveryService;
-import telephony.core.service.SessionService;
 import telephony.core.service.dto.request.DeliveriesFetchRequest;
 import telephony.core.service.dto.response.DeliveriesFetchResponse;
 import telephony.core.service.exception.SessionServiceException;

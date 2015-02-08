@@ -5,9 +5,8 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.ProductComplaintDao;
 import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.service.ProductComplaintService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.ProductComplaintConverter;
-import telephony.core.service.dto.ProductComplaintDto;
 import telephony.core.service.dto.ProductComplaintEditDto;
 import telephony.core.service.dto.ProductDetailedComplaintDto;
 import telephony.core.service.dto.request.*;
@@ -29,7 +28,7 @@ implements ProductComplaintService {
 	ProductComplaintConverter productComplaintConverter;
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	ProductComplaintDao productComplaintDao;
@@ -79,7 +78,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintId : {} ]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		ProductComplaint pc = productComplaintDao.findById(request.getComplaintId());
 		ProductDetailedComplaintDto dto = productComplaintConverter.toDetailedDto(pc);
@@ -117,7 +116,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintDto : {} ]", request.getComplaint());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		ProductComplaint entity = productComplaintConverter.toEntity(request.getComplaint());
 		productComplaintDao.save(entity);
 
@@ -215,7 +214,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ filters : {} ]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<ProductComplaintEditDto> complaintz = new ArrayList<ProductComplaintEditDto>();
 		List<ProductComplaint> complaints = productComplaintDao.findByCriteria(request.getFilters());
@@ -269,7 +268,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintEdit : {} ] ", request.getComplaint());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		ProductComplaint productComplaint = productComplaintDao.findById(request.getComplaint().getComplaintId());
 
@@ -301,7 +300,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		productComplaintDao.markAsRejected(request.getComplaintId());
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
@@ -328,7 +327,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		productComplaintDao.markAsInProgress(request.getComplaintId());
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
@@ -357,7 +356,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		productComplaintDao.markAsAccepted(request.getComplaintId());
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
@@ -404,7 +403,7 @@ implements ProductComplaintService {
 		}
 
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		productComplaintDao.markAsResolved(request.getComplaintId());
 
@@ -450,7 +449,7 @@ implements ProductComplaintService {
 			logger.debug("params : [ complaintId : {} ]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		productComplaintDao.removeById(request.getComplaintId());
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg

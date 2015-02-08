@@ -9,6 +9,7 @@ import java.util.List;
 public class ModelFetchResponse extends BasicResponse {
 
     List<ModelDto> models;
+    Long countTotal;
 
     public ModelFetchResponse() {
         this.models = new ArrayList<ModelDto>();
@@ -34,5 +35,13 @@ public class ModelFetchResponse extends BasicResponse {
         if (this.models.contains(modelDto)) {
             this.models.remove(modelDto);
         }
+    }
+
+    public Long getCountTotal() {
+        return countTotal;
+    }
+
+    public void setCountTotal(Long countTotal) {
+        this.countTotal = countTotal;
     }
 }

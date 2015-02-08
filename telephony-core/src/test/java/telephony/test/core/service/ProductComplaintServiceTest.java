@@ -31,10 +31,6 @@ import com.google.inject.Inject;
 import com.googlecode.flyway.test.annotation.FlywayTest;
 import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 
-
-/**
- * asd.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
 @TestExecutionListeners({
@@ -77,6 +73,7 @@ public class ProductComplaintServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProductComplaintFilterCriteria filters = ProductComplaintFilterCriteriaBuilder.productComplaintFilterCriteria()
 				.withProductId(TestData.PRODUCT1_ID)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ProductComplaintFetchRequest fetchRequest = new ProductComplaintFetchRequest(session);

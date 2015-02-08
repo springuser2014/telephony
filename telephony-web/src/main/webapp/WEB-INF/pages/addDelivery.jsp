@@ -59,32 +59,13 @@
             <form id="add-delivery-form">
                 <fieldset class="smart-form">
                     <div class="row">
+
                         <section class="col col-3">
                             <label class="input">
                                 <input type="text" name="label" id="label" placeholder="Nazwa"/>
                                 <b class="tooltip tooltip-bottom-right">Nazwa dostawy</b>
                             </label>
                         </section>
-
-                        <section class="col col-3">
-                            <label class="select">
-                                <select name="store" id="store" class="valid">
-                                    <option value="0" selected="" disabled="">magazyn</option>
-                                    {{#stores}}
-                                        <option value="{{storeId}}">{{label}}</option>
-                                    {{/stores}}
-                                </select>
-                                <i></i>
-                            </label>
-                        </section>
-{{#add}}
-                        <section class="col col-2">
-                            <a class="btn btn-info btn-sm" id='add-new-store' href='<c:url value="/addStore"/>'>Dodaj nowy magazyn</a>
-                        </section>
-{{/add}}
-                    </div>
-
-                    <div class="row">
 
                         <section class="col col-3">
                             <label class="input">
@@ -96,8 +77,20 @@
 
                         <section class="col col-3">
                             <label class="select">
+                                <select name="store" id="store" class="valid">
+                                    <option value="0" selected="" disabled="">magazyn dostarczenia</option>
+                                    {{#stores}}
+                                        <option value="{{storeId}}">{{label}}</option>
+                                    {{/stores}}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+
+                        <section class="col col-3">
+                            <label class="select">
                                 <select name="contact" id="contact" class="valid">
-                                    <option value="0" selected="" disabled="">kontakt</option>
+                                    <option value="0" selected="" disabled="">dostawca</option>
                                     {{#contacts}}
                                         <option value="{{id}}">{{label}}</option>
                                     {{/contacts}}
@@ -105,11 +98,7 @@
                                 <i></i>
                             </label>
                         </section>
-{{#add}}
-                        <section class="col col-2">
-                            <a class="btn btn-info btn-sm" id='add-new-contact' href='<c:url value="/addContact"/>'>Dodaj nowy kontakt</a>
-                        </section>
-{{/add}}
+
                     </div>
                 </fieldset>
             </form>

@@ -25,9 +25,6 @@ public interface ProductService extends BasicService<Product> {
 	List<ProducerDto> fetchAllProducersInUse(SessionDto session)
 			throws SessionServiceException;
 
-	List<String> fetchAllImeiInUse(SessionDto session)
-			throws SessionServiceException;
-
 	List<ModelDto> fetchAllModelsInUse(SessionDto session)
 			throws SessionServiceException;
 

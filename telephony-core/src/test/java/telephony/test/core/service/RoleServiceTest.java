@@ -51,6 +51,7 @@ public class RoleServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		RoleFilterCriteria filters = RoleFilterCriteriaBuilder
 				.roleFilterCriteria()
+				.withPage(0).withPerPage(100)
 				.build();
 		RoleFetchRequest fetchRequest = new RoleFetchRequest(session);
 		fetchRequest.setFilters(filters);

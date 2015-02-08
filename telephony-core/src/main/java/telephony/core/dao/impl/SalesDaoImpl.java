@@ -476,7 +476,5 @@ implements SalesDao {
 		}
 
 		return count;
-
 	}
-
 }

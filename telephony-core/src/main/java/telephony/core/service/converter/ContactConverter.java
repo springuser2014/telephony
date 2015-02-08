@@ -6,6 +6,7 @@ import telephony.core.service.dto.ContactDto;
 import telephony.core.service.dto.ContactSearchDto;
 import telephony.core.service.dto.PhoneNumberDto;
 
+import static telephony.core.assertion.CommonAssertions.isEmpty;
 import static telephony.core.assertion.CommonAssertions.isNotEmpty;
 
 public class ContactConverter {
@@ -70,7 +71,7 @@ public class ContactConverter {
         ContactSearchDto dto = new ContactSearchDto();
         update(dto,contact);
 
-        boolean is = contact.getDeliveries().isEmpty() && contact.getSales().isEmpty();
+        boolean is = isEmpty(contact.getDeliveries()) && isEmpty(contact.getSales());
 
         dto.setEditable(is);
         dto.setDeletable(is);

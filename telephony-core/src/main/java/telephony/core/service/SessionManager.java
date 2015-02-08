@@ -10,7 +10,7 @@ import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.util.StringGenerator;
 
-public interface SessionService {
+public interface SessionManager {
 	
 	Integer getSessionValidity();
 	

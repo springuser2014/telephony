@@ -77,7 +77,7 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(InformationService.class).to(InformationServiceImpl.class);        
         bind(ContactService.class).to(ContactServiceImpl.class);
         bind(RoleService.class).to(RoleServiceImpl.class);
-        bind(SessionService.class).to(SessionServiceImpl.class);
+        bind(SessionManager.class).to(SessionManagerImpl.class);
         bind(ModelService.class).to(ModelServiceImpl.class);
         bind(ProducerService.class).to(ProducerServiceImpl.class);
         bind(TaxService.class).to(TaxServiceImpl.class);

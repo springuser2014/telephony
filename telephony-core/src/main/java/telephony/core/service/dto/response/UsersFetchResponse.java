@@ -8,9 +8,10 @@ import java.util.List;
 public class UsersFetchResponse extends BasicResponse {
 
     List<UserFetchDto> users;
+    Long countTotal;
 
     public UsersFetchResponse() {
-        this.users = new ArrayList<UserFetchDto>();
+        this.users = new ArrayList<>();
     }
 
     public List<UserFetchDto> getUsers() {
@@ -19,5 +20,13 @@ public class UsersFetchResponse extends BasicResponse {
 
     public void setUsers(List<UserFetchDto> users) {
         this.users = users;
+    }
+
+    public Long getCountTotal() {
+        return countTotal;
+    }
+
+    public void setCountTotal(Long countTotal) {
+        this.countTotal = countTotal;
     }
 }

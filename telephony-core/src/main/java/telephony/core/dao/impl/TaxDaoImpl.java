@@ -80,8 +80,8 @@ implements TaxDao {
 	}
 
 	@Override
-	public List<Tax> fetch(TaxFilterCriteria filters) {
-		logger.info("TaxDaoImpl.fetch starts");
+	public List<Tax> fetchByCriteria(TaxFilterCriteria filters) {
+		logger.info("TaxDaoImpl.fetchByCriteria starts");
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("params : [ filters : {} ]", filters);
@@ -118,9 +118,9 @@ implements TaxDao {
 		}
 
 		if(isNotNull(filters.getActiveAt())) {
-			sb.append(" and ((t.from >= :at and t.to < :at) ");
-			sb.append(" or (t.from IS NULL and t.to < :at) ");
-			sb.append(" or (t.from >= :at and t.to IS NULL)) ");
+			sb.append(" and ((t.from <= :at and t.to > :at) ");
+			sb.append(" or (t.from IS NULL and t.to > :at) ");
+			sb.append(" or (t.from <= :at and t.to IS NULL)) ");
 		}
 
 		Query q = getEntityManager().createQuery(sb.toString());
@@ -155,7 +155,7 @@ implements TaxDao {
 		}
 
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
-			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
 			q.setMaxResults(filters.getPerPage());
 		}
 
@@ -164,6 +164,95 @@ implements TaxDao {
 		}
 
 		List<Tax> taxes = (List<Tax>) q.getResultList();
+
+		return taxes;
+	}
+
+	@Override
+	public Long countByCriteria(TaxFilterCriteria filters) {
+		logger.info("TaxDaoImpl.countByCriteria starts");
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("params : [ filters : {} ]", filters);
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(" select count(t) from Tax t ");
+		sb.append(" where 1=1 ");
+
+		if (isNotNull(filters.getRateFrom())) {
+			sb.append(" and t.rate >= :rateFrom ");
+		}
+
+		if (isNotNull(filters.getRateTo())) {
+			sb.append(" and t.rate < :rateTo ");
+		}
+
+		if (isNotNull(filters.getTaxDateStart()) && isNotNull(filters.getTaxDateEnd())) {
+			sb.append(" and ((t.from >= :from and t.to < :to) ");
+			sb.append(" or (t.from IS NULL and t.to < :to) ");
+			sb.append(" or (t.from >= :from and t.to IS NULL)) ");
+		}
+
+		if (isNotNull(filters.getTaxDateStart()) && isNull(filters.getTaxDateEnd())) {
+			sb.append(" and t.from <= :from ");
+		}
+
+		if (isNull(filters.getTaxDateStart()) && isNotNull(filters.getTaxDateEnd())) {
+			sb.append(" and t.to < :to ");
+		}
+
+		if (isNotEmpty(filters.getTaxIds())) {
+			sb.append(" and t.id IN (:ids) ");
+		}
+
+		if(isNotNull(filters.getActiveAt())) {
+			sb.append(" and ((t.from <= :at and t.to > :at) ");
+			sb.append(" or (t.from IS NULL and t.to > :at) ");
+			sb.append(" or (t.from <= :at and t.to IS NULL)) ");
+		}
+
+		Query q = getEntityManager().createQuery(sb.toString());
+
+		if (isNotNull(filters.getRateFrom())) {
+			q.setParameter("rateFrom", filters.getRateFrom());
+		}
+
+		if (isNotNull(filters.getRateTo())) {
+			q.setParameter("rateTo", filters.getRateTo());
+		}
+
+		if (isNotNull(filters.getTaxDateEnd()) && isNotNull(filters.getTaxDateStart())) {
+			q.setParameter("from", filters.getTaxDateStart());
+			q.setParameter("to", filters.getTaxDateEnd());
+		}
+
+		if (isNull(filters.getTaxDateEnd()) && isNotNull(filters.getTaxDateStart())) {
+			q.setParameter("from", filters.getTaxDateStart());
+		}
+
+		if (isNotNull(filters.getTaxDateEnd()) && isNull(filters.getTaxDateStart())) {
+			q.setParameter("to", filters.getTaxDateEnd());
+		}
+
+		if (isNotEmpty(filters.getTaxIds())) {
+			q.setParameter("ids", filters.getTaxIds());
+		}
+
+		if (isNotNull(filters.getActiveAt())) {
+			q.setParameter("at", filters.getActiveAt());
+		}
+
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getPerPage())) {
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		Long taxes = (Long) q.getSingleResult();
 
 		return taxes;
 	}

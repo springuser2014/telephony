@@ -50,7 +50,7 @@ implements ModelDao {
 
 	@Override
 	public List<Model> findByCriteria(ModelFilterCriteria filters) {
-		logger.info("ModelDaoImpl.find starts");
+		logger.info("ModelDaoImpl.findByCriteria starts");
 
 		StringBuilder query = new StringBuilder();
 		query.append(" select m from Model m inner join m.producer p where 1=1 ");
@@ -93,7 +93,7 @@ implements ModelDao {
 		}
 		// TODO extract to common
 		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
-			q.setFirstResult((filters.getPerPage() - 1)* filters.getPage());
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
 			q.setMaxResults(filters.getPerPage());
 		}
 
@@ -102,6 +102,63 @@ implements ModelDao {
 		}
 
 		List<Model> lst = (List<Model>) q.getResultList();
+
+		return lst;
+	}
+
+	@Override
+	public Long countByCriteria(ModelFilterCriteria filters) {
+		logger.info("ModelDaoImpl.countByCriteria starts");
+
+		StringBuilder query = new StringBuilder();
+		query.append(" select count(m) from Model m inner join m.producer p where 1=1 ");
+
+		if (isNotNull(filters.getLabel())) {
+			query.append(" and  m.label like :modelLabel ");
+		}
+
+		if (isNotEmpty(filters.getModelIds())) {
+			query.append(" and m.id in (:modelIds) ");
+		}
+
+		if (isNotNull(filters.getProducer())) {
+			query.append(" and p.label = :producerLabel ");
+		}
+
+		if (isNotNull(filters.getProducerId())) {
+			query.append(" and p.id = :producerId ");
+		}
+
+		String queryStr =  query.toString();
+
+		Query q = getEntityManager().createQuery(queryStr);
+
+		if (isNotNull(filters.getLabel())) {
+			q.setParameter("modelLabel", filters.getLabel());
+		}
+
+		if (isNotEmpty(filters.getModelIds())) {
+			q.setParameter("modelIds", filters.getModelIds());
+		}
+
+		if (isNotNull(filters.getProducer())) {
+			q.setParameter("producerLabel", filters.getProducer());
+		}
+
+		if (isNotNull(filters.getProducerId())) {
+			q.setParameter("producerId", filters.getProducerId());
+		}
+		// TODO extract to common
+		if (isNotNull(filters.getPage()) && isNotNull(filters.getPerPage())) {
+			q.setFirstResult((filters.getPerPage())* filters.getPage());
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		if (isNotNull(filters.getPerPage())) {
+			q.setMaxResults(filters.getPerPage());
+		}
+
+		Long lst = (Long) q.getSingleResult();
 
 		return lst;
 	}

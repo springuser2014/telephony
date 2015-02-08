@@ -63,7 +63,10 @@ public class StoreServiceTest extends BaseCoreTest {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		StoreFilterCriteria filters = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
+		StoreFilterCriteria filters = StoreFilterCriteriaBuilder.storeFilterCriteria()
+				.withPage(0).withPerPage(100)
+				.build();
+
 		StoreFetchRequest request = new StoreFetchRequest(session);
 		request.setFilters(filters);
 
@@ -81,7 +84,6 @@ public class StoreServiceTest extends BaseCoreTest {
 
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		StoreFilterCriteria filters = StoreFilterCriteriaBuilder.storeFilterCriteria().build();
 		long nbBefore = storeService.count(session);
 
 		// when
@@ -105,7 +107,9 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		StoreFilterCriteria filters1 = StoreFilterCriteriaBuilder.storeFilterCriteria()
-				.withStoreId(TestData.STORE1_ID).build();
+				.withStoreId(TestData.STORE1_ID)
+				.withPage(0).withPerPage(100)
+				.build();
 		StoreFetchRequest reqFetch = new StoreFetchRequest(session);
 		reqFetch.setFilters(filters1);
 		StoreFetchResponse respFetch = storeService.fetch(reqFetch);
@@ -136,7 +140,9 @@ public class StoreServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		StoreFilterCriteria filters = StoreFilterCriteriaBuilder.storeFilterCriteria()
-				.withLabel(TestData.STORE_RACIBORZ_LABEL).build();
+				.withLabel(TestData.STORE_RACIBORZ_LABEL)
+				.withPage(0).withPerPage(100)
+				.build();
 
 		StoreFetchRequest request = new StoreFetchRequest(session);
 		request.setFilters(filters);

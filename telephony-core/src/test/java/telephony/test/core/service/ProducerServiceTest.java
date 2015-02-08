@@ -71,6 +71,7 @@ public class ProducerServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
 				.withLabel(label)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ProducersFetchRequest request = new ProducersFetchRequest(session);
@@ -90,8 +91,13 @@ public class ProducerServiceTest extends BaseCoreTest {
 	public void fetchingAllProducers() throws ProducerServiceException, SessionServiceException {
 
 		// given
+		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
+				.withPage(0).withPerPage(100)
+				.build();
+
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProducersFetchRequest request = new ProducersFetchRequest(session);
+		request.setFilters(filters);
 
 		// when
 		ProducersFetchResponse fetchProducers = producerService.fetch(request);
@@ -108,7 +114,9 @@ public class ProducerServiceTest extends BaseCoreTest {
 		// given
 		long id = 1;
 		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
-				.withProducerId(id).build();
+				.withProducerId(id)
+				.withPage(0).withPerPage(100)
+				.build();
 
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProducersFetchRequest request = new ProducersFetchRequest(session);
@@ -131,7 +139,9 @@ public class ProducerServiceTest extends BaseCoreTest {
 		long id1 = 1, id2 = 2;
 		Collection<Long> ids = Arrays.asList(id1, id2);
 		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
-				.withProducerIds(ids).build();
+				.withPage(0).withPerPage(100)
+				.withProducerIds(ids)
+				.build();
 
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProducersFetchRequest request = new ProducersFetchRequest(session);
@@ -155,7 +165,9 @@ public class ProducerServiceTest extends BaseCoreTest {
 		long id = 1;
 		String newLabel = "newlabel";
 		ProducerFilterCriteria filters = ProducerFilterCriteriaBuilder.producerFilterCriteria()
-				.withProducerId(id).build();
+				.withPage(0).withPerPage(100)
+				.withProducerId(id)
+				.build();
 
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID, TestDataBuilder.getFutureDate());
 		ProducersFetchRequest request = new ProducersFetchRequest(session);

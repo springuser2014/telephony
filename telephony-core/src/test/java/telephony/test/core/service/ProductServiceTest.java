@@ -55,6 +55,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withStoreId(TestData.STORE1_ID)
+				.withPage(0).withPerPage(100)
 				.build();
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
 		fetchRequest.setFilters(filters);
@@ -75,6 +76,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withStatus(ProductStatus.IN_STORE)
 				.withStoreId(TestData.STORE1_ID)
+				.withPage(0).withPerPage(1000)
 				.build();
 
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
@@ -101,7 +103,6 @@ public class ProductServiceTest extends BaseCoreTest {
 		List<String> expected = new ArrayList<String>();
 		expected.add(TestData.PRODUCER_NOKIA_LABEL);
 		expected.add(TestData.PRODUCER_APPLE_LABEL);
-
 
 		// then
 		assertEquals("should contains 2 ", new Integer(2), new Integer(lst.size()));
@@ -146,7 +147,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		
 		// when
 		List<String> lst = productService.fetchAllColors(session);
-		List<String> expected = new ArrayList<String>();
+		List<String> expected = new ArrayList<>();
 		expected.add(TestData.COLOR_BLACK);
 		expected.add(TestData.COLOR_WHITE);
 		expected.add(TestData.COLOR_RED);
@@ -156,21 +157,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		assertTrue("should return 4 different colors", lst.size() == 4);
 		assertTrue("exactly those 4 colors ", lst.containsAll(expected));
 	}
-	
-	@Test
-	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
-	public void fetchingAllIMEIsInUse() throws SessionServiceException {
-		
-		// given
-		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
-		
-		// when
-		List<String> lst = productService.fetchAllImeiInUse(session);
 
-		// then
-		assertEquals(lst.size(), 42);
-	}
-	
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/migration", "db/data" })
 	public void fetchingProductByImeiAndStore() 
@@ -181,6 +168,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withImei(TestData.PRODUCT2_IMEI)
 				.withStoreId(TestData.STORE1_ID)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
@@ -203,6 +191,7 @@ public class ProductServiceTest extends BaseCoreTest {
 
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 			.withImei("123456789000001")
+			.withPage(0).withPerPage(100)
 			.build();
 
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
@@ -224,6 +213,7 @@ public class ProductServiceTest extends BaseCoreTest {
 
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withProductId(TestData.PRODUCT1_ID)
+				.withPage(0).withPerPage(100)
 				.build();
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
 
@@ -246,6 +236,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withProductId(TestData.PRODUCT1_ID)
 				.withProductId(TestData.PRODUCT2_ID)
+				.withPage(0).withPerPage(100)
 				.build();
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
 		fetchRequest.setFilters(filters);
@@ -266,6 +257,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withImei(TestData.PRODUCT48_IMEI)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ProductFetchRequest fetchRequest = new ProductFetchRequest(session);
@@ -280,7 +272,6 @@ public class ProductServiceTest extends BaseCoreTest {
 		assertEquals(fetchResponse.getProducts().get(0).getColor(), TestData.PRODUCT48_COLOR);
 	}
 
-
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
 	public void fetchProducts1() throws SessionServiceException {
@@ -291,6 +282,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withColor("white")
 				.withProducer("nokia")
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		ProductFetchRequest request = new ProductFetchRequest(sessionDto);
@@ -314,6 +306,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withDeliveryDateStart(deliveryDateStart)
 				.withDeliveryDateEnd(deliveryDateEnd)
+				.withPage(0).withPerPage(100)
 				.build();
 				
 		ProductFetchRequest request = new ProductFetchRequest();
@@ -336,6 +329,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withColor("black")
 				.withProducer("nokia")
+				.withPage(0).withPerPage(100)
 				.build();				
 		
 		ProductFetchRequest request = new ProductFetchRequest();
@@ -357,8 +351,8 @@ public class ProductServiceTest extends BaseCoreTest {
 		// given
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withImei("123456789000004")
+				.withPage(0).withPerPage(100)
 				.build();
-				
 		
 		ProductFetchRequest request = new ProductFetchRequest();
 		request.setSessionId(TestData.USER1_SESSIONID);
@@ -379,6 +373,7 @@ public class ProductServiceTest extends BaseCoreTest {
 		// given
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
 				.withStatus(ProductStatus.SOLD)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ProductFetchRequest request = new ProductFetchRequest();
@@ -408,6 +403,4 @@ public class ProductServiceTest extends BaseCoreTest {
 		// then
 		assertEquals(resp.getColors().size(), 4);
 	}
-
-
 }

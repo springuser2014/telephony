@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.service.PermissionChecker;
 import telephony.core.service.ProductService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.request.ProductFetchDataRequest;
 import telephony.core.service.dto.response.ProductFetchDataResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -28,7 +28,7 @@ implements ProductFetchDataResource {
     ProductService productService;
 
     @Inject
-    SessionService sessionService;
+    SessionManager sessionManager;
 
     @Inject
     PermissionChecker permissionChecker;

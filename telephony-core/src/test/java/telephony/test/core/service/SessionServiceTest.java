@@ -16,7 +16,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.core.service.dto.request.SessionDetailsRequest;
 import telephony.core.service.dto.response.SessionDetailsResponse;
 import telephony.test.BaseCoreTest;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.core.data.TestData;
 import telephony.core.service.dto.SessionDto;
@@ -35,9 +35,9 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 public class SessionServiceTest extends BaseCoreTest {
 		
 	@Inject
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 	
-	private SessionService sessionServiceMock;
+	private SessionManager sessionManagerMock;
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -48,8 +48,8 @@ public class SessionServiceTest extends BaseCoreTest {
 		String password = TestData.USER_BOSS_PASSWORD;
 		
 		// when
-		sessionService.setSessionValidity(30 * 60 * 1000); // TODO move to setup method
-		SessionDto session = sessionService.init(username, password);
+		sessionManager.setSessionValidity(30 * 60 * 1000); // TODO move to setup method
+		SessionDto session = sessionManager.init(username, password);
 		
 		// then
 		assertNotNull("For exisiting user should return session object", session);
@@ -62,11 +62,11 @@ public class SessionServiceTest extends BaseCoreTest {
 		// given 
 		String username = TestData.USER_MANAGER_NAME;
 		String password = TestData.USER_MANAGER_PASSWORD;
-		sessionService.setSessionValidity(30 * 60 * 1000); // TODO move to setup method
-		SessionDto sessionToRefresh = sessionService.init(username, password);		
+		sessionManager.setSessionValidity(30 * 60 * 1000); // TODO move to setup method
+		SessionDto sessionToRefresh = sessionManager.init(username, password);
 		
 		// when 
-		SessionDto refreshedSession = sessionService.refresh(sessionToRefresh);
+		SessionDto refreshedSession = sessionManager.refresh(sessionToRefresh);
 		
 		// then
 		boolean isValidAfterRefresh = 
@@ -91,12 +91,12 @@ public class SessionServiceTest extends BaseCoreTest {
 		Date validity = new Date();
 		
 		// TODO: move mock definition to *Module
-		this.sessionServiceMock = mock(SessionService.class);		
-		when(this.sessionServiceMock.init(username , password))
+		this.sessionManagerMock = mock(SessionManager.class);
+		when(this.sessionManagerMock.init(username , password))
 			.thenReturn(new SessionDto(username, sessionId, validity));
 		
 		// when
-		SessionDto session = this.sessionServiceMock.init(username, password);
+		SessionDto session = this.sessionManagerMock.init(username, password);
 				
 		// then
 		assertNotNull("Should return initialized session's object", session);
@@ -111,8 +111,8 @@ public class SessionServiceTest extends BaseCoreTest {
 		String password = TestData.USER1_PASSWORD;
 		
 		// when 
-		SessionDto sessionToValidate = sessionService.init(username, password);	
-		boolean validated = sessionService.validate(sessionToValidate);
+		SessionDto sessionToValidate = sessionManager.init(username, password);
+		boolean validated = sessionManager.validate(sessionToValidate);
 		
 		// then
 		assertTrue("should return true for being session", validated);
@@ -126,11 +126,11 @@ public class SessionServiceTest extends BaseCoreTest {
 		String username = TestData.USER2_NAME;
 		String password = TestData.USER2_PASSWORD;
 		
-		sessionService.setSessionValidity(new Integer(-60 * 60 * 24)); // TODO move to setup method
-		SessionDto sessionToValidate = sessionService.init(username, password);		
+		sessionManager.setSessionValidity(new Integer(-60 * 60 * 24)); // TODO move to setup method
+		SessionDto sessionToValidate = sessionManager.init(username, password);
 				
 		// when 
-		boolean validated = sessionService.validate(sessionToValidate);
+		boolean validated = sessionManager.validate(sessionToValidate);
 		
 		// then
 //		assertFalse("Should return false for expired session", validated);
@@ -143,11 +143,11 @@ public class SessionServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String password = TestData.USER1_PASSWORD;
-		sessionService.setSessionValidity(new Integer(30 * 60 * 1000));
-		SessionDto sessionToDelete = sessionService.init(username, password);
+		sessionManager.setSessionValidity(new Integer(30 * 60 * 1000));
+		SessionDto sessionToDelete = sessionManager.init(username, password);
 		
 		// when
-		boolean destroyed = sessionService.destroy(sessionToDelete);
+		boolean destroyed = sessionManager.destroy(sessionToDelete);
 		
 		// then
 		assertTrue("Should destroy active session", destroyed);
@@ -160,12 +160,12 @@ public class SessionServiceTest extends BaseCoreTest {
 		// given
 		String username = TestData.USER1_NAME;
 		String password = TestData.USER1_PASSWORD;
-		sessionService.setSessionValidity(new Integer(30 * 60 * 1000)); // TODO move to setup method
-		SessionDto sessionToDelete = sessionService.init(username, password);
+		sessionManager.setSessionValidity(new Integer(30 * 60 * 1000)); // TODO move to setup method
+		SessionDto sessionToDelete = sessionManager.init(username, password);
 		SessionDetailsRequest detailsRequest = new SessionDetailsRequest(sessionToDelete);
 
 		// when
-		SessionDetailsResponse resp = sessionService.fetchDetails(detailsRequest);
+		SessionDetailsResponse resp = sessionManager.fetchDetails(detailsRequest);
 
 		// then
 		assertNotNull("Should destroy active session", resp);

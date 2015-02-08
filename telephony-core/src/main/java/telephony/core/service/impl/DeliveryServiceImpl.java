@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.*;
 import telephony.core.entity.jpa.Delivery;
 import telephony.core.service.DeliveryService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.DeliveryConverter;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
@@ -32,7 +32,7 @@ implements DeliveryService {
     DeliveriesDao deliveriesDao;
     
     @Inject
-    SessionService sessionService;
+	SessionManager sessionManager;
     
     @Inject
     StoresDao storesDao;
@@ -80,7 +80,7 @@ implements DeliveryService {
 			logger.debug("params : [ filters : {}]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
         List<Delivery> res = deliveriesDao.findByCriteria(request.getFilters());
         List<DeliverySearchDto> coll = new ArrayList<>();
@@ -129,7 +129,7 @@ implements DeliveryService {
 	public long count(SessionDto session)
 			throws SessionServiceException {
 
-		sessionService.validate(session);
+		sessionManager.validate(session);
 
 		return deliveriesDao.count();
 	}
@@ -154,7 +154,7 @@ implements DeliveryService {
 			logger.debug("params : [ deliveryDto : {} ] ", request.getDeliveryDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		DeliveryAddDto addDto = request.getDeliveryDto();
 
@@ -283,7 +283,7 @@ implements DeliveryService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Delivery delivery = deliveriesDao.findDetailsById(request.getDeliveryId());
 		DeliveryDto deliveryDto = deliveryConverter.toDeliveryDto(delivery);
@@ -482,7 +482,7 @@ implements DeliveryService {
 			resp.setSuccess(false);
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Delivery delivery = deliveriesDao.findById(request.getDeliveryDto().getId());
 		deliveryConverter.updateEntity(delivery, request.getDeliveryDto());
@@ -532,7 +532,7 @@ implements DeliveryService {
 			logger.debug("params : [ deliveryId : {} ]", request.getDeliveryId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		deliveriesDao.removeById(request.getDeliveryId());
 		

@@ -133,4 +133,18 @@ class ProductFilterCriteriaBuilderBase<GeneratorT extends ProductFilterCriteriaB
 		instance.addDeliveryId(id);
 		return (GeneratorT) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPage(Integer val) {
+		instance.setPage(val);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPerPage(Integer val) {
+		instance.setPerPage(val);
+
+		return (GeneratorT) this;
+	}
 }

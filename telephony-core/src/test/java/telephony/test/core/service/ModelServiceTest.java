@@ -54,6 +54,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		String label = "iphone 4s";
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withLabel(label)
+			.withPage(0).withPerPage(100)
 			.build();
 
 		ModelFetchRequest request = new ModelFetchRequest(session);
@@ -79,6 +80,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		long id = 1;
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withModelId(id)
+			.withPage(0).withPerPage(100)
 			.build();
 
 		ModelFetchRequest request = new ModelFetchRequest(session);
@@ -103,6 +105,7 @@ public class ModelServiceTest extends BaseCoreTest {
 		List<Long> ids = Arrays.asList(1L, 2L, 3L);
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withModelIds(ids)
+			.withPage(0).withPerPage(100)
 			.build();
 
 		ModelFetchRequest request = new ModelFetchRequest(session);
@@ -141,6 +144,7 @@ public class ModelServiceTest extends BaseCoreTest {
 
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 			.withModelId(id)
+			.withPage(0).withPerPage(100)
 			.build();
 
 		ModelFetchRequest request = new ModelFetchRequest(session);

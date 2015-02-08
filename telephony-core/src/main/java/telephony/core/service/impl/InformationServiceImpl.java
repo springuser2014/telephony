@@ -16,10 +16,6 @@ import telephony.core.service.dto.response.ProducersResponse;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
-
-/**
- * Information management service.
- */
 public class InformationServiceImpl implements InformationService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());

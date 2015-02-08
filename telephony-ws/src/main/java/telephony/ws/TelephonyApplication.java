@@ -79,7 +79,7 @@ public class TelephonyApplication extends Application {
         router.attach(UsersDetailsResource.URL, UsersDetailsResourceImpl.class);
         
         // deliveries resources - complete
-        router.attach(DeliveriesAddResource.URL, DeliveriesAddResourceImpl.class);
+        router.attach(DeliveryAddResource.URL, DeliveryAddResourceImpl.class);
         router.attach(DeliveriesFetchResource.URL, DeliveriesFetchResourceImpl.class);
         router.attach(DeliveriesEditResource.URL, DeliveriesEditResourceImpl.class);
         router.attach(DeliveriesDeleteResource.URL, DeliveriesDeleteResourceImpl.class);

@@ -1,19 +1,12 @@
 package telephony.ws.resource.contact.impl;
 
 import com.google.inject.Inject;
-import org.json.JSONObject;
 import org.restlet.data.Status;
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.Delivery;
-import telephony.core.entity.jpa.Sale;
 import telephony.core.service.ContactService;
-import telephony.core.service.SessionService;
 import telephony.core.service.dto.request.ContactAddRequest;
-import telephony.core.service.dto.response.BasicResponse;
 import telephony.core.service.dto.response.ContactAddResponse;
 import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
@@ -23,7 +16,6 @@ import telephony.ws.resource.contact.ContactsAddResource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 
 public class ContactsAddResourceImpl
 extends TelephonyServerResource

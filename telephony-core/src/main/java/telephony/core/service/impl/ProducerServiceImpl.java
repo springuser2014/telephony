@@ -12,7 +12,7 @@ import com.google.inject.persist.Transactional;
 import telephony.core.dao.ProducerDao;
 import telephony.core.entity.jpa.Producer;
 import telephony.core.service.ProducerService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.ProducerConverter;
 import telephony.core.service.dto.ProducerDto;
 import telephony.core.service.dto.SessionDto;
@@ -39,7 +39,7 @@ implements ProducerService {
 	ProducerDao producerDao;
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	ProducerConverter producerConverter;
@@ -64,7 +64,7 @@ implements ProducerService {
 			logger.debug("params : [ filters : {} ] ", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<Producer> producers = producerDao.fetch(request.getFilters());
 		List<ProducerDto> producerDtos = new ArrayList<ProducerDto>();
@@ -127,7 +127,7 @@ implements ProducerService {
 			logger.debug("params : [ editDto : {} ]", request.getProducerDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Producer producer = producerDao.findById(request.getProducerDto().getProducerId());
 		producer.setLabel(request.getProducerDto().getLabel());
@@ -191,7 +191,7 @@ implements ProducerService {
 			logger.debug("params : [ producerId : {} ]", request.getProducerId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		producerDao.removeById(request.getProducerId());
 

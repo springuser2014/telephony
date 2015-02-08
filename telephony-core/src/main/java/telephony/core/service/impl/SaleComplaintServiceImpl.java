@@ -3,10 +3,9 @@ package telephony.core.service.impl;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import telephony.core.dao.SaleComplaintDao;
-import telephony.core.entity.jpa.ProductComplaint;
 import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.SaleComplaintConverter;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
@@ -25,7 +24,7 @@ extends AbstractGenericService<SaleComplaint, SaleComplaintDao>
 implements SaleComplaintService {
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	SaleComplaintConverter saleComplaintConverter;
@@ -59,7 +58,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintId : {} ]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		SaleComplaint pc = saleComplaintDao.findById(request.getComplaintId());
 		SaleDetailedComplaintDto dto = saleComplaintConverter.toDetailedDto(pc);
@@ -116,7 +115,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintDto : {} ]", request.getComplaint());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		SaleComplaint entity = saleComplaintConverter.toEntity(request.getComplaint());
 
@@ -217,7 +216,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ filters : {} ]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<SaleComplaintEditDto> complaintz = new ArrayList<SaleComplaintEditDto>();
 		List<SaleComplaint> complaints = saleComplaintDao.findByCriteria(request.getFilters());
@@ -252,7 +251,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintEdit : {} ] ", request.getComplaint());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		SaleComplaint saleComplaint = saleComplaintDao.findById(request.getComplaint().getComplaintId());
 
@@ -303,7 +302,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		saleComplaintDao.markAsInProgress(request.getComplaintId());
 
@@ -332,7 +331,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		saleComplaintDao.markAsInProgress(request.getComplaintId());
 
@@ -361,7 +360,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		saleComplaintDao.markAsAccepted(request.getComplaintId());
 
@@ -408,7 +407,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintid : {}]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		saleComplaintDao.markAsResolved(request.getComplaintId());
 
@@ -455,7 +454,7 @@ implements SaleComplaintService {
 			logger.debug("params : [ complaintId : {} ]", request.getComplaintId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		saleComplaintDao.removeById(request.getComplaintId());
 

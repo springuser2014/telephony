@@ -12,7 +12,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.query.filter.ContactFilterCriteriaBuilder;
 import telephony.core.service.ContactService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
 import telephony.core.service.dto.response.ContactDetailsResponse;
@@ -39,7 +39,7 @@ public class ContactServiceTest extends BaseCoreTest {
 	private ContactService contactService;
 	
 	@Inject 
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })
@@ -51,6 +51,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		String label = "adam";
 		ContactFilterCriteria filters = ContactFilterCriteriaBuilder.contactFilterCriteria()
 				.withLabel(label)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ContactFetchRequest request = new ContactFetchRequest(session);
@@ -101,6 +102,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		// then
 		ContactFilterCriteria filters = ContactFilterCriteriaBuilder.contactFilterCriteria()
 				.withDetails(details)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ContactFetchRequest request = new ContactFetchRequest(session);
@@ -123,6 +125,7 @@ public class ContactServiceTest extends BaseCoreTest {
 
 		ContactFilterCriteria filters = ContactFilterCriteriaBuilder.contactFilterCriteria()
 				.withLabel(label)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ContactFetchRequest request = new ContactFetchRequest(sessionDto);
@@ -153,6 +156,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		// then
 		ContactFilterCriteria filters2 = ContactFilterCriteriaBuilder.contactFilterCriteria()
 				.withDetails(newDetails)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ContactFetchRequest request2 = new ContactFetchRequest(sessionDto);
@@ -183,6 +187,7 @@ public class ContactServiceTest extends BaseCoreTest {
 		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME,TestData.USER1_SESSIONID);
 		ContactFilterCriteria filters = ContactFilterCriteriaBuilder
 				.contactFilterCriteria()
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ContactFetchRequest dto = new ContactFetchRequest(sessionDto);

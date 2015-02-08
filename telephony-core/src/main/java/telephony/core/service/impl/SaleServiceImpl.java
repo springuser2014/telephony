@@ -2,7 +2,6 @@ package telephony.core.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +10,9 @@ import telephony.core.dao.ContactsDao;
 import telephony.core.dao.ProductsDao;
 import telephony.core.dao.SalesDao;
 import telephony.core.dao.StoresDao;
-import telephony.core.entity.jpa.Contact;
-import telephony.core.entity.jpa.Product;
 import telephony.core.entity.jpa.Sale;
-import telephony.core.entity.jpa.Store;
-import telephony.core.query.filter.SaleFilterCriteria;
-import telephony.core.query.filter.SaleFilterCriteriaBuilder;
 import telephony.core.service.SaleService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.SaleConverter;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
@@ -49,7 +43,7 @@ implements SaleService {
 	StoresDao storesDao;
 	
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	SaleConverter saleConverter;
@@ -93,7 +87,7 @@ implements SaleService {
 			logger.debug("params : [ saleId : {} ] ", request.getSaleId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Sale sale = salesDao.findById(request.getSaleId());
 		DetailedSaleDto detailedSale = saleConverter.toDetailedSaleDto(sale);
@@ -149,7 +143,7 @@ implements SaleService {
 			logger.debug("params : [ filters : {} ] ", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<SaleSearchDto> salez = new ArrayList<>();
 		List<Sale> sales = salesDao.findByCriteria(request.getFilters());
@@ -186,7 +180,7 @@ implements SaleService {
 			logger.debug("params : [ saleDto : {} ] ", request.getSale());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Sale entity = saleConverter.toEntity(request.getSale());
 
@@ -305,7 +299,7 @@ implements SaleService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		SaleEditDto editDto = request.getSaleEdit();
 
@@ -357,7 +351,7 @@ implements SaleService {
 			logger.debug("params : [ saleId : {} ]", request.getSaleId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		salesDao.removeById(request.getSaleId());
 
@@ -386,7 +380,7 @@ implements SaleService {
 	@Override
 	@Transactional
 	public long count(SessionDto session) throws SessionServiceException {
-		sessionService.validate(session);
+		sessionManager.validate(session);
 		return salesDao.count();
 	}
 }

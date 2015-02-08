@@ -5,7 +5,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.request.SessionDetailsRequest;
 import telephony.core.service.dto.response.SessionDetailsResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -23,7 +23,7 @@ implements SessionDetailsResource {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
-    SessionService sessionService;
+    SessionManager sessionManager;
 
     @Override
     @Post("json")
@@ -36,7 +36,7 @@ implements SessionDetailsResource {
         SessionDetailsResponse resp = resp = new SessionDetailsResponse();
 
         try {
-            resp = sessionService.fetchDetails(request);
+            resp = sessionManager.fetchDetails(request);
         } catch (SessionServiceException ex) {
             logger.error("",ex);
             resp.setMessage("sessionExpired");

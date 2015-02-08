@@ -79,7 +79,9 @@ public class TaxServiceTest extends BaseCoreTest {
 		Date to = TestDataBuilder.getDate(2010,1,1);
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withTaxId(id).build();
+				.withTaxId(id)
+				.withPage(0).withPerPage(100)
+				.build();
 
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
@@ -105,7 +107,9 @@ public class TaxServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
 				.withTaxDateStart(from)
-				.withTaxDateEnd(to).build();
+				.withTaxDateEnd(to)
+				.withPage(0).withPerPage(100)
+				.build();
 
 		// when
 		TaxFetchRequest request = new TaxFetchRequest(session);
@@ -125,7 +129,9 @@ public class TaxServiceTest extends BaseCoreTest {
 		Date from = TestDataBuilder.getDate(2013,1,1);
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withTaxDateStart(from).build();
+				.withTaxDateStart(from)
+				.withPage(0).withPerPage(100)
+				.build();
 
 		// when
 		TaxFetchRequest request = new TaxFetchRequest(session);
@@ -148,6 +154,7 @@ public class TaxServiceTest extends BaseCoreTest {
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
 				.withTaxDateEnd(to)
 				.withTaxDateStart(from)
+				.withPage(0).withPerPage(100)
 				.build();
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
@@ -169,7 +176,11 @@ public class TaxServiceTest extends BaseCoreTest {
 		Date to = null;
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withTaxDateStart(from).withTaxDateEnd(to).build();
+				.withTaxDateStart(from)
+				.withTaxDateEnd(to)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 
@@ -190,8 +201,10 @@ public class TaxServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withPage(0).withPerPage(5)
-				.withActiveAt(activeAt).build();
+				.withActiveAt(activeAt)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 
@@ -212,7 +225,10 @@ public class TaxServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withActiveAt(activeAt).build();
+				.withActiveAt(activeAt)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 
@@ -233,7 +249,10 @@ public class TaxServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withActiveAt(activeAt).build();
+				.withActiveAt(activeAt)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 
@@ -254,7 +273,10 @@ public class TaxServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withActiveAt(activeAt).build();
+				.withActiveAt(activeAt)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 
@@ -274,10 +296,14 @@ public class TaxServiceTest extends BaseCoreTest {
 		long taxId = 2;
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withTaxId(taxId).build();
+				.withTaxId(taxId)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 		TaxFetchResponse resp1 = taxService.fetch(request);
+
 		TaxDto dto = resp1.getTaxes().get(0);
 		double rateBefore = dto.getRate();
 		double rateAfter = rateBefore * 1.5;
@@ -305,7 +331,10 @@ public class TaxServiceTest extends BaseCoreTest {
 		long taxId = 2;
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		TaxFilterCriteria filters = TaxFilterCriteriaBuilder.taxFilterCriteria()
-				.withTaxId(taxId).build();
+				.withTaxId(taxId)
+				.withPage(0).withPerPage(100)
+				.build();
+
 		TaxFetchRequest request = new TaxFetchRequest(session);
 		request.setFilters(filters);
 

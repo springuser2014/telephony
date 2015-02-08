@@ -48,7 +48,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 	private DeliveryService deliveryService;
 	
 	@Inject 
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 	
 	@Inject 
 	private UserService userService;
@@ -70,6 +70,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		SessionDto sessionDto = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
+				.withPage(0).withPerPage(100)
 				.withLabel("3310")
 				.build();
 
@@ -89,6 +90,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 
 		ModelFilterCriteria filters = ModelFilterCriteriaBuilder.modelFilterCriteria()
 				.withLabel("iphone 4s")
+				.withPage(0).withPerPage(100)
 				.build();
 
 		ModelFetchRequest request = new ModelFetchRequest(sessionDto);
@@ -254,7 +256,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		req.setSessionId(TestData.USER1_SESSIONID);
 		req.setUsername(TestData.USER1_NAME);
 		req.setDeliveryId(deliveryId);
-		
+
 		DeliveryDetailsResponse resp = deliveryService.fetchDetails(req);
 		
 		// then
@@ -270,6 +272,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
 				.withMinNumberOfProducts(1)
 				.withMaxNumberOfProducts(10)
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
@@ -301,6 +304,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
 				.withDeliveryDateStart(deliveryDateStart)
 				.withDeliveryDateEnd(deliveryDateEnd)
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
@@ -323,6 +327,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		String label = "nowy rok cieszyn 1";
 		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
 				.withLabel(label)
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
@@ -345,6 +350,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
 				.withMinNumberOfProducts(7)
 				.withMaxNumberOfProducts(9)
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
@@ -367,6 +373,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		DeliveryFilterCriteria filters = DeliveryFilterCriteriaBuilder.deliveryFilterCriteria()
 				.withSumFrom(500.0d)
 				.withSumTo(900.0d)
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();
@@ -391,6 +398,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 				.withSumTo(900.0d)
 				.withMinNumberOfProducts(7)
 				.withMaxNumberOfProducts(9)
+				.withPage(0).withPerPage(100)
 				.build();
 		
 		DeliveriesFetchRequest req = new DeliveriesFetchRequest();

@@ -312,7 +312,7 @@ public class DeliveryResourceTest extends BaseWSTest {
 					.contentType(ContentType.JSON)
 					.body(gson.toJson(req))
 				.when()
-					.post(TESTING_APP + DeliveriesAddResource.URL);
+					.post(TESTING_APP + DeliveryAddResource.URL);
 	
 		Boolean resp2 = from(res2.asString()).get("success");
 		

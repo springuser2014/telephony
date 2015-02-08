@@ -5,7 +5,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.SessionInitializationRequest;
 import telephony.core.service.dto.response.SessionInitializationResponse;
@@ -23,7 +23,7 @@ implements SessionInitializationResource {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 
     @Override
 	@Post("json")
@@ -37,7 +37,7 @@ implements SessionInitializationResource {
         SessionDto session = null;
 
         try {
-        	session = sessionService.init(initializationRequest.getUsername(), initializationRequest.getPassword());
+        	session = sessionManager.init(initializationRequest.getUsername(), initializationRequest.getPassword());
         } catch (Exception ex) {
         	logger.error("Error occured during session initialization." , ex);
         }

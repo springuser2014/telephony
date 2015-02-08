@@ -9,7 +9,7 @@ import telephony.core.dao.ContactsDao;
 import telephony.core.entity.jpa.*;
 import telephony.core.query.filter.ContactFilterCriteria;
 import telephony.core.service.ContactService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.ContactConverter;
 import telephony.core.service.dto.*;
 import telephony.core.service.dto.request.*;
@@ -35,7 +35,7 @@ implements ContactService {
 	ContactsDao contactsDao;
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	ContactConverter contactConverter;
@@ -69,7 +69,7 @@ implements ContactService {
 			logger.debug("params : [filters: {} : {}]", filters);
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		List<Contact> lst = contactsDao.findByCriteria(filters);
 
 		for(Contact contact : lst) {
@@ -135,7 +135,7 @@ implements ContactService {
 			logger.debug("params : [ newContact : {}]", dto);
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		// TODO extract to converter
 		Address address = new Address();
@@ -223,7 +223,7 @@ implements ContactService {
 			logger.debug("params : [ contact: {}]", dto);
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		
 		Contact contactToUpdate = contactsDao.findById(dto.getId());
 
@@ -348,7 +348,7 @@ implements ContactService {
 			logger.debug("params : [ contactId : {}]", request.getContactToDelete());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		contactsDao.removeById(request.getContactToDelete());
 
 		resp.setSuccess(true);
@@ -410,7 +410,7 @@ implements ContactService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Contact contact = contactsDao.findById(request.getContactId());
 		ContactDto contactDto = contactConverter.contactToContactDto(contact);

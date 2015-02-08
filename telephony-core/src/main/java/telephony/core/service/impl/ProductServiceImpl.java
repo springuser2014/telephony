@@ -23,7 +23,7 @@ import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.ProductServiceException;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.core.service.ProductService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -46,7 +46,7 @@ implements ProductService {
 	ProducerDao producerDao;
 	
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	ProductConverter productConverter;
@@ -87,7 +87,7 @@ implements ProductService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		ModelFilterCriteria modelFilterCriteria = ModelFilterCriteriaBuilder.modelFilterCriteria()
 				.withPage(0).withPerPage(1000)
@@ -128,10 +128,12 @@ implements ProductService {
 
 		logger.info("ProductServiceImpl.fetchAllModels starts");
 
-		sessionService.validate(session);
+		sessionManager.validate(session);
 
 		List<String> res = new ArrayList<>();
-		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
+		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria()
+				.withPage(0).withPerPage(100)
+				.build();
 		// TODO : prepare separate JPQL for this case
 		List<Product> products = productsDao.findByCriteria(filters);
 
@@ -152,7 +154,7 @@ implements ProductService {
 
 		logger.info("ProductServiceImpl.fetchAllProducersInUse starts");
 
-		sessionService.validate(session);
+		sessionManager.validate(session);
 
 		List<ProducerDto> res = new ArrayList<>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
@@ -170,11 +172,6 @@ implements ProductService {
 		}
 
 		return res;
-	}
-
-	@Override
-	public List<String> fetchAllImeiInUse(SessionDto session) throws SessionServiceException {
-		return null;
 	}
 
 	// TODO extract to validator
@@ -216,7 +213,7 @@ implements ProductService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Product product = productsDao.findByIMEI(request.getImei());
 		boolean isAvailable = product == null;
@@ -234,7 +231,7 @@ implements ProductService {
 
 		logger.info("ProductServiceImpl.fetchAllImeiInUse starts");
 
-		sessionService.validate(session);
+		sessionManager.validate(session);
 
 		List<ModelDto> res = new ArrayList<>();
 		ProductFilterCriteria filters = ProductFilterCriteriaBuilder.productFilterCriteria().build();
@@ -270,7 +267,7 @@ implements ProductService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Product product = productsDao.findById(request.getProductId());
 		ProductDetailsDto productDto = productConverter.toProductDetailsDto(product);
@@ -304,7 +301,7 @@ implements ProductService {
 	@Transactional
 	public long count(SessionDto session) throws SessionServiceException {
 
-		sessionService.validate(session);
+		sessionManager.validate(session);
 
 		return productsDao.count();
 	}
@@ -363,7 +360,7 @@ implements ProductService {
 					+ "deliveryDateEnd : {}, productStatus : {} ] ", params);
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<Product> result = productsDao.findByCriteria(filters);
 		Long count = productsDao.countByCriteria(filters);
@@ -415,7 +412,7 @@ implements ProductService {
 			return resp;
 		}
 
-		sessionService.validate(req.getSessionDto());
+		sessionManager.validate(req.getSessionDto());
 
 		Product product = productsDao.findById(req.getProductDto().getId());
 		productConverter.updateEntity(product, req.getProductDto());

@@ -69,4 +69,18 @@ class StoreFilterCriteriaBuilderBase<GeneratorT extends StoreFilterCriteriaBuild
 
 		return (GeneratorT) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPage(Integer val) {
+		instance.setPage(val);
+
+		return (GeneratorT) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public GeneratorT withPerPage(Integer val) {
+		instance.setPerPage(val);
+
+		return (GeneratorT) this;
+	}
 }

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.request.SessionDestroyRequest;
 import telephony.core.service.dto.response.SessionDestroyResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -26,7 +26,7 @@ implements SessionDestroyResource {
 	 private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 
 	@Override	
     @Delete("json")
@@ -40,7 +40,7 @@ implements SessionDestroyResource {
         Boolean success = null;
 
         try {
-            success = sessionService.destroy(destroyRequest.getSessionDto());
+            success = sessionManager.destroy(destroyRequest.getSessionDto());
         } catch (SessionServiceException e) { 
         	logger.error("Error occured during session ending.", e);
         }

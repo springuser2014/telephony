@@ -29,17 +29,17 @@ public final class TestData {
 
 	public static final Long USER2_ID = 2L;
 	public static final String USER2_NAME = "user2@gmail.com";
-	public static final String USER2_PASSWORD = "sdaysdhaiufsiua";	
+	public static final String USER2_PASSWORD = "rfaysdhaiufsiuf";
 	public static final String USER2_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
 
 	public static final Long USER_BOSS_ID = 3L;
 	public static final String USER_BOSS_NAME = "boss@gmail.com";
-	public static final String USER_BOSS_PASSWORD = "zwaysdhaiufsiko";	
+	public static final String USER_BOSS_PASSWORD = "rfaysdhaiufsiuf";
 	public static final String USER_BOSS_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
 
 	public static final Long USER_MANAGER_ID = 4L;
 	public static final String USER_MANAGER_NAME = "manager@gmail.com";
-	public static final String USER_MANAGER_PASSWORD = "wertsdhnbgfsiko";
+	public static final String USER_MANAGER_PASSWORD = "rfaysdhaiufsiuf";
 	public static final String USER_MANAGER_SESSIONID = "asdweasdweasdweasdweasdweasdwe21";
 	
 	public static final String STORE_CIESZYN_LABEL = "cieszyn";	

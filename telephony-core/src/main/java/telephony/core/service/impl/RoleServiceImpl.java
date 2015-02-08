@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import telephony.core.dao.RolesDao;
 import telephony.core.entity.jpa.Role;
 import telephony.core.service.RoleService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.RoleConverter;
 import telephony.core.service.dto.RoleDto;
 import telephony.core.service.dto.SessionDto;
@@ -36,7 +36,7 @@ implements RoleService {
 	RolesDao rolesDao;
 	
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	RoleConverter roleConverter;
@@ -70,7 +70,7 @@ implements RoleService {
 			logger.debug("params : [ filters : {} ]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<RoleDto> rolez = new ArrayList<RoleDto>();
 		List<Role> roles = rolesDao.find(request.getFilters());
@@ -107,7 +107,7 @@ implements RoleService {
 			logger.debug("params : [ roleDto : {}] ", request.getRoleDto());
 		}
 
-		sessionService.validate(request.getSessionDto()); // TODO add validation
+		sessionManager.validate(request.getSessionDto()); // TODO add validation
 
 		Role entity = roleConverter.toEntity(request.getRoleDto());
 

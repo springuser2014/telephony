@@ -6,7 +6,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.dto.request.SessionValidationRequest;
 import telephony.core.service.dto.response.SessionValidationResponse;
 import telephony.core.service.exception.SessionServiceException;
@@ -24,7 +24,7 @@ implements SessionValidationResource {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 
 	@Override
 	@Post("json")
@@ -39,7 +39,7 @@ implements SessionValidationResource {
 		SessionValidationResponse resp = new SessionValidationResponse();
 
 		try {
-			isValid = new Boolean(sessionService.validate(validationRequest.getSessionDto()));
+			isValid = new Boolean(sessionManager.validate(validationRequest.getSessionDto()));
 		} catch (SessionServiceException ex) {
 			logger.error("Error occured during session validation ", ex);
 		}

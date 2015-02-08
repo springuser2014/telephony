@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.*;
 import telephony.core.entity.jpa.*;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.StoreService;
 import telephony.core.service.converter.StoreConverter;
 import telephony.core.service.dto.SessionDto;
-import telephony.core.service.dto.StoreDto;
 import telephony.core.service.dto.StoreSearchDto;
 import telephony.core.service.dto.request.StoreAddRequest;
 import telephony.core.service.dto.request.StoreDeleteRequest;
@@ -44,7 +43,7 @@ implements StoreService {
     StoresDao storesDao;
     
     @Inject
-    SessionService sessionService;
+	SessionManager sessionManager;
 
     @Inject
 	SalesDao salesDao;
@@ -104,7 +103,7 @@ implements StoreService {
 			logger.debug("params : [ filters : {} ]", request.getFilters());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		List<StoreSearchDto> storez = new ArrayList<StoreSearchDto>();
 		List<Store> stores = storesDao.findByCriteria(request.getFilters());
@@ -158,7 +157,7 @@ implements StoreService {
 			logger.debug("params : [ storeDto : {} ]", request.getStoreDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Store entity = storeConverter.toEntity(request.getStoreDto());
 
@@ -208,7 +207,7 @@ implements StoreService {
 			logger.debug("params : [ storeId : {} ]", request.getStoreId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		storesDao.removeById(request.getStoreId());
 
@@ -259,7 +258,7 @@ implements StoreService {
 			logger.debug("params : [ storeDto : {} ]", request.getStoreDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		Store entity = storesDao.findById(request.getStoreDto().getStoreId());
 		storeConverter.updateEntity(request.getStoreDto(), entity);
@@ -275,7 +274,7 @@ implements StoreService {
 	@Override
 	@Transactional
 	public long count(SessionDto session) throws SessionServiceException {
-		sessionService.validate(session); // TODO add validation
+		sessionManager.validate(session); // TODO add validation
 
 		return storesDao.count();
 	}

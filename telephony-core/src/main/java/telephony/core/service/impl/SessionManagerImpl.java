@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import telephony.core.dao.UsersDao;
 import telephony.core.entity.jpa.User;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.UserConverter;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.UserFetchDto;
@@ -24,9 +24,9 @@ import com.google.inject.persist.Transactional;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
 
-public class SessionServiceImpl
+public class SessionManagerImpl
 extends AbstractBasicService 
-implements SessionService {
+implements SessionManager {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	

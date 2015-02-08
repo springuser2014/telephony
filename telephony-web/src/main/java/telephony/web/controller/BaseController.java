@@ -79,6 +79,14 @@ public class BaseController {
 		return mv;
 	}
 
+	@RequestMapping(value="editProduct/{id}", method = RequestMethod.GET)
+	public ModelAndView editProduct(@PathVariable("id") Long id) {
+
+		ModelAndView mv = new ModelAndView("editProduct");
+		appendEnvironment(mv);
+
+		return mv;
+	}
 	// sales
 	@RequestMapping(value="sales", method = RequestMethod.GET)
 	public ModelAndView sales() {

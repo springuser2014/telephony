@@ -5,12 +5,10 @@ import com.google.inject.persist.Transactional;
 
 import telephony.core.dao.ComplaintCommentDao;
 import telephony.core.entity.jpa.ComplaintComment;
-import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.entity.jpa.SaleComplaint;
 import telephony.core.service.ComplaintCommentService;
 import telephony.core.service.ProductComplaintService;
 import telephony.core.service.SaleComplaintService;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.converter.ComplaintCommentConverter;
 import telephony.core.service.dto.AnonymousComplaintCommentDto;
 import telephony.core.service.dto.ComplaintCommentDto;
@@ -33,7 +31,7 @@ implements ComplaintCommentService {
 	ComplaintCommentConverter complaintCommentConverter;
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	ProductComplaintService productComplaint;
@@ -62,7 +60,7 @@ implements ComplaintCommentService {
 			return resp;
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		ComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
 		complaintCommentDao.save(cc);
@@ -141,7 +139,7 @@ implements ComplaintCommentService {
 	@Override
 	public long count(SessionDto session) throws SessionServiceException {
 
-		sessionService.validate(session);
+		sessionManager.validate(session);
 		return complaintCommentDao.count();
 	}
 }

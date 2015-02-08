@@ -209,6 +209,7 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 authData,
                 function(jqXHR, status) {
                     var resp = jqXHR.responseJSON;
+
                     stores = resp.stores;
                 },
                 function() { },

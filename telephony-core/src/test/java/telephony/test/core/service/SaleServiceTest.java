@@ -42,7 +42,7 @@ public class SaleServiceTest extends BaseCoreTest {
 	private SaleService saleService;
 	
 	@Inject
-	private SessionService sessionService;
+	private SessionManager sessionManager;
 	
 	@Inject
 	private UserService userService;
@@ -63,10 +63,12 @@ public class SaleServiceTest extends BaseCoreTest {
 		// given
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
+				.withPage(0).withPerPage(100)
 				.build();
 
 		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
 		fetchRequest.setFilters(filters);
+
 
 		// when
 		SalesFetchResponse fetchResponse = saleService.findSales(fetchRequest);
@@ -86,6 +88,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
 				.withLabel(TestData.SALE_CIESZYN_LABEL)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
@@ -108,7 +111,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		SessionDto session = SessionDto.create(TestData.USER1_NAME, TestData.USER1_SESSIONID);
 		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
 				.withPerPage(1)
-				.withPage(1)
+				.withPage(0)
 				.build();
 
 		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
@@ -121,7 +124,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		assertNotNull(fetchResponse);
 		assertTrue(fetchResponse.isSuccess());
 		assertEquals(fetchResponse.getSales().size() , 1);
-		assertEquals(fetchResponse.getSales().get(0).getId(), new Long(2));
+		assertEquals(fetchResponse.getSales().get(0).getId(), new Long(1));
 	}
 
 	@Test
@@ -133,6 +136,7 @@ public class SaleServiceTest extends BaseCoreTest {
 		SaleFilterCriteria filters = SaleFilterCriteriaBuilder.saleFilterCriteria()
 				.withMinNumberOfProducts(5)
 				.withMaxNumberOfProducts(7)
+				.withPage(0).withPerPage(100)
 				.build();
 
 		SalesFetchRequest fetchRequest = new SalesFetchRequest(session);
@@ -284,5 +288,4 @@ public class SaleServiceTest extends BaseCoreTest {
 		assertNotNull(resp);
 		assertTrue(resp.isSuccess());
 	}
-
 }

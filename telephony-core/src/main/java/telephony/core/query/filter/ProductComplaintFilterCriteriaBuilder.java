@@ -87,4 +87,19 @@ class ProductComplaintFilterCriteriaBuilderBase<GeneratorT extends ProductCompla
 
         return (GeneratorT) this;
     }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withPage(Integer page) {
+        instance.setPage(page);
+
+        return (GeneratorT) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public GeneratorT withPerPage(Integer pp) {
+        instance.setPerPage(pp);
+
+        return (GeneratorT) this;
+    }
+
 }

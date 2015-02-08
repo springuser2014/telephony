@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.dao.TaxDao;
 import telephony.core.entity.jpa.Tax;
-import telephony.core.service.SessionService;
+import telephony.core.service.SessionManager;
 import telephony.core.service.TaxService;
 import telephony.core.service.converter.TaxConverter;
 import telephony.core.service.dto.SessionDto;
@@ -39,7 +39,7 @@ implements TaxService {
 	TaxDao taxDao;
 
 	@Inject
-	SessionService sessionService;
+	SessionManager sessionManager;
 
 	@Inject
 	TaxConverter taxConverter;
@@ -95,15 +95,17 @@ implements TaxService {
 			logger.debug("params : [ request : {} ]", request);
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
-		List<TaxDto> taxez = new ArrayList<TaxDto>();
-		List<Tax> entities = taxDao.fetch(request.getFilters());
+		List<TaxDto> taxez = new ArrayList<>();
+		List<Tax> entities = taxDao.fetchByCriteria(request.getFilters());
+		Long count = taxDao.countByCriteria(request.getFilters());
 
 		for (Tax entity : entities) {
 			taxez.add(taxConverter.toDto(entity));
 		}
 
+		resp.setCountTotal(count);
 		resp.setMessage("operation performed successfully"); // TODO : add localized msg
 		resp.setSuccess(true);
 		resp.setTaxes(taxez);
@@ -150,7 +152,7 @@ implements TaxService {
 			logger.debug("params : [ taxDto : {} ]", request.getTaxDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		TaxDto dto = request.getTaxDto();
 		Tax entity = taxConverter.toEntity(dto);
@@ -203,7 +205,7 @@ implements TaxService {
 			logger.debug("params : [ editTax : {} ]", request.getTaxDto());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 
 		TaxDto dto = request.getTaxDto();
 		Tax tax = taxDao.findById(dto.getId());
@@ -256,7 +258,7 @@ implements TaxService {
 			logger.debug("params : [ taxId : {} ] ", request.getTaxId());
 		}
 
-		sessionService.validate(request.getSessionDto());
+		sessionManager.validate(request.getSessionDto());
 		taxDao.removeById(request.getTaxId());
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
