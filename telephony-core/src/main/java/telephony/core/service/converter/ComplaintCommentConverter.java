@@ -3,9 +3,7 @@ package telephony.core.service.converter;
 import com.google.inject.Inject;
 import telephony.core.dao.ProductComplaintDao;
 import telephony.core.dao.SaleComplaintDao;
-import telephony.core.entity.jpa.ComplaintComment;
-import telephony.core.entity.jpa.ProductComplaint;
-import telephony.core.entity.jpa.SaleComplaint;
+import telephony.core.entity.jpa.*;
 import telephony.core.service.dto.AnonymousComplaintCommentDto;
 import telephony.core.service.dto.ComplaintCommentDto;
 
@@ -21,19 +19,15 @@ public class ComplaintCommentConverter {
     @Inject
     SaleComplaintDao saleComplaintDao;
 
-    public ComplaintComment toEntity(ComplaintCommentDto complaintComment) {
+    public ProductComplaintComment toEntity(ComplaintCommentDto complaintComment) {
 
-        ComplaintComment cc = new ComplaintComment();
+        ProductComplaintComment cc = new ProductComplaintComment();
 
         SaleComplaint sc = saleComplaintDao.findById(complaintComment.getComplaintId());
         ProductComplaint pc = productComplaintDao.findById(complaintComment.getComplaintId());
 
-        if (isNotNull(sc)) {
-//            cc.setComplaint(sc);
-        }
-
         if (isNotNull(pc)) {
-//            cc.setComplaint(pc);
+            cc.setComplaint(pc);
         }
 
         cc.setAuthor(complaintComment.getAuthor());
@@ -43,18 +37,50 @@ public class ComplaintCommentConverter {
         return cc;
     }
 
-    public ComplaintComment toEntity(AnonymousComplaintCommentDto complaintComment) {
-        ComplaintComment cc = new ComplaintComment();
+    public ProductComplaintComment toEntity(AnonymousComplaintCommentDto complaintComment) {
+        ProductComplaintComment cc = new ProductComplaintComment();
+
+        SaleComplaint sc = saleComplaintDao.findByHash(complaintComment.getHashUnique());
+        ProductComplaint pc = productComplaintDao.findByHash(complaintComment.getHashUnique());
+
+
+        if (isNotNull(pc)) {
+            cc.setComplaint(pc);
+        }
+
+        cc.setAuthor(complaintComment.getAuthor());
+        cc.setContent(complaintComment.getComment());
+        cc.setReportedDate(new Date());
+
+        return cc;
+    }
+
+    public SaleComplaintComment toSaleComplaintEntity(ComplaintCommentDto complaintComment) {
+
+        SaleComplaintComment cc = new SaleComplaintComment();
+
+        SaleComplaint sc = saleComplaintDao.findById(complaintComment.getComplaintId());
+        ProductComplaint pc = productComplaintDao.findById(complaintComment.getComplaintId());
+
+        if (isNotNull(sc)) {
+            cc.setComplaint(sc);
+        }
+
+        cc.setAuthor(complaintComment.getAuthor());
+        cc.setContent(complaintComment.getComment());
+        cc.setReportedDate(new Date());
+
+        return cc;
+    }
+
+    public SaleComplaintComment toSaleComplaintEntity(AnonymousComplaintCommentDto complaintComment) {
+        SaleComplaintComment cc = new SaleComplaintComment();
 
         SaleComplaint sc = saleComplaintDao.findByHash(complaintComment.getHashUnique());
         ProductComplaint pc = productComplaintDao.findByHash(complaintComment.getHashUnique());
 
         if (isNotNull(sc)) {
-//            cc.setComplaint(sc);
-        }
-
-        if (isNotNull(pc)) {
-//            cc.setComplaint(pc);
+            cc.setComplaint(sc);
         }
 
         cc.setAuthor(complaintComment.getAuthor());

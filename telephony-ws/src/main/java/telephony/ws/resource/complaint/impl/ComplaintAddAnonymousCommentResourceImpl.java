@@ -5,7 +5,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.ComplaintCommentService;
+import telephony.core.service.ProductComplaintCommentService;
 import telephony.core.service.dto.request.AnonymousComplaintCommentRequest;
 import telephony.core.service.dto.response.AnonymousComplaintCommentResponse;
 import telephony.ws.resource.TelephonyServerResource;
@@ -22,7 +22,7 @@ implements ComplaintAddAnonymousCommentResource {
     final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Inject
-    ComplaintCommentService commentService;
+    ProductComplaintCommentService commentService;
 
     @Override
     @Post("json")

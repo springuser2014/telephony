@@ -79,11 +79,6 @@
                                     <i></i>
                                 </label>
                             </section>
-{{#add}}
-                            <section class="col col-2">
-                                <a class="btn btn-info btn-sm" id='add-new-store' href='<c:url value="/addStore"/>'>Dodaj nowy magazyn</a>
-                            </section>
-{{/add}}
                         </div>
 
                         <div class="row">
@@ -98,12 +93,8 @@
                                     <i></i>
                                 </label>
                             </section>
-{{#add}}
-                            <section class="col col-2">
-                                <a class="btn btn-info btn-sm" id='add-new-contact' href='<c:url value="/addContact"/>'>Dodaj nowy kontakt</a>
-                            </section>
                         </div>
-{{/add}}
+
                         <div class="row">
                             <section class="col col-3">
                                 <label class="input">

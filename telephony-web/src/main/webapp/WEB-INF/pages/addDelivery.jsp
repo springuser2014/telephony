@@ -286,30 +286,6 @@
 
 </script>
 
-<script id="delivery-add-element" type="x-tmpl-mustache">
-
-     <div class="row">
-            <section class="col col-2">
-                <label class="input">
-                    <i class="icon-prepend fa fa-dollar"></i>
-                    <input type="text" id="sum_from" name="sum_from" placeholder="Cena zakupu"/>
-                    <b class="tooltip tooltip-bottom-right">Cena zakupu </b>
-                </label>
-            </section>
-        </div>
-
-        <div class="row">
-            <section class="col col-2">
-                <label class="input">
-                    <i class="icon-prepend fa fa-dollar"></i>
-                    <input type="text" id="sum_from" name="sum_from" placeholder="Cena zakupu"/>
-                    <b class="tooltip tooltip-bottom-right">Cena sprzedaży </b>
-                </label>
-            </section>
-        </div>
-
-</script>
-
 
 <div id="no-products-dialog" title="Nie masz żadnych produktów" style="display:none">
 Nie masz dodanych żadnych produktów na liście dostawy

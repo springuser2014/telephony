@@ -9,15 +9,10 @@ import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import telephony.core.service.ComplaintCommentService;
-import telephony.core.service.dto.BaseComplaintCommentDto;
+import telephony.core.service.ProductComplaintCommentService;
 import telephony.core.service.dto.request.ComplaintCommentRequest;
-import telephony.core.service.dto.response.ComplaintAddCommentResponse;
 import telephony.core.service.dto.response.ComplaintCommentResponse;
-import telephony.core.service.dto.response.ContactAddResponse;
-import telephony.core.service.exception.ContactServiceException;
 import telephony.core.service.exception.SessionServiceException;
-import telephony.core.service.impl.ComplaintCommentServiceImpl;
 import telephony.ws.resource.TelephonyServerResource;
 import telephony.ws.resource.complaint.ComplaintAddCommentResource;
 
@@ -28,7 +23,7 @@ implements ComplaintAddCommentResource {
 	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Inject
-	ComplaintCommentService commentService;
+	ProductComplaintCommentService commentService;
 
 	@Override
 	@Post("json")

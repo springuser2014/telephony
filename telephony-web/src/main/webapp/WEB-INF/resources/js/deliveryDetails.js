@@ -353,8 +353,6 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
 
         var createView = function() {
 
-            fetchDeliveryData();
-
             var authData = Telephony.Auth.getAuthObj();
             authData.filters = { page : 0, perPage : 100 };
 
@@ -370,6 +368,8 @@ require(['app', 'jquery-ui', 'mustache', 'jquery-cookie', 'rest', 'auth', 'jquer
                 },
                 false
             );
+
+            fetchDeliveryData();
 
             Telephony.Rest.Taxes.Fetch(
                 authData,

@@ -2,12 +2,10 @@ package telephony.core.service.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-
-import telephony.core.dao.ComplaintCommentDao;
-import telephony.core.entity.jpa.ComplaintComment;
-import telephony.core.service.ComplaintCommentService;
+import telephony.core.dao.ProductComplaintCommentDao;
+import telephony.core.entity.jpa.ProductComplaintComment;
+import telephony.core.service.ProductComplaintCommentService;
 import telephony.core.service.ProductComplaintService;
-import telephony.core.service.SaleComplaintService;
 import telephony.core.service.SessionManager;
 import telephony.core.service.converter.ComplaintCommentConverter;
 import telephony.core.service.dto.AnonymousComplaintCommentDto;
@@ -15,7 +13,8 @@ import telephony.core.service.dto.ComplaintCommentDto;
 import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.AnonymousComplaintCommentRequest;
 import telephony.core.service.dto.request.ComplaintCommentRequest;
-import telephony.core.service.dto.response.*;
+import telephony.core.service.dto.response.AnonymousComplaintCommentResponse;
+import telephony.core.service.dto.response.ComplaintCommentResponse;
 import telephony.core.service.dto.response.Error;
 import telephony.core.service.exception.SessionServiceException;
 
@@ -23,9 +22,9 @@ import java.util.List;
 
 import static telephony.core.assertion.CommonAssertions.isEmpty;
 
-public class ComplaintCommentServiceImpl
-extends AbstractBasicService<ComplaintComment> 
-implements ComplaintCommentService {
+public class ProductComplaintCommentServiceImpl
+extends AbstractBasicService<ProductComplaintComment>
+implements ProductComplaintCommentService {
 
 	@Inject
 	ComplaintCommentConverter complaintCommentConverter;
@@ -35,12 +34,9 @@ implements ComplaintCommentService {
 
 	@Inject
 	ProductComplaintService productComplaint;
-	
+
 	@Inject
-	SaleComplaintService saleComplaint;
-	
-	@Inject
-	ComplaintCommentDao complaintCommentDao;
+	ProductComplaintCommentDao complaintCommentDao;
 
 	@Transactional
 	@Override
@@ -62,7 +58,7 @@ implements ComplaintCommentService {
 
 		sessionManager.validate(request.getSessionDto());
 
-		ComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
+		ProductComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
 		complaintCommentDao.save(cc);
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
@@ -120,12 +116,12 @@ implements ComplaintCommentService {
 		if (!validate(request.getComplaintComment(), errors)) {
 
 			resp.setErrors(errors);
-			resp.setMessage(""); // TODO add localized msg
+			resp.setMessage("validationError"); // TODO add localized msg
 			resp.setSuccess(true);
 			return resp;
 		}
 
-		ComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
+		ProductComplaintComment cc = complaintCommentConverter.toEntity(request.getComplaintComment());
 		complaintCommentDao.save(cc);
 
 		resp.setMessage("operation performed successfully"); // TODO add localized msg

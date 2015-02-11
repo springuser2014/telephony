@@ -1,11 +1,10 @@
 package telephony.core.entity.jpa;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "sales")
@@ -44,11 +43,31 @@ public class Sale extends BaseEntity {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sale", cascade = CascadeType.ALL)
-//    private Collection<SaleComplaint> complaints;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = CascadeType.ALL)
+    private Collection<SaleComplaint> complaints;
 
     public Sale() {
         products = new HashSet<>();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Collection<SaleComplaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(Collection<SaleComplaint> complaints) {
+        this.complaints = complaints;
     }
 
     public Contact getContact() {
@@ -120,22 +139,6 @@ public class Sale extends BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public void addComplaint(SaleComplaint sc) {
-//        complaints.add(sc);
-//    }
-//
-//    public void removeComplaint(SaleComplaint sc) {
-//        complaints.remove(sc);
-//    }
-//
-//    public Collection<SaleComplaint> getComplaints() {
-//        return complaints;
-//    }
-//
-//    public void setComplaints(Collection<SaleComplaint> complaints) {
-//        this.complaints = complaints;
-//    }
 
     @Override
     public boolean equals(Object o) {

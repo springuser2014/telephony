@@ -1,39 +1,29 @@
 package telephony.test.core.service;
 
-import static org.junit.Assert.*;
-
-import java.util.Date;
-
+import com.google.inject.Inject;
+import com.googlecode.flyway.test.annotation.FlywayTest;
+import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-
+import telephony.core.service.ProductComplaintCommentService;
+import telephony.core.service.ProductComplaintService;
 import telephony.core.service.dto.AnonymousComplaintCommentDto;
-import telephony.core.service.dto.BaseComplaintCommentDto;
 import telephony.core.service.dto.ComplaintCommentDto;
+import telephony.core.service.dto.SessionDto;
 import telephony.core.service.dto.request.AnonymousComplaintCommentRequest;
 import telephony.core.service.dto.request.ComplaintCommentRequest;
 import telephony.core.service.dto.response.AnonymousComplaintCommentResponse;
 import telephony.core.service.dto.response.ComplaintCommentResponse;
 import telephony.core.service.exception.SessionServiceException;
 import telephony.test.BaseCoreTest;
-import telephony.core.service.ComplaintCommentService;
-import telephony.core.service.ProductComplaintService;
 import telephony.test.core.data.TestData;
-import telephony.core.entity.jpa.ComplaintComment;
-import telephony.core.service.dto.SessionDto;
 
-import com.google.inject.Inject;
-import com.googlecode.flyway.test.annotation.FlywayTest;
-import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
+import static org.junit.Assert.*;
 
-
-/**
- * asd.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/META-INF/context.xml" })
 @TestExecutionListeners({
@@ -41,13 +31,13 @@ import com.googlecode.flyway.test.dbunit.FlywayDBUnitTestExecutionListener;
     FlywayDBUnitTestExecutionListener.class 
 })
 @FlywayTest
-public class ComplaintCommentServiceTest extends BaseCoreTest {
+public class ProductComplaintCommentServiceTest extends BaseCoreTest {
 
 	@Inject
 	private ProductComplaintService productComplaintService;
 	
 	@Inject
-	private ComplaintCommentService complaintCommentService;
+	private ProductComplaintCommentService complaintCommentService;
 
 	@Test
 	@FlywayTest(locationsForMigrate = { "db/migration", "db/data" })

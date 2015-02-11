@@ -1,37 +1,7 @@
 package telephony.core.guice;
 
-import telephony.core.dao.ComplaintCommentDao;
-import telephony.core.dao.ContactsDao;
-import telephony.core.dao.DeliveriesDao;
-import telephony.core.dao.InformationDao;
-import telephony.core.dao.ModelDao;
-import telephony.core.dao.PricingsDao;
-import telephony.core.dao.ProducerDao;
-import telephony.core.dao.ProductComplaintDao;
-import telephony.core.dao.ProductTaxDao;
-import telephony.core.dao.ProductsDao;
-import telephony.core.dao.RolesDao;
-import telephony.core.dao.SaleComplaintDao;
-import telephony.core.dao.SalesDao;
-import telephony.core.dao.StoresDao;
-import telephony.core.dao.TaxDao;
-import telephony.core.dao.UsersDao;
-import telephony.core.dao.impl.ComplaintCommentDaoImpl;
-import telephony.core.dao.impl.ContactsDaoImpl;
-import telephony.core.dao.impl.DeliveriesDaoImpl;
-import telephony.core.dao.impl.InformationDaoImpl;
-import telephony.core.dao.impl.ModelDaoImpl;
-import telephony.core.dao.impl.PricingsDaoImpl;
-import telephony.core.dao.impl.ProducerDaoImpl;
-import telephony.core.dao.impl.ProductComplaintDaoImpl;
-import telephony.core.dao.impl.ProductTaxDaoImpl;
-import telephony.core.dao.impl.ProductsDaoImpl;
-import telephony.core.dao.impl.RolesDaoImpl;
-import telephony.core.dao.impl.SaleComplaintDaoImpl;
-import telephony.core.dao.impl.SalesDaoImpl;
-import telephony.core.dao.impl.StoresDaoImpl;
-import telephony.core.dao.impl.TaxDaoImpl;
-import telephony.core.dao.impl.UsersDaoImpl;
+import telephony.core.dao.*;
+import telephony.core.dao.impl.*;
 import telephony.core.service.*;
 import telephony.core.service.converter.*;
 import telephony.core.service.impl.*;
@@ -64,7 +34,8 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(SaleComplaintDao.class).to(SaleComplaintDaoImpl.class);
         bind(ProductComplaintDao.class).to(ProductComplaintDaoImpl.class);
         bind(PricingsDao.class).to(PricingsDaoImpl.class);
-        bind(ComplaintCommentDao.class).to(ComplaintCommentDaoImpl.class);
+        bind(ProductComplaintCommentDao.class).to(ProductComplaintCommentDaoImpl.class);
+        bind(SaleComplaintCommentDao.class).to(SaleComplaintCommentDaoImpl.class);
         bind(ProductTaxDao.class).to(ProductTaxDaoImpl.class);
 
         // binding service layer objects
@@ -84,7 +55,8 @@ public class TelephonyCoreServicesModule extends AbstractModule {
         bind(SaleComplaintService.class).to(SaleComplaintServiceImpl.class);
         bind(ProductComplaintService.class).to(ProductComplaintServiceImpl.class);
         bind(PricingService.class).to(PricingServiceImpl.class);
-        bind(ComplaintCommentService.class).to(ComplaintCommentServiceImpl.class);
+        bind(ProductComplaintCommentService.class).to(ProductComplaintCommentServiceImpl.class);
+        bind(SaleComplaintCommentService.class).to(SaleComplaintCommentServiceImpl.class);
 
         bind(PermissionChecker.class).to(PermissionCheckerImpl.class);
 

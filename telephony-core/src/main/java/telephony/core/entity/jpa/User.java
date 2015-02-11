@@ -30,22 +30,29 @@ public class User extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionValidity;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//		name = "user_stores",
-//        joinColumns = @JoinColumn(
-//    		name = "user_id",
-//    		referencedColumnName = "id"),
-//        inverseJoinColumns = @JoinColumn(
-//    		name = "store_id",
-//    		referencedColumnName = "id"))
-//    private Set<Store> allowedShops;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToMany(
+            mappedBy = "user",
+            fetch    = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+            }
+    )
+    private Collection<Delivery> deliveries;
+
+    @OneToMany(
+            mappedBy = "user",
+            fetch    = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+            }
+    )
+    private Collection<Sale> sales;
 
     public User() { }
 
@@ -89,14 +96,6 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-//    public Set<Store> getAllowedShops() {
-//        return allowedShops;
-//    }
-//
-//    public void setAllowedShops(Set<Store> allowedShops) {
-//        this.allowedShops = allowedShops;
-//    }
-
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -128,11 +127,7 @@ public class User extends BaseEntity {
         }
 
         User user = (User) o;
-//
-//        if (allowedShops != null
-//                        ? !allowedShops.equals(user.allowedShops) : user.allowedShops != null) {
-//            return false;
-//        }
+
         if (email != null ? !email.equals(user.email) : user.email != null) {
             return false;
         }
@@ -151,7 +146,6 @@ public class User extends BaseEntity {
         int result = super.hashCode();
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-//        result = 31 * result + (allowedShops != null ? allowedShops.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
@@ -159,6 +153,50 @@ public class User extends BaseEntity {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + "]";
-	}    
+	}
+
+    public void addDelivery(Delivery delivery) {
+
+        if (!this.deliveries.contains(delivery)) {
+            deliveries.add(delivery);
+        }
+    }
+
+    public void removeDelivery(Delivery delivery) {
+
+        if (this.deliveries.contains(delivery)) {
+            deliveries.remove(delivery);
+        }
+    }
+
+    public Collection<Delivery> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(Collection<Delivery> deliveries) {
+        this.deliveries = deliveries;
+    }
+
+    public void addSale(Sale sale) {
+
+        if (!this.sales.contains(sale)) {
+            sales.add(sale);
+        }
+    }
+
+    public void removeSale(Sale sale) {
+
+        if (this.sales.contains(sale)) {
+            sales.remove(sale);
+        }
+    }
+
+    public Collection<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(Collection<Sale> sales) {
+        this.sales = sales;
+    }
 }
 

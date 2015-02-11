@@ -49,7 +49,11 @@ public class Delivery extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_id", nullable = false)
     private Contact contact;
-   
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Product> products = new HashSet<Product>();
 
@@ -212,4 +216,29 @@ public class Delivery extends BaseEntity {
 				? contact == null 
 				: this.contact.equals(contact);
 	}
+
+    public final User getUser() {
+        return user;
+    }
+
+    public final void setUser(User user) {
+
+        if (sameAsFormer(user)) {
+            return;
+        }
+
+        User oldContact = this.user;
+
+        if (oldContact != null) {
+            oldContact.removeDelivery(this);
+        }
+
+        this.contact = contact;
+    }
+
+    private boolean sameAsFormer(User user) {
+        return this.contact == null
+                ? user == null
+                : this.contact.equals(user);
+    }
 }
