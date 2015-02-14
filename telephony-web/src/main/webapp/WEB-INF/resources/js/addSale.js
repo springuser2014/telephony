@@ -339,6 +339,12 @@ function(App, $, Mustache, cookies, rest, auth) {
 
 			});
 
+			$('.add-product-to-list').click(function(e) {
+				var productId = $(e.target).attr('product-id');
+
+				getSelectedProducts().push(productId);
+			});
+
 			if ($.fn.datepicker) {
 				$('.date').each(function() {
 

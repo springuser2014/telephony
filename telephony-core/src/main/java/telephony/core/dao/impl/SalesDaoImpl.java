@@ -282,6 +282,7 @@ implements SalesDao {
 
 		return res;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Long countByCriteria(SaleFilterCriteria filters) {

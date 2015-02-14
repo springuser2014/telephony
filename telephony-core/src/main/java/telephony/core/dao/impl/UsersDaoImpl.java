@@ -21,7 +21,7 @@ public class UsersDaoImpl
 extends GenericDaoImpl<User> 
 implements UsersDao {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public UsersDaoImpl() {
 		super(User.class);
@@ -36,8 +36,9 @@ implements UsersDao {
 				
 		List<User> lst = (List<User>) getEntityManager()
 				.createQuery(
-						"select e from User e LEFT JOIN FETCH e.roles " +
-						"LEFT JOIN FETCH e.allowedShops where e.email = ?1")
+						"SELECT e FROM User e " +
+						"LEFT JOIN FETCH e.roles " +
+						"WHERE e.email = ?1 ")
 				.setParameter(1, name)
 				.getResultList();
 		

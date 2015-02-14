@@ -23,7 +23,6 @@ public class ComplaintCommentConverter {
 
         ProductComplaintComment cc = new ProductComplaintComment();
 
-        SaleComplaint sc = saleComplaintDao.findById(complaintComment.getComplaintId());
         ProductComplaint pc = productComplaintDao.findById(complaintComment.getComplaintId());
 
         if (isNotNull(pc)) {
@@ -40,9 +39,7 @@ public class ComplaintCommentConverter {
     public ProductComplaintComment toEntity(AnonymousComplaintCommentDto complaintComment) {
         ProductComplaintComment cc = new ProductComplaintComment();
 
-        SaleComplaint sc = saleComplaintDao.findByHash(complaintComment.getHashUnique());
         ProductComplaint pc = productComplaintDao.findByHash(complaintComment.getHashUnique());
-
 
         if (isNotNull(pc)) {
             cc.setComplaint(pc);
@@ -60,7 +57,6 @@ public class ComplaintCommentConverter {
         SaleComplaintComment cc = new SaleComplaintComment();
 
         SaleComplaint sc = saleComplaintDao.findById(complaintComment.getComplaintId());
-        ProductComplaint pc = productComplaintDao.findById(complaintComment.getComplaintId());
 
         if (isNotNull(sc)) {
             cc.setComplaint(sc);
@@ -77,7 +73,6 @@ public class ComplaintCommentConverter {
         SaleComplaintComment cc = new SaleComplaintComment();
 
         SaleComplaint sc = saleComplaintDao.findByHash(complaintComment.getHashUnique());
-        ProductComplaint pc = productComplaintDao.findByHash(complaintComment.getHashUnique());
 
         if (isNotNull(sc)) {
             cc.setComplaint(sc);

@@ -6,11 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import telephony.core.dao.ContactsDao;
-import telephony.core.dao.ProductsDao;
-import telephony.core.dao.SalesDao;
-import telephony.core.dao.StoresDao;
+import telephony.core.dao.*;
 import telephony.core.entity.jpa.Sale;
+import telephony.core.entity.jpa.User;
 import telephony.core.service.SaleService;
 import telephony.core.service.SessionManager;
 import telephony.core.service.converter.SaleConverter;
@@ -29,6 +27,9 @@ import static telephony.core.assertion.CommonAssertions.*;
 public class SaleServiceImpl
 extends AbstractBasicService<Sale> 
 implements SaleService {
+
+	@Inject
+	UsersDao usersDao;
 
 	@Inject
 	SalesDao salesDao;
@@ -182,7 +183,10 @@ implements SaleService {
 
 		sessionManager.validate(request.getSessionDto());
 
+		User u = usersDao.findByName(request.getUsername());
+
 		Sale entity = saleConverter.toEntity(request.getSale());
+		entity.setUser(u);
 
 		salesDao.save(entity);
 

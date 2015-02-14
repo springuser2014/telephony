@@ -139,7 +139,7 @@
             </td>
             <td>VAT {{tax}} %</td>
             <td>
-                <a class="btn btn-success btn-xs add-sale" sale-id="{{id}}">Dodaj do listy</a>
+                <a class="btn btn-success btn-xs add-product-to-list" product-id="{{id}}">Dodaj do listy</a>
                 <a class="btn btn-info btn-xs" href="<c:url value="/productDetails/"/>{{id}}">Szczegóły</a>
                 <a class="btn bg-color-magenta btn-xs txt-color-white" href="<c:url value="/editProduct/"/>{{id}}">Edytuj produkt</a>
             </td>
