@@ -40,7 +40,7 @@ public class User extends BaseEntity {
             mappedBy = "user",
             fetch    = FetchType.LAZY,
             cascade = {
-                    CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+                    CascadeType.ALL
             }
     )
     private Collection<Delivery> deliveries;

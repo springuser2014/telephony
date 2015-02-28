@@ -35,6 +35,9 @@ public class DeliveryConverter {
     TaxDao taxDao;
 
     @Inject
+    UsersDao usersDao;
+
+    @Inject
     ProductTaxDao productTaxDao;
 
     @Inject
@@ -65,10 +68,11 @@ public class DeliveryConverter {
         return bean;
     }
 
-    public Delivery toEntity(DeliveryAddDto addDto) throws DeliveryServiceException {
+    public Delivery toEntity(DeliveryAddDto addDto, String username) throws DeliveryServiceException {
         // TODO cleanup this mess
         Delivery delivery = new Delivery();
 
+        User user = usersDao.findByName(username);
         Store store = storesDao.findById(addDto.getStoreId());
         Contact contact = contactsDao.findById(addDto.getContactId());
 
@@ -76,8 +80,9 @@ public class DeliveryConverter {
         delivery.setLabel(addDto.getLabel());
         delivery.setStore(store);
         delivery.setContact(contact);
+        delivery.setUser(user);
 
-        Collection<Product> products = new ArrayList<Product>();
+        Collection<Product> products = new ArrayList<>();
 
         for (ProductAddDto dto : addDto.getProducts()) {
 
@@ -132,7 +137,7 @@ public class DeliveryConverter {
             productTax.setFrom(new Date());
             productTax.setTo(null);
 
-            List<ProductTax> pts = new ArrayList<ProductTax>();
+            List<ProductTax> pts = new ArrayList<>();
             pts.add(productTax);
             p.setProductTaxes(pts);
 

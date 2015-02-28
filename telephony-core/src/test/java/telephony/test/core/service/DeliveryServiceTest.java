@@ -129,7 +129,7 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		tax.setFrom(new Date());
 		tax.setTo(priceTo);
 		
-		List<ProductAddDto> products = new ArrayList<ProductAddDto>();
+		List<ProductAddDto> products = new ArrayList<>();
 		ProductAddDto p1 = new ProductAddDto();
 		p1.setProducer("nokia");
 		p1.setModel("3310");
@@ -161,10 +161,10 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		deliveryDto.setLabel("rrrr");
 
 		requestDto.setDeliveryDto(deliveryDto);
-		
+
 		// when
 		DeliveryAddResponse resp = deliveryService.add(requestDto);
-		
+
 		long deliveriesAfter = deliveryService.count(session);
 		long productsAfter = productService.count(session);
 
@@ -427,8 +427,6 @@ public class DeliveryServiceTest extends BaseCoreTest {
 		editDto.setContactId(TestData.CONTACT2_ID);
 		editDto.setStoreId(TestData.STORE2_ID);
 		editDto.setLabel("nowy label");
-
-		Date dateTo = new DateTime().withDate(2016,12,31).withTime(0,0,0,0).toDate();
 
 		PricingAddDto pricing1 = new PricingAddDto();
 		pricing1.setFrom(new Date());

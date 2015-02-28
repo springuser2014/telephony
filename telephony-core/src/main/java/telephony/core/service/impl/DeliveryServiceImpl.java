@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import telephony.core.dao.*;
 import telephony.core.entity.jpa.Delivery;
+import telephony.core.entity.jpa.User;
 import telephony.core.service.DeliveryService;
 import telephony.core.service.SessionManager;
 import telephony.core.service.converter.DeliveryConverter;
@@ -24,6 +25,9 @@ import static telephony.core.assertion.CommonAssertions.*;
 public class DeliveryServiceImpl
 extends AbstractBasicService<Delivery> 
 implements DeliveryService {
+
+	@Inject
+	UsersDao usersDao;
 
 	@Inject
 	PricingsDao pricingsDao;
@@ -158,8 +162,7 @@ implements DeliveryService {
 
 		DeliveryAddDto addDto = request.getDeliveryDto();
 
-		Delivery delivery = deliveryConverter.toEntity(addDto);
-		deliveriesDao.saveOrUpdate(delivery);
+		Delivery delivery = deliveryConverter.toEntity(addDto, request.getUsername());
 
 		resp.setSuccess(true);
 		resp.setMessage("operation performed successfully"); // TODO add localized msg
